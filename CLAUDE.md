@@ -163,18 +163,18 @@ gh issue close <número> --comment "✅ Tarea completada..."
 - ✅ T-004: Guía de Contribución creada (issue #12)
 - ✅ T-005: GitHub Actions CI configurado (issue #3)
 - ✅ T-006: Placeholders de tests en CI (issue #13)
+- ✅ T-007: Pre-commit hooks con Husky (issue #14) ⭐ **RECIÉN COMPLETADO**
 - ✅ T-008: Estructura de monorepo con Turborepo (issue #4)
 - ✅ T-009: TypeScript configurado con strict mode (issue #5)
 - ✅ T-010: ESLint y Prettier configurados (issue #6)
 
 ### En Progreso (Fase 0)
 
-- 🚧 Fase 0: Fundamentos y documentación - 53% completado (9/17 tareas)
+- 🚧 Fase 0: Fundamentos y documentación - 59% completado (10/17 tareas)
 
 ### Pendiente (Orden de Prioridad)
 
-- 🎯 **SIGUIENTE**: T-007: Pre-commit hooks (issue #14) - Ya podemos hacerlo
-- ⏳ T-011: Configurar variables de entorno (issue #7)
+- 🎯 **SIGUIENTE**: T-011: Configurar variables de entorno (issue #7)
 - ⏳ T-012: Configurar PostgreSQL (issue #8)
 - ⏳ T-013: Configurar Prisma (issue #9) - Requiere T-012
 - ⏳ T-014: Crear seed data (issue #15) - Requiere T-013

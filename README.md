@@ -98,13 +98,20 @@ amauta/
 
 ## Estado del Proyecto
 
-🚧 **En desarrollo activo** - Fase 0: Fundamentos (53% completado)
+🚧 **En desarrollo activo** - Fase 0: Fundamentos (59% completado)
 
 Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de desarrollo.
 
 ### Fases
 
-- 🚧 **Fase 0**: Fundamentos y documentación (9/17 tareas completadas)
+- 🚧 **Fase 0**: Fundamentos y documentación (10/17 tareas completadas)
+  - ✅ Repositorio y estructura configurada
+  - ✅ CI/CD básico con GitHub Actions
+  - ✅ Monorepo con Turborepo
+  - ✅ TypeScript con strict mode
+  - ✅ ESLint y Prettier configurados
+  - ✅ Pre-commit hooks con Husky
+  - 🔄 Próximo: Variables de entorno y PostgreSQL
 - 📋 **Fase 1**: MVP - Plataforma de cursos básica (próximo)
 - 📋 **Fase 2**: Offline-First & PWA
 - 📋 **Fase 3**: Evaluaciones y certificaciones

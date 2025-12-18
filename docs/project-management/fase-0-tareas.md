@@ -30,10 +30,10 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 - [x] Repositorio creado en GitHub
 - [x] Estructura de carpetas definida
 - [x] README.md completo con información del proyecto
-- [ ] .gitignore configurado
-- [ ] Licencia del proyecto definida
-- [ ] Code of Conduct creado
-- [ ] Contributing guidelines documentadas
+- [x] .gitignore configurado
+- [x] Licencia del proyecto definida
+- [x] Code of Conduct creado
+- [x] Contributing guidelines documentadas
 
 ### Tareas Técnicas
 
@@ -106,11 +106,12 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 ### Criterios de Aceptación
 
-- [ ] GitHub Actions configurado
-- [ ] Tests se ejecutan automáticamente en PRs
-- [ ] Linting y type checking automático
-- [ ] Build verification en cada commit
+- [x] GitHub Actions configurado
+- [x] Tests se ejecutan automáticamente en PRs
+- [ ] Linting y type checking automático (pendiente expansión)
+- [ ] Build verification en cada commit (pendiente expansión)
 - [ ] Deploy automático a staging (opcional para Fase 0)
+- [x] Pre-commit hooks configurados
 
 ### Tareas Técnicas
 
@@ -150,15 +151,16 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 **Estimación**: 3 puntos
 **Prioridad**: Should Have
 **Labels**: `infrastructure`, `dx`
+**Estado**: ✅ Completado (Issue #14)
 
 **Checklist:**
 
-- [ ] Instalar y configurar Husky
-- [ ] Configurar pre-commit hook para lint-staged
-- [ ] Configurar hook para formateo con Prettier
-- [ ] Configurar hook para linting con ESLint
-- [ ] Configurar commit-msg hook para conventional commits
-- [ ] Documentar en CONTRIBUTING.md
+- [x] Instalar y configurar Husky
+- [x] Configurar pre-commit hook para lint-staged
+- [x] Configurar hook para formateo con Prettier
+- [x] Configurar hook para linting con ESLint
+- [x] Configurar commit-msg hook para conventional commits
+- [x] Documentar en CONTRIBUTING.md
 
 ---
 
@@ -170,10 +172,10 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 ### Criterios de Aceptación
 
-- [ ] Monorepo configurado (Turborepo o similar)
-- [ ] TypeScript configurado con strict mode
-- [ ] ESLint y Prettier configurados
-- [ ] Package.json con scripts útiles
+- [x] Monorepo configurado (Turborepo o similar)
+- [x] TypeScript configurado con strict mode
+- [x] ESLint y Prettier configurados
+- [x] Package.json con scripts útiles
 - [ ] Variables de entorno documentadas
 
 ### Tareas Técnicas
