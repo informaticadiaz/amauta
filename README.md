@@ -166,9 +166,23 @@ Código mantenible, documentado y pensado para durar décadas, no meses.
 
 ## Licencia
 
-[Pendiente definir - Recomendación: AGPL-3.0 o GPL-3.0]
+Este proyecto está licenciado bajo la **GNU Affero General Public License v3.0 (AGPL-3.0)**.
 
-Este proyecto es de código abierto con el propósito de servir al bien común educativo.
+La AGPL-3.0 garantiza que:
+- El código fuente permanece abierto y accesible para todos
+- Cualquier modificación debe compartirse con la comunidad
+- Incluso si se usa como servicio web, el código debe permanecer abierto
+- Protege el espíritu de código abierto al servicio del bien común educativo
+
+Ver el archivo [LICENSE](./LICENSE) para el texto completo de la licencia.
+
+### ¿Por qué AGPL-3.0?
+
+Elegimos AGPL-3.0 porque:
+1. **Protege la libertad educativa**: Garantiza que Amauta siempre será libre y abierto
+2. **Previene apropiación privada**: Nadie puede tomar el código y cerrarlo en un servicio propietario
+3. **Fomenta la colaboración**: Cualquier mejora debe compartirse con la comunidad
+4. **Alineada con nuestros valores**: La educación es un derecho, no un producto comercial
 
 ## Comunidad y Contacto
 
@@ -208,6 +222,6 @@ A todas las personas que creen en la educación como derecho fundamental y contr
 
 ![Build Status](https://img.shields.io/badge/build-pending-yellow)
 ![Version](https://img.shields.io/badge/version-0.1.0--alpha-blue)
-![License](https://img.shields.io/badge/license-pending-lightgrey)
+![License](https://img.shields.io/badge/license-AGPL--3.0-blue)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
 ![Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-pending-orange)
