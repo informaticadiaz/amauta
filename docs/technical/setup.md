@@ -306,11 +306,49 @@ echo $DATABASE_URL
 # npm run prisma db execute --stdin <<< "SELECT version();"
 ```
 
-### 5. Generar Cliente Prisma
+### 5. Configurar Prisma ORM
+
+Una vez que PostgreSQL esté corriendo, configura Prisma:
 
 ```bash
-npm run prisma generate
+# 1. Ejecutar primera migración (crea todas las tablas)
+cd apps/api
+npm run prisma:migrate
+
+# Esto te pedirá un nombre para la migración, por ejemplo: "init"
+# Creará las tablas y generará Prisma Client automáticamente
 ```
+
+**¿Qué hace esto?**
+
+- Crea todas las tablas en PostgreSQL según `apps/api/prisma/schema.prisma`
+- Genera la carpeta `prisma/migrations/` con el historial de migraciones
+- Genera Prisma Client automáticamente en `node_modules/@prisma/client`
+
+**Comandos Prisma disponibles:**
+
+```bash
+# Generar/actualizar Prisma Client (si modificas el schema)
+npm run prisma:generate --workspace=@amauta/api
+
+# Crear nueva migración después de modificar schema.prisma
+npm run prisma:migrate --workspace=@amauta/api
+
+# Abrir Prisma Studio (interface gráfica para ver datos)
+npm run prisma:studio --workspace=@amauta/api
+# Abre en http://localhost:5555
+
+# Ver estado de migraciones
+npx prisma migrate status --schema=apps/api/prisma/schema.prisma
+
+# Push schema sin crear migración (desarrollo rápido)
+npm run db:push --workspace=@amauta/api
+```
+
+**Ver documentación completa:**
+
+- Schema y modelos: `docs/technical/database.md`
+- Comandos Prisma: `apps/api/prisma/README.md`
 
 ## Ejecutar el Proyecto
 
