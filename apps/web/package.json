@@ -4,10 +4,11 @@
   "private": true,
   "description": "Amauta - Frontend Next.js PWA",
   "scripts": {
-    "dev": "echo 'Next.js se configurará después de TypeScript'",
+    "dev": "echo 'Next.js se configurará después de ESLint/Prettier'",
     "build": "echo 'Build se configurará cuando tengamos Next.js'",
     "start": "echo 'Start se configurará cuando tengamos Next.js'",
-    "lint": "echo 'Lint se configurará en issue #6 (ESLint)'",
+    "lint": "ESLINT_USE_FLAT_CONFIG=false eslint . --ext .ts,.tsx --max-warnings 0",
+    "lint:fix": "ESLINT_USE_FLAT_CONFIG=false eslint . --ext .ts,.tsx --fix",
     "type-check": "tsc --noEmit"
   }
 }

@@ -7,9 +7,11 @@
 **Estado**: En progreso
 
 ### Descripción
+
 Establecer las bases técnicas y de gestión del proyecto Amauta, configurando la infraestructura de desarrollo, documentación y procesos que permitirán el desarrollo exitoso de las siguientes fases.
 
 ### Objetivos
+
 - Configurar repositorio y estructura de proyecto
 - Establecer pipeline de CI/CD básico
 - Documentar procesos y estándares
@@ -24,6 +26,7 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 **Para** poder trabajar de manera eficiente y consistente
 
 ### Criterios de Aceptación
+
 - [x] Repositorio creado en GitHub
 - [x] Estructura de carpetas definida
 - [x] README.md completo con información del proyecto
@@ -35,25 +38,29 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 ### Tareas Técnicas
 
 #### T-001: Configurar .gitignore
+
 **Estimación**: 1 punto
 **Prioridad**: Must Have
 **Labels**: `tech-debt`, `infrastructure`
 
 **Checklist:**
+
 - [ ] Agregar reglas para Node.js
 - [ ] Agregar reglas para Next.js (.next/, out/)
-- [ ] Agregar reglas para variables de entorno (.env*)
+- [ ] Agregar reglas para variables de entorno (.env\*)
 - [ ] Agregar reglas para IDEs (VSCode, etc)
 - [ ] Agregar reglas para sistema operativo
 - [ ] Agregar reglas para dependencias (node_modules/)
 - [ ] Agregar reglas para builds y dist/
 
 #### T-002: Definir licencia del proyecto
+
 **Estimación**: 1 punto
 **Prioridad**: Must Have
 **Labels**: `docs`, `legal`
 
 **Checklist:**
+
 - [ ] Investigar licencias open source apropiadas (AGPL-3.0, GPL-3.0)
 - [ ] Consultar con stakeholders sobre preferencias
 - [ ] Crear archivo LICENSE
@@ -61,11 +68,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 - [ ] Agregar badge de licencia
 
 #### T-003: Crear Code of Conduct
+
 **Estimación**: 2 puntos
 **Prioridad**: Should Have
 **Labels**: `docs`, `community`
 
 **Checklist:**
+
 - [ ] Adaptar Contributor Covenant u otro estándar
 - [ ] Definir proceso de reporte de violaciones
 - [ ] Designar responsables de moderación
@@ -73,11 +82,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 - [ ] Vincular desde README
 
 #### T-004: Crear Contributing Guidelines
+
 **Estimación**: 3 puntos
 **Prioridad**: Should Have
 **Labels**: `docs`, `community`
 
 **Checklist:**
+
 - [ ] Documentar proceso de fork y PR
 - [ ] Explicar convenciones de commits
 - [ ] Listar requisitos para PRs (tests, docs)
@@ -94,6 +105,7 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 **Para** asegurar la calidad del código y automatizar deploys
 
 ### Criterios de Aceptación
+
 - [ ] GitHub Actions configurado
 - [ ] Tests se ejecutan automáticamente en PRs
 - [ ] Linting y type checking automático
@@ -103,11 +115,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 ### Tareas Técnicas
 
 #### T-005: Configurar GitHub Actions para CI
+
 **Estimación**: 5 puntos
 **Prioridad**: Must Have
 **Labels**: `infrastructure`, `ci-cd`
 
 **Checklist:**
+
 - [ ] Crear workflow .github/workflows/ci.yml
 - [ ] Configurar jobs para diferentes ambientes (Node 20)
 - [ ] Agregar step para install dependencies
@@ -118,11 +132,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 - [ ] Configurar triggers (push, PR a main/develop)
 
 #### T-006: Configurar tests en CI
+
 **Estimación**: 3 puntos
 **Prioridad**: Must Have
 **Labels**: `infrastructure`, `ci-cd`, `testing`
 
 **Checklist:**
+
 - [ ] Agregar step para ejecutar tests
 - [ ] Configurar coverage reporting
 - [ ] Subir coverage a servicio (Codecov, Coveralls)
@@ -130,11 +146,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 - [ ] Agregar badge de coverage al README
 
 #### T-007: Configurar pre-commit hooks
+
 **Estimación**: 3 puntos
 **Prioridad**: Should Have
 **Labels**: `infrastructure`, `dx`
 
 **Checklist:**
+
 - [ ] Instalar y configurar Husky
 - [ ] Configurar pre-commit hook para lint-staged
 - [ ] Configurar hook para formateo con Prettier
@@ -151,6 +169,7 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 **Para** poder empezar a desarrollar features
 
 ### Criterios de Aceptación
+
 - [ ] Monorepo configurado (Turborepo o similar)
 - [ ] TypeScript configurado con strict mode
 - [ ] ESLint y Prettier configurados
@@ -160,11 +179,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 ### Tareas Técnicas
 
 #### T-008: Inicializar estructura de monorepo
+
 **Estimación**: 5 puntos
 **Prioridad**: Must Have
 **Labels**: `infrastructure`, `setup`
 
 **Checklist:**
+
 - [ ] Instalar y configurar Turborepo
 - [ ] Crear estructura de carpetas (apps/, packages/)
 - [ ] Configurar workspaces en package.json
@@ -174,11 +195,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 - [ ] Documentar estructura en README
 
 #### T-009: Configurar TypeScript
+
 **Estimación**: 3 puntos
 **Prioridad**: Must Have
 **Labels**: `infrastructure`, `typescript`
 
 **Checklist:**
+
 - [ ] Crear tsconfig.json base
 - [ ] Configurar strict mode
 - [ ] Configurar paths aliases (@/)
@@ -187,11 +210,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 - [ ] Verificar que compila sin errores
 
 #### T-010: Configurar ESLint y Prettier
+
 **Estimación**: 3 puntos
 **Prioridad**: Must Have
 **Labels**: `infrastructure`, `code-quality`
 
 **Checklist:**
+
 - [ ] Instalar ESLint y plugins necesarios
 - [ ] Configurar .eslintrc.js con reglas
 - [ ] Instalar Prettier
@@ -202,17 +227,19 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 - [ ] Configurar extensión en VSCode (settings.json)
 
 #### T-011: Configurar variables de entorno
+
 **Estimación**: 2 puntos
 **Prioridad**: Must Have
 **Labels**: `infrastructure`, `configuration`
 
 **Checklist:**
+
 - [ ] Crear .env.example con todas las variables
 - [ ] Documentar cada variable en comentarios
 - [ ] Crear .env.local de ejemplo
 - [ ] Agregar validación de env vars (zod o similar)
 - [ ] Documentar en docs/technical/setup.md
-- [ ] Agregar .env* al .gitignore
+- [ ] Agregar .env\* al .gitignore
 
 ---
 
@@ -223,6 +250,7 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 **Para** poder trabajar con modelos de datos
 
 ### Criterios de Aceptación
+
 - [ ] PostgreSQL configurado (local o Docker)
 - [ ] Prisma instalado y configurado
 - [ ] Schema inicial definido
@@ -232,11 +260,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 ### Tareas Técnicas
 
 #### T-012: Configurar PostgreSQL
+
 **Estimación**: 3 puntos
 **Prioridad**: Must Have
 **Labels**: `infrastructure`, `database`
 
 **Checklist:**
+
 - [ ] Crear docker-compose.yml con PostgreSQL
 - [ ] Configurar volúmenes para persistencia
 - [ ] Documentar instalación local alternativa
@@ -245,11 +275,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 - [ ] Verificar conexión
 
 #### T-013: Configurar Prisma
+
 **Estimación**: 5 puntos
 **Prioridad**: Must Have
 **Labels**: `infrastructure`, `database`, `backend`
 
 **Checklist:**
+
 - [ ] Instalar Prisma y Prisma Client
 - [ ] Inicializar Prisma (prisma init)
 - [ ] Crear schema.prisma base
@@ -260,11 +292,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 - [ ] Documentar comandos Prisma
 
 #### T-014: Crear seed data
+
 **Estimación**: 3 puntos
 **Prioridad**: Should Have
 **Labels**: `backend`, `database`
 
 **Checklist:**
+
 - [ ] Crear prisma/seed.ts
 - [ ] Agregar usuarios de prueba (roles diferentes)
 - [ ] Agregar categorías base
@@ -281,6 +315,7 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 **Para** entender el proyecto y contribuir efectivamente
 
 ### Criterios de Aceptación
+
 - [x] Documentación técnica completa
 - [x] Documentación de gestión completa
 - [x] README informativo
@@ -290,11 +325,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 ### Tareas Técnicas
 
 #### T-015: Crear diagramas de arquitectura
+
 **Estimación**: 3 puntos
 **Prioridad**: Should Have
 **Labels**: `docs`, `architecture`
 
 **Checklist:**
+
 - [ ] Crear diagrama de arquitectura general
 - [ ] Crear diagrama de flujo de datos
 - [ ] Crear diagrama ER de base de datos
@@ -303,11 +340,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 - [ ] Exportar versiones en imagen
 
 #### T-016: Documentar API endpoints (preparación)
+
 **Estimación**: 2 puntos
 **Prioridad**: Could Have
 **Labels**: `docs`, `api`
 
 **Checklist:**
+
 - [ ] Crear estructura para docs/technical/api-reference.md
 - [ ] Definir formato de documentación de endpoints
 - [ ] Considerar Swagger/OpenAPI para futuro
@@ -319,6 +358,7 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 ## Deuda Técnica y Mejoras
 
 ### DT-001: Configurar Docker para desarrollo completo
+
 **Estimación**: 5 puntos
 **Prioridad**: Could Have
 **Labels**: `tech-debt`, `infrastructure`, `dx`
@@ -327,6 +367,7 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 Crear configuración Docker completa para que desarrolladores puedan levantar todo el stack con un comando.
 
 **Checklist:**
+
 - [ ] Crear Dockerfile para apps/web
 - [ ] Crear Dockerfile para apps/api
 - [ ] Actualizar docker-compose.yml con todos los servicios
@@ -335,6 +376,7 @@ Crear configuración Docker completa para que desarrolladores puedan levantar to
 - [ ] Documentar uso de Docker en setup.md
 
 ### DT-002: Configurar herramienta de monitoreo de errores
+
 **Estimación**: 3 puntos
 **Prioridad**: Could Have
 **Labels**: `tech-debt`, `infrastructure`, `monitoring`
@@ -343,6 +385,7 @@ Crear configuración Docker completa para que desarrolladores puedan levantar to
 Integrar Sentry u otra herramienta para tracking de errores en desarrollo.
 
 **Checklist:**
+
 - [ ] Evaluar opciones (Sentry, LogRocket, etc)
 - [ ] Crear cuenta en servicio elegido
 - [ ] Integrar en frontend
@@ -355,6 +398,7 @@ Integrar Sentry u otra herramienta para tracking de errores en desarrollo.
 ## Resumen de Estimaciones
 
 ### Por Prioridad
+
 - **Must Have**: 34 puntos
 - **Should Have**: 11 puntos
 - **Could Have**: 8 puntos
@@ -362,6 +406,7 @@ Integrar Sentry u otra herramienta para tracking de errores en desarrollo.
 **Total**: 53 puntos
 
 ### Por Área
+
 - Infrastructure: 29 puntos
 - Docs: 10 puntos
 - Backend: 8 puntos
@@ -371,14 +416,17 @@ Integrar Sentry u otra herramienta para tracking de errores en desarrollo.
 ### Recomendación de Sprints
 
 **Sprint 0 - Parte 1** (20-25 puntos)
+
 - T-001 a T-007: Repo, CI/CD
 - Duración: 1 semana
 
 **Sprint 0 - Parte 2** (20-25 puntos)
+
 - T-008 a T-014: Setup técnico, DB
 - Duración: 1 semana
 
 **Backlog para refinar**
+
 - T-015 a T-016 + Deuda Técnica
 - Evaluar después de Sprint 0
 

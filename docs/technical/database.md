@@ -526,8 +526,8 @@ async function main() {
       { nombre: 'Ciencias', slug: 'ciencias' },
       { nombre: 'Historia', slug: 'historia' },
       { nombre: 'Lengua', slug: 'lengua' },
-      { nombre: 'Tecnología', slug: 'tecnologia' }
-    ]
+      { nombre: 'Tecnología', slug: 'tecnologia' },
+    ],
   });
 
   // Usuario admin
@@ -538,8 +538,8 @@ async function main() {
       apellido: 'Sistema',
       rol: 'SUPER_ADMIN',
       password: 'hash_aqui', // Usar bcrypt en implementación real
-      emailVerificado: new Date()
-    }
+      emailVerificado: new Date(),
+    },
   });
 
   console.log('Seed completado');

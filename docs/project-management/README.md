@@ -42,18 +42,21 @@ Esta documentación está dirigida a gestores de proyecto, product owners, scrum
 ## Métricas de Éxito
 
 ### Técnicas
+
 - Cobertura de tests > 80%
 - Tiempo de carga < 3 segundos
 - Disponibilidad > 99.5%
 - Zero critical security issues
 
 ### Producto
+
 - Usuarios activos mensuales
 - Cursos completados
 - Tasa de retención
 - NPS (Net Promoter Score)
 
 ### Impacto Social
+
 - Instituciones educativas usando la plataforma
 - Estudiantes en zonas de baja conectividad
 - Contenido en idiomas originarios
@@ -62,5 +65,6 @@ Esta documentación está dirigida a gestores de proyecto, product owners, scrum
 ## Contacto
 
 Para cuestiones de gestión de proyecto, contactar a:
+
 - Product Owner: [email]
 - Scrum Master: [email]

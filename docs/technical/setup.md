@@ -3,6 +3,7 @@
 ## Requisitos Previos
 
 ### Software Necesario
+
 - **Node.js**: v20.x o superior ([Descargar](https://nodejs.org/))
 - **pnpm**: v8.x o superior (recomendado sobre npm/yarn)
   ```bash
@@ -14,6 +15,7 @@
 - **Docker** (opcional): Para ejecutar servicios en contenedores
 
 ### Editor Recomendado
+
 - **VS Code** con extensiones:
   - ESLint
   - Prettier
@@ -123,6 +125,7 @@ pnpm dev
 ```
 
 La aplicación estará disponible en:
+
 - Frontend: http://localhost:3000
 - API Backend: http://localhost:3001
 - Prisma Studio: `pnpm prisma studio` → http://localhost:5555
@@ -220,14 +223,14 @@ services:
       POSTGRES_USER: amauta
       POSTGRES_PASSWORD: desarrollo123
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - '6379:6379'
     volumes:
       - redis_data:/data
 
@@ -237,6 +240,7 @@ volumes:
 ```
 
 Ejecutar:
+
 ```bash
 docker-compose up -d
 ```
@@ -244,12 +248,14 @@ docker-compose up -d
 ## Problemas Comunes
 
 ### Error: "Port 3000 already in use"
+
 ```bash
 # Encontrar y matar proceso
 lsof -ti:3000 | xargs kill -9
 ```
 
 ### Error de conexión a PostgreSQL
+
 ```bash
 # Verificar que PostgreSQL está corriendo
 pg_isready
@@ -259,6 +265,7 @@ docker-compose ps
 ```
 
 ### Error de Prisma
+
 ```bash
 # Regenerar cliente
 pnpm prisma generate
@@ -268,6 +275,7 @@ pnpm prisma migrate reset
 ```
 
 ### Limpiar y reinstalar
+
 ```bash
 # Limpiar node_modules y reinstalar
 rm -rf node_modules .next
@@ -277,6 +285,7 @@ pnpm install
 ## Siguiente Paso
 
 Una vez configurado el entorno, revisa:
+
 - [Estándares de Código](./coding-standards.md)
 - [Guía de Contribución](../../CONTRIBUTING.md)
 - [Arquitectura](./architecture.md)
@@ -284,5 +293,6 @@ Una vez configurado el entorno, revisa:
 ## Soporte
 
 ¿Problemas con la configuración?
+
 - Revisa los [issues](https://github.com/tu-org/amauta/issues)
 - Crea un nuevo issue con la etiqueta `setup`

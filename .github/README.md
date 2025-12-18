@@ -7,17 +7,20 @@ Este directorio contiene los workflows de GitHub Actions para el proyecto Amauta
 ### 1. CI (Integración Continua) - `ci.yml`
 
 **Triggers:**
+
 - Push a `main`, `master`, o `develop`
 - Pull Requests a `main`, `master`, o `develop`
 
 **Jobs:**
 
 #### 1.1 Validate (Validaciones Básicas)
+
 - ✅ Verificar estructura de archivos esenciales
 - ✅ Validar que no hay secretos expuestos (.env, credentials, etc.)
 - ✅ Validar formato de documentación (archivos .md no vacíos)
 
 #### 1.2 Build (Construcción del Proyecto)
+
 - ✅ Setup de Node.js 20.x
 - ✅ Caché de dependencias npm
 - 📋 Placeholder para install dependencies (cuando exista package.json)
@@ -28,10 +31,12 @@ Este directorio contiene los workflows de GitHub Actions para el proyecto Amauta
 - 📋 Placeholder para coverage (cuando tengamos tests)
 
 #### 1.3 Summary (Resumen)
+
 - ✅ Resumen de ejecución del CI
 - ✅ Próximos pasos documentados
 
 **Características:**
+
 - Cancela workflows anteriores del mismo PR/branch automáticamente
 - Matrix strategy para Node.js (actualmente solo 20.x)
 - Jobs con dependencias (validate → build → summary)
@@ -56,6 +61,7 @@ El workflow actual realiza validaciones básicas de la estructura del proyecto. 
 Cuando el proyecto crezca, se agregarán:
 
 ### Tests
+
 ```yaml
 - name: Run tests
   run: npm test
@@ -65,6 +71,7 @@ Cuando el proyecto crezca, se agregarán:
 ```
 
 ### Database
+
 ```yaml
 - name: Setup PostgreSQL
   uses: ikalnytskyi/action-setup-postgres@v4
@@ -74,6 +81,7 @@ Cuando el proyecto crezca, se agregarán:
 ```
 
 ### Deploy (producción)
+
 ```yaml
 - name: Deploy to production
   if: github.ref == 'refs/heads/main'
@@ -83,6 +91,7 @@ Cuando el proyecto crezca, se agregarán:
 ## Monitoreo
 
 Ver el estado del CI en:
+
 - Pestaña "Actions" del repositorio
 - Badge en README.md (cuando esté configurado)
 - Checks en Pull Requests
@@ -90,11 +99,13 @@ Ver el estado del CI en:
 ## Troubleshooting
 
 ### El workflow no se ejecuta
+
 - Verificar que el archivo esté en `.github/workflows/`
 - Verificar sintaxis YAML (usar yamllint o editor con validación)
 - Revisar triggers (branches correctos)
 
 ### El job falla
+
 - Revisar logs en la pestaña "Actions"
 - Verificar que las validaciones sean correctas para el estado actual del proyecto
 - Consultar documentación de GitHub Actions

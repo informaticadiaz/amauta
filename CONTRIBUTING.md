@@ -28,28 +28,33 @@ Este proyecto adhiere al [Código de Conducta de Contributor Covenant](./CODE_OF
 Hay muchas formas de contribuir a Amauta:
 
 ### 1. Reportar Bugs
+
 - Usa la plantilla de issue para bugs
 - Describe el problema claramente con pasos para reproducirlo
 - Incluye capturas de pantalla si es relevante
 - Menciona tu entorno (OS, navegador, versión de Node.js)
 
 ### 2. Sugerir Features o Mejoras
+
 - Usa la plantilla de issue para features
 - Explica el problema que resuelve tu propuesta
 - Describe la solución que imaginas
 - Considera alternativas
 
 ### 3. Contribuir con Código
+
 - Busca issues etiquetados como `good-first-issue` para empezar
 - Lee el [Roadmap](./docs/project-management/roadmap.md) para entender las prioridades
 - Consulta [WORKFLOW.md](./WORKFLOW.md) para el proceso de trabajo con issues
 
 ### 4. Mejorar Documentación
+
 - Corregir typos, clarificar explicaciones
 - Agregar ejemplos o diagramas
 - Traducir documentación (futuro)
 
 ### 5. Ayudar a la Comunidad
+
 - Responder preguntas en GitHub Discussions
 - Revisar Pull Requests de otros contribuidores
 - Compartir el proyecto en redes sociales
@@ -141,18 +146,21 @@ Ve a tu fork en GitHub y haz clic en "New Pull Request".
 ## Convenciones de Código
 
 ### General
+
 - Usar español para nombres de variables, funciones y comentarios
 - Código en inglés solo cuando sea convención establecida (ej: React hooks)
 - Nombres descriptivos y claros
 - Evitar abreviaciones confusas
 
 ### TypeScript
+
 - Usar TypeScript para todo el código
 - Evitar `any`, preferir tipos explícitos
 - Usar interfaces para objetos complejos
 - Documentar funciones públicas con JSDoc
 
 ### Estilo
+
 - Usar Prettier para formateo automático
 - Seguir las reglas de ESLint configuradas
 - Indentación: 2 espacios
@@ -160,6 +168,7 @@ Ve a tu fork en GitHub y haz clic en "New Pull Request".
 - Punto y coma al final de sentencias
 
 ### Estructura de Archivos
+
 ```
 apps/
   web/           # Frontend Next.js
@@ -237,6 +246,7 @@ Resuelve: #42"
 ### Antes de Crear el PR
 
 **Checklist:**
+
 - [ ] El código sigue los estándares del proyecto
 - [ ] Los tests pasan (cuando estén configurados)
 - [ ] La documentación está actualizada
@@ -247,6 +257,7 @@ Resuelve: #42"
 ### Crear el Pull Request
 
 1. **Título descriptivo**:
+
    ```
    feat: Implementar autenticación de usuarios
    fix: Corregir bug en formulario de login
@@ -254,20 +265,25 @@ Resuelve: #42"
    ```
 
 2. **Descripción completa**:
+
    ```markdown
    ## Descripción
+
    Breve explicación de los cambios.
 
    ## Tipo de cambio
+
    - [ ] Bug fix
    - [ ] Nueva feature
    - [ ] Breaking change
    - [ ] Documentación
 
    ## ¿Cómo se ha probado?
+
    Descripción de las pruebas realizadas.
 
    ## Checklist
+
    - [ ] Mi código sigue los estándares del proyecto
    - [ ] He actualizado la documentación
    - [ ] Mis cambios no generan warnings
@@ -346,6 +362,7 @@ npm run dev
 ### Herramientas Recomendadas
 
 #### VSCode Extensions
+
 - ESLint
 - Prettier
 - TypeScript and JavaScript Language Features
@@ -384,6 +401,7 @@ Para setup detallado, consulta [docs/technical/setup.md](./docs/technical/setup.
 ### Al Reportar
 
 Incluye:
+
 - **Descripción clara** del problema
 - **Pasos para reproducir**:
   1. Ir a '...'
@@ -405,15 +423,19 @@ Incluye:
 
 ```markdown
 ## Problema
+
 Descripción del problema que resuelve tu propuesta.
 
 ## Solución Propuesta
+
 Descripción clara de lo que quieres que pase.
 
 ## Alternativas Consideradas
+
 Otras soluciones que consideraste.
 
 ## Contexto Adicional
+
 Screenshots, mockups, ejemplos de otros proyectos, etc.
 ```
 

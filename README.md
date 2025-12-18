@@ -13,12 +13,14 @@ No concebimos la educación como un producto, sino como un **derecho social**. N
 ## Características Principales
 
 ### Acceso Universal
+
 - **Funciona en cualquier dispositivo**: Web, móvil, tablet, desktop
 - **Offline-first**: Contenido disponible sin conexión a internet
 - **PWA instalable**: Experiencia similar a app nativa
 - **Accesible**: Cumple estándares WCAG 2.1
 
 ### Para Estudiantes
+
 - Catálogo abierto de cursos gratuitos
 - Seguimiento de progreso personal
 - Evaluaciones y certificaciones
@@ -26,6 +28,7 @@ No concebimos la educación como un producto, sino como un **derecho social**. N
 - Descarga de contenido para estudio offline
 
 ### Para Educadores
+
 - Crear y publicar cursos libremente
 - Herramientas de creación de contenido
 - Seguimiento de estudiantes
@@ -33,6 +36,7 @@ No concebimos la educación como un producto, sino como un **derecho social**. N
 - Sistema de evaluaciones
 
 ### Para Instituciones Educativas
+
 - Gestión de grupos y clases
 - Registro de asistencias
 - Sistema de calificaciones
@@ -42,6 +46,7 @@ No concebimos la educación como un producto, sino como un **derecho social**. N
 ## Stack Tecnológico
 
 ### Frontend
+
 - **Next.js 14+** - Framework React con App Router
 - **TypeScript** - Type safety
 - **Tailwind CSS** - Styling
@@ -49,6 +54,7 @@ No concebimos la educación como un producto, sino como un **derecho social**. N
 - **Workbox** - Service workers y PWA
 
 ### Backend
+
 - **Node.js** - Runtime
 - **Express/Fastify** - API framework
 - **PostgreSQL** - Base de datos principal
@@ -56,6 +62,7 @@ No concebimos la educación como un producto, sino como un **derecho social**. N
 - **Redis** - Caché y sesiones
 
 ### DevOps
+
 - **Turborepo** - Monorepo build system
 - **Docker** - Contenedores
 - **GitHub Actions** - CI/CD
@@ -107,12 +114,14 @@ Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de des
 ## Documentación
 
 ### Para Desarrolladores
+
 - [Arquitectura del Sistema](./docs/technical/architecture.md)
 - [Guía de Configuración](./docs/technical/setup.md)
 - [Estándares de Código](./docs/technical/coding-standards.md)
 - [Base de Datos](./docs/technical/database.md)
 
 ### Para Gestión de Proyecto
+
 - [Roadmap](./docs/project-management/roadmap.md)
 - [Metodología Ágil](./docs/project-management/metodologia.md)
 - [Gestión de Sprints](./docs/project-management/sprints.md)
@@ -121,6 +130,7 @@ Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de des
 ## Instalación Rápida
 
 ### Requisitos
+
 - Node.js 20+
 - npm 10+ (viene con Node.js)
 
@@ -183,22 +193,28 @@ Amauta es un proyecto de código abierto y damos la bienvenida a contribuciones 
 ## Principios de Diseño
 
 ### 1. Accesibilidad Universal
+
 Diseñamos para que **todos** puedan acceder, sin importar:
+
 - Dispositivo (móvil básico, computadora antigua, última tecnología)
 - Conectividad (offline, 2G, 4G, fibra)
 - Capacidades (visual, motriz, cognitiva)
 - Idioma (español, inglés, idiomas originarios)
 
 ### 2. Simplicidad
+
 Interfaces claras, directas y sin fricción. El aprendizaje debe ser el foco, no la tecnología.
 
 ### 3. Privacidad y Seguridad
+
 Los datos de los usuarios son sagrados. Transparencia total sobre qué recopilamos y por qué.
 
 ### 4. Código Abierto
+
 Transparencia técnica y social. El código es un bien común.
 
 ### 5. Sostenibilidad
+
 Código mantenible, documentado y pensado para durar décadas, no meses.
 
 ## Licencia
@@ -206,6 +222,7 @@ Código mantenible, documentado y pensado para durar décadas, no meses.
 Este proyecto está licenciado bajo la **GNU Affero General Public License v3.0 (AGPL-3.0)**.
 
 La AGPL-3.0 garantiza que:
+
 - El código fuente permanece abierto y accesible para todos
 - Cualquier modificación debe compartirse con la comunidad
 - Incluso si se usa como servicio web, el código debe permanecer abierto
@@ -216,6 +233,7 @@ Ver el archivo [LICENSE](./LICENSE) para el texto completo de la licencia.
 ### ¿Por qué AGPL-3.0?
 
 Elegimos AGPL-3.0 porque:
+
 1. **Protege la libertad educativa**: Garantiza que Amauta siempre será libre y abierto
 2. **Previene apropiación privada**: Nadie puede tomar el código y cerrarlo en un servicio propietario
 3. **Fomenta la colaboración**: Cualquier mejora debe compartirse con la comunidad
@@ -231,18 +249,23 @@ Elegimos AGPL-3.0 porque:
 ## Valores del Proyecto
 
 ### Transparencia
+
 Comunicación abierta sobre decisiones técnicas, roadmap y prioridades.
 
 ### Colaboración
+
 Trabajamos juntos, aprendemos juntos, crecemos juntos.
 
 ### Calidad
+
 Excelencia técnica al servicio del impacto social.
 
 ### Impacto Social
+
 Cada línea de código tiene un propósito: democratizar el conocimiento.
 
 ### Inclusión
+
 Todos son bienvenidos, sin importar experiencia, origen o identidad.
 
 ## Código de Conducta

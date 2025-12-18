@@ -47,6 +47,7 @@ Amauta es una plataforma educativa progresiva (PWA) construida con una arquitect
 ## Stack Tecnológico
 
 ### Frontend
+
 - **Framework**: Next.js 14+ (App Router)
 - **Lenguaje**: TypeScript
 - **UI**: Tailwind CSS + Radix UI / shadcn/ui
@@ -56,6 +57,7 @@ Amauta es una plataforma educativa progresiva (PWA) construida con una arquitect
 - **Formularios**: React Hook Form
 
 ### Backend
+
 - **Runtime**: Node.js 20+
 - **Framework**: Express o Fastify
 - **Lenguaje**: TypeScript
@@ -65,11 +67,13 @@ Amauta es una plataforma educativa progresiva (PWA) construida con una arquitect
 - **API**: RESTful (GraphQL opcional futuro)
 
 ### Base de Datos
+
 - **Principal**: PostgreSQL 15+
 - **Caché**: Redis
 - **Búsqueda**: PostgreSQL Full-Text Search (Elasticsearch futuro)
 
 ### DevOps
+
 - **Contenedores**: Docker + Docker Compose
 - **CI/CD**: GitHub Actions
 - **Monitoreo**: (A definir)
@@ -96,45 +100,53 @@ Amauta es una plataforma educativa progresiva (PWA) construida con una arquitect
 ### 2. Estrategia Offline-First
 
 **Service Worker** intercepta requests:
+
 1. **Cache First**: Recursos estáticos (CSS, JS, imágenes)
 2. **Network First**: Contenido dinámico (cursos, usuarios)
 3. **Stale While Revalidate**: Contenido semi-estático (catálogo de cursos)
 
 **IndexedDB** almacena:
+
 - Contenido de cursos descargados
 - Progreso del estudiante
 - Datos pendientes de sincronización
 
 **Sincronización**:
+
 - Background Sync API para operaciones offline
 - Conflict resolution para datos modificados offline
 
 ### 3. Módulos Principales
 
 #### Módulo de Usuarios y Autenticación
+
 - Registro y autenticación
 - Perfiles (estudiante, educador, administrador)
 - Roles y permisos
 
 #### Módulo de Cursos
+
 - Creación y gestión de cursos
 - Estructura de lecciones y unidades
 - Multimedia (videos, documentos, interactivos)
 - Descarga para offline
 
 #### Módulo de Aprendizaje
+
 - Seguimiento de progreso
 - Sistema de evaluaciones
 - Certificaciones
 - Gamificación (opcional)
 
 #### Módulo Administrativo Escolar
+
 - Gestión de asistencias
 - Registro de calificaciones
 - Comunicados y notificaciones
 - Reportes académicos
 
 #### Módulo de Comunidad
+
 - Foros de discusión
 - Mensajería
 - Grupos de estudio
@@ -143,6 +155,7 @@ Amauta es una plataforma educativa progresiva (PWA) construida con una arquitect
 ## Seguridad
 
 ### Principios
+
 - Autenticación JWT con refresh tokens
 - HTTPS obligatorio en producción
 - Sanitización de inputs
@@ -151,6 +164,7 @@ Amauta es una plataforma educativa progresiva (PWA) construida con una arquitect
 - CSP (Content Security Policy)
 
 ### Niveles de Acceso
+
 1. **Público**: Navegación de catálogo
 2. **Estudiante**: Acceso a cursos, seguimiento
 3. **Educador**: Creación de contenido, seguimiento de alumnos
@@ -160,16 +174,19 @@ Amauta es una plataforma educativa progresiva (PWA) construida con una arquitect
 ## Escalabilidad
 
 ### Horizontal
+
 - Backend stateless (sesiones en Redis)
 - Load balancer compatible
 - Microservicios opcionales para módulos específicos
 
 ### Vertical
+
 - Optimización de queries (índices, vistas materializadas)
 - Caché estratégico en múltiples niveles
 - CDN para contenido estático
 
 ### Base de Datos
+
 - Particionamiento por institución educativa
 - Read replicas para reportes
 - Archivado de datos históricos
@@ -177,12 +194,14 @@ Amauta es una plataforma educativa progresiva (PWA) construida con una arquitect
 ## Performance
 
 ### Frontend
+
 - Code splitting automático (Next.js)
 - Lazy loading de componentes
 - Optimización de imágenes (next/image)
 - Prefetching estratégico
 
 ### Backend
+
 - Caché de queries frecuentes
 - Paginación de resultados
 - Compresión gzip/brotli
@@ -191,17 +210,20 @@ Amauta es una plataforma educativa progresiva (PWA) construida con una arquitect
 ## Consideraciones de Diseño
 
 ### Accesibilidad (a11y)
+
 - WCAG 2.1 AA compliance
 - Navegación por teclado
 - Screen reader friendly
 - Alto contraste disponible
 
 ### Internacionalización (i18n)
+
 - Soporte multi-idioma (español prioritario)
 - Idiomas originarios (quechua, aymara, guaraní)
 - RTL support preparado
 
 ### Responsive Design
+
 - Mobile-first approach
 - Breakpoints: móvil, tablet, desktop
 - Touch-friendly interactions
@@ -209,18 +231,21 @@ Amauta es una plataforma educativa progresiva (PWA) construida con una arquitect
 ## Decisiones Técnicas Clave
 
 ### ¿Por qué Next.js?
+
 - SSR/SSG para SEO y performance
 - API routes integradas
 - Excelente soporte PWA
 - Ecosystem maduro
 
 ### ¿Por qué PostgreSQL?
+
 - Robustez para datos académicos críticos
 - Full-text search nativo
 - JSON support para flexibilidad
 - Open source y bien documentado
 
 ### ¿Por qué Offline-First?
+
 - Contextos con conectividad limitada
 - Acceso universal real
 - Mejor experiencia de usuario

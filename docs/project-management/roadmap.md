@@ -13,14 +13,17 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 ---
 
 ## Fase 0: Fundamentos (Actual)
+
 **Duración estimada**: 2 semanas
 
 ### Objetivos
+
 - Establecer bases del proyecto
 - Configurar infraestructura de desarrollo
 - Documentación inicial
 
 ### Entregables
+
 - [x] Estructura de proyecto
 - [x] Documentación técnica base
 - [x] Documentación de gestión
@@ -31,21 +34,25 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 ---
 
 ## Fase 1: MVP - Plataforma de Cursos Básica
+
 **Duración estimada**: 6-8 semanas
 **Sprint 1-4**
 
 ### Objetivos
+
 Crear plataforma funcional donde educadores puedan publicar cursos y estudiantes consumirlos.
 
 ### Historias de Usuario Principales
 
 #### Como Educador
+
 - Puedo registrarme en la plataforma
 - Puedo crear un curso con título, descripción e imagen
 - Puedo agregar lecciones de texto y video
 - Puedo publicar mi curso
 
 #### Como Estudiante
+
 - Puedo registrarme en la plataforma
 - Puedo navegar el catálogo de cursos
 - Puedo inscribirme en un curso
@@ -53,6 +60,7 @@ Crear plataforma funcional donde educadores puedan publicar cursos y estudiantes
 - Puedo marcar lecciones como completadas
 
 ### Funcionalidades Técnicas
+
 - Autenticación y autorización (NextAuth.js)
 - CRUD de cursos
 - CRUD de lecciones
@@ -61,6 +69,7 @@ Crear plataforma funcional donde educadores puedan publicar cursos y estudiantes
 - UI responsive
 
 ### Entregables
+
 - Frontend con Next.js desplegado
 - Backend API funcional
 - Base de datos PostgreSQL configurada
@@ -68,6 +77,7 @@ Crear plataforma funcional donde educadores puedan publicar cursos y estudiantes
 - 5+ cursos de demostración
 
 ### Criterios de Éxito
+
 - Un educador puede crear y publicar un curso completo
 - Un estudiante puede completar un curso de principio a fin
 - La aplicación funciona en móvil y desktop
@@ -75,21 +85,25 @@ Crear plataforma funcional donde educadores puedan publicar cursos y estudiantes
 ---
 
 ## Fase 2: Offline-First & PWA
+
 **Duración estimada**: 4-6 semanas
 **Sprint 5-7**
 
 ### Objetivos
+
 Habilitar funcionalidad offline para acceso sin conexión.
 
 ### Historias de Usuario
 
 #### Como Estudiante
+
 - Puedo descargar un curso para verlo sin conexión
 - Puedo ver mis lecciones descargadas sin internet
 - Mi progreso se sincroniza automáticamente cuando recupero conexión
 - Puedo instalar Amauta como app en mi dispositivo
 
 ### Funcionalidades Técnicas
+
 - Service Worker con Workbox
 - IndexedDB para almacenamiento local
 - Sincronización en background (Background Sync API)
@@ -98,12 +112,14 @@ Habilitar funcionalidad offline para acceso sin conexión.
 - Descarga selectiva de contenido
 
 ### Entregables
+
 - PWA instalable
 - Sistema de caché offline funcional
 - UI para gestionar descargas
 - Indicadores de estado de sincronización
 
 ### Criterios de Éxito
+
 - Usuario puede descargar curso completo
 - Usuario puede estudiar 100% offline
 - Progreso se sincroniza al reconectar
@@ -112,26 +128,31 @@ Habilitar funcionalidad offline para acceso sin conexión.
 ---
 
 ## Fase 3: Evaluaciones y Certificaciones
+
 **Duración estimada**: 4-5 semanas
 **Sprint 8-10**
 
 ### Objetivos
+
 Agregar sistema de evaluación y certificación de conocimientos.
 
 ### Historias de Usuario
 
 #### Como Educador
+
 - Puedo crear quizzes y exámenes
 - Puedo definir criterios de aprobación
 - Puedo ver estadísticas de rendimiento de estudiantes
 
 #### Como Estudiante
+
 - Puedo realizar evaluaciones dentro de los cursos
 - Puedo ver mi puntaje y feedback inmediato
 - Puedo obtener un certificado al completar un curso
 - Puedo descargar/compartir mi certificado
 
 ### Funcionalidades Técnicas
+
 - Tipos de pregunta: múltiple opción, verdadero/falso, respuesta corta
 - Sistema de calificación automática
 - Generación de certificados (PDF)
@@ -139,12 +160,14 @@ Agregar sistema de evaluación y certificación de conocimientos.
 - Dashboard de estadísticas para educadores
 
 ### Entregables
+
 - Editor de evaluaciones
 - Motor de calificación
 - Sistema de certificados
 - Dashboard de analytics básico
 
 ### Criterios de Éxito
+
 - Educador puede crear evaluación completa
 - Estudiante puede completar y aprobar
 - Certificado generado y descargable
@@ -152,15 +175,18 @@ Agregar sistema de evaluación y certificación de conocimientos.
 ---
 
 ## Fase 4: Módulo Administrativo Escolar
+
 **Duración estimada**: 6-8 semanas
 **Sprint 11-14**
 
 ### Objetivos
+
 Implementar funcionalidades para gestión administrativa de instituciones educativas.
 
 ### Historias de Usuario
 
 #### Como Administrador Escolar
+
 - Puedo crear y gestionar grupos/clases
 - Puedo asignar estudiantes a grupos
 - Puedo registrar asistencias diarias
@@ -169,16 +195,19 @@ Implementar funcionalidades para gestión administrativa de instituciones educat
 - Puedo generar reportes de asistencia y rendimiento
 
 #### Como Educador de Institución
+
 - Puedo ver la lista de mis grupos
 - Puedo tomar asistencia fácilmente
 - Puedo ingresar notas de evaluaciones
 
 #### Como Estudiante/Apoderado
+
 - Puedo ver mi historial de asistencias
 - Puedo ver mis calificaciones
 - Puedo recibir comunicados de la institución
 
 ### Funcionalidades Técnicas
+
 - Modelo multi-tenant (instituciones)
 - Sistema de asistencias con estados
 - Registro de calificaciones por periodo
@@ -187,6 +216,7 @@ Implementar funcionalidades para gestión administrativa de instituciones educat
 - Calendario académico
 
 ### Entregables
+
 - Dashboard administrativo
 - Interfaz de asistencia rápida
 - Sistema de calificaciones
@@ -194,6 +224,7 @@ Implementar funcionalidades para gestión administrativa de instituciones educat
 - Reportes básicos
 
 ### Criterios de Éxito
+
 - Escuela puede gestionar 100+ estudiantes
 - Asistencia registrable en < 2 minutos por grupo
 - Reportes generables en tiempo real
@@ -201,15 +232,18 @@ Implementar funcionalidades para gestión administrativa de instituciones educat
 ---
 
 ## Fase 5: Comunidad y Colaboración
+
 **Duración estimada**: 5-6 semanas
 **Sprint 15-17**
 
 ### Objetivos
+
 Crear espacios de interacción entre estudiantes y educadores.
 
 ### Historias de Usuario
 
 #### Como Usuario
+
 - Puedo participar en foros de discusión del curso
 - Puedo hacer preguntas al educador
 - Puedo colaborar con otros estudiantes
@@ -217,6 +251,7 @@ Crear espacios de interacción entre estudiantes y educadores.
 - Puedo unirme a grupos de estudio
 
 ### Funcionalidades Técnicas
+
 - Sistema de foros por curso
 - Mensajería interna
 - Notificaciones en tiempo real (WebSocket)
@@ -224,6 +259,7 @@ Crear espacios de interacción entre estudiantes y educadores.
 - Sistema de moderación
 
 ### Entregables
+
 - Foros integrados en cursos
 - Chat/mensajería
 - Sistema de notificaciones
@@ -232,13 +268,16 @@ Crear espacios de interacción entre estudiantes y educadores.
 ---
 
 ## Fase 6: Búsqueda y Recomendaciones
+
 **Duración estimada**: 4-5 semanas
 **Sprint 18-20**
 
 ### Objetivos
+
 Mejorar descubrimiento de contenido.
 
 ### Funcionalidades
+
 - Búsqueda full-text avanzada
 - Filtros (categoría, nivel, duración, idioma)
 - Sistema de recomendaciones basado en historial
@@ -246,6 +285,7 @@ Mejorar descubrimiento de contenido.
 - Cursos relacionados
 
 ### Tecnología
+
 - PostgreSQL Full-Text Search
 - Algoritmo de recomendación básico
 - Elasticsearch (opcional, futuro)
@@ -253,13 +293,16 @@ Mejorar descubrimiento de contenido.
 ---
 
 ## Fase 7: Multimedia y Contenido Rico
+
 **Duración estimada**: 4-6 semanas
 **Sprint 21-23**
 
 ### Objetivos
+
 Expandir tipos de contenido soportados.
 
 ### Funcionalidades
+
 - Upload y streaming de video optimizado
 - Editor de texto rico (Markdown/WYSIWYG)
 - Contenido interactivo (H5P)
@@ -268,6 +311,7 @@ Expandir tipos de contenido soportados.
 - Live streaming (futuro)
 
 ### Tecnología
+
 - Transcodificación de video
 - CDN para multimedia
 - H5P o similar para interactivos
@@ -275,19 +319,23 @@ Expandir tipos de contenido soportados.
 ---
 
 ## Fase 8: Internacionalización
+
 **Duración estimada**: 3-4 semanas
 **Sprint 24-25**
 
 ### Objetivos
+
 Soporte multi-idioma completo.
 
 ### Funcionalidades
+
 - Interfaz en español, inglés
 - Soporte para idiomas originarios (quechua, aymara, guaraní)
 - Sistema de traducciones colaborativas
 - Contenido multi-idioma
 
 ### Tecnología
+
 - next-intl o react-i18next
 - Base de datos de traducciones
 - Herramientas de colaboración (Crowdin)
@@ -295,10 +343,12 @@ Soporte multi-idioma completo.
 ---
 
 ## Fase 9: Analytics y Reportes Avanzados
+
 **Duración estimada**: 4-5 semanas
 **Sprint 26-28**
 
 ### Funcionalidades
+
 - Dashboard de analytics para educadores
 - Métricas de engagement
 - Reportes personalizables
@@ -306,6 +356,7 @@ Soporte multi-idioma completo.
 - Visualizaciones avanzadas
 
 ### Tecnología
+
 - Charts con Recharts/Chart.js
 - Data warehouse opcional
 - BI básico
@@ -313,9 +364,11 @@ Soporte multi-idioma completo.
 ---
 
 ## Fase 10: Optimización y Escala
+
 **Duración estimada**: Continua
 
 ### Objetivos
+
 - Performance optimization
 - Escalabilidad horizontal
 - Monitoreo y observabilidad
@@ -327,6 +380,7 @@ Soporte multi-idioma completo.
 ## Backlog Futuro (Post-MVP)
 
 ### Funcionalidades Avanzadas
+
 - Gamificación (badges, puntos, leaderboards)
 - Integración con LMS externos (Moodle, Canvas)
 - API pública para integraciones
@@ -338,6 +392,7 @@ Soporte multi-idioma completo.
 - Blockchain para certificados verificables
 
 ### Infraestructura
+
 - Microservicios
 - Kubernetes
 - Multi-región
@@ -348,12 +403,14 @@ Soporte multi-idioma completo.
 ## Métricas de Progreso
 
 ### Por Fase
+
 - Historias de usuario completadas
 - Tests passed
 - Bugs críticos resueltos
 - Performance benchmarks
 
 ### Globales
+
 - Cobertura de código
 - Tiempo de respuesta API
 - Disponibilidad (uptime)
@@ -364,6 +421,7 @@ Soporte multi-idioma completo.
 ## Flexibilidad
 
 Este roadmap es un plan vivo que se ajustará según:
+
 - Feedback de usuarios
 - Prioridades de stakeholders
 - Restricciones técnicas o de recursos

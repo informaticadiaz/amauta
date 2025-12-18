@@ -68,11 +68,13 @@ amauta/
 ## Convenciones del Proyecto
 
 ### Commits
+
 - Mensajes de commit en español
 - Seguir formato descriptivo y claro
 - Incluir contexto del cambio
 
 ### Documentación
+
 - Toda la documentación en español
 - Mantener documentos actualizados en `/docs`
 - Separar documentación técnica de gestión de proyecto
@@ -80,12 +82,14 @@ amauta/
 ## Referencias Importantes
 
 ### Documentos Principales
+
 - **Metodología de trabajo**: `WORKFLOW.md` ⭐ **LEER PRIMERO**
 - **Guía de contribución**: `CONTRIBUTING.md` - Cómo contribuir al proyecto
 - **Código de conducta**: `CODE_OF_CONDUCT.md` - Expectativas de la comunidad
 - **Licencia**: `LICENSE` - AGPL-3.0
 
 ### Documentación Técnica
+
 - `docs/technical/README.md` - Índice de documentación técnica
 - `docs/technical/architecture.md` - Arquitectura del sistema
 - `docs/technical/coding-standards.md` - Estándares de código
@@ -93,6 +97,7 @@ amauta/
 - `docs/technical/setup.md` - Guía de configuración
 
 ### Documentación de Gestión
+
 - `docs/project-management/README.md` - Índice de gestión
 - `docs/project-management/roadmap.md` - Roadmap del proyecto
 - `docs/project-management/fase-0-tareas.md` - Tareas de Fase 0
@@ -100,10 +105,12 @@ amauta/
 - `docs/project-management/sprints.md` - Gestión de sprints
 
 ### CI/CD y Workflows
+
 - `.github/workflows/ci.yml` - Pipeline de CI/CD
 - `.github/README.md` - Documentación de workflows
 
 ### Monorepo
+
 - `turbo.json` - Configuración de Turborepo
 - `apps/web/README.md` - Frontend Next.js PWA
 - `apps/api/README.md` - Backend API REST
@@ -149,6 +156,7 @@ gh issue close <número> --comment "✅ Tarea completada..."
 ## Estado Actual del Proyecto
 
 ### Completado (Fase 0)
+
 - ✅ T-001: .gitignore configurado (issue #1)
 - ✅ T-002: Licencia AGPL-3.0 establecida (issue #2)
 - ✅ T-003: Código de Conducta creado (issue #11)
@@ -158,9 +166,11 @@ gh issue close <número> --comment "✅ Tarea completada..."
 - ✅ T-008: Estructura de monorepo con Turborepo (issue #4)
 
 ### En Progreso (Fase 0)
+
 - 🚧 Fase 0: Fundamentos y documentación - 41% completado (7/17 tareas)
 
 ### Pendiente (Orden de Prioridad)
+
 - 🎯 **SIGUIENTE**: T-009: Configurar TypeScript (issue #5) - BLOQUEANTE
 - ⏳ T-010: Configurar ESLint y Prettier (issue #6) - BLOQUEANTE
 - ⏳ T-007: Pre-commit hooks (issue #14) - Requiere T-010
@@ -174,6 +184,7 @@ gh issue close <número> --comment "✅ Tarea completada..."
 ## Notas para Claude Code
 
 ### Generales
+
 - El proyecto está en fase inicial de desarrollo
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
@@ -182,12 +193,14 @@ gh issue close <número> --comment "✅ Tarea completada..."
 - Verificar checklist de calidad antes de cerrar issues
 
 ### Estructura del Monorepo
+
 - Usar Turborepo para gestión de workspaces
 - Apps en `apps/`: web (Next.js), api (Express)
 - Packages compartidos en `packages/`: shared, types
 - Scripts globales en package.json raíz ejecutan en todos los workspaces
 
 ### Orden de Issues
+
 - **IMPORTANTE**: Seguir el orden numérico de tareas (T-001, T-002, T-003...)
 - Saltear tareas que tengan dependencias no resueltas
 - Consultar `docs/project-management/fase-0-tareas.md` para dependencias

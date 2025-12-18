@@ -4,10 +4,11 @@
   "private": true,
   "description": "Amauta - Backend API REST",
   "scripts": {
-    "dev": "echo 'Express/Fastify se configurará después de TypeScript'",
+    "dev": "echo 'Express/Fastify se configurará después de ESLint/Prettier'",
     "build": "tsc",
     "start": "echo 'Start se configurará cuando tengamos código'",
-    "lint": "echo 'Lint se configurará en issue #6 (ESLint)'",
+    "lint": "ESLINT_USE_FLAT_CONFIG=false eslint . --ext .ts --max-warnings 0",
+    "lint:fix": "ESLINT_USE_FLAT_CONFIG=false eslint . --ext .ts --fix",
     "type-check": "tsc --noEmit"
   }
 }

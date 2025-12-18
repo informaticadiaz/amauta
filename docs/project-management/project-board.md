@@ -56,9 +56,11 @@ Ready: 9 items
 ## Sprint 0 - Fundamentos
 
 ### Objetivo del Sprint
+
 Establecer la infraestructura base del proyecto y el sistema de autenticación funcional.
 
 ### Capacidad
+
 - **Desarrolladores**: Por definir
 - **Puntos comprometidos**: 28 puntos
 - **Fechas**: 18/12/2024 - 31/12/2024
@@ -72,6 +74,7 @@ Establecer la infraestructura base del proyecto y el sistema de autenticación f
 Items identificados pero no priorizados para este sprint.
 
 **Items en Backlog (Fase 0):**
+
 - [ ] T-006: Configurar tests en CI (3pts)
 - [ ] T-003: Crear Code of Conduct (2pts)
 - [ ] T-004: Crear Contributing Guidelines (3pts)
@@ -83,6 +86,7 @@ Items identificados pero no priorizados para este sprint.
 - [ ] DT-002: Monitoreo de errores (3pts)
 
 **Items en Backlog (Fase 1):**
+
 - [ ] US-001: Como usuario puedo registrarme (5pts)
 - [ ] US-002: Como usuario puedo hacer login (3pts)
 - [ ] US-003: Como usuario puedo recuperar contraseña (5pts)
@@ -100,54 +104,63 @@ Items listos para ser tomados por un desarrollador. Cumplen Definition of Ready.
 **Items Ready:**
 
 #### T-001: Configurar .gitignore
+
 - **Estimación**: 1 punto
 - **Prioridad**: Must Have
 - **Asignado**: Sin asignar
 - **Criterios**: Reglas para Node.js, Next.js, env vars, IDEs
 
 #### T-002: Definir licencia del proyecto
+
 - **Estimación**: 1 punto
 - **Prioridad**: Must Have
 - **Asignado**: Sin asignar
 - **Criterios**: Investigar opciones, crear LICENSE, actualizar README
 
 #### T-005: Configurar GitHub Actions para CI
+
 - **Estimación**: 5 puntos
 - **Prioridad**: Must Have
 - **Asignado**: Sin asignar
 - **Criterios**: Workflow CI, lint, type check, build, caché
 
 #### T-008: Inicializar estructura de monorepo
+
 - **Estimación**: 5 puntos
 - **Prioridad**: Must Have
 - **Asignado**: Sin asignar
 - **Criterios**: Turborepo, apps/web, apps/api, workspaces
 
 #### T-009: Configurar TypeScript
+
 - **Estimación**: 3 puntos
 - **Prioridad**: Must Have
 - **Asignado**: Sin asignar
 - **Criterios**: tsconfig.json, strict mode, paths, tipos compartidos
 
 #### T-010: Configurar ESLint y Prettier
+
 - **Estimación**: 3 puntos
 - **Prioridad**: Must Have
 - **Asignado**: Sin asignar
 - **Criterios**: ESLint config, Prettier config, scripts, VSCode
 
 #### T-011: Configurar variables de entorno
+
 - **Estimación**: 2 puntos
 - **Prioridad**: Must Have
 - **Asignado**: Sin asignar
 - **Criterios**: .env.example, validación, documentación
 
 #### T-012: Configurar PostgreSQL
+
 - **Estimación**: 3 puntos
 - **Prioridad**: Must Have
 - **Asignado**: Sin asignar
 - **Criterios**: docker-compose, DB creada, conexión verificada
 
 #### T-013: Configurar Prisma
+
 - **Estimación**: 5 puntos
 - **Prioridad**: Must Have
 - **Asignado**: Sin asignar
@@ -164,6 +177,7 @@ Items en desarrollo activo.
 **Regla**: Máximo 2 items por desarrollador simultáneamente.
 
 **Items en progreso:**
+
 - Ninguno actualmente (Sprint no iniciado)
 
 ---
@@ -173,9 +187,11 @@ Items en desarrollo activo.
 Items con Pull Request abierto esperando code review.
 
 **Items en review:**
+
 - Ninguno actualmente
 
 **Proceso de Review:**
+
 1. PR creado y vinculado a issue
 2. CI checks pasando
 3. Al menos 1 aprobación requerida
@@ -191,10 +207,12 @@ Items completados que cumplen Definition of Done.
 **Items completados:**
 
 #### ✅ Repositorio creado en GitHub
+
 - **Completado**: 18/12/2024
 - **URL**: https://github.com/informaticadiaz/amauta
 
 #### ✅ Documentación técnica base creada
+
 - **Completado**: 18/12/2024
 - **Archivos**:
   - docs/technical/architecture.md
@@ -203,6 +221,7 @@ Items completados que cumplen Definition of Done.
   - docs/technical/setup.md
 
 #### ✅ Documentación de gestión creada
+
 - **Completado**: 18/12/2024
 - **Archivos**:
   - docs/project-management/metodologia.md
@@ -211,9 +230,11 @@ Items completados que cumplen Definition of Done.
   - docs/project-management/tareas.md
 
 #### ✅ README.md completo
+
 - **Completado**: 18/12/2024
 
 #### ✅ CLAUDE.md creado
+
 - **Completado**: 18/12/2024
 
 **Total Done**: 5 items (documentación)
@@ -284,18 +305,22 @@ Un item está "Done" cuando:
 ## Métricas del Board
 
 ### Velocidad
+
 - **Sprint 0**: TBD (primer sprint)
 - **Promedio**: TBD
 
 ### Cycle Time
+
 - **Promedio**: TBD
 - **Objetivo**: < 3 días por item
 
 ### Lead Time
+
 - **Promedio**: TBD
 - **Objetivo**: < 1 semana
 
 ### WIP (Work In Progress)
+
 - **Actual**: 0 items
 - **Límite**: 2 items por persona
 - **Total equipo**: TBD
@@ -305,6 +330,7 @@ Un item está "Done" cuando:
 ## Etiquetas (Labels)
 
 ### Por Tipo
+
 - `feature` - Nueva funcionalidad
 - `bug` - Algo roto
 - `enhancement` - Mejora
@@ -312,6 +338,7 @@ Un item está "Done" cuando:
 - `docs` - Documentación
 
 ### Por Área
+
 - `frontend` - UI/UX
 - `backend` - API/lógica
 - `database` - BD
@@ -319,18 +346,21 @@ Un item está "Done" cuando:
 - `testing` - Tests
 
 ### Por Prioridad
+
 - `p0-critical` - Urgente
 - `p1-high` - Alta
 - `p2-medium` - Media
 - `p3-low` - Baja
 
 ### Por Fase
+
 - `phase-0` - Fundamentos
 - `phase-1` - MVP
 - `phase-2` - Offline/PWA
 - `mvp` - Parte del MVP
 
 ### Especiales
+
 - `good-first-issue` - Para nuevos
 - `help-wanted` - Colaboración
 - `blocked` - Bloqueado

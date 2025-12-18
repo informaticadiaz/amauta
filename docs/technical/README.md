@@ -18,6 +18,7 @@ Esta documentación técnica está dirigida a desarrolladores que trabajen en el
 ## Contribución
 
 Para contribuir al proyecto, consulta primero:
+
 - [Guía de Configuración](./setup.md) - Para preparar tu entorno de desarrollo
 - [Estándares de Código](./coding-standards.md) - Para mantener la consistencia del código
 - [Testing](./testing.md) - Para asegurar la calidad del código

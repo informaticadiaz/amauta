@@ -3,6 +3,7 @@
 ## Principios Generales
 
 ### Filosofía de Código
+
 - **Clean Code**: Código legible, mantenible y expresivo
 - **DRY** (Don't Repeat Yourself): Evitar duplicación
 - **SOLID**: Principios de diseño orientado a objetos
@@ -10,6 +11,7 @@
 - **YAGNI** (You Aren't Gonna Need It): No implementar funcionalidad especulativa
 
 ### Valores del Proyecto
+
 - **Accesibilidad primero**: Código que sirve a todos
 - **Colaboración**: Código fácil de entender para otros
 - **Sostenibilidad**: Pensar en el mantenimiento a largo plazo
@@ -17,6 +19,7 @@
 ## TypeScript
 
 ### Configuración
+
 Usar `strict: true` en `tsconfig.json`:
 
 ```json
@@ -33,6 +36,7 @@ Usar `strict: true` en `tsconfig.json`:
 ### Tipos vs Interfaces
 
 **Usar `interface` para:**
+
 - Definir formas de objetos
 - APIs públicas
 - Cuando se necesita extensión/merge
@@ -50,6 +54,7 @@ interface Estudiante extends Usuario {
 ```
 
 **Usar `type` para:**
+
 - Uniones y tipos complejos
 - Tipos utilitarios
 - Primitivos y literales
@@ -89,6 +94,7 @@ function procesarDatos(data: DatosEsperados) {
 ## Nomenclatura
 
 ### Variables y Funciones
+
 - **camelCase** para variables y funciones
 - Nombres descriptivos y expresivos
 
@@ -103,20 +109,22 @@ const usuario = obtenerUsuario();
 ```
 
 ### Componentes React
+
 - **PascalCase** para componentes
 - Nombres sustantivos, descriptivos de la UI
 
 ```typescript
 // ❌ Mal
-function coursecard() { }
-function Course_Card() { }
+function coursecard() {}
+function Course_Card() {}
 
 // ✅ Bien
-function CourseCard() { }
-function ListaEstudiantes() { }
+function CourseCard() {}
+function ListaEstudiantes() {}
 ```
 
 ### Archivos
+
 - **kebab-case** para archivos
 - Extensión según contenido: `.ts`, `.tsx`, `.test.ts`
 
@@ -133,6 +141,7 @@ utils/
 ```
 
 ### Constantes
+
 - **UPPER_SNAKE_CASE** para constantes globales
 - **camelCase** para constantes locales de configuración
 
@@ -146,16 +155,17 @@ const defaultPaginationSize = 20;
 ```
 
 ### Clases y Tipos
+
 - **PascalCase** para clases, interfaces, types, enums
 
 ```typescript
-class GestorCursos { }
-interface ConfiguracionCurso { }
+class GestorCursos {}
+interface ConfiguracionCurso {}
 type EstadoAutenticacion = 'autenticado' | 'no-autenticado';
 enum RolUsuario {
   Estudiante = 'ESTUDIANTE',
   Educador = 'EDUCADOR',
-  Admin = 'ADMIN'
+  Admin = 'ADMIN',
 }
 ```
 
@@ -279,12 +289,12 @@ export class CursoController {
       const { page = 1, limit = 20 } = req.query;
       const cursos = await this.cursoService.obtenerTodos({
         page: Number(page),
-        limit: Number(limit)
+        limit: Number(limit),
       });
 
       res.json({
         success: true,
-        data: cursos
+        data: cursos,
       });
     } catch (error) {
       next(error);
@@ -302,7 +312,7 @@ export class CursoController {
 
       res.status(201).json({
         success: true,
-        data: curso
+        data: curso,
       });
     } catch (error) {
       next(error);
@@ -328,23 +338,23 @@ export class CursoService {
       this.prisma.curso.findMany({
         skip,
         take: options.limit,
-        include: { educador: true }
+        include: { educador: true },
       }),
-      this.prisma.curso.count()
+      this.prisma.curso.count(),
     ]);
 
     return {
       cursos,
       total,
       page: options.page,
-      totalPages: Math.ceil(total / options.limit)
+      totalPages: Math.ceil(total / options.limit),
     };
   }
 
   async crear(datos: CrearCursoDto) {
     return this.prisma.curso.create({
       data: datos,
-      include: { educador: true }
+      include: { educador: true },
     });
   }
 }
@@ -359,7 +369,7 @@ export class CursoService {
 async function inscribirseEnCurso(cursoId: string) {
   try {
     const response = await fetch(`/api/cursos/${cursoId}/inscribir`, {
-      method: 'POST'
+      method: 'POST',
     });
 
     if (!response.ok) {
@@ -405,7 +415,7 @@ export function errorHandler(
   if (error instanceof AppError) {
     return res.status(error.statusCode).json({
       success: false,
-      error: error.message
+      error: error.message,
     });
   }
 
@@ -413,7 +423,7 @@ export function errorHandler(
   console.error('Error no manejado:', error);
   res.status(500).json({
     success: false,
-    error: 'Error interno del servidor'
+    error: 'Error interno del servidor',
   });
 }
 ```
@@ -443,9 +453,9 @@ describe('CursoService', () => {
       const datosInvalidos = { titulo: '' };
 
       // Act & Assert
-      await expect(cursoService.crear(datosInvalidos))
-        .rejects
-        .toThrow('Título requerido');
+      await expect(cursoService.crear(datosInvalidos)).rejects.toThrow(
+        'Título requerido'
+      );
     });
   });
 });
@@ -496,6 +506,7 @@ Usar [Conventional Commits](https://www.conventionalcommits.org/):
 ```
 
 **Tipos:**
+
 - `feat`: Nueva funcionalidad
 - `fix`: Corrección de bug
 - `docs`: Cambios en documentación
@@ -523,15 +534,19 @@ chore(deps): actualizar dependencias a versiones seguras
 ## Herramientas
 
 ### ESLint
+
 Configuración base en `.eslintrc.js`
 
 ### Prettier
+
 Formateo automático
 
 ### Husky
+
 Pre-commit hooks para validar código antes de commit
 
 ### TypeScript
+
 Type checking estricto
 
 ## Recursos
