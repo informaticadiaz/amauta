@@ -27,6 +27,14 @@ coverage/
 .env.test
 .env.production
 
+# NEVER commit these files - they contain sensitive data
+.env.production.local
+.env.staging.local
+*.credentials
+*.secrets
+secrets/
+credentials/
+
 # IDEs and editors
 .vscode/
 .idea/

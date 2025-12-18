@@ -129,6 +129,7 @@ Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de des
 - [Guía de Configuración](./docs/technical/setup.md)
 - [Estándares de Código](./docs/technical/coding-standards.md)
 - [Base de Datos](./docs/technical/database.md)
+- [Variables de Entorno y Seguridad](./docs/technical/environment-variables.md) 🔒
 
 ### Para Gestión de Proyecto
 
@@ -172,6 +173,10 @@ cp .env.example .env.local
 # Editar .env.local con tus configuraciones
 
 cd ../..
+
+# ⚠️ IMPORTANTE: Los archivos .env.local NUNCA se suben al repositorio
+# Contienen información sensible y están protegidos por .gitignore
+# Ver docs/technical/environment-variables.md para más detalles
 ```
 
 ### ⚠️ Configuración de Base de Datos (Requerido para funcionalidad completa)
