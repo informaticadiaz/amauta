@@ -139,34 +139,122 @@ Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de des
 
 ## Instalación Rápida
 
-### Requisitos
+### Requisitos Previos
 
-- Node.js 20+
-- npm 10+ (viene con Node.js)
+**Obligatorios:**
 
-### Setup
+- **Node.js** 20+ ([Descargar](https://nodejs.org/))
+- **npm** 10+ (viene con Node.js)
+
+**Opcionales (recomendado para desarrollo completo):**
+
+- **Docker** & **Docker Compose** ([Descargar Docker Desktop](https://www.docker.com/products/docker-desktop))
+  - Necesario para ejecutar PostgreSQL y Redis
+  - Alternativa: Instalar PostgreSQL 15+ localmente (ver [guía](./docker/postgres/LOCAL_INSTALL.md))
+
+### Setup Básico
 
 ```bash
-# Clonar repositorio
+# 1. Clonar repositorio
 git clone https://github.com/informaticadiaz/amauta.git
 cd amauta
 
-# Instalar dependencias
+# 2. Instalar dependencias
 npm install
 
-# Verificar estructura del monorepo
-npm run dev  # Ejecutará todos los workspaces
+# 3. Configurar variables de entorno
+cd apps/api
+cp .env.example .env.local
+# Editar .env.local con tus configuraciones
 
-# Cuando estén configurados (próximos issues):
-# - TypeScript (issue #5)
-# - Next.js y Express
-# - PostgreSQL (issue #8)
-# - Prisma (issue #9)
+cd ../web
+cp .env.example .env.local
+# Editar .env.local con tus configuraciones
+
+cd ../..
 ```
 
-**Nota**: El proyecto está en fase inicial. Los workspaces (`apps/web`, `apps/api`) están preparados pero requieren configuración adicional en próximos issues.
+### ⚠️ Configuración de Base de Datos (Requerido para funcionalidad completa)
 
-Ver [Guía de Configuración](./docs/technical/setup.md) para instrucciones detalladas.
+El proyecto usa **PostgreSQL** y **Redis**. Tienes dos opciones:
+
+#### Opción A: Con Docker (Recomendado) 🐳
+
+```bash
+# 1. Iniciar servicios (PostgreSQL + Redis)
+docker compose up -d
+
+# 2. Verificar que estén corriendo
+docker compose ps
+
+# 3. Ejecutar migraciones de Prisma
+npm run prisma:migrate --workspace=@amauta/api
+# Te pedirá un nombre, por ejemplo: "init"
+
+# 4. Ver logs (opcional)
+docker compose logs -f
+```
+
+#### Opción B: Sin Docker (Instalación Local)
+
+Si prefieres no usar Docker:
+
+```bash
+# 1. Instalar PostgreSQL 15+ localmente
+# Ver guía completa: docker/postgres/LOCAL_INSTALL.md
+
+# 2. Crear base de datos
+sudo -u postgres psql
+# Ejecutar comandos SQL (ver guía)
+
+# 3. Ejecutar migraciones
+npm run prisma:migrate --workspace=@amauta/api
+```
+
+**📖 Guías detalladas:**
+
+- [Setup completo](./docs/technical/setup.md) - Configuración paso a paso
+- [Instalación PostgreSQL local](./docker/postgres/LOCAL_INSTALL.md) - Sin Docker
+- [Comandos Prisma](./apps/api/prisma/README.md) - Gestión de base de datos
+
+### Ejecutar el Proyecto
+
+```bash
+# Desarrollo (cuando esté implementado)
+npm run dev              # Iniciar todo
+npm run dev:api          # Solo backend
+npm run dev:web          # Solo frontend
+
+# Base de datos
+npm run prisma:studio --workspace=@amauta/api  # Interface gráfica (localhost:5555)
+```
+
+### 🚧 Estado del Proyecto
+
+**Fase 0: Fundamentos** (76% completado - 13/17 tareas)
+
+✅ **Configurado:**
+
+- Monorepo con Turborepo
+- TypeScript con strict mode
+- ESLint y Prettier
+- Pre-commit hooks con Husky
+- Variables de entorno con validación Zod
+- PostgreSQL 15 + Redis 7 (Docker)
+- Prisma ORM con 15 modelos
+
+⏳ **Pendiente:**
+
+- Seed data para base de datos
+- Expandir CI con validaciones completas
+- Diagramas de arquitectura
+- Documentación de API endpoints
+
+Ver [Estado Completo](#estado-del-proyecto) más abajo para detalles.
+
+---
+
+**Nota**: Si solo quieres explorar el código sin base de datos, puedes saltar la configuración de Docker/PostgreSQL. La mayoría del código TypeScript funcionará sin base de datos.
 
 ## Contribuir
 
