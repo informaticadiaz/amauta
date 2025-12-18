@@ -149,24 +149,27 @@ gh issue close <número> --comment "✅ Tarea completada..."
 ## Estado Actual del Proyecto
 
 ### Completado (Fase 0)
-- ✅ T-001: .gitignore configurado
-- ✅ T-002: Licencia AGPL-3.0 establecida
-- ✅ T-003: Código de Conducta creado
-- ✅ T-004: Guía de Contribución creada
-- ✅ T-005: GitHub Actions CI configurado (básico)
-- ✅ T-006: Placeholders de tests en CI
-- ✅ T-008: Estructura de monorepo con Turborepo
+- ✅ T-001: .gitignore configurado (issue #1)
+- ✅ T-002: Licencia AGPL-3.0 establecida (issue #2)
+- ✅ T-003: Código de Conducta creado (issue #11)
+- ✅ T-004: Guía de Contribución creada (issue #12)
+- ✅ T-005: GitHub Actions CI configurado (issue #3)
+- ✅ T-006: Placeholders de tests en CI (issue #13)
+- ✅ T-008: Estructura de monorepo con Turborepo (issue #4)
 
-### En Progreso
-- 🚧 Fase 0: Fundamentos y documentación
+### En Progreso (Fase 0)
+- 🚧 Fase 0: Fundamentos y documentación - 41% completado (7/17 tareas)
 
-### Pendiente
-- ⏳ T-007: Pre-commit hooks (requiere ESLint/Prettier)
-- ⏳ T-009: Configurar TypeScript
-- ⏳ T-010: Configurar ESLint y Prettier
-- ⏳ T-011: Configurar variables de entorno
-- ⏳ T-012: Configurar PostgreSQL
-- ⏳ T-013: Configurar Prisma
+### Pendiente (Orden de Prioridad)
+- 🎯 **SIGUIENTE**: T-009: Configurar TypeScript (issue #5) - BLOQUEANTE
+- ⏳ T-010: Configurar ESLint y Prettier (issue #6) - BLOQUEANTE
+- ⏳ T-007: Pre-commit hooks (issue #14) - Requiere T-010
+- ⏳ T-011: Configurar variables de entorno (issue #7)
+- ⏳ T-012: Configurar PostgreSQL (issue #8)
+- ⏳ T-013: Configurar Prisma (issue #9) - Requiere T-012
+- ⏳ T-014: Crear seed data (issue #15) - Requiere T-013
+- ⏳ T-015: Crear diagramas de arquitectura (issue #16)
+- ⏳ T-016: Documentar API endpoints (issue #17)
 
 ## Notas para Claude Code
 
