@@ -234,8 +234,8 @@ nano .env.production.local
 # Cambiar:
 # - DATABASE_URL=postgresql://amauta:REAL_PASSWORD@YOUR_VPS_IP:5432/amauta_prod
 # - JWT_SECRET=<resultado de: openssl rand -base64 32>
-# - API_URL=https://api.amauta.your-domain.com
-# - CORS_ORIGIN=https://amauta.your-domain.com
+# - API_URL=https://api.your-domain.com
+# - CORS_ORIGIN=https://your-domain.com
 
 # 3. Copiar valores a Dokploy
 # - Abrir Dokploy UI
