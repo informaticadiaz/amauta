@@ -56,9 +56,38 @@ No concebimos la educación como un producto, sino como un **derecho social**. N
 - **Redis** - Caché y sesiones
 
 ### DevOps
+- **Turborepo** - Monorepo build system
 - **Docker** - Contenedores
 - **GitHub Actions** - CI/CD
 - **Jest** - Testing
+
+## Estructura del Monorepo
+
+El proyecto está organizado como un monorepo usando Turborepo:
+
+```
+amauta/
+├── apps/
+│   ├── web/              # Frontend Next.js PWA
+│   └── api/              # Backend API REST
+├── packages/
+│   ├── shared/           # Código compartido
+│   └── types/            # Tipos TypeScript compartidos
+├── docs/                 # Documentación
+├── .github/              # CI/CD workflows
+├── turbo.json            # Configuración de Turborepo
+└── package.json          # Workspace raíz
+```
+
+### Apps
+
+- **@amauta/web**: Aplicación frontend con Next.js, PWA, Tailwind CSS
+- **@amauta/api**: API backend con Express/Fastify, PostgreSQL, Prisma
+
+### Packages
+
+- **@amauta/shared**: Utilidades y código compartido entre apps
+- **@amauta/types**: Definiciones de tipos TypeScript compartidos
 
 ## Estado del Proyecto
 
@@ -93,34 +122,29 @@ Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de des
 
 ### Requisitos
 - Node.js 20+
-- PostgreSQL 15+
-- Redis 7+
-- pnpm 8+
+- npm 10+ (viene con Node.js)
 
 ### Setup
 
 ```bash
 # Clonar repositorio
-git clone https://github.com/tu-org/amauta.git
+git clone https://github.com/informaticadiaz/amauta.git
 cd amauta
 
 # Instalar dependencias
-pnpm install
+npm install
 
-# Configurar variables de entorno
-cp .env.example .env.local
-# Editar .env.local con tus configuraciones
+# Verificar estructura del monorepo
+npm run dev  # Ejecutará todos los workspaces
 
-# Setup base de datos
-pnpm prisma migrate dev
-
-# Iniciar desarrollo
-pnpm dev
+# Cuando estén configurados (próximos issues):
+# - TypeScript (issue #5)
+# - Next.js y Express
+# - PostgreSQL (issue #8)
+# - Prisma (issue #9)
 ```
 
-La aplicación estará disponible en:
-- Frontend: http://localhost:3000
-- API: http://localhost:3001
+**Nota**: El proyecto está en fase inicial. Los workspaces (`apps/web`, `apps/api`) están preparados pero requieren configuración adicional en próximos issues.
 
 Ver [Guía de Configuración](./docs/technical/setup.md) para instrucciones detalladas.
 

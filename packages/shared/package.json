@@ -1,0 +1,12 @@
+{
+  "name": "@amauta/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Código compartido entre frontend y backend",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "lint": "echo 'Lint se configurará en issue #6'",
+    "type-check": "echo 'Type-check se configurará en issue #5'"
+  }
+}

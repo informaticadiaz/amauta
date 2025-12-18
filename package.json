@@ -1,0 +1,41 @@
+{
+  "name": "amauta",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Plataforma educativa de acceso público y universal",
+  "keywords": [
+    "educación",
+    "e-learning",
+    "pwa",
+    "open-source"
+  ],
+  "license": "AGPL-3.0",
+  "author": "Amauta Contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/informaticadiaz/amauta.git"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "prettier": "^3.1.1",
+    "turbo": "^1.11.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "packageManager": "npm@10.2.5"
+}

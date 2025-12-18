@@ -1,0 +1,11 @@
+{
+  "name": "@amauta/types",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Definiciones de tipos TypeScript compartidos",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "type-check": "echo 'Type-check se configurará en issue #5'"
+  }
+}
