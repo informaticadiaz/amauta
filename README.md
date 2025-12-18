@@ -98,14 +98,14 @@ amauta/
 
 ## Estado del Proyecto
 
-🚧 **En desarrollo activo** - Fase 0: Fundamentos
+🚧 **En desarrollo activo** - Fase 0: Fundamentos (53% completado)
 
 Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de desarrollo.
 
 ### Fases
 
-- ✅ **Fase 0**: Fundamentos y documentación
-- 🚧 **Fase 1**: MVP - Plataforma de cursos básica (próximo)
+- 🚧 **Fase 0**: Fundamentos y documentación (9/17 tareas completadas)
+- 📋 **Fase 1**: MVP - Plataforma de cursos básica (próximo)
 - 📋 **Fase 2**: Offline-First & PWA
 - 📋 **Fase 3**: Evaluaciones y certificaciones
 - 📋 **Fase 4**: Módulo administrativo escolar

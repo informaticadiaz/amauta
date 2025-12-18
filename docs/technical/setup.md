@@ -5,12 +5,9 @@
 ### Software Necesario
 
 - **Node.js**: v20.x o superior ([Descargar](https://nodejs.org/))
-- **pnpm**: v8.x o superior (recomendado sobre npm/yarn)
-  ```bash
-  npm install -g pnpm
-  ```
-- **PostgreSQL**: v15.x o superior ([Descargar](https://www.postgresql.org/download/))
-- **Redis**: v7.x o superior ([Descargar](https://redis.io/download))
+- **npm**: v10.x o superior (viene incluido con Node.js)
+- **PostgreSQL**: v15.x o superior ([Descargar](https://www.postgresql.org/download/)) - Pendiente de configuración
+- **Redis**: v7.x o superior ([Descargar](https://redis.io/download)) - Opcional, para futuro
 - **Git**: Para control de versiones
 - **Docker** (opcional): Para ejecutar servicios en contenedores
 
@@ -36,7 +33,7 @@ cd amauta
 
 ```bash
 # Instalar dependencias del proyecto
-pnpm install
+npm install
 ```
 
 ### 3. Configurar Variables de Entorno
@@ -87,10 +84,10 @@ SMTP_PASSWORD=""
 createdb amauta_dev
 
 # Ejecutar migraciones
-pnpm prisma migrate dev
+npm run prisma migrate dev
 
 # Opcional: Cargar datos de prueba
-pnpm prisma db seed
+npm run prisma db seed
 ```
 
 #### Opción B: Docker
@@ -100,13 +97,13 @@ pnpm prisma db seed
 docker-compose up -d postgres redis
 
 # Ejecutar migraciones
-pnpm prisma migrate dev
+npm run prisma migrate dev
 ```
 
 ### 5. Generar Cliente Prisma
 
 ```bash
-pnpm prisma generate
+npm run prisma generate
 ```
 
 ## Ejecutar el Proyecto
@@ -115,29 +112,29 @@ pnpm prisma generate
 
 ```bash
 # Terminal 1: Backend API
-pnpm dev:api
+npm run dev:api
 
 # Terminal 2: Frontend Next.js
-pnpm dev:web
+npm run dev:web
 
 # O ambos simultáneamente:
-pnpm dev
+npm run dev
 ```
 
 La aplicación estará disponible en:
 
 - Frontend: http://localhost:3000
 - API Backend: http://localhost:3001
-- Prisma Studio: `pnpm prisma studio` → http://localhost:5555
+- Prisma Studio: `npm run prisma studio` → http://localhost:5555
 
 ### Producción
 
 ```bash
 # Build
-pnpm build
+npm run build
 
 # Iniciar
-pnpm start
+npm run start
 ```
 
 ## Estructura del Proyecto
@@ -177,35 +174,35 @@ amauta/
 
 ```bash
 # Desarrollo
-pnpm dev              # Iniciar todo en modo desarrollo
-pnpm dev:web          # Solo frontend
-pnpm dev:api          # Solo backend
+npm run dev              # Iniciar todo en modo desarrollo
+npm run dev:web          # Solo frontend
+npm run dev:api          # Solo backend
 
 # Build
-pnpm build            # Construir todo
-pnpm build:web        # Solo frontend
-pnpm build:api        # Solo backend
+npm run build            # Construir todo
+npm run build:web        # Solo frontend
+npm run build:api        # Solo backend
 
 # Testing
-pnpm test             # Ejecutar tests
-pnpm test:watch       # Tests en modo watch
-pnpm test:coverage    # Tests con cobertura
+npm run test             # Ejecutar tests
+npm run test:watch       # Tests en modo watch
+npm run test:coverage    # Tests con cobertura
 
 # Linting y Formatting
-pnpm lint             # Ejecutar ESLint
-pnpm format           # Formatear con Prettier
-pnpm type-check       # Verificar tipos TypeScript
+npm run lint             # Ejecutar ESLint
+npm run format           # Formatear con Prettier
+npm run type-check       # Verificar tipos TypeScript
 
 # Base de Datos
-pnpm prisma:generate  # Generar cliente Prisma
-pnpm prisma:migrate   # Crear migración
-pnpm prisma:studio    # Abrir Prisma Studio
-pnpm prisma:seed      # Cargar datos de prueba
+npm run prisma:generate  # Generar cliente Prisma
+npm run prisma:migrate   # Crear migración
+npm run prisma:studio    # Abrir Prisma Studio
+npm run prisma:seed      # Cargar datos de prueba
 
 # Docker
-pnpm docker:up        # Iniciar servicios
-pnpm docker:down      # Detener servicios
-pnpm docker:clean     # Limpiar volúmenes
+npm run docker:up        # Iniciar servicios
+npm run docker:down      # Detener servicios
+npm run docker:clean     # Limpiar volúmenes
 ```
 
 ## Configuración de Docker (Opcional)
@@ -268,10 +265,10 @@ docker-compose ps
 
 ```bash
 # Regenerar cliente
-pnpm prisma generate
+npm run prisma generate
 
 # Reset base de datos (⚠️ borra datos)
-pnpm prisma migrate reset
+npm run prisma migrate reset
 ```
 
 ### Limpiar y reinstalar
@@ -279,7 +276,7 @@ pnpm prisma migrate reset
 ```bash
 # Limpiar node_modules y reinstalar
 rm -rf node_modules .next
-pnpm install
+npm run install
 ```
 
 ## Siguiente Paso

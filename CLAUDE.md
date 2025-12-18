@@ -164,22 +164,23 @@ gh issue close <número> --comment "✅ Tarea completada..."
 - ✅ T-005: GitHub Actions CI configurado (issue #3)
 - ✅ T-006: Placeholders de tests en CI (issue #13)
 - ✅ T-008: Estructura de monorepo con Turborepo (issue #4)
+- ✅ T-009: TypeScript configurado con strict mode (issue #5)
+- ✅ T-010: ESLint y Prettier configurados (issue #6)
 
 ### En Progreso (Fase 0)
 
-- 🚧 Fase 0: Fundamentos y documentación - 41% completado (7/17 tareas)
+- 🚧 Fase 0: Fundamentos y documentación - 53% completado (9/17 tareas)
 
 ### Pendiente (Orden de Prioridad)
 
-- 🎯 **SIGUIENTE**: T-009: Configurar TypeScript (issue #5) - BLOQUEANTE
-- ⏳ T-010: Configurar ESLint y Prettier (issue #6) - BLOQUEANTE
-- ⏳ T-007: Pre-commit hooks (issue #14) - Requiere T-010
+- 🎯 **SIGUIENTE**: T-007: Pre-commit hooks (issue #14) - Ya podemos hacerlo
 - ⏳ T-011: Configurar variables de entorno (issue #7)
 - ⏳ T-012: Configurar PostgreSQL (issue #8)
 - ⏳ T-013: Configurar Prisma (issue #9) - Requiere T-012
 - ⏳ T-014: Crear seed data (issue #15) - Requiere T-013
 - ⏳ T-015: Crear diagramas de arquitectura (issue #16)
 - ⏳ T-016: Documentar API endpoints (issue #17)
+- ⏳ T-014 (bis): Expandir CI con lint, type-check y build (issue #10)
 
 ## Notas para Claude Code
 
