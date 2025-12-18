@@ -180,6 +180,7 @@ gh issue close <número> --comment "✅ Tarea completada..."
 - 🎯 **SIGUIENTE**: T-014: Crear seed data (issue #15) o T-014bis: Expandir CI (issue #10)
 - ⏳ T-015: Crear diagramas de arquitectura (issue #16)
 - ⏳ T-016: Documentar API endpoints (issue #17)
+- 🆕 T-017: Configurar deployment en VPS con Dokploy (issue #18)
 
 ## Notas para Claude Code
 
