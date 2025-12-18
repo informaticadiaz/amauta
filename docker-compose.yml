@@ -1,0 +1,136 @@
+version: '3.8'
+
+# ==================================
+# Docker Compose para Desarrollo Local
+# ==================================
+#
+# Este archivo configura los servicios necesarios para desarrollo:
+# - PostgreSQL 15: Base de datos principal
+# - Redis 7: Caché y sesiones
+# - Adminer: Interface web para gestionar PostgreSQL (opcional)
+#
+# Uso:
+#   docker-compose up -d          # Iniciar servicios en background
+#   docker-compose down           # Detener servicios
+#   docker-compose logs -f        # Ver logs
+#   docker-compose ps             # Ver estado de servicios
+
+services:
+  # ==================================
+  # PostgreSQL - Base de Datos Principal
+  # ==================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: amauta-postgres
+    restart: unless-stopped
+
+    environment:
+      # Credenciales de la base de datos
+      POSTGRES_DB: amauta_dev
+      POSTGRES_USER: amauta
+      POSTGRES_PASSWORD: desarrollo123
+
+      # Configuración de PostgreSQL
+      POSTGRES_INITDB_ARGS: '--encoding=UTF8 --locale=es_ES.UTF-8'
+
+      # Timezone
+      TZ: America/Lima
+
+    ports:
+      # Puerto expuesto: host:container
+      - '5432:5432'
+
+    volumes:
+      # Persistencia de datos
+      - postgres_data:/var/lib/postgresql/data
+
+      # Scripts de inicialización (se ejecutan en orden alfabético)
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d
+
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U amauta -d amauta_dev']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - amauta-network
+
+  # ==================================
+  # Redis - Caché y Sesiones
+  # ==================================
+  redis:
+    image: redis:7-alpine
+    container_name: amauta-redis
+    restart: unless-stopped
+
+    command: >
+      redis-server
+      --appendonly yes
+      --requirepass desarrollo123
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+
+    environment:
+      TZ: America/Lima
+
+    ports:
+      - '6379:6379'
+
+    volumes:
+      # Persistencia de datos (AOF)
+      - redis_data:/data
+
+    healthcheck:
+      test: ['CMD', 'redis-cli', '--raw', 'incr', 'ping']
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+    networks:
+      - amauta-network
+
+  # ==================================
+  # Adminer - Interface Web para PostgreSQL
+  # ==================================
+  # Opcional: Descomentar para habilitar interface web
+  # Acceder en: http://localhost:8080
+  #
+  # adminer:
+  #   image: adminer:latest
+  #   container_name: amauta-adminer
+  #   restart: unless-stopped
+  #
+  #   environment:
+  #     ADMINER_DEFAULT_SERVER: postgres
+  #     ADMINER_DESIGN: nette
+  #
+  #   ports:
+  #     - '8080:8080'
+  #
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #
+  #   networks:
+  #     - amauta-network
+
+# ==================================
+# Volúmenes Persistentes
+# ==================================
+volumes:
+  postgres_data:
+    driver: local
+    name: amauta_postgres_data
+
+  redis_data:
+    driver: local
+    name: amauta_redis_data
+
+# ==================================
+# Red de Docker
+# ==================================
+networks:
+  amauta-network:
+    driver: bridge
+    name: amauta_network

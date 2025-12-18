@@ -164,27 +164,146 @@ Si faltan variables requeridas o tienen valores inválidos, verás un error clar
 
 ### 4. Configurar Base de Datos
 
-#### Opción A: PostgreSQL Local
+El proyecto usa PostgreSQL 15+ como base de datos principal. Tienes dos opciones para configurarla:
+
+#### Opción A: Docker (Recomendado) 🐳
+
+Esta es la forma más rápida y sencilla. Todo está pre-configurado en `docker-compose.yml`.
+
+**Requisitos:**
+
+- Docker Desktop instalado ([Descargar](https://www.docker.com/products/docker-desktop))
+- Docker Compose (incluido en Docker Desktop)
+
+**Pasos:**
 
 ```bash
-# Crear base de datos
-createdb amauta_dev
+# 1. Iniciar servicios (PostgreSQL + Redis)
+docker-compose up -d
 
-# Ejecutar migraciones
-npm run prisma migrate dev
+# 2. Verificar que los servicios estén corriendo
+docker-compose ps
 
-# Opcional: Cargar datos de prueba
-npm run prisma db seed
+# 3. Ver logs (opcional)
+docker-compose logs -f postgres
+
+# 4. Los servicios ya están listos para usar
+# PostgreSQL: localhost:5432
+# Redis: localhost:6379
 ```
 
-#### Opción B: Docker
+**Servicios incluidos:**
+
+- **PostgreSQL 15**: Base de datos principal
+  - Usuario: `amauta`
+  - Password: `desarrollo123`
+  - Database: `amauta_dev`
+  - Puerto: `5432`
+- **Redis 7**: Caché y sesiones (opcional)
+  - Password: `desarrollo123`
+  - Puerto: `6379`
+
+**Comandos útiles:**
 
 ```bash
-# Iniciar PostgreSQL y Redis con Docker Compose
-docker-compose up -d postgres redis
+# Detener servicios
+docker-compose down
 
-# Ejecutar migraciones
-npm run prisma migrate dev
+# Detener y eliminar volúmenes (⚠️ borra datos)
+docker-compose down -v
+
+# Ver logs en tiempo real
+docker-compose logs -f
+
+# Reiniciar servicios
+docker-compose restart
+
+# Conectar a PostgreSQL
+docker-compose exec postgres psql -U amauta -d amauta_dev
+
+# Backup de base de datos
+docker-compose exec postgres pg_dump -U amauta amauta_dev > backup.sql
+
+# Restore de backup
+docker-compose exec -T postgres psql -U amauta -d amauta_dev < backup.sql
+```
+
+**Scripts de inicialización:**
+
+El directorio `docker/postgres/init/` contiene scripts SQL que se ejecutan automáticamente la primera vez que se crea el contenedor:
+
+- `01-init.sql`: Configura extensiones (uuid-ossp, pg_trgm, unaccent), funciones útiles y parámetros de búsqueda en español
+
+**Persistencia de datos:**
+
+Los datos se guardan en volúmenes Docker y persisten entre reinicios:
+
+- `amauta_postgres_data`: Datos de PostgreSQL
+- `amauta_redis_data`: Datos de Redis
+
+#### Opción B: Instalación Local
+
+Si prefieres no usar Docker o quieres mayor control sobre PostgreSQL, puedes instalarlo localmente.
+
+**📖 Guía completa:** Ver [`docker/postgres/LOCAL_INSTALL.md`](../../docker/postgres/LOCAL_INSTALL.md)
+
+**Guías por sistema operativo:**
+
+- **Linux (Ubuntu/Debian)**: `sudo apt install postgresql-15`
+- **Linux (Fedora/RHEL)**: `sudo dnf install postgresql-server`
+- **macOS**: `brew install postgresql@15` o [Postgres.app](https://postgresapp.com/)
+- **Windows**: [Instalador oficial](https://www.postgresql.org/download/windows/)
+
+**Después de instalar:**
+
+```bash
+# 1. Crear usuario y base de datos
+sudo -u postgres psql
+```
+
+```sql
+CREATE USER amauta WITH PASSWORD 'desarrollo123';
+CREATE DATABASE amauta_dev;
+GRANT ALL PRIVILEGES ON DATABASE amauta_dev TO amauta;
+ALTER DATABASE amauta_dev OWNER TO amauta;
+
+-- Habilitar extensiones
+\c amauta_dev
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pg_trgm";
+CREATE EXTENSION IF NOT EXISTS "unaccent";
+\q
+```
+
+```bash
+# 2. Configurar .env.local
+# Ver apps/api/.env.local y apps/web/.env.local
+# DATABASE_URL=postgresql://amauta:desarrollo123@localhost:5432/amauta_dev
+
+# 3. Verificar conexión
+psql -U amauta -d amauta_dev -h localhost
+```
+
+#### Verificar Conexión
+
+Después de configurar la base de datos (Docker o local):
+
+```bash
+# Opción 1: Conectar con psql
+psql -U amauta -d amauta_dev -h localhost
+# Password: desarrollo123
+
+# Dentro de psql:
+SELECT version();  -- Ver versión de PostgreSQL
+\l                 -- Listar bases de datos
+\du                -- Listar usuarios
+\q                 -- Salir
+
+# Opción 2: Verificar con variable de entorno
+echo $DATABASE_URL
+
+# Opción 3: Una vez que Prisma esté configurado (T-013)
+# npm run prisma db execute --stdin <<< "SELECT version();"
 ```
 
 ### 5. Generar Cliente Prisma
