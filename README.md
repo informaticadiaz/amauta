@@ -138,6 +138,7 @@ Amauta es un proyecto de código abierto y damos la bienvenida a contribuciones 
 
 ### Guidelines
 
+- Lee nuestro [Código de Conducta](./CODE_OF_CONDUCT.md) - Requisito para todos los contribuidores
 - Lee nuestros [Estándares de Código](./docs/technical/coding-standards.md)
 - Revisa el [Roadmap](./docs/project-management/roadmap.md) para ver prioridades
 - Busca issues etiquetados como `good-first-issue` para empezar
@@ -208,6 +209,10 @@ Cada línea de código tiene un propósito: democratizar el conocimiento.
 ### Inclusión
 Todos son bienvenidos, sin importar experiencia, origen o identidad.
 
+## Código de Conducta
+
+Este proyecto adhiere al [Código de Conducta de Contributor Covenant](./CODE_OF_CONDUCT.md). Al participar, se espera que respetes este código. Por favor, reporta comportamientos inaceptables a través de los canales especificados en el documento.
+
 ## Agradecimientos
 
 A todas las personas que creen en la educación como derecho fundamental y contribuyen con su tiempo, conocimiento y energía para hacer de Amauta una realidad.
@@ -224,4 +229,4 @@ A todas las personas que creen en la educación como derecho fundamental y contr
 ![Version](https://img.shields.io/badge/version-0.1.0--alpha-blue)
 ![License](https://img.shields.io/badge/license-AGPL--3.0-blue)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
-![Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-pending-orange)
+![Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-Contributor%20Covenant-green)
