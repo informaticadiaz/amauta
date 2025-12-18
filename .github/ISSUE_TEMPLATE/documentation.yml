@@ -1,0 +1,103 @@
+name: Documentation
+description: Documentación técnica o de usuario
+title: "[DOCS]: "
+labels: ["docs"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Solicitud para crear o mejorar documentación.
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Tipo de Documentación
+      description: Qué tipo de documentación se necesita
+      options:
+        - Documentación Técnica
+        - Guía de Usuario
+        - Tutorial
+        - API Reference
+        - README / Getting Started
+        - Comentarios en Código
+        - Arquitectura / Diseño
+      default: 0
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción
+      description: Qué documentación se necesita crear o actualizar
+      placeholder: Describe qué documentación falta o necesita mejorarse
+    validations:
+      required: true
+
+  - type: textarea
+    id: audience
+    attributes:
+      label: Audiencia
+      description: Para quién es esta documentación
+      placeholder: |
+        - Desarrolladores
+        - Usuarios finales
+        - Administradores
+        - Contribuidores
+    validations:
+      required: true
+
+  - type: textarea
+    id: content-outline
+    attributes:
+      label: Estructura / Contenido
+      description: Bosquejo de lo que debería incluir
+      placeholder: |
+        ## Sección 1
+        - Punto 1
+        - Punto 2
+
+        ## Sección 2
+        - Punto 1
+    validations:
+      required: false
+
+  - type: input
+    id: location
+    attributes:
+      label: Ubicación
+      description: Dónde debería ir esta documentación
+      placeholder: "ej: docs/technical/new-feature.md"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Prioridad
+      options:
+        - Must Have
+        - Should Have
+        - Could Have
+      default: 1
+    validations:
+      required: true
+
+  - type: textarea
+    id: related-code
+    attributes:
+      label: Código Relacionado
+      description: Links a código que necesita documentación
+      placeholder: Referencias a archivos, funciones, clases, etc.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Contexto Adicional
+      description: Cualquier otra información relevante
+    validations:
+      required: false

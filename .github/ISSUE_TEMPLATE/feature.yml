@@ -1,0 +1,126 @@
+name: Feature Request
+description: Nueva funcionalidad o historia de usuario
+title: "[FEATURE]: "
+labels: ["feature"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por contribuir a Amauta! Por favor completa la información sobre la nueva funcionalidad.
+
+  - type: textarea
+    id: user-story
+    attributes:
+      label: Historia de Usuario
+      description: Describe la funcionalidad desde la perspectiva del usuario
+      placeholder: |
+        **Como** [rol de usuario]
+        **Quiero** [acción/funcionalidad]
+        **Para** [beneficio/razón]
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción
+      description: Contexto adicional y detalles de implementación
+      placeholder: Explica con más detalle qué se necesita y por qué
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Criterios de Aceptación
+      description: Lista de condiciones que deben cumplirse
+      placeholder: |
+        - [ ] Criterio 1 - específico y testeable
+        - [ ] Criterio 2 - específico y testeable
+        - [ ] Criterio 3 - específico y testeable
+    validations:
+      required: true
+
+  - type: textarea
+    id: design
+    attributes:
+      label: Diseño / Mockups
+      description: Links a diseños, wireframes o mockups (si aplica)
+      placeholder: Pega links a Figma, imágenes, etc.
+    validations:
+      required: false
+
+  - type: textarea
+    id: technical-notes
+    attributes:
+      label: Consideraciones Técnicas
+      description: Detalles técnicos de implementación
+      placeholder: |
+        - API endpoints necesarios
+        - Modelos de datos involucrados
+        - Dependencias de otras issues
+        - Consideraciones de seguridad/performance
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Prioridad
+      description: Nivel de prioridad de esta funcionalidad
+      options:
+        - Must Have (crítico para el release)
+        - Should Have (importante pero no bloqueante)
+        - Could Have (deseable si hay tiempo)
+        - Won't Have (fuera de scope actual)
+      default: 1
+    validations:
+      required: true
+
+  - type: input
+    id: estimation
+    attributes:
+      label: Estimación
+      description: Story points estimados (dejar vacío si aún no se estimó)
+      placeholder: "1, 2, 3, 5, 8, 13"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Fase
+      description: A qué fase del roadmap pertenece
+      options:
+        - Fase 0 - Fundamentos
+        - Fase 1 - MVP
+        - Fase 2 - Offline/PWA
+        - Fase 3 - Evaluaciones
+        - Fase 4 - Administrativo
+        - Futuro
+      default: 1
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: areas
+    attributes:
+      label: Áreas afectadas
+      description: Selecciona las áreas del proyecto que se verán afectadas
+      options:
+        - label: Frontend
+        - label: Backend
+        - label: Database
+        - label: Infrastructure
+        - label: Documentation
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Contexto Adicional
+      description: Cualquier otra información relevante
+      placeholder: Screenshots, ejemplos, referencias, etc.
+    validations:
+      required: false

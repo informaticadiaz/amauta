@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Discusiones de la Comunidad
+    url: https://github.com/informaticadiaz/amauta/discussions
+    about: Participa en discusiones sobre el proyecto
+  - name: Documentación
+    url: https://github.com/informaticadiaz/amauta/tree/main/docs
+    about: Lee la documentación completa del proyecto

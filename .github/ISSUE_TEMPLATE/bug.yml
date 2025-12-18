@@ -1,0 +1,139 @@
+name: Bug Report
+description: Reportar un error o problema
+title: "[BUG]: "
+labels: ["bug"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por reportar este bug. Por favor proporciona la mayor información posible.
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severidad
+      description: Qué tan crítico es este bug
+      options:
+        - P0 - Critical (sistema caído, pérdida de datos, brecha de seguridad)
+        - P1 - High (funcionalidad principal no funciona)
+        - P2 - Medium (funcionalidad secundaria afectada)
+        - P3 - Low (problema cosmético o edge case)
+      default: 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción del Bug
+      description: Qué está mal y qué esperabas que pasara
+      placeholder: Describe claramente el problema
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Pasos para Reproducir
+      description: Cómo reproducir este error
+      placeholder: |
+        1. Ir a '...'
+        2. Hacer click en '...'
+        3. Ingresar '...'
+        4. Ver error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Comportamiento Esperado
+      description: Qué debería pasar
+      placeholder: Describe el comportamiento correcto
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Comportamiento Actual
+      description: Qué pasa realmente
+      placeholder: Describe qué sucede en lugar del comportamiento esperado
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / Videos
+      description: Si es posible, agrega capturas de pantalla o videos
+      placeholder: Arrastra imágenes o videos aquí
+    validations:
+      required: false
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Navegador
+      description: En qué navegador ocurre el problema
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Otro
+        - Todos
+      multiple: true
+    validations:
+      required: false
+
+  - type: input
+    id: os
+    attributes:
+      label: Sistema Operativo
+      description: Qué sistema operativo usas
+      placeholder: "ej: Windows 11, macOS 14, Ubuntu 22.04"
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: Versión
+      description: Versión de la aplicación donde ocurre el bug
+      placeholder: "ej: 0.1.0, main branch"
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Mensajes de Error
+      description: Copia aquí cualquier log o mensaje de error relevante
+      placeholder: Pega los logs aquí
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Información Adicional
+      description: Cualquier otro dato que pueda ayudar
+      placeholder: |
+        - ¿Ocurre solo con ciertos usuarios?
+        - ¿Es intermitente o consistente?
+        - ¿Hay algún workaround?
+    validations:
+      required: false
+
+  - type: textarea
+    id: possible-cause
+    attributes:
+      label: Posible Causa
+      description: Si tienes idea de qué puede estar causando el bug
+      placeholder: Análisis técnico o hipótesis
+    validations:
+      required: false

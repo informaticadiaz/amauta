@@ -1,0 +1,150 @@
+name: Technical Debt / Refactoring
+description: Deuda técnica, refactoring o mejora técnica
+title: "[TECH]: "
+labels: ["tech-debt"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Documenta deuda técnica o necesidades de refactoring.
+
+  - type: input
+    id: title
+    attributes:
+      label: Título
+      description: Descripción breve del trabajo técnico
+      placeholder: "ej: Refactorizar sistema de autenticación"
+    validations:
+      required: true
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objetivo
+      description: Qué se quiere lograr
+      placeholder: Explica el objetivo técnico
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivación
+      description: Por qué es necesario hacer esto
+      placeholder: |
+        ¿Por qué es importante?
+        ¿Qué problemas resuelve?
+        ¿Qué beneficios trae?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Tipo
+      description: Tipo de trabajo técnico
+      options:
+        - Refactoring
+        - Infrastructure
+        - Performance
+        - Security
+        - Code Quality
+        - Documentation
+        - Testing
+      default: 0
+    validations:
+      required: true
+
+  - type: textarea
+    id: approach
+    attributes:
+      label: Enfoque Propuesto
+      description: Cómo se va a implementar
+      placeholder: |
+        1. Paso 1
+        2. Paso 2
+        3. Paso 3
+    validations:
+      required: true
+
+  - type: textarea
+    id: checklist
+    attributes:
+      label: Checklist de Tareas
+      description: Lista detallada de pasos a seguir
+      placeholder: |
+        - [ ] Tarea 1
+        - [ ] Tarea 2
+        - [ ] Tarea 3
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Prioridad
+      description: Nivel de prioridad
+      options:
+        - Must Have (crítico)
+        - Should Have (importante)
+        - Could Have (deseable)
+      default: 1
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impacto
+      description: Qué impacto tiene esta deuda técnica
+      options:
+        - Alto (afecta significativamente desarrollo o calidad)
+        - Medio (afecta moderadamente)
+        - Bajo (impacto menor)
+      default: 1
+    validations:
+      required: true
+
+  - type: input
+    id: estimation
+    attributes:
+      label: Estimación
+      description: Story points estimados
+      placeholder: "1, 2, 3, 5, 8, 13"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: areas
+    attributes:
+      label: Áreas afectadas
+      options:
+        - label: Frontend
+        - label: Backend
+        - label: Database
+        - label: Infrastructure
+        - label: Testing
+        - label: Documentation
+
+  - type: textarea
+    id: testing
+    attributes:
+      label: Testing
+      description: Cómo verificar que el trabajo está completo
+      placeholder: |
+        - Criterios de éxito
+        - Tests necesarios
+        - Métricas a verificar
+    validations:
+      required: false
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: Riesgos
+      description: Riesgos potenciales de este cambio
+      placeholder: ¿Qué podría salir mal? ¿Qué mitigaciones hay?
+    validations:
+      required: false
