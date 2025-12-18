@@ -4,10 +4,10 @@
   "private": true,
   "description": "Amauta - Frontend Next.js PWA",
   "scripts": {
-    "dev": "echo 'Next.js se configurará en issue #5 (TypeScript)'",
+    "dev": "echo 'Next.js se configurará después de TypeScript'",
     "build": "echo 'Build se configurará cuando tengamos Next.js'",
     "start": "echo 'Start se configurará cuando tengamos Next.js'",
     "lint": "echo 'Lint se configurará en issue #6 (ESLint)'",
-    "type-check": "echo 'Type-check se configurará en issue #5 (TypeScript)'"
+    "type-check": "tsc --noEmit"
   }
 }

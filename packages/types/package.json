@@ -6,6 +6,7 @@
   "main": "./index.ts",
   "types": "./index.ts",
   "scripts": {
-    "type-check": "echo 'Type-check se configurará en issue #5'"
+    "build": "tsc",
+    "type-check": "tsc --noEmit"
   }
 }

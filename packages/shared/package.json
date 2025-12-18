@@ -6,7 +6,8 @@
   "main": "./index.ts",
   "types": "./index.ts",
   "scripts": {
+    "build": "tsc",
     "lint": "echo 'Lint se configurará en issue #6'",
-    "type-check": "echo 'Type-check se configurará en issue #5'"
+    "type-check": "tsc --noEmit"
   }
 }

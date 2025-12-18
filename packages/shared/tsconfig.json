@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    // Shared package configuration
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "rootDir": ".",
+
+    // Para que pueda ser usado tanto en frontend como backend
+    "declaration": true,
+    "declarationMap": true,
+
+    // Paths
+    "baseUrl": ".",
+    "paths": {
+      "@amauta/types": ["../types"],
+      "@amauta/types/*": ["../types/*"]
+    }
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
+}
