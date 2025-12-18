@@ -113,6 +113,18 @@ jobs:
           echo "🏗️  Build se configurará cuando tengamos código fuente"
           # npm run build
 
+      - name: Placeholder - Tests
+        run: |
+          echo "🧪 Tests se configurarán cuando tengamos código y framework de testing"
+          # npm run test
+
+      - name: Placeholder - Coverage
+        run: |
+          echo "📊 Coverage se configurará cuando tengamos tests"
+          echo "Servicio objetivo: Codecov o Coveralls"
+          # npm run test:coverage
+          # bash <(curl -s https://codecov.io/bash)
+
   # Job 3: Resumen
   summary:
     name: Resumen CI
@@ -129,11 +141,14 @@ jobs:
           echo ""
           echo "✅ Validaciones básicas completadas"
           echo "✅ Configuración de build preparada"
+          echo "✅ Placeholders de tests y coverage listos"
           echo ""
           echo "📋 Próximos pasos:"
           echo "  - Configurar monorepo (issue #4)"
           echo "  - Agregar TypeScript (issue #5)"
           echo "  - Agregar ESLint/Prettier (issue #6)"
+          echo "  - Configurar Jest o Vitest para tests"
+          echo "  - Configurar Codecov/Coveralls para coverage"
           echo ""
           echo "Este workflow se irá expandiendo conforme"
           echo "se agreguen más features al proyecto."

@@ -24,6 +24,8 @@ Este directorio contiene los workflows de GitHub Actions para el proyecto Amauta
 - 📋 Placeholder para lint (cuando se configure ESLint)
 - 📋 Placeholder para type checking (cuando se configure TypeScript)
 - 📋 Placeholder para build (cuando exista código fuente)
+- 📋 Placeholder para tests (cuando se configure Jest/Vitest)
+- 📋 Placeholder para coverage (cuando tengamos tests)
 
 #### 1.3 Summary (Resumen)
 - ✅ Resumen de ejecución del CI
@@ -44,9 +46,10 @@ El workflow actual realiza validaciones básicas de la estructura del proyecto. 
 - [ ] Issue #5: TypeScript → Agregar type checking real
 - [ ] Issue #6: ESLint/Prettier → Agregar lint y format check
 - [ ] Issue #7: Variables de entorno → Agregar validación de .env.example
-- [ ] Futuro: Tests unitarios
-- [ ] Futuro: Tests de integración
-- [ ] Futuro: Coverage reports
+- [x] Issue #13: Tests en CI → Placeholders listos para Jest/Vitest
+- [ ] Futuro: Configurar Jest o Vitest
+- [ ] Futuro: Tests unitarios y de integración
+- [ ] Futuro: Coverage reports (Codecov/Coveralls)
 
 ## Expansión Futura
 
