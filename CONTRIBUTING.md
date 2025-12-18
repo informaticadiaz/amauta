@@ -131,6 +131,13 @@ git add .
 git commit -m "feat: agregar autenticación de usuarios"
 ```
 
+**Nota sobre Pre-commit Hooks**: El proyecto usa Husky para ejecutar automáticamente verificaciones antes de cada commit. Esto incluye:
+
+- **Lint-staged**: Ejecuta ESLint y Prettier solo en archivos modificados
+- **Commitlint**: Valida que el mensaje de commit siga las convenciones
+
+Si algún hook falla, el commit será rechazado. Corrige los problemas indicados y vuelve a intentar.
+
 ### 8. Push a tu Fork
 
 ```bash
@@ -357,6 +364,23 @@ cp .env.example .env.local
 
 # 4. Iniciar desarrollo (cuando esté configurado)
 npm run dev
+```
+
+**Importante**: Al instalar las dependencias con `npm install`, Husky se configura automáticamente y los pre-commit hooks quedan activos. Esto significa que cada vez que hagas un commit:
+
+1. **Pre-commit hook** ejecutará:
+   - ESLint en archivos `.ts`, `.tsx`, `.js`, `.jsx` modificados
+   - Prettier en todos los archivos modificados
+   - Correcciones automáticas cuando sea posible
+
+2. **Commit-msg hook** validará que el mensaje del commit:
+   - Siga el formato de Conventional Commits
+   - Use uno de los tipos válidos: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`, `build`, `revert`
+
+Si necesitas hacer un commit sin ejecutar los hooks (no recomendado), puedes usar:
+
+```bash
+git commit --no-verify -m "tu mensaje"
 ```
 
 ### Herramientas Recomendadas
