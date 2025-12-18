@@ -128,7 +128,9 @@ Ver [Guía de Configuración](./docs/technical/setup.md) para instrucciones deta
 
 Amauta es un proyecto de código abierto y damos la bienvenida a contribuciones de la comunidad.
 
-### Cómo Contribuir
+**Lee nuestra [Guía de Contribución completa](./CONTRIBUTING.md)** para información detallada sobre cómo contribuir.
+
+### Resumen Rápido
 
 1. **Fork** el repositorio
 2. Crea una **rama** para tu feature (`git checkout -b feature/mi-feature`)
@@ -136,13 +138,23 @@ Amauta es un proyecto de código abierto y damos la bienvenida a contribuciones 
 4. **Push** a tu rama (`git push origin feature/mi-feature`)
 5. Abre un **Pull Request**
 
-### Guidelines
+### Recursos para Contribuidores
 
-- Lee nuestro [Código de Conducta](./CODE_OF_CONDUCT.md) - Requisito para todos los contribuidores
-- Lee nuestros [Estándares de Código](./docs/technical/coding-standards.md)
-- Revisa el [Roadmap](./docs/project-management/roadmap.md) para ver prioridades
-- Busca issues etiquetados como `good-first-issue` para empezar
-- Pregunta antes de trabajar en features grandes
+- 📋 [Guía de Contribución Completa](./CONTRIBUTING.md) - **Comienza aquí**
+- 🤝 [Código de Conducta](./CODE_OF_CONDUCT.md) - Requisito para todos
+- 🛠️ [Workflow de Issues](./WORKFLOW.md) - Proceso de trabajo
+- 📐 [Estándares de Código](./docs/technical/coding-standards.md)
+- 🗺️ [Roadmap](./docs/project-management/roadmap.md) - Prioridades del proyecto
+- 🏗️ [Arquitectura](./docs/technical/architecture.md) - Diseño del sistema
+
+### Formas de Contribuir
+
+- 🐛 Reportar bugs
+- 💡 Sugerir features
+- 📝 Mejorar documentación
+- 💻 Contribuir código
+- 🌍 Ayudar con traducciones (futuro)
+- 💬 Participar en discusiones
 
 ## Principios de Diseño
 
