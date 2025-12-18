@@ -163,24 +163,24 @@ gh issue close <número> --comment "✅ Tarea completada..."
 - ✅ T-004: Guía de Contribución creada (issue #12)
 - ✅ T-005: GitHub Actions CI configurado (issue #3)
 - ✅ T-006: Placeholders de tests en CI (issue #13)
-- ✅ T-007: Pre-commit hooks con Husky (issue #14) ⭐ **RECIÉN COMPLETADO**
+- ✅ T-007: Pre-commit hooks con Husky (issue #14)
 - ✅ T-008: Estructura de monorepo con Turborepo (issue #4)
 - ✅ T-009: TypeScript configurado con strict mode (issue #5)
 - ✅ T-010: ESLint y Prettier configurados (issue #6)
+- ✅ T-011: Variables de entorno con validación Zod (issue #7)
+- ✅ T-012: PostgreSQL 15 + Redis 7 con Docker (issue #8)
 
 ### En Progreso (Fase 0)
 
-- 🚧 Fase 0: Fundamentos y documentación - 59% completado (10/17 tareas)
+- 🚧 Fase 0: Fundamentos y documentación - 71% completado (12/17 tareas)
 
 ### Pendiente (Orden de Prioridad)
 
-- 🎯 **SIGUIENTE**: T-011: Configurar variables de entorno (issue #7)
-- ⏳ T-012: Configurar PostgreSQL (issue #8)
-- ⏳ T-013: Configurar Prisma (issue #9) - Requiere T-012
+- 🎯 **SIGUIENTE**: T-013: Configurar Prisma (issue #9)
 - ⏳ T-014: Crear seed data (issue #15) - Requiere T-013
+- ⏳ T-014 (bis): Expandir CI con lint, type-check y build (issue #10)
 - ⏳ T-015: Crear diagramas de arquitectura (issue #16)
 - ⏳ T-016: Documentar API endpoints (issue #17)
-- ⏳ T-014 (bis): Expandir CI con lint, type-check y build (issue #10)
 
 ## Notas para Claude Code
 

@@ -45,13 +45,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 **Checklist:**
 
-- [ ] Agregar reglas para Node.js
-- [ ] Agregar reglas para Next.js (.next/, out/)
-- [ ] Agregar reglas para variables de entorno (.env\*)
-- [ ] Agregar reglas para IDEs (VSCode, etc)
-- [ ] Agregar reglas para sistema operativo
-- [ ] Agregar reglas para dependencias (node_modules/)
-- [ ] Agregar reglas para builds y dist/
+- [x] Agregar reglas para Node.js
+- [x] Agregar reglas para Next.js (.next/, out/)
+- [x] Agregar reglas para variables de entorno (.env\*)
+- [x] Agregar reglas para IDEs (VSCode, etc)
+- [x] Agregar reglas para sistema operativo
+- [x] Agregar reglas para dependencias (node_modules/)
+- [x] Agregar reglas para builds y dist/
 
 #### T-002: Definir licencia del proyecto
 
@@ -61,11 +61,11 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 **Checklist:**
 
-- [ ] Investigar licencias open source apropiadas (AGPL-3.0, GPL-3.0)
-- [ ] Consultar con stakeholders sobre preferencias
-- [ ] Crear archivo LICENSE
-- [ ] Actualizar README con información de licencia
-- [ ] Agregar badge de licencia
+- [x] Investigar licencias open source apropiadas (AGPL-3.0, GPL-3.0)
+- [x] Consultar con stakeholders sobre preferencias
+- [x] Crear archivo LICENSE
+- [x] Actualizar README con información de licencia
+- [x] Agregar badge de licencia
 
 #### T-003: Crear Code of Conduct
 
@@ -75,11 +75,11 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 **Checklist:**
 
-- [ ] Adaptar Contributor Covenant u otro estándar
-- [ ] Definir proceso de reporte de violaciones
-- [ ] Designar responsables de moderación
-- [ ] Crear archivo CODE_OF_CONDUCT.md
-- [ ] Vincular desde README
+- [x] Adaptar Contributor Covenant u otro estándar
+- [x] Definir proceso de reporte de violaciones
+- [x] Designar responsables de moderación
+- [x] Crear archivo CODE_OF_CONDUCT.md
+- [x] Vincular desde README
 
 #### T-004: Crear Contributing Guidelines
 
@@ -89,12 +89,12 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 **Checklist:**
 
-- [ ] Documentar proceso de fork y PR
-- [ ] Explicar convenciones de commits
-- [ ] Listar requisitos para PRs (tests, docs)
-- [ ] Documentar proceso de code review
-- [ ] Agregar guía de setup para contribuidores
-- [ ] Crear archivo CONTRIBUTING.md
+- [x] Documentar proceso de fork y PR
+- [x] Explicar convenciones de commits
+- [x] Listar requisitos para PRs (tests, docs)
+- [x] Documentar proceso de code review
+- [x] Agregar guía de setup para contribuidores
+- [x] Crear archivo CONTRIBUTING.md
 
 ---
 
@@ -123,14 +123,14 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 **Checklist:**
 
-- [ ] Crear workflow .github/workflows/ci.yml
-- [ ] Configurar jobs para diferentes ambientes (Node 20)
-- [ ] Agregar step para install dependencies
-- [ ] Agregar step para lint
-- [ ] Agregar step para type checking
-- [ ] Agregar step para build
-- [ ] Configurar caché de node_modules
-- [ ] Configurar triggers (push, PR a main/develop)
+- [x] Crear workflow .github/workflows/ci.yml
+- [x] Configurar jobs para diferentes ambientes (Node 20)
+- [x] Agregar step para install dependencies
+- [x] Agregar step para lint
+- [x] Agregar step para type checking
+- [x] Agregar step para build
+- [x] Configurar caché de node_modules
+- [x] Configurar triggers (push, PR a main/develop)
 
 #### T-006: Configurar tests en CI
 
@@ -140,11 +140,11 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 **Checklist:**
 
-- [ ] Agregar step para ejecutar tests
-- [ ] Configurar coverage reporting
-- [ ] Subir coverage a servicio (Codecov, Coveralls)
-- [ ] Configurar umbrales mínimos de coverage
-- [ ] Agregar badge de coverage al README
+- [x] Agregar step para ejecutar tests
+- [x] Configurar coverage reporting
+- [x] Subir coverage a servicio (Codecov, Coveralls)
+- [x] Configurar umbrales mínimos de coverage
+- [x] Agregar badge de coverage al README
 
 #### T-007: Configurar pre-commit hooks
 
@@ -176,7 +176,7 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 - [x] TypeScript configurado con strict mode
 - [x] ESLint y Prettier configurados
 - [x] Package.json con scripts útiles
-- [ ] Variables de entorno documentadas
+- [x] Variables de entorno documentadas
 
 ### Tareas Técnicas
 
@@ -188,13 +188,13 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 **Checklist:**
 
-- [ ] Instalar y configurar Turborepo
-- [ ] Crear estructura de carpetas (apps/, packages/)
-- [ ] Configurar workspaces en package.json
-- [ ] Crear turbo.json con pipeline
-- [ ] Configurar apps/web (Next.js)
-- [ ] Configurar apps/api (Express/Fastify)
-- [ ] Documentar estructura en README
+- [x] Instalar y configurar Turborepo
+- [x] Crear estructura de carpetas (apps/, packages/)
+- [x] Configurar workspaces en package.json
+- [x] Crear turbo.json con pipeline
+- [x] Configurar apps/web (Next.js)
+- [x] Configurar apps/api (Express/Fastify)
+- [x] Documentar estructura en README
 
 #### T-009: Configurar TypeScript
 
@@ -204,12 +204,12 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 **Checklist:**
 
-- [ ] Crear tsconfig.json base
-- [ ] Configurar strict mode
-- [ ] Configurar paths aliases (@/)
-- [ ] Crear tsconfig para cada workspace
-- [ ] Configurar tipos compartidos en packages/types
-- [ ] Verificar que compila sin errores
+- [x] Crear tsconfig.json base
+- [x] Configurar strict mode
+- [x] Configurar paths aliases (@/)
+- [x] Crear tsconfig para cada workspace
+- [x] Configurar tipos compartidos en packages/types
+- [x] Verificar que compila sin errores
 
 #### T-010: Configurar ESLint y Prettier
 
@@ -219,14 +219,14 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 **Checklist:**
 
-- [ ] Instalar ESLint y plugins necesarios
-- [ ] Configurar .eslintrc.js con reglas
-- [ ] Instalar Prettier
-- [ ] Configurar .prettierrc
-- [ ] Crear .prettierignore
-- [ ] Asegurar compatibilidad ESLint + Prettier
-- [ ] Agregar scripts lint y format
-- [ ] Configurar extensión en VSCode (settings.json)
+- [x] Instalar ESLint y plugins necesarios
+- [x] Configurar .eslintrc.js con reglas
+- [x] Instalar Prettier
+- [x] Configurar .prettierrc
+- [x] Crear .prettierignore
+- [x] Asegurar compatibilidad ESLint + Prettier
+- [x] Agregar scripts lint y format
+- [x] Configurar extensión en VSCode (settings.json)
 
 #### T-011: Configurar variables de entorno
 
@@ -236,12 +236,12 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 **Checklist:**
 
-- [ ] Crear .env.example con todas las variables
-- [ ] Documentar cada variable en comentarios
-- [ ] Crear .env.local de ejemplo
-- [ ] Agregar validación de env vars (zod o similar)
-- [ ] Documentar en docs/technical/setup.md
-- [ ] Agregar .env\* al .gitignore
+- [x] Crear .env.example con todas las variables
+- [x] Documentar cada variable en comentarios
+- [x] Crear .env.local de ejemplo
+- [x] Agregar validación de env vars (zod o similar)
+- [x] Documentar en docs/technical/setup.md
+- [x] Agregar .env\* al .gitignore
 
 ---
 
@@ -253,7 +253,7 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 ### Criterios de Aceptación
 
-- [ ] PostgreSQL configurado (local o Docker)
+- [x] PostgreSQL configurado (local o Docker)
 - [ ] Prisma instalado y configurado
 - [ ] Schema inicial definido
 - [ ] Migraciones funcionando
@@ -269,12 +269,12 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 **Checklist:**
 
-- [ ] Crear docker-compose.yml con PostgreSQL
-- [ ] Configurar volúmenes para persistencia
-- [ ] Documentar instalación local alternativa
-- [ ] Crear base de datos de desarrollo
-- [ ] Configurar DATABASE_URL en .env
-- [ ] Verificar conexión
+- [x] Crear docker-compose.yml con PostgreSQL
+- [x] Configurar volúmenes para persistencia
+- [x] Documentar instalación local alternativa
+- [x] Crear base de datos de desarrollo
+- [x] Configurar DATABASE_URL en .env
+- [x] Verificar conexión
 
 #### T-013: Configurar Prisma
 
