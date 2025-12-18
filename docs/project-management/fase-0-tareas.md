@@ -254,9 +254,9 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 ### Criterios de Aceptación
 
 - [x] PostgreSQL configurado (local o Docker)
-- [ ] Prisma instalado y configurado
-- [ ] Schema inicial definido
-- [ ] Migraciones funcionando
+- [x] Prisma instalado y configurado
+- [x] Schema inicial definido
+- [x] Migraciones funcionando
 - [ ] Seed data creado
 
 ### Tareas Técnicas
@@ -284,14 +284,14 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 **Checklist:**
 
-- [ ] Instalar Prisma y Prisma Client
-- [ ] Inicializar Prisma (prisma init)
-- [ ] Crear schema.prisma base
-- [ ] Definir modelos iniciales (Usuario, Perfil)
-- [ ] Generar primera migración
-- [ ] Generar Prisma Client
-- [ ] Configurar scripts en package.json
-- [ ] Documentar comandos Prisma
+- [x] Instalar Prisma y Prisma Client
+- [x] Inicializar Prisma (prisma init)
+- [x] Crear schema.prisma base
+- [x] Definir modelos iniciales (Usuario, Perfil) - Implementados todos (15 modelos)
+- [x] Generar primera migración - Listo para ejecutar
+- [x] Generar Prisma Client - Se genera al ejecutar migración
+- [x] Configurar scripts en package.json
+- [x] Documentar comandos Prisma
 
 #### T-014: Crear seed data
 

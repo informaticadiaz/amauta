@@ -169,16 +169,15 @@ gh issue close <número> --comment "✅ Tarea completada..."
 - ✅ T-010: ESLint y Prettier configurados (issue #6)
 - ✅ T-011: Variables de entorno con validación Zod (issue #7)
 - ✅ T-012: PostgreSQL 15 + Redis 7 con Docker (issue #8)
+- ✅ T-013: Prisma ORM con schema completo (issue #9)
 
 ### En Progreso (Fase 0)
 
-- 🚧 Fase 0: Fundamentos y documentación - 71% completado (12/17 tareas)
+- 🚧 Fase 0: Fundamentos y documentación - 76% completado (13/17 tareas)
 
 ### Pendiente (Orden de Prioridad)
 
-- 🎯 **SIGUIENTE**: T-013: Configurar Prisma (issue #9)
-- ⏳ T-014: Crear seed data (issue #15) - Requiere T-013
-- ⏳ T-014 (bis): Expandir CI con lint, type-check y build (issue #10)
+- 🎯 **SIGUIENTE**: T-014: Crear seed data (issue #15) o T-014bis: Expandir CI (issue #10)
 - ⏳ T-015: Crear diagramas de arquitectura (issue #16)
 - ⏳ T-016: Documentar API endpoints (issue #17)
 

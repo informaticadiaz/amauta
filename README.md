@@ -98,13 +98,13 @@ amauta/
 
 ## Estado del Proyecto
 
-🚧 **En desarrollo activo** - Fase 0: Fundamentos (71% completado)
+🚧 **En desarrollo activo** - Fase 0: Fundamentos (76% completado)
 
 Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de desarrollo.
 
 ### Fases
 
-- 🚧 **Fase 0**: Fundamentos y documentación (12/17 tareas completadas)
+- 🚧 **Fase 0**: Fundamentos y documentación (13/17 tareas completadas)
   - ✅ Repositorio y estructura configurada
   - ✅ CI/CD básico con GitHub Actions
   - ✅ Monorepo con Turborepo
@@ -113,7 +113,8 @@ Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de des
   - ✅ Pre-commit hooks con Husky
   - ✅ Variables de entorno con validación Zod
   - ✅ PostgreSQL 15 + Redis 7 configurados
-  - 🔄 Próximo: Configurar Prisma ORM (T-013)
+  - ✅ Prisma ORM con schema completo (15 modelos)
+  - 🔄 Próximo: Seed data (T-014) o Expandir CI (T-014bis)
 - 📋 **Fase 1**: MVP - Plataforma de cursos básica (próximo)
 - 📋 **Fase 2**: Offline-First & PWA
 - 📋 **Fase 3**: Evaluaciones y certificaciones
