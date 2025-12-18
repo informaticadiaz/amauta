@@ -10,5 +10,8 @@
     "lint": "ESLINT_USE_FLAT_CONFIG=false eslint . --ext .ts,.tsx --max-warnings 0",
     "lint:fix": "ESLINT_USE_FLAT_CONFIG=false eslint . --ext .ts,.tsx --fix",
     "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^4.2.1"
   }
 }
