@@ -41,6 +41,8 @@ COPY apps/api ./apps/api
 
 # Generar Prisma Client
 WORKDIR /app/apps/api
+# Prisma generate requiere DATABASE_URL definida (no la usa, solo valida)
+ENV DATABASE_URL="postgresql://placeholder:placeholder@placeholder:5432/placeholder?schema=public"
 RUN npx prisma generate
 
 # Build TypeScript
