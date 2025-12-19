@@ -2,34 +2,45 @@
 # Multi-stage build para optimizar tamaño de imagen
 
 # ============================================
-# Stage 1: Dependencies
+# Stage 1: Production Dependencies
 # ============================================
-FROM node:20-alpine AS deps
+FROM node:20-alpine AS deps-prod
 
-# Instalar dependencias del sistema necesarias
 RUN apk add --no-cache libc6-compat
-
 WORKDIR /app
 
-# Copiar archivos de dependencias
 COPY package*.json ./
 COPY apps/api/package*.json ./apps/api/
 
 # Instalar solo dependencias de producción
-# Configurar NODE_ENV=production para evitar hooks de desarrollo
 ENV NODE_ENV=production
 RUN npm ci --workspace=@amauta/api --omit=dev
 
 # ============================================
-# Stage 2: Builder
+# Stage 2: All Dependencies (para build)
+# ============================================
+FROM node:20-alpine AS deps-build
+
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+COPY package*.json ./
+COPY apps/api/package*.json ./apps/api/
+
+# Instalar TODAS las dependencias (incluyendo dev para TypeScript)
+ENV NODE_ENV=development
+RUN npm ci --workspace=@amauta/api
+
+# ============================================
+# Stage 3: Builder
 # ============================================
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copiar dependencias desde stage anterior
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/apps/api/node_modules ./apps/api/node_modules
+# Copiar dependencias de build (con devDependencies)
+COPY --from=deps-build /app/node_modules ./node_modules
+COPY --from=deps-build /app/apps/api/node_modules ./apps/api/node_modules
 
 # Copiar archivos de configuración
 COPY package*.json ./
@@ -49,7 +60,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # ============================================
-# Stage 3: Runner (Producción)
+# Stage 4: Runner (Producción)
 # ============================================
 FROM node:20-alpine AS runner
 
@@ -62,8 +73,9 @@ RUN adduser --system --uid 1001 nestjs
 # Copiar solo lo necesario para producción
 COPY --from=builder --chown=nestjs:nodejs /app/apps/api/dist ./dist
 COPY --from=builder --chown=nestjs:nodejs /app/apps/api/prisma ./prisma
-COPY --from=builder --chown=nestjs:nodejs /app/node_modules ./node_modules
-COPY --from=builder --chown=nestjs:nodejs /app/apps/api/node_modules ./apps/api/node_modules
+# Copiar dependencias de producción (sin devDependencies)
+COPY --from=deps-prod --chown=nestjs:nodejs /app/node_modules ./node_modules
+COPY --from=deps-prod --chown=nestjs:nodejs /app/apps/api/node_modules ./apps/api/node_modules
 COPY --from=builder --chown=nestjs:nodejs /app/apps/api/package*.json ./
 
 # Variables de entorno por defecto (serán sobrescritas por Dokploy)
