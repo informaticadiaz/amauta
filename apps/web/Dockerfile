@@ -15,8 +15,10 @@ WORKDIR /app
 COPY package*.json ./
 COPY apps/web/package*.json ./apps/web/
 
-# Instalar dependencias (deshabilitar Husky en producción)
-RUN HUSKY=0 npm ci --workspace=@amauta/web
+# Instalar dependencias
+# Configurar NODE_ENV=production para evitar hooks de desarrollo
+ENV NODE_ENV=production
+RUN npm ci --workspace=@amauta/web
 
 # ============================================
 # Stage 2: Builder

@@ -16,8 +16,9 @@ COPY package*.json ./
 COPY apps/api/package*.json ./apps/api/
 
 # Instalar solo dependencias de producción
-# Deshabilitar Husky para evitar errores en producción
-RUN HUSKY=0 npm ci --workspace=@amauta/api --omit=dev
+# Configurar NODE_ENV=production para evitar hooks de desarrollo
+ENV NODE_ENV=production
+RUN npm ci --workspace=@amauta/api --omit=dev
 
 # ============================================
 # Stage 2: Builder
