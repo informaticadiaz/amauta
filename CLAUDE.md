@@ -15,6 +15,7 @@ amauta/
 ├── README.md
 ├── CLAUDE.md                    # Este archivo - Contexto para Claude
 ├── WORKFLOW.md                  # ⭐ Metodología de trabajo con issues
+├── DEPLOYMENT_PROGRESS.md       # ⭐ Estado del deployment en producción
 ├── CONTRIBUTING.md              # Guía de contribución
 ├── CODE_OF_CONDUCT.md           # Código de conducta
 ├── LICENSE                      # AGPL-3.0
@@ -90,6 +91,7 @@ amauta/
 ### Documentos Principales
 
 - **Metodología de trabajo**: `WORKFLOW.md` ⭐ **LEER PRIMERO**
+- **Estado de Deployment**: `DEPLOYMENT_PROGRESS.md` ⭐ **Estado actual del deployment en producción**
 - **Guía de contribución**: `CONTRIBUTING.md` - Cómo contribuir al proyecto
 - **Código de conducta**: `CODE_OF_CONDUCT.md` - Expectativas de la comunidad
 - **Licencia**: `LICENSE` - AGPL-3.0
