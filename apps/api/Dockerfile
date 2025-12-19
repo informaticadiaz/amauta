@@ -14,8 +14,6 @@ WORKDIR /app
 # Copiar archivos de dependencias
 COPY package*.json ./
 COPY apps/api/package*.json ./apps/api/
-COPY packages/shared/package*.json ./packages/shared/ 2>/dev/null || true
-COPY packages/types/package*.json ./packages/types/ 2>/dev/null || true
 
 # Instalar solo dependencias de producción
 RUN npm ci --workspace=@amauta/api --omit=dev
@@ -38,9 +36,6 @@ COPY turbo.json ./
 
 # Copiar código fuente del API
 COPY apps/api ./apps/api
-
-# Copiar packages compartidos si existen
-COPY packages ./packages 2>/dev/null || true
 
 # Generar Prisma Client
 WORKDIR /app/apps/api

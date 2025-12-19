@@ -14,8 +14,6 @@ WORKDIR /app
 # Copiar archivos de dependencias
 COPY package*.json ./
 COPY apps/web/package*.json ./apps/web/
-COPY packages/shared/package*.json ./packages/shared/ 2>/dev/null || true
-COPY packages/types/package*.json ./packages/types/ 2>/dev/null || true
 
 # Instalar dependencias
 RUN npm ci --workspace=@amauta/web
@@ -38,9 +36,6 @@ COPY turbo.json ./
 
 # Copiar código fuente del Web
 COPY apps/web ./apps/web
-
-# Copiar packages compartidos si existen
-COPY packages ./packages 2>/dev/null || true
 
 # Build arguments para Next.js
 ARG NEXT_PUBLIC_API_URL
