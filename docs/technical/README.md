@@ -9,19 +9,22 @@
 3. [Estándares de Código](./coding-standards.md)
 4. [Base de Datos](./database.md)
 5. [Variables de Entorno](./environment-variables.md)
+6. [🐳 Guía de Puertos y Redes en Docker](./docker-ports-networking-guide.md) - **Para desarrolladores nuevos en Docker**
+7. [📦 Entendiendo Dokploy](./understanding-dokploy-deployment.md) - **Cómo funciona Dokploy con múltiples proyectos**
 
 ### API y Testing
 
-6. [API Reference](./api-reference.md)
-7. [Testing](./testing.md)
+8. [API Reference](./api-reference.md)
+9. [Testing](./testing.md)
 
 ### Seguridad y Deployment
 
-8. [⭐ Índice de Seguridad](./SECURITY_README.md) - **LEER PRIMERO**
-9. [Análisis VPS y Deployment](./vps-deployment-analysis.md)
-10. [Almacenamiento de Datos Sensibles](./PRIVATE_DATA_STORAGE.md)
-11. [Repositorio Privado](./PRIVATE_REPO_REFERENCE.md)
-12. [Guía de Sanitización](../.github/SECURITY_SANITIZATION.md)
+10. [⭐ Índice de Seguridad](./SECURITY_README.md) - **LEER PRIMERO**
+11. [Análisis VPS y Deployment](./vps-deployment-analysis.md)
+12. [🚀 Guía de Deployment con Dokploy UI](./dokploy-ui-deployment-guide.md) - **Paso a paso para deployment en producción**
+13. [Almacenamiento de Datos Sensibles](./PRIVATE_DATA_STORAGE.md)
+14. [Repositorio Privado](./PRIVATE_REPO_REFERENCE.md)
+15. [Guía de Sanitización](../.github/SECURITY_SANITIZATION.md)
 
 ## Propósito
 
@@ -35,6 +38,14 @@ Para contribuir al proyecto, consulta primero:
 - [Estándares de Código](./coding-standards.md) - Para mantener la consistencia del código
 - [Testing](./testing.md) - Para asegurar la calidad del código
 - [Índice de Seguridad](./SECURITY_README.md) - Para manejo de datos sensibles
+
+### Para Desarrolladores Nuevos
+
+Si eres nuevo en Docker o deployment:
+
+- 🐳 [Guía de Puertos y Redes en Docker](./docker-ports-networking-guide.md) - Conceptos esenciales de networking explicados de forma práctica
+- 📦 [Entendiendo Dokploy](./understanding-dokploy-deployment.md) - Cómo funciona Dokploy y deployment multi-proyecto
+- 🚀 [Deployment con Dokploy UI](./dokploy-ui-deployment-guide.md) - Tutorial paso a paso para producción
 
 ## Seguridad
 
