@@ -15,6 +15,9 @@ WORKDIR /app
 COPY package*.json ./
 COPY apps/api/package*.json ./apps/api/
 
+# Deshabilitar Husky en producción (no necesitamos git hooks)
+ENV HUSKY=0
+
 # Instalar solo dependencias de producción
 RUN npm ci --workspace=@amauta/api --omit=dev
 

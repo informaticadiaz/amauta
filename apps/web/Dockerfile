@@ -15,6 +15,9 @@ WORKDIR /app
 COPY package*.json ./
 COPY apps/web/package*.json ./apps/web/
 
+# Deshabilitar Husky en producción
+ENV HUSKY=0
+
 # Instalar dependencias
 RUN npm ci --workspace=@amauta/web
 
