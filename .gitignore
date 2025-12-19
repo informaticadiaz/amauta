@@ -97,3 +97,16 @@ prisma/*.db-journal
 # Backup files
 *.bak
 *.backup
+
+# ==================================
+# Repositorio Privado (NO commitear)
+# ==================================
+# El repo privado debe estar en ~/amauta-deployment-private/
+# NO debe estar dentro del repo público
+amauta-deployment-private/
+*-deployment-private/
+
+# Archivos privados que podrían crearse por error
+*-FULL.md
+*-private.md
+*-PRIVATE.md
