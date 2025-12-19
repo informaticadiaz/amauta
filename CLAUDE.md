@@ -113,7 +113,7 @@ amauta/
 
 - `turbo.json` - Configuración de Turborepo
 - `apps/web/README.md` - Frontend Next.js PWA
-- `apps/api/README.md` - Backend API REST
+- `apps/api/README.md` - Backend API con NestJS + Fastify
 - `packages/shared/README.md` - Código compartido
 - `packages/types/README.md` - Tipos TypeScript
 
@@ -196,9 +196,21 @@ gh issue close <número> --comment "✅ Tarea completada..."
 ### Estructura del Monorepo
 
 - Usar Turborepo para gestión de workspaces
-- Apps en `apps/`: web (Next.js), api (Express)
+- Apps en `apps/`: web (Next.js), api (NestJS + Fastify)
 - Packages compartidos en `packages/`: shared, types
 - Scripts globales en package.json raíz ejecutan en todos los workspaces
+
+### Stack Técnico Definido
+
+- **Frontend**: Next.js 14+ (App Router) con TypeScript
+- **Backend**: NestJS + Fastify con TypeScript strict mode
+- **ORM**: Prisma
+- **Base de Datos**: PostgreSQL 15+
+- **Caché**: Redis 7+ (en uso desde Fase 1)
+- **Desarrollo**: Docker Compose obligatorio para entorno local
+- **Deployment**: Dokploy en VPS (amauta.diazignacio.ar)
+
+Ver `docs/technical/architecture.md` para decisiones técnicas detalladas.
 
 ### Orden de Issues
 

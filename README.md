@@ -55,16 +55,17 @@ No concebimos la educación como un producto, sino como un **derecho social**. N
 
 ### Backend
 
-- **Node.js** - Runtime
-- **Express/Fastify** - API framework
-- **PostgreSQL** - Base de datos principal
+- **Node.js 20+** - Runtime
+- **NestJS + Fastify** - API framework enterprise
+- **PostgreSQL 15+** - Base de datos principal
 - **Prisma** - ORM
-- **Redis** - Caché y sesiones
+- **Redis 7+** - Caché y sesiones (desde Fase 1)
 
 ### DevOps
 
 - **Turborepo** - Monorepo build system
-- **Docker** - Contenedores
+- **Docker Compose** - Desarrollo local (obligatorio)
+- **Dokploy** - Deployment en VPS
 - **GitHub Actions** - CI/CD
 - **Jest** - Testing
 
@@ -89,7 +90,7 @@ amauta/
 ### Apps
 
 - **@amauta/web**: Aplicación frontend con Next.js, PWA, Tailwind CSS
-- **@amauta/api**: API backend con Express/Fastify, PostgreSQL, Prisma
+- **@amauta/api**: API backend con NestJS + Fastify, PostgreSQL, Prisma
 
 ### Packages
 
@@ -98,7 +99,7 @@ amauta/
 
 ## Estado del Proyecto
 
-🚧 **En desarrollo activo** - Fase 0: Fundamentos (76% completado)
+🚧 **En desarrollo activo** - Fase 0: Fundamentos (76% infraestructura, 0% funcionalidad)
 
 Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de desarrollo.
 
@@ -112,9 +113,11 @@ Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de des
   - ✅ ESLint y Prettier configurados
   - ✅ Pre-commit hooks con Husky
   - ✅ Variables de entorno con validación Zod
-  - ✅ PostgreSQL 15 + Redis 7 configurados
+  - ✅ PostgreSQL 15 + Redis 7 configurados con Docker
   - ✅ Prisma ORM con schema completo (15 modelos)
-  - 🔄 Próximo: Seed data (T-014) o Expandir CI (T-014bis)
+  - ✅ **Decisiones técnicas tomadas**: NestJS + Fastify, Docker obligatorio
+  - 🔄 **Backend API**: Pendiente de implementación (será NestJS + Fastify)
+  - 🔄 **Próximo**: Implementar NestJS + Fastify, luego Seed data o Expandir CI
 - 📋 **Fase 1**: MVP - Plataforma de cursos básica (próximo)
 - 📋 **Fase 2**: Offline-First & PWA
 - 📋 **Fase 3**: Evaluaciones y certificaciones
@@ -146,12 +149,9 @@ Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de des
 
 - **Node.js** 20+ ([Descargar](https://nodejs.org/))
 - **npm** 10+ (viene con Node.js)
-
-**Opcionales (recomendado para desarrollo completo):**
-
 - **Docker** & **Docker Compose** ([Descargar Docker Desktop](https://www.docker.com/products/docker-desktop))
-  - Necesario para ejecutar PostgreSQL y Redis
-  - Alternativa: Instalar PostgreSQL 15+ localmente (ver [guía](./docker/postgres/LOCAL_INSTALL.md))
+  - Obligatorio para desarrollo local (PostgreSQL + Redis)
+  - Alternativa: Instalar PostgreSQL 15+ y Redis 7+ manualmente (ver [guía](./docker/postgres/LOCAL_INSTALL.md))
 
 ### Setup Básico
 
@@ -179,11 +179,11 @@ cd ../..
 # Ver docs/technical/environment-variables.md para más detalles
 ```
 
-### ⚠️ Configuración de Base de Datos (Requerido para funcionalidad completa)
+### ⚠️ Configuración de Base de Datos (Obligatorio)
 
-El proyecto usa **PostgreSQL** y **Redis**. Tienes dos opciones:
+El proyecto usa **PostgreSQL** (obligatorio) y **Redis** (opcional, usado desde Fase 1). Tienes dos opciones:
 
-#### Opción A: Con Docker (Recomendado) 🐳
+#### Opción A: Con Docker (Recomendado - Más fácil) 🐳
 
 ```bash
 # 1. Iniciar servicios (PostgreSQL + Redis)

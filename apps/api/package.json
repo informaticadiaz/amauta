@@ -14,7 +14,7 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
-    "prisma:seed": "tsx prisma/seed.ts",
+    "prisma:seed": "echo 'Seed pendiente de implementación (T-014)'",
     "prisma:reset": "prisma migrate reset",
     "prisma:format": "prisma format",
     "db:push": "prisma db push",
