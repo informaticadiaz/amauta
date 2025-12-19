@@ -16,17 +16,25 @@
 
 El repositorio privado contiene:
 
-### Análisis VPS Completo
+### 📊 Índices y Reportes
 
-- `deployment/vps-analysis-FULL.md` - Análisis con datos reales (IP, dominios, configuraciones)
+- `README.md` - Índice general del repositorio privado
+- `MAINTENANCE_CHECKLIST.md` - ⭐ Evaluación completa de preparación para mantenimiento (92%)
+- `DOCKER_CLEANUP_ANALYSIS.md` - Análisis detallado del sistema de limpieza automática
+- `VPS_HEALTH_REPORT_*.md` - Reportes periódicos de estado del VPS (disco, RAM, CPU, containers)
 
-### Credenciales
+### 📋 Análisis y Planificación
+
+- `deployment/vps-analysis-FULL.md` - Análisis completo del VPS con datos reales (IP, dominios, recursos)
+- `deployment/AMAUTA_DEPLOYMENT_PLAN.md` - ⭐ Plan detallado de deployment paso a paso (5 días)
+
+### 🔐 Credenciales
 
 - `deployment/credentials/ssh-access.md` - IP VPS, usuario, password/key SSH
 - `deployment/credentials/database-credentials.md` - Credenciales PostgreSQL, connection strings
 - `deployment/credentials/secrets.md` - JWT_SECRET, SESSION_SECRET, API keys
 
-### Configuraciones de Producción
+### ⚙️ Configuraciones de Producción
 
 - `deployment/production-configs/.env.api.production.local` - Variables API con valores reales
 - `deployment/production-configs/.env.web.production.local` - Variables Web con valores reales
@@ -34,19 +42,20 @@ El repositorio privado contiene:
 - `deployment/production-configs/dokploy-web-config.md` - Configuración Dokploy Web
 - `deployment/production-configs/cloudflare-dns.md` - Registros DNS
 
-### Scripts de Deployment
+### 📚 Runbooks de Operación (⭐ HERRAMIENTAS CRÍTICAS)
 
-- `scripts/deploy-api.sh` - Script de deployment API
-- `scripts/deploy-web.sh` - Script de deployment Web
-- `scripts/backup-production.sh` - Script de backup
-- `scripts/health-check.sh` - Health check con URLs reales
+- `deployment/runbooks/emergency-disk-full.md` - ⭐ Procedimiento de emergencia disco lleno (respuesta 1-2 min)
+- `deployment/runbooks/maintenance-commands.md` - ⭐ Comandos de mantenimiento diario (cheatsheet completo)
+- `deployment/runbooks/backup-restore.md` - ⭐ Procedimientos completos de backup y restore
+- `deployment/runbooks/deployment-checklist.md` - Checklist de deployment con comandos reales (pendiente)
+- `deployment/runbooks/incident-response.md` - Respuesta a incidentes de seguridad (pendiente)
 
-### Runbooks
+### 🔧 Scripts de Deployment
 
-- `deployment/runbooks/deployment-checklist.md` - Checklist con comandos reales
-- `deployment/runbooks/backup-restore.md` - Procedimientos de backup
-- `deployment/runbooks/incident-response.md` - Respuesta a incidentes
-- `deployment/runbooks/maintenance.md` - Mantenimiento rutinario
+- `scripts/deploy-api.sh` - Script de deployment API (pendiente)
+- `scripts/deploy-web.sh` - Script de deployment Web (pendiente)
+- `scripts/backup-production.sh` - Script de backup (pendiente)
+- `scripts/health-check.sh` - Health check con URLs reales (pendiente)
 
 ---
 
