@@ -26,8 +26,9 @@ amauta/
 │
 ├── .github/
 │   ├── workflows/
-│   │   └── ci.yml              # Workflow de CI/CD
-│   └── README.md               # Documentación de workflows
+│   │   └── ci.yml                    # Workflow de CI/CD
+│   ├── README.md                     # Documentación de workflows
+│   └── SECURITY_SANITIZATION.md      # Guía de sanitización
 │
 ├── apps/                        # Aplicaciones del monorepo
 │   ├── web/                    # Frontend Next.js PWA (@amauta/web)
@@ -62,7 +63,12 @@ amauta/
         ├── architecture.md
         ├── coding-standards.md
         ├── database.md
-        └── setup.md
+        ├── setup.md
+        ├── environment-variables.md
+        ├── SECURITY_README.md              # ⭐ Índice de seguridad
+        ├── vps-deployment-analysis.md      # Plan de deployment
+        ├── PRIVATE_DATA_STORAGE.md         # Almacenamiento seguro
+        └── PRIVATE_REPO_REFERENCE.md       # Repo privado
 ```
 
 ## Convenciones del Proyecto
@@ -95,6 +101,15 @@ amauta/
 - `docs/technical/coding-standards.md` - Estándares de código
 - `docs/technical/database.md` - Diseño de base de datos
 - `docs/technical/setup.md` - Guía de configuración
+- `docs/technical/environment-variables.md` - Estrategia de variables de entorno
+
+#### Seguridad y Deployment
+
+- `docs/technical/SECURITY_README.md` - ⭐ Índice maestro de seguridad
+- `docs/technical/vps-deployment-analysis.md` - Análisis y plan de deployment
+- `docs/technical/PRIVATE_DATA_STORAGE.md` - Guía de almacenamiento seguro
+- `docs/technical/PRIVATE_REPO_REFERENCE.md` - Referencia a repositorio privado
+- `.github/SECURITY_SANITIZATION.md` - Guía de sanitización de datos sensibles
 
 ### Documentación de Gestión
 
