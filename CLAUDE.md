@@ -113,6 +113,12 @@ amauta/
 - `docs/technical/PRIVATE_REPO_REFERENCE.md` - Referencia a repositorio privado
 - `.github/SECURITY_SANITIZATION.md` - Guía de sanitización de datos sensibles
 
+**⭐ Repositorio Privado - Estado del Deployment:**
+
+- **Ubicación**: `/home/ignacio/devhome/amauta-deployment-private/deployment/status/`
+- **Inicio rápido**: `cat deployment/status/INICIO-RAPIDO-DEPLOYMENT.md`
+- **Estado actual**: 45% completado (PostgreSQL y Redis funcionando)
+
 ### Documentación de Gestión
 
 - `docs/project-management/README.md` - Índice de gestión
