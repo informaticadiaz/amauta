@@ -98,4 +98,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 
 # Comando de inicio
 # Nota: Cuando tengamos NestJS implementado, será: node dist/main.js
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js || (echo 'API placeholder - Esperando implementación de NestJS' && tail -f /dev/null)"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js && echo 'API placeholder - Manteniendo contenedor activo' && tail -f /dev/null"]
