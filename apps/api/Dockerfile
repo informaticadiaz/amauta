@@ -28,8 +28,8 @@ COPY package*.json ./
 COPY apps/api/package*.json ./apps/api/
 
 # Instalar TODAS las dependencias (incluyendo dev para TypeScript)
-# Actualizado: 2025-12-19 - Incluye @types/node para process/console
-ARG CACHEBUST=1
+# Actualizado: 2025-12-22 - Forzar invalidación de cache
+ARG CACHEBUST=2
 ENV NODE_ENV=development
 RUN npm ci --workspace=@amauta/api
 
