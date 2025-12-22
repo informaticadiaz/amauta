@@ -30,6 +30,7 @@ COPY apps/api/package*.json ./apps/api/
 # Instalar TODAS las dependencias (incluyendo dev para TypeScript)
 # Actualizado: 2025-12-22 - Forzar invalidación de cache
 ARG CACHEBUST=2
+RUN echo "Cache bust: $CACHEBUST"
 ENV NODE_ENV=development
 RUN npm ci --workspace=@amauta/api
 
