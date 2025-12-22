@@ -306,7 +306,93 @@ echo $DATABASE_URL
 # npm run prisma db execute --stdin <<< "SELECT version();"
 ```
 
-### 5. Configurar Prisma ORM
+### 5. Configurar Redis (Opcional)
+
+Redis se usa para caché y sesiones. Es opcional en desarrollo pero **recomendado**.
+
+#### Con Docker (Recomendado)
+
+Si usaste `docker-compose up -d`, Redis ya está corriendo en `localhost:6379`.
+
+**Verificar que Redis esté funcionando:**
+
+```bash
+# Opción 1: Redis CLI (si tienes redis-cli instalado)
+redis-cli -h localhost -p 6379 ping
+# Debería responder: PONG
+
+# Opción 2: Conectar con password
+redis-cli -h localhost -p 6379 -a desarrollo123 ping
+
+# Opción 3: Desde Docker
+docker-compose exec redis redis-cli ping
+```
+
+**Comandos útiles:**
+
+```bash
+# Ver info de Redis
+docker-compose exec redis redis-cli info
+
+# Ver memoria usada
+docker-compose exec redis redis-cli info memory
+
+# Ver keys almacenadas
+docker-compose exec redis redis-cli keys '*'
+
+# Flush toda la cache (⚠️ borra todo)
+docker-compose exec redis redis-cli FLUSHALL
+
+# Ver logs de Redis
+docker-compose logs -f redis
+```
+
+#### Instalación Local (Alternativa)
+
+**Linux (Ubuntu/Debian):**
+
+```bash
+sudo apt install redis-server
+sudo systemctl start redis-server
+sudo systemctl enable redis-server
+```
+
+**macOS:**
+
+```bash
+brew install redis
+brew services start redis
+```
+
+**Windows:**
+
+```bash
+# Descargar desde: https://github.com/microsoftarchive/redis/releases
+# O usar WSL2 y seguir instrucciones de Linux
+```
+
+**Configurar password (opcional):**
+
+```bash
+# Editar /etc/redis/redis.conf
+requirepass desarrollo123
+
+# Reiniciar
+sudo systemctl restart redis-server
+```
+
+#### Configurar en .env.local
+
+Si Redis está disponible, agregar a `apps/api/.env.local`:
+
+```env
+REDIS_URL=redis://:desarrollo123@localhost:6379
+REDIS_CACHE_TTL=3600
+```
+
+Si **NO** usas Redis, puedes omitir estas variables. La aplicación funcionará sin caché.
+
+### 6. Configurar Prisma ORM
 
 Una vez que PostgreSQL esté corriendo, configura Prisma:
 
@@ -486,41 +572,236 @@ Ejecutar:
 docker-compose up -d
 ```
 
-## Problemas Comunes
+## Problemas Comunes y Soluciones
 
-### Error: "Port 3000 already in use"
+### 1. Error: "Port already in use"
+
+**Síntoma:** `Error: listen EADDRINUSE: address already in use :::3000`
+
+**Solución:**
 
 ```bash
-# Encontrar y matar proceso
+# Encontrar proceso usando el puerto
+lsof -ti:3000
+
+# Matar proceso
 lsof -ti:3000 | xargs kill -9
+
+# O cambiar puerto en .env.local
+PORT=3002
+API_PORT=3003
 ```
 
-### Error de conexión a PostgreSQL
+### 2. Error de conexión a PostgreSQL
+
+**Síntoma:** `Error: P1001: Can't reach database server`
+
+**Verificar:**
 
 ```bash
-# Verificar que PostgreSQL está corriendo
+# ¿PostgreSQL está corriendo?
 pg_isready
 
-# O si usas Docker:
-docker-compose ps
+# Con Docker:
+docker-compose ps postgres
+
+# ¿Puedes conectarte manualmente?
+psql -U amauta -d amauta_dev -h localhost
 ```
 
-### Error de Prisma
+**Soluciones comunes:**
 
 ```bash
-# Regenerar cliente
-npm run prisma generate
+# Reiniciar PostgreSQL (Docker)
+docker-compose restart postgres
 
-# Reset base de datos (⚠️ borra datos)
-npm run prisma migrate reset
+# Ver logs para más info
+docker-compose logs postgres
+
+# Verificar DATABASE_URL en .env.local
+echo $DATABASE_URL
+# Debe ser: postgresql://amauta:desarrollo123@localhost:5432/amauta_dev
 ```
 
-### Limpiar y reinstalar
+### 3. Error de Prisma Client
+
+**Síntoma:** `@prisma/client did not initialize yet`
+
+**Solución:**
 
 ```bash
-# Limpiar node_modules y reinstalar
-rm -rf node_modules .next
-npm run install
+# Regenerar cliente Prisma
+npm run prisma:generate --workspace=@amauta/api
+
+# Si persiste, limpiar y regenerar
+rm -rf node_modules/@prisma/client
+npm install
+npm run prisma:generate --workspace=@amauta/api
+```
+
+### 4. Migraciones de Prisma fallan
+
+**Síntoma:** `Migration failed to apply`
+
+**Solución:**
+
+```bash
+# Ver estado de migraciones
+npx prisma migrate status --schema=apps/api/prisma/schema.prisma
+
+# Resolver manualmente (⚠️ solo desarrollo)
+npm run prisma:migrate:reset --workspace=@amauta/api
+
+# Esto:
+# 1. Elimina todas las tablas
+# 2. Re-aplica todas las migraciones
+# 3. Ejecuta seed (si existe)
+```
+
+### 5. Error de Redis
+
+**Síntoma:** `Error: Redis connection to localhost:6379 failed`
+
+**Solución:**
+
+```bash
+# Verificar que Redis está corriendo
+redis-cli ping
+# O con Docker:
+docker-compose ps redis
+
+# Si no es crítico, comentar REDIS_URL en .env.local
+# La app funcionará sin caché
+
+# Iniciar Redis (Docker)
+docker-compose up -d redis
+```
+
+### 6. Variables de entorno no reconocidas
+
+**Síntoma:** `❌ Error en la configuración de variables de entorno`
+
+**Solución:**
+
+```bash
+# 1. Verificar que .env.local existe
+ls -la apps/api/.env.local
+ls -la apps/web/.env.local
+
+# 2. Verificar formato (sin comillas extra, sin espacios)
+# CORRECTO:
+NODE_ENV=development
+
+# INCORRECTO:
+NODE_ENV = development
+NODE_ENV="development"
+
+# 3. Regenerar secrets si faltan
+openssl rand -base64 32
+
+# 4. Reiniciar servidor después de cambiar .env
+```
+
+### 7. Error de permisos en PostgreSQL
+
+**Síntoma:** `permission denied for schema public`
+
+**Solución:**
+
+```sql
+-- Conectar como superusuario
+sudo -u postgres psql amauta_dev
+
+-- Otorgar permisos
+GRANT ALL ON SCHEMA public TO amauta;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO amauta;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO amauta;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO amauta;
+```
+
+### 8. ESLint o Prettier errores
+
+**Síntoma:** Archivos con errores de formato
+
+**Solución:**
+
+```bash
+# Formatear todos los archivos
+npm run format
+
+# Fix errores de ESLint automáticamente
+npm run lint:fix --workspace=@amauta/api
+npm run lint:fix --workspace=@amauta/web
+```
+
+### 9. Limpiar y reinstalar todo
+
+**Cuando nada funciona:**
+
+```bash
+# 1. Detener servicios
+docker-compose down
+
+# 2. Limpiar todo
+rm -rf node_modules
+rm -rf apps/api/node_modules
+rm -rf apps/web/node_modules
+rm -rf .next
+rm -rf apps/web/.next
+rm -rf apps/api/dist
+
+# 3. Limpiar package-lock
+rm package-lock.json
+
+# 4. Reinstalar
+npm install
+
+# 5. Regenerar Prisma
+npm run prisma:generate --workspace=@amauta/api
+
+# 6. Iniciar servicios
+docker-compose up -d
+
+# 7. Ejecutar migraciones
+npm run prisma:migrate --workspace=@amauta/api
+```
+
+### 10. Docker se queda sin espacio
+
+**Síntoma:** `no space left on device`
+
+**Solución:**
+
+```bash
+# Ver uso de disco de Docker
+docker system df
+
+# Limpiar imágenes sin usar
+docker image prune -a
+
+# Limpiar volúmenes sin usar
+docker volume prune
+
+# Limpiar todo (⚠️ elimina contenedores detenidos)
+docker system prune -a --volumes
+```
+
+### 11. Husky pre-commit hooks fallan
+
+**Síntoma:** `husky - pre-commit hook failed`
+
+**Solución:**
+
+```bash
+# Ver qué falló
+git commit -m "test" --no-verify
+
+# Formatear manualmente antes de commit
+npm run format
+npm run lint:fix --workspace=@amauta/api
+
+# O skip hooks (solo para emergencias)
+git commit -m "mensaje" --no-verify
 ```
 
 ## Siguiente Paso
