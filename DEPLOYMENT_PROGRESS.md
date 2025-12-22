@@ -1,9 +1,9 @@
 # 🚀 Deployment Progress - Amauta
 
-## Estado Actual: 🟡 En Progreso (Bloqueado por Cache de Docker)
+## Estado Actual: 🟢 Backend API Deployado y Funcionando
 
-**Última actualización**: 2025-12-19
-**Último commit**: `fcc9b59` - fix: agregar ARG CACHEBUST para invalidar cache de Docker
+**Última actualización**: 2025-12-22
+**Último commit**: `6213f16` - fix: mantener contenedor activo después de ejecutar index.js
 
 ---
 
@@ -15,38 +15,42 @@
 - Dockerfiles multi-stage creados y optimizados
 - Variables de entorno configuradas
 - Secrets generados y almacenados de forma segura
-- 10 commits de fixes iterativos
+- **Backend API deployado y funcionando** ✨
+- Migraciones de base de datos ejecutadas
+- 14 commits de fixes iterativos (problemas resueltos)
 
-### ❌ Bloqueado
+### 🎯 Problemas Resueltos (2025-12-22)
 
-- **Backend API deployment**: Docker cache persistente impidiendo instalación de @types/node
-- Error actual: `TS2688: Cannot find type definition file for 'node'`
+1. **Docker cache persistente** - Limpiado builder cache (1.187GB)
+2. **@types/node faltante** - Agregado a devDependencies de apps/api
+3. **Contenedor terminaba** - CMD actualizado para mantener activo
 
 ### ⏸️ Pendiente
 
 - Deployment del Frontend Web
 - Configuración de dominios y SSL
-- Ejecución de migraciones de base de datos
+- Implementación de servidor HTTP (NestJS/Fastify)
 
 ---
 
-## 🎯 Próxima Acción Crítica
+## 🎯 Próxima Acción
 
-**Al retomar el trabajo:**
+**Backend API está funcionando!** Próximos pasos:
 
-1. **Limpiar cache de Docker en VPS** (⚠️ CRÍTICO)
+1. **Deploy del Frontend Web** (T-017 continuar)
+   - Configurar aplicación en Dokploy
+   - Variables de entorno del Frontend
+   - Build y deploy
 
-   ```bash
-   ssh root@72.60.144.210
-   docker builder prune -af
-   ```
+2. **Configurar Dominios y SSL**
+   - Backend: api.amauta.diazignacio.ar
+   - Frontend: amauta.diazignacio.ar
+   - Traefik configurará SSL automáticamente
 
-2. **Redeploy Backend API en Dokploy UI**
-   - Ir a proyecto "Amauta" → aplicación "amauta-api"
-   - Click en "Redeploy"
-   - Monitorear logs: `deps-build` NO debe mostrar "CACHED"
-
-3. **Si funciona: Continuar con Frontend y dominios**
+3. **Implementar Servidor HTTP Real**
+   - Elegir entre NestJS o Fastify
+   - Crear endpoints básicos
+   - Remover placeholder
 
 ---
 
@@ -66,14 +70,14 @@
 - [x] Desplegar Redis 7
 - [x] Verificar servicios running
 
-### Fase 3: Backend API ⚠️ (BLOQUEADO)
+### Fase 3: Backend API ✅
 
 - [x] Configurar source repository
 - [x] Configurar variables de entorno
-- [ ] ❌ Build exitoso (bloqueado por cache)
-- [ ] Container running
-- [ ] Ejecutar migraciones
-- [ ] Healthcheck pasando
+- [x] Build exitoso (problemas de cache resueltos)
+- [x] Container running (2 instancias activas)
+- [x] Ejecutar migraciones
+- [x] Contenedor estable con placeholder
 
 ### Fase 4: Frontend Web ⏸️
 
