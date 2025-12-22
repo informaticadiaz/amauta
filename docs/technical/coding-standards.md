@@ -267,58 +267,162 @@ export async function CourseList() {
 }
 ```
 
-## Backend/API
+## Backend/NestJS
 
 ### Estructura de Controladores
 
 ```typescript
 // controllers/curso.controller.ts
-import { Request, Response, NextFunction } from 'express';
-import { CursoService } from '@/services/curso.service';
-import { validarCurso } from '@/validators/curso.validator';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  Query,
+  UseGuards,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
+import { CursoService } from './curso.service';
+import { CreateCursoDto, UpdateCursoDto } from './dto';
+import { JwtAuthGuard } from '@/auth/guards/jwt-auth.guard';
+import { RolesGuard } from '@/auth/guards/roles.guard';
+import { Roles } from '@/auth/decorators/roles.decorator';
+import { CurrentUser } from '@/auth/decorators/current-user.decorator';
+import { Usuario } from '@prisma/client';
 
+@Controller('cursos')
+@UseGuards(JwtAuthGuard)
 export class CursoController {
-  constructor(private cursoService: CursoService) {}
+  constructor(private readonly cursoService: CursoService) {}
 
   /**
-   * Obtiene todos los cursos
-   * @route GET /api/cursos
+   * Obtiene todos los cursos con paginación
+   * @route GET /api/cursos?page=1&limit=20
    */
-  async obtenerTodos(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { page = 1, limit = 20 } = req.query;
-      const cursos = await this.cursoService.obtenerTodos({
-        page: Number(page),
-        limit: Number(limit),
-      });
+  @Get()
+  async obtenerTodos(
+    @Query('page') page: string = '1',
+    @Query('limit') limit: string = '20'
+  ) {
+    return this.cursoService.obtenerTodos({
+      page: parseInt(page, 10),
+      limit: parseInt(limit, 10),
+    });
+  }
 
-      res.json({
-        success: true,
-        data: cursos,
-      });
-    } catch (error) {
-      next(error);
-    }
+  /**
+   * Obtiene un curso por ID
+   * @route GET /api/cursos/:id
+   */
+  @Get(':id')
+  async obtenerPorId(@Param('id') id: string) {
+    return this.cursoService.obtenerPorId(id);
   }
 
   /**
    * Crea un nuevo curso
    * @route POST /api/cursos
    */
-  async crear(req: Request, res: Response, next: NextFunction) {
-    try {
-      const datosValidados = validarCurso(req.body);
-      const curso = await this.cursoService.crear(datosValidados);
+  @Post()
+  @Roles('EDUCADOR', 'ADMIN')
+  @UseGuards(RolesGuard)
+  @HttpCode(HttpStatus.CREATED)
+  async crear(
+    @Body() createCursoDto: CreateCursoDto,
+    @CurrentUser() usuario: Usuario
+  ) {
+    return this.cursoService.crear(createCursoDto, usuario.id);
+  }
 
-      res.status(201).json({
-        success: true,
-        data: curso,
-      });
-    } catch (error) {
-      next(error);
-    }
+  /**
+   * Actualiza un curso
+   * @route PUT /api/cursos/:id
+   */
+  @Put(':id')
+  @Roles('EDUCADOR', 'ADMIN')
+  @UseGuards(RolesGuard)
+  async actualizar(
+    @Param('id') id: string,
+    @Body() updateCursoDto: UpdateCursoDto,
+    @CurrentUser() usuario: Usuario
+  ) {
+    return this.cursoService.actualizar(id, updateCursoDto, usuario.id);
+  }
+
+  /**
+   * Elimina un curso (soft delete)
+   * @route DELETE /api/cursos/:id
+   */
+  @Delete(':id')
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async eliminar(@Param('id') id: string) {
+    return this.cursoService.eliminar(id);
   }
 }
+```
+
+### Módulos NestJS
+
+```typescript
+// modules/curso/curso.module.ts
+import { Module } from '@nestjs/common';
+import { CursoController } from './curso.controller';
+import { CursoService } from './curso.service';
+import { PrismaModule } from '@/prisma/prisma.module';
+
+@Module({
+  imports: [PrismaModule],
+  controllers: [CursoController],
+  providers: [CursoService],
+  exports: [CursoService],
+})
+export class CursoModule {}
+```
+
+### DTOs (Data Transfer Objects)
+
+```typescript
+// dto/create-curso.dto.ts
+import {
+  IsString,
+  IsNotEmpty,
+  MinLength,
+  MaxLength,
+  IsOptional,
+  IsUrl,
+} from 'class-validator';
+
+export class CreateCursoDto {
+  @IsString()
+  @IsNotEmpty({ message: 'El título es requerido' })
+  @MinLength(5, { message: 'El título debe tener al menos 5 caracteres' })
+  @MaxLength(200, { message: 'El título no puede exceder 200 caracteres' })
+  titulo: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'La descripción es requerida' })
+  @MinLength(20, {
+    message: 'La descripción debe tener al menos 20 caracteres',
+  })
+  descripcion: string;
+
+  @IsString()
+  @IsOptional()
+  @IsUrl({}, { message: 'La imagen debe ser una URL válida' })
+  imagenUrl?: string;
+}
+
+// dto/update-curso.dto.ts
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateCursoDto } from './create-curso.dto';
+
+export class UpdateCursoDto extends PartialType(CreateCursoDto) {}
 ```
 
 ### Servicios (Business Logic)
@@ -531,15 +635,365 @@ test(cursos): agregar tests para creación de curso
 chore(deps): actualizar dependencias a versiones seguras
 ```
 
+## Prisma Patterns
+
+### Queries Eficientes
+
+```typescript
+// ❌ Mal: N+1 queries
+const cursos = await prisma.curso.findMany();
+for (const curso of cursos) {
+  const educador = await prisma.usuario.findUnique({
+    where: { id: curso.educadorId },
+  });
+}
+
+// ✅ Bien: Una sola query con include
+const cursos = await prisma.curso.findMany({
+  include: {
+    educador: true,
+    _count: {
+      select: { estudiantes: true },
+    },
+  },
+});
+```
+
+### Transacciones
+
+```typescript
+// ✅ Usar transacciones para operaciones múltiples
+async inscribirEstudiante(estudianteId: string, cursoId: string) {
+  return this.prisma.$transaction(async (tx) => {
+    // 1. Verificar cupo
+    const curso = await tx.curso.findUnique({
+      where: { id: cursoId },
+      include: { _count: { select: { estudiantes: true } } },
+    });
+
+    if (!curso || curso._count.estudiantes >= curso.cupoMaximo) {
+      throw new Error('Curso lleno');
+    }
+
+    // 2. Crear inscripción
+    const inscripcion = await tx.inscripcion.create({
+      data: {
+        estudianteId,
+        cursoId,
+        estado: 'ACTIVA',
+      },
+    });
+
+    // 3. Registrar en log
+    await tx.logActividad.create({
+      data: {
+        tipo: 'INSCRIPCION',
+        estudianteId,
+        cursoId,
+      },
+    });
+
+    return inscripcion;
+  });
+}
+```
+
+### Paginación y Performance
+
+```typescript
+// ✅ Paginación cursor-based para datasets grandes
+async obtenerCursosPaginados(cursor?: string, limit: number = 20) {
+  const cursos = await this.prisma.curso.findMany({
+    take: limit + 1, // Traer uno más para saber si hay más páginas
+    ...(cursor && {
+      skip: 1,
+      cursor: { id: cursor },
+    }),
+    orderBy: { createdAt: 'desc' },
+    select: {
+      id: true,
+      titulo: true,
+      descripcion: true,
+      _count: { select: { estudiantes: true } },
+    },
+  });
+
+  const hasMore = cursos.length > limit;
+  const items = hasMore ? cursos.slice(0, -1) : cursos;
+
+  return {
+    items,
+    nextCursor: hasMore ? items[items.length - 1].id : null,
+  };
+}
+```
+
+## Next.js App Router Avanzado
+
+### Server Actions
+
+```typescript
+// app/actions/curso.actions.ts
+'use server';
+
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
+
+export async function crearCurso(formData: FormData) {
+  // 1. Autenticación
+  const session = await auth();
+  if (!session) {
+    throw new Error('No autenticado');
+  }
+
+  // 2. Validación
+  const titulo = formData.get('titulo') as string;
+  const descripcion = formData.get('descripcion') as string;
+
+  if (!titulo || titulo.length < 5) {
+    return { error: 'Título inválido' };
+  }
+
+  // 3. Crear curso
+  const curso = await prisma.curso.create({
+    data: {
+      titulo,
+      descripcion,
+      educadorId: session.user.id,
+    },
+  });
+
+  // 4. Revalidar cache
+  revalidatePath('/cursos');
+
+  // 5. Redirect
+  redirect(`/cursos/${curso.id}`);
+}
+```
+
+### Streaming y Suspense
+
+```typescript
+// app/cursos/page.tsx
+import { Suspense } from 'react';
+import { CursosList } from './cursos-list';
+import { CursosListSkeleton } from './cursos-list-skeleton';
+
+export default function CursosPage() {
+  return (
+    <div>
+      <h1>Cursos</h1>
+      <Suspense fallback={<CursosListSkeleton />}>
+        <CursosList />
+      </Suspense>
+    </div>
+  );
+}
+
+// cursos-list.tsx (Server Component)
+async function CursosList() {
+  // Esta query se ejecuta en el servidor
+  const cursos = await obtenerCursos();
+
+  return (
+    <div>
+      {cursos.map(curso => (
+        <CourseCard key={curso.id} curso={curso} />
+      ))}
+    </div>
+  );
+}
+```
+
+### Metadata Dinámica
+
+```typescript
+// app/cursos/[id]/page.tsx
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+
+interface Props {
+  params: { id: string };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const curso = await obtenerCursoPorId(params.id);
+
+  if (!curso) {
+    return {
+      title: 'Curso no encontrado',
+    };
+  }
+
+  return {
+    title: `${curso.titulo} | Amauta`,
+    description: curso.descripcion,
+    openGraph: {
+      title: curso.titulo,
+      description: curso.descripcion,
+      images: [curso.imagenUrl],
+    },
+  };
+}
+
+export default async function CursoPage({ params }: Props) {
+  const curso = await obtenerCursoPorId(params.id);
+
+  if (!curso) {
+    notFound();
+  }
+
+  return <CursoDetalle curso={curso} />;
+}
+```
+
+## Seguridad
+
+### Validación de Entrada
+
+```typescript
+// ✅ SIEMPRE validar entrada del usuario
+import { z } from 'zod';
+
+const cursoSchema = z.object({
+  titulo: z.string().min(5).max(200),
+  descripcion: z.string().min(20),
+  categoriaId: z.string().uuid(),
+  precio: z.number().min(0).optional(),
+});
+
+// En controlador
+async crear(@Body() body: unknown) {
+  const validated = cursoSchema.parse(body); // Lanza error si inválido
+  return this.cursoService.crear(validated);
+}
+```
+
+### Prevención de SQL Injection
+
+```typescript
+// ❌ NUNCA concatenar strings en queries
+const email = req.query.email;
+await prisma.$queryRaw`SELECT * FROM usuarios WHERE email = ${email}`; // VULNERABLE
+
+// ✅ Usar Prisma (escapa automáticamente)
+const usuarios = await prisma.usuario.findMany({
+  where: { email: email },
+});
+```
+
+### Autenticación y Autorización
+
+```typescript
+// guards/roles.guard.ts
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+} from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+
+@Injectable()
+export class RolesGuard implements CanActivate {
+  constructor(private reflector: Reflector) {}
+
+  canActivate(context: ExecutionContext): boolean {
+    const requiredRoles = this.reflector.get<string[]>(
+      'roles',
+      context.getHandler()
+    );
+
+    if (!requiredRoles) {
+      return true;
+    }
+
+    const request = context.switchToHttp().getRequest();
+    const user = request.user;
+
+    if (!user) {
+      throw new ForbiddenException('Usuario no autenticado');
+    }
+
+    const hasRole = requiredRoles.some((role) => user.rol === role);
+
+    if (!hasRole) {
+      throw new ForbiddenException('No tienes permisos para esta acción');
+    }
+
+    return true;
+  }
+}
+```
+
+### Sanitización de Datos
+
+```typescript
+// ✅ Escapar HTML en contenido user-generated
+import DOMPurify from 'isomorphic-dompurify';
+
+function sanitizeHtml(html: string): string {
+  return DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'ul', 'ol', 'li'],
+    ALLOWED_ATTR: [],
+  });
+}
+
+// Uso
+const descripcionLimpia = sanitizeHtml(descripcionUsuario);
+```
+
+## Performance
+
+### React Performance
+
+```typescript
+// ✅ Memoizar componentes costosos
+import { memo } from 'react';
+
+export const CourseCard = memo(function CourseCard({ curso }) {
+  return <div>{/* ... */}</div>;
+});
+
+// ✅ useMemo para cálculos costosos
+const cursosOrdenados = useMemo(() => {
+  return cursos.sort((a, b) => b.popularidad - a.popularidad);
+}, [cursos]);
+
+// ✅ useCallback para funciones pasadas como props
+const handleEnroll = useCallback(() => {
+  enrollStudent(courseId);
+}, [courseId]);
+```
+
+### Lazy Loading
+
+```typescript
+// ✅ Lazy load componentes pesados
+import { lazy, Suspense } from 'react';
+
+const VideoPlayer = lazy(() => import('./video-player'));
+
+function LeccionPage() {
+  return (
+    <Suspense fallback={<VideoPlayerSkeleton />}>
+      <VideoPlayer url={leccion.videoUrl} />
+    </Suspense>
+  );
+}
+```
+
 ## Herramientas
 
 ### ESLint
 
-Configuración base en `.eslintrc.js`
+Configuración base en `.eslintrc.js` con reglas strict
 
 ### Prettier
 
-Formateo automático
+Formateo automático consistente
 
 ### Husky
 
@@ -547,7 +1001,15 @@ Pre-commit hooks para validar código antes de commit
 
 ### TypeScript
 
-Type checking estricto
+Type checking estricto con `strict: true`
+
+### class-validator
+
+Validación de DTOs en NestJS
+
+### Zod
+
+Validación de schemas en frontend y backend
 
 ## Recursos
 
@@ -555,3 +1017,6 @@ Type checking estricto
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
 - [React Documentation](https://react.dev/)
 - [Next.js Documentation](https://nextjs.org/docs)
+- [NestJS Documentation](https://docs.nestjs.com/)
+- [Prisma Best Practices](https://www.prisma.io/docs/guides/performance-and-optimization)
+- [OWASP Security Practices](https://owasp.org/www-project-top-ten/)
