@@ -44,7 +44,8 @@ const serverSchema = z.object({
 
   NEXTAUTH_SECRET: z
     .string()
-    .min(32, 'NEXTAUTH_SECRET debe tener al menos 32 caracteres'),
+    .min(32, 'NEXTAUTH_SECRET debe tener al menos 32 caracteres')
+    .optional(),
 
   // Base de datos (si se usa Prisma en el frontend)
   DATABASE_URL: z

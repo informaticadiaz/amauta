@@ -9,7 +9,6 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "incremental": true,
-
     // Paths específicos de web
     "baseUrl": ".",
     "paths": {
@@ -22,13 +21,13 @@
       "@amauta/types": ["../../packages/types"],
       "@amauta/types/*": ["../../packages/types/*"]
     },
-
     // Next.js plugins
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "noEmit": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", ".next", "out"]
