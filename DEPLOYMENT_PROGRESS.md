@@ -1,9 +1,9 @@
 # 🚀 Deployment Progress - Amauta
 
-## Estado Actual: 🟢 Backend API Deployado y Funcionando
+## Estado Actual: 🟢 Backend API ONLINE - Frontend Pendiente
 
 **Última actualización**: 2025-12-23
-**Último commit**: `2f5e84d` - feat(api): implementar servidor HTTP con NestJS + Fastify
+**Backend público**: https://amauta-api.diazignacio.ar ✅
 
 ---
 
@@ -23,6 +23,10 @@
 - **DNS configurados en Cloudflare** ✨ (2025-12-23)
   - `amauta.diazignacio.ar` → Cloudflare proxy
   - `amauta-api.diazignacio.ar` → Cloudflare proxy
+- **Backend accesible públicamente** ✨ (2025-12-23)
+  - URL: https://amauta-api.diazignacio.ar
+  - Health check: `/health` respondiendo OK
+  - SSL/TLS funcionando via Cloudflare + Traefik
 
 ### 🎯 Problemas Resueltos (2025-12-23)
 
@@ -33,34 +37,27 @@
 
 ### ⏸️ Pendiente
 
-- Configurar dominio en Dokploy (Backend)
 - Deployment del Frontend Web en Dokploy
 - Configurar dominio en Dokploy (Frontend)
-- Verificar SSL/TLS y CORS
+- Verificar CORS entre frontend y backend
 
 ---
 
 ## 🎯 Próxima Acción
 
-**DNS configurados en Cloudflare!** Próximos pasos:
+**Backend ONLINE!** Próximos pasos:
 
-1. **Configurar dominio Backend en Dokploy**
-   - Agregar `amauta-api.diazignacio.ar` al servicio amauta-api
-   - HTTPS habilitado (Let's Encrypt automático)
-   - Verificar acceso público
-
-2. **Deploy del Frontend Web en Dokploy**
+1. **Deploy del Frontend Web en Dokploy**
    - Crear aplicación con Dockerfile `apps/web/Dockerfile`
-   - Configurar variables de entorno
+   - Configurar variables de entorno (NEXT_PUBLIC_API_URL, etc.)
    - Build y deploy
 
-3. **Configurar dominio Frontend en Dokploy**
+2. **Configurar dominio Frontend en Dokploy**
    - Agregar `amauta.diazignacio.ar` al servicio web
    - HTTPS habilitado
    - Verificar acceso público
 
-4. **Verificación Final**
-   - Verificar SSL/TLS funcionando
+3. **Verificación Final**
    - Verificar CORS entre frontend y backend
    - Test de funcionamiento completo
 
@@ -102,14 +99,14 @@
 
 - [x] DNS en Cloudflare: `amauta-api.diazignacio.ar` (proxy activado)
 - [x] DNS en Cloudflare: `amauta.diazignacio.ar` (proxy activado)
-- [ ] Configurar dominio Backend en Dokploy
+- [x] Configurar dominio Backend en Dokploy ✅
 - [ ] Configurar dominio Frontend en Dokploy
-- [ ] Verificar SSL/TLS con Traefik
+- [x] Verificar SSL/TLS con Traefik (Backend) ✅
 - [ ] Verificar CORS
 
-### Fase 6: Verificación Final ⏸️
+### Fase 6: Verificación Final 🔄
 
-- [ ] Backend accesible vía dominio
+- [x] Backend accesible vía dominio (https://amauta-api.diazignacio.ar) ✅
 - [ ] Frontend accesible vía dominio
 - [ ] Database migrations aplicadas
 - [ ] Seed data cargada (opcional)
