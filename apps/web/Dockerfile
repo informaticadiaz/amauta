@@ -17,6 +17,9 @@ COPY apps/web/package*.json ./apps/web/
 COPY packages/shared/package*.json ./packages/shared/
 COPY packages/types/package*.json ./packages/types/
 
+# Placeholder para Prisma (requerido durante npm ci en monorepo)
+ENV DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder"
+
 # Instalar todas las dependencias
 RUN npm ci
 
