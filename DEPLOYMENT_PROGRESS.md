@@ -22,7 +22,7 @@
 - **Frontend Next.js 14 configurado** ✨ (2025-12-23)
 - **DNS configurados en Cloudflare** ✨ (2025-12-23)
   - `amauta.diazignacio.ar` → Cloudflare proxy
-  - `api.amauta.diazignacio.ar` → Cloudflare proxy
+  - `amauta-api.diazignacio.ar` → Cloudflare proxy
 
 ### 🎯 Problemas Resueltos (2025-12-23)
 
@@ -45,7 +45,7 @@
 **DNS configurados en Cloudflare!** Próximos pasos:
 
 1. **Configurar dominio Backend en Dokploy**
-   - Agregar `api.amauta.diazignacio.ar` al servicio amauta-api
+   - Agregar `amauta-api.diazignacio.ar` al servicio amauta-api
    - HTTPS habilitado (Let's Encrypt automático)
    - Verificar acceso público
 
@@ -100,7 +100,7 @@
 
 ### Fase 5: Networking y Dominios 🔄
 
-- [x] DNS en Cloudflare: `api.amauta.diazignacio.ar` (proxy activado)
+- [x] DNS en Cloudflare: `amauta-api.diazignacio.ar` (proxy activado)
 - [x] DNS en Cloudflare: `amauta.diazignacio.ar` (proxy activado)
 - [ ] Configurar dominio Backend en Dokploy
 - [ ] Configurar dominio Frontend en Dokploy

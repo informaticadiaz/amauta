@@ -325,7 +325,7 @@ Total: ~2.6GB / 4GB → 65% de uso
    - Branch: main
    - Build: Dockerfile
    - Path: apps/api/Dockerfile
-   - Domain: api.amauta.diazignacio.ar
+   - Domain: amauta-api.diazignacio.ar
    - Env vars: [configurar desde secrets]
 
 6. Agregar Frontend Web
@@ -346,7 +346,7 @@ Total: ~2.6GB / 4GB → 65% de uso
 
 8. Verificar
    - https://amauta.diazignacio.ar
-   - https://api.amauta.diazignacio.ar
+   - https://amauta-api.diazignacio.ar
 ```
 
 ### Lo Que Dokploy Hace Automáticamente
@@ -412,7 +412,7 @@ Total: ~2.6GB / 4GB → 65% de uso
 │                                        │
 │ • amauta-api                           │
 │   Status: ✅ Running                   │
-│   Domain: api.amauta.diazignacio.ar    │
+│   Domain: amauta-api.diazignacio.ar    │
 │   [Logs] [Restart] [Redeploy]         │
 │                                        │
 │ Databases:                             │

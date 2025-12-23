@@ -18,7 +18,7 @@ Antes de empezar, verifica que tienes:
 ### En Cloudflare (DNS)
 
 - ✅ Registro A: `amauta.[TU-DOMINIO]` → IP del VPS
-- ✅ Registro A: `api.amauta.[TU-DOMINIO]` → IP del VPS
+- ✅ Registro A: `amauta-api.[TU-DOMINIO]` → IP del VPS
 - ✅ Proxy activado (naranja)
 - ✅ SSL/TLS: Full (strict)
 
@@ -193,7 +193,7 @@ Environment Variables (click "Add Variable" para cada una):
 NODE_ENV=production
 API_PORT=4000
 API_HOST=0.0.0.0
-API_URL=https://api.amauta.[TU-DOMINIO]
+API_URL=https://amauta-api.[TU-DOMINIO]
 CORS_ORIGIN=https://amauta.[TU-DOMINIO]
 
 DATABASE_URL=postgresql://amauta_user:[POSTGRES_PASSWORD]@amauta-db:5432/amauta_prod?schema=public
@@ -214,7 +214,7 @@ LOG_FORMAT=json
 ```
 Domains:
 1. Click "Add Domain"
-2. Domain: api.amauta.[TU-DOMINIO]
+2. Domain: amauta-api.[TU-DOMINIO]
 3. HTTPS: Enabled (auto con Let's Encrypt)
 4. Redirect HTTP to HTTPS: Yes
 ```
@@ -275,7 +275,7 @@ exit
 **Desde tu navegador**:
 
 ```
-https://api.amauta.[TU-DOMINIO]/health
+https://amauta-api.[TU-DOMINIO]/health
 ```
 
 **Respuesta esperada** (ejemplo):
@@ -291,7 +291,7 @@ https://api.amauta.[TU-DOMINIO]/health
 **Desde terminal**:
 
 ```bash
-curl https://api.amauta.[TU-DOMINIO]/health
+curl https://amauta-api.[TU-DOMINIO]/health
 ```
 
 ---
@@ -325,7 +325,7 @@ PORT=3000
 NEXTAUTH_URL=https://amauta.[TU-DOMINIO]
 NEXTAUTH_SECRET=[COPIAR desde secrets.md - DEBE SER IGUAL AL BACKEND]
 
-NEXT_PUBLIC_API_URL=https://api.amauta.[TU-DOMINIO]
+NEXT_PUBLIC_API_URL=https://amauta-api.[TU-DOMINIO]
 NEXT_PUBLIC_APP_NAME=Amauta
 NEXT_PUBLIC_PWA_ENABLED=true
 ```
@@ -406,7 +406,7 @@ docker stats --no-stream | grep amauta
 
 ```bash
 # Backend health
-curl https://api.amauta.[TU-DOMINIO]/health
+curl https://amauta-api.[TU-DOMINIO]/health
 
 # Frontend accessible
 curl https://amauta.[TU-DOMINIO]
@@ -463,11 +463,11 @@ curl -vI https://amauta.[TU-DOMINIO] 2>&1 | grep -i 'subject\|issuer'
 
 ```bash
 # Test de endpoint público (si existe)
-curl https://api.amauta.[TU-DOMINIO]/api/institutions
+curl https://amauta-api.[TU-DOMINIO]/api/institutions
 
 # Test de endpoint protegido (requiere auth)
 curl -H "Authorization: Bearer TOKEN" \
-     https://api.amauta.[TU-DOMINIO]/api/users
+     https://amauta-api.[TU-DOMINIO]/api/users
 ```
 
 ### Test de Performance
@@ -606,7 +606,7 @@ echo "================================"
 
 # Backend API
 echo -n "Backend API: "
-if curl -sf https://api.amauta.[TU-DOMINIO]/health > /dev/null; then
+if curl -sf https://amauta-api.[TU-DOMINIO]/health > /dev/null; then
     echo "✅ OK"
 else
     echo "❌ FAIL"
@@ -784,7 +784,7 @@ cat backup.sql | docker exec -i amauta-db psql -U amauta_user -d amauta_prod
 
 - [ ] Todos los containers en estado "Running"
 - [ ] Frontend accesible en https://amauta.[TU-DOMINIO]
-- [ ] Backend accesible en https://api.amauta.[TU-DOMINIO]
+- [ ] Backend accesible en https://amauta-api.[TU-DOMINIO]
 - [ ] SSL válido (candado verde)
 - [ ] Base de datos con schema aplicado
 - [ ] Seed data cargado (si corresponde)

@@ -56,14 +56,14 @@ Tu VPS tiene un **sistema robusto de protección y monitoreo** implementado:
 
 ```
 amauta.[TU-DOMINIO]         → Frontend (Next.js PWA)
-api.amauta.[TU-DOMINIO]     → Backend API (NestJS + Fastify)
+amauta-api.[TU-DOMINIO]     → Backend API (NestJS + Fastify)
 ```
 
 **Alternativa** (si quieres separación total):
 
 ```
 amauta.[OTRO-DOMINIO]       → Frontend
-api.amauta.[OTRO-DOMINIO]   → Backend
+amauta-api.[OTRO-DOMINIO]   → Backend
 ```
 
 ### Stack Técnico de Amauta
@@ -123,7 +123,7 @@ apps/web/.env.production.local      🔒 Producción (solo local)
 
 ```env
 NODE_ENV=production
-API_URL=https://api.amauta.[TU-DOMINIO]
+API_URL=https://amauta-api.[TU-DOMINIO]
 DATABASE_URL=postgresql://[USUARIO]:[PASSWORD]@[HOST]:5432/amauta_prod
 JWT_SECRET=<generar con: openssl rand -base64 32>
 SESSION_SECRET=<generar diferente>
@@ -135,7 +135,7 @@ CORS_ORIGIN=https://amauta.[TU-DOMINIO]
 
 ```env
 NODE_ENV=production
-NEXT_PUBLIC_API_URL=https://api.amauta.[TU-DOMINIO]
+NEXT_PUBLIC_API_URL=https://amauta-api.[TU-DOMINIO]
 NEXTAUTH_URL=https://amauta.[TU-DOMINIO]
 NEXTAUTH_SECRET=<mismo que backend>
 ```
@@ -263,7 +263,7 @@ openssl rand -base64 32
 ```bash
 # Registros A o CNAME en Cloudflare
 amauta              A/CNAME    [TU-VPS-IP]    ☁️ Proxy ON
-api.amauta          A/CNAME    [TU-VPS-IP]    ☁️ Proxy ON
+amauta-api          A/CNAME    [TU-VPS-IP]    ☁️ Proxy ON
 
 # SSL/TLS
 Modo: Full (strict)
@@ -315,7 +315,7 @@ Dockerfile: apps/api/Dockerfile
 NODE_ENV=production
 API_PORT=3001
 API_HOST=0.0.0.0
-API_URL=https://api.amauta.[TU-DOMINIO]
+API_URL=https://amauta-api.[TU-DOMINIO]
 DATABASE_URL=postgresql://amauta_user:[PASSWORD]@host.docker.internal:5432/amauta_prod
 JWT_SECRET=[tu-secret-generado]
 SESSION_SECRET=[tu-secret-generado]
@@ -330,7 +330,7 @@ LOG_FORMAT=json
 **3. Configurar dominio**:
 
 ```
-Domain: api.amauta.[TU-DOMINIO]
+Domain: amauta-api.[TU-DOMINIO]
 HTTPS: Enabled (Auto TLS via Traefik)
 Redirect HTTP → HTTPS: Yes
 ```
@@ -339,7 +339,7 @@ Redirect HTTP → HTTPS: Yes
 
 - Trigger build en Dokploy
 - Verificar logs (sin errores)
-- Health check: `curl https://api.amauta.[TU-DOMINIO]/health`
+- Health check: `curl https://amauta-api.[TU-DOMINIO]/health`
 
 ### Fase 5: Migraciones Prisma
 
@@ -378,7 +378,7 @@ Dockerfile: apps/web/Dockerfile
 ```
 NODE_ENV=production
 PORT=3000
-NEXT_PUBLIC_API_URL=https://api.amauta.[TU-DOMINIO]
+NEXT_PUBLIC_API_URL=https://amauta-api.[TU-DOMINIO]
 NEXTAUTH_URL=https://amauta.[TU-DOMINIO]
 NEXTAUTH_SECRET=[mismo que backend]
 NEXT_PUBLIC_APP_NAME=Amauta
@@ -451,7 +451,7 @@ docker exec [postgres-container] pg_dump -U amauta_user amauta_prod > \
 ```bash
 # En /root/scripts/health-check.sh
 # Verificar Amauta API
-curl -f https://api.amauta.[TU-DOMINIO]/health || echo "Amauta API DOWN"
+curl -f https://amauta-api.[TU-DOMINIO]/health || echo "Amauta API DOWN"
 ```
 
 **3. Cron job para backup Amauta** (además del existente):
@@ -685,7 +685,7 @@ docker logs amauta-postgres --tail 50
 
 5. 🌐 **Configurar DNS en Cloudflare**:
    - Registros A/CNAME para `amauta.[TU-DOMINIO]`
-   - Registros A/CNAME para `api.amauta.[TU-DOMINIO]`
+   - Registros A/CNAME para `amauta-api.[TU-DOMINIO]`
    - Proxy activado, SSL/TLS Full (strict)
 
 6. 🔐 **Generar y guardar secrets**:

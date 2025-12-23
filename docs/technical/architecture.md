@@ -993,7 +993,7 @@ Desarrollador → git push → GitHub → Webhook → Dokploy → Deploy automá
 
 - VPS: Dokploy en 72.60.144.210
 - Frontend: https://amauta.diazignacio.ar
-- API: https://api.amauta.diazignacio.ar
+- API: https://amauta-api.diazignacio.ar
 - Base de datos: PostgreSQL en VPS
 - Caché: Redis en VPS
 

@@ -58,19 +58,19 @@ ssh root@[YOUR-SERVER-IP]
 # ❌ MAL
 
 https://amauta.diazignacio.ar
-https://api.amauta.diazignacio.ar
+https://amauta-api.diazignacio.ar
 supabase.diazignacio.ar
 
 # ✅ BIEN
 
 https://amauta.[TU-DOMINIO]
-https://api.amauta.[TU-DOMINIO]
+https://amauta-api.[TU-DOMINIO]
 [subdomain].[TU-DOMINIO]
 
 # ✅ ALTERNATIVA
 
 https://amauta.example.com
-https://api.amauta.example.com
+https://amauta-api.example.com
 ```
 
 ### 3. Credenciales de Base de Datos
@@ -357,7 +357,7 @@ docker logs [edge-functions-container]
 ```env
 DATABASE_URL=postgresql://amauta:SecureP@ss123@192.168.1.100:5432/amauta_prod
 JWT_SECRET=kX9mP2vL8qR4sT7wY3nA6bE1cF5gH0jK
-API_URL=https://api.amauta.diazignacio.ar
+API_URL=https://amauta-api.diazignacio.ar
 ```
 
 **✅ VERSIÓN SANITIZADA**:
@@ -365,7 +365,7 @@ API_URL=https://api.amauta.diazignacio.ar
 ```env
 DATABASE_URL=postgresql://[usuario]:[password]@[host]:5432/amauta_prod
 JWT_SECRET=[GENERAR CON: openssl rand -base64 32]
-API_URL=https://api.amauta.[TU-DOMINIO]
+API_URL=https://amauta-api.[TU-DOMINIO]
 ```
 
 ### Ejemplo 3: Script de Deployment

@@ -148,7 +148,7 @@ utils/
 ```typescript
 // Constantes globales
 const MAX_FILE_SIZE = 10485760;
-const API_BASE_URL = 'https://api.amauta.org';
+const API_BASE_URL = 'https://amauta-api.example.org';
 
 // Config local
 const defaultPaginationSize = 20;
