@@ -19,6 +19,10 @@
 - Migraciones de base de datos ejecutadas
 - 14 commits de fixes iterativos (problemas resueltos)
 - **Servidor HTTP con NestJS + Fastify implementado** ✨ (2025-12-23)
+- **Frontend Next.js 14 configurado** ✨ (2025-12-23)
+- **DNS configurados en Cloudflare** ✨ (2025-12-23)
+  - `amauta.diazignacio.ar` → Cloudflare proxy
+  - `api.amauta.diazignacio.ar` → Cloudflare proxy
 
 ### 🎯 Problemas Resueltos (2025-12-23)
 
@@ -29,35 +33,36 @@
 
 ### ⏸️ Pendiente
 
-- Deployment del Frontend Web (requiere Next.js - Issue #20)
-- Configuración de dominios y SSL
-- Redeploy del Backend con servidor HTTP real
+- Configurar dominio en Dokploy (Backend)
+- Deployment del Frontend Web en Dokploy
+- Configurar dominio en Dokploy (Frontend)
+- Verificar SSL/TLS y CORS
 
 ---
 
 ## 🎯 Próxima Acción
 
-**Servidor NestJS + Fastify implementado!** Próximos pasos:
+**DNS configurados en Cloudflare!** Próximos pasos:
 
-1. **Redeploy del Backend** (push + redeploy en Dokploy)
-   - Push de commits locales a GitHub
-   - Trigger redeploy en Dokploy
-   - Verificar healthcheck `/health` funciona
+1. **Configurar dominio Backend en Dokploy**
+   - Agregar `api.amauta.diazignacio.ar` al servicio amauta-api
+   - HTTPS habilitado (Let's Encrypt automático)
+   - Verificar acceso público
 
-2. **Configurar Next.js en Frontend** (Issue #20)
-   - Instalar Next.js 14 con App Router
-   - Crear página inicial
-   - Actualizar Dockerfile
-
-3. **Deploy del Frontend Web** (T-017 continuar)
-   - Configurar aplicación en Dokploy
-   - Variables de entorno del Frontend
+2. **Deploy del Frontend Web en Dokploy**
+   - Crear aplicación con Dockerfile `apps/web/Dockerfile`
+   - Configurar variables de entorno
    - Build y deploy
 
-4. **Configurar Dominios y SSL**
-   - Backend: api.amauta.diazignacio.ar
-   - Frontend: amauta.diazignacio.ar
-   - Traefik configurará SSL automáticamente
+3. **Configurar dominio Frontend en Dokploy**
+   - Agregar `amauta.diazignacio.ar` al servicio web
+   - HTTPS habilitado
+   - Verificar acceso público
+
+4. **Verificación Final**
+   - Verificar SSL/TLS funcionando
+   - Verificar CORS entre frontend y backend
+   - Test de funcionamiento completo
 
 ---
 
@@ -93,10 +98,12 @@
 - [ ] Desplegar aplicación
 - [ ] Healthcheck pasando
 
-### Fase 5: Networking y Dominios ⏸️
+### Fase 5: Networking y Dominios 🔄
 
-- [ ] Configurar dominio Backend (api.amauta.diazignacio.ar)
-- [ ] Configurar dominio Frontend (amauta.diazignacio.ar)
+- [x] DNS en Cloudflare: `api.amauta.diazignacio.ar` (proxy activado)
+- [x] DNS en Cloudflare: `amauta.diazignacio.ar` (proxy activado)
+- [ ] Configurar dominio Backend en Dokploy
+- [ ] Configurar dominio Frontend en Dokploy
 - [ ] Verificar SSL/TLS con Traefik
 - [ ] Verificar CORS
 
