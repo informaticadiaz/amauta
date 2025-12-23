@@ -30,9 +30,8 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copiar dependencias
+# Copiar dependencias (en monorepo con workspaces, todo está en node_modules raíz)
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/apps/web/node_modules ./apps/web/node_modules
 
 # Copiar archivos de configuración
 COPY package*.json ./
