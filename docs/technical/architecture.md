@@ -25,7 +25,7 @@ Amauta es una plataforma educativa progresiva (PWA) construida con una arquitect
 ┌─────────────────────────────────────────────────────────┐
 │                    SERVIDOR BACKEND                      │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
-│  │   Express/   │  │  Auth        │  │  Redis       │  │
+│  │   NestJS +   │  │  Auth        │  │  Redis       │  │
 │  │   Fastify    │  │  Middleware  │  │  (Cache)     │  │
 │  └──────────────┘  └──────────────┘  └──────────────┘  │
 │                           │                              │

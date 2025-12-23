@@ -2,8 +2,8 @@
 
 ## Estado Actual: 🟢 Backend API Deployado y Funcionando
 
-**Última actualización**: 2025-12-22
-**Último commit**: `6213f16` - fix: mantener contenedor activo después de ejecutar index.js
+**Última actualización**: 2025-12-23
+**Último commit**: `2f5e84d` - feat(api): implementar servidor HTTP con NestJS + Fastify
 
 ---
 
@@ -18,39 +18,46 @@
 - **Backend API deployado y funcionando** ✨
 - Migraciones de base de datos ejecutadas
 - 14 commits de fixes iterativos (problemas resueltos)
+- **Servidor HTTP con NestJS + Fastify implementado** ✨ (2025-12-23)
 
-### 🎯 Problemas Resueltos (2025-12-22)
+### 🎯 Problemas Resueltos (2025-12-23)
 
 1. **Docker cache persistente** - Limpiado builder cache (1.187GB)
 2. **@types/node faltante** - Agregado a devDependencies de apps/api
 3. **Contenedor terminaba** - CMD actualizado para mantener activo
+4. **Servidor HTTP placeholder** - Implementado NestJS + Fastify con endpoints reales
 
 ### ⏸️ Pendiente
 
-- Deployment del Frontend Web
+- Deployment del Frontend Web (requiere Next.js - Issue #20)
 - Configuración de dominios y SSL
-- Implementación de servidor HTTP (NestJS/Fastify)
+- Redeploy del Backend con servidor HTTP real
 
 ---
 
 ## 🎯 Próxima Acción
 
-**Backend API está funcionando!** Próximos pasos:
+**Servidor NestJS + Fastify implementado!** Próximos pasos:
 
-1. **Deploy del Frontend Web** (T-017 continuar)
+1. **Redeploy del Backend** (push + redeploy en Dokploy)
+   - Push de commits locales a GitHub
+   - Trigger redeploy en Dokploy
+   - Verificar healthcheck `/health` funciona
+
+2. **Configurar Next.js en Frontend** (Issue #20)
+   - Instalar Next.js 14 con App Router
+   - Crear página inicial
+   - Actualizar Dockerfile
+
+3. **Deploy del Frontend Web** (T-017 continuar)
    - Configurar aplicación en Dokploy
    - Variables de entorno del Frontend
    - Build y deploy
 
-2. **Configurar Dominios y SSL**
+4. **Configurar Dominios y SSL**
    - Backend: api.amauta.diazignacio.ar
    - Frontend: amauta.diazignacio.ar
    - Traefik configurará SSL automáticamente
-
-3. **Implementar Servidor HTTP Real**
-   - Elegir entre NestJS o Fastify
-   - Crear endpoints básicos
-   - Remover placeholder
 
 ---
 
@@ -77,7 +84,8 @@
 - [x] Build exitoso (problemas de cache resueltos)
 - [x] Container running (2 instancias activas)
 - [x] Ejecutar migraciones
-- [x] Contenedor estable con placeholder
+- [x] Servidor NestJS + Fastify implementado (Issue #19)
+- [ ] Redeploy con servidor HTTP real (pendiente push)
 
 ### Fase 4: Frontend Web ⏸️
 
@@ -142,9 +150,9 @@
 
 ---
 
-## ⚠️ Problema Actual (SIN RESOLVER)
+## ✅ Problemas Anteriores (RESUELTOS)
 
-### Docker Cache Persistente en deps-build Stage
+### Docker Cache Persistente en deps-build Stage (Resuelto)
 
 **Síntoma:**
 
@@ -155,18 +163,19 @@
 error TS2688: Cannot find type definition file for 'node'
 ```
 
-**Intentos de Fix:**
-
-- ✅ Comentarios en Dockerfile (no funcionó)
-- ✅ ARG CACHEBUST=1 (no funcionó)
-- ⏸️ Pendiente: Limpiar builder cache en VPS
-
-**Solución Propuesta:**
+**Solución aplicada:**
 
 ```bash
 ssh root@72.60.144.210
 docker builder prune -af
 ```
+
+### Servidor HTTP Placeholder (Resuelto 2025-12-23)
+
+- **Problema**: Backend usaba `tail -f /dev/null` como placeholder
+- **Solución**: Implementado NestJS + Fastify con endpoints reales
+- **Commit**: `2f5e84d`
+- **Endpoints**: `/health`, `/`, `/api/v1/info`
 
 ---
 
@@ -247,14 +256,14 @@ docker system df
 
 ## 🎯 Métricas
 
-- **Commits de deployment**: 10
-- **Problemas resueltos**: 5
-- **Problemas pendientes**: 1 (cache de Docker)
-- **Servicios funcionando**: 2/4 (PostgreSQL, Redis)
-- **Progreso general**: ~60%
+- **Commits de deployment**: 14+
+- **Problemas resueltos**: 6
+- **Problemas pendientes**: 0
+- **Servicios funcionando**: 3/4 (PostgreSQL, Redis, Backend API)
+- **Progreso general**: ~70%
 
 ---
 
 **Mantenedor**: Claude Code
-**Última sesión**: 2025-12-19
-**Siguiente paso**: Limpiar Docker cache y redeploy
+**Última sesión**: 2025-12-23
+**Siguiente paso**: Push, redeploy backend, configurar Frontend (Issue #20)
