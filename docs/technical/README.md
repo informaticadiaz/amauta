@@ -1,5 +1,18 @@
 # Documentación Técnica - Amauta
 
+## 🟢 Estado de Producción
+
+El proyecto está **EN PRODUCCIÓN**:
+
+| Servicio    | URL                               |
+| ----------- | --------------------------------- |
+| Frontend    | https://amauta.diazignacio.ar     |
+| Backend API | https://amauta-api.diazignacio.ar |
+
+Ver [DEPLOYMENT_PROGRESS.md](../../DEPLOYMENT_PROGRESS.md) para estado detallado del deployment.
+
+---
+
 ## Índice
 
 ### Fundamentos
@@ -20,11 +33,12 @@
 ### Seguridad y Deployment
 
 8. [⭐ Índice de Seguridad](./SECURITY_README.md) - **LEER PRIMERO**
-9. [Análisis VPS y Deployment](./vps-deployment-analysis.md)
-10. [🚀 Guía de Deployment con Dokploy UI](./dokploy-ui-deployment-guide.md) - **Paso a paso para deployment en producción**
-11. [Almacenamiento de Datos Sensibles](./PRIVATE_DATA_STORAGE.md)
-12. [Repositorio Privado](./PRIVATE_REPO_REFERENCE.md)
-13. [Guía de Sanitización](../.github/SECURITY_SANITIZATION.md)
+9. [📊 Estado del Deployment](../../DEPLOYMENT_PROGRESS.md) - **Estado actual de producción**
+10. [Análisis VPS y Deployment](./vps-deployment-analysis.md)
+11. [🚀 Guía de Deployment con Dokploy UI](./dokploy-ui-deployment-guide.md) - **Paso a paso para deployment en producción**
+12. [Almacenamiento de Datos Sensibles](./PRIVATE_DATA_STORAGE.md)
+13. [Repositorio Privado](./PRIVATE_REPO_REFERENCE.md)
+14. [Guía de Sanitización](../../.github/SECURITY_SANITIZATION.md)
 
 ## Propósito
 
