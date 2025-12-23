@@ -177,7 +177,7 @@ exit
 3. Seleccionar "Git Repository"
 4. Configurar Source:
    - Repository URL: https://github.com/informaticadiaz/amauta
-   - Branch: main
+   - Branch: master
    - Build Type: Dockerfile
    - Dockerfile Path: apps/api/Dockerfile
    - Build Context: . (raíz del repo)
@@ -306,7 +306,7 @@ curl https://amauta-api.[TU-DOMINIO]/health
 3. Seleccionar "Git Repository"
 4. Configurar Source:
    - Repository URL: https://github.com/informaticadiaz/amauta
-   - Branch: main
+   - Branch: master
    - Build Type: Dockerfile
    - Dockerfile Path: apps/web/Dockerfile
    - Build Context: . (raíz del repo)
@@ -522,7 +522,7 @@ echo "# Test auto-deploy" >> README.md
 # Commit y push
 git add README.md
 git commit -m "test: verificar auto-deploy de Dokploy"
-git push origin main
+git push origin master
 
 # En Dokploy UI:
 # - Deberías ver nuevo deployment iniciado automáticamente
