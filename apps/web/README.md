@@ -6,10 +6,10 @@ Frontend de Amauta - Aplicación Next.js PWA
 
 🚧 **Pendiente configuración**
 
-Este workspace está preparado pero requiere configuración completa que se hará en próximos issues:
+Este workspace está preparado pero requiere configuración completa:
 
-- [ ] Issue #5 (T-009): Configurar TypeScript
-- [ ] Futuro: Configurar Next.js 14+
+- [x] Issue #5 (T-009): Configurar TypeScript - ✅ Completado
+- [ ] Issue #20 (T-019): Configurar Next.js 14+ - 🎯 **Siguiente**
 - [ ] Futuro: Configurar Tailwind CSS
 - [ ] Futuro: Configurar PWA con Workbox
 - [ ] Futuro: Configurar Zustand para state management

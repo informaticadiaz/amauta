@@ -565,14 +565,19 @@ docker logs amauta-postgres --tail 50
 
 ## 🚀 Roadmap Sugerido
 
-### Fase 0 (Actual - 76% completado)
+### Fase 0 (Actual - 78% completado)
+
+**Completado recientemente**:
+
+- ✅ T-018: Servidor HTTP con NestJS + Fastify (issue #19)
 
 **Tareas restantes**:
 
-1. ✅ T-014bis: Expandir CI (issue #10) - Próxima recomendada
+1. 🎯 T-019: Configurar Next.js en Frontend (issue #20) - **Próxima recomendada**
 2. ⏳ T-014: Crear seed data (issue #15)
-3. ⏳ T-015: Crear diagramas (issue #16)
-4. ⏳ T-016: Documentar API (issue #17)
+3. ⏳ T-014bis: Expandir CI (issue #10)
+4. ⏳ T-015: Crear diagramas (issue #16)
+5. ⏳ T-016: Documentar API (issue #17)
 
 **NO hacer deployment todavía** - Fase 0 es fundamentos.
 
@@ -587,14 +592,12 @@ docker logs amauta-postgres --tail 50
 5. Configurar Dokploy (2 aplicaciones)
 6. Documentar proceso completo
 
-**Duración estimada**: 2-3 días (8 puntos story, según issue #18)
-
 ### Fase 1 (MVP)
 
 **Con infraestructura lista**:
 
-1. Implementar backend NestJS + Fastify
-2. Implementar frontend Next.js
+1. ✅ Backend NestJS + Fastify implementado
+2. Implementar frontend Next.js (en progreso - issue #20)
 3. Auth y usuarios básicos
 4. Deploy automático desde día 1
 5. Testing en producción durante desarrollo
@@ -661,9 +664,11 @@ docker logs amauta-postgres --tail 50
 ### Inmediatas (Hoy/Esta Semana)
 
 1. ✅ **Completar Fase 0** antes de pensar en deployment:
-   - Hacer T-014bis (Expandar CI) - issue #10
-   - Hacer T-014 (Seed data) - issue #15
-   - Hacer T-015 y T-016 (docs) - issues #16, #17
+   - ✅ T-018: Backend NestJS + Fastify (issue #19) - Completado
+   - 🎯 T-019: Configurar Next.js en Frontend (issue #20) - **Siguiente**
+   - ⏳ T-014: Crear seed data (issue #15)
+   - ⏳ T-014bis: Expandir CI (issue #10)
+   - ⏳ T-015 y T-016 (docs) - issues #16, #17
 
 2. 📚 **Estudiar este análisis** para familiarizarte con el plan
 
@@ -696,13 +701,13 @@ docker logs amauta-postgres --tail 50
    - Documentar proceso real (ajustar si necesario)
    - Hacer deployment de prueba
 
-8. 🏗️ **Implementar backend NestJS + Fastify** (Fase 1):
-   - Módulos básicos (auth, usuarios, cursos)
-   - Endpoints REST
-   - Integración con Prisma
-   - Health check endpoint
+8. ✅ **Backend NestJS + Fastify** (completado - issue #19):
+   - Servidor HTTP básico implementado
+   - Pendiente: módulos de auth, usuarios, cursos
+   - Pendiente: endpoints REST completos
+   - Pendiente: integración con Prisma
 
-9. 🎨 **Implementar frontend Next.js** (Fase 1):
+9. 🎨 **Frontend Next.js** (en progreso - issue #20):
    - App Router, Server Components
    - PWA configuration
    - Integración con backend API
@@ -809,9 +814,11 @@ deployment/
 
 ### Issues Relevantes
 
+- Issue #20: T-019 Configurar Next.js en Frontend - 🎯 **Siguiente**
+- Issue #19: T-018 Servidor HTTP NestJS + Fastify - ✅ Completado
 - Issue #18: T-017 Configurar deployment VPS (8 puntos)
-- Issue #10: T-014bis Expandar CI
 - Issue #15: T-014 Crear seed data
+- Issue #10: T-014bis Expandir CI
 - Issues #16, #17: Documentación
 
 ### Comandos Útiles (Genéricos)
