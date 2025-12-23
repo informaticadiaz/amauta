@@ -12,19 +12,19 @@
 6. [🐳 Guía de Puertos y Redes en Docker](./docker-ports-networking-guide.md) - **Para desarrolladores nuevos en Docker**
 7. [📦 Entendiendo Dokploy](./understanding-dokploy-deployment.md) - **Cómo funciona Dokploy con múltiples proyectos**
 
-### API y Testing
+### API y Testing (Pendientes)
 
-8. [API Reference](./api-reference.md)
-9. [Testing](./testing.md)
+- [ ] API Reference (`api-reference.md`) - Issue #17
+- [ ] Testing (`testing.md`)
 
 ### Seguridad y Deployment
 
-10. [⭐ Índice de Seguridad](./SECURITY_README.md) - **LEER PRIMERO**
-11. [Análisis VPS y Deployment](./vps-deployment-analysis.md)
-12. [🚀 Guía de Deployment con Dokploy UI](./dokploy-ui-deployment-guide.md) - **Paso a paso para deployment en producción**
-13. [Almacenamiento de Datos Sensibles](./PRIVATE_DATA_STORAGE.md)
-14. [Repositorio Privado](./PRIVATE_REPO_REFERENCE.md)
-15. [Guía de Sanitización](../.github/SECURITY_SANITIZATION.md)
+8. [⭐ Índice de Seguridad](./SECURITY_README.md) - **LEER PRIMERO**
+9. [Análisis VPS y Deployment](./vps-deployment-analysis.md)
+10. [🚀 Guía de Deployment con Dokploy UI](./dokploy-ui-deployment-guide.md) - **Paso a paso para deployment en producción**
+11. [Almacenamiento de Datos Sensibles](./PRIVATE_DATA_STORAGE.md)
+12. [Repositorio Privado](./PRIVATE_REPO_REFERENCE.md)
+13. [Guía de Sanitización](../.github/SECURITY_SANITIZATION.md)
 
 ## Propósito
 
@@ -36,7 +36,6 @@ Para contribuir al proyecto, consulta primero:
 
 - [Guía de Configuración](./setup.md) - Para preparar tu entorno de desarrollo
 - [Estándares de Código](./coding-standards.md) - Para mantener la consistencia del código
-- [Testing](./testing.md) - Para asegurar la calidad del código
 - [Índice de Seguridad](./SECURITY_README.md) - Para manejo de datos sensibles
 
 ### Para Desarrolladores Nuevos

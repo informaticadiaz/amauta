@@ -2,12 +2,23 @@
 
 ## Índice
 
+### Planificación
+
 1. [Roadmap del Proyecto](./roadmap.md)
 2. [Metodología Ágil](./metodologia.md)
 3. [Gestión de Sprints](./sprints.md)
 4. [Planificación de Tareas](./tareas.md)
-5. [Roles y Responsabilidades](./roles.md)
-6. [Proceso de Release](./releases.md)
+
+### Seguimiento
+
+5. [Tareas Fase 0](./fase-0-tareas.md) - Tareas de la fase actual
+6. [Backlog](./backlog.md) - Lista priorizada de trabajo pendiente
+7. [Project Board](./project-board.md) - Tablero de seguimiento
+
+### Pendientes de Crear
+
+- [ ] Roles y Responsabilidades (`roles.md`)
+- [ ] Proceso de Release (`releases.md`)
 
 ## Propósito
 
