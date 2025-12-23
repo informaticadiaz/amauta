@@ -96,6 +96,5 @@ USER nestjs
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD node -e "require('http').get('http://localhost:4000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
 
-# Comando de inicio
-# Nota: Cuando tengamos NestJS implementado, será: node dist/main.js
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js && echo 'API placeholder - Manteniendo contenedor activo' && tail -f /dev/null"]
+# Comando de inicio: migrar base de datos y arrancar NestJS
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
