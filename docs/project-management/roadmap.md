@@ -12,18 +12,26 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 
 ---
 
-## Fase 0: Fundamentos (Actual - 76% Completado)
+## Fase 0: Fundamentos (Actual - 89% Completado)
 
 **Duración estimada**: 2 semanas
-**Progreso**: 13/17 tareas completadas
+**Progreso**: 16/18 tareas completadas
 **Iniciado**: 01/12/2024
 **Estimado de finalización**: 31/12/2024
+
+### 🟢 Producción
+
+| Servicio    | URL                               |
+| ----------- | --------------------------------- |
+| Frontend    | https://amauta.diazignacio.ar     |
+| Backend API | https://amauta-api.diazignacio.ar |
 
 ### Objetivos
 
 - Establecer bases del proyecto
 - Configurar infraestructura de desarrollo
 - Documentación inicial
+- Deployment en producción
 
 ### Entregables
 
@@ -40,10 +48,11 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 - [x] Prisma ORM con schema completo (15 modelos) - T-013
 - [x] Entorno de desarrollo documentado
 - [x] Estrategia de seguridad para variables de entorno
+- [x] Servidor HTTP con NestJS + Fastify - T-018
+- [x] Frontend con Next.js configurado - T-019
+- [x] Deployment en producción con Dokploy - T-017
 - [ ] Seed data para base de datos - T-014
 - [ ] Expandir CI con lint, type-check y build - T-014bis
-- [ ] Diagramas de arquitectura - T-015
-- [ ] Documentar API endpoints - T-016
 
 ---
 

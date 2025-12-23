@@ -1,5 +1,20 @@
 # Documentación de Gestión de Proyecto - Amauta
 
+## 🟢 Estado de Producción
+
+El proyecto está **EN PRODUCCIÓN**:
+
+| Servicio    | URL                               |
+| ----------- | --------------------------------- |
+| Frontend    | https://amauta.diazignacio.ar     |
+| Backend API | https://amauta-api.diazignacio.ar |
+
+**Fase 0**: 89% completado (16/18 tareas)
+
+Ver [DEPLOYMENT_PROGRESS.md](../../DEPLOYMENT_PROGRESS.md) para estado detallado.
+
+---
+
 ## Índice
 
 ### Planificación
@@ -15,10 +30,10 @@
 6. [Backlog](./backlog.md) - Lista priorizada de trabajo pendiente
 7. [Project Board](./project-board.md) - Tablero de seguimiento
 
-### Pendientes de Crear
+### Equipo y Procesos
 
-- [ ] Roles y Responsabilidades (`roles.md`)
-- [ ] Proceso de Release (`releases.md`)
+8. [Roles y Responsabilidades](./roles.md) - Estructura del equipo
+9. [Proceso de Releases](./releases.md) - Versionado y deployment
 
 ## Propósito
 

@@ -1,7 +1,16 @@
 # Product Backlog - Amauta
 
-**Última actualización**: 2024-12-18
+**Última actualización**: 2024-12-23
 **Product Owner**: [Por definir]
+
+## 🟢 Estado de Producción
+
+| Servicio    | URL                               |
+| ----------- | --------------------------------- |
+| Frontend    | https://amauta.diazignacio.ar     |
+| Backend API | https://amauta-api.diazignacio.ar |
+
+**Fase 0**: 89% completado (16/18 tareas)
 
 ## Cómo usar este documento
 
@@ -16,70 +25,83 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ## Sprint Actual: Sprint 0 (Fase 0)
 
-**Fechas**: 18/12/2024 - 31/12/2024
-**Objetivo**: Establecer fundamentos técnicos y de gestión del proyecto
+**Fechas**: 01/12/2024 - 31/12/2024
+**Objetivo**: Establecer fundamentos técnicos y de gestión del proyecto + Deployment en producción
 **Capacidad**: 25 puntos (estimado para primer sprint)
 
 ### Comprometido para Sprint 0
 
-| ID    | Tarea                              | Estimación | Asignado | Estado   | Prioridad |
-| ----- | ---------------------------------- | ---------- | -------- | -------- | --------- |
-| T-001 | Configurar .gitignore              | 1          | -        | 📋 To Do | Must      |
-| T-002 | Definir licencia del proyecto      | 1          | -        | 📋 To Do | Must      |
-| T-005 | Configurar GitHub Actions para CI  | 5          | -        | 📋 To Do | Must      |
-| T-008 | Inicializar estructura de monorepo | 5          | -        | 📋 To Do | Must      |
-| T-009 | Configurar TypeScript              | 3          | -        | 📋 To Do | Must      |
-| T-010 | Configurar ESLint y Prettier       | 3          | -        | 📋 To Do | Must      |
-| T-011 | Configurar variables de entorno    | 2          | -        | 📋 To Do | Must      |
-| T-012 | Configurar PostgreSQL              | 3          | -        | 📋 To Do | Must      |
-| T-013 | Configurar Prisma                  | 5          | -        | 📋 To Do | Must      |
+| ID     | Tarea                              | Estimación | Asignado | Estado   | Prioridad |
+| ------ | ---------------------------------- | ---------- | -------- | -------- | --------- |
+| T-001  | Configurar .gitignore              | 1          | Claude   | ✅ Done  | Must      |
+| T-002  | Definir licencia del proyecto      | 1          | Claude   | ✅ Done  | Must      |
+| T-003  | Crear Code of Conduct              | 2          | Claude   | ✅ Done  | Should    |
+| T-004  | Crear Contributing Guidelines      | 3          | Claude   | ✅ Done  | Should    |
+| T-005  | Configurar GitHub Actions para CI  | 5          | Claude   | ✅ Done  | Must      |
+| T-006  | Configurar tests en CI             | 3          | Claude   | ✅ Done  | Must      |
+| T-007  | Configurar pre-commit hooks        | 3          | Claude   | ✅ Done  | Should    |
+| T-008  | Inicializar estructura de monorepo | 5          | Claude   | ✅ Done  | Must      |
+| T-009  | Configurar TypeScript              | 3          | Claude   | ✅ Done  | Must      |
+| T-010  | Configurar ESLint y Prettier       | 3          | Claude   | ✅ Done  | Must      |
+| T-011  | Configurar variables de entorno    | 2          | Claude   | ✅ Done  | Must      |
+| T-012  | Configurar PostgreSQL + Redis      | 3          | Claude   | ✅ Done  | Must      |
+| T-013  | Configurar Prisma                  | 5          | Claude   | ✅ Done  | Must      |
+| T-017  | Deployment en producción (Dokploy) | 8          | Claude   | ✅ Done  | Must      |
+| T-018  | Servidor HTTP NestJS + Fastify     | 5          | Claude   | ✅ Done  | Must      |
+| T-019  | Configurar Next.js en Frontend     | 5          | Claude   | ✅ Done  | Must      |
+| T-014  | Crear seed data                    | 3          | -        | 📋 To Do | Should    |
+| T-014b | Expandir CI (lint, type-check)     | 3          | -        | 📋 To Do | Should    |
 
-**Total comprometido**: 28 puntos
+**Total comprometido**: 63 puntos | **Completados**: 57 puntos (90%)
 
 ---
 
 ## Backlog Priorizado
 
-### FASE 0: Fundamentos (Sprint 0)
+### FASE 0: Fundamentos (Sprint 0) - 89% Completado
 
-#### Must Have (Crítico para completar Fase 0)
+#### Must Have (Crítico para completar Fase 0) ✅
 
 | ID    | Historia/Tarea                     | Estimación | Estado  | Sprint   |
 | ----- | ---------------------------------- | ---------- | ------- | -------- |
-| T-001 | Configurar .gitignore              | 1          | Ready   | Sprint 0 |
-| T-002 | Definir licencia del proyecto      | 1          | Ready   | Sprint 0 |
-| T-005 | Configurar GitHub Actions para CI  | 5          | Ready   | Sprint 0 |
-| T-006 | Configurar tests en CI             | 3          | Backlog | Sprint 0 |
-| T-008 | Inicializar estructura de monorepo | 5          | Ready   | Sprint 0 |
-| T-009 | Configurar TypeScript              | 3          | Ready   | Sprint 0 |
-| T-010 | Configurar ESLint y Prettier       | 3          | Ready   | Sprint 0 |
-| T-011 | Configurar variables de entorno    | 2          | Ready   | Sprint 0 |
-| T-012 | Configurar PostgreSQL              | 3          | Ready   | Sprint 0 |
-| T-013 | Configurar Prisma                  | 5          | Ready   | Sprint 0 |
+| T-001 | Configurar .gitignore              | 1          | ✅ Done | Sprint 0 |
+| T-002 | Definir licencia del proyecto      | 1          | ✅ Done | Sprint 0 |
+| T-005 | Configurar GitHub Actions para CI  | 5          | ✅ Done | Sprint 0 |
+| T-006 | Configurar tests en CI             | 3          | ✅ Done | Sprint 0 |
+| T-008 | Inicializar estructura de monorepo | 5          | ✅ Done | Sprint 0 |
+| T-009 | Configurar TypeScript              | 3          | ✅ Done | Sprint 0 |
+| T-010 | Configurar ESLint y Prettier       | 3          | ✅ Done | Sprint 0 |
+| T-011 | Configurar variables de entorno    | 2          | ✅ Done | Sprint 0 |
+| T-012 | Configurar PostgreSQL + Redis      | 3          | ✅ Done | Sprint 0 |
+| T-013 | Configurar Prisma                  | 5          | ✅ Done | Sprint 0 |
+| T-017 | Deployment en producción (Dokploy) | 8          | ✅ Done | Sprint 0 |
+| T-018 | Servidor HTTP NestJS + Fastify     | 5          | ✅ Done | Sprint 0 |
+| T-019 | Configurar Next.js en Frontend     | 5          | ✅ Done | Sprint 0 |
 
-**Subtotal Must Have Fase 0**: 31 puntos
+**Subtotal Must Have Fase 0**: 49 puntos (100% completados)
 
 #### Should Have (Importante pero no bloqueante)
 
-| ID    | Historia/Tarea                  | Estimación | Estado  | Sprint   |
-| ----- | ------------------------------- | ---------- | ------- | -------- |
-| T-003 | Crear Code of Conduct           | 2          | Backlog | Sprint 0 |
-| T-004 | Crear Contributing Guidelines   | 3          | Backlog | Sprint 0 |
-| T-007 | Configurar pre-commit hooks     | 3          | Backlog | Sprint 0 |
-| T-014 | Crear seed data                 | 3          | Backlog | Sprint 0 |
-| T-015 | Crear diagramas de arquitectura | 3          | Backlog | Sprint 0 |
+| ID     | Historia/Tarea                 | Estimación | Estado  | Sprint   |
+| ------ | ------------------------------ | ---------- | ------- | -------- |
+| T-003  | Crear Code of Conduct          | 2          | ✅ Done | Sprint 0 |
+| T-004  | Crear Contributing Guidelines  | 3          | ✅ Done | Sprint 0 |
+| T-007  | Configurar pre-commit hooks    | 3          | ✅ Done | Sprint 0 |
+| T-014  | Crear seed data                | 3          | Backlog | Sprint 0 |
+| T-014b | Expandir CI (lint, type-check) | 3          | Backlog | Sprint 0 |
 
-**Subtotal Should Have Fase 0**: 14 puntos
+**Subtotal Should Have Fase 0**: 14 puntos (8 completados, 6 pendientes)
 
 #### Could Have (Deseable si hay tiempo)
 
-| ID     | Historia/Tarea                             | Estimación | Estado  | Sprint |
-| ------ | ------------------------------------------ | ---------- | ------- | ------ |
-| T-016  | Documentar API endpoints (preparación)     | 2          | Backlog | Futuro |
-| DT-001 | Configurar Docker para desarrollo completo | 5          | Backlog | Futuro |
-| DT-002 | Configurar herramienta de monitoreo        | 3          | Backlog | Futuro |
+| ID     | Historia/Tarea                             | Estimación | Estado  | Sprint   |
+| ------ | ------------------------------------------ | ---------- | ------- | -------- |
+| T-015  | Crear diagramas de arquitectura            | 3          | Backlog | Futuro   |
+| T-016  | Documentar API endpoints (preparación)     | 2          | Backlog | Futuro   |
+| DT-001 | Configurar Docker para desarrollo completo | 5          | ✅ Done | Sprint 0 |
+| DT-002 | Configurar herramienta de monitoreo        | 3          | Backlog | Futuro   |
 
-**Subtotal Could Have Fase 0**: 10 puntos
+**Subtotal Could Have Fase 0**: 13 puntos (5 completados)
 
 ---
 
@@ -193,18 +215,19 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 - **Must Have**: 110+ puntos
 - **Should Have**: 31+ puntos
-- **Could Have**: 10+ puntos
+- **Could Have**: 13+ puntos
 
 ### Distribución por Fase
 
-- **Fase 0**: 55 puntos (en progreso)
+- **Fase 0**: 76 puntos (89% completado - 62 puntos done)
 - **Fase 1**: 110 puntos
 - **Fase 2**: 31 puntos
 
 ### Backlog Health
 
-- **Ready for Development**: 10 items
-- **Needs Refinement**: 35+ items
+- **Done**: 16 items (Fase 0)
+- **Ready for Development**: 2 items (T-014, T-014b)
+- **Needs Refinement**: 35+ items (Fase 1+)
 - **Blocked**: 0 items
 
 ---
@@ -257,5 +280,5 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 - Las prioridades pueden ajustarse según feedback de usuarios
 - Nuevas historias pueden agregarse en cualquier momento
 
-**Última revisión**: Sprint 0
-**Próxima revisión**: Sprint Planning Sprint 1
+**Última revisión**: 23/12/2024
+**Próxima revisión**: Sprint Planning Sprint 1 (Enero 2025)
