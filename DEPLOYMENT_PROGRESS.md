@@ -5,6 +5,19 @@
 **Última actualización**: 2025-12-23
 **Backend público**: https://amauta-api.diazignacio.ar ✅
 
+### 🚀 Para retomar (próxima sesión)
+
+```bash
+# 1. Verificar backend sigue online
+curl https://amauta-api.diazignacio.ar/health
+
+# 2. Ir a Dokploy UI
+# http://72.60.144.210:3000
+
+# 3. Seguir guía: docs/technical/dokploy-ui-deployment-guide.md
+# Sección: Fase 6 - Desplegar Frontend Web
+```
+
 ---
 
 ## 📊 Resumen Ejecutivo
