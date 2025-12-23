@@ -443,11 +443,11 @@ La Fase 0 estará completa cuando:
 - [x] Estructura de proyecto lista (Turborepo + monorepo)
 - [x] Base de datos configurada con Prisma (PostgreSQL + schema completo)
 - [x] Backend NestJS + Fastify configurado (issue #19)
-- [ ] Frontend Next.js configurado (issue #20)
+- [x] Frontend Next.js configurado (issue #20)
 - [ ] Documentación técnica completa (falta diagramas de arquitectura)
 - [ ] Seed data para desarrollo
 - [ ] Al menos 1 desarrollador puede clonar y ejecutar el proyecto sin ayuda
 
 **Iniciado**: 01/12/2024
-**Progreso actual**: 78% (14/18 tareas)
+**Progreso actual**: 83% (15/18 tareas)
 **Fecha objetivo**: 31/12/2024

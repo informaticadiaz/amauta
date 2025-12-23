@@ -194,15 +194,15 @@ gh issue close <número> --comment "✅ Tarea completada..."
 - ✅ T-012: PostgreSQL 15 + Redis 7 con Docker (issue #8)
 - ✅ T-013: Prisma ORM con schema completo (issue #9)
 - ✅ T-018: Servidor HTTP con NestJS + Fastify (issue #19)
+- ✅ T-019: Configurar Next.js en Frontend (issue #20)
 
 ### En Progreso (Fase 0)
 
-- 🚧 Fase 0: Fundamentos y documentación - 78% completado (14/18 tareas)
+- 🚧 Fase 0: Fundamentos y documentación - 83% completado (15/18 tareas)
 
 ### Pendiente (Orden de Prioridad)
 
-- 🎯 **SIGUIENTE**: T-019: Configurar Next.js en Frontend (issue #20)
-- ⏳ T-014: Crear seed data (issue #15)
+- 🎯 **SIGUIENTE**: T-014: Crear seed data (issue #15)
 - ⏳ T-014bis: Expandir CI con lint, type-check y build (issue #10)
 - ⏳ T-015: Crear diagramas de arquitectura (issue #16)
 - ⏳ T-016: Documentar API endpoints (issue #17)

@@ -4,23 +4,32 @@ Frontend de Amauta - Aplicación Next.js PWA
 
 ## Estado Actual
 
-🚧 **Pendiente configuración**
+✅ **Next.js 14 configurado** (Issue #20 - T-019)
 
-Este workspace está preparado pero requiere configuración completa:
+### Completado
 
-- [x] Issue #5 (T-009): Configurar TypeScript - ✅ Completado
-- [ ] Issue #20 (T-019): Configurar Next.js 14+ - 🎯 **Siguiente**
-- [ ] Futuro: Configurar Tailwind CSS
-- [ ] Futuro: Configurar PWA con Workbox
-- [ ] Futuro: Configurar Zustand para state management
+- [x] Next.js 14.2 con App Router
+- [x] TypeScript en modo strict
+- [x] Estructura de carpetas App Router
+- [x] Página inicial de Amauta
+- [x] Estilos con CSS Modules y dark mode
+- [x] Output standalone para Docker
+- [x] Dockerfile optimizado para producción
+- [x] Validación de variables de entorno con Zod
 
-## Tecnologías Planeadas
+### Pendiente
 
-- **Next.js 14+** con App Router
+- [ ] Configurar Tailwind CSS
+- [ ] Configurar PWA con Workbox
+- [ ] Configurar Zustand para state management
+- [ ] Integrar con API backend
+
+## Tecnologías
+
+- **Next.js 14.2** con App Router
+- **React 18**
 - **TypeScript** en modo strict
-- **Tailwind CSS** para estilos
-- **Zustand** para state management
-- **Workbox** para PWA y service workers
+- **Zod** para validación de env vars
 
 ## Desarrollo
 
@@ -28,19 +37,62 @@ Este workspace está preparado pero requiere configuración completa:
 # Desde la raíz del monorepo
 npm run dev
 
-# Solo este workspace (cuando esté configurado)
+# Solo este workspace
 npm run dev --workspace=@amauta/web
+
+# Build de producción
+npm run build --workspace=@amauta/web
+
+# Verificar tipos
+npm run type-check --workspace=@amauta/web
 ```
 
-## Estructura (Futura)
+## Estructura
 
 ```
 apps/web/
 ├── src/
-│   ├── app/           # App Router de Next.js
-│   ├── components/    # Componentes React
-│   ├── lib/          # Utilidades y helpers
-│   └── styles/       # Estilos globales
-├── public/           # Assets estáticos
+│   ├── app/              # App Router de Next.js
+│   │   ├── layout.tsx    # Layout raíz con metadata
+│   │   ├── page.tsx      # Página principal
+│   │   ├── globals.css   # Estilos globales
+│   │   └── icon.svg      # Favicon
+│   └── config/
+│       └── env.ts        # Validación de variables de entorno
+├── public/               # Assets estáticos
+├── next.config.js        # Configuración de Next.js
+├── Dockerfile            # Build multi-stage para producción
 └── package.json
 ```
+
+## Variables de Entorno
+
+Ver `.env.example` para la lista completa. Variables principales:
+
+| Variable              | Descripción          | Requerida  |
+| --------------------- | -------------------- | ---------- |
+| `NEXT_PUBLIC_API_URL` | URL del backend API  | Sí         |
+| `NEXT_PUBLIC_APP_URL` | URL de la aplicación | Sí         |
+| `NEXTAUTH_SECRET`     | Secret para NextAuth | Producción |
+
+## Docker
+
+El Dockerfile está configurado para producción con output standalone:
+
+```bash
+# Build de imagen
+docker build -t amauta-web -f apps/web/Dockerfile .
+
+# Ejecutar
+docker run -p 3000:3000 amauta-web
+```
+
+## Scripts
+
+| Script       | Descripción                   |
+| ------------ | ----------------------------- |
+| `dev`        | Inicia servidor de desarrollo |
+| `build`      | Genera build de producción    |
+| `start`      | Inicia servidor de producción |
+| `lint`       | Ejecuta ESLint                |
+| `type-check` | Verifica tipos TypeScript     |
