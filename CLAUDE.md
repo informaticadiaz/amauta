@@ -223,39 +223,44 @@ gh issue close <número> --comment "✅ Tarea completada..."
 
 ## Estado Actual del Proyecto
 
-### Completado (Fase 0)
+> **Nota**: Esta sección usa comandos dinámicos para evitar desactualización.
+> La fuente de verdad es `docs/project-management/backlog.md`.
 
-- ✅ T-001: .gitignore configurado (issue #1)
-- ✅ T-002: Licencia AGPL-3.0 establecida (issue #2)
-- ✅ T-003: Código de Conducta creado (issue #11)
-- ✅ T-004: Guía de Contribución creada (issue #12)
-- ✅ T-005: GitHub Actions CI configurado (issue #3)
-- ✅ T-006: Placeholders de tests en CI (issue #13)
-- ✅ T-007: Pre-commit hooks con Husky (issue #14)
-- ✅ T-008: Estructura de monorepo con Turborepo (issue #4)
-- ✅ T-009: TypeScript configurado con strict mode (issue #5)
-- ✅ T-010: ESLint y Prettier configurados (issue #6)
-- ✅ T-011: Variables de entorno con validación Zod (issue #7)
-- ✅ T-012: PostgreSQL 15 + Redis 7 con Docker (issue #8)
-- ✅ T-013: Prisma ORM con schema completo (issue #9)
-- ✅ T-017: Deployment en VPS con Dokploy (issue #18) - **PRODUCCIÓN ONLINE**
-- ✅ T-018: Servidor HTTP con NestJS + Fastify (issue #19)
-- ✅ T-019: Configurar Next.js en Frontend (issue #20)
+### Consultar Estado en Tiempo Real
 
-### En Progreso (Fase 0)
+```bash
+# Ver todos los issues abiertos
+gh issue list --limit 50
 
-- 🚧 Fase 0: Fundamentos y documentación - 89% completado (16/18 tareas)
+# Ver issues por label/fase
+gh issue list --label "phase-0"
+gh issue list --label "phase-1"
 
-### Completado Recientemente
+# Ver issues cerrados recientemente
+gh issue list --state closed --limit 10
 
-- ✅ T-017: Configurar deployment en VPS con Dokploy (issue #18) - **2025-12-23**
+# Ver detalle de un issue específico
+gh issue view <número>
+```
 
-### Pendiente (Orden de Prioridad)
+### Fuentes de Verdad (Documentos Autoritativos)
 
-- 🎯 **SIGUIENTE**: T-014: Crear seed data (issue #15)
-- ⏳ T-014bis: Expandir CI con lint, type-check y build (issue #10)
-- ⏳ T-015: Crear diagramas de arquitectura (issue #16)
-- ⏳ T-016: Documentar API endpoints (issue #17)
+| Información            | Documento                                    |
+| ---------------------- | -------------------------------------------- |
+| **Backlog completo**   | `docs/project-management/backlog.md`         |
+| **Tareas Fase 0**      | `docs/project-management/fase-0-tareas.md`   |
+| **Tablero visual**     | `docs/project-management/project-board.md`   |
+| **Roadmap general**    | `docs/project-management/roadmap.md`         |
+| **Sistema de gestión** | `docs/project-management/sistema-gestion.md` |
+
+### Estado de Producción
+
+| Servicio    | URL                               | Estado    |
+| ----------- | --------------------------------- | --------- |
+| Frontend    | https://amauta.diazignacio.ar     | 🟢 Online |
+| Backend API | https://amauta-api.diazignacio.ar | 🟢 Online |
+
+Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ## Notas para Claude Code
 

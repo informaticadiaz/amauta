@@ -186,6 +186,45 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
+### Épica Transversal: Contenido Curricular Argentino
+
+**Estado**: Backlog (Investigación completada)
+**Prioridad**: Could Have
+**Issue**: #21
+**Dependencias**: Puede desarrollarse en paralelo con otras fases
+
+#### Contexto
+
+Los NAP (Núcleos de Aprendizajes Prioritarios) son los contenidos curriculares mínimos obligatorios del sistema educativo argentino. Integrarlos permitirá alinear Amauta con la currícula oficial.
+
+**Investigación completada** (ver `docs/technical/database.md`):
+
+- Fuente: educ.ar / argentina.gob.ar
+- Formato: PDFs parseables (no existe API ni dataset estructurado)
+- Cobertura: Inicial, Primaria (2 ciclos), Secundaria (2 ciclos)
+- Áreas: 8 disciplinas curriculares
+
+#### Tareas
+
+| ID     | Tarea                                   | Estimación | Estado  | Sprint |
+| ------ | --------------------------------------- | ---------- | ------- | ------ |
+| NAP-01 | Catalogar y descargar PDFs de NAP (~15) | 2          | Backlog | TBD    |
+| NAP-02 | Desarrollar parser PDF → JSON           | 5          | Backlog | TBD    |
+| NAP-03 | Diseñar modelo de datos curricular      | 3          | Backlog | TBD    |
+| NAP-04 | Mapear NAP → Categorías/Cursos          | 2          | Backlog | TBD    |
+| NAP-05 | Generar seed data alineado con NAP      | 3          | Backlog | TBD    |
+| NAP-06 | Documentar estructura curricular        | 2          | Backlog | TBD    |
+
+**Estimación total**: 17 puntos (preliminar, a refinar en planning)
+
+#### Referencias
+
+- Issue: https://github.com/informaticadiaz/amauta/issues/21
+- NAP Oficial: https://www.argentina.gob.ar/nucleos-de-aprendizaje-prioritarios
+- Colección: https://www.educ.ar/recursos/150199/
+
+---
+
 ## Bugs y Issues
 
 Actualmente no hay bugs reportados (proyecto en fase inicial).
@@ -215,19 +254,21 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 - **Must Have**: 110+ puntos
 - **Should Have**: 31+ puntos
-- **Could Have**: 13+ puntos
+- **Could Have**: 30+ puntos (incluye NAP: 17 puntos)
 
 ### Distribución por Fase
 
 - **Fase 0**: 76 puntos (89% completado - 62 puntos done)
 - **Fase 1**: 110 puntos
 - **Fase 2**: 31 puntos
+- **Épica Transversal NAP**: 17 puntos (issue #21)
 
 ### Backlog Health
 
 - **Done**: 16 items (Fase 0)
 - **Ready for Development**: 2 items (T-014, T-014b)
 - **Needs Refinement**: 35+ items (Fase 1+)
+- **Research Done**: 1 item (NAP #21 - investigación completada)
 - **Blocked**: 0 items
 
 ---
