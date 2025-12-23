@@ -17,23 +17,27 @@ Ver [DEPLOYMENT_PROGRESS.md](../../DEPLOYMENT_PROGRESS.md) para estado detallado
 
 ## Índice
 
+### Introducción
+
+1. [Sistema de Gestión](./sistema-gestion.md) - **Empezar aquí** - Guía completa del sistema
+
 ### Planificación
 
-1. [Roadmap del Proyecto](./roadmap.md)
-2. [Metodología Ágil](./metodologia.md)
-3. [Gestión de Sprints](./sprints.md)
-4. [Planificación de Tareas](./tareas.md)
+2. [Roadmap del Proyecto](./roadmap.md)
+3. [Metodología Ágil](./metodologia.md)
+4. [Gestión de Sprints](./sprints.md)
+5. [Planificación de Tareas](./tareas.md)
 
 ### Seguimiento
 
-5. [Tareas Fase 0](./fase-0-tareas.md) - Tareas de la fase actual
-6. [Backlog](./backlog.md) - Lista priorizada de trabajo pendiente
-7. [Project Board](./project-board.md) - Tablero de seguimiento
+6. [Tareas Fase 0](./fase-0-tareas.md) - Tareas de la fase actual
+7. [Backlog](./backlog.md) - Lista priorizada de trabajo pendiente
+8. [Project Board](./project-board.md) - Tablero de seguimiento
 
 ### Equipo y Procesos
 
-8. [Roles y Responsabilidades](./roles.md) - Estructura del equipo
-9. [Proceso de Releases](./releases.md) - Versionado y deployment
+9. [Roles y Responsabilidades](./roles.md) - Estructura del equipo
+10. [Proceso de Releases](./releases.md) - Versionado y deployment
 
 ## Propósito
 

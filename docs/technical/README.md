@@ -15,30 +15,52 @@ Ver [DEPLOYMENT_PROGRESS.md](../../DEPLOYMENT_PROGRESS.md) para estado detallado
 
 ## Índice
 
+### Para Empezar (Onboarding)
+
+1. [⭐ Guía de Onboarding](./onboarding.md) - **EMPEZAR AQUÍ** - Configuración paso a paso
+2. [📋 Cheatsheet](./cheatsheet.md) - Referencia rápida de comandos
+3. [📖 Glosario](../glosario.md) - Terminología del proyecto
+
 ### Fundamentos
 
-1. [Arquitectura del Sistema](./architecture.md)
-2. [Guía de Configuración](./setup.md)
-3. [Estándares de Código](./coding-standards.md)
-4. [Base de Datos](./database.md)
-5. [Variables de Entorno](./environment-variables.md)
-6. [🐳 Guía de Puertos y Redes en Docker](./docker-ports-networking-guide.md) - **Para desarrolladores nuevos en Docker**
-7. [📦 Entendiendo Dokploy](./understanding-dokploy-deployment.md) - **Cómo funciona Dokploy con múltiples proyectos**
+4. [Arquitectura del Sistema](./architecture.md)
+5. [Guía de Configuración](./setup.md)
+6. [Estándares de Código](./coding-standards.md)
+7. [Base de Datos](./database.md)
+8. [Variables de Entorno](./environment-variables.md)
 
-### API y Testing (Pendientes)
+### Guías de Desarrollo
 
-- [ ] API Reference (`api-reference.md`) - Issue #17
-- [ ] Testing (`testing.md`)
+9. [🧪 Testing](./testing.md) - Cómo escribir y ejecutar tests
+10. [🔧 Patrones y Recetas](./patterns.md) - Soluciones a problemas comunes
+11. [👁️ Code Review](./code-review.md) - Proceso y criterios de revisión
+12. [🐛 Debugging](./debugging.md) - Cómo diagnosticar problemas
+13. [🔒 Seguridad para Devs](./security-guide.md) - Prácticas de seguridad
+14. [⚡ Performance](./performance.md) - Optimización y métricas
+
+### Decisiones Arquitectónicas (ADR)
+
+15. [ADR Index](./adr/README.md) - Registro de decisiones arquitectónicas
+    - [001 - Monorepo con Turborepo](./adr/001-monorepo-turborepo.md)
+    - [002 - NestJS + Fastify](./adr/002-nestjs-fastify.md)
+    - [003 - Prisma ORM](./adr/003-prisma-orm.md)
+    - [004 - Next.js App Router](./adr/004-nextjs-app-router.md)
+    - [005 - Deployment con Dokploy](./adr/005-deployment-dokploy.md)
+
+### Docker y Deployment
+
+16. [🐳 Guía de Puertos y Redes en Docker](./docker-ports-networking-guide.md)
+17. [📦 Entendiendo Dokploy](./understanding-dokploy-deployment.md)
+18. [🚀 Deployment con Dokploy UI](./dokploy-ui-deployment-guide.md)
 
 ### Seguridad y Deployment
 
-8. [⭐ Índice de Seguridad](./SECURITY_README.md) - **LEER PRIMERO**
-9. [📊 Estado del Deployment](../../DEPLOYMENT_PROGRESS.md) - **Estado actual de producción**
-10. [Análisis VPS y Deployment](./vps-deployment-analysis.md)
-11. [🚀 Guía de Deployment con Dokploy UI](./dokploy-ui-deployment-guide.md) - **Paso a paso para deployment en producción**
-12. [Almacenamiento de Datos Sensibles](./PRIVATE_DATA_STORAGE.md)
-13. [Repositorio Privado](./PRIVATE_REPO_REFERENCE.md)
-14. [Guía de Sanitización](../../.github/SECURITY_SANITIZATION.md)
+19. [⭐ Índice de Seguridad](./SECURITY_README.md) - **LEER PRIMERO**
+20. [📊 Estado del Deployment](../../DEPLOYMENT_PROGRESS.md) - **Estado actual de producción**
+21. [Análisis VPS y Deployment](./vps-deployment-analysis.md)
+22. [Almacenamiento de Datos Sensibles](./PRIVATE_DATA_STORAGE.md)
+23. [Repositorio Privado](./PRIVATE_REPO_REFERENCE.md)
+24. [Guía de Sanitización](../../.github/SECURITY_SANITIZATION.md)
 
 ## Propósito
 

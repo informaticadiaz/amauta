@@ -52,6 +52,7 @@ amauta/
 └── docs/
     ├── project-management/
     │   ├── README.md
+    │   ├── sistema-gestion.md         # ⭐ Guía completa del sistema de gestión
     │   ├── metodologia.md
     │   ├── roadmap.md
     │   ├── sprints.md
@@ -59,17 +60,33 @@ amauta/
     │   ├── fase-0-tareas.md
     │   ├── backlog.md
     │   └── project-board.md
+    ├── glosario.md                      # Terminología del proyecto
     └── technical/
         ├── README.md
+        ├── onboarding.md                  # ⭐ Guía día 1-3 para nuevos devs
+        ├── cheatsheet.md                  # Referencia rápida de comandos
         ├── architecture.md
         ├── coding-standards.md
         ├── database.md
         ├── setup.md
         ├── environment-variables.md
-        ├── SECURITY_README.md              # ⭐ Índice de seguridad
-        ├── vps-deployment-analysis.md      # Plan de deployment
-        ├── PRIVATE_DATA_STORAGE.md         # Almacenamiento seguro
-        └── PRIVATE_REPO_REFERENCE.md       # Repo privado
+        ├── testing.md                     # Guía de testing
+        ├── patterns.md                    # Patrones y recetas
+        ├── code-review.md                 # Proceso de code review
+        ├── debugging.md                   # Guía de debugging
+        ├── security-guide.md              # Seguridad para devs (OWASP)
+        ├── performance.md                 # Optimización y métricas
+        ├── SECURITY_README.md             # Índice de seguridad
+        ├── vps-deployment-analysis.md     # Plan de deployment
+        ├── PRIVATE_DATA_STORAGE.md        # Almacenamiento seguro
+        ├── PRIVATE_REPO_REFERENCE.md      # Repo privado
+        └── adr/                           # Decisiones arquitectónicas
+            ├── README.md
+            ├── 001-monorepo-turborepo.md
+            ├── 002-nestjs-fastify.md
+            ├── 003-prisma-orm.md
+            ├── 004-nextjs-app-router.md
+            └── 005-deployment-dokploy.md
 ```
 
 ## Convenciones del Proyecto
@@ -105,6 +122,32 @@ amauta/
 - `docs/technical/setup.md` - Guía de configuración
 - `docs/technical/environment-variables.md` - Estrategia de variables de entorno
 
+#### Formación para Desarrolladores ⭐
+
+**Para Empezar (Onboarding)**:
+
+- `docs/technical/onboarding.md` - ⭐ **EMPEZAR AQUÍ** - Guía día 1-3
+- `docs/technical/cheatsheet.md` - Referencia rápida de comandos
+- `docs/glosario.md` - Terminología del proyecto
+
+**Guías de Desarrollo**:
+
+- `docs/technical/testing.md` - Cómo escribir y ejecutar tests
+- `docs/technical/patterns.md` - Patrones y recetas comunes
+- `docs/technical/code-review.md` - Proceso de code review
+- `docs/technical/debugging.md` - Diagnóstico de problemas
+- `docs/technical/security-guide.md` - Seguridad (OWASP Top 10)
+- `docs/technical/performance.md` - Optimización y métricas
+
+**Decisiones Arquitectónicas (ADR)**:
+
+- `docs/technical/adr/README.md` - Índice de ADRs
+- `docs/technical/adr/001-monorepo-turborepo.md` - Por qué Turborepo
+- `docs/technical/adr/002-nestjs-fastify.md` - Por qué NestJS + Fastify
+- `docs/technical/adr/003-prisma-orm.md` - Por qué Prisma
+- `docs/technical/adr/004-nextjs-app-router.md` - Por qué App Router
+- `docs/technical/adr/005-deployment-dokploy.md` - Por qué Dokploy
+
 #### Seguridad y Deployment
 
 - `docs/technical/SECURITY_README.md` - ⭐ Índice maestro de seguridad
@@ -122,6 +165,7 @@ amauta/
 
 ### Documentación de Gestión
 
+- `docs/project-management/sistema-gestion.md` - ⭐ **Guía completa del sistema de gestión** (empezar aquí)
 - `docs/project-management/README.md` - Índice de gestión
 - `docs/project-management/roadmap.md` - Roadmap del proyecto
 - `docs/project-management/fase-0-tareas.md` - Tareas de Fase 0
