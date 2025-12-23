@@ -99,13 +99,18 @@ amauta/
 
 ## Estado del Proyecto
 
-🚧 **En desarrollo activo** - Fase 0: Fundamentos (76% infraestructura, 0% funcionalidad)
+🟢 **EN PRODUCCIÓN** - Fase 0: Fundamentos (89% completado)
+
+### 🌐 URLs de Producción
+
+- **Frontend**: https://amauta.diazignacio.ar
+- **Backend API**: https://amauta-api.diazignacio.ar
 
 Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de desarrollo.
 
 ### Fases
 
-- 🚧 **Fase 0**: Fundamentos y documentación (13/17 tareas completadas)
+- 🟢 **Fase 0**: Fundamentos y documentación (16/18 tareas completadas)
   - ✅ Repositorio y estructura configurada
   - ✅ CI/CD básico con GitHub Actions
   - ✅ Monorepo con Turborepo
@@ -115,9 +120,10 @@ Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de des
   - ✅ Variables de entorno con validación Zod
   - ✅ PostgreSQL 15 + Redis 7 configurados con Docker
   - ✅ Prisma ORM con schema completo (15 modelos)
-  - ✅ **Decisiones técnicas tomadas**: NestJS + Fastify, Docker obligatorio
-  - 🔄 **Backend API**: Pendiente de implementación (será NestJS + Fastify)
-  - 🔄 **Próximo**: Implementar NestJS + Fastify, luego Seed data o Expandir CI
+  - ✅ Backend API con NestJS + Fastify
+  - ✅ Frontend con Next.js 14 (App Router)
+  - ✅ **Deployment en producción** (Dokploy en VPS)
+  - 🔄 **Pendiente**: Seed data, diagramas de arquitectura
 - 📋 **Fase 1**: MVP - Plataforma de cursos básica (próximo)
 - 📋 **Fase 2**: Offline-First & PWA
 - 📋 **Fase 3**: Evaluaciones y certificaciones
@@ -234,11 +240,11 @@ npm run dev:web          # Solo frontend
 npm run prisma:studio --workspace=@amauta/api  # Interface gráfica (localhost:5555)
 ```
 
-### 🚧 Estado del Proyecto
+### 🟢 Estado del Proyecto
 
-**Fase 0: Fundamentos** (76% completado - 13/17 tareas)
+**Fase 0: Fundamentos** (89% completado - 16/18 tareas)
 
-✅ **Configurado:**
+✅ **Configurado y en Producción:**
 
 - Monorepo con Turborepo
 - TypeScript con strict mode
@@ -247,15 +253,16 @@ npm run prisma:studio --workspace=@amauta/api  # Interface gráfica (localhost:5
 - Variables de entorno con validación Zod
 - PostgreSQL 15 + Redis 7 (Docker)
 - Prisma ORM con 15 modelos
+- Backend NestJS + Fastify
+- Frontend Next.js 14
+- **Deployment en producción** (Dokploy)
 
 ⏳ **Pendiente:**
 
 - Seed data para base de datos
-- Expandir CI con validaciones completas
 - Diagramas de arquitectura
-- Documentación de API endpoints
 
-Ver [Estado Completo](#estado-del-proyecto) más abajo para detalles.
+Ver [Estado Completo](#estado-del-proyecto) más arriba para detalles.
 
 ---
 
@@ -387,7 +394,7 @@ A todas las personas que creen en la educación como derecho fundamental y contr
 
 ## Status
 
-![Build Status](https://img.shields.io/badge/build-pending-yellow)
+![Production](https://img.shields.io/badge/production-online-brightgreen)
 ![Version](https://img.shields.io/badge/version-0.1.0--alpha-blue)
 ![License](https://img.shields.io/badge/license-AGPL--3.0-blue)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)

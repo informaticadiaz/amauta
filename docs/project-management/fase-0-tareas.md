@@ -357,6 +357,50 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 
 ---
 
+## Feature 6: Deployment en Producción
+
+**Como** equipo de desarrollo
+**Quiero** tener el sistema deployado en producción
+**Para** que los usuarios puedan acceder a la plataforma
+
+### Criterios de Aceptación
+
+- [x] VPS configurado con Dokploy
+- [x] PostgreSQL en producción
+- [x] Redis en producción
+- [x] Backend API deployado y accesible
+- [x] Frontend deployado y accesible
+- [x] SSL/TLS configurado
+- [x] Dominios configurados
+
+### Tareas Técnicas
+
+#### T-017: Configurar deployment en VPS con Dokploy
+
+**Estimación**: 8 puntos
+**Prioridad**: Must Have
+**Labels**: `infrastructure`, `deployment`
+**Estado**: ✅ Completado (2025-12-23)
+
+**Checklist:**
+
+- [x] Configurar proyecto en Dokploy
+- [x] Desplegar PostgreSQL 15
+- [x] Desplegar Redis 7
+- [x] Crear Dockerfiles optimizados (multi-stage)
+- [x] Configurar variables de entorno de producción
+- [x] Desplegar Backend API (NestJS + Fastify)
+- [x] Desplegar Frontend (Next.js)
+- [x] Configurar dominios y SSL
+- [x] Verificar health checks
+
+**URLs de Producción:**
+
+- Frontend: https://amauta.diazignacio.ar
+- Backend API: https://amauta-api.diazignacio.ar
+
+---
+
 ## Deuda Técnica y Mejoras
 
 ### DT-001: Configurar Docker para desarrollo completo
@@ -449,5 +493,6 @@ La Fase 0 estará completa cuando:
 - [ ] Al menos 1 desarrollador puede clonar y ejecutar el proyecto sin ayuda
 
 **Iniciado**: 01/12/2024
-**Progreso actual**: 83% (15/18 tareas)
+**Progreso actual**: 89% (16/18 tareas)
 **Fecha objetivo**: 31/12/2024
+**Estado de Producción**: 🟢 ONLINE (2025-12-23)

@@ -113,11 +113,12 @@ amauta/
 - `docs/technical/PRIVATE_REPO_REFERENCE.md` - Referencia a repositorio privado
 - `.github/SECURITY_SANITIZATION.md` - Guía de sanitización de datos sensibles
 
-**⭐ Repositorio Privado - Estado del Deployment:**
+**⭐ Estado del Deployment: 🟢 COMPLETADO**
 
-- **Ubicación**: `/home/ignacio/devhome/amauta-deployment-private/deployment/status/`
-- **Inicio rápido**: `cat deployment/status/INICIO-RAPIDO-DEPLOYMENT.md`
-- **Estado actual**: 45% completado (PostgreSQL y Redis funcionando)
+- **Frontend**: https://amauta.diazignacio.ar ✅
+- **Backend API**: https://amauta-api.diazignacio.ar ✅
+- **Servicios**: PostgreSQL, Redis, Backend, Frontend - todos online
+- **Detalles**: Ver `DEPLOYMENT_PROGRESS.md`
 
 ### Documentación de Gestión
 
@@ -193,12 +194,17 @@ gh issue close <número> --comment "✅ Tarea completada..."
 - ✅ T-011: Variables de entorno con validación Zod (issue #7)
 - ✅ T-012: PostgreSQL 15 + Redis 7 con Docker (issue #8)
 - ✅ T-013: Prisma ORM con schema completo (issue #9)
+- ✅ T-017: Deployment en VPS con Dokploy (issue #18) - **PRODUCCIÓN ONLINE**
 - ✅ T-018: Servidor HTTP con NestJS + Fastify (issue #19)
 - ✅ T-019: Configurar Next.js en Frontend (issue #20)
 
 ### En Progreso (Fase 0)
 
-- 🚧 Fase 0: Fundamentos y documentación - 83% completado (15/18 tareas)
+- 🚧 Fase 0: Fundamentos y documentación - 89% completado (16/18 tareas)
+
+### Completado Recientemente
+
+- ✅ T-017: Configurar deployment en VPS con Dokploy (issue #18) - **2025-12-23**
 
 ### Pendiente (Orden de Prioridad)
 
@@ -206,7 +212,6 @@ gh issue close <número> --comment "✅ Tarea completada..."
 - ⏳ T-014bis: Expandir CI con lint, type-check y build (issue #10)
 - ⏳ T-015: Crear diagramas de arquitectura (issue #16)
 - ⏳ T-016: Documentar API endpoints (issue #17)
-- ⏳ T-017: Configurar deployment en VPS con Dokploy (issue #18)
 
 ## Notas para Claude Code
 
