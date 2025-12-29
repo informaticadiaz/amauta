@@ -4,6 +4,38 @@
 > **Objetivo**: Analizar los 21 PDFs de NAP para extraer contenido estructurado
 > **Estado**: En progreso
 
+## Orden de Análisis
+
+**Criterio**: Por nivel educativo (progresión natural del sistema educativo argentino)
+
+| #   | Archivo                                            | Nivel                | Estado       |
+| --- | -------------------------------------------------- | -------------------- | ------------ |
+| 1   | `inicial/nap-educacion-inicial.pdf`                | Inicial              | ⬜ Pendiente |
+| 2   | `primaria/nap-primaria-1er-ciclo.pdf`              | Primaria 1º-3º       | ⬜ Pendiente |
+| 3   | `primaria/nap-primaria-2do-ciclo.pdf`              | Primaria 4º-6º       | ⬜ Pendiente |
+| 4   | `septimo/nap-septimo-anio.pdf`                     | Séptimo / Transición | ⬜ Pendiente |
+| 5   | `secundaria-basico/nap-matematica.pdf`             | Sec. Básico          | ⬜ Pendiente |
+| 6   | `secundaria-basico/nap-lengua.pdf`                 | Sec. Básico          | ⬜ Pendiente |
+| 7   | `secundaria-basico/nap-ciencias-naturales.pdf`     | Sec. Básico          | ⬜ Pendiente |
+| 8   | `secundaria-basico/nap-ciencias-sociales.pdf`      | Sec. Básico          | ⬜ Pendiente |
+| 9   | `secundaria-basico/nap-formacion-etica.pdf`        | Sec. Básico          | ⬜ Pendiente |
+| 10  | `secundaria-basico/nap-educacion-artistica.pdf`    | Sec. Básico          | ⬜ Pendiente |
+| 11  | `secundaria-basico/nap-educacion-fisica.pdf`       | Sec. Básico          | ⬜ Pendiente |
+| 12  | `secundaria-basico/nap-educacion-tecnologica.pdf`  | Sec. Básico          | ⬜ Pendiente |
+| 13  | `secundaria-orientado/nap-matematica.pdf`          | Sec. Orientado       | ⬜ Pendiente |
+| 14  | `secundaria-orientado/nap-lengua-literatura.pdf`   | Sec. Orientado       | ⬜ Pendiente |
+| 15  | `secundaria-orientado/nap-ciencias-naturales.pdf`  | Sec. Orientado       | ⬜ Pendiente |
+| 16  | `secundaria-orientado/nap-ciencias-sociales.pdf`   | Sec. Orientado       | ⬜ Pendiente |
+| 17  | `secundaria-orientado/nap-filosofia-etica.pdf`     | Sec. Orientado       | ⬜ Pendiente |
+| 18  | `secundaria-orientado/nap-educacion-artistica.pdf` | Sec. Orientado       | ⬜ Pendiente |
+| 19  | `secundaria-orientado/nap-educacion-fisica.pdf`    | Sec. Orientado       | ⬜ Pendiente |
+| 20  | `transversales/nap-lenguas-extranjeras.pdf`        | Transversal          | ⬜ Pendiente |
+| 21  | `transversales/nap-educacion-digital.pdf`          | Transversal          | ⬜ Pendiente |
+
+**Leyenda**: ⬜ Pendiente | 🔄 En progreso | ✅ Completado
+
+---
+
 ## Resumen de Progreso
 
 | Nivel                | Total  | Analizados | Pendientes |
