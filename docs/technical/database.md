@@ -766,7 +766,133 @@ psql -U usuario amauta_prod < backup_20231215.sql
 - Auditoría con `createdAt`/`updatedAt`
 - Soft deletes con campo `activo`/`eliminado`
 
+## Estructura Curricular NAP (Verificada)
+
+> **Fuente**: Investigación realizada el 29/12/2024 sobre fuentes oficiales.
+> Esta sección documenta la estructura real de los NAP para alinear Amauta con la currícula argentina.
+
+### ¿Qué son los NAP?
+
+Los **Núcleos de Aprendizajes Prioritarios** son los contenidos mínimos obligatorios que todos los estudiantes argentinos deben aprender, establecidos por el Consejo Federal de Educación. Constituyen una base común para la enseñanza en todo el país.
+
+### Fuentes Oficiales
+
+| Fuente                          | URL                                                                        | Contenido                             |
+| ------------------------------- | -------------------------------------------------------------------------- | ------------------------------------- |
+| Portal Educ.ar                  | https://www.educ.ar/recursos/150199/                                       | Colección completa de 22 cuadernillos |
+| Argentina.gob.ar                | https://www.argentina.gob.ar/educacion/nucleos-de-aprendizaje-prioritarios | Página oficial con enlaces            |
+| Biblioteca Nacional del Maestro | http://www.bnm.me.gov.ar                                                   | PDFs históricos                       |
+
+### Áreas Curriculares (10)
+
+| #   | Área                                       | Slug propuesto          | Icono         |
+| --- | ------------------------------------------ | ----------------------- | ------------- |
+| 1   | Matemática                                 | `matematica`            | `calculator`  |
+| 2   | Lengua y Literatura                        | `lengua-literatura`     | `book-open`   |
+| 3   | Ciencias Naturales                         | `ciencias-naturales`    | `flask`       |
+| 4   | Ciencias Sociales                          | `ciencias-sociales`     | `globe`       |
+| 5   | Formación Ética y Ciudadana                | `etica-ciudadana`       | `scale`       |
+| 6   | Educación Artística                        | `educacion-artistica`   | `palette`     |
+| 7   | Educación Física                           | `educacion-fisica`      | `dumbbell`    |
+| 8   | Educación Tecnológica                      | `educacion-tecnologica` | `cog`         |
+| 9   | Lenguas Extranjeras                        | `lenguas-extranjeras`   | `languages`   |
+| 10  | Educación Digital, Programación y Robótica | `educacion-digital`     | `laptop-code` |
+
+> **Nota**: El issue #21 mencionaba 8 áreas. La investigación confirmó que son **10 áreas** incluyendo Lenguas Extranjeras y Educación Digital.
+
+### Niveles Educativos
+
+| Nivel                      | Código                 | Años/Grados       | Edad aproximada |
+| -------------------------- | ---------------------- | ----------------- | --------------- |
+| Educación Inicial          | `INICIAL`              | Sala de 4 y 5     | 4-5 años        |
+| Primaria 1er Ciclo         | `PRIMARIA_1`           | 1º, 2º, 3º grado  | 6-8 años        |
+| Primaria 2do Ciclo         | `PRIMARIA_2`           | 4º, 5º, 6º grado  | 9-11 años       |
+| Séptimo Año                | `SEPTIMO`              | 7º grado / 1º año | 12 años         |
+| Secundaria Ciclo Básico    | `SECUNDARIA_BASICO`    | 1º, 2º, 3º año    | 12-14 años      |
+| Secundaria Ciclo Orientado | `SECUNDARIA_ORIENTADO` | 4º, 5º, 6º año    | 15-17 años      |
+
+### Documentos NAP Disponibles (22)
+
+#### Por Nivel
+
+| Nivel              | Documento                            | URL Descarga                                                   |
+| ------------------ | ------------------------------------ | -------------------------------------------------------------- |
+| Inicial            | NAP Educación Inicial                | http://www.bnm.me.gov.ar/giga1/documentos/EL000978.pdf         |
+| Primaria 1er Ciclo | NAP Primaria Primer Ciclo (8 áreas)  | https://backend.educ.ar/refactor_resource/get-attachment/22399 |
+| Primaria 2do Ciclo | NAP Primaria Segundo Ciclo (8 áreas) | https://backend.educ.ar/refactor_resource/get-attachment/22424 |
+| Séptimo Año        | NAP Séptimo Año                      | http://www.bnm.me.gov.ar/giga1/documentos/EL007881.pdf         |
+
+#### Secundaria Ciclo Básico (8 documentos)
+
+- NAP Matemática
+- NAP Lengua
+- NAP Ciencias Naturales
+- NAP Ciencias Sociales
+- NAP Formación Ética y Ciudadana
+- NAP Educación Artística
+- NAP Educación Física
+- NAP Educación Tecnológica
+
+#### Secundaria Ciclo Orientado (7 documentos)
+
+- NAP Matemática
+- NAP Lengua y Literatura
+- NAP Ciencias Naturales
+- NAP Ciencias Sociales
+- NAP Filosofía y Formación Ética y Ciudadana
+- NAP Educación Física
+- NAP Educación Artística
+
+#### Transversales (2 documentos)
+
+- NAP Lenguas Extranjeras (Primaria y Secundaria)
+- NAP Educación Digital, Programación y Robótica (Inicial, Primaria y Secundaria)
+
+### Licencia de los NAP
+
+**Creative Commons BY-NC-SA** (Atribución - No Comercial - Compartir Igual)
+
+- ✅ Se pueden usar en Amauta (proyecto educativo sin fines de lucro)
+- ✅ Se debe atribuir la fuente (Ministerio de Educación Argentina)
+- ❌ No se puede usar con fines comerciales
+
+### Mapeo NAP → Modelo de Datos Amauta
+
+```
+NAP                          →  Amauta
+─────────────────────────────────────────────
+Área curricular (10)         →  Categoria
+Nivel educativo (6)          →  Campo en Curso (nuevo enum)
+Documento NAP                →  Fuente de contenido para Lecciones
+Contenidos prioritarios      →  Descripción de Cursos/Lecciones
+```
+
+### Propuesta de Enum para Niveles
+
+```prisma
+enum NivelEducativo {
+  INICIAL
+  PRIMARIA_1          // 1er ciclo (1º-3º)
+  PRIMARIA_2          // 2do ciclo (4º-6º)
+  SEPTIMO             // Transición
+  SECUNDARIA_BASICO   // 1º-3º año
+  SECUNDARIA_ORIENTADO // 4º-6º año
+}
+```
+
+### Próximos Pasos (Issue #21)
+
+1. ☐ Descargar los 22 PDFs de NAP
+2. ☐ Desarrollar parser PDF → JSON
+3. ☐ Actualizar schema Prisma con `NivelEducativo`
+4. ☐ Crear seed con 10 categorías NAP
+5. ☐ Generar cursos de ejemplo por nivel/área
+
+---
+
 ## Recursos
 
 - [Prisma Docs](https://www.prisma.io/docs)
 - [PostgreSQL Docs](https://www.postgresql.org/docs/)
+- [Colección NAP - Educ.ar](https://www.educ.ar/recursos/150199/)
+- [NAP - Argentina.gob.ar](https://www.argentina.gob.ar/educacion/nucleos-de-aprendizaje-prioritarios)
