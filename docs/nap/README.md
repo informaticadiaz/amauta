@@ -13,6 +13,7 @@ Los Núcleos de Aprendizajes Prioritarios son los contenidos mínimos obligatori
 ```
 docs/nap/
 ├── README.md                    # Este archivo
+├── ANALISIS.md                  # Tracking del análisis de PDFs (Issue #22)
 ├── inicial/                     # Educación Inicial (1 documento)
 ├── primaria/                    # Primaria 1er y 2do Ciclo (2 documentos)
 ├── septimo/                     # Séptimo Año / transición (1 documento)
@@ -107,12 +108,42 @@ Estos documentos sirven como fuente para:
 3. **Niveles**: Organización de cursos por nivel educativo
 4. **Validación**: Alineación con currícula oficial argentina
 
+## Estado del Análisis
+
+> **Issue relacionado**: [#22](https://github.com/informaticadiaz/amauta/issues/22)
+> **Documento de tracking**: [ANALISIS.md](./ANALISIS.md)
+
+### Progreso: 2/21 PDFs analizados (9.5%)
+
+| Nivel                | Analizados | Total | Estado         |
+| -------------------- | ---------- | ----- | -------------- |
+| Inicial              | 1/1        | 1     | ✅ Completo    |
+| Primaria             | 1/2        | 2     | 🔄 En progreso |
+| Séptimo              | 0/1        | 1     | ⬜ Pendiente   |
+| Secundaria Básico    | 0/8        | 8     | ⬜ Pendiente   |
+| Secundaria Orientado | 0/7        | 7     | ⬜ Pendiente   |
+| Transversales        | 0/2        | 2     | ⬜ Pendiente   |
+
+### Hallazgos Clave
+
+Se identificaron **2 tipos de estructura** en los documentos NAP:
+
+| Tipo            | Niveles   | Organización          | Parseabilidad |
+| --------------- | --------- | --------------------- | ------------- |
+| **Holística**   | Inicial   | 7 ejes de experiencia | Alta          |
+| **Disciplinar** | Primaria+ | 8 áreas × años × ejes | Muy alta      |
+
+Ver detalles completos en [ANALISIS.md](./ANALISIS.md).
+
 ## Próximos Pasos
 
-- [ ] Parsear PDFs a formato JSON estructurado
-- [ ] Extraer contenidos prioritarios por nivel/área
+- [x] Analizar estructura de PDFs (Inicial y Primaria 1er Ciclo completados)
+- [x] Identificar patrones comunes entre niveles
+- [ ] Completar análisis de Primaria 2do Ciclo
+- [ ] Definir formato JSON objetivo
+- [ ] Desarrollar parser PDF → JSON
+- [ ] Procesar los 21 documentos
 - [ ] Generar seed data alineado con NAP
-- [ ] Documentar mapeo NAP → Cursos Amauta
 
 ## Instrucciones de Descarga
 

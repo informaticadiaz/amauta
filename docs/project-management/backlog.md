@@ -188,39 +188,50 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ### Épica Transversal: Contenido Curricular Argentino
 
-**Estado**: Backlog (Investigación completada)
+**Estado**: En progreso (Análisis de estructura)
 **Prioridad**: Could Have
-**Issue**: #21
+**Issues**: #21 (épica), #22 (análisis de PDFs)
 **Dependencias**: Puede desarrollarse en paralelo con otras fases
 
 #### Contexto
 
 Los NAP (Núcleos de Aprendizajes Prioritarios) son los contenidos curriculares mínimos obligatorios del sistema educativo argentino. Integrarlos permitirá alinear Amauta con la currícula oficial.
 
-**Investigación completada** (ver `docs/technical/database.md`):
+**Investigación completada** (ver `docs/technical/database.md` y `docs/nap/ANALISIS.md`):
 
 - Fuente: educ.ar / argentina.gob.ar
 - Formato: PDFs parseables (no existe API ni dataset estructurado)
-- Cobertura: Inicial, Primaria (2 ciclos), Secundaria (2 ciclos)
-- Áreas: 8 disciplinas curriculares
+- Cobertura: Inicial, Primaria (2 ciclos), Séptimo, Secundaria (2 ciclos), Transversales
+- Documentos: **21 PDFs** catalogados
+- Áreas: **10 disciplinas curriculares**
+
+**Análisis de estructura** (Issue #22 - en progreso):
+
+- Analizados: 2/21 PDFs (Inicial + Primaria 1er Ciclo)
+- Identificados 2 tipos de estructura: Holística (Inicial) vs Disciplinar (Primaria+)
+- Parseabilidad: Alta/Muy alta
+- Detalles: `docs/nap/ANALISIS.md`
 
 #### Tareas
 
-| ID     | Tarea                                   | Estimación | Estado  | Sprint |
-| ------ | --------------------------------------- | ---------- | ------- | ------ |
-| NAP-01 | Catalogar y descargar PDFs de NAP (~15) | 2          | Backlog | TBD    |
-| NAP-02 | Desarrollar parser PDF → JSON           | 5          | Backlog | TBD    |
-| NAP-03 | Diseñar modelo de datos curricular      | 3          | Backlog | TBD    |
-| NAP-04 | Mapear NAP → Categorías/Cursos          | 2          | Backlog | TBD    |
-| NAP-05 | Generar seed data alineado con NAP      | 3          | Backlog | TBD    |
-| NAP-06 | Documentar estructura curricular        | 2          | Backlog | TBD    |
+| ID      | Tarea                                  | Estimación | Estado      | Sprint |
+| ------- | -------------------------------------- | ---------- | ----------- | ------ |
+| NAP-01  | Catalogar y descargar PDFs de NAP (21) | 2          | ✅ Done     | -      |
+| NAP-01b | Analizar estructura de los 21 PDFs     | 3          | 🔄 Progress | -      |
+| NAP-02  | Desarrollar parser PDF → JSON          | 5          | Backlog     | TBD    |
+| NAP-03  | Diseñar modelo de datos curricular     | 3          | Backlog     | TBD    |
+| NAP-04  | Mapear NAP → Categorías/Cursos         | 2          | Backlog     | TBD    |
+| NAP-05  | Generar seed data alineado con NAP     | 3          | Backlog     | TBD    |
+| NAP-06  | Documentar estructura curricular       | 2          | 🔄 Progress | -      |
 
-**Estimación total**: 17 puntos (preliminar, a refinar en planning)
+**Estimación total**: 20 puntos (ajustado)
 
 #### Referencias
 
-- Issue: https://github.com/informaticadiaz/amauta/issues/21
-- NAP Oficial: https://www.argentina.gob.ar/nucleos-de-aprendizaje-prioritarios
+- Issue #21 (épica): https://github.com/informaticadiaz/amauta/issues/21
+- Issue #22 (análisis): https://github.com/informaticadiaz/amauta/issues/22
+- Documentación NAP: `docs/nap/README.md` y `docs/nap/ANALISIS.md`
+- NAP Oficial: https://www.argentina.gob.ar/educacion/nucleos-de-aprendizaje-prioritarios
 - Colección: https://www.educ.ar/recursos/150199/
 
 ---
