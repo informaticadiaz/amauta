@@ -2,35 +2,35 @@
 
 > **Issue relacionado**: [#22](https://github.com/informaticadiaz/amauta/issues/22)
 > **Objetivo**: Analizar los 21 PDFs de NAP para extraer contenido estructurado
-> **Estado**: En progreso
+> **Estado**: 20/21 PDFs analizados (95%) - COMPLETADO (1 PDF incorrecto pendiente de reemplazo)
 
 ## Orden de Análisis
 
 **Criterio**: Por nivel educativo (progresión natural del sistema educativo argentino)
 
-| #   | Archivo                                            | Nivel                | Estado        |
-| --- | -------------------------------------------------- | -------------------- | ------------- |
-| 1   | `inicial/nap-educacion-inicial.pdf`                | Inicial              | ✅ Completado |
-| 2   | `primaria/nap-primaria-1er-ciclo.pdf`              | Primaria 1º-3º       | ✅ Completado |
-| 3   | `primaria/nap-primaria-2do-ciclo.pdf`              | Primaria 4º-6º       | ✅ Completado |
-| 4   | `septimo/nap-septimo-anio.pdf`                     | Séptimo / Transición | ✅ Completado |
-| 5   | `secundaria-basico/nap-matematica.pdf`             | Sec. Básico          | ⬜ Pendiente  |
-| 6   | `secundaria-basico/nap-lengua.pdf`                 | Sec. Básico          | ⬜ Pendiente  |
-| 7   | `secundaria-basico/nap-ciencias-naturales.pdf`     | Sec. Básico          | ⬜ Pendiente  |
-| 8   | `secundaria-basico/nap-ciencias-sociales.pdf`      | Sec. Básico          | ⬜ Pendiente  |
-| 9   | `secundaria-basico/nap-formacion-etica.pdf`        | Sec. Básico          | ⬜ Pendiente  |
-| 10  | `secundaria-basico/nap-educacion-artistica.pdf`    | Sec. Básico          | ⬜ Pendiente  |
-| 11  | `secundaria-basico/nap-educacion-fisica.pdf`       | Sec. Básico          | ⬜ Pendiente  |
-| 12  | `secundaria-basico/nap-educacion-tecnologica.pdf`  | Sec. Básico          | ⬜ Pendiente  |
-| 13  | `secundaria-orientado/nap-matematica.pdf`          | Sec. Orientado       | ⬜ Pendiente  |
-| 14  | `secundaria-orientado/nap-lengua-literatura.pdf`   | Sec. Orientado       | ⬜ Pendiente  |
-| 15  | `secundaria-orientado/nap-ciencias-naturales.pdf`  | Sec. Orientado       | ⬜ Pendiente  |
-| 16  | `secundaria-orientado/nap-ciencias-sociales.pdf`   | Sec. Orientado       | ⬜ Pendiente  |
-| 17  | `secundaria-orientado/nap-filosofia-etica.pdf`     | Sec. Orientado       | ⬜ Pendiente  |
-| 18  | `secundaria-orientado/nap-educacion-artistica.pdf` | Sec. Orientado       | ⬜ Pendiente  |
-| 19  | `secundaria-orientado/nap-educacion-fisica.pdf`    | Sec. Orientado       | ⬜ Pendiente  |
-| 20  | `transversales/nap-lenguas-extranjeras.pdf`        | Transversal          | ⬜ Pendiente  |
-| 21  | `transversales/nap-educacion-digital.pdf`          | Transversal          | ⬜ Pendiente  |
+| #   | Archivo                                            | Nivel                | Estado            |
+| --- | -------------------------------------------------- | -------------------- | ----------------- |
+| 1   | `inicial/nap-educacion-inicial.pdf`                | Inicial              | ✅ Completado     |
+| 2   | `primaria/nap-primaria-1er-ciclo.pdf`              | Primaria 1º-3º       | ✅ Completado     |
+| 3   | `primaria/nap-primaria-2do-ciclo.pdf`              | Primaria 4º-6º       | ✅ Completado     |
+| 4   | `septimo/nap-septimo-anio.pdf`                     | Séptimo / Transición | ✅ Completado     |
+| 5   | `secundaria-basico/nap-matematica.pdf`             | Sec. Básico          | ✅ Completado     |
+| 6   | `secundaria-basico/nap-lengua.pdf`                 | Sec. Básico          | ✅ Completado     |
+| 7   | `secundaria-basico/nap-ciencias-naturales.pdf`     | Sec. Básico          | ✅ Completado     |
+| 8   | `secundaria-basico/nap-ciencias-sociales.pdf`      | Sec. Básico          | ✅ Completado     |
+| 9   | `secundaria-basico/nap-formacion-etica.pdf`        | Sec. Básico          | ✅ Completado     |
+| 10  | `secundaria-basico/nap-educacion-artistica.pdf`    | Sec. Básico          | ✅ Completado     |
+| 11  | `secundaria-basico/nap-educacion-fisica.pdf`       | Sec. Básico          | ✅ Completado     |
+| 12  | `secundaria-basico/nap-educacion-tecnologica.pdf`  | Sec. Básico          | ✅ Completado     |
+| 13  | `secundaria-orientado/nap-matematica.pdf`          | Sec. Orientado       | ✅ Completado     |
+| 14  | `secundaria-orientado/nap-lengua-literatura.pdf`   | Sec. Orientado       | ✅ Completado     |
+| 15  | `secundaria-orientado/nap-ciencias-naturales.pdf`  | Sec. Orientado       | ✅ Completado     |
+| 16  | `secundaria-orientado/nap-ciencias-sociales.pdf`   | Sec. Orientado       | ✅ Completado     |
+| 17  | `secundaria-orientado/nap-filosofia-etica.pdf`     | Sec. Orientado       | ✅ Completado     |
+| 18  | `secundaria-orientado/nap-educacion-artistica.pdf` | Sec. Orientado       | ⚠️ PDF incorrecto |
+| 19  | `secundaria-orientado/nap-educacion-fisica.pdf`    | Sec. Orientado       | ✅ Completado     |
+| 20  | `transversales/nap-lenguas-extranjeras.pdf`        | Transversal          | ✅ Completado     |
+| 21  | `transversales/nap-educacion-digital.pdf`          | Transversal          | ✅ Completado     |
 
 **Leyenda**: ⬜ Pendiente | 🔄 En progreso | ✅ Completado
 
@@ -137,15 +137,15 @@ print(f'Páginas: {len(r.pages)}')"
 
 ## Resumen de Progreso
 
-| Nivel                | Total  | Analizados | Pendientes |
-| -------------------- | ------ | ---------- | ---------- |
-| Inicial              | 1      | 1          | 0          |
-| Primaria             | 2      | 2          | 0          |
-| Séptimo              | 1      | 1          | 0          |
-| Secundaria Básico    | 8      | 0          | 8          |
-| Secundaria Orientado | 7      | 0          | 7          |
-| Transversales        | 2      | 0          | 2          |
-| **Total**            | **21** | **4**      | **17**     |
+| Nivel                | Total  | Analizados | Pendientes             |
+| -------------------- | ------ | ---------- | ---------------------- |
+| Inicial              | 1      | 1          | 0                      |
+| Primaria             | 2      | 2          | 0                      |
+| Séptimo              | 1      | 1          | 0                      |
+| Secundaria Básico    | 8      | 8          | 0                      |
+| Secundaria Orientado | 7      | 6          | 1 (⚠️ PDF incorrecto)  |
+| Transversales        | 2      | 2          | 0                      |
+| **Total**            | **21** | **20**     | **1** (PDF incorrecto) |
 
 ---
 
@@ -362,100 +362,375 @@ print(f'Páginas: {len(r.pages)}')"
 
 ### Secundaria Ciclo Básico
 
-- [ ] `secundaria-basico/nap-matematica.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-basico/nap-matematica.pdf`
+  - **Páginas**: 27
+  - **Fecha publicación**: Octubre 2013 (3ª edición)
+  - **Resoluciones**: CFCyE 214/04, 225/04, 228/04, 235/05, 247/05, 249/05; CFE 37/07, 135/11, 141/11, 180/12, 181/12, 182/12
+  - **Años**: 1° y 2° / 2° y 3° Años
+  - **Ejes temáticos** (4):
+    1. En relación con el Número y las Operaciones
+    2. En relación con el Álgebra y las Funciones
+    3. En relación con la Geometría y la Medida
+    4. En relación con la Probabilidad y la Estadística
+  - **Contenidos destacados**:
+    - Conjuntos numéricos: N, Z, Q (y extensión a R en 2°/3°)
+    - Expresiones algebraicas, ecuaciones, sistemas de ecuaciones
+    - Funciones: lineal, de proporcionalidad directa e inversa
+    - Geometría: construcciones con regla y compás, Teorema de Pitágoras
+    - Medida: SIMELA, estimación de errores
+    - Estadística descriptiva y probabilidad frecuencial
+  - **Concepto clave**: "Hacer matemática" como práctica de conjeturar-validar
+  - **Parseabilidad**: Muy alta (estructura por ejes y años)
+  - **Archivo de análisis**: `analisis-matematica.md`
+  - **Notas**: Fuerte énfasis en argumentación y validación; calculadora integrada como herramienta; formalización progresiva de conceptos
 
-- [ ] `secundaria-basico/nap-lengua.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-basico/nap-lengua.pdf`
+  - **Páginas**: 42
+  - **Fecha publicación**: Octubre 2011 (2ª edición)
+  - **Resoluciones**: CFCyE 214/04, 225/04, 228/04, 235/05, 247/05, 249/05; CFE 37/07, 135/11, 141/11
+  - **Años**: 1° y 2° / 2° y 3° Años
+  - **Ejes temáticos** (4):
+    1. En relación con la Comprensión y la Producción Oral
+    2. En relación con la Lectura y la Producción Escrita
+    3. En relación con la Literatura
+    4. En relación con la Reflexión sobre la Lengua (sistema, norma y uso) y los Textos
+  - **Contenidos destacados**:
+    - Oralidad: exposición, debate, entrevista, escucha crítica de medios
+    - Lectura: textos expositivos, argumentativos, instruccionales; hipertextos
+    - Escritura: proceso de planificación-textualización-revisión; géneros variados
+    - Literatura: narrativa (cuentos, novelas, microrrelatos), poesía, teatro; obras de tradición oral
+    - Gramática: oración simple y compuesta; cohesión; variedades lingüísticas
+  - **Concepto clave**: Lengua como práctica social; formato TALLER
+  - **Criterios de secuenciación**: Por ámbito de uso, por género discursivo, por organización lógica
+  - **Parseabilidad**: Muy alta (estructura por ejes y años)
+  - **Archivo de análisis**: `analisis-lengua.md`
+  - **Notas**: Fuerte énfasis en literatura (especialmente latinoamericana y argentina); reflexión metalingüística integrada; TIC para producción y socialización
 
-- [ ] `secundaria-basico/nap-ciencias-naturales.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-basico/nap-ciencias-naturales.pdf`
+  - **Páginas**: 22
+  - **Fecha publicación**: Octubre 2013 (3ª edición)
+  - **Resoluciones**: CFCyE 214/04, 225/04, 228/04, 235/05, 247/05, 249/05; CFE 37/07, 135/11, 141/11, 180/12, 181/12, 182/12
+  - **Años**: 1° y 2° / 2° y 3° Años
+  - **Ejes temáticos** (4):
+    1. Los seres vivos: diversidad, unidad, interrelaciones y cambios
+    2. Los materiales y sus cambios
+    3. Los fenómenos del mundo físico
+    4. La Tierra, el universo y sus cambios
+  - **Contenidos destacados**:
+    - Teoría Celular, Evolución, Genética mendeliana
+    - Modelo cinético corpuscular, Teoría atómico-molecular, Tabla Periódica
+    - Campos de fuerza, Leyes de Newton, Espectro electromagnético
+    - Sistema Solar, Modelos cosmogónicos, Clima terrestre
+  - **Parseabilidad**: Muy alta (estructura por ejes y años)
+  - **Archivo de análisis**: `analisis-ciencias-naturales.md`
+  - **Notas**: Incluye ESI en reproducción humana; enfoque de alfabetización científica
 
-- [ ] `secundaria-basico/nap-ciencias-sociales.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-basico/nap-ciencias-sociales.pdf`
+  - **Páginas**: 23
+  - **Fecha publicación**: Resolución CFCyE N° 249/05, modificada por CFE N° 182/12
+  - **Años**: 1° y 2° / 2° y 3° Años
+  - **Ejes temáticos** (3):
+    1. Las sociedades y los espacios geográficos
+    2. Las sociedades a través del tiempo
+    3. Las actividades humanas y la organización social
+  - **Contenidos destacados**:
+    - 1°/2° año: América (geografía, historia colonial, independencias)
+    - 2°/3° año: Argentina (territorio, Estado nacional, siglo XIX-XX)
+    - Gobiernos radicales, Semana Trágica, modelo agroexportador
+  - **Parseabilidad**: Muy alta
+  - **Archivo de análisis**: `analisis-ciencias-sociales.md`
+  - **Notas**: Escala progresiva América → Argentina; enfoque multiperspectivo
 
-- [ ] `secundaria-basico/nap-formacion-etica.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-basico/nap-formacion-etica.pdf`
+  - **Páginas**: 26
+  - **Fecha publicación**: Octubre 2011 (1ª edición)
+  - **Años**: 1° y 2° / 2° y 3° Años
+  - **Ejes temáticos** (4):
+    1. En relación con la reflexión ética
+    2. En relación con los Derechos Humanos y los derechos de NNyA
+    3. En relación con las identidades y las diversidades
+    4. En relación con una ciudadanía participativa
+  - **Contenidos destacados**:
+    - Argumentación ética, falacias, conceptos filosóficos
+    - DDHH, terrorismo de Estado, memoria colectiva
+    - Género, diversidad sexual, ESI integrada
+    - Constitución Nacional, participación estudiantil
+  - **Contenidos transversales**: ESI, educación ambiental, vial, para la paz, intercultural
+  - **Parseabilidad**: Muy alta
+  - **Archivo de análisis**: `analisis-formacion-etica.md`
+  - **Notas**: Fuerte presencia de memoria histórica (dictadura, Malvinas); perspectiva latinoamericana
 
-- [ ] `secundaria-basico/nap-educacion-artistica.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-basico/nap-educacion-artistica.pdf`
+  - **Páginas**: 34
+  - **Fecha publicación**: Octubre 2011 (1ª edición)
+  - **Años**: 1° y 2° / 2° y 3° Años
+  - **Disciplinas** (4 sub-áreas):
+    1. Artes Visuales
+    2. Danza
+    3. Música
+    4. Teatro
+  - **Estructura por disciplina**: 2 ejes
+    - En relación con las prácticas [artísticas] y su contexto
+    - En relación con las prácticas de producción [artística]
+  - **Contenidos destacados**:
+    - Lenguajes artísticos específicos de cada disciplina
+    - Producción artística individual y colectiva
+    - Contextualización sociocultural e histórica
+    - Identidad, diversidad cultural, género, comunidad
+  - **Parseabilidad**: Muy alta (estructura consistente entre disciplinas)
+  - **Archivo de análisis**: `analisis-educacion-artistica.md`
+  - **Notas**: 4 disciplinas con estructura paralela; fuerte énfasis en identidad y diversidad cultural
 
-- [ ] `secundaria-basico/nap-educacion-fisica.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-basico/nap-educacion-fisica.pdf`
+  - **Páginas**: 26
+  - **Fecha publicación**: Octubre 2011 (1ª edición)
+  - **Años**: 1° y 2° / 2° y 3° Años
+  - **Ejes temáticos** (3):
+    1. Prácticas corporales, ludomotrices y deportivas referidas a la disponibilidad de sí mismo
+    2. Prácticas corporales, ludomotrices y deportivas en interacción con otros
+    3. Prácticas corporales, ludomotrices y deportivas en el ambiente natural y otros
+  - **Contenidos destacados**:
+    - "Cultura corporal" (juegos, deportes, murgas, acrobacias, malabares, danzas)
+    - Deporte escolar: "competir para jugar" vs "competir para ganar"
+    - Prácticas saludables, imagen corporal, emociones
+    - Conciencia ambiental, equidad de género
+  - **Conceptos clave**: Prácticas corporales vs actividad física; recreación educativa
+  - **Parseabilidad**: Muy alta
+  - **Archivo de análisis**: `analisis-educacion-fisica.md`
+  - **Notas**: Fuerte énfasis en inclusión y no discriminación; diversidad (género, origen, capacidades, orientación sexual)
 
-- [ ] `secundaria-basico/nap-educacion-tecnologica.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-basico/nap-educacion-tecnologica.pdf`
+  - **Páginas**: 34
+  - **Fecha publicación**: Octubre 2011 (1ª edición)
+  - **Años**: 1° y 2° / 2° y 3° Años
+  - **Ejes temáticos** (3):
+    1. En relación con los procesos tecnológicos
+    2. En relación con los medios técnicos
+    3. En relación con la reflexión sobre la tecnología como proceso sociocultural: diversidad, cambios y continuidades
+  - **Contenidos destacados**:
+    - Análisis de sistemas y procesos tecnológicos
+    - Transformación de materiales, energía e información
+    - Automatización, control, robots industriales
+    - Telecomunicaciones (analógicas → digitales)
+    - Sistema Nacional de Innovación (INTI, INVAP, CONAE, etc.)
+  - **Conceptos clave**: Tecnificación, sistema sociotécnico, convergencia de medios
+  - **Parseabilidad**: Muy alta
+  - **Archivo de análisis**: `analisis-educacion-tecnologica.md`
+  - **Notas**: Progresión analógico → digital; enfoque sociotécnico; sustentabilidad ambiental
 
 ---
 
 ### Secundaria Ciclo Orientado
 
-- [ ] `secundaria-orientado/nap-matematica.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-orientado/nap-matematica.pdf`
+  - **Páginas**: 26
+  - **Años**: 3° y 4° / 4° y 5° / 5° y 6° Años
+  - **Ejes temáticos** (4):
+    1. Número y Álgebra
+    2. Funciones y Álgebra
+    3. Geometría y Medida / Geometría y Álgebra (5°/6°)
+    4. Probabilidades y Estadística
+  - **Contenidos destacados**:
+    - Funciones polinómicas, racionales, exponenciales, logarítmicas, trigonométricas
+    - Geometría analítica (recta, circunferencia, parábola)
+    - Correlación lineal y regresión
+  - **Parseabilidad**: Muy alta
+  - **Archivo de análisis**: `analisis-matematica.md`
+  - **Notas**: Fuerte énfasis en modelización y uso de tecnología; geometría analítica en último año
 
-- [ ] `secundaria-orientado/nap-lengua-literatura.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-orientado/nap-lengua-literatura.pdf`
+  - **Páginas**: 39
+  - **Años**: 3°/4° año + 4°-5°/5°-6° años (últimos dos unificados)
+  - **Ejes temáticos** (4):
+    1. Lectura y Escritura de Textos Literarios
+    2. Lectura y Escritura de Textos No Literarios
+    3. Comprensión y Producción de Textos Orales
+    4. Reflexión sobre el Lenguaje
+  - **Contenidos destacados**:
+    - Literaturas americanas (latinoamericana, norteamericana, del Caribe) y argentina
+    - Literatura de pueblos indígenas
+    - Non fiction (relato documental/testimonial)
+    - Ensayo ("literatura de ideas")
+    - Monografías, análisis de discurso político
+    - Español como lengua romance, relaciones lengua-poder
+  - **Modalidad pedagógica**: TALLER
+  - **Parseabilidad**: Muy alta
+  - **Archivo de análisis**: `analisis-lengua-literatura.md`
+  - **Notas**: Últimos dos años unificados para planificación por recorridos de lectura; Literatura al centro del espacio curricular; fuerte presencia de identidad y diversidad cultural
 
-- [ ] `secundaria-orientado/nap-ciencias-naturales.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-orientado/nap-ciencias-naturales.pdf`
+  - **Páginas**: 23
+  - **Años**: Organizado por DISCIPLINA (no por año) - Jurisdicción decide distribución en 1, 2 o 3 años
+  - **Disciplinas** (3):
+    1. Biología
+    2. Física
+    3. Química
+  - **Contenidos destacados por disciplina**:
+    - **Biología** (2 ejes):
+      - Flujo de la información genética (ADN, expresión génica, código genético, mutaciones, herencia, biotecnología)
+      - Los procesos evolutivos (teoría sintética, selección natural, especiación, evidencias, origen de la vida)
+    - **Física** (sin ejes explícitos, bloques temáticos):
+      - Energía (conservación, transformaciones, degradación, sustentabilidad)
+      - Modelos (partícula, onda, campo, electromagnetismo)
+      - Física Moderna (mecánica cuántica, relatividad especial, E=mc²)
+    - **Química** (2 ejes):
+      - Propiedades, estructura y usos de los materiales (estructura atómica, tabla periódica, enlaces, nanomateriales)
+      - Las transformaciones químicas (reacciones, cinética, equilibrio, electroquímica, química orgánica, química ambiental)
+  - **Estructura especial**: Único NAP organizado por disciplina, NO por año
+  - **Parseabilidad**: Alta (pero estructura diferente a otros NAP)
+  - **Archivo de análisis**: `analisis-ciencias-naturales.md`
+  - **Notas**: Incluye introducción a física moderna (mecánica cuántica, relatividad); énfasis en biotecnología y química ambiental; cada disciplina puede enseñarse en 1-3 años según jurisdicción
 
-- [ ] `secundaria-orientado/nap-ciencias-sociales.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-orientado/nap-ciencias-sociales.pdf`
+  - **Páginas**: 27
+  - **Años**: Organizado por DISCIPLINA (no por año) - Jurisdicción decide distribución en 1, 2 o 3 años
+  - **Disciplinas** (3):
+    1. Historia
+    2. Geografía
+    3. Economía
+  - **Contenidos destacados por disciplina**:
+    - **Historia** (organización cronológica, s.XX completo):
+      - Expansión imperialista y economías primario-exportadoras
+      - Crisis de 1929, keynesianismo, ISI
+      - Populismos latinoamericanos (peronismo)
+      - Guerra Fría, Revolución Cubana
+      - Argentina 1955-1976, violencia política
+      - Terrorismo de Estado, golpe 1976, Malvinas
+      - Transición democrática, neoliberalismo, globalización
+    - **Geografía** (5 DIMENSIONES analíticas):
+      - Dimensión política de los territorios (Malvinas, Antártida)
+      - Dimensión sociodemográfica
+      - Dimensión ambiental
+      - Dimensión económica
+      - Dimensión cultural
+    - **Economía** (disciplina autónoma):
+      - Doctrinas económicas (liberalismo, keynesianismo, neoliberalismo, marxismo)
+      - Rol del Estado, modelos económicos
+      - Economía social y solidaria
+  - **Estructura especial**: Geografía usa DIMENSIONES (no ejes); Economía aparece como disciplina autónoma por primera vez
+  - **Parseabilidad**: Alta (pero estructura diferente a otros NAP)
+  - **Archivo de análisis**: `analisis-ciencias-sociales.md`
+  - **Notas**: Similar a Ciencias Naturales (por disciplina); fuerte presencia de memoria histórica (dictadura, Malvinas); Geografía con estructura única de 5 dimensiones analíticas
 
-- [ ] `secundaria-orientado/nap-filosofia-etica.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-orientado/nap-filosofia-etica.pdf`
+  - **Páginas**: 23
+  - **Años**: Organizado por DISCIPLINA (no por año) - Jurisdicción decide distribución en 1, 2 o 3 años
+  - **Disciplinas** (2):
+    1. Filosofía
+    2. Formación Ética y Ciudadana
+  - **Contenidos destacados por disciplina**:
+    - **Filosofía** (7 ejes):
+      - Problemáticas existenciales (amor, felicidad, amistad, muerte, incertidumbre)
+      - Argumentación (validez vs verdad, falacias, consistencia lógica)
+      - Conocimiento y ciencias (epistemología, ciencia y sociedad)
+      - Política, ética y estética (determinismo, libertad, teorías éticas)
+      - Noción de "realidad" (TIC y subjetividad)
+      - Poder, discurso y subjetividad (resistencia, discursos sobre los "otros")
+      - Colonialidad (pensamiento crítico latinoamericano)
+    - **Formación Ética y Ciudadana** (3 ejes):
+      - Derechos Humanos (Holocausto, terrorismo de Estado, acceso a la justicia)
+      - Ciudadanía y política (actores, poder, participación, organismos supraestatales)
+      - Identidades y diversidades (interculturalidad, genocidios, discriminación)
+  - **Estructura especial**:
+    - Filosofía tiene pensamiento latinoamericano como contenido obligatorio (colonialidad)
+    - FEyC incluye genocidios específicos: Conquista de América, "Conquista del Desierto", genocidio armenio, Holocausto, Apartheid, terrorismo de Estado
+    - Incluye educación vial en FEyC
+  - **Parseabilidad**: Alta (pero estructura diferente a otros NAP)
+  - **Archivo de análisis**: `analisis-filosofia-etica.md`
+  - **Notas**: Similar a Ciencias Naturales/Sociales (por disciplina); fuerte énfasis en pensamiento crítico y memoria histórica; Filosofía con eje de colonialidad único; FEyC con contenido de genocidios como casos extremos de discriminación
 
-- [ ] `secundaria-orientado/nap-educacion-fisica.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+- [x] `secundaria-orientado/nap-educacion-fisica.pdf`
+  - **Páginas**: 27
+  - **Años**: 3°/4° - 4°/5° - 5°/6° (organizado por año, NO por disciplina)
+  - **Ejes temáticos** (3, constantes en los 3 años):
+    1. Prácticas corporales, ludomotrices y deportivas referidas a la disponibilidad de sí mismo
+    2. Prácticas corporales, ludomotrices y deportivas en interacción con otros
+    3. Prácticas corporales, ludomotrices y deportivas en el ambiente natural y otros
+  - **Contenidos destacados**:
+    - **Deporte escolar**: Colaborativo, cooperativo, de inclusión y disfrute; "disfrutar del juego sobre competir para ganar"
+    - **Diversidad explícita**: Género, orientación sexual, constitución corporal, disponibilidad motriz, nacionalidades, creencias
+    - **Cultura corporal popular**: Urbana y rural, juegos tradicionales y autóctonos
+    - **Progresión hacia autonomía**: Gestión autónoma de prácticas y proyectos
+    - **Ambiente natural**: Prácticas de supervivencia en 5°/6° año
+    - **Argumentos críticos**: Sobre modelos corporales en medios de comunicación
+  - **Estructura especial**: Organizado por año (como Matemática), NO por disciplina (como CN, CS, Filosofía)
+  - **Parseabilidad**: Muy alta (estructura por ejes y años)
+  - **Archivo de análisis**: `analisis-educacion-fisica.md`
+  - **Notas**: Único NAP de Ciclo Orientado organizado por año; fuerte énfasis en inclusión y diversidad; concepto distintivo de "deporte escolar"
 
 - [ ] `secundaria-orientado/nap-educacion-artistica.pdf`
-  - Páginas: _pendiente_
-  - Contenidos principales: _pendiente_
-  - Notas: _pendiente_
+  - **Estado**: ⚠️ **PDF INCORRECTO - PROBLEMA EN FUENTE ORIGINAL**
+  - **Problema detectado**: El archivo contiene un libro de cuentos de ACUMAR ("Contando el Río que Quiero" - Concurso de cuentos 2018, 48 páginas) en lugar del NAP de Educación Artística
+  - **Causa**: La URL documentada en `README.md` descarga el archivo incorrecto:
+    ```
+    https://backend.educ.ar/refactor_resource/get-attachment/22427
+    ```
+    El attachment ID `22427` en educ.ar apunta a un recurso incorrecto.
+  - **Fuente alternativa (NO VERIFICADA)**:
+    - URL: `http://www.bnm.me.gov.ar/giga1/documentos/EL005105.pdf`
+    - Fuente: Biblioteca Nacional del Maestro
+    - **ADVERTENCIA**: Esta es una suposición basada en búsqueda web. No se puede garantizar que sea la misma versión/edición que las demás fuentes del repositorio. Usar con precaución.
+  - **Acción requerida**:
+    1. Verificar en educ.ar cuál es el ID correcto para NAP Educación Artística Ciclo Orientado
+    2. O validar que la fuente alternativa (BNM) corresponde a la misma versión de los documentos
+  - **Notas**: El problema no es local del repositorio sino de la fuente original (educ.ar)
 
 ---
 
 ### Transversales
 
-- [ ] `transversales/nap-lenguas-extranjeras.pdf`
-  - Páginas: _pendiente_
-  - Niveles cubiertos: Primaria y Secundaria
-  - Idiomas: _pendiente_
-  - Notas: _pendiente_
+- [x] `transversales/nap-lenguas-extranjeras.pdf`
+  - **Páginas**: 83
+  - **Niveles cubiertos**: Primaria y Secundaria (transversal)
+  - **Lenguas**: Alemán, Francés, Inglés, Italiano, Portugués
+  - **Organización especial**: Por RECORRIDO según momento de inicio
+    - Recorrido 4 ciclos: Desde 1er Ciclo Primaria (Nivel I-IV)
+    - Recorrido 3 ciclos: Desde 2do Ciclo Primaria (Nivel I-III)
+    - Recorrido 2 ciclos: Desde Ciclo Básico Secundaria (Nivel I-II)
+    - Recorrido 1 ciclo: Ciclo Orientado Secundaria (solo oralidad O lectoescritura)
+  - **Ejes temáticos** (6, comunes a todos los recorridos):
+    1. Comprensión Oral
+    2. Lectura
+    3. Producción Oral
+    4. Escritura
+    5. Reflexión sobre la Lengua que se Aprende
+    6. Reflexión Intercultural
+  - **Enfoque**: Plurilingüe e intercultural
+  - **Características distintivas**:
+    - Único NAP transversal (Primaria + Secundaria)
+    - 5 lenguas con principios comunes
+    - Alta flexibilidad jurisdiccional
+    - Articulación con español como lengua de escolarización
+    - Reconocimiento de lenguas originarias y de inmigración
+  - **Parseabilidad**: Alta (estructura por recorridos y niveles)
+  - **Archivo de análisis**: `analisis-lenguas-extranjeras.md`
+  - **Notas**: Estructura única basada en recorridos; jurisdicción decide lenguas, momento de inicio y carga horaria; recorrido de 1 ciclo tiene dos opciones excluyentes (oralidad O lectoescritura)
 
-- [ ] `transversales/nap-educacion-digital.pdf`
-  - Páginas: _pendiente_
-  - Niveles cubiertos: Inicial, Primaria, Secundaria
-  - Ejes temáticos: _pendiente_
-  - Notas: _pendiente_
+- [x] `transversales/nap-educacion-digital.pdf`
+  - **Páginas**: 27
+  - **Niveles cubiertos**: Inicial + Primaria + Secundaria (transversal completo)
+  - **Resolución específica**: CFE 343/18 (12 de septiembre de 2018)
+  - **Áreas**: Educación Digital, Programación, Robótica
+  - **Organización especial**: Por NIVEL/CICLO con saberes numerados (NO ejes temáticos)
+    - Educación Inicial: 9 saberes
+    - Primaria Primer Ciclo: 9 saberes
+    - Primaria Segundo Ciclo: 11 saberes
+    - Secundaria Ciclo Básico: 12 saberes
+    - Secundaria Ciclo Orientado: 13 saberes
+  - **Contenidos destacados**:
+    - Pensamiento computacional
+    - Programación (icónica → textual → avanzada)
+    - Robótica (juegos → diseño → sistemas complejos)
+    - Big Data y análisis de información
+    - Inteligencia artificial (nociones en Ciclo Orientado)
+    - Seguridad informática
+    - Ciudadanía digital
+    - Emprendimiento digital
+  - **Hito histórico**: Argentina fue el primer país de América Latina en integrar programación y robótica en toda la educación obligatoria (2018)
+  - **Marco**: Plan Aprender Conectados (Decreto 386/18)
+  - **Parseabilidad**: Alta (saberes numerados por nivel)
+  - **Archivo de análisis**: `analisis-educacion-digital.md`
+  - **Notas**: NAP más reciente (2018 vs 2004-2012); único NAP transversal completo (Inicial a Secundaria); sin ejes tradicionales; incluye contenidos emergentes exclusivos (IA, Big Data, seguridad)
 
 ---
 
@@ -512,6 +787,22 @@ _Esta sección se actualiza a medida que avanza el análisis_
   - **Hallazgo clave**: Puente estructural entre Primaria y Secundaria
   - Parser de Primaria adaptable con ajuste menor (eliminar dimensión "año")
 
+- **Secundaria Ciclo Básico** (8/8 analizados - COMPLETADO ✅):
+  - Documentos SEPARADOS por área (a diferencia de Inicial/Primaria/Séptimo que son integrados)
+  - Estructura: 1° y 2° / 2° y 3° Años (según estructura jurisdiccional de 7 o 6 años de primaria)
+  - Organización: Propósitos generales → NAP por año → Ejes → Contenidos
+  - **Hallazgos clave por área**:
+    - **Matemática**: 4 ejes (Número y Operaciones, Álgebra y Funciones, Geometría y Medida, Probabilidad y Estadística); énfasis en "hacer matemática" (conjeturar-validar)
+    - **Lengua**: 4 ejes (Oralidad, Lectura/Escritura, Literatura, Reflexión sobre la Lengua); formato TALLER; literatura latinoamericana y argentina
+    - **Ciencias Naturales**: 4 ejes (seres vivos, materiales, fenómenos físicos, Tierra/universo); incluye ESI
+    - **Ciencias Sociales**: 3 ejes; escala América → Argentina; enfoque multiperspectivo
+    - **Formación Ética y Ciudadana**: 4 ejes; fuerte presencia de DDHH, memoria histórica, ESI integrada
+    - **Educación Artística**: 4 sub-áreas (Artes Visuales, Danza, Música, Teatro); 2 ejes por disciplina
+    - **Educación Física**: 3 ejes; conceptos "cultura corporal" y "competir para jugar"; inclusión
+    - **Educación Tecnológica**: 3 ejes; progresión analógico→digital; enfoque sociotécnico
+  - **Parseabilidad**: Muy alta (estructura consistente con variaciones por área)
+  - **Archivos de análisis**: `analisis-[area].md` en carpeta `secundaria-basico/`
+
 ### Estructura típica de los documentos
 
 - **Nivel Inicial**:
@@ -535,15 +826,16 @@ _Esta sección se actualiza a medida que avanza el análisis_
 
 ### Comparación de estructuras
 
-| Aspecto            | Nivel Inicial            | Primaria (ambos ciclos) | Séptimo Año             |
-| ------------------ | ------------------------ | ----------------------- | ----------------------- |
-| Organización       | Holística (7 ejes)       | Disciplinar (8 áreas)   | Disciplinar (8 áreas)   |
-| División temporal  | No aplica                | Por año (1°-3° y 4°-6°) | Un solo año (7°)        |
-| Formato contenidos | Párrafos descriptivos    | Listas con viñetas      | Listas con viñetas      |
-| Ed. Artística      | Integrada en "Expresión" | 4 sub-áreas separadas   | 4 sub-áreas separadas   |
-| Parseabilidad      | Alta                     | Muy alta                | Muy alta                |
-| Páginas            | 22                       | 95 (1er) + 131 (2do)    | 94                      |
-| Jerarquía          | Eje → Contenidos         | Área → Año → Eje → Cont | Área → Eje → Contenidos |
+| Aspecto            | Nivel Inicial            | Primaria (ambos ciclos) | Séptimo Año             | Secundaria Básico          |
+| ------------------ | ------------------------ | ----------------------- | ----------------------- | -------------------------- |
+| Organización       | Holística (7 ejes)       | Disciplinar (8 áreas)   | Disciplinar (8 áreas)   | Disciplinar (8 áreas sep.) |
+| División temporal  | No aplica                | Por año (1°-3° y 4°-6°) | Un solo año (7°)        | Por año (1°-2° / 2°-3°)    |
+| Formato contenidos | Párrafos descriptivos    | Listas con viñetas      | Listas con viñetas      | Listas con viñetas         |
+| Ed. Artística      | Integrada en "Expresión" | 4 sub-áreas separadas   | 4 sub-áreas separadas   | 4 sub-áreas separadas      |
+| Parseabilidad      | Alta                     | Muy alta                | Muy alta                | Muy alta                   |
+| Páginas            | 22                       | 95 (1er) + 131 (2do)    | 94                      | ~25 pp c/área (8 docs)     |
+| Jerarquía          | Eje → Contenidos         | Área → Año → Eje → Cont | Área → Eje → Contenidos | Propósitos → Año → Eje     |
+| Documentos         | 1 integrado              | 1 integrado por ciclo   | 1 integrado             | 8 separados por área       |
 
 ### Estructura de Primaria - Áreas y Ejes
 
@@ -581,6 +873,25 @@ _Esta sección se actualiza a medida que avanza el análisis_
 
 **Notas**: En **negrita** los ejes nuevos que no existían en Primaria. Séptimo Año funciona como puente introduciendo conceptos que se desarrollarán en Secundaria.
 
+### Estructura de Secundaria Ciclo Básico - Áreas y Ejes
+
+| Área                        | Ejes temáticos                                                                                               |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Matemática                  | Número y Operaciones, Álgebra y Funciones, Geometría y Medida, Probabilidad y Estadística                    |
+| Lengua                      | Comprensión y Producción Oral, Lectura y Producción Escrita, Literatura, Reflexión sobre la Lengua           |
+| Ciencias Naturales          | Seres vivos, Materiales y cambios, Fenómenos del mundo físico, La Tierra y el universo                       |
+| Ciencias Sociales           | Sociedades y espacios geográficos, Sociedades a través del tiempo, Actividades humanas y organización social |
+| Formación Ética y Ciudadana | Reflexión ética, DDHH y derechos de NNyA, Identidades y diversidades, Ciudadanía participativa               |
+| **Educación Artística**     | (4 sub-áreas)                                                                                                |
+| → Artes Visuales            | Prácticas y contexto, Prácticas de producción                                                                |
+| → Danza                     | Prácticas y contexto, Prácticas de producción                                                                |
+| → Música                    | Prácticas y contexto, Prácticas de producción                                                                |
+| → Teatro                    | Prácticas y contexto, Prácticas de producción                                                                |
+| Educación Física            | Disponibilidad de sí mismo, Interacción con otros, Ambiente natural y otros                                  |
+| Educación Tecnológica       | Procesos tecnológicos, Medios técnicos, Reflexión sobre tecnología como proceso sociocultural                |
+
+**Notas**: Secundaria Básico tiene documentos SEPARADOS por área (no integrados como Primaria/Séptimo). Cada documento incluye propósitos generales del ciclo y NAP organizados por año (1°-2° / 2°-3°). La estructura de Educación Artística mantiene las 4 sub-áreas con 2 ejes cada una.
+
 ### Recomendaciones para el parser
 
 - El parser debe manejar estructuras diferentes según nivel educativo
@@ -595,6 +906,39 @@ _Esta sección se actualiza a medida que avanza el análisis_
 
 ---
 
+## Problemas Conocidos
+
+### ⚠️ PDF Incorrecto: NAP Educación Artística (Ciclo Orientado)
+
+| Campo                  | Detalle                                                              |
+| ---------------------- | -------------------------------------------------------------------- |
+| **Archivo**            | `secundaria-orientado/nap-educacion-artistica.pdf`                   |
+| **Problema**           | La URL documentada descarga un archivo incorrecto                    |
+| **Contenido actual**   | Libro de cuentos ACUMAR "Contando el Río que Quiero" (2018, 48 págs) |
+| **Contenido esperado** | NAP Educación Artística - Ciclo Orientado Secundaria                 |
+
+**URL problemática** (en `README.md`):
+
+```
+https://backend.educ.ar/refactor_resource/get-attachment/22427
+```
+
+**Fuente alternativa (NO VERIFICADA)**:
+
+- URL: `http://www.bnm.me.gov.ar/giga1/documentos/EL005105.pdf`
+- Fuente: Biblioteca Nacional del Maestro
+- ⚠️ **ADVERTENCIA**: Esta URL se obtuvo mediante búsqueda web. No se puede garantizar que corresponda a la misma versión/edición que las demás fuentes del repositorio.
+
+**Acciones sugeridas**:
+
+1. Contactar a educ.ar para reportar el problema con el attachment ID 22427
+2. Buscar el ID correcto en el portal de educ.ar
+3. O verificar manualmente que la fuente alternativa (BNM) corresponde a la misma versión
+
+**Impacto**: 20/21 PDFs analizados (95%). Este es el único PDF pendiente.
+
+---
+
 ## Próximos Pasos
 
 1. [x] Analizar estructura de PDF representativo (Nivel Inicial completado)
@@ -602,13 +946,14 @@ _Esta sección se actualiza a medida que avanza el análisis_
 3. [x] Identificar patrones comunes entre niveles (tabla comparativa creada)
 4. [x] Analizar PDF de Primaria 2do Ciclo para confirmar patrón ✅ **CONFIRMADO: estructura idéntica**
 5. [x] Analizar PDF de Séptimo año ✅ **COMPLETADO: estructura similar a Primaria pero simplificada (1 año)**
-6. [ ] Analizar PDFs de Secundaria Básico (8 documentos)
-7. [ ] Analizar PDFs de Secundaria Orientado (7 documentos)
-8. [ ] Analizar PDFs Transversales (2 documentos)
-9. [ ] Definir formato JSON objetivo (considerando diferencias por nivel)
-10. [ ] Desarrollar parser PDF → JSON
-11. [ ] Procesar todos los documentos
-12. [ ] Validar datos extraídos
+6. [x] Analizar PDFs de Secundaria Básico (8 documentos) ✅ **COMPLETADO** (8/8)
+7. [x] Analizar PDFs de Secundaria Orientado ⚠️ **6/7 COMPLETADOS** (1 PDF con fuente rota)
+8. [x] Analizar PDFs Transversales (2 documentos) ✅ **COMPLETADO** (2/2)
+9. [ ] Resolver problema de fuente para NAP Educación Artística (Ciclo Orientado)
+10. [ ] Definir formato JSON objetivo (considerando diferencias por nivel)
+11. [ ] Desarrollar parser PDF → JSON
+12. [ ] Procesar todos los documentos
+13. [ ] Validar datos extraídos
 
 ---
 

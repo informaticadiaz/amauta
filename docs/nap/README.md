@@ -113,26 +113,42 @@ Estos documentos sirven como fuente para:
 > **Issue relacionado**: [#22](https://github.com/informaticadiaz/amauta/issues/22)
 > **Documento de tracking**: [ANALISIS.md](./ANALISIS.md)
 
-### Progreso: 4/21 PDFs analizados (19%)
+### Progreso: 20/21 PDFs analizados (95%)
 
-| Nivel                | Analizados | Total | Estado       |
-| -------------------- | ---------- | ----- | ------------ |
-| Inicial              | 1/1        | 1     | ✅ Completo  |
-| Primaria             | 2/2        | 2     | ✅ Completo  |
-| Séptimo              | 1/1        | 1     | ✅ Completo  |
-| Secundaria Básico    | 0/8        | 8     | ⬜ Pendiente |
-| Secundaria Orientado | 0/7        | 7     | ⬜ Pendiente |
-| Transversales        | 0/2        | 2     | ⬜ Pendiente |
+| Nivel                | Analizados | Total | Estado                   |
+| -------------------- | ---------- | ----- | ------------------------ |
+| Inicial              | 1/1        | 1     | ✅ Completo              |
+| Primaria             | 2/2        | 2     | ✅ Completo              |
+| Séptimo              | 1/1        | 1     | ✅ Completo              |
+| Secundaria Básico    | 8/8        | 8     | ✅ Completo              |
+| Secundaria Orientado | 6/7        | 7     | ⚠️ 1 PDF con fuente rota |
+| Transversales        | 2/2        | 2     | ✅ Completo              |
 
 ### Hallazgos Clave
 
-Se identificaron **2 tipos de estructura** en los documentos NAP:
+Se identificaron **5 tipos de estructura** en los documentos NAP:
 
-| Tipo            | Niveles          | Organización            | Parseabilidad |
-| --------------- | ---------------- | ----------------------- | ------------- |
-| **Holística**   | Inicial          | 7 ejes de experiencia   | Alta          |
-| **Disciplinar** | Primaria         | 8 áreas × 3 años × ejes | Muy alta      |
-| **Disciplinar** | Séptimo (trans.) | 8 áreas × 1 año × ejes  | Muy alta      |
+| Tipo               | Niveles             | Organización                  | Parseabilidad |
+| ------------------ | ------------------- | ----------------------------- | ------------- |
+| **Holística**      | Inicial             | 7 ejes de experiencia         | Alta          |
+| **Disciplinar**    | Primaria            | 8 áreas × 3 años × ejes       | Muy alta      |
+| **Disciplinar**    | Séptimo (trans.)    | 8 áreas × 1 año × ejes        | Muy alta      |
+| **Separada**       | Secundaria Básico   | 8 docs × 2 años × ejes        | Muy alta      |
+| **Por disciplina** | Sec. Orientado      | Por disciplina (no por año)   | Alta          |
+| **Por recorrido**  | Lenguas Extranjeras | 4 recorridos × 6 ejes         | Alta          |
+| **Por nivel**      | Ed. Digital         | 5 niveles × saberes numerados | Alta          |
+
+**Secundaria Orientado** (6/7 analizados ⚠️):
+
+- Documentos separados por área
+- Algunos organizados por AÑO (Matemática, Ed. Física), otros por DISCIPLINA (CN, CS, Filosofía)
+- Archivos de análisis: `secundaria-orientado/analisis-[area].md`
+- ⚠️ `nap-educacion-artistica.pdf` tiene fuente rota (ver ANALISIS.md)
+
+**Transversales** (2/2 analizados ✅):
+
+- Lenguas Extranjeras: 5 idiomas, 4 recorridos según punto de inicio
+- Educación Digital: Único NAP que cubre Inicial→Secundaria completo
 
 Ver detalles completos en [ANALISIS.md](./ANALISIS.md).
 
@@ -142,9 +158,10 @@ Ver detalles completos en [ANALISIS.md](./ANALISIS.md).
 - [x] Identificar patrones comunes entre niveles
 - [x] Completar análisis de Primaria 2do Ciclo
 - [x] Completar análisis de Séptimo Año
-- [ ] Analizar PDFs de Secundaria Básico (8 documentos)
-- [ ] Analizar PDFs de Secundaria Orientado (7 documentos)
-- [ ] Analizar PDFs Transversales (2 documentos)
+- [x] Analizar PDFs de Secundaria Básico (8 documentos)
+- [x] Analizar PDFs de Secundaria Orientado (6/7 documentos) ⚠️ 1 PDF con fuente rota
+- [x] Analizar PDFs Transversales (2 documentos)
+- [ ] Resolver problema de fuente para NAP Educación Artística (Ciclo Orientado)
 - [ ] Definir formato JSON objetivo
 - [ ] Desarrollar parser PDF → JSON
 - [ ] Procesar los 21 documentos
@@ -184,7 +201,9 @@ curl -L -o secundaria-orientado/nap-ciencias-naturales.pdf "https://backend.educ
 curl -L -o secundaria-orientado/nap-ciencias-sociales.pdf "https://backend.educ.ar/refactor_resource/get-attachment/22472"
 curl -L -o secundaria-orientado/nap-educacion-fisica.pdf "https://backend.educ.ar/refactor_resource/get-attachment/22426"
 curl -L -o secundaria-orientado/nap-filosofia-etica.pdf "https://backend.educ.ar/refactor_resource/get-attachment/22401"
-curl -L -o secundaria-orientado/nap-educacion-artistica.pdf "https://backend.educ.ar/refactor_resource/get-attachment/22427"
+# ⚠️ ADVERTENCIA: Esta URL descarga un archivo incorrecto (libro de cuentos ACUMAR).
+# Ver ANALISIS.md sección "Problemas Conocidos" para más detalles.
+# curl -L -o secundaria-orientado/nap-educacion-artistica.pdf "https://backend.educ.ar/refactor_resource/get-attachment/22427"
 
 # === TRANSVERSALES ===
 curl -L -o transversales/nap-lenguas-extranjeras.pdf "https://backend.educ.ar/refactor_resource/get-attachment/22400"
