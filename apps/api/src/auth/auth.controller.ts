@@ -5,8 +5,8 @@
  */
 
 import { Controller, Post, Body, Get, Param } from '@nestjs/common';
-import type { AuthService } from './auth.service';
-import { type AuthUser } from './auth.service';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports -- NestJS requires runtime import for DI
+import { AuthService, type AuthUser } from './auth.service';
 import type { LoginDto } from './dto/login.dto';
 import type { RegisterDto } from './dto/register.dto';
 
