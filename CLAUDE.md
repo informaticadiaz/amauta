@@ -8,6 +8,111 @@ Este documento proporciona contexto e información relevante para Claude Code al
 
 Amauta es un sistema educativo para la gestión del aprendizaje.
 
+## Visión y Filosofía ⭐
+
+**IMPORTANTE**: Antes de desarrollar, entender la visión del proyecto.
+
+- **Documento de Visión**: `README.md` - Filosofía, principios de diseño, valores
+- **Propósito**: Educación como derecho social, acceso universal, offline-first
+- **Nombre**: "Amauta" (quechua) = maestro/sabio al servicio de la comunidad
+
+> _"No concebimos la educación como un producto, sino como un derecho social."_
+
+---
+
+## 🚦 Estado Actual y Próximos Pasos
+
+### Fase Actual: Fase 0 ✅ COMPLETADA
+
+**Fecha de completitud**: 30/12/2024
+
+Todo lo de Fase 0 está listo:
+
+- ✅ Infraestructura (monorepo, CI/CD, Docker)
+- ✅ Base de datos (Prisma, 15 modelos, seed completo)
+- ✅ Deployment en producción (Dokploy)
+- ✅ Documentación técnica y de gestión
+
+### Próxima Fase: Fase 1 - MVP Plataforma de Cursos 📋
+
+**Objetivo**: Crear plataforma funcional donde educadores publiquen cursos y estudiantes los consuman.
+
+**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 1"
+
+---
+
+## 🗺️ Desarrollo Ordenado (CRÍTICO)
+
+### Regla Principal
+
+> **Para desarrollar features nuevas, SIEMPRE consultar `docs/project-management/roadmap.md`**
+
+El roadmap define:
+
+- 10 fases incrementales con prioridades claras
+- Historias de usuario para cada fase
+- Stack tecnológico específico por feature
+- Criterios de éxito medibles
+- Código de ejemplo y patrones
+
+### Proceso de Desarrollo por Fases
+
+```
+1. CONSULTAR ROADMAP
+   └── Leer la fase correspondiente en roadmap.md
+   └── Entender historias de usuario y criterios de éxito
+
+2. CREAR ISSUES
+   └── Desglosar la fase en issues específicos (gh issue create)
+   └── Usar labels: phase-1, phase-2, etc.
+   └── Referenciar sección del roadmap en cada issue
+
+3. IMPLEMENTAR
+   └── Seguir workflow de WORKFLOW.md
+   └── Usar TodoWrite para tracking
+   └── Respetar stack técnico definido
+
+4. DOCUMENTAR
+   └── Actualizar docs/sistema/ con funcionalidades completadas
+   └── Actualizar CLAUDE.md si cambia el estado del proyecto
+
+5. CERRAR FASE
+   └── Verificar criterios de éxito del roadmap
+   └── Actualizar estado en CLAUDE.md y roadmap.md
+```
+
+### Checklist Antes de Empezar una Fase Nueva
+
+- [ ] ¿Leí la sección completa de la fase en `roadmap.md`?
+- [ ] ¿Entiendo las historias de usuario?
+- [ ] ¿Conozco el stack tecnológico específico para esta fase?
+- [ ] ¿Existen issues creados para esta fase? Si no, crearlos primero
+- [ ] ¿Las dependencias de fases anteriores están completas?
+
+### Jerarquía de Documentos para Desarrollo
+
+| Prioridad | Documento                            | Propósito                        |
+| --------- | ------------------------------------ | -------------------------------- |
+| 1         | `README.md`                          | Visión, filosofía, principios    |
+| 2         | `docs/project-management/roadmap.md` | **Qué construir y en qué orden** |
+| 3         | `WORKFLOW.md`                        | Cómo trabajar con issues         |
+| 4         | `docs/technical/architecture.md`     | Decisiones técnicas              |
+| 5         | `docs/technical/coding-standards.md` | Cómo escribir código             |
+
+### Fases del Roadmap (Resumen)
+
+| Fase | Nombre            | Estado        | Documento             |
+| ---- | ----------------- | ------------- | --------------------- |
+| 0    | Fundamentos       | ✅ Completado | `fase-0-tareas.md`    |
+| 1    | MVP Cursos        | 📋 Próximo    | `roadmap.md` → Fase 1 |
+| 2    | Offline-First PWA | 📋 Pendiente  | `roadmap.md` → Fase 2 |
+| 3    | Evaluaciones      | 📋 Pendiente  | `roadmap.md` → Fase 3 |
+| 4    | Módulo Escolar    | 📋 Pendiente  | `roadmap.md` → Fase 4 |
+| 5    | Comunidad         | 📋 Pendiente  | `roadmap.md` → Fase 5 |
+| 6-10 | Avanzadas         | 📋 Futuro     | `roadmap.md`          |
+
+---
+
 ## Estructura del Proyecto
 
 ```
@@ -296,11 +401,19 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ## Notas para Claude Code
 
+### Reglas de Oro 🏆
+
+1. **Para features nuevas** → Consultar `roadmap.md` PRIMERO
+2. **Para issues existentes** → Seguir `WORKFLOW.md`
+3. **Antes de codear** → Entender la visión en `README.md`
+4. **Al terminar** → Actualizar documentación y estado
+
 ### Generales
 
-- El proyecto está en fase inicial de desarrollo
+- **Fase actual**: Fase 0 completada, próximo: Fase 1
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
+- **SIEMPRE consultar `roadmap.md` para desarrollo de features**
 - Usar TodoWrite para issues con 3+ pasos
 - Commits descriptivos que referencien el issue
 - Verificar checklist de calidad antes de cerrar issues
@@ -324,10 +437,12 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 Ver `docs/technical/architecture.md` para decisiones técnicas detalladas.
 
-### Orden de Issues
+### Orden de Desarrollo
 
-- **IMPORTANTE**: Seguir el orden numérico de tareas (T-001, T-002, T-003...)
-- Saltear tareas que tengan dependencias no resueltas
+- **Para Fase 0**: Seguir orden numérico de tareas (T-001, T-002...) en `fase-0-tareas.md`
+- **Para Fase 1+**: Seguir el orden definido en `roadmap.md` para cada fase
+- **Regla general**: Respetar dependencias entre tareas y fases
+- **Prioridades dentro de cada fase**: El roadmap define Prioridad 1 (Core), 2 (Importante), 3 (Futuro)
 
 ### Documentación del Sistema (IMPORTANTE)
 
