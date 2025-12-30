@@ -11,7 +11,7 @@ import { seedCategorias } from './categorias';
 import { seedInstituciones } from './instituciones';
 import { seedCursos } from './cursos';
 import { seedInscripciones } from './inscripciones';
-// import { seedAdministrativo } from './administrativo';
+import { seedAdministrativo } from './administrativo';
 
 export async function runAllSeeds(prisma: PrismaClient): Promise<void> {
   console.log('🌱 Iniciando seed de base de datos...\n');
@@ -31,7 +31,7 @@ export async function runAllSeeds(prisma: PrismaClient): Promise<void> {
   await seedInscripciones(prisma);
 
   // Etapa 5: Asistencias + Calificaciones + Comunicados (depende de Etapa 2)
-  // await seedAdministrativo(prisma);
+  await seedAdministrativo(prisma);
 
   console.log('═'.repeat(50));
   console.log('✅ Seed completado exitosamente\n');
