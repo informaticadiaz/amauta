@@ -30,7 +30,9 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 | Categorías     | ✅ Seed      | 6 categorías curriculares             |
 | Instituciones  | ✅ Seed      | 2 instituciones educativas            |
 | Grupos         | ✅ Seed      | 4 grupos con estudiantes asignados    |
-| Cursos         | ⏳ Pendiente | Contenido educativo                   |
+| Cursos         | ✅ Seed      | 6 cursos de ejemplo                   |
+| Lecciones      | ✅ Seed      | 15 lecciones (VIDEO, TEXTO, QUIZ)     |
+| Recursos       | ✅ Seed      | 8 recursos adjuntos                   |
 | Inscripciones  | ⏳ Pendiente | Relación estudiante-curso             |
 | Asistencias    | ⏳ Pendiente | Registro diario                       |
 | Calificaciones | ⏳ Pendiente | Notas y evaluaciones                  |
@@ -41,7 +43,7 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 | ----- | ---------------------------------------------------- | ------------- |
 | 1     | [Usuarios y Perfiles](etapa-1-usuarios.md)           | ✅ Completado |
 | 2     | [Categorías e Instituciones](etapa-2-categorias.md)  | ✅ Completado |
-| 3     | [Cursos y Lecciones](etapa-3-cursos.md)              | ⏳ Pendiente  |
+| 3     | [Cursos y Lecciones](etapa-3-cursos.md)              | ✅ Completado |
 | 4     | [Inscripciones y Progreso](etapa-4-inscripciones.md) | ⏳ Pendiente  |
 | 5     | [Módulo Administrativo](etapa-5-administrativo.md)   | ⏳ Pendiente  |
 
@@ -158,4 +160,4 @@ Acceso: Sus cursos e inscripciones
 ---
 
 **Última actualización**: 2025-12-30
-**Etapa actual**: 2 de 5 completadas
+**Etapa actual**: 3 de 5 completadas
