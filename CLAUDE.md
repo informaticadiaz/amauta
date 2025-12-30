@@ -57,6 +57,13 @@ amauta/
 │       └── index.ts
 │
 └── docs/
+    ├── sistema/                         # ⭐ Documentación del sistema (no técnica)
+    │   ├── README.md                    # ⭐ Guía general del sistema
+    │   ├── etapa-1-usuarios.md          # ✅ Usuarios y perfiles
+    │   ├── etapa-2-categorias.md        # ⏳ Categorías e instituciones
+    │   ├── etapa-3-cursos.md            # ⏳ Cursos y lecciones
+    │   ├── etapa-4-inscripciones.md     # ⏳ Inscripciones y progreso
+    │   └── etapa-5-administrativo.md    # ⏳ Asistencias, calificaciones
     ├── project-management/
     │   ├── README.md
     │   ├── sistema-gestion.md         # ⭐ Guía completa del sistema de gestión
@@ -274,6 +281,7 @@ gh issue view <número>
 | **Tablero visual**     | `docs/project-management/project-board.md`   |
 | **Roadmap general**    | `docs/project-management/roadmap.md`         |
 | **Sistema de gestión** | `docs/project-management/sistema-gestion.md` |
+| **Guía del Sistema**   | `docs/sistema/README.md`                     |
 | **Base de datos/Seed** | `apps/api/prisma/README.md`                  |
 | **Schema Prisma**      | `apps/api/prisma/schema.prisma`              |
 
@@ -320,4 +328,37 @@ Ver `docs/technical/architecture.md` para decisiones técnicas detalladas.
 
 - **IMPORTANTE**: Seguir el orden numérico de tareas (T-001, T-002, T-003...)
 - Saltear tareas que tengan dependencias no resueltas
-- Consultar `docs/project-management/fase-0-tareas.md` para dependencias
+
+### Documentación del Sistema (IMPORTANTE)
+
+Al completar una etapa o funcionalidad, **SIEMPRE actualizar** la documentación en `docs/sistema/`:
+
+1. **Al completar una etapa del seed**:
+   - Actualizar el documento de la etapa (ej: `etapa-1-usuarios.md`)
+   - Cambiar estado de ⏳ Pendiente a ✅ Completado
+   - Agregar fecha de completitud
+   - Documentar qué se logró de manera no técnica
+
+2. **Al agregar funcionalidades**:
+   - Actualizar `docs/sistema/README.md` con el nuevo estado
+   - Agregar la funcionalidad a la tabla de "Estado Actual"
+
+3. **Estructura de documentación**:
+
+   ```
+   docs/sistema/
+   ├── README.md              ← Guía general (actualizar siempre)
+   ├── etapa-1-usuarios.md    ← ✅ Completado
+   ├── etapa-2-categorias.md  ← Actualizar cuando se complete
+   ├── etapa-3-cursos.md      ← Actualizar cuando se complete
+   ├── etapa-4-inscripciones.md
+   └── etapa-5-administrativo.md
+   ```
+
+4. **Propósito de esta documentación**:
+   - Lectura rápida (~5 minutos)
+   - Sin comandos ni código
+   - Orientada a entender el sistema
+   - Útil para nuevos desarrolladores
+
+- Consultar `docs/project-management/fase-0-tareas.md` para dependencias entre tareas
