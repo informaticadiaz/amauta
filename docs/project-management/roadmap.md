@@ -76,6 +76,15 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 
 **Duración estimada**: 6-8 semanas
 **Sprint 1-4**
+**Progreso**: 1/16 issues completados
+
+### Progreso Sprint 1
+
+| Issue | Título                                | Estado        |
+| ----- | ------------------------------------- | ------------- |
+| #28   | F1-001: Autenticación con NextAuth.js | ✅ Completado |
+| #29   | F1-002: Autorización por roles (RBAC) | 📋 Pendiente  |
+| #30   | F1-003: Layout base responsive        | 📋 Pendiente  |
 
 ### Objetivos
 

@@ -22,22 +22,33 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 0 ✅ COMPLETADA
+### Fase Actual: Fase 1 - MVP Plataforma de Cursos 🚧 EN PROGRESO
+
+**Inicio**: 30/12/2024
+**Progreso**: 1/16 issues (Sprint 1 iniciado)
+
+#### Completado en Fase 1:
+
+- ✅ **F1-001**: Autenticación con NextAuth.js v5
+  - Login y registro funcionales
+  - Páginas: `/login`, `/register`, `/dashboard`
+  - Endpoints: `/api/v1/auth/login`, `/api/v1/auth/register`
+
+#### Próximos pasos:
+
+- 📋 **F1-002**: Autorización por roles (RBAC)
+- 📋 **F1-003**: Layout base responsive
+
+**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 1"
+
+### Fase Anterior: Fase 0 ✅ COMPLETADA
 
 **Fecha de completitud**: 30/12/2024
-
-Todo lo de Fase 0 está listo:
 
 - ✅ Infraestructura (monorepo, CI/CD, Docker)
 - ✅ Base de datos (Prisma, 15 modelos, seed completo)
 - ✅ Deployment en producción (Dokploy)
 - ✅ Documentación técnica y de gestión
-
-### Próxima Fase: Fase 1 - MVP Plataforma de Cursos 📋
-
-**Objetivo**: Crear plataforma funcional donde educadores publiquen cursos y estudiantes los consuman.
-
-**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 1"
 
 ---
 
