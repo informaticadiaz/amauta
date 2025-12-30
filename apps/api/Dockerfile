@@ -79,6 +79,9 @@ COPY --from=builder --chown=nestjs:nodejs /app/apps/api/prisma ./prisma
 # Copiar dependencias de producción (sin devDependencies)
 COPY --from=deps-prod --chown=nestjs:nodejs /app/node_modules ./node_modules
 COPY --from=deps-prod --chown=nestjs:nodejs /app/apps/api/node_modules ./apps/api/node_modules
+# Copiar Prisma Client generado (sobrescribe el de deps-prod)
+COPY --from=builder --chown=nestjs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder --chown=nestjs:nodejs /app/node_modules/@prisma/client ./node_modules/@prisma/client
 COPY --from=builder --chown=nestjs:nodejs /app/apps/api/package*.json ./
 
 # Variables de entorno por defecto (serán sobrescritas por Dokploy)
