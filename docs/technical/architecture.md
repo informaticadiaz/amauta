@@ -9,39 +9,375 @@ Amauta es una plataforma educativa progresiva (PWA) construida con una arquitect
 - **Escalabilidad**: Diseñada para crecer con la comunidad
 - **Mantenibilidad**: Código limpio y bien documentado
 
-## Diagrama de Arquitectura
+## Diagramas de Arquitectura
 
+### Arquitectura General del Sistema
+
+```mermaid
+flowchart TB
+    subgraph Cliente["🖥️ Cliente (PWA)"]
+        NextJS["Next.js 14<br/>App Router"]
+        SW["Service Worker<br/>Workbox"]
+        IDB["IndexedDB<br/>Offline Storage"]
+    end
+
+    subgraph Backend["⚙️ Servidor Backend"]
+        NestJS["NestJS + Fastify"]
+        Auth["Auth Middleware<br/>JWT + Passport"]
+        Services["Business Logic<br/>Services"]
+        Prisma["Data Access<br/>Prisma ORM"]
+    end
+
+    subgraph Data["💾 Capa de Datos"]
+        PG["PostgreSQL 15<br/>Base de datos principal"]
+        Redis["Redis 7<br/>Cache + Sesiones"]
+    end
+
+    subgraph Storage["📁 Almacenamiento"]
+        Files["Archivos<br/>Multimedia"]
+        CDN["CDN<br/>(Futuro)"]
+    end
+
+    Cliente -->|HTTPS/REST| Backend
+    SW <-->|Background Sync| Backend
+    IDB <-.->|Sincronización| Backend
+
+    NestJS --> Auth
+    Auth --> Services
+    Services --> Prisma
+    Prisma --> PG
+    Services <--> Redis
+
+    Backend --> Storage
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    CLIENTE (PWA)                         │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
-│  │   Next.js    │  │  Service     │  │  IndexedDB   │  │
-│  │   App Router │  │  Worker      │  │  (Offline)   │  │
-│  └──────────────┘  └──────────────┘  └──────────────┘  │
-└─────────────────────────────────────────────────────────┘
-                           │
-                      HTTPS/REST API
-                           │
-┌─────────────────────────────────────────────────────────┐
-│                    SERVIDOR BACKEND                      │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
-│  │   NestJS +   │  │  Auth        │  │  Redis       │  │
-│  │   Fastify    │  │  Middleware  │  │  (Cache)     │  │
-│  └──────────────┘  └──────────────┘  └──────────────┘  │
-│                           │                              │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
-│  │  Business    │  │  Data Access │  │  PostgreSQL  │  │
-│  │  Logic       │  │  Layer       │  │  (Prisma)    │  │
-│  └──────────────┘  └──────────────┘  └──────────────┘  │
-└─────────────────────────────────────────────────────────┘
-                           │
-┌─────────────────────────────────────────────────────────┐
-│                    ALMACENAMIENTO                        │
-│  ┌──────────────┐  ┌──────────────┐                    │
-│  │  Archivos    │  │  CDN         │                    │
-│  │  Multimedia  │  │  (Opcional)  │                    │
-│  └──────────────┘  └──────────────┘                    │
-└─────────────────────────────────────────────────────────┘
+
+### Arquitectura en Capas
+
+```mermaid
+flowchart LR
+    subgraph Presentation["Presentación"]
+        UI["UI Components"]
+        Pages["Pages/Routes"]
+    end
+
+    subgraph API["API Layer"]
+        Controllers["Controllers"]
+        DTOs["DTOs/Validation"]
+    end
+
+    subgraph Business["Business Logic"]
+        Services2["Services"]
+        UseCases["Use Cases"]
+    end
+
+    subgraph DataAccess["Data Access"]
+        Repositories["Repositories"]
+        Models["Prisma Models"]
+    end
+
+    subgraph Database["Database"]
+        PostgreSQL["PostgreSQL"]
+    end
+
+    Presentation --> API
+    API --> Business
+    Business --> DataAccess
+    DataAccess --> Database
+```
+
+### Arquitectura de Deployment (Producción)
+
+```mermaid
+flowchart TB
+    subgraph Internet["🌐 Internet"]
+        Users["Usuarios"]
+    end
+
+    subgraph VPS["VPS (72.60.144.210)"]
+        subgraph Traefik["Traefik (Reverse Proxy)"]
+            SSL["SSL/TLS<br/>Let's Encrypt"]
+            Router["Routing<br/>por dominio"]
+        end
+
+        subgraph Containers["Contenedores Docker"]
+            FE["Frontend<br/>Next.js"]
+            BE["Backend<br/>NestJS"]
+            DB["PostgreSQL"]
+            Cache["Redis"]
+        end
+
+        subgraph Dokploy["Dokploy"]
+            Deploy["Gestión de<br/>deployments"]
+            Logs["Logs y<br/>monitoring"]
+        end
+    end
+
+    Users -->|HTTPS:443| Traefik
+    Traefik -->|amauta.diazignacio.ar| FE
+    Traefik -->|amauta-api.diazignacio.ar| BE
+    BE <--> DB
+    BE <--> Cache
+
+    style SSL fill:#90EE90
+    style FE fill:#87CEEB
+    style BE fill:#DDA0DD
+    style DB fill:#F0E68C
+    style Cache fill:#FFB6C1
+```
+
+### Diagrama Entidad-Relación (ER)
+
+```mermaid
+erDiagram
+    %% ================================
+    %% MÓDULO DE USUARIOS
+    %% ================================
+    Usuario {
+        string id PK
+        string email UK
+        string nombre
+        string apellido
+        enum rol "ESTUDIANTE|EDUCADOR|ADMIN_ESCUELA|SUPER_ADMIN"
+        string password
+        string avatar
+        boolean activo
+        datetime emailVerificado
+    }
+
+    Perfil {
+        string id PK
+        string usuarioId FK,UK
+        string bio
+        string telefono
+        string pais
+        string ciudad
+        string institucion
+        string matricula
+        string grado
+        string[] especialidad
+        int experiencia
+    }
+
+    Usuario ||--o| Perfil : "tiene"
+
+    %% ================================
+    %% MÓDULO DE CURSOS
+    %% ================================
+    Categoria {
+        string id PK
+        string nombre UK
+        string slug UK
+        string descripcion
+        string icono
+    }
+
+    Curso {
+        string id PK
+        string titulo
+        string descripcion
+        string slug UK
+        string educadorId FK
+        string categoriaId FK
+        enum nivel "PRINCIPIANTE|INTERMEDIO|AVANZADO"
+        enum estado "BORRADOR|REVISION|PUBLICADO|ARCHIVADO"
+        string imagen
+        int duracion
+        string idioma
+        datetime publicadoEn
+    }
+
+    Leccion {
+        string id PK
+        string titulo
+        string descripcion
+        int orden
+        string cursoId FK
+        enum tipo "VIDEO|TEXTO|QUIZ|INTERACTIVO|DESCARGABLE"
+        int duracion
+        json contenido
+        boolean publicada
+    }
+
+    Recurso {
+        string id PK
+        string nombre
+        string tipo
+        string url
+        int tamano
+        string leccionId FK
+        boolean disponibleOffline
+    }
+
+    Usuario ||--o{ Curso : "crea"
+    Categoria ||--o{ Curso : "contiene"
+    Curso ||--o{ Leccion : "tiene"
+    Leccion ||--o{ Recurso : "adjunta"
+
+    %% ================================
+    %% MÓDULO DE APRENDIZAJE
+    %% ================================
+    Inscripcion {
+        string id PK
+        string usuarioId FK
+        string cursoId FK
+        enum estado "ACTIVO|COMPLETADO|ABANDONADO"
+        int progreso
+        datetime inscritoEn
+        datetime completadoEn
+    }
+
+    Progreso {
+        string id PK
+        string usuarioId FK
+        string leccionId FK
+        boolean completado
+        int porcentaje
+        datetime ultimoAcceso
+        datetime completadoEn
+        int intentos
+        float mejorPuntaje
+    }
+
+    Usuario ||--o{ Inscripcion : "se inscribe"
+    Curso ||--o{ Inscripcion : "recibe"
+    Usuario ||--o{ Progreso : "registra"
+    Leccion ||--o{ Progreso : "trackea"
+
+    %% ================================
+    %% MÓDULO ADMINISTRATIVO ESCOLAR
+    %% ================================
+    Institucion {
+        string id PK
+        string nombre
+        enum tipo "ESCUELA|COLEGIO|UNIVERSIDAD|CENTRO_FORMACION"
+        string direccion
+        string telefono
+        string email
+        boolean activa
+    }
+
+    Grupo {
+        string id PK
+        string nombre
+        string grado
+        string seccion
+        string institucionId FK
+        string educadorId FK
+        boolean activo
+    }
+
+    GrupoEstudiante {
+        string grupoId PK,FK
+        string estudianteId PK,FK
+        datetime inscritoEn
+    }
+
+    Asistencia {
+        string id PK
+        string grupoId FK
+        string estudianteId FK
+        datetime fecha
+        enum estado "PRESENTE|AUSENTE|TARDANZA|JUSTIFICADO"
+        string observaciones
+    }
+
+    Calificacion {
+        string id PK
+        string grupoId FK
+        string estudianteId FK
+        string materia
+        string periodo
+        float nota
+        float notaMaxima
+        string observaciones
+    }
+
+    Comunicado {
+        string id PK
+        string institucionId FK
+        string autorId FK
+        string titulo
+        string contenido
+        enum tipo "GENERAL|ACADEMICO|ADMINISTRATIVO|EVENTO|URGENTE"
+        enum prioridad "BAJA|NORMAL|ALTA|URGENTE"
+        datetime publicadoEn
+    }
+
+    Institucion ||--o{ Grupo : "tiene"
+    Usuario ||--o{ Grupo : "dirige"
+    Grupo ||--o{ GrupoEstudiante : "agrupa"
+    Usuario ||--o{ GrupoEstudiante : "pertenece"
+    Grupo ||--o{ Asistencia : "registra"
+    Usuario ||--o{ Asistencia : "tiene"
+    Grupo ||--o{ Calificacion : "evalúa"
+    Usuario ||--o{ Calificacion : "recibe"
+    Institucion ||--o{ Comunicado : "publica"
+    Usuario ||--o{ Comunicado : "redacta"
+```
+
+### Diagrama de Flujo de Datos
+
+```mermaid
+flowchart TB
+    subgraph Usuarios["👤 Flujo de Autenticación"]
+        Login["Login<br/>(email + password)"]
+        ValidarCreds["Validar<br/>credenciales"]
+        GenerarJWT["Generar JWT<br/>+ Refresh Token"]
+        GuardarSesion["Guardar sesión<br/>en Redis"]
+        RetornarTokens["Retornar<br/>tokens"]
+
+        Login --> ValidarCreds
+        ValidarCreds -->|válido| GenerarJWT
+        ValidarCreds -->|inválido| ErrorAuth["Error 401"]
+        GenerarJWT --> GuardarSesion
+        GuardarSesion --> RetornarTokens
+    end
+
+    subgraph Cursos["📚 Flujo de Inscripción"]
+        SeleccionarCurso["Seleccionar<br/>curso"]
+        VerificarRequisitos["Verificar<br/>requisitos"]
+        CrearInscripcion["Crear<br/>inscripción"]
+        InicializarProgreso["Inicializar<br/>progreso"]
+
+        SeleccionarCurso --> VerificarRequisitos
+        VerificarRequisitos -->|cumple| CrearInscripcion
+        VerificarRequisitos -->|no cumple| ErrorReq["Error requisitos"]
+        CrearInscripcion --> InicializarProgreso
+    end
+
+    subgraph Aprendizaje["🎯 Flujo de Progreso"]
+        AccederLeccion["Acceder a<br/>lección"]
+        RegistrarActividad["Registrar<br/>actividad"]
+        ActualizarProgreso["Actualizar<br/>progreso lección"]
+        RecalcularCurso["Recalcular<br/>progreso curso"]
+        VerificarCompletado["¿Curso<br/>completado?"]
+        MarcarCompletado["Marcar curso<br/>como completado"]
+
+        AccederLeccion --> RegistrarActividad
+        RegistrarActividad --> ActualizarProgreso
+        ActualizarProgreso --> RecalcularCurso
+        RecalcularCurso --> VerificarCompletado
+        VerificarCompletado -->|Sí| MarcarCompletado
+        VerificarCompletado -->|No| AccederLeccion
+    end
+
+    subgraph Offline["📴 Flujo Offline"]
+        AccionUsuario["Acción del<br/>usuario"]
+        VerificarRed["¿Hay<br/>conexión?"]
+        EnviarAPI["Enviar a<br/>API"]
+        GuardarLocal["Guardar en<br/>IndexedDB"]
+        ColaSync["Agregar a cola<br/>de sincronización"]
+        BackgroundSync["Background Sync<br/>(cuando hay red)"]
+        SincronizarDatos["Sincronizar<br/>con servidor"]
+
+        AccionUsuario --> VerificarRed
+        VerificarRed -->|Sí| EnviarAPI
+        VerificarRed -->|No| GuardarLocal
+        GuardarLocal --> ColaSync
+        ColaSync -.->|Red disponible| BackgroundSync
+        BackgroundSync --> SincronizarDatos
+        SincronizarDatos --> EnviarAPI
+    end
 ```
 
 ## Stack Tecnológico
