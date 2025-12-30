@@ -1,0 +1,160 @@
+/**
+ * Estilos para UserMenu
+ */
+
+.authLinks {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.loginLink {
+  color: var(--foreground);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.loginLink:hover {
+  color: var(--primary);
+}
+
+.registerLink {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary);
+  color: white;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.375rem;
+}
+
+.registerLink:hover {
+  background-color: #1d4ed8;
+}
+
+.container {
+  position: relative;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: transform 0.1s;
+}
+
+.trigger:hover {
+  transform: scale(1.05);
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatarPlaceholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 220px;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  z-index: 50;
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  .dropdown {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.userInfo {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.userName {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.userEmail {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.userRole {
+  font-size: 0.625rem;
+  color: var(--primary);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-top: 0.25rem;
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--border);
+}
+
+.menuItem {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--foreground);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: background-color 0.1s;
+}
+
+.menuItem:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  .menuItem:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.logoutButton {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: #dc2626;
+  text-align: left;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.1s;
+}
+
+.logoutButton:hover {
+  background-color: rgba(220, 38, 38, 0.1);
+}
