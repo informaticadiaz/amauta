@@ -37,7 +37,14 @@ amauta/
 │   │   └── README.md
 │   └── api/                    # Backend API REST (@amauta/api)
 │       ├── package.json
-│       └── README.md
+│       ├── README.md
+│       └── prisma/
+│           ├── README.md            # ⭐ Documentación de DB y Seed
+│           ├── schema.prisma        # Schema de base de datos
+│           ├── seed.ts              # Entry point del seed
+│           └── seeds/               # Datos de prueba por etapas
+│               ├── index.ts         # Orquestador
+│               └── usuarios.ts      # Etapa 1: Usuarios (✅ completado)
 │
 ├── packages/                    # Packages compartidos
 │   ├── shared/                 # Código compartido (@amauta/shared)
@@ -121,6 +128,21 @@ amauta/
 - `docs/technical/database.md` - Diseño de base de datos
 - `docs/technical/setup.md` - Guía de configuración
 - `docs/technical/environment-variables.md` - Estrategia de variables de entorno
+
+#### Base de Datos y Seed ⭐
+
+- `apps/api/prisma/README.md` - ⭐ **Documentación completa de Prisma y Seed**
+- `apps/api/prisma/schema.prisma` - Schema de todos los modelos
+- `apps/api/prisma/seeds/` - Datos de prueba por etapas
+
+**Usuarios de prueba** (password: `password123`):
+
+- `superadmin@amauta.test` (SUPER_ADMIN)
+- `admin1@amauta.test`, `admin2@amauta.test` (ADMIN_ESCUELA)
+- `educador1@amauta.test`, `educador2@amauta.test`, `educador3@amauta.test` (EDUCADOR)
+- `estudiante1-4@amauta.test` (ESTUDIANTE)
+
+Ver `apps/api/prisma/README.md` para tabla completa con nombres y descripciones.
 
 #### Formación para Desarrolladores ⭐
 
@@ -252,6 +274,8 @@ gh issue view <número>
 | **Tablero visual**     | `docs/project-management/project-board.md`   |
 | **Roadmap general**    | `docs/project-management/roadmap.md`         |
 | **Sistema de gestión** | `docs/project-management/sistema-gestion.md` |
+| **Base de datos/Seed** | `apps/api/prisma/README.md`                  |
+| **Schema Prisma**      | `apps/api/prisma/schema.prisma`              |
 
 ### Estado de Producción
 

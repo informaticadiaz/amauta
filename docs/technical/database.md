@@ -512,48 +512,54 @@ pnpm prisma migrate dev --name revertir_cambio_x
 
 ## Seeds (Datos Iniciales)
 
-El seed provee datos de prueba para desarrollo y testing. **No usar en producción**.
+El seed provee datos de prueba para desarrollo y testing.
+
+> **Documentación completa**: Ver `apps/api/prisma/README.md` para detalles de implementación.
 
 ### Uso
 
 ```bash
 # Ejecutar seed
-npm run prisma:seed
+npm run prisma:seed --workspace=@amauta/api
 
 # Reset completo (borra datos + aplica migraciones + seed)
-npm run prisma:reset
+npm run prisma:reset --workspace=@amauta/api
 ```
 
-### Especificación de Datos
+### Usuarios de Prueba (Implementado ✅)
 
-#### 1. Usuarios
+| Email                     | Rol           | Nombre          | Descripción                         |
+| ------------------------- | ------------- | --------------- | ----------------------------------- |
+| `superadmin@amauta.test`  | SUPER_ADMIN   | Admin Sistema   | Acceso total al sistema             |
+| `admin1@amauta.test`      | ADMIN_ESCUELA | María García    | Admin Escuela Primaria Belgrano     |
+| `admin2@amauta.test`      | ADMIN_ESCUELA | Carlos López    | Admin Colegio Secundario San Martín |
+| `educador1@amauta.test`   | EDUCADOR      | Ana Martínez    | Profesora de Matemáticas            |
+| `educador2@amauta.test`   | EDUCADOR      | Pedro Sánchez   | Profesor de Lengua                  |
+| `educador3@amauta.test`   | EDUCADOR      | Laura Fernández | Profesora de Ciencias               |
+| `estudiante1@amauta.test` | ESTUDIANTE    | Juan Pérez      | Estudiante 4°A Belgrano             |
+| `estudiante2@amauta.test` | ESTUDIANTE    | Sofía Rodríguez | Estudiante 4°A Belgrano             |
+| `estudiante3@amauta.test` | ESTUDIANTE    | Mateo González  | Estudiante 1°A San Martín           |
+| `estudiante4@amauta.test` | ESTUDIANTE    | Valentina Díaz  | Estudiante 1°A San Martín           |
 
-| Email                      | Nombre    | Apellido  | Rol           | Propósito                              |
-| -------------------------- | --------- | --------- | ------------- | -------------------------------------- |
-| `admin@amauta.org`         | Admin     | Sistema   | SUPER_ADMIN   | Administrador global del sistema       |
-| `director@escuela.edu.ar`  | Daniel    | Martínez  | ADMIN_ESCUELA | Administrador de institución           |
-| `maria.gonzalez@edu.ar`    | María     | González  | EDUCADOR      | Educadora - crea cursos de Matemáticas |
-| `carlos.lopez@edu.ar`      | Carlos    | López     | EDUCADOR      | Educador - crea cursos de Ciencias     |
-| `laura.silva@edu.ar`       | Laura     | Silva     | EDUCADOR      | Educadora - sin cursos (nuevo)         |
-| `lucas.fernandez@mail.com` | Lucas     | Fernández | ESTUDIANTE    | Estudiante con progreso avanzado       |
-| `valentina.ruiz@mail.com`  | Valentina | Ruiz      | ESTUDIANTE    | Estudiante con inscripciones activas   |
-| `mateo.garcia@mail.com`    | Mateo     | García    | ESTUDIANTE    | Estudiante nuevo sin progreso          |
+**Password por defecto**: `password123` (hasheado con bcrypt, 10 rounds)
 
-**Password por defecto**: `Amauta2024!` (hasheado con bcrypt, 10 rounds)
+### Perfiles (Implementado ✅)
 
-#### 2. Perfiles
+Cada usuario tiene un perfil completo con datos argentinos. Ver `apps/api/prisma/README.md` para detalles.
 
-Cada usuario tiene un perfil asociado:
+### Progreso de Implementación
 
-| Usuario         | Bio                            | Teléfono         | Ciudad       | Datos específicos                                       |
-| --------------- | ------------------------------ | ---------------- | ------------ | ------------------------------------------------------- |
-| María González  | "Licenciada en Matemáticas..." | +54 11 1234-5678 | Buenos Aires | especialidad: ["Álgebra", "Geometría"], experiencia: 10 |
-| Carlos López    | "Doctor en Física..."          | +54 11 2345-6789 | Córdoba      | especialidad: ["Física", "Química"], experiencia: 8     |
-| Lucas Fernández | null                           | null             | Mendoza      | matricula: "2024-001", grado: "4to"                     |
-| Valentina Ruiz  | null                           | null             | Buenos Aires | matricula: "2024-002", grado: "4to"                     |
-| Mateo García    | null                           | null             | Rosario      | matricula: "2024-003", grado: "3ro"                     |
+| Etapa | Issue | Estado        | Datos                                             |
+| ----- | ----- | ------------- | ------------------------------------------------- |
+| 1     | #23   | ✅ Completado | 10 usuarios, 10 perfiles                          |
+| 2     | #24   | ⏳ Pendiente  | 6 categorías, 2 instituciones, 4 grupos           |
+| 3     | #25   | ⏳ Pendiente  | 6 cursos, 15 lecciones, 10 recursos               |
+| 4     | #26   | ⏳ Pendiente  | 12 inscripciones, ~20 progresos                   |
+| 5     | #27   | ⏳ Pendiente  | ~40 asistencias, 16 calificaciones, 4 comunicados |
 
-#### 3. Categorías
+### Datos Planificados (Pendientes)
+
+#### Categorías (Etapa 2)
 
 | Nombre              | Slug                 | Descripción                                        | Icono        |
 | ------------------- | -------------------- | -------------------------------------------------- | ------------ |
