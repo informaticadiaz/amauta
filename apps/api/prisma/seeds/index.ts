@@ -10,7 +10,7 @@ import { seedUsuarios } from './usuarios';
 import { seedCategorias } from './categorias';
 import { seedInstituciones } from './instituciones';
 import { seedCursos } from './cursos';
-// import { seedInscripciones } from './inscripciones';
+import { seedInscripciones } from './inscripciones';
 // import { seedAdministrativo } from './administrativo';
 
 export async function runAllSeeds(prisma: PrismaClient): Promise<void> {
@@ -28,7 +28,7 @@ export async function runAllSeeds(prisma: PrismaClient): Promise<void> {
   await seedCursos(prisma);
 
   // Etapa 4: Inscripciones + Progreso (depende de Etapa 3)
-  // await seedInscripciones(prisma);
+  await seedInscripciones(prisma);
 
   // Etapa 5: Asistencias + Calificaciones + Comunicados (depende de Etapa 2)
   // await seedAdministrativo(prisma);
