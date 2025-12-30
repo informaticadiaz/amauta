@@ -12,28 +12,26 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 
 ---
 
-## Fase 0: Fundamentos (Actual - 89% Completado)
+## Fase 0: Fundamentos ✅ COMPLETADA
 
-**Duración estimada**: 2 semanas
-**Progreso**: 16/18 tareas completadas
-**Iniciado**: 01/12/2024
-**Estimado de finalización**: 31/12/2024
+**Duración**: 01/12/2024 - 30/12/2024
+**Progreso**: 18/18 tareas completadas (100%)
 
 ### 🟢 Producción
 
-| Servicio    | URL                               |
-| ----------- | --------------------------------- |
-| Frontend    | https://amauta.diazignacio.ar     |
-| Backend API | https://amauta-api.diazignacio.ar |
+| Servicio    | URL                               | Estado    |
+| ----------- | --------------------------------- | --------- |
+| Frontend    | https://amauta.diazignacio.ar     | 🟢 Online |
+| Backend API | https://amauta-api.diazignacio.ar | 🟢 Online |
 
-### Objetivos
+### Objetivos ✅
 
-- Establecer bases del proyecto
-- Configurar infraestructura de desarrollo
-- Documentación inicial
-- Deployment en producción
+- ✅ Establecer bases del proyecto
+- ✅ Configurar infraestructura de desarrollo
+- ✅ Documentación inicial
+- ✅ Deployment en producción
 
-### Entregables
+### Entregables ✅
 
 - [x] Estructura de proyecto (Turborepo con monorepo) - T-008
 - [x] Documentación técnica base
@@ -51,8 +49,26 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 - [x] Servidor HTTP con NestJS + Fastify - T-018
 - [x] Frontend con Next.js configurado - T-019
 - [x] Deployment en producción con Dokploy - T-017
-- [ ] Seed data para base de datos - T-014
-- [ ] Expandir CI con lint, type-check y build - T-014bis
+- [x] Seed data para base de datos - T-014 ✅
+- [x] CI expandido con lint, type-check y build - T-014bis ✅
+
+### Datos en Producción
+
+| Tabla          | Registros |
+| -------------- | --------- |
+| usuarios       | 10        |
+| perfiles       | 10        |
+| categorias     | 6         |
+| instituciones  | 2         |
+| grupos         | 4         |
+| cursos         | 6         |
+| lecciones      | 15        |
+| recursos       | 8         |
+| inscripciones  | 12        |
+| progresos      | 28        |
+| asistencias    | 40        |
+| calificaciones | 16        |
+| comunicados    | 4         |
 
 ---
 
@@ -2590,5 +2606,5 @@ Revisar roadmap cada 3 sprints (6 semanas) para ajustar prioridades.
 
 ---
 
-**Última actualización**: 2024-12-18
-**Próxima revisión**: Sprint 3
+**Última actualización**: 2024-12-30
+**Próxima revisión**: Inicio de Fase 1
