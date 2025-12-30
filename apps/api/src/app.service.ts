@@ -20,6 +20,7 @@ export interface ApiInfoResponse {
   description: string;
   environment: string;
   documentation: string;
+  repository: string;
 }
 
 @Injectable()
@@ -51,7 +52,9 @@ export class AppService {
       version: '0.1.0',
       description: 'Sistema educativo para la gestión del aprendizaje',
       environment: env.NODE_ENV,
-      documentation: '/api/v1/docs',
+      documentation:
+        'https://github.com/informaticadiaz/amauta/blob/master/docs/technical/architecture.md',
+      repository: 'https://github.com/informaticadiaz/amauta',
     };
   }
 }

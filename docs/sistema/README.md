@@ -22,22 +22,23 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 
 ### Funcionalidades Implementadas
 
-| Módulo         | Estado       | Descripción                            |
-| -------------- | ------------ | -------------------------------------- |
-| Autenticación  | ⏳ Pendiente | Login, registro, recuperar contraseña  |
-| Usuarios       | ✅ Seed      | 10 usuarios de prueba disponibles      |
-| Perfiles       | ✅ Seed      | Información extendida de cada usuario  |
-| Categorías     | ✅ Seed      | 6 categorías curriculares              |
-| Instituciones  | ✅ Seed      | 2 instituciones educativas             |
-| Grupos         | ✅ Seed      | 4 grupos con estudiantes asignados     |
-| Cursos         | ✅ Seed      | 6 cursos de ejemplo                    |
-| Lecciones      | ✅ Seed      | 15 lecciones (VIDEO, TEXTO, QUIZ)      |
-| Recursos       | ✅ Seed      | 8 recursos adjuntos                    |
-| Inscripciones  | ✅ Seed      | 12 inscripciones de estudiantes        |
-| Progreso       | ✅ Seed      | 28 registros de avance                 |
-| Asistencias    | ✅ Seed      | 40 registros (10 días × 4 estudiantes) |
-| Calificaciones | ✅ Seed      | 16 notas (4 materias × 4 estudiantes)  |
-| Comunicados    | ✅ Seed      | 4 comunicados institucionales          |
+| Módulo             | Estado       | Cantidad | Descripción                           |
+| ------------------ | ------------ | -------- | ------------------------------------- |
+| Autenticación      | ⏳ Pendiente | -        | Login, registro, recuperar contraseña |
+| Usuarios           | ✅ Seed      | 10       | Usuarios de prueba disponibles        |
+| Perfiles           | ✅ Seed      | 10       | Información extendida de cada usuario |
+| Categorías         | ✅ Seed      | 6        | Categorías curriculares               |
+| Instituciones      | ✅ Seed      | 2        | Instituciones educativas              |
+| Grupos             | ✅ Seed      | 4        | Grupos/clases con estudiantes         |
+| Grupos-Estudiantes | ✅ Seed      | 4        | Asignaciones estudiante-grupo         |
+| Cursos             | ✅ Seed      | 6        | Cursos de ejemplo                     |
+| Lecciones          | ✅ Seed      | 15       | Lecciones (VIDEO, TEXTO, QUIZ)        |
+| Recursos           | ✅ Seed      | 8        | Recursos adjuntos a lecciones         |
+| Inscripciones      | ✅ Seed      | 12       | Inscripciones de estudiantes          |
+| Progreso           | ✅ Seed      | 28       | Registros de avance en lecciones      |
+| Asistencias        | ✅ Seed      | 40       | Registros (10 días × 4 estudiantes)   |
+| Calificaciones     | ✅ Seed      | 16       | Notas (4 materias × 4 estudiantes)    |
+| Comunicados        | ✅ Seed      | 4        | Comunicados institucionales           |
 
 ### Progreso por Etapas
 
