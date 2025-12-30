@@ -346,6 +346,7 @@ git push
    ```
 
 3. **Marcar claramente documentos públicos vs privados**:
+
    ```markdown
    # ⚠️ VERSIÓN PÚBLICA - Sin datos sensibles
 

@@ -247,6 +247,7 @@ Hacé estos cambios pequeños para familiarizarte:
    - Observá los logs en la terminal
 
 3. **Explorar Prisma Studio**
+
    ```bash
    npm run prisma:studio
    ```

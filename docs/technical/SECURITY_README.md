@@ -216,6 +216,7 @@ git diff --staged | grep -iE "(password|secret).*=.*[^example]"
    ```
 
 3. **Marcar claramente**:
+
    ```markdown
    # ⚠️ VERSIÓN PÚBLICA - Sin datos sensibles
 
