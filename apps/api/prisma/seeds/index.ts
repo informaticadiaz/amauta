@@ -9,9 +9,7 @@ import type { PrismaClient } from '@prisma/client';
 import { seedUsuarios } from './usuarios';
 import { seedCategorias } from './categorias';
 import { seedInstituciones } from './instituciones';
-
-// Etapas futuras (descomentar cuando estén implementadas)
-// import { seedCursos } from './cursos';
+import { seedCursos } from './cursos';
 // import { seedInscripciones } from './inscripciones';
 // import { seedAdministrativo } from './administrativo';
 
@@ -26,8 +24,8 @@ export async function runAllSeeds(prisma: PrismaClient): Promise<void> {
   await seedCategorias(prisma);
   await seedInstituciones(prisma);
 
-  // Etapa 3: Cursos + Lecciones (depende de Etapa 1 y 2)
-  // await seedCursos(prisma);
+  // Etapa 3: Cursos + Lecciones + Recursos (depende de Etapa 1 y 2)
+  await seedCursos(prisma);
 
   // Etapa 4: Inscripciones + Progreso (depende de Etapa 3)
   // await seedInscripciones(prisma);
