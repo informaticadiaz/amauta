@@ -1,58 +1,63 @@
 # Etapa 5: Módulo Administrativo
 
-> **Estado**: ⏳ Pendiente
+> **Estado**: ✅ Completado
+> **Fecha**: 2025-12-30
 > **Issue**: [#27](https://github.com/informaticadiaz/amauta/issues/27)
-> **Dependencia**: Etapa 2
 
-## Objetivo
+## Resumen
 
-Completar el seed con datos del módulo administrativo escolar: asistencias, calificaciones y comunicados.
+Esta etapa completa el seed con datos del módulo administrativo escolar: asistencias, calificaciones y comunicados institucionales.
 
-## ¿Qué se logrará?
+## ¿Qué se logró?
 
-### Asistencias
+### Asistencias Creadas
 
-Se crearán **~40 registros** de asistencia (últimos 10 días hábiles):
+Se crearon **40 registros** de asistencia (últimos 10 días hábiles):
 
-| Estado      | Porcentaje | Descripción          |
-| ----------- | ---------- | -------------------- |
-| PRESENTE    | 80%        | Asistió normalmente  |
-| AUSENTE     | 10%        | No asistió           |
-| TARDANZA    | 5%         | Llegó tarde          |
-| JUSTIFICADO | 5%         | Ausencia justificada |
+| Estado      | Cantidad | Porcentaje |
+| ----------- | -------- | ---------- |
+| PRESENTE    | 33       | ~82%       |
+| AUSENTE     | ~4       | ~10%       |
+| TARDANZA    | ~2       | ~5%        |
+| JUSTIFICADO | ~1       | ~3%        |
 
-Ejemplo de registro:
+**Distribución por estudiante:**
 
-| Fecha      | Estudiante      | Estado   | Observaciones        |
-| ---------- | --------------- | -------- | -------------------- |
-| 2025-12-20 | Juan Pérez      | PRESENTE | -                    |
-| 2025-12-20 | Sofía Rodríguez | TARDANZA | "Llegó 10 min tarde" |
-| 2025-12-19 | Juan Pérez      | PRESENTE | -                    |
-| 2025-12-19 | Sofía Rodríguez | AUSENTE  | -                    |
+| Estudiante      | Grupo       | Días registrados |
+| --------------- | ----------- | ---------------- |
+| Juan Pérez      | 4to Grado A | 10               |
+| Sofía Rodríguez | 4to Grado A | 10               |
+| Mateo González  | 1er Año A   | 10               |
+| Valentina Díaz  | 1er Año A   | 10               |
 
-### Calificaciones
+### Calificaciones Creadas
 
-Se crearán **16 calificaciones** (4 por estudiante):
+Se crearon **16 calificaciones** (4 materias × 4 estudiantes):
 
-| Estudiante      | Materia     | Período       | Nota |
-| --------------- | ----------- | ------------- | ---- |
-| Juan Pérez      | Matemáticas | 1er Trimestre | 8.5  |
-| Juan Pérez      | Lengua      | 1er Trimestre | 7.0  |
-| Juan Pérez      | Ciencias    | 1er Trimestre | 9.0  |
-| Juan Pérez      | Historia    | 1er Trimestre | 8.0  |
-| Sofía Rodríguez | Matemáticas | 1er Trimestre | 9.5  |
-| ...             | ...         | ...           | ...  |
+**4to Grado A (Escuela Belgrano):**
 
-### Comunicados Institucionales
+| Estudiante      | Matemáticas | Lengua | Cs. Naturales | Cs. Sociales |
+| --------------- | ----------- | ------ | ------------- | ------------ |
+| Juan Pérez      | 8.5         | 7.0    | 9.0           | 8.0          |
+| Sofía Rodríguez | 9.5         | 8.5    | 9.0           | 8.5          |
 
-Se crearán **4 comunicados**:
+**1er Año A (Colegio San Martín):**
 
-| Institución | Tipo      | Prioridad | Título                              |
-| ----------- | --------- | --------- | ----------------------------------- |
-| Belgrano    | GENERAL   | NORMAL    | "Bienvenidos al ciclo lectivo 2025" |
-| Belgrano    | EVENTO    | ALTA      | "Acto del 25 de Mayo"               |
-| San Martín  | ACADEMICO | NORMAL    | "Fechas de exámenes finales"        |
-| San Martín  | URGENTE   | URGENTE   | "Suspensión de clases por clima"    |
+| Estudiante     | Matemáticas | Lengua | Biología | Historia |
+| -------------- | ----------- | ------ | -------- | -------- |
+| Mateo González | 7.5         | 8.0    | 9.0      | 7.0      |
+| Valentina Díaz | 8.0         | 9.5    | 8.5      | 9.0      |
+
+### Comunicados Publicados
+
+Se crearon **4 comunicados** institucionales:
+
+| Institución | Tipo      | Prioridad  | Título                          |
+| ----------- | --------- | ---------- | ------------------------------- |
+| Belgrano    | GENERAL   | 🟢 NORMAL  | Bienvenidos al ciclo lectivo    |
+| Belgrano    | EVENTO    | 🟠 ALTA    | Acto del 25 de Mayo             |
+| San Martín  | ACADEMICO | 🟢 NORMAL  | Fechas de exámenes              |
+| San Martín  | URGENTE   | 🔴 URGENTE | Suspensión por alerta climática |
 
 ## Flujos Administrativos
 
@@ -93,53 +98,43 @@ Ingresa notas:
   Calificaciones guardadas
 ```
 
-### Publicar Comunicado
-
-```
-Admin selecciona institución
-         │
-         ▼
-Completa formulario:
-├── Título
-├── Contenido
-├── Tipo (General/Evento/Urgente)
-└── Prioridad
-         │
-         ▼
-  Comunicado publicado
-```
-
-## Datos a Crear
+## Datos en Producción
 
 | Modelo       | Cantidad |
 | ------------ | -------- |
-| Asistencia   | ~40      |
+| Asistencia   | 40       |
 | Calificacion | 16       |
 | Comunicado   | 4        |
 
-## Beneficios
+## Beneficios Obtenidos
 
 Al completar esta etapa:
 
-1. El sistema tendrá **datos completos** para todas las funcionalidades
-2. Se podrán probar **reportes de asistencia**
-3. Los estudiantes verán sus **calificaciones**
-4. Se podrá probar la **bandeja de comunicados**
+1. El sistema tiene **datos completos** para todas las funcionalidades
+2. Se pueden probar **reportes de asistencia**
+3. Los estudiantes ven sus **calificaciones**
+4. Se puede probar la **bandeja de comunicados**
 
-## Archivos a Crear
+## Archivos Creados
 
 - `apps/api/prisma/seeds/administrativo.ts`
 
-## Cierre del Seed
+## Seed Completo
 
-Al completar la Etapa 5:
+Con la Etapa 5 completada, el seed data incluye:
 
-1. ✅ Cerrar issue #27
-2. ✅ Cerrar issue #15 (issue padre)
-3. ✅ Actualizar documentación
-4. ✅ Marcar T-014 como completada
+| Etapa | Modelos                              | Registros   |
+| ----- | ------------------------------------ | ----------- |
+| 1     | Usuario, Perfil                      | 10 + 10     |
+| 2     | Categoria, Institucion, Grupo        | 6 + 2 + 4   |
+| 3     | Curso, Leccion, Recurso              | 6 + 15 + 8  |
+| 4     | Inscripcion, Progreso                | 12 + 28     |
+| 5     | Asistencia, Calificacion, Comunicado | 40 + 16 + 4 |
+
+**Total: ~161 registros en 12 modelos**
 
 ---
 
-**Fecha estimada**: Por definir
-**Prerrequisito**: Etapa 2 completada (no depende de 3 y 4)
+**Implementado por**: Claude Code
+**Commit**: `fb6e8fb`
+**Issues cerrados**: #27, #15

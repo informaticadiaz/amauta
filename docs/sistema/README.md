@@ -22,21 +22,22 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 
 ### Funcionalidades Implementadas
 
-| Módulo         | Estado       | Descripción                           |
-| -------------- | ------------ | ------------------------------------- |
-| Autenticación  | ⏳ Pendiente | Login, registro, recuperar contraseña |
-| Usuarios       | ✅ Seed      | 10 usuarios de prueba disponibles     |
-| Perfiles       | ✅ Seed      | Información extendida de cada usuario |
-| Categorías     | ✅ Seed      | 6 categorías curriculares             |
-| Instituciones  | ✅ Seed      | 2 instituciones educativas            |
-| Grupos         | ✅ Seed      | 4 grupos con estudiantes asignados    |
-| Cursos         | ✅ Seed      | 6 cursos de ejemplo                   |
-| Lecciones      | ✅ Seed      | 15 lecciones (VIDEO, TEXTO, QUIZ)     |
-| Recursos       | ✅ Seed      | 8 recursos adjuntos                   |
-| Inscripciones  | ✅ Seed      | 12 inscripciones de estudiantes       |
-| Progreso       | ✅ Seed      | 28 registros de avance                |
-| Asistencias    | ⏳ Pendiente | Registro diario                       |
-| Calificaciones | ⏳ Pendiente | Notas y evaluaciones                  |
+| Módulo         | Estado       | Descripción                            |
+| -------------- | ------------ | -------------------------------------- |
+| Autenticación  | ⏳ Pendiente | Login, registro, recuperar contraseña  |
+| Usuarios       | ✅ Seed      | 10 usuarios de prueba disponibles      |
+| Perfiles       | ✅ Seed      | Información extendida de cada usuario  |
+| Categorías     | ✅ Seed      | 6 categorías curriculares              |
+| Instituciones  | ✅ Seed      | 2 instituciones educativas             |
+| Grupos         | ✅ Seed      | 4 grupos con estudiantes asignados     |
+| Cursos         | ✅ Seed      | 6 cursos de ejemplo                    |
+| Lecciones      | ✅ Seed      | 15 lecciones (VIDEO, TEXTO, QUIZ)      |
+| Recursos       | ✅ Seed      | 8 recursos adjuntos                    |
+| Inscripciones  | ✅ Seed      | 12 inscripciones de estudiantes        |
+| Progreso       | ✅ Seed      | 28 registros de avance                 |
+| Asistencias    | ✅ Seed      | 40 registros (10 días × 4 estudiantes) |
+| Calificaciones | ✅ Seed      | 16 notas (4 materias × 4 estudiantes)  |
+| Comunicados    | ✅ Seed      | 4 comunicados institucionales          |
 
 ### Progreso por Etapas
 
@@ -46,7 +47,7 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 | 2     | [Categorías e Instituciones](etapa-2-categorias.md)  | ✅ Completado |
 | 3     | [Cursos y Lecciones](etapa-3-cursos.md)              | ✅ Completado |
 | 4     | [Inscripciones y Progreso](etapa-4-inscripciones.md) | ✅ Completado |
-| 5     | [Módulo Administrativo](etapa-5-administrativo.md)   | ⏳ Pendiente  |
+| 5     | [Módulo Administrativo](etapa-5-administrativo.md)   | ✅ Completado |
 
 ## Cómo Probar el Sistema
 
@@ -161,4 +162,4 @@ Acceso: Sus cursos e inscripciones
 ---
 
 **Última actualización**: 2025-12-30
-**Etapa actual**: 4 de 5 completadas
+**Etapa actual**: 5 de 5 completadas (SEED COMPLETO)
