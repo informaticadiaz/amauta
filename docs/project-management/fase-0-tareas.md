@@ -340,15 +340,24 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 **Estimación**: 3 puntos
 **Prioridad**: Should Have
 **Labels**: `docs`, `architecture`
+**Estado**: ✅ Completado (Issue #16 - 2025-12-30)
 
 **Checklist:**
 
-- [ ] Crear diagrama de arquitectura general
-- [ ] Crear diagrama de flujo de datos
-- [ ] Crear diagrama ER de base de datos
-- [ ] Usar herramienta (Mermaid, Draw.io, Excalidraw)
-- [ ] Agregar diagramas a docs/technical/architecture.md
-- [ ] Exportar versiones en imagen
+- [x] Crear diagrama de arquitectura general
+- [x] Crear diagrama de flujo de datos
+- [x] Crear diagrama ER de base de datos
+- [x] Usar herramienta (Mermaid, Draw.io, Excalidraw) → Mermaid
+- [x] Agregar diagramas a docs/technical/architecture.md
+- [ ] Exportar versiones en imagen (opcional, Mermaid renderiza en GitHub)
+
+**Resultado**: 5 diagramas Mermaid en `docs/technical/architecture.md`:
+
+- Arquitectura General del Sistema
+- Arquitectura en Capas
+- Arquitectura de Deployment (VPS + Dokploy)
+- Diagrama ER completo (15 modelos)
+- Diagrama de Flujo de Datos (auth, inscripción, progreso, offline)
 
 #### T-016: Documentar API endpoints (preparación)
 
@@ -497,12 +506,14 @@ La Fase 0 estará completa cuando:
 - [x] Base de datos configurada con Prisma (PostgreSQL + schema completo)
 - [x] Backend NestJS + Fastify configurado (issue #19)
 - [x] Frontend Next.js configurado (issue #20)
-- [ ] Documentación técnica completa (falta diagramas de arquitectura - issue #16)
+- [x] Documentación técnica completa (diagramas Mermaid - issue #16 ✅)
 - [x] Seed data para desarrollo (5 etapas completas - issues #23-27)
 - [x] Al menos 1 desarrollador puede clonar y ejecutar el proyecto sin ayuda
 
 **Iniciado**: 01/12/2024
-**Progreso actual**: 94% (17/18 tareas - falta T-015 diagramas)
+**Progreso actual**: 100% (18/18 tareas completadas) ✅
 **Fecha objetivo**: 31/12/2024
+**Fecha completada**: 30/12/2024 🎉
 **Estado de Producción**: 🟢 ONLINE (2025-12-23)
 **Seed**: ✅ COMPLETO (2025-12-30)
+**Diagramas**: ✅ COMPLETO (2025-12-30)

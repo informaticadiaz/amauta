@@ -99,7 +99,7 @@ amauta/
 
 ## Estado del Proyecto
 
-🟢 **EN PRODUCCIÓN** - Fase 0: Fundamentos (89% completado)
+🟢 **EN PRODUCCIÓN** - Fase 0: Fundamentos (100% completado)
 
 ### 🌐 URLs de Producción
 
@@ -110,7 +110,7 @@ Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de des
 
 ### Fases
 
-- 🟢 **Fase 0**: Fundamentos y documentación (16/18 tareas completadas)
+- ✅ **Fase 0**: Fundamentos y documentación (18/18 tareas completadas)
   - ✅ Repositorio y estructura configurada
   - ✅ CI/CD básico con GitHub Actions
   - ✅ Monorepo con Turborepo
@@ -123,7 +123,8 @@ Ver [Roadmap](./docs/project-management/roadmap.md) para el plan completo de des
   - ✅ Backend API con NestJS + Fastify
   - ✅ Frontend con Next.js 14 (App Router)
   - ✅ **Deployment en producción** (Dokploy en VPS)
-  - 🔄 **Pendiente**: Seed data, diagramas de arquitectura
+  - ✅ **Seed data** (5 etapas: usuarios, categorías, cursos, inscripciones, administrativo)
+  - ✅ **Diagramas de arquitectura** (Mermaid: ER, flujos, deployment)
 - 📋 **Fase 1**: MVP - Plataforma de cursos básica (próximo)
 - 📋 **Fase 2**: Offline-First & PWA
 - 📋 **Fase 3**: Evaluaciones y certificaciones
@@ -242,7 +243,7 @@ npm run prisma:studio --workspace=@amauta/api  # Interface gráfica (localhost:5
 
 ### 🟢 Estado del Proyecto
 
-**Fase 0: Fundamentos** (89% completado - 16/18 tareas)
+**Fase 0: Fundamentos** ✅ COMPLETADO (18/18 tareas)
 
 ✅ **Configurado y en Producción:**
 
@@ -256,11 +257,8 @@ npm run prisma:studio --workspace=@amauta/api  # Interface gráfica (localhost:5
 - Backend NestJS + Fastify
 - Frontend Next.js 14
 - **Deployment en producción** (Dokploy)
-
-⏳ **Pendiente:**
-
-- Seed data para base de datos
-- Diagramas de arquitectura
+- **Seed data completo** (10 usuarios, 6 cursos, 15 lecciones, etc.)
+- **Diagramas de arquitectura** (Mermaid en docs/technical/architecture.md)
 
 Ver [Estado Completo](#estado-del-proyecto) más arriba para detalles.
 

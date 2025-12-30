@@ -2,7 +2,7 @@
 
 ## Estado Actual: 🟢 DEPLOYMENT COMPLETO - Frontend y Backend ONLINE
 
-**Última actualización**: 2025-12-23
+**Última actualización**: 2025-12-30
 **Frontend público**: https://amauta.diazignacio.ar ✅
 **Backend público**: https://amauta-api.diazignacio.ar ✅
 
@@ -56,8 +56,9 @@ curl https://amauta-api.diazignacio.ar/health  # Backend API
 
 **Sistema ONLINE!** Mejoras sugeridas:
 
-1. **Seed Data** (Issue #15)
-   - Cargar datos de prueba para desarrollo
+1. ~~**Seed Data** (Issue #15)~~ ✅ COMPLETADO (2025-12-30)
+   - 5 etapas de seed implementadas (Issues #23-27)
+   - 10 usuarios, 6 cursos, 15 lecciones, datos administrativos
 
 2. **Configurar Webhooks**
    - Auto-deploy en push a master
@@ -92,7 +93,7 @@ curl https://amauta-api.diazignacio.ar/health  # Backend API
 - [x] Container running (2 instancias activas)
 - [x] Ejecutar migraciones
 - [x] Servidor NestJS + Fastify implementado (Issue #19)
-- [ ] Redeploy con servidor HTTP real (pendiente push)
+- [x] Redeploy con servidor HTTP real ✅
 
 ### Fase 4: Frontend Web ✅
 
@@ -114,7 +115,7 @@ curl https://amauta-api.diazignacio.ar/health  # Backend API
 - [x] Backend accesible vía dominio (https://amauta-api.diazignacio.ar) ✅
 - [x] Frontend accesible vía dominio (https://amauta.diazignacio.ar) ✅
 - [x] Database migrations aplicadas ✅
-- [ ] Seed data cargada (opcional)
+- [x] Seed data cargada ✅ (2025-12-30)
 - [ ] Monitoring configurado (opcional)
 - [ ] Backups configurados (opcional)
 
@@ -185,6 +186,15 @@ docker builder prune -af
 - **Solución**: Implementado NestJS + Fastify con endpoints reales
 - **Commit**: `2f5e84d`
 - **Endpoints**: `/health`, `/`, `/api/v1/info`
+
+### DATABASE_URL con hostname desactualizado (Resuelto 2025-12-30)
+
+- **Problema**: Backend crasheando en loop (Exit code 1)
+- **Causa**: DATABASE_URL y REDIS_URL usaban task IDs de contenedores antiguos
+- **Error**: `P1001: Can't reach database server at amauta-amautadb-kt4oqj.1.pf72ze0jtk835jj8gie5l422b`
+- **Solución**: Actualizar a nombres de servicio estables (sin task ID)
+- **Comando**: `docker service update --env-add 'DATABASE_URL=...' amauta-amautaapi-ryf48a`
+- **Resultado**: Backend restaurado, todos los servicios 1/1
 
 ---
 
@@ -274,5 +284,5 @@ docker system df
 ---
 
 **Mantenedor**: Claude Code
-**Última sesión**: 2025-12-23
-**Estado**: 🎉 DEPLOYMENT COMPLETADO
+**Última sesión**: 2025-12-30
+**Estado**: 🎉 DEPLOYMENT COMPLETADO + SEED DATA
