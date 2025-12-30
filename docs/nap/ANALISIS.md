@@ -2,35 +2,35 @@
 
 > **Issue relacionado**: [#22](https://github.com/informaticadiaz/amauta/issues/22)
 > **Objetivo**: Analizar los 21 PDFs de NAP para extraer contenido estructurado
-> **Estado**: 20/21 PDFs analizados (95%) - COMPLETADO (1 PDF incorrecto pendiente de reemplazo)
+> **Estado**: 21/21 PDFs analizados (100%) - COMPLETADO
 
 ## Orden de Análisis
 
 **Criterio**: Por nivel educativo (progresión natural del sistema educativo argentino)
 
-| #   | Archivo                                            | Nivel                | Estado            |
-| --- | -------------------------------------------------- | -------------------- | ----------------- |
-| 1   | `inicial/nap-educacion-inicial.pdf`                | Inicial              | ✅ Completado     |
-| 2   | `primaria/nap-primaria-1er-ciclo.pdf`              | Primaria 1º-3º       | ✅ Completado     |
-| 3   | `primaria/nap-primaria-2do-ciclo.pdf`              | Primaria 4º-6º       | ✅ Completado     |
-| 4   | `septimo/nap-septimo-anio.pdf`                     | Séptimo / Transición | ✅ Completado     |
-| 5   | `secundaria-basico/nap-matematica.pdf`             | Sec. Básico          | ✅ Completado     |
-| 6   | `secundaria-basico/nap-lengua.pdf`                 | Sec. Básico          | ✅ Completado     |
-| 7   | `secundaria-basico/nap-ciencias-naturales.pdf`     | Sec. Básico          | ✅ Completado     |
-| 8   | `secundaria-basico/nap-ciencias-sociales.pdf`      | Sec. Básico          | ✅ Completado     |
-| 9   | `secundaria-basico/nap-formacion-etica.pdf`        | Sec. Básico          | ✅ Completado     |
-| 10  | `secundaria-basico/nap-educacion-artistica.pdf`    | Sec. Básico          | ✅ Completado     |
-| 11  | `secundaria-basico/nap-educacion-fisica.pdf`       | Sec. Básico          | ✅ Completado     |
-| 12  | `secundaria-basico/nap-educacion-tecnologica.pdf`  | Sec. Básico          | ✅ Completado     |
-| 13  | `secundaria-orientado/nap-matematica.pdf`          | Sec. Orientado       | ✅ Completado     |
-| 14  | `secundaria-orientado/nap-lengua-literatura.pdf`   | Sec. Orientado       | ✅ Completado     |
-| 15  | `secundaria-orientado/nap-ciencias-naturales.pdf`  | Sec. Orientado       | ✅ Completado     |
-| 16  | `secundaria-orientado/nap-ciencias-sociales.pdf`   | Sec. Orientado       | ✅ Completado     |
-| 17  | `secundaria-orientado/nap-filosofia-etica.pdf`     | Sec. Orientado       | ✅ Completado     |
-| 18  | `secundaria-orientado/nap-educacion-artistica.pdf` | Sec. Orientado       | ⚠️ PDF incorrecto |
-| 19  | `secundaria-orientado/nap-educacion-fisica.pdf`    | Sec. Orientado       | ✅ Completado     |
-| 20  | `transversales/nap-lenguas-extranjeras.pdf`        | Transversal          | ✅ Completado     |
-| 21  | `transversales/nap-educacion-digital.pdf`          | Transversal          | ✅ Completado     |
+| #   | Archivo                                            | Nivel                | Estado        |
+| --- | -------------------------------------------------- | -------------------- | ------------- |
+| 1   | `inicial/nap-educacion-inicial.pdf`                | Inicial              | ✅ Completado |
+| 2   | `primaria/nap-primaria-1er-ciclo.pdf`              | Primaria 1º-3º       | ✅ Completado |
+| 3   | `primaria/nap-primaria-2do-ciclo.pdf`              | Primaria 4º-6º       | ✅ Completado |
+| 4   | `septimo/nap-septimo-anio.pdf`                     | Séptimo / Transición | ✅ Completado |
+| 5   | `secundaria-basico/nap-matematica.pdf`             | Sec. Básico          | ✅ Completado |
+| 6   | `secundaria-basico/nap-lengua.pdf`                 | Sec. Básico          | ✅ Completado |
+| 7   | `secundaria-basico/nap-ciencias-naturales.pdf`     | Sec. Básico          | ✅ Completado |
+| 8   | `secundaria-basico/nap-ciencias-sociales.pdf`      | Sec. Básico          | ✅ Completado |
+| 9   | `secundaria-basico/nap-formacion-etica.pdf`        | Sec. Básico          | ✅ Completado |
+| 10  | `secundaria-basico/nap-educacion-artistica.pdf`    | Sec. Básico          | ✅ Completado |
+| 11  | `secundaria-basico/nap-educacion-fisica.pdf`       | Sec. Básico          | ✅ Completado |
+| 12  | `secundaria-basico/nap-educacion-tecnologica.pdf`  | Sec. Básico          | ✅ Completado |
+| 13  | `secundaria-orientado/nap-matematica.pdf`          | Sec. Orientado       | ✅ Completado |
+| 14  | `secundaria-orientado/nap-lengua-literatura.pdf`   | Sec. Orientado       | ✅ Completado |
+| 15  | `secundaria-orientado/nap-ciencias-naturales.pdf`  | Sec. Orientado       | ✅ Completado |
+| 16  | `secundaria-orientado/nap-ciencias-sociales.pdf`   | Sec. Orientado       | ✅ Completado |
+| 17  | `secundaria-orientado/nap-filosofia-etica.pdf`     | Sec. Orientado       | ✅ Completado |
+| 18  | `secundaria-orientado/nap-educacion-artistica.pdf` | Sec. Orientado       | ✅ Completado |
+| 19  | `secundaria-orientado/nap-educacion-fisica.pdf`    | Sec. Orientado       | ✅ Completado |
+| 20  | `transversales/nap-lenguas-extranjeras.pdf`        | Transversal          | ✅ Completado |
+| 21  | `transversales/nap-educacion-digital.pdf`          | Transversal          | ✅ Completado |
 
 **Leyenda**: ⬜ Pendiente | 🔄 En progreso | ✅ Completado
 
@@ -137,15 +137,15 @@ print(f'Páginas: {len(r.pages)}')"
 
 ## Resumen de Progreso
 
-| Nivel                | Total  | Analizados | Pendientes             |
-| -------------------- | ------ | ---------- | ---------------------- |
-| Inicial              | 1      | 1          | 0                      |
-| Primaria             | 2      | 2          | 0                      |
-| Séptimo              | 1      | 1          | 0                      |
-| Secundaria Básico    | 8      | 8          | 0                      |
-| Secundaria Orientado | 7      | 6          | 1 (⚠️ PDF incorrecto)  |
-| Transversales        | 2      | 2          | 0                      |
-| **Total**            | **21** | **20**     | **1** (PDF incorrecto) |
+| Nivel                | Total  | Analizados | Pendientes |
+| -------------------- | ------ | ---------- | ---------- |
+| Inicial              | 1      | 1          | 0          |
+| Primaria             | 2      | 2          | 0          |
+| Séptimo              | 1      | 1          | 0          |
+| Secundaria Básico    | 8      | 8          | 0          |
+| Secundaria Orientado | 7      | 7          | 0          |
+| Transversales        | 2      | 2          | 0          |
+| **Total**            | **21** | **21**     | **0**      |
 
 ---
 
@@ -658,22 +658,42 @@ print(f'Páginas: {len(r.pages)}')"
   - **Archivo de análisis**: `analisis-educacion-fisica.md`
   - **Notas**: Único NAP de Ciclo Orientado organizado por año; fuerte énfasis en inclusión y diversidad; concepto distintivo de "deporte escolar"
 
-- [ ] `secundaria-orientado/nap-educacion-artistica.pdf`
-  - **Estado**: ⚠️ **PDF INCORRECTO - PROBLEMA EN FUENTE ORIGINAL**
-  - **Problema detectado**: El archivo contiene un libro de cuentos de ACUMAR ("Contando el Río que Quiero" - Concurso de cuentos 2018, 48 páginas) en lugar del NAP de Educación Artística
-  - **Causa**: La URL documentada en `README.md` descarga el archivo incorrecto:
-    ```
-    https://backend.educ.ar/refactor_resource/get-attachment/22427
-    ```
-    El attachment ID `22427` en educ.ar apunta a un recurso incorrecto.
-  - **Fuente alternativa (NO VERIFICADA)**:
-    - URL: `http://www.bnm.me.gov.ar/giga1/documentos/EL005105.pdf`
-    - Fuente: Biblioteca Nacional del Maestro
-    - **ADVERTENCIA**: Esta es una suposición basada en búsqueda web. No se puede garantizar que sea la misma versión/edición que las demás fuentes del repositorio. Usar con precaución.
-  - **Acción requerida**:
-    1. Verificar en educ.ar cuál es el ID correcto para NAP Educación Artística Ciclo Orientado
-    2. O validar que la fuente alternativa (BNM) corresponde a la misma versión de los documentos
-  - **Notas**: El problema no es local del repositorio sino de la fuente original (educ.ar)
+- [x] `secundaria-orientado/nap-educacion-artistica.pdf`
+  - **Páginas**: 23
+  - **Fecha publicación**: 2012 (aprox.)
+  - **Resoluciones**: CFE 180/12, 181/12, 182/12
+  - **Fuente corregida**: Biblioteca Nacional del Maestro (BNM)
+  - **Sub-áreas** (5 lenguajes artísticos):
+    1. Artes Visuales (pp. 14-15)
+    2. Música (pp. 15-16)
+    3. Danza (pp. 16-17)
+    4. Teatro (pp. 17-18)
+    5. Artes Audiovisuales (pp. 18-19)
+  - **Estructura del documento**:
+    - Portada institucional (p. 1)
+    - Autoridades (p. 2)
+    - Portada interior (p. 3)
+    - Elaboración NAP (p. 4)
+    - Índice (p. 5)
+    - Presentación del Ministro (p. 7)
+    - Introducción (pp. 8-11)
+    - NAP de Educación Artística (pp. 12-19)
+    - Contraportada (pp. 20-23)
+  - **Estructura por lenguaje**:
+    - Cada lenguaje tiene 2 EJES:
+      - EJE 1: En relación con las prácticas de [X] y su contexto
+      - EJE 2: En relación con las prácticas de producción de [X]
+    - Contenidos en viñetas descriptivas
+  - **Parseabilidad**: ALTA
+    - Estructura consistente entre lenguajes
+    - Ejes claramente identificados
+    - Contenidos en viñetas
+  - **Notas importantes**:
+    - No tiene división por años (es para todo el Ciclo Orientado)
+    - Cada jurisdicción decide si enseñar 1, 2 o 3 años
+    - Cada jurisdicción decide qué lenguajes priorizar
+    - Incluye Artes Audiovisuales (no presente en niveles anteriores)
+  - **Archivo de análisis**: `analisis-educacion-artistica.md`
 
 ---
 
@@ -908,34 +928,29 @@ _Esta sección se actualiza a medida que avanza el análisis_
 
 ## Problemas Conocidos
 
-### ⚠️ PDF Incorrecto: NAP Educación Artística (Ciclo Orientado)
+### ✅ RESUELTO: PDF Incorrecto NAP Educación Artística (Ciclo Orientado)
 
-| Campo                  | Detalle                                                              |
-| ---------------------- | -------------------------------------------------------------------- |
-| **Archivo**            | `secundaria-orientado/nap-educacion-artistica.pdf`                   |
-| **Problema**           | La URL documentada descarga un archivo incorrecto                    |
-| **Contenido actual**   | Libro de cuentos ACUMAR "Contando el Río que Quiero" (2018, 48 págs) |
-| **Contenido esperado** | NAP Educación Artística - Ciclo Orientado Secundaria                 |
+| Campo                 | Detalle                                                   |
+| --------------------- | --------------------------------------------------------- |
+| **Archivo**           | `secundaria-orientado/nap-educacion-artistica.pdf`        |
+| **Problema original** | La URL de educ.ar descargaba un archivo incorrecto        |
+| **Solución**          | Reemplazado con fuente de Biblioteca Nacional del Maestro |
+| **Fecha resolución**  | 2025-12-30                                                |
 
-**URL problemática** (en `README.md`):
+**URL corregida** (Biblioteca Nacional del Maestro):
 
 ```
-https://backend.educ.ar/refactor_resource/get-attachment/22427
+http://www.bnm.me.gov.ar/giga1/documentos/EL005105.pdf
 ```
 
-**Fuente alternativa (NO VERIFICADA)**:
+**Verificación**: El PDF de BNM corresponde correctamente a:
 
-- URL: `http://www.bnm.me.gov.ar/giga1/documentos/EL005105.pdf`
-- Fuente: Biblioteca Nacional del Maestro
-- ⚠️ **ADVERTENCIA**: Esta URL se obtuvo mediante búsqueda web. No se puede garantizar que corresponda a la misma versión/edición que las demás fuentes del repositorio.
+- NAP Educación Artística - Ciclo Orientado - Educación Secundaria
+- 23 páginas
+- Sub-áreas: Artes Visuales, Música, Danza, Teatro, Artes Audiovisuales
+- Resoluciones CFE 180/12, 181/12, 182/12
 
-**Acciones sugeridas**:
-
-1. Contactar a educ.ar para reportar el problema con el attachment ID 22427
-2. Buscar el ID correcto en el portal de educ.ar
-3. O verificar manualmente que la fuente alternativa (BNM) corresponde a la misma versión
-
-**Impacto**: 20/21 PDFs analizados (95%). Este es el único PDF pendiente.
+**Nota**: La URL original de educ.ar sigue rota. Se recomienda actualizar `README.md` con la fuente de BNM.
 
 ---
 
@@ -947,9 +962,9 @@ https://backend.educ.ar/refactor_resource/get-attachment/22427
 4. [x] Analizar PDF de Primaria 2do Ciclo para confirmar patrón ✅ **CONFIRMADO: estructura idéntica**
 5. [x] Analizar PDF de Séptimo año ✅ **COMPLETADO: estructura similar a Primaria pero simplificada (1 año)**
 6. [x] Analizar PDFs de Secundaria Básico (8 documentos) ✅ **COMPLETADO** (8/8)
-7. [x] Analizar PDFs de Secundaria Orientado ⚠️ **6/7 COMPLETADOS** (1 PDF con fuente rota)
+7. [x] Analizar PDFs de Secundaria Orientado ✅ **COMPLETADO** (7/7) - PDF corregido 2025-12-30
 8. [x] Analizar PDFs Transversales (2 documentos) ✅ **COMPLETADO** (2/2)
-9. [ ] Resolver problema de fuente para NAP Educación Artística (Ciclo Orientado)
+9. [x] Resolver problema de fuente para NAP Educación Artística ✅ **RESUELTO** (fuente BNM)
 10. [ ] Definir formato JSON objetivo (considerando diferencias por nivel)
 11. [ ] Desarrollar parser PDF → JSON
 12. [ ] Procesar todos los documentos
