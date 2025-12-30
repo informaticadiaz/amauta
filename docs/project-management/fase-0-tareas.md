@@ -257,7 +257,7 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 - [x] Prisma instalado y configurado
 - [x] Schema inicial definido
 - [x] Migraciones funcionando
-- [ ] Seed data creado
+- [x] Seed data creado
 
 ### Tareas Técnicas
 
@@ -298,15 +298,24 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 **Estimación**: 3 puntos
 **Prioridad**: Should Have
 **Labels**: `backend`, `database`
+**Estado**: ✅ Completado (Issues #15, #23-27)
 
 **Checklist:**
 
-- [ ] Crear prisma/seed.ts
-- [ ] Agregar usuarios de prueba (roles diferentes)
-- [ ] Agregar categorías base
-- [ ] Agregar script de seed a package.json
-- [ ] Documentar cómo usar seed
-- [ ] Configurar seed en package.json
+- [x] Crear prisma/seed.ts
+- [x] Agregar usuarios de prueba (roles diferentes)
+- [x] Agregar categorías base
+- [x] Agregar script de seed a package.json
+- [x] Documentar cómo usar seed
+- [x] Configurar seed en package.json
+
+**Resultado**: Seed completo con 5 etapas implementadas:
+
+- Etapa 1: Usuarios y Perfiles (10 usuarios)
+- Etapa 2: Categorías e Instituciones
+- Etapa 3: Cursos y Lecciones
+- Etapa 4: Inscripciones y Progreso
+- Etapa 5: Asistencias, Calificaciones, Comunicados
 
 ---
 
@@ -488,11 +497,12 @@ La Fase 0 estará completa cuando:
 - [x] Base de datos configurada con Prisma (PostgreSQL + schema completo)
 - [x] Backend NestJS + Fastify configurado (issue #19)
 - [x] Frontend Next.js configurado (issue #20)
-- [ ] Documentación técnica completa (falta diagramas de arquitectura)
-- [ ] Seed data para desarrollo
-- [ ] Al menos 1 desarrollador puede clonar y ejecutar el proyecto sin ayuda
+- [ ] Documentación técnica completa (falta diagramas de arquitectura - issue #16)
+- [x] Seed data para desarrollo (5 etapas completas - issues #23-27)
+- [x] Al menos 1 desarrollador puede clonar y ejecutar el proyecto sin ayuda
 
 **Iniciado**: 01/12/2024
-**Progreso actual**: 89% (16/18 tareas)
+**Progreso actual**: 94% (17/18 tareas - falta T-015 diagramas)
 **Fecha objetivo**: 31/12/2024
 **Estado de Producción**: 🟢 ONLINE (2025-12-23)
+**Seed**: ✅ COMPLETO (2025-12-30)
