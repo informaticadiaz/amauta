@@ -113,33 +113,38 @@ Estos documentos sirven como fuente para:
 > **Issue relacionado**: [#22](https://github.com/informaticadiaz/amauta/issues/22)
 > **Documento de tracking**: [ANALISIS.md](./ANALISIS.md)
 
-### Progreso: 2/21 PDFs analizados (9.5%)
+### Progreso: 4/21 PDFs analizados (19%)
 
-| Nivel                | Analizados | Total | Estado         |
-| -------------------- | ---------- | ----- | -------------- |
-| Inicial              | 1/1        | 1     | ✅ Completo    |
-| Primaria             | 1/2        | 2     | 🔄 En progreso |
-| Séptimo              | 0/1        | 1     | ⬜ Pendiente   |
-| Secundaria Básico    | 0/8        | 8     | ⬜ Pendiente   |
-| Secundaria Orientado | 0/7        | 7     | ⬜ Pendiente   |
-| Transversales        | 0/2        | 2     | ⬜ Pendiente   |
+| Nivel                | Analizados | Total | Estado       |
+| -------------------- | ---------- | ----- | ------------ |
+| Inicial              | 1/1        | 1     | ✅ Completo  |
+| Primaria             | 2/2        | 2     | ✅ Completo  |
+| Séptimo              | 1/1        | 1     | ✅ Completo  |
+| Secundaria Básico    | 0/8        | 8     | ⬜ Pendiente |
+| Secundaria Orientado | 0/7        | 7     | ⬜ Pendiente |
+| Transversales        | 0/2        | 2     | ⬜ Pendiente |
 
 ### Hallazgos Clave
 
 Se identificaron **2 tipos de estructura** en los documentos NAP:
 
-| Tipo            | Niveles   | Organización          | Parseabilidad |
-| --------------- | --------- | --------------------- | ------------- |
-| **Holística**   | Inicial   | 7 ejes de experiencia | Alta          |
-| **Disciplinar** | Primaria+ | 8 áreas × años × ejes | Muy alta      |
+| Tipo            | Niveles          | Organización            | Parseabilidad |
+| --------------- | ---------------- | ----------------------- | ------------- |
+| **Holística**   | Inicial          | 7 ejes de experiencia   | Alta          |
+| **Disciplinar** | Primaria         | 8 áreas × 3 años × ejes | Muy alta      |
+| **Disciplinar** | Séptimo (trans.) | 8 áreas × 1 año × ejes  | Muy alta      |
 
 Ver detalles completos en [ANALISIS.md](./ANALISIS.md).
 
 ## Próximos Pasos
 
-- [x] Analizar estructura de PDFs (Inicial y Primaria 1er Ciclo completados)
+- [x] Analizar estructura de PDFs (Inicial, Primaria y Séptimo completados)
 - [x] Identificar patrones comunes entre niveles
-- [ ] Completar análisis de Primaria 2do Ciclo
+- [x] Completar análisis de Primaria 2do Ciclo
+- [x] Completar análisis de Séptimo Año
+- [ ] Analizar PDFs de Secundaria Básico (8 documentos)
+- [ ] Analizar PDFs de Secundaria Orientado (7 documentos)
+- [ ] Analizar PDFs Transversales (2 documentos)
 - [ ] Definir formato JSON objetivo
 - [ ] Desarrollar parser PDF → JSON
 - [ ] Procesar los 21 documentos

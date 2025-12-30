@@ -207,7 +207,7 @@ Los NAP (Núcleos de Aprendizajes Prioritarios) son los contenidos curriculares 
 
 **Análisis de estructura** (Issue #22 - en progreso):
 
-- Analizados: 2/21 PDFs (Inicial + Primaria 1er Ciclo)
+- Analizados: 4/21 PDFs (Inicial, Primaria 1er y 2do Ciclo, Séptimo Año)
 - Identificados 2 tipos de estructura: Holística (Inicial) vs Disciplinar (Primaria+)
 - Parseabilidad: Alta/Muy alta
 - Detalles: `docs/nap/ANALISIS.md`

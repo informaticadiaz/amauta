@@ -13,7 +13,7 @@
 | 1   | `inicial/nap-educacion-inicial.pdf`                | Inicial              | ✅ Completado |
 | 2   | `primaria/nap-primaria-1er-ciclo.pdf`              | Primaria 1º-3º       | ✅ Completado |
 | 3   | `primaria/nap-primaria-2do-ciclo.pdf`              | Primaria 4º-6º       | ✅ Completado |
-| 4   | `septimo/nap-septimo-anio.pdf`                     | Séptimo / Transición | ⬜ Pendiente  |
+| 4   | `septimo/nap-septimo-anio.pdf`                     | Séptimo / Transición | ✅ Completado |
 | 5   | `secundaria-basico/nap-matematica.pdf`             | Sec. Básico          | ⬜ Pendiente  |
 | 6   | `secundaria-basico/nap-lengua.pdf`                 | Sec. Básico          | ⬜ Pendiente  |
 | 7   | `secundaria-basico/nap-ciencias-naturales.pdf`     | Sec. Básico          | ⬜ Pendiente  |
@@ -109,6 +109,7 @@ def dividir_pdf(pdf_path, num_partes):
 | `inicial/nap-educacion-inicial.pdf`   | 22      | 4      | `*-parte1.pdf` a `*-parte4.pdf` |
 | `primaria/nap-primaria-1er-ciclo.pdf` | 95      | 4      | `*-parte1.pdf` a `*-parte4.pdf` |
 | `primaria/nap-primaria-2do-ciclo.pdf` | 131     | 5      | `*-parte1.pdf` a `*-parte5.pdf` |
+| `septimo/nap-septimo-anio.pdf`        | 94      | 4      | `*-parte1.pdf` a `*-parte4.pdf` |
 
 ### Detalle de División: Primaria 2do Ciclo
 
@@ -140,11 +141,11 @@ print(f'Páginas: {len(r.pages)}')"
 | -------------------- | ------ | ---------- | ---------- |
 | Inicial              | 1      | 1          | 0          |
 | Primaria             | 2      | 2          | 0          |
-| Séptimo              | 1      | 0          | 1          |
+| Séptimo              | 1      | 1          | 0          |
 | Secundaria Básico    | 8      | 0          | 8          |
 | Secundaria Orientado | 7      | 0          | 7          |
 | Transversales        | 2      | 0          | 2          |
-| **Total**            | **21** | **3**      | **18**     |
+| **Total**            | **21** | **4**      | **17**     |
 
 ---
 
@@ -295,11 +296,67 @@ print(f'Páginas: {len(r.pages)}')"
 
 ### Séptimo Año
 
-- [ ] `septimo/nap-septimo-anio.pdf`
-  - Páginas: _pendiente_
-  - Áreas cubiertas: _pendiente_
-  - Estructura: _pendiente_
-  - Notas: _pendiente_
+- [x] `septimo/nap-septimo-anio.pdf`
+  - **Páginas**: 94 (dividido en 4 partes para análisis)
+  - **Fecha publicación**: Octubre 2011
+  - **Resolución**: Resoluciones N° 37/07, 74/08 y 135/11 del Consejo Federal de Educación
+  - **Grado**: 7° año (puede ser 7° Primaria o 1° Secundaria según jurisdicción)
+  - **Áreas cubiertas** (8 áreas disciplinares + 4 sub-áreas):
+    1. Matemática (pp. 15-24)
+       - Ejes: Número y Operaciones, Álgebra y Funciones, Geometría y Medida, Probabilidad y Estadística
+    2. Lengua (pp. 25-36)
+       - Ejes: Comprensión y Producción Oral, Lectura y Producción Escrita, Literatura, Reflexión sobre la Lengua (sistema, norma y uso)
+    3. Ciencias Sociales (pp. 37-46)
+       - Ejes: Las Sociedades y los Espacios Geográficos, Las Sociedades a Través del Tiempo, Las Actividades Humanas y la Organización Social
+    4. Ciencias Naturales (pp. 47-56)
+       - Ejes: Seres Vivos (diversidad, unidad, interrelaciones, cambios), Los Materiales y sus Cambios, Los Fenómenos del Mundo Físico, La Tierra el Universo y sus Cambios
+    5. Educación Física (pp. 57-62)
+       - Ejes: Prácticas Corporales Ludomotrices referidas a la Disponibilidad de Sí Mismo, Prácticas Corporales Ludomotrices en Interacción con Otros, Prácticas Corporales en Ambiente Natural y Otros
+    6. Educación Tecnológica (pp. 63-68)
+       - Ejes: En relación con los Procesos Tecnológicos, En relación con los Medios Técnicos, En relación con la Reflexión sobre la Tecnología como Proceso Sociocultural
+    7. Formación Ética y Ciudadana (pp. 69-71)
+       - Ejes: En relación con la Reflexión Ética, En relación con la Construcción Histórica de las Identidades, En relación con la Ciudadanía los Derechos y la Participación
+    8. Educación Artística (pp. 72-90) - 4 sub-áreas:
+       - Propósitos generales del área (pp. 72-73)
+       - Artes Visuales (pp. 74-78)
+         - Ejes: En relación con la Práctica del Lenguaje Visual, En relación con la Contextualización de la Imagen Visual
+       - Danzas (pp. 79-82)
+         - Ejes: En relación con la Práctica de la Danza, En relación con la Contextualización Socio-Cultural
+       - Música (pp. 83-87)
+         - Ejes: En relación con las Prácticas del Lenguaje Musical, En relación con la Contextualización
+       - Teatro (pp. 88-90)
+         - Ejes: En relación con los Elementos y la Práctica del Lenguaje Teatral, En relación con la Contextualización de las Manifestaciones Teatrales en la Construcción de Identidad y Cultura
+  - **Estructura del documento**:
+    - Portada institucional (p. 1)
+    - Autoridades nacionales y provinciales (pp. 2-4)
+    - Índice (p. 5)
+    - Presentación del Ministro (pp. 6-7)
+    - Introducción y justificación del 7° año (pp. 8-14)
+    - NAP por área disciplinar (pp. 15-90)
+    - Página en blanco (p. 91)
+    - Índice visual con íconos de áreas (p. 92)
+    - Contraportada con logos oficiales (pp. 93-94)
+  - **Estructura por área**:
+    - Diferente a Primaria: NO hay división por múltiples años
+    - Cada área → organizada directamente por EJES temáticos (un solo año: 7°)
+    - Cada eje → lista de contenidos con viñetas
+    - Similar a Primaria pero sin la dimensión temporal interna
+  - **Parseabilidad**: MUY ALTA
+    - Estructura consistente con Primaria pero simplificada (1 año vs 3)
+    - Títulos claramente marcados: "ÁREA / SÉPTIMO AÑO"
+    - Ejes con formato "EN RELACIÓN CON..."
+    - Contenidos en viñetas claras
+  - **Notas importantes**:
+    - Documento de TRANSICIÓN entre Primaria y Secundaria
+    - El 7° año puede ubicarse en Primaria O Secundaria según la jurisdicción
+    - Las 8 áreas son IDÉNTICAS a Primaria (mismas áreas, mismos nombres)
+    - Los ejes son muy similares a Primaria 2do Ciclo (evolución de los mismos)
+    - Educación Artística mantiene las 4 sub-áreas de Primaria
+    - Incluye propósitos generales para Ed. Artística (aplican a 4°, 5°, 6° y 7° años)
+    - Las notas al pie aclaran la doble ubicación según jurisdicción
+    - Matemática introduce "Álgebra y Funciones" como eje (no estaba en Primaria)
+    - Lengua agrega "Literatura" como eje separado
+    - El parser de Primaria necesita ajuste menor: estructura plana (sin años internos)
 
 ---
 
@@ -444,6 +501,17 @@ _Esta sección se actualiza a medida que avanza el análisis_
   - Un único parser puede procesar ambos documentos
   - Ed. Física y Ed. Tecnológica incluyen notas sobre 7° año
 
+- **Séptimo Año** (1/1 analizado - COMPLETADO):
+  - Documento de TRANSICIÓN (puede ser 7° Primaria o 1° Secundaria según jurisdicción)
+  - Mismas 8 áreas que Primaria (incluyendo 4 sub-áreas de Ed. Artística)
+  - Estructura SIMPLIFICADA: sin división por múltiples años (solo 7°)
+  - Organización: Área → Ejes → Contenidos (sin nivel "año" intermedio)
+  - Ejes muy similares a Primaria 2do Ciclo con algunas evoluciones:
+    - Matemática agrega "Álgebra y Funciones"
+    - Lengua agrega "Literatura" como eje separado
+  - **Hallazgo clave**: Puente estructural entre Primaria y Secundaria
+  - Parser de Primaria adaptable con ajuste menor (eliminar dimensión "año")
+
 ### Estructura típica de los documentos
 
 - **Nivel Inicial**:
@@ -458,17 +526,24 @@ _Esta sección se actualiza a medida que avanza el análisis_
   Introducción → [8 ÁREAS: cada una con 3 años, cada año con ejes] →
   Contraportada
   ```
+- **Séptimo Año**:
+  ```
+  Portada → Autoridades → Índice → Presentación ministerial →
+  Introducción (justificación 7° año) → [8 ÁREAS: cada una con ejes directos] →
+  Índice visual → Contraportada
+  ```
 
 ### Comparación de estructuras
 
-| Aspecto            | Nivel Inicial            | Primaria (ambos ciclos) |
-| ------------------ | ------------------------ | ----------------------- |
-| Organización       | Holística (7 ejes)       | Disciplinar (8 áreas)   |
-| División temporal  | No aplica                | Por año (1°-3° y 4°-6°) |
-| Formato contenidos | Párrafos descriptivos    | Listas con viñetas      |
-| Ed. Artística      | Integrada en "Expresión" | 4 sub-áreas separadas   |
-| Parseabilidad      | Alta                     | Muy alta                |
-| Páginas            | 22                       | 95 (1er) + 131 (2do)    |
+| Aspecto            | Nivel Inicial            | Primaria (ambos ciclos) | Séptimo Año             |
+| ------------------ | ------------------------ | ----------------------- | ----------------------- |
+| Organización       | Holística (7 ejes)       | Disciplinar (8 áreas)   | Disciplinar (8 áreas)   |
+| División temporal  | No aplica                | Por año (1°-3° y 4°-6°) | Un solo año (7°)        |
+| Formato contenidos | Párrafos descriptivos    | Listas con viñetas      | Listas con viñetas      |
+| Ed. Artística      | Integrada en "Expresión" | 4 sub-áreas separadas   | 4 sub-áreas separadas   |
+| Parseabilidad      | Alta                     | Muy alta                | Muy alta                |
+| Páginas            | 22                       | 95 (1er) + 131 (2do)    | 94                      |
+| Jerarquía          | Eje → Contenidos         | Área → Año → Eje → Cont | Área → Eje → Contenidos |
 
 ### Estructura de Primaria - Áreas y Ejes
 
@@ -487,15 +562,36 @@ _Esta sección se actualiza a medida que avanza el análisis_
 | → Música                    | Prácticas del lenguaje musical, Contextualización                                                            |
 | → Teatro                    | Elementos y práctica del lenguaje teatral, Contextualización                                                 |
 
+### Estructura de Séptimo Año - Áreas y Ejes
+
+| Área                        | Ejes temáticos                                                                                                 |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Matemática                  | Número y Operaciones, **Álgebra y Funciones** (nuevo), Geometría y Medida, Probabilidad y Estadística          |
+| Lengua                      | Comprensión y Producción Oral, Lectura y Producción Escrita, **Literatura** (nuevo), Reflexión sobre la Lengua |
+| Ciencias Sociales           | Sociedades y espacios geográficos, Sociedades a través del tiempo, Actividades humanas y organización social   |
+| Ciencias Naturales          | Seres vivos, Materiales y cambios, Fenómenos del mundo físico, La Tierra y el universo                         |
+| Educación Física            | Disponibilidad de sí mismo, Interacción con otros, Ambiente natural                                            |
+| Educación Tecnológica       | Procesos tecnológicos, Medios técnicos, Reflexión sobre tecnología                                             |
+| Formación Ética y Ciudadana | Reflexión ética, Construcción de identidades, Ciudadanía y derechos                                            |
+| **Educación Artística**     | (4 sub-áreas con ejes propios)                                                                                 |
+| → Artes Visuales            | Práctica del lenguaje visual, Contextualización de la imagen visual                                            |
+| → Danzas                    | Práctica de la danza, Contextualización socio-cultural                                                         |
+| → Música                    | Prácticas del lenguaje musical, Contextualización                                                              |
+| → Teatro                    | Elementos y práctica del lenguaje teatral, Contextualización de manifestaciones teatrales                      |
+
+**Notas**: En **negrita** los ejes nuevos que no existían en Primaria. Séptimo Año funciona como puente introduciendo conceptos que se desarrollarán en Secundaria.
+
 ### Recomendaciones para el parser
 
 - El parser debe manejar estructuras diferentes según nivel educativo
 - Nivel Inicial requiere extracción de párrafos descriptivos, no listas
 - Primaria requiere extracción jerárquica: Área → Año → Eje → Contenidos
+- Séptimo Año requiere extracción simplificada: Área → Eje → Contenidos (sin nivel "año")
 - Considerar campo `estructura_tipo` para diferenciar (holístico vs disciplinar)
 - Los 7 ejes de Inicial no mapean 1:1 con las 8 áreas de Primaria
 - Educación Artística necesita nivel adicional de anidación (sub-áreas)
-- Detectar títulos con patrón "ÁREA / AÑO" para segmentación automática
+- Detectar títulos con patrón "ÁREA / AÑO" o "ÁREA / SÉPTIMO AÑO" para segmentación
+- El parser de Primaria puede reutilizarse para Séptimo con flag `single_year=true`
 
 ---
 
@@ -505,7 +601,7 @@ _Esta sección se actualiza a medida que avanza el análisis_
 2. [x] Analizar PDFs de Primaria para comparar estructura (1er Ciclo completado)
 3. [x] Identificar patrones comunes entre niveles (tabla comparativa creada)
 4. [x] Analizar PDF de Primaria 2do Ciclo para confirmar patrón ✅ **CONFIRMADO: estructura idéntica**
-5. [ ] Analizar PDF de Séptimo año (siguiente en progresión)
+5. [x] Analizar PDF de Séptimo año ✅ **COMPLETADO: estructura similar a Primaria pero simplificada (1 año)**
 6. [ ] Analizar PDFs de Secundaria Básico (8 documentos)
 7. [ ] Analizar PDFs de Secundaria Orientado (7 documentos)
 8. [ ] Analizar PDFs Transversales (2 documentos)
