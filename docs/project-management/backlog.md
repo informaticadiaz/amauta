@@ -11,7 +11,7 @@
 | Backend API | https://amauta-api.diazignacio.ar |
 
 **Fase 0**: ✅ Completada (30/12/2024)
-**Fase 1**: 🚧 En progreso (2/16 issues completados)
+**Fase 1**: 🚧 En progreso (3/16 issues completados)
 
 ## Cómo usar este documento
 
@@ -36,14 +36,14 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 | ------ | -------------------------------- | -------- | -------- | --------- |
 | F1-001 | Autenticación con NextAuth.js v5 | Backend  | ✅ Done  | Must      |
 | F1-002 | Autorización por roles (RBAC)    | Backend  | ✅ Done  | Must      |
-| F1-003 | Layout base responsive           | Frontend | 📋 Ready | Must      |
+| F1-003 | Layout base responsive           | Frontend | ✅ Done  | Must      |
 | F1-004 | API CRUD de cursos               | Backend  | 📋 Ready | Must      |
 | F1-005 | UI crear/editar cursos           | Frontend | 📋 Ready | Must      |
 | F1-006 | Sistema de subida de imágenes    | Full     | 📋 Ready | Should    |
 | F1-007 | API CRUD de lecciones            | Backend  | 📋 Ready | Must      |
 | F1-008 | UI para gestión de lecciones     | Frontend | 📋 Ready | Must      |
 
-**Progreso**: 2/16 issues completados (12.5%)
+**Progreso**: 3/16 issues completados (18.75%)
 
 ### Sprint 0 (Fase 0) - ✅ COMPLETADO
 
@@ -330,5 +330,5 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 - Las prioridades pueden ajustarse según feedback de usuarios
 - Nuevas historias pueden agregarse en cualquier momento
 
-**Última revisión**: 23/12/2024
-**Próxima revisión**: Sprint Planning Sprint 1 (Enero 2025)
+**Última revisión**: 02/01/2026
+**Próxima revisión**: Al completar Sprint 1

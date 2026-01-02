@@ -1,5 +1,36 @@
 # Gestión de Sprints - Amauta
 
+## Sprint Actual: Sprint 1 - MVP Autenticación y Layout
+
+**Fase**: Fase 1 - MVP Plataforma de Cursos
+**Fechas**: 30/12/2024 - En curso
+**Progreso**: 3/16 issues completados (18.75%)
+
+### Issues Completados ✅
+
+| Issue | Título                                | Fecha      |
+| ----- | ------------------------------------- | ---------- |
+| #28   | F1-001: Autenticación con NextAuth.js | 30/12/2024 |
+| #29   | F1-002: Autorización por roles (RBAC) | 01/01/2026 |
+| #30   | F1-003: Layout base responsive        | 02/01/2026 |
+
+### Próximos Issues 📋
+
+| Issue | Título                         | Tipo     | Prioridad |
+| ----- | ------------------------------ | -------- | --------- |
+| #31   | F1-004: API CRUD de cursos     | Backend  | Must      |
+| #32   | F1-005: UI crear/editar cursos | Frontend | Must      |
+
+### Logros del Sprint
+
+- ✅ Sistema de autenticación completo (login/registro)
+- ✅ Autorización por roles (RBAC) con guards y decoradores
+- ✅ Layout responsive con Tailwind CSS
+- ✅ Componentes: Header, Footer, Sidebar, MobileMenu
+- ✅ Navegación condicional por rol
+
+---
+
 ## Estructura de Sprints
 
 ### Duración
