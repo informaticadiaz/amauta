@@ -1,6 +1,6 @@
 # Product Backlog - Amauta
 
-**Última actualización**: 2024-12-23
+**Última actualización**: 2026-01-02
 **Product Owner**: [Por definir]
 
 ## 🟢 Estado de Producción
@@ -10,7 +10,8 @@
 | Frontend    | https://amauta.diazignacio.ar     |
 | Backend API | https://amauta-api.diazignacio.ar |
 
-**Fase 0**: 89% completado (16/18 tareas)
+**Fase 0**: ✅ Completada (30/12/2024)
+**Fase 1**: 🚧 En progreso (2/16 issues completados)
 
 ## Cómo usar este documento
 
@@ -23,36 +24,33 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
-## Sprint Actual: Sprint 0 (Fase 0)
+## Sprint Actual: Sprint 1 (Fase 1 - MVP)
 
-**Fechas**: 01/12/2024 - 31/12/2024
-**Objetivo**: Establecer fundamentos técnicos y de gestión del proyecto + Deployment en producción
-**Capacidad**: 25 puntos (estimado para primer sprint)
+**Fechas**: 30/12/2024 - En curso
+**Objetivo**: Implementar autenticación, autorización y base del sistema de cursos
+**Issues totales**: 16 (ver `gh issue list --label phase-1`)
 
-### Comprometido para Sprint 0
+### Comprometido para Sprint 1
 
-| ID     | Tarea                              | Estimación | Asignado | Estado   | Prioridad |
-| ------ | ---------------------------------- | ---------- | -------- | -------- | --------- |
-| T-001  | Configurar .gitignore              | 1          | Claude   | ✅ Done  | Must      |
-| T-002  | Definir licencia del proyecto      | 1          | Claude   | ✅ Done  | Must      |
-| T-003  | Crear Code of Conduct              | 2          | Claude   | ✅ Done  | Should    |
-| T-004  | Crear Contributing Guidelines      | 3          | Claude   | ✅ Done  | Should    |
-| T-005  | Configurar GitHub Actions para CI  | 5          | Claude   | ✅ Done  | Must      |
-| T-006  | Configurar tests en CI             | 3          | Claude   | ✅ Done  | Must      |
-| T-007  | Configurar pre-commit hooks        | 3          | Claude   | ✅ Done  | Should    |
-| T-008  | Inicializar estructura de monorepo | 5          | Claude   | ✅ Done  | Must      |
-| T-009  | Configurar TypeScript              | 3          | Claude   | ✅ Done  | Must      |
-| T-010  | Configurar ESLint y Prettier       | 3          | Claude   | ✅ Done  | Must      |
-| T-011  | Configurar variables de entorno    | 2          | Claude   | ✅ Done  | Must      |
-| T-012  | Configurar PostgreSQL + Redis      | 3          | Claude   | ✅ Done  | Must      |
-| T-013  | Configurar Prisma                  | 5          | Claude   | ✅ Done  | Must      |
-| T-017  | Deployment en producción (Dokploy) | 8          | Claude   | ✅ Done  | Must      |
-| T-018  | Servidor HTTP NestJS + Fastify     | 5          | Claude   | ✅ Done  | Must      |
-| T-019  | Configurar Next.js en Frontend     | 5          | Claude   | ✅ Done  | Must      |
-| T-014  | Crear seed data                    | 3          | -        | 📋 To Do | Should    |
-| T-014b | Expandir CI (lint, type-check)     | 3          | -        | 📋 To Do | Should    |
+| ID     | Tarea                            | Tipo     | Estado   | Prioridad |
+| ------ | -------------------------------- | -------- | -------- | --------- |
+| F1-001 | Autenticación con NextAuth.js v5 | Backend  | ✅ Done  | Must      |
+| F1-002 | Autorización por roles (RBAC)    | Backend  | ✅ Done  | Must      |
+| F1-003 | Layout base responsive           | Frontend | 📋 Ready | Must      |
+| F1-004 | API CRUD de cursos               | Backend  | 📋 Ready | Must      |
+| F1-005 | UI crear/editar cursos           | Frontend | 📋 Ready | Must      |
+| F1-006 | Sistema de subida de imágenes    | Full     | 📋 Ready | Should    |
+| F1-007 | API CRUD de lecciones            | Backend  | 📋 Ready | Must      |
+| F1-008 | UI para gestión de lecciones     | Frontend | 📋 Ready | Must      |
 
-**Total comprometido**: 63 puntos | **Completados**: 57 puntos (90%)
+**Progreso**: 2/16 issues completados (12.5%)
+
+### Sprint 0 (Fase 0) - ✅ COMPLETADO
+
+**Fechas**: 01/12/2024 - 30/12/2024
+**Resultado**: Infraestructura base + Deployment en producción
+
+Ver `docs/project-management/fase-0-tareas.md` para detalle completo.
 
 ---
 

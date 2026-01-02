@@ -23,7 +23,7 @@ flowchart TB
 
     subgraph Backend["⚙️ Servidor Backend"]
         NestJS["NestJS + Fastify"]
-        Auth["Auth Middleware<br/>JWT + Passport"]
+        Auth["Auth Guards<br/>JWT + RBAC"]
         Services["Business Logic<br/>Services"]
         Prisma["Data Access<br/>Prisma ORM"]
     end
@@ -398,7 +398,7 @@ flowchart TB
 - **Framework**: NestJS (con adaptador Fastify)
 - **Lenguaje**: TypeScript (strict mode)
 - **ORM**: Prisma
-- **Autenticación**: Passport.js (JWT strategy)
+- **Autenticación**: NextAuth.js v5 (frontend) + Guards JWT personalizados con RBAC (backend)
 - **Validación**: Zod + class-validator
 - **API**: RESTful (GraphQL opcional futuro)
 - **Arquitectura**: Modular (controllers, services, repositories)
@@ -458,9 +458,13 @@ flowchart TB
 
 #### Módulo de Usuarios y Autenticación
 
-- Registro y autenticación
+- Registro y autenticación (NextAuth.js v5 con JWT)
 - Perfiles (estudiante, educador, administrador)
-- Roles y permisos
+- RBAC implementado con Guards de NestJS:
+  - `JwtAuthGuard`: Verifica tokens JWT (global)
+  - `RolesGuard`: Verifica roles del usuario
+  - Decoradores: `@Public()`, `@Roles()`, `@CurrentUser()`
+- 4 roles: ESTUDIANTE, EDUCADOR, ADMIN_ESCUELA, SUPER_ADMIN
 
 #### Módulo de Cursos
 
@@ -494,20 +498,35 @@ flowchart TB
 
 ### Principios
 
-- Autenticación JWT con refresh tokens
-- HTTPS obligatorio en producción
+- Autenticación JWT con NextAuth.js v5 (frontend) y verificación con `jose` (backend)
+- RBAC con Guards globales (`JwtAuthGuard`, `RolesGuard`)
+- HTTPS obligatorio en producción (SSL via Traefik)
 - Sanitización de inputs
 - Rate limiting
 - CORS configurado
 - CSP (Content Security Policy)
 
+### Sistema de Autorización (RBAC)
+
+**Arquitectura implementada**:
+
+```
+Request → JwtAuthGuard (verifica token) → RolesGuard (verifica roles) → Controller
+```
+
+**Decoradores disponibles**:
+
+- `@Public()`: Marca endpoint como público (sin autenticación)
+- `@Roles('ADMIN_ESCUELA', 'SUPER_ADMIN')`: Requiere roles específicos
+- `@CurrentUser()`: Inyecta el usuario autenticado en el handler
+
 ### Niveles de Acceso
 
-1. **Público**: Navegación de catálogo
-2. **Estudiante**: Acceso a cursos, seguimiento
-3. **Educador**: Creación de contenido, seguimiento de alumnos
-4. **Administrador Escolar**: Gestión administrativa completa
-5. **Super Admin**: Configuración del sistema
+1. **Público**: Navegación de catálogo, login, registro (`@Public()`)
+2. **ESTUDIANTE**: Acceso a cursos, seguimiento de progreso
+3. **EDUCADOR**: Creación de contenido, seguimiento de alumnos
+4. **ADMIN_ESCUELA**: Gestión administrativa de la institución
+5. **SUPER_ADMIN**: Configuración del sistema, acceso total
 
 ## Escalabilidad
 

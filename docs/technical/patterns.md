@@ -242,6 +242,139 @@ export class AppModule {}
 
 ---
 
+### Receta: Proteger endpoints con RBAC
+
+**Situación**: Necesitás restringir acceso a endpoints según el rol del usuario.
+
+**Sistema RBAC implementado en Amauta** (F1-002):
+
+#### Roles disponibles
+
+| Rol             | Descripción                    |
+| --------------- | ------------------------------ |
+| `ESTUDIANTE`    | Usuario que consume cursos     |
+| `EDUCADOR`      | Crea y gestiona cursos propios |
+| `ADMIN_ESCUELA` | Administra su institución      |
+| `SUPER_ADMIN`   | Acceso total al sistema        |
+
+#### Backend: Decoradores y Guards
+
+Los guards están configurados **globalmente** en `app.module.ts`, por lo que:
+
+- **Todos los endpoints requieren autenticación por defecto**
+- Usar `@Public()` para endpoints sin autenticación
+- Usar `@Roles()` para restringir por rol
+
+```typescript
+// Endpoint público (sin autenticación)
+import { Public } from '@/common/decorators';
+
+@Public()
+@Get('health')
+healthCheck() {
+  return { status: 'ok' };
+}
+
+// Endpoint que requiere autenticación (cualquier rol)
+@Get('mi-perfil')
+getPerfil(@CurrentUser() user: RequestUser) {
+  return this.perfilService.findByUserId(user.id);
+}
+
+// Endpoint restringido a roles específicos
+import { Roles, CurrentUser } from '@/common/decorators';
+
+@Roles('EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN')
+@Post('cursos')
+crearCurso(@Body() dto: CreateCursoDto, @CurrentUser() user: RequestUser) {
+  return this.cursosService.create(dto, user.id);
+}
+
+// Endpoint solo para admins
+@Roles('ADMIN_ESCUELA', 'SUPER_ADMIN')
+@Get('usuarios')
+listarUsuarios() {
+  return this.usuariosService.findAll();
+}
+```
+
+#### Frontend: Hook useAuthorization
+
+```typescript
+'use client';
+import { useAuthorization } from '@/hooks/useAuthorization';
+
+function MiComponente() {
+  const {
+    user,              // Usuario actual
+    isAuthenticated,   // ¿Está logueado?
+    isLoading,         // ¿Cargando sesión?
+    hasRole,           // Verificar rol específico
+    hasAnyRole,        // Verificar múltiples roles
+    // Helpers de rol
+    isEstudiante,
+    isEducador,
+    isAdmin,           // ADMIN_ESCUELA o SUPER_ADMIN
+    // Helpers de permisos
+    canManageCourses,  // EDUCADOR, ADMIN_ESCUELA, SUPER_ADMIN
+    canManageUsers,    // ADMIN_ESCUELA, SUPER_ADMIN
+  } = useAuthorization();
+
+  return (
+    <div>
+      {canManageCourses && <button>Crear Curso</button>}
+      {isAdmin && <button>Panel Admin</button>}
+      {hasRole('SUPER_ADMIN') && <button>Config Sistema</button>}
+    </div>
+  );
+}
+```
+
+#### Frontend: Componente RequireRole
+
+```typescript
+import { RequireRole, AccessDenied } from '@/components/auth';
+
+// Ocultar contenido si no tiene rol
+<RequireRole roles={['EDUCADOR', 'ADMIN_ESCUELA']}>
+  <CrearCursoForm />
+</RequireRole>
+
+// Con fallback personalizado
+<RequireRole
+  roles={['SUPER_ADMIN']}
+  fallback={<AccessDenied message="Solo super admins" />}
+>
+  <ConfiguracionSistema />
+</RequireRole>
+
+// Con redirección
+<RequireRole
+  roles={['ADMIN_ESCUELA']}
+  redirectTo="/dashboard"
+>
+  <PanelAdmin />
+</RequireRole>
+```
+
+#### Middleware: Protección de rutas
+
+Las rutas protegidas por rol se configuran en `middleware.ts`:
+
+```typescript
+// middleware.ts
+const ROUTE_ROLES = [
+  { path: '/admin', roles: ['ADMIN_ESCUELA', 'SUPER_ADMIN'] },
+  {
+    path: '/dashboard/cursos/crear',
+    roles: ['EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN'],
+  },
+  // Agregar más rutas según necesidad
+];
+```
+
+---
+
 ### Receta: Agregar validación personalizada
 
 **Situación**: Necesitás validar un campo con lógica específica.

@@ -1,7 +1,7 @@
 # Project Board - Amauta
 
-**Última actualización**: 2024-12-23
-**Sprint actual**: Sprint 0 - Fundamentos (89% Completado)
+**Última actualización**: 2026-01-02
+**Sprint actual**: Sprint 1 - Fase 1 MVP (12.5% Completado)
 
 ## 🟢 Estado de Producción
 
@@ -10,12 +10,19 @@
 | Frontend    | https://amauta.diazignacio.ar     |
 | Backend API | https://amauta-api.diazignacio.ar |
 
+## Estado de Fases
+
+| Fase | Nombre      | Estado         | Progreso     |
+| ---- | ----------- | -------------- | ------------ |
+| 0    | Fundamentos | ✅ Completada  | 100%         |
+| 1    | MVP Cursos  | 🚧 En progreso | 2/16 (12.5%) |
+
 ## Vista del Board (Kanban)
 
 > **Nota**: Este tablero es una referencia visual. Para estado en tiempo real usar:
 >
 > ```bash
-> gh issue list --limit 50
+> gh issue list --label phase-1
 > ```
 
 ```
@@ -23,74 +30,74 @@
 │    📋 BACKLOG    │    🎯 READY      │  🚧 IN PROGRESS  │   👀 REVIEW      │    ✅ DONE       │
 ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
 │                  │                  │                  │                  │                  │
-│ FASE 0 (2 pend)  │ T-014 (3pts)     │                  │                  │ ✅ T-001 (1pt)   │
-│ ────────         │ Seed data #15    │                  │                  │ .gitignore       │
-│ T-015 (3pts)     │                  │                  │                  │                  │
-│ Diagramas #16    │ T-014b (3pts)    │                  │                  │ ✅ T-002 (1pt)   │
-│                  │ Expandir CI #10  │                  │                  │ Licencia AGPL    │
-│ T-016 (2pts)     │                  │                  │                  │                  │
-│ API docs #17     │                  │                  │                  │ ✅ T-003 (2pts)  │
-│                  │                  │                  │                  │ Code of Conduct  │
-│ TRANSVERSAL      │                  │                  │                  │                  │
-│ ────────         │                  │                  │                  │ ✅ T-004 (3pts)  │
-│ NAP (20pts) #21  │                  │                  │                  │ Contributing     │
-│ 🔄 #22 4/21 PDFs │                  │                  │                  │                  │
-│                  │                  │                  │                  │ ✅ T-005 (5pts)  │
-│ FASE 1           │                  │                  │                  │ GitHub Actions   │
-│ ────────         │                  │                  │                  │                  │
-│ US-001 (5pts)    │                  │                  │                  │ ✅ T-006 (3pts)  │
-│ Registro         │                  │                  │                  │ Tests en CI      │
+│ FASE 1 (14 pend) │ F1-003 #30       │                  │                  │ ✅ F1-001        │
+│ ────────         │ Layout responsive│                  │                  │ Auth NextAuth.js │
+│ F1-009 #36       │                  │                  │                  │                  │
+│ Catálogo cursos  │ F1-004 #31       │                  │                  │ ✅ F1-002        │
+│                  │ API CRUD cursos  │                  │                  │ RBAC (Guards)    │
+│ F1-010 #37       │                  │                  │                  │                  │
+│ Detalle curso    │                  │                  │                  │                  │
 │                  │                  │                  │                  │                  │
-│ US-002 (3pts)    │                  │                  │                  │ ✅ T-007 (3pts)  │
-│ Login            │                  │                  │                  │ Pre-commit hooks │
+│ F1-011 #38       │                  │                  │                  │                  │
+│ API inscripción  │                  │                  │                  │                  │
 │                  │                  │                  │                  │                  │
-│ US-003 (5pts)    │                  │                  │                  │ ✅ T-008 (5pts)  │
-│ Recuperar pass   │                  │                  │                  │ Monorepo setup   │
+│ F1-012 #39       │                  │                  │                  │                  │
+│ UI Mis cursos    │                  │                  │                  │                  │
 │                  │                  │                  │                  │                  │
-│ ... más items    │                  │                  │                  │ ✅ T-009 (3pts)  │
-│                  │                  │                  │                  │ TypeScript       │
+│ F1-013 #40       │                  │                  │                  │                  │
+│ Visor lecciones  │                  │                  │                  │                  │
 │                  │                  │                  │                  │                  │
-│                  │                  │                  │                  │ ✅ T-010 (3pts)  │
-│                  │                  │                  │                  │ ESLint/Prettier  │
+│ F1-014 #41       │                  │                  │                  │                  │
+│ API progreso     │                  │                  │                  │                  │
 │                  │                  │                  │                  │                  │
-│                  │                  │                  │                  │ ✅ T-011 (2pts)  │
-│                  │                  │                  │                  │ Env vars         │
+│ F1-015 #42       │                  │                  │                  │                  │
+│ UI completar     │                  │                  │                  │                  │
 │                  │                  │                  │                  │                  │
-│                  │                  │                  │                  │ ✅ T-012 (3pts)  │
-│                  │                  │                  │                  │ PostgreSQL+Redis │
-│                  │                  │                  │                  │                  │
-│                  │                  │                  │                  │ ✅ T-013 (5pts)  │
-│                  │                  │                  │                  │ Prisma ORM       │
-│                  │                  │                  │                  │                  │
-│                  │                  │                  │                  │ ✅ T-017 (8pts)  │
-│                  │                  │                  │                  │ Deployment Prod  │
-│                  │                  │                  │                  │                  │
-│                  │                  │                  │                  │ ✅ T-018 (5pts)  │
-│                  │                  │                  │                  │ NestJS+Fastify   │
-│                  │                  │                  │                  │                  │
-│                  │                  │                  │                  │ ✅ T-019 (5pts)  │
-│                  │                  │                  │                  │ Next.js Frontend │
+│ F1-016 #43       │                  │                  │                  │                  │
+│ Dashboard estud. │                  │                  │                  │                  │
 │                  │                  │                  │                  │                  │
 └──────────────────┴──────────────────┴──────────────────┴──────────────────┴──────────────────┘
 
-Total Sprint 0: 63 puntos | Completado: 57 puntos (90%)
-Done: 16 items | Ready: 2 items | Backlog: 35+ items (Fase 1+) | Transversal: NAP #21/#22 (20pts, 4/21 analizados)
+Sprint 1 (Fase 1): 16 issues | Completados: 2 (12.5%)
+Ready: F1-003, F1-004 | Done: F1-001, F1-002
 ```
 
 ---
 
-## Sprint 0 - Fundamentos (89% Completado)
+## Sprint 1 - Fase 1 MVP (En Progreso)
+
+### Objetivo del Sprint
+
+Implementar autenticación, autorización y sistema base de cursos.
+
+### Estado Actual
+
+- **Desarrolladores**: Claude Code
+- **Issues totales**: 16
+- **Issues completados**: 2 (12.5%)
+- **Fechas**: 30/12/2024 - En curso
+- **Deployment**: ✅ EN PRODUCCIÓN (auto-deploy con Dokploy)
+
+### Issues Completados
+
+| ID     | Descripción                      | Fecha      |
+| ------ | -------------------------------- | ---------- |
+| F1-001 | Autenticación con NextAuth.js v5 | 30/12/2024 |
+| F1-002 | Autorización por roles (RBAC)    | 02/01/2026 |
+
+---
+
+## Sprint 0 - Fundamentos ✅ COMPLETADO
 
 ### Objetivo del Sprint
 
 Establecer la infraestructura base del proyecto y deployment en producción.
 
-### Estado Actual
+### Resultado Final
 
 - **Desarrolladores**: Claude Code
-- **Puntos comprometidos**: 63 puntos
-- **Puntos completados**: 57 puntos (90%)
-- **Fechas**: 01/12/2024 - 31/12/2024
+- **Puntos completados**: 57 puntos
+- **Fechas**: 01/12/2024 - 30/12/2024
 - **Deployment**: ✅ EN PRODUCCIÓN
 
 ---
