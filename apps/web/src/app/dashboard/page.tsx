@@ -6,7 +6,6 @@
 
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
-import styles from './dashboard.module.css';
 
 export const metadata = {
   title: 'Dashboard - Amauta',
@@ -21,36 +20,52 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Dashboard</h1>
-        <p className={styles.welcome}>
+    <div>
+      <header className="mb-8">
+        <h1 className="text-3xl font-bold text-[var(--foreground)]">
+          Dashboard
+        </h1>
+        <p className="mt-2 text-[var(--muted)]">
           Bienvenido, <strong>{session.user.name}</strong>
         </p>
       </header>
 
-      <main className={styles.main}>
-        <div className={styles.card}>
-          <h2>Tu información</h2>
-          <dl className={styles.info}>
-            <div>
-              <dt>Email</dt>
-              <dd>{session.user.email}</dd>
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Card: Información del usuario */}
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
+          <h2 className="mb-4 text-lg font-semibold text-[var(--foreground)]">
+            Tu información
+          </h2>
+          <dl className="space-y-3">
+            <div className="flex items-center justify-between">
+              <dt className="text-sm text-[var(--muted)]">Email</dt>
+              <dd className="text-sm text-[var(--foreground)]">
+                {session.user.email}
+              </dd>
             </div>
-            <div>
-              <dt>Rol</dt>
-              <dd className={styles.role}>{session.user.rol}</dd>
+            <div className="flex items-center justify-between">
+              <dt className="text-sm text-[var(--muted)]">Rol</dt>
+              <dd>
+                <span className="inline-block rounded bg-primary/10 px-2 py-1 text-xs font-semibold uppercase text-primary">
+                  {session.user.rol}
+                </span>
+              </dd>
             </div>
-            <div>
-              <dt>ID</dt>
-              <dd className={styles.id}>{session.user.id}</dd>
+            <div className="flex items-center justify-between">
+              <dt className="text-sm text-[var(--muted)]">ID</dt>
+              <dd className="font-mono text-xs text-[var(--muted)]">
+                {session.user.id}
+              </dd>
             </div>
           </dl>
         </div>
 
-        <div className={styles.card}>
-          <h2>Próximamente</h2>
-          <p className={styles.placeholder}>
+        {/* Card: Próximamente */}
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
+          <h2 className="mb-4 text-lg font-semibold text-[var(--foreground)]">
+            Próximamente
+          </h2>
+          <p className="text-sm text-[var(--muted)]">
             {session.user.rol === 'EDUCADOR' ||
             session.user.rol === 'SUPER_ADMIN' ? (
               <>Aquí podrás gestionar tus cursos y ver estadísticas.</>
@@ -59,13 +74,7 @@ export default async function DashboardPage() {
             )}
           </p>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a href="/api/auth/signout" className={styles.logoutLink}>
-          Cerrar sesión
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
