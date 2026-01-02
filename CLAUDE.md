@@ -25,7 +25,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 ### Fase Actual: Fase 1 - MVP Plataforma de Cursos 🚧 EN PROGRESO
 
 **Inicio**: 30/12/2024
-**Progreso**: 2/16 issues (Sprint 1 en progreso)
+**Progreso**: 3/16 issues (Sprint 1 en progreso)
 
 #### Completado en Fase 1:
 
@@ -40,10 +40,17 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Hook frontend: `useAuthorization`
   - Middleware con protección por rol
 
+- ✅ **F1-003**: Layout base responsive
+  - Tailwind CSS v3 configurado
+  - Componentes: `Header`, `Footer`, `Sidebar`, `MobileMenu`
+  - Layouts: `MainLayout`, `DashboardLayout`
+  - Navegación condicional por rol
+  - Responsive: mobile, tablet, desktop
+
 #### Próximos pasos:
 
-- 📋 **F1-003**: Layout base responsive
 - 📋 **F1-004**: API CRUD de cursos
+- 📋 **F1-005**: UI para crear y editar cursos
 
 **Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 1"
 
