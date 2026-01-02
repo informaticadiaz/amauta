@@ -6,7 +6,8 @@
 
 import { Controller, Post, Req, BadRequestException } from '@nestjs/common';
 import type { FastifyRequest } from 'fastify';
-import type { UploadsService, UploadResult } from './uploads.service';
+import type { UploadsService } from './uploads.service';
+import type { UploadResult } from './uploads.service';
 import { Roles } from '../common/decorators';
 
 @Controller('uploads')
