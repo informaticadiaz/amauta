@@ -9,6 +9,8 @@ import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { AuthService, type AuthUser } from './auth.service';
 import type { LoginDto } from './dto/login.dto';
 import type { RegisterDto } from './dto/register.dto';
+import { Public, CurrentUser } from '../common/decorators';
+import type { RequestUser } from '../common/guards';
 
 interface AuthResponse {
   user: AuthUser;
@@ -24,6 +26,7 @@ export class AuthController {
    *
    * POST /api/v1/auth/login
    */
+  @Public()
   @Post('login')
   async login(@Body() dto: LoginDto): Promise<AuthResponse> {
     const user = await this.authService.login(dto);
@@ -38,6 +41,7 @@ export class AuthController {
    *
    * POST /api/v1/auth/register
    */
+  @Public()
   @Post('register')
   async register(@Body() dto: RegisterDto): Promise<AuthResponse> {
     const user = await this.authService.register(dto);
@@ -48,10 +52,22 @@ export class AuthController {
   }
 
   /**
+   * Obtener usuario actual (desde token)
+   *
+   * GET /api/v1/auth/me
+   */
+  @Get('me')
+  async getMe(@CurrentUser() user: RequestUser): Promise<AuthUser> {
+    // El usuario ya está verificado por el guard
+    return this.authService.getUserById(user.id) as Promise<AuthUser>;
+  }
+
+  /**
    * Obtener usuario por ID (para verificar sesión)
    *
    * GET /api/v1/auth/user/:id
    */
+  @Public()
   @Get('user/:id')
   async getUser(@Param('id') id: string): Promise<AuthUser | null> {
     return this.authService.getUserById(id);

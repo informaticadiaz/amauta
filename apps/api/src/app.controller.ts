@@ -11,7 +11,9 @@ import {
   type HealthResponse,
   type ApiInfoResponse,
 } from './app.service';
+import { Public } from './common/decorators';
 
+@Public() // Todos los endpoints de este controller son públicos
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
