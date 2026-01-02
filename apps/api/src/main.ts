@@ -8,6 +8,9 @@ import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
+import multipart from '@fastify/multipart';
+import fastifyStatic from '@fastify/static';
+import { join } from 'path';
 import { AppModule } from './app.module';
 import { env, isDevelopment } from './config/env';
 
@@ -20,6 +23,20 @@ async function bootstrap() {
     })
   );
 
+  // Registrar plugin para uploads multipart
+  await app.register(multipart, {
+    limits: {
+      fileSize: env.MAX_FILE_SIZE,
+    },
+  });
+
+  // Servir archivos estáticos (uploads)
+  await app.register(fastifyStatic, {
+    root: join(__dirname, '..', env.UPLOAD_DIR),
+    prefix: '/uploads/',
+    decorateReply: false,
+  });
+
   // Configurar CORS
   app.enableCors({
     origin: env.CORS_ORIGIN,
@@ -30,7 +47,7 @@ async function bootstrap() {
 
   // Prefijo global para API
   app.setGlobalPrefix('api/v1', {
-    exclude: ['/', 'health'],
+    exclude: ['/', 'health', 'uploads/(.*)'],
   });
 
   // Iniciar servidor

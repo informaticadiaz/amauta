@@ -74,7 +74,7 @@ export function Sidebar() {
       ),
     },
     {
-      href: '/dashboard/gestionar-cursos',
+      href: '/dashboard/cursos',
       label: 'Gestionar cursos',
       show: canManageCourses,
       icon: (
