@@ -6,8 +6,8 @@
 
 import { Controller, Post, Req, BadRequestException } from '@nestjs/common';
 import type { FastifyRequest } from 'fastify';
-import type { UploadsService } from './uploads.service';
-import type { UploadResult } from './uploads.service';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { UploadsService, UploadResult } from './uploads.service';
 import { Roles } from '../common/decorators';
 
 @Controller('uploads')

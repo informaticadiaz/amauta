@@ -5,7 +5,8 @@
  */
 
 import { Controller, Get, Param, NotFoundException } from '@nestjs/common';
-import type { CategoriasService } from './categorias.service';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { CategoriasService } from './categorias.service';
 import { Public } from '../common/decorators';
 
 @Controller('categorias')
