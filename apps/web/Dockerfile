@@ -44,9 +44,9 @@ COPY packages ./packages
 # Copiar código fuente del Web
 COPY apps/web ./apps/web
 
-# Build arguments para Next.js
-ARG NEXT_PUBLIC_API_URL=http://localhost:3001
-ARG NEXT_PUBLIC_APP_URL=http://localhost:3000
+# Build arguments para Next.js (valores de producción)
+ARG NEXT_PUBLIC_API_URL=https://amauta-api.diazignacio.ar
+ARG NEXT_PUBLIC_APP_URL=https://amauta.diazignacio.ar
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
 
