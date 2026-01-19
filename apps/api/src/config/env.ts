@@ -96,7 +96,7 @@ const envSchema = z.object({
 
   ALLOWED_FILE_TYPES: z
     .string()
-    .default('image/jpeg,image/png,image/gif,application/pdf')
+    .default('image/jpeg,image/png,image/gif,image/webp,application/pdf')
     .transform((val) => val.split(',').map((type) => type.trim())),
 
   // Email SMTP (opcional)
