@@ -36,15 +36,11 @@ export function CursosActions({ cursos }: CursosActionsProps) {
 
   async function handlePublishToggle(id: string, publicar: boolean) {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/v1/cursos/${id}/publicar`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({ publicar }),
-        }
-      );
+      const response = await fetch(`/api/cursos/${id}/publicar`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ publicar }),
+      });
 
       if (!response.ok) {
         const err = await response.json();

@@ -56,8 +56,8 @@ export function CursoCard({ curso, onPublishToggle }: CursoCardProps) {
   const [isUpdating, setIsUpdating] = useState(false);
 
   const imageUrl = curso.imagen
-    ? curso.imagen.startsWith('/')
-      ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}${curso.imagen}`
+    ? curso.imagen.startsWith('/uploads/')
+      ? `/api/image${curso.imagen}`
       : curso.imagen
     : null;
 

@@ -44,13 +44,6 @@ COPY packages ./packages
 # Copiar código fuente del Web
 COPY apps/web ./apps/web
 
-# Build arguments para Next.js
-# Los valores se configuran en el panel de Dokploy (Environment Variables)
-ARG NEXT_PUBLIC_API_URL
-ARG NEXT_PUBLIC_APP_URL
-ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
-ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
-
 # Deshabilitar telemetry
 ENV NEXT_TELEMETRY_DISABLED=1
 

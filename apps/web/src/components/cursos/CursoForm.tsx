@@ -95,18 +95,14 @@ export function CursoForm({ curso, categorias, onSuccess }: CursoFormProps) {
     }
 
     try {
-      const endpoint = isEditing ? `/cursos/${curso.id}` : '/cursos';
+      const endpoint = isEditing ? `/api/cursos/${curso.id}` : '/api/cursos';
       const method = isEditing ? 'PATCH' : 'POST';
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/v1${endpoint}`,
-        {
-          method,
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(endpoint, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
 
       if (!response.ok) {
         const err = await response.json();

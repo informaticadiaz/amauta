@@ -56,14 +56,10 @@ export function ImageUploader({
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/v1/uploads`,
-        {
-          method: 'POST',
-          body: formData,
-          credentials: 'include',
-        }
-      );
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
 
       if (!response.ok) {
         const err = await response.json();
@@ -139,8 +135,9 @@ export function ImageUploader({
   };
 
   const displayImage = preview || value;
-  const imageUrl = displayImage?.startsWith('/')
-    ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}${displayImage}`
+  // Las imágenes se sirven desde el backend, usamos el proxy de Next.js
+  const imageUrl = displayImage?.startsWith('/uploads/')
+    ? `/api/image${displayImage}`
     : displayImage;
 
   return (
