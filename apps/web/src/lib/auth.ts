@@ -9,9 +9,11 @@ import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './auth.config';
 
 const API_URL = process.env.API_URL || 'http://localhost:3001';
+const AUTH_SECRET = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET;
 
 const nextAuth = NextAuth({
   ...authConfig,
+  secret: AUTH_SECRET,
   providers: [
     Credentials({
       name: 'credentials',
