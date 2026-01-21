@@ -74,7 +74,7 @@
 .role {
   display: inline-block;
   padding: 0.25rem 0.5rem;
-  background-color: rgba(37, 99, 235, 0.1);
+  background-color: var(--primary-bg);
   color: var(--primary);
   border-radius: 0.25rem;
   font-size: 0.75rem;
@@ -100,7 +100,7 @@
 }
 
 .logoutLink {
-  color: #dc2626;
+  color: var(--error-text);
   text-decoration: none;
   font-size: 0.875rem;
 }

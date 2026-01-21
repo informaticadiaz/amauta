@@ -8,13 +8,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
-}
-
-@media (prefers-color-scheme: dark) {
-  .container {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  }
+  background: var(--gradient-bg);
 }
 
 .card {
@@ -23,16 +17,10 @@
   padding: 2.5rem;
   background-color: var(--background);
   border-radius: 1rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-@media (prefers-color-scheme: dark) {
-  .card {
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  }
 }
 
 .logo {
@@ -41,7 +29,7 @@
   color: var(--primary);
   text-decoration: none;
   margin-bottom: 2rem;
-  background: linear-gradient(135deg, var(--primary), #8b5cf6);
+  background: var(--gradient-brand);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

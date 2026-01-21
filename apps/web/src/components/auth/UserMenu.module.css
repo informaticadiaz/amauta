@@ -30,7 +30,7 @@
 }
 
 .registerLink:hover {
-  background-color: #1d4ed8;
+  background-color: var(--primary-hover);
 }
 
 .container {
@@ -81,15 +81,9 @@
   background-color: var(--background);
   border: 1px solid var(--border);
   border-radius: 0.5rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg);
   z-index: 50;
   overflow: hidden;
-}
-
-@media (prefers-color-scheme: dark) {
-  .dropdown {
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-  }
 }
 
 .userInfo {
@@ -133,13 +127,7 @@
 }
 
 .menuItem:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-@media (prefers-color-scheme: dark) {
-  .menuItem:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-  }
+  background-color: var(--overlay-light);
 }
 
 .logoutButton {
@@ -148,7 +136,7 @@
   padding: 0.75rem 1rem;
   background: none;
   border: none;
-  color: #dc2626;
+  color: var(--error-text);
   text-align: left;
   font-size: 0.875rem;
   cursor: pointer;
@@ -156,5 +144,5 @@
 }
 
 .logoutButton:hover {
-  background-color: rgba(220, 38, 38, 0.1);
+  background-color: var(--error-bg-hover);
 }

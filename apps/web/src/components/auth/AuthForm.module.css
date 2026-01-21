@@ -49,7 +49,7 @@
 .select:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: var(--focus-ring);
 }
 
 .input::placeholder {
@@ -74,7 +74,7 @@
 }
 
 .button:hover:not(:disabled) {
-  background-color: #1d4ed8;
+  background-color: var(--primary-hover);
 }
 
 .button:active:not(:disabled) {
@@ -88,16 +88,9 @@
 
 .error {
   padding: 0.75rem 1rem;
-  background-color: #fef2f2;
-  border: 1px solid #fecaca;
+  background-color: var(--error-bg);
+  border: 1px solid var(--error-border);
   border-radius: 0.5rem;
-  color: #dc2626;
+  color: var(--error-text);
   font-size: 0.875rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  .error {
-    background-color: rgba(220, 38, 38, 0.1);
-    border-color: rgba(220, 38, 38, 0.3);
-  }
 }

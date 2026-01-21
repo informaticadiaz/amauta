@@ -54,7 +54,7 @@
 
 .leccionCard:hover {
   border-color: var(--primary);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .dragHandle {
@@ -97,13 +97,13 @@
 }
 
 .tipoIconTexto {
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--neutral-bg);
+  color: var(--neutral-text);
 }
 
 .tipoIconVideo {
-  background: #fce7f3;
-  color: #db2777;
+  background: var(--info-bg);
+  color: var(--info-text);
 }
 
 .tipoIcon svg {
@@ -141,13 +141,13 @@
 }
 
 .badgePublicada {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--success-bg);
+  color: var(--success-text);
 }
 
 .badgeBorrador {
-  background: #fef3c7;
-  color: #d97706;
+  background: var(--warning-bg);
+  color: var(--warning-text-dark);
 }
 
 .actions {
@@ -173,8 +173,8 @@
 }
 
 .actionButtonDanger:hover {
-  background: #fef2f2;
-  color: #dc2626;
+  background: var(--error-bg);
+  color: var(--error-text);
 }
 
 .actionButton svg {
@@ -187,13 +187,13 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
-  background: #fef2f2;
+  background: var(--error-bg);
   border-radius: 0.375rem;
 }
 
 .deleteConfirmText {
   font-size: 0.75rem;
-  color: #dc2626;
+  color: var(--error-text);
 }
 
 .deleteConfirmButton {
@@ -205,7 +205,7 @@
 }
 
 .deleteConfirmYes {
-  background: #dc2626;
+  background: var(--error-text);
   color: white;
 }
 

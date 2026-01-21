@@ -3,22 +3,110 @@
 @tailwind utilities;
 
 :root {
+  /* === COLORES BASE === */
   --foreground: #171717;
   --background: #ffffff;
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
   --muted: #6b7280;
   --border: #e5e7eb;
+
+  /* === PRIMARY (Blue) === */
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-bg: rgba(37, 99, 235, 0.1);
+
+  /* === ACCENT (Purple - para gradientes) === */
+  --accent: #8b5cf6;
+
+  /* === ERROR/DANGER (Red) === */
+  --error-text: #dc2626;
+  --error-bg: #fef2f2;
+  --error-border: #fecaca;
+  --error-bg-hover: rgba(220, 38, 38, 0.1);
+
+  /* === WARNING (Amber) === */
+  --warning-text: #f59e0b;
+  --warning-text-dark: #d97706;
+  --warning-bg: #fef3c7;
+
+  /* === SUCCESS (Green) === */
+  --success-text: #16a34a;
+  --success-bg: #dcfce7;
+
+  /* === INFO/VIDEO (Pink) === */
+  --info-text: #db2777;
+  --info-bg: #fce7f3;
+
+  /* === NEUTRAL (Blue - iconos tipo Texto) === */
+  --neutral-text: #2563eb;
+  --neutral-bg: #dbeafe;
+
+  /* === SOMBRAS === */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.15);
+
+  /* === OVERLAYS === */
+  --overlay-light: rgba(0, 0, 0, 0.05);
+
+  /* === FOCUS RING === */
+  --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.1);
+
+  /* === GRADIENTES === */
+  --gradient-brand: linear-gradient(135deg, var(--primary), var(--accent));
+  --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
+    /* === COLORES BASE === */
     --foreground: #ededed;
     --background: #0a0a0a;
-    --primary: #3b82f6;
-    --primary-hover: #60a5fa;
     --muted: #9ca3af;
     --border: #374151;
+
+    /* === PRIMARY (Dark) === */
+    --primary: #3b82f6;
+    --primary-hover: #60a5fa;
+    --primary-bg: rgba(59, 130, 246, 0.1);
+
+    /* === ACCENT (Dark) === */
+    --accent: #a78bfa;
+
+    /* === ERROR/DANGER (Dark) === */
+    --error-text: #f87171;
+    --error-bg: rgba(220, 38, 38, 0.1);
+    --error-border: rgba(220, 38, 38, 0.3);
+    --error-bg-hover: rgba(220, 38, 38, 0.2);
+
+    /* === WARNING (Dark) === */
+    --warning-text: #fbbf24;
+    --warning-text-dark: #f59e0b;
+    --warning-bg: rgba(245, 158, 11, 0.1);
+
+    /* === SUCCESS (Dark) === */
+    --success-text: #4ade80;
+    --success-bg: rgba(22, 163, 74, 0.1);
+
+    /* === INFO/VIDEO (Dark) === */
+    --info-text: #f472b6;
+    --info-bg: rgba(219, 39, 119, 0.1);
+
+    /* === NEUTRAL (Dark) === */
+    --neutral-bg: rgba(59, 130, 246, 0.1);
+
+    /* === SOMBRAS (Dark) === */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.4);
+
+    /* === OVERLAYS (Dark) === */
+    --overlay-light: rgba(255, 255, 255, 0.05);
+
+    /* === FOCUS RING (Dark) === */
+    --focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.2);
+
+    /* === GRADIENTES (Dark) === */
+    --gradient-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   }
 }
 
