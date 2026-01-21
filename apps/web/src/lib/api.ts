@@ -47,11 +47,6 @@ export const api = {
   ): Promise<T> {
     // Usar auth() de NextAuth v5 para obtener la sesión
     const session = await auth();
-    console.log(
-      '[API Debug] Session obtenida:',
-      !!session,
-      session?.user ? { id: session.user.id, email: session.user.email } : null
-    );
 
     const headers = new Headers(options.headers);
     headers.set('Content-Type', 'application/json');
