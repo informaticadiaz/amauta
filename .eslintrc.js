@@ -62,5 +62,11 @@ module.exports = {
     'coverage/',
     '*.config.js',
     '*.config.ts',
+    'jest.setup.js',
+    '**/__tests__/**',
+    '**/*.test.ts',
+    '**/*.test.tsx',
+    '**/*.spec.ts',
+    '**/*.spec.tsx',
   ],
 };
