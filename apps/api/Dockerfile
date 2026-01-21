@@ -84,10 +84,14 @@ COPY --from=builder --chown=nestjs:nodejs /app/node_modules/.prisma ./node_modul
 COPY --from=builder --chown=nestjs:nodejs /app/node_modules/@prisma/client ./node_modules/@prisma/client
 COPY --from=builder --chown=nestjs:nodejs /app/apps/api/package*.json ./
 
+# Crear directorio de uploads con permisos para el usuario nestjs
+RUN mkdir -p /app/uploads/cursos && chown -R nestjs:nodejs /app/uploads
+
 # Variables de entorno por defecto (serán sobrescritas por Dokploy)
 ENV NODE_ENV=production
 ENV API_PORT=4000
 ENV API_HOST=0.0.0.0
+ENV UPLOAD_DIR=/app/uploads
 
 # Exponer puerto
 EXPOSE 4000
