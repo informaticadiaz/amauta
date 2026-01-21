@@ -122,7 +122,7 @@ export default async function CursosPage({ searchParams }: PageProps) {
   return (
     <div className="min-h-screen bg-[var(--background)]">
       {/* Header */}
-      <div className="border-b border-[var(--border)] bg-white">
+      <div className="border-b border-[var(--border)] bg-[var(--background)]">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold text-[var(--foreground)]">
             Catálogo de Cursos
@@ -138,7 +138,7 @@ export default async function CursosPage({ searchParams }: PageProps) {
         {/* Buscador */}
         <Suspense
           fallback={
-            <div className="h-12 w-full animate-pulse rounded-lg bg-gray-100" />
+            <div className="h-12 w-full animate-pulse rounded-lg bg-[var(--overlay-light)]" />
           }
         >
           <BuscadorCursos />
@@ -149,7 +149,7 @@ export default async function CursosPage({ searchParams }: PageProps) {
           <aside>
             <Suspense
               fallback={
-                <div className="h-64 w-full animate-pulse rounded-lg bg-gray-100" />
+                <div className="h-64 w-full animate-pulse rounded-lg bg-[var(--overlay-light)]" />
               }
             >
               <FiltrosCursos categorias={categorias} />
@@ -164,7 +164,7 @@ export default async function CursosPage({ searchParams }: PageProps) {
                   {[1, 2, 3, 4, 5, 6].map((i) => (
                     <div
                       key={i}
-                      className="h-96 animate-pulse rounded-lg bg-gray-100"
+                      className="h-96 animate-pulse rounded-lg bg-[var(--overlay-light)]"
                     />
                   ))}
                 </div>

@@ -43,7 +43,7 @@ export function CatalogoCursos({ cursosData }: CatalogoCursosProps) {
   // Estado vacío
   if (cursos.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-[var(--border)] bg-white py-20 text-center">
+      <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-[var(--border)] bg-[var(--background)] py-20 text-center">
         <svg
           className="mb-4 h-20 w-20 text-[var(--muted)]"
           fill="none"

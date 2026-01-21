@@ -56,7 +56,7 @@ export function BuscadorCursos() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Buscar cursos por título o descripción..."
-          className="w-full rounded-lg border border-[var(--border)] bg-white px-4 py-3 pl-12 pr-10 text-[var(--foreground)] placeholder:text-[var(--muted)] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+          className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 pl-12 pr-10 text-[var(--foreground)] placeholder:text-[var(--muted)] focus:border-[var(--primary)] focus:outline-none focus:shadow-[var(--focus-ring)]"
         />
 
         {/* Ícono de búsqueda */}
@@ -78,7 +78,7 @@ export function BuscadorCursos() {
         {searchTerm && (
           <button
             onClick={handleClear}
-            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-[var(--muted)] transition-colors hover:bg-gray-100 hover:text-[var(--foreground)]"
+            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-[var(--muted)] transition-colors hover:bg-[var(--overlay-light)] hover:text-[var(--foreground)]"
             aria-label="Limpiar búsqueda"
           >
             <svg

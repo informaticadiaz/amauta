@@ -95,7 +95,7 @@ export function PaginacionCursos({
             onClick={() => goToPage(page as number)}
             className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${
               page === currentPage
-                ? 'border-primary bg-primary text-white'
+                ? 'border-[var(--primary)] bg-[var(--primary)] text-white'
                 : 'border-[var(--border)] text-[var(--foreground)] hover:bg-[var(--border)]'
             }`}
             aria-label={`Página ${page}`}

@@ -59,7 +59,7 @@ export function FiltrosCursos({ categorias }: FiltrosCursosProps) {
   const hayFiltrosActivos = categoriaActiva || nivelActivo;
 
   return (
-    <div className="space-y-6 rounded-lg border border-[var(--border)] bg-white p-6">
+    <div className="space-y-6 rounded-lg border border-[var(--border)] bg-[var(--background)] p-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-[var(--foreground)]">
@@ -68,7 +68,7 @@ export function FiltrosCursos({ categorias }: FiltrosCursosProps) {
         {hayFiltrosActivos && (
           <button
             onClick={limpiarFiltros}
-            className="text-sm font-medium text-primary hover:underline"
+            className="text-sm font-medium text-[var(--primary)] hover:underline"
           >
             Limpiar
           </button>
@@ -94,8 +94,8 @@ export function FiltrosCursos({ categorias }: FiltrosCursosProps) {
                   onClick={() => toggleFiltro('categoriaId', cat.id)}
                   className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
                     isActive
-                      ? 'bg-primary text-white font-medium'
-                      : 'text-[var(--foreground)] hover:bg-gray-100'
+                      ? 'bg-[var(--primary)] text-white font-medium'
+                      : 'text-[var(--foreground)] hover:bg-[var(--overlay-light)]'
                   }`}
                 >
                   {cat.nombre}
@@ -120,8 +120,8 @@ export function FiltrosCursos({ categorias }: FiltrosCursosProps) {
                 onClick={() => toggleFiltro('nivel', nivel.value)}
                 className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
                   isActive
-                    ? 'bg-primary text-white font-medium'
-                    : 'text-[var(--foreground)] hover:bg-gray-100'
+                    ? 'bg-[var(--primary)] text-white font-medium'
+                    : 'text-[var(--foreground)] hover:bg-[var(--overlay-light)]'
                 }`}
               >
                 {nivel.label}
@@ -139,22 +139,22 @@ export function FiltrosCursos({ categorias }: FiltrosCursosProps) {
           </h3>
           <div className="flex flex-wrap gap-2">
             {categoriaActiva && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--primary-bg)] px-3 py-1 text-xs font-medium text-[var(--primary)]">
                 {categorias.find((c) => c.id === categoriaActiva)?.nombre}
                 <button
                   onClick={() => toggleFiltro('categoriaId', categoriaActiva)}
-                  className="hover:text-primary/70"
+                  className="hover:opacity-70"
                 >
                   ×
                 </button>
               </span>
             )}
             {nivelActivo && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--primary-bg)] px-3 py-1 text-xs font-medium text-[var(--primary)]">
                 {NIVELES.find((n) => n.value === nivelActivo)?.label}
                 <button
                   onClick={() => toggleFiltro('nivel', nivelActivo)}
-                  className="hover:text-primary/70"
+                  className="hover:opacity-70"
                 >
                   ×
                 </button>

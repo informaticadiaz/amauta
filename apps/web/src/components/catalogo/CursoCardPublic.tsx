@@ -37,9 +37,9 @@ const NIVEL_LABELS: Record<string, string> = {
 };
 
 const NIVEL_COLORS: Record<string, string> = {
-  PRINCIPIANTE: 'bg-green-100 text-green-700',
-  INTERMEDIO: 'bg-yellow-100 text-yellow-700',
-  AVANZADO: 'bg-red-100 text-red-700',
+  PRINCIPIANTE: 'bg-[var(--success-bg)] text-[var(--success-text)]',
+  INTERMEDIO: 'bg-[var(--warning-bg)] text-[var(--warning-text)]',
+  AVANZADO: 'bg-[var(--error-bg)] text-[var(--error-text)]',
 };
 
 export function CursoCardPublic({ curso }: CursoCardPublicProps) {
@@ -54,10 +54,10 @@ export function CursoCardPublic({ curso }: CursoCardPublicProps) {
   return (
     <Link
       href={`/cursos/${curso.slug}`}
-      className="group overflow-hidden rounded-lg border border-[var(--border)] bg-white shadow-sm transition-all hover:shadow-lg"
+      className="group overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] shadow-sm transition-all hover:shadow-lg"
     >
       {/* Imagen */}
-      <div className="relative aspect-video overflow-hidden bg-gray-100">
+      <div className="relative aspect-video overflow-hidden bg-[var(--overlay-light)]">
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -69,7 +69,7 @@ export function CursoCardPublic({ curso }: CursoCardPublicProps) {
         ) : (
           <div className="flex h-full items-center justify-center">
             <svg
-              className="h-16 w-16 text-gray-300"
+              className="h-16 w-16 text-[var(--muted)]"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1"
@@ -94,12 +94,12 @@ export function CursoCardPublic({ curso }: CursoCardPublicProps) {
       {/* Contenido */}
       <div className="p-4">
         {/* Categoría */}
-        <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+        <span className="inline-block rounded-full bg-[var(--primary-bg)] px-3 py-1 text-xs font-medium text-[var(--primary)]">
           {curso.categoria.nombre}
         </span>
 
         {/* Título */}
-        <h3 className="mt-3 line-clamp-2 text-lg font-semibold text-[var(--foreground)] group-hover:text-primary">
+        <h3 className="mt-3 line-clamp-2 text-lg font-semibold text-[var(--foreground)] group-hover:text-[var(--primary)]">
           {curso.titulo}
         </h3>
 
