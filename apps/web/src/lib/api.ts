@@ -11,6 +11,7 @@ import { getToken } from 'next-auth/jwt';
 import { cookies } from 'next/headers';
 
 const API_URL = process.env.API_URL || 'http://localhost:3001';
+const AUTH_SECRET = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET;
 
 interface ApiError {
   message: string;
@@ -51,7 +52,7 @@ export const api = {
         cookies: cookieStore,
         headers: new Headers(),
       } as never,
-      secret: process.env.AUTH_SECRET,
+      secret: AUTH_SECRET,
     });
 
     const headers = new Headers(options.headers);
@@ -122,7 +123,7 @@ async function createAuthToken(
   payload: Record<string, unknown>
 ): Promise<string> {
   const { SignJWT } = await import('jose');
-  const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
+  const secret = new TextEncoder().encode(AUTH_SECRET);
 
   const token = await new SignJWT({
     id: payload.id as string,
