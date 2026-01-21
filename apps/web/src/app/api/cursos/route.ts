@@ -8,11 +8,12 @@ import { getToken } from 'next-auth/jwt';
 import { SignJWT } from 'jose';
 
 const API_URL = process.env.API_URL || 'http://localhost:3001';
+const AUTH_SECRET = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET;
 
 async function createAuthToken(
   token: Record<string, unknown>
 ): Promise<string> {
-  const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
+  const secret = new TextEncoder().encode(AUTH_SECRET);
   return new SignJWT({
     id: token.id as string,
     sub: token.sub as string,
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
   try {
     const token = await getToken({
       req: request,
-      secret: process.env.AUTH_SECRET,
+      secret: AUTH_SECRET,
     });
     if (!token) {
       return NextResponse.json({ message: 'No autenticado' }, { status: 401 });

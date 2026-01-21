@@ -42,6 +42,14 @@ const serverSchema = z.object({
     .url('NEXTAUTH_URL debe ser una URL válida')
     .default('http://localhost:3000'),
 
+  // NextAuth v5 usa AUTH_SECRET como nombre estándar
+  // Soportamos ambos por compatibilidad
+  AUTH_SECRET: z
+    .string()
+    .min(32, 'AUTH_SECRET debe tener al menos 32 caracteres')
+    .optional(),
+
+  // Legacy: NEXTAUTH_SECRET (v4)
   NEXTAUTH_SECRET: z
     .string()
     .min(32, 'NEXTAUTH_SECRET debe tener al menos 32 caracteres')
