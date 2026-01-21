@@ -47,6 +47,13 @@ export const api = {
     options: RequestInit = {}
   ): Promise<T> {
     const cookieStore = await cookies();
+    const allCookies = cookieStore.getAll();
+    console.log(
+      '[API Debug] Cookies disponibles:',
+      allCookies.map((c) => c.name)
+    );
+    console.log('[API Debug] AUTH_SECRET definido:', !!AUTH_SECRET);
+
     const token = await getToken({
       req: {
         cookies: cookieStore,
@@ -54,6 +61,11 @@ export const api = {
       } as never,
       secret: AUTH_SECRET,
     });
+    console.log(
+      '[API Debug] Token obtenido:',
+      !!token,
+      token ? { id: token.id, email: token.email } : null
+    );
 
     const headers = new Headers(options.headers);
     headers.set('Content-Type', 'application/json');
