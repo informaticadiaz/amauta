@@ -19,6 +19,8 @@ export async function POST(request: NextRequest) {
     const token = await getToken({
       req: request,
       secret: AUTH_SECRET,
+      secureCookie: true,
+      salt: '__Secure-authjs.session-token',
     });
 
     if (!token) {

@@ -54,12 +54,15 @@ export const api = {
     );
     console.log('[API Debug] AUTH_SECRET definido:', !!AUTH_SECRET);
 
+    // NextAuth v5 en HTTPS usa cookies con prefijo __Secure-
     const token = await getToken({
       req: {
         cookies: cookieStore,
         headers: new Headers(),
       } as never,
       secret: AUTH_SECRET,
+      secureCookie: true,
+      salt: '__Secure-authjs.session-token',
     });
     console.log(
       '[API Debug] Token obtenido:',

@@ -34,6 +34,8 @@ export async function PATCH(
     const token = await getToken({
       req: request,
       secret: AUTH_SECRET,
+      secureCookie: true,
+      salt: '__Secure-authjs.session-token',
     });
     if (!token) {
       return NextResponse.json({ message: 'No autenticado' }, { status: 401 });
