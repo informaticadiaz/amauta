@@ -1,0 +1,264 @@
+/**
+ * Estilos para el formulario de lecciones
+ */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 800px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.required {
+  color: #dc2626;
+  margin-left: 0.25rem;
+}
+
+.input,
+.select,
+.textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.input:disabled,
+.select:disabled,
+.textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--border);
+}
+
+.textarea {
+  min-height: 200px;
+  resize: vertical;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.error {
+  padding: 0.75rem 1rem;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  color: #dc2626;
+  font-size: 0.875rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.buttonPrimary {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+}
+
+.buttonPrimary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+
+.buttonPrimary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.buttonSecondary {
+  background-color: transparent;
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+.buttonSecondary:hover:not(:disabled) {
+  background-color: var(--border);
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+.charCount {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+.charCountWarning {
+  color: #f59e0b;
+}
+
+.charCountError {
+  color: #dc2626;
+}
+
+.tipoSelector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tipoOption {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--background);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tipoOption:hover {
+  border-color: var(--primary);
+}
+
+.tipoOptionActive {
+  border-color: var(--primary);
+  background-color: rgba(37, 99, 235, 0.1);
+  color: var(--primary);
+}
+
+.tipoOption svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.videoPreview {
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.videoPreview iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.contentEditor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.editorTabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.editorTab {
+  padding: 0.5rem 1rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.editorTab:hover {
+  color: var(--foreground);
+}
+
+.editorTabActive {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.preview {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  min-height: 200px;
+  background: var(--background);
+}
+
+.preview h1,
+.preview h2,
+.preview h3 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.preview p {
+  margin-bottom: 0.5rem;
+}
+
+.preview code {
+  background: var(--border);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.preview pre {
+  background: var(--border);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
