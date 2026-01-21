@@ -11,7 +11,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { env } from '../config/env';
-import type { ImageProcessorService } from './image-processor.service';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { ImageProcessorService } from './image-processor.service';
 
 export interface UploadResult {
   url: string;
