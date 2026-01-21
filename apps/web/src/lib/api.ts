@@ -7,8 +7,7 @@
  * - Manejo de errores
  */
 
-import { getToken } from 'next-auth/jwt';
-import { cookies } from 'next/headers';
+import { auth } from './auth';
 
 const API_URL = process.env.API_URL || 'http://localhost:3001';
 const AUTH_SECRET = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET;
@@ -46,37 +45,25 @@ export const api = {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const cookieStore = await cookies();
-    const allCookies = cookieStore.getAll();
+    // Usar auth() de NextAuth v5 para obtener la sesión
+    const session = await auth();
     console.log(
-      '[API Debug] Cookies disponibles:',
-      allCookies.map((c) => c.name)
-    );
-    console.log('[API Debug] AUTH_SECRET definido:', !!AUTH_SECRET);
-
-    // NextAuth v5 en HTTPS usa cookies con prefijo __Secure-
-    const token = await getToken({
-      req: {
-        cookies: cookieStore,
-        headers: new Headers(),
-      } as never,
-      secret: AUTH_SECRET,
-      secureCookie: true,
-      salt: '__Secure-authjs.session-token',
-    });
-    console.log(
-      '[API Debug] Token obtenido:',
-      !!token,
-      token ? { id: token.id, email: token.email } : null
+      '[API Debug] Session obtenida:',
+      !!session,
+      session?.user ? { id: session.user.id, email: session.user.email } : null
     );
 
     const headers = new Headers(options.headers);
     headers.set('Content-Type', 'application/json');
 
-    if (token) {
-      // Crear un JWT simple con la info necesaria para el backend
-      // El backend verificará este token con el mismo AUTH_SECRET
-      const authToken = await createAuthToken(token);
+    if (session?.user) {
+      // Crear un JWT con la info del usuario para el backend
+      const authToken = await createAuthToken({
+        id: session.user.id,
+        sub: session.user.id,
+        email: session.user.email,
+        rol: session.user.rol,
+      });
       headers.set('Authorization', `Bearer ${authToken}`);
     }
 
