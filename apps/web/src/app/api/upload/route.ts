@@ -43,8 +43,8 @@ export async function POST(request: NextRequest) {
     // Obtener el FormData del request
     const formData = await request.formData();
 
-    // Hacer proxy al backend
-    const response = await fetch(`${API_URL}/api/v1/uploads`, {
+    // Hacer proxy al backend (uploads está excluido del prefijo api/v1)
+    const response = await fetch(`${API_URL}/uploads`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${authToken}`,
