@@ -21,7 +21,7 @@ export const updateCursoSchema = z.object({
       message: 'Nivel inválido. Debe ser PRINCIPIANTE, INTERMEDIO o AVANZADO',
     })
     .optional(),
-  imagen: z.string().url('URL de imagen inválida').nullable().optional(),
+  imagen: z.string().min(1, 'URL de imagen inválida').nullable().optional(),
   duracion: z
     .number()
     .int('La duración debe ser un número entero')

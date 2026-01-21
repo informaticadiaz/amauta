@@ -17,7 +17,7 @@ export const createCursoSchema = z.object({
   nivel: z.enum(['PRINCIPIANTE', 'INTERMEDIO', 'AVANZADO'], {
     message: 'Nivel inválido. Debe ser PRINCIPIANTE, INTERMEDIO o AVANZADO',
   }),
-  imagen: z.string().url('URL de imagen inválida').optional().nullable(),
+  imagen: z.string().min(1, 'URL de imagen inválida').optional().nullable(),
   duracion: z
     .number()
     .int('La duración debe ser un número entero')
