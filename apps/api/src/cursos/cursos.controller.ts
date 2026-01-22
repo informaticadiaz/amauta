@@ -76,6 +76,21 @@ export class CursosController {
   }
 
   /**
+   * Obtener curso por slug
+   *
+   * GET /api/v1/cursos/slug/:slug
+   */
+  @Public()
+  @Get('slug/:slug')
+  async obtenerPorSlug(@Param('slug') slug: string): Promise<CursoResponse> {
+    const curso = await this.cursosService.obtenerPorSlug(slug);
+    return {
+      curso,
+      message: 'Curso obtenido exitosamente',
+    };
+  }
+
+  /**
    * Obtener curso por ID
    *
    * GET /api/v1/cursos/:id

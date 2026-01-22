@@ -50,6 +50,13 @@ export interface CursoConEducador {
     lecciones: number;
     inscripciones: number;
   };
+  lecciones?: Array<{
+    id: string;
+    titulo: string;
+    orden: number;
+    duracion: number | null;
+    publicada: boolean;
+  }>;
 }
 
 interface ListaCursosResult {
@@ -374,7 +381,7 @@ export class CursosService {
   }
 
   /**
-   * Obtiene un curso por slug
+   * Obtiene un curso por slug (incluye lecciones para página de detalle)
    */
   async obtenerPorSlug(slug: string): Promise<CursoConEducador> {
     const curso = await this.prisma.curso.findUnique({
@@ -393,6 +400,18 @@ export class CursosService {
             id: true,
             nombre: true,
             slug: true,
+          },
+        },
+        lecciones: {
+          select: {
+            id: true,
+            titulo: true,
+            orden: true,
+            duracion: true,
+            publicada: true,
+          },
+          orderBy: {
+            orden: 'asc',
           },
         },
         _count: {
