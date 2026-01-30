@@ -25,7 +25,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 ### Fase Actual: Fase 1 - MVP Plataforma de Cursos 🚧 EN PROGRESO
 
 **Inicio**: 30/12/2024
-**Progreso**: 3/16 issues (Sprint 1 en progreso)
+**Progreso**: 10/16 issues completados
 
 #### Completado en Fase 1:
 
@@ -47,10 +47,42 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Navegación condicional por rol
   - Responsive: mobile, tablet, desktop
 
+- ✅ **F1-004**: API CRUD de cursos
+  - Endpoints REST completos para gestión de cursos
+  - Validación con class-validator
+
+- ✅ **F1-005**: UI para crear y editar cursos
+  - Formularios de creación y edición
+  - Integración con API
+
+- ✅ **F1-006**: Sistema de subida de imágenes
+  - Upload de imágenes para cursos
+  - Almacenamiento en servidor
+
+- ✅ **F1-007**: API CRUD de lecciones
+  - Endpoints REST para lecciones
+  - Asociación con cursos
+
+- ✅ **F1-008**: UI para gestión de lecciones
+  - Interfaz para crear/editar lecciones
+  - Ordenamiento de lecciones
+
+- ✅ **F1-009**: Catálogo público de cursos
+  - Página `/cursos` con listado público
+  - Filtros y búsqueda
+
+- ✅ **F1-010**: Página de detalle de curso
+  - Vista detallada del curso
+  - Información de lecciones
+
 #### Próximos pasos:
 
-- 📋 **F1-004**: API CRUD de cursos
-- 📋 **F1-005**: UI para crear y editar cursos
+- 📋 **F1-011**: API sistema de inscripción
+- 📋 **F1-012**: UI de inscripción y mis cursos
+- 📋 **F1-013**: Visualizador de lecciones para estudiantes
+- 📋 **F1-014**: API seguimiento de progreso
+- 📋 **F1-015**: UI marcar lecciones completadas
+- 📋 **F1-016**: Dashboard de estudiante
 
 **Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 1"
 
@@ -125,15 +157,15 @@ El roadmap define:
 
 ### Fases del Roadmap (Resumen)
 
-| Fase | Nombre            | Estado        | Documento             |
-| ---- | ----------------- | ------------- | --------------------- |
-| 0    | Fundamentos       | ✅ Completado | `fase-0-tareas.md`    |
-| 1    | MVP Cursos        | 📋 Próximo    | `roadmap.md` → Fase 1 |
-| 2    | Offline-First PWA | 📋 Pendiente  | `roadmap.md` → Fase 2 |
-| 3    | Evaluaciones      | 📋 Pendiente  | `roadmap.md` → Fase 3 |
-| 4    | Módulo Escolar    | 📋 Pendiente  | `roadmap.md` → Fase 4 |
-| 5    | Comunidad         | 📋 Pendiente  | `roadmap.md` → Fase 5 |
-| 6-10 | Avanzadas         | 📋 Futuro     | `roadmap.md`          |
+| Fase | Nombre            | Estado         | Documento             |
+| ---- | ----------------- | -------------- | --------------------- |
+| 0    | Fundamentos       | ✅ Completado  | `fase-0-tareas.md`    |
+| 1    | MVP Cursos        | 🚧 En Progreso | `roadmap.md` → Fase 1 |
+| 2    | Offline-First PWA | 📋 Pendiente   | `roadmap.md` → Fase 2 |
+| 3    | Evaluaciones      | 📋 Pendiente   | `roadmap.md` → Fase 3 |
+| 4    | Módulo Escolar    | 📋 Pendiente   | `roadmap.md` → Fase 4 |
+| 5    | Comunidad         | 📋 Pendiente   | `roadmap.md` → Fase 5 |
+| 6-10 | Avanzadas         | 📋 Futuro      | `roadmap.md`          |
 
 ---
 
@@ -434,7 +466,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 0 completada, próximo: Fase 1
+- **Fase actual**: Fase 1 en progreso (10/16 issues completados)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**
