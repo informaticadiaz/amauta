@@ -542,6 +542,49 @@ Al completar una etapa o funcionalidad, **SIEMPRE actualizar** la documentación
 
 **ANTES de escribir código, SIEMPRE leer los contextos correspondientes:**
 
+#### Base de Datos y Prisma (CRÍTICO - LEER SIEMPRE) 🚨
+
+**ANTES de escribir CUALQUIER código que interactúe con la base de datos:**
+
+1. **OBLIGATORIO**: Leer `docs/ai-context/database/schema.md` para conocer:
+   - Nombres exactos de tablas y columnas
+   - Tipos de datos y enums disponibles
+   - Relaciones y foreign keys
+   - Campos opcionales vs requeridos
+
+2. **OBLIGATORIO**: Leer `apps/api/prisma/schema.prisma` si el contexto no es suficiente
+
+3. **NUNCA inventar**:
+   - ❌ Columnas que no existen
+   - ❌ Enums con valores no definidos
+   - ❌ Relaciones que no están en el schema
+   - ❌ Nombres de tablas incorrectos
+
+4. **Verificar antes de usar**:
+   - ¿El campo existe? → Leer schema
+   - ¿El enum tiene ese valor? → Leer schema
+   - ¿La relación existe? → Leer schema
+   - ¿Es opcional o requerido? → Leer schema
+
+**Ejemplo de verificación:**
+
+```typescript
+// ANTES de escribir esto:
+await this.prisma.curso.findMany({
+  where: { categoria: 'TECNOLOGIA' }, // ❌ ¿Existe 'categoria'? ¿Es string o relación?
+});
+
+// VERIFICAR en schema.prisma:
+// - El campo es 'categoriaId' (string, FK) no 'categoria'
+// - O usar include: { categoria: true } para la relación
+
+// CORRECTO después de verificar:
+await this.prisma.curso.findMany({
+  where: { categoriaId: 'xxx' },
+  include: { categoria: true },
+});
+```
+
 #### Backend (API)
 
 | Tarea                               | Leer ANTES de codear                                                     |
@@ -551,6 +594,7 @@ Al completar una etapa o funcionalidad, **SIEMPRE actualizar** la documentación
 | Agregar endpoint a módulo existente | `docs/ai-skills/api-endpoint.md` + `docs/ai-context/modules/{modulo}.md` |
 | Modificar schema Prisma             | `docs/ai-context/database/schema.md`                                     |
 | Trabajar con validaciones           | `docs/ai-context/_patterns.md` (sección Zod)                             |
+| **Cualquier query Prisma**          | `docs/ai-context/database/schema.md` + `apps/api/prisma/schema.prisma`   |
 
 #### Frontend (Web)
 
@@ -563,10 +607,12 @@ Al completar una etapa o funcionalidad, **SIEMPRE actualizar** la documentación
 
 #### Reglas Generales
 
-1. **Nunca escribir código backend sin leer `_patterns.md`** - Contiene validación Zod, estructura de controllers/services, paginación
-2. **Para módulos existentes, leer su contexto** - `docs/ai-context/modules/{modulo}.md` tiene endpoints, modelo Prisma y ejemplos reales
-3. **Usar skills para generación repetitiva** - CRUD, endpoints, formularios ya tienen templates
-4. **Si no existe contexto del módulo, usar `cursos.md` como referencia** - Es el módulo más completo y sirve de template
+1. **CRÍTICO: Nunca escribir queries Prisma sin verificar el schema** - Leer `docs/ai-context/database/schema.md` o `apps/api/prisma/schema.prisma` ANTES de cualquier operación de DB
+2. **Nunca escribir código backend sin leer `_patterns.md`** - Contiene validación Zod, estructura de controllers/services, paginación
+3. **Para módulos existentes, leer su contexto** - `docs/ai-context/modules/{modulo}.md` tiene endpoints, modelo Prisma y ejemplos reales
+4. **Usar skills para generación repetitiva** - CRUD, endpoints, formularios ya tienen templates
+5. **Si no existe contexto del módulo, usar `cursos.md` como referencia** - Es el módulo más completo y sirve de template
+6. **Ante la duda, leer el código fuente** - Si el contexto no es claro, leer el archivo real antes de asumir
 
 ### Patrones Críticos (Resumen)
 
@@ -599,6 +645,80 @@ await this.prisma.curso.update({
 // Estructura de respuestas
 // Singular: { curso, message }
 // Lista: { cursos, total, page, limit, totalPages }
+```
+
+### Enums Disponibles (Referencia Rápida)
+
+**IMPORTANTE**: Solo usar estos valores. No inventar otros.
+
+```typescript
+// Roles de usuario
+enum Rol {
+  ESTUDIANTE,
+  EDUCADOR,
+  ADMIN_ESCUELA,
+  SUPER_ADMIN,
+}
+
+// Cursos
+enum Nivel {
+  PRINCIPIANTE,
+  INTERMEDIO,
+  AVANZADO,
+}
+enum EstadoCurso {
+  BORRADOR,
+  REVISION,
+  PUBLICADO,
+  ARCHIVADO,
+}
+
+// Lecciones
+enum TipoLeccion {
+  VIDEO,
+  TEXTO,
+  QUIZ,
+  INTERACTIVO,
+  DESCARGABLE,
+}
+
+// Inscripciones
+enum EstadoInscripcion {
+  ACTIVO,
+  COMPLETADO,
+  ABANDONADO,
+}
+
+// Instituciones
+enum TipoInstitucion {
+  ESCUELA,
+  COLEGIO,
+  UNIVERSIDAD,
+  CENTRO_FORMACION,
+}
+
+// Asistencias
+enum EstadoAsistencia {
+  PRESENTE,
+  AUSENTE,
+  TARDANZA,
+  JUSTIFICADO,
+}
+
+// Comunicados
+enum TipoComunicado {
+  GENERAL,
+  ACADEMICO,
+  ADMINISTRATIVO,
+  EVENTO,
+  URGENTE,
+}
+enum Prioridad {
+  BAJA,
+  NORMAL,
+  ALTA,
+  URGENTE,
+}
 ```
 
 ### Documentación Disponible
