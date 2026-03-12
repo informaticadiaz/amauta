@@ -149,6 +149,7 @@ export default async function CursoDetallePage({ params }: PageProps) {
               <InscripcionBtn
                 cursoId={curso.id}
                 cursoTitulo={curso.titulo}
+                cursoSlug={curso.slug}
                 totalLecciones={curso._count.lecciones}
                 duracion={curso.duracion}
               />

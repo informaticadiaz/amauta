@@ -33,13 +33,16 @@ Permite a los usuarios inscribirse en cursos publicados. Registra el estado de l
 | `apps/api/src/inscripciones/dto/query-inscripciones.dto.ts`      | Schema Zod para filtros |
 | `apps/api/src/inscripciones/dto/inscribirse.dto.ts`              | Schema Zod (si aplica)  |
 
-### Frontend (por implementar)
+### Frontend
 
-| Archivo                                                | Propósito                 |
-| ------------------------------------------------------ | ------------------------- |
-| `apps/web/src/app/api/cursos/[id]/inscribir/route.ts`  | Proxy inscribirse         |
-| `apps/web/src/app/mis-cursos/page.tsx`                 | Lista de cursos inscritos |
-| `apps/web/src/components/cursos/InscribirseButton.tsx` | Botón de inscripción      |
+| Archivo                                                      | Propósito                          |
+| ------------------------------------------------------------ | ---------------------------------- |
+| `apps/web/src/app/api/cursos/[id]/inscribir/route.ts`        | Proxy POST/DELETE inscribirse      |
+| `apps/web/src/app/api/cursos/[id]/inscripcion/route.ts`      | Proxy GET estado de inscripción    |
+| `apps/web/src/app/api/mis-cursos/route.ts`                   | Proxy GET mis inscripciones        |
+| `apps/web/src/app/dashboard/mis-cursos/page.tsx`             | Página lista de cursos inscritos   |
+| `apps/web/src/components/catalogo/InscripcionBtn.tsx`        | Botón inscripción con lógica real  |
+| `apps/web/src/components/inscripciones/MiCursoCard.tsx`      | Tarjeta de curso inscrito          |
 
 ---
 

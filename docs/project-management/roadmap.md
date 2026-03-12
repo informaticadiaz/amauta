@@ -103,7 +103,7 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 | Issue | Título                                          | Estado        | Prioridad   |
 | ----- | ----------------------------------------------- | ------------- | ----------- |
 | #38   | F1-011: API sistema de inscripción              | ✅ Completado | must-have   |
-| #39   | F1-012: UI de inscripción y mis cursos          | 📋 Pendiente  | must-have   |
+| #39   | F1-012: UI de inscripción y mis cursos          | ✅ Completado | must-have   |
 | #40   | F1-013: Visualizador de lecciones para estud.   | 📋 Pendiente  | must-have   |
 | #41   | F1-014: API seguimiento de progreso             | 📋 Pendiente  | must-have   |
 | #42   | F1-015: UI marcar lecciones completadas         | 📋 Pendiente  | must-have   |

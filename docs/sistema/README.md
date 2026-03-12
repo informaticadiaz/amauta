@@ -26,6 +26,7 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 | Gestión de Cursos       | ✅ Funcional | Sprint 1 |
 | Catálogo de Cursos      | ✅ Funcional | Sprint 2 |
 | Inscripciones           | ✅ Funcional | Sprint 3 |
+| UI Inscripción y Mis Cursos | ✅ Funcional | Sprint 4 |
 | Progreso de Estudiantes | 📋 Pendiente | Sprint 3 |
 
 ## Roles del Sistema
@@ -143,4 +144,4 @@ docs/sistema/
 ---
 
 **Última actualización**: 12/03/2026
-**Fase actual**: Fase 1 - MVP Plataforma de Cursos (11/16 completados)
+**Fase actual**: Fase 1 - MVP Plataforma de Cursos (12/16 completados)
