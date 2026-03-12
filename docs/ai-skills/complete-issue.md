@@ -31,6 +31,80 @@ Ejecuta el issue #15 de forma autónoma siguiendo el workflow completo
 
 ## Proceso Autónomo (Ejecutar en Orden Estricto)
 
+### PASO 0 — Verificar Estado del Proyecto (SIEMPRE al iniciar)
+
+Antes de cualquier otra acción, verificar el estado actual del desarrollo consultando **tres fuentes** y comparándolas.
+
+#### Fuente 1 — GitHub (estado real de cada issue)
+
+```bash
+# Issues abiertos de la fase actual, ordenados por número
+gh issue list --label "phase-1" --state open --limit 20 --json number,title,labels \
+  | jq -r '.[] | "#\(.number) \(.title) [\(.labels | map(.name) | join(", "))]"'
+
+# Issues cerrados recientes (para detectar completados no registrados)
+gh issue list --label "phase-1" --state closed --limit 10 --json number,title \
+  | jq -r '.[] | "#\(.number) \(.title)"'
+```
+
+#### Fuente 2 — roadmap.md (orden y dependencias)
+
+```
+LEER: docs/project-management/roadmap.md → sección de la fase actual
+```
+
+Extraer:
+- Orden definido para los issues de la fase
+- Dependencias explícitas entre issues (cuál debe ir antes)
+- Issues marcados como `must-have` vs `should-have`
+
+#### Fuente 3 — CLAUDE.md (progreso documentado)
+
+```
+LEER: CLAUDE.md → sección "Próximos pasos" y "Completado en Fase X"
+```
+
+#### Comparar las tres fuentes
+
+Construir una tabla de verificación:
+
+| Issue | Título | GitHub | roadmap.md | CLAUDE.md |
+|-------|--------|--------|------------|-----------|
+| #38   | F1-011 | OPEN   | Pendiente  | Pendiente |
+| #37   | F1-010 | CLOSED | Completado | ✅        |
+
+**Si las tres fuentes coinciden** → continuar al siguiente paso.
+
+**Si hay divergencias**, resolverlas con estas reglas:
+
+| Divergencia | Fuente de verdad | Acción |
+|-------------|-----------------|--------|
+| Issue cerrado en GitHub pero pendiente en CLAUDE.md | GitHub | Actualizar CLAUDE.md |
+| Issue abierto en GitHub pero marcado completo en CLAUDE.md | GitHub | Reabrir o investigar |
+| Orden diferente entre roadmap.md y los issues de GitHub | roadmap.md | Seguir el orden del roadmap |
+| Progreso total diferente (ej: GitHub dice 10 cerrados, CLAUDE.md dice 8/16) | GitHub | Actualizar contador en CLAUDE.md |
+
+Mostrar las divergencias encontradas al usuario y proponer las correcciones antes de continuar.
+
+#### Determinar el próximo issue a trabajar
+
+Si no se especificó un número de issue:
+1. Tomar los issues OPEN en GitHub de la fase actual
+2. Ordenarlos según el orden definido en `roadmap.md`
+3. Aplicar criterios de selección (en orden de prioridad):
+   - Priorizar issues con label `must-have`
+   - Respetar dependencias (no empezar un issue si su dependencia está OPEN)
+   - Tomar el primero según el orden del roadmap
+4. Presentar al usuario: _"El próximo issue según el roadmap es #XX — [título] (must-have). ¿Trabajamos con este?"_
+5. Esperar confirmación antes de continuar
+
+Si se especificó un número:
+- Verificar que el issue existe y está OPEN en GitHub
+- Verificar que sus dependencias están cerradas
+- Si está cerrado o tiene dependencias pendientes, informar al usuario y sugerir el próximo válido
+
+---
+
 ### PASO 1 — Leer el Issue
 
 ```bash
