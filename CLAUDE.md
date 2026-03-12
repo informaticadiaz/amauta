@@ -767,4 +767,5 @@ enum Prioridad {
 | **CRUD Generator**   | `docs/ai-skills/crud-generator.md`       | Crear módulo nuevo completo                       |
 | **API Endpoint**     | `docs/ai-skills/api-endpoint.md`         | Agregar endpoint a módulo existente               |
 | **React Form**       | `docs/ai-skills/react-form.md`           | Crear formulario nuevo                            |
-| **Complete Issue**   | `docs/ai-skills/complete-issue.md`       | Ejecutar un issue completo de forma autónoma      |
+| **Complete Issue**       | `docs/ai-skills/complete-issue.md`           | Ejecutar un issue completo de forma autónoma          |
+| **NotebookLM Cuadernos** | `docs/ai-skills/notebooklm-cuadernos.md`     | Generar cuadernos de estudio genéricos para NotebookLM|
