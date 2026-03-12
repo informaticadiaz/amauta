@@ -312,6 +312,9 @@ Si el módulo **no tiene archivo de contexto** y se implementó algo significati
 
 Incluir **siempre** los archivos de test junto con la implementación:
 
+> **Importante**: Usar `git add` y `git commit` directamente, sin `git -C "ruta"`.
+> El working directory ya es la raíz del proyecto.
+
 ```bash
 git add apps/api/src/[modulo]/[modulo].service.ts
 git add apps/api/src/[modulo]/[modulo].service.spec.ts

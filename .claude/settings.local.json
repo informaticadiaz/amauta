@@ -5,9 +5,7 @@
       "Bash(gh *)",
       "Bash(npm *)",
       "Bash(ls*)",
-      "Bash(node_modules/.bin/jest *)",
-      "Bash(git -C \"C:/Users/infor/DevHome/amauta\" add docs/project-management/roadmap.md docs/sistema/README.md docs/ai-context/modules/inscripciones.md CLAUDE.md .claude/skills/complete-issue/skill.md && git -C \"C:/Users/infor/DevHome/amauta\" status)",
-      "Bash(git -C \"C:/Users/infor/DevHome/amauta\" add .claude/skills/complete-issue/SKILL.md .claude/settings.local.json)"
+      "Bash(node_modules/.bin/jest *)"
     ]
   }
 }
