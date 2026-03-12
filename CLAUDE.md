@@ -538,56 +538,92 @@ Al completar una etapa o funcionalidad, **SIEMPRE actualizar** la documentación
 
 ## 🤖 Sistema de Contexto para IA
 
-### Documentación Especializada para IAs
+### Reglas de Carga de Contexto (OBLIGATORIO) ⭐
 
-El proyecto incluye documentación optimizada para asistentes de IA en `docs/ai-context/`:
+**ANTES de escribir código, SIEMPRE leer los contextos correspondientes:**
+
+#### Backend (API)
+
+| Tarea                               | Leer ANTES de codear                                                     |
+| ----------------------------------- | ------------------------------------------------------------------------ |
+| Crear/modificar endpoint            | `docs/ai-context/_patterns.md` + `docs/ai-context/modules/{modulo}.md`   |
+| Crear módulo CRUD completo          | `docs/ai-skills/crud-generator.md`                                       |
+| Agregar endpoint a módulo existente | `docs/ai-skills/api-endpoint.md` + `docs/ai-context/modules/{modulo}.md` |
+| Modificar schema Prisma             | `docs/ai-context/database/schema.md`                                     |
+| Trabajar con validaciones           | `docs/ai-context/_patterns.md` (sección Zod)                             |
+
+#### Frontend (Web)
+
+| Tarea                         | Leer ANTES de codear                                                      |
+| ----------------------------- | ------------------------------------------------------------------------- |
+| Crear formulario              | `docs/ai-skills/react-form.md` + `docs/ai-context/frontend/components.md` |
+| Crear página nueva            | `docs/ai-context/frontend/pages.md`                                       |
+| Usar hooks de auth/roles      | `docs/ai-context/frontend/hooks.md`                                       |
+| Crear componente reutilizable | `docs/ai-context/frontend/components.md`                                  |
+
+#### Reglas Generales
+
+1. **Nunca escribir código backend sin leer `_patterns.md`** - Contiene validación Zod, estructura de controllers/services, paginación
+2. **Para módulos existentes, leer su contexto** - `docs/ai-context/modules/{modulo}.md` tiene endpoints, modelo Prisma y ejemplos reales
+3. **Usar skills para generación repetitiva** - CRUD, endpoints, formularios ya tienen templates
+4. **Si no existe contexto del módulo, usar `cursos.md` como referencia** - Es el módulo más completo y sirve de template
+
+### Patrones Críticos (Resumen)
+
+Estos patrones están en `_patterns.md` pero son tan importantes que se resumen aquí:
+
+```typescript
+// ❌ NUNCA usar parse directo
+const data = schema.parse(dto); // MAL
+
+// ✅ SIEMPRE usar safeParse
+const result = schema.safeParse(dto);
+if (!result.success) {
+  throw new BadRequestException(result.error.issues[0]?.message);
+}
+const data = result.data; // BIEN
+```
+
+```typescript
+// ❌ NUNCA eliminar físicamente
+await this.prisma.curso.delete({ where: { id } }); // MAL
+
+// ✅ SIEMPRE soft delete (cambiar estado)
+await this.prisma.curso.update({
+  where: { id },
+  data: { estado: 'ARCHIVADO' },
+}); // BIEN
+```
+
+```typescript
+// Estructura de respuestas
+// Singular: { curso, message }
+// Lista: { cursos, total, page, limit, totalPages }
+```
+
+### Documentación Disponible
 
 | Tipo         | Ubicación                            | Propósito                       |
 | ------------ | ------------------------------------ | ------------------------------- |
-| **Índice**   | `docs/ai-context/_index.md`          | Punto de entrada, guía de carga |
 | **Patrones** | `docs/ai-context/_patterns.md`       | Patrones de código del proyecto |
 | **Módulos**  | `docs/ai-context/modules/`           | Contexto por módulo backend     |
 | **Frontend** | `docs/ai-context/frontend/`          | Páginas, componentes, hooks     |
 | **Database** | `docs/ai-context/database/schema.md` | Schema Prisma                   |
 | **Skills**   | `docs/ai-skills/`                    | Generadores de código           |
 
-### Carga de Contexto por Tarea
-
-| Tarea                  | Contextos a Leer                          |
-| ---------------------- | ----------------------------------------- |
-| **Crear endpoint API** | `_patterns.md` + `modules/{modulo}.md`    |
-| **Crear formulario**   | `_patterns.md` + `frontend/components.md` |
-| **Generar CRUD**       | `ai-skills/crud-generator.md`             |
-| **Agregar endpoint**   | `ai-skills/api-endpoint.md`               |
-| **Crear formulario**   | `ai-skills/react-form.md`                 |
-
-### Skills Disponibles
-
-| Skill              | Archivo                            | Descripción                                 |
-| ------------------ | ---------------------------------- | ------------------------------------------- |
-| **CRUD Generator** | `docs/ai-skills/crud-generator.md` | Genera módulo completo (backend + frontend) |
-| **API Endpoint**   | `docs/ai-skills/api-endpoint.md`   | Agrega endpoint a módulo existente          |
-| **React Form**     | `docs/ai-skills/react-form.md`     | Crea formulario siguiendo patrones          |
-
 ### Módulos Documentados
 
 - `auth` - Autenticación (NextAuth + JWT)
-- `cursos` - CRUD de cursos
+- `cursos` - CRUD de cursos (⭐ usar como template de referencia)
 - `lecciones` - Gestión de lecciones
 - `inscripciones` - Sistema de inscripción
 - `uploads` - Subida de archivos
 - `categorias` - Categorías de cursos
 
-### Para Cursor
+### Skills Disponibles
 
-El archivo `.cursorrules` en la raíz configura Cursor para usar estos contextos automáticamente.
-
-### Ejemplo de Uso
-
-```
-# En Claude Code:
-Lee docs/ai-context/_patterns.md y docs/ai-context/modules/cursos.md
-
-# Para generar un CRUD:
-Lee docs/ai-skills/crud-generator.md y genera un CRUD para Evaluacion
-```
+| Skill              | Archivo                            | Cuándo usar                         |
+| ------------------ | ---------------------------------- | ----------------------------------- |
+| **CRUD Generator** | `docs/ai-skills/crud-generator.md` | Crear módulo nuevo completo         |
+| **API Endpoint**   | `docs/ai-skills/api-endpoint.md`   | Agregar endpoint a módulo existente |
+| **React Form**     | `docs/ai-skills/react-form.md`     | Crear formulario nuevo              |
