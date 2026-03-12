@@ -17,6 +17,49 @@ Cuando el usuario pide ejecutar o completar un issue de GitHub de forma autónom
 
 ## Proceso (Ejecutar en Orden Estricto)
 
+### PASO 0 — Identificar el Issue a Trabajar (si no se indicó uno)
+
+Si el usuario **no especificó un número de issue**, ejecutar este paso automáticamente:
+
+```bash
+# Listar issues abiertos ordenados por número
+gh issue list --limit 20 --state open --json number,title,labels \
+  | jq -r '.[] | "#\(.number) [\(.labels[].name // "sin-label" | select(. != ""))] \(.title)"'
+```
+
+Seleccionar el issue de **menor número** que corresponda a la fase actual (según `CLAUDE.md`).
+Luego leer el issue completo:
+
+```bash
+gh issue view [número] --json title,body,labels,milestone \
+  | jq -r '"\(.title)\n\nLabels: \(.labels[].name // "ninguno")\n\n\(.body)"'
+```
+
+Con esa información, presentar al usuario un resumen antes de continuar:
+
+---
+
+**Propuesta de issue a trabajar:**
+
+> **Issue #[N] — [Título]**
+>
+> **Objetivo:** [1 oración que describe qué se va a construir]
+>
+> **Problemas a resolver:**
+> - [problema/tarea 1 del checklist]
+> - [problema/tarea 2 del checklist]
+> - [...]
+>
+> **Alcance:** [backend / frontend / ambos] — [módulo o página afectada]
+>
+> **Dependencias:** [issues previos necesarios, o "ninguna"]
+
+¿Continuamos con este issue? (responder sí/no o indicar otro número)
+
+**Esperar confirmación del usuario antes de avanzar al PASO 1.**
+
+---
+
 ### PASO 1 — Leer el Issue
 
 ```bash
