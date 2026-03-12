@@ -1,0 +1,101 @@
+# Cursor Rules - Proyecto Amauta
+
+## Contexto del Proyecto
+
+Amauta es un sistema educativo para la gestión del aprendizaje.
+- Monorepo con Turborepo
+- Backend: NestJS + Fastify + Prisma + PostgreSQL
+- Frontend: Next.js 14+ (App Router) + TypeScript
+- Autenticación: NextAuth.js v5 (frontend) + JWT (backend)
+- Validación: Zod (no class-validator)
+
+## Documentación de Contexto
+
+Para tareas complejas, cargar contexto desde `docs/ai-context/`:
+
+- **Patrones generales**: `docs/ai-context/_patterns.md`
+- **Módulos backend**: `docs/ai-context/modules/{modulo}.md`
+- **Frontend**: `docs/ai-context/frontend/`
+- **Base de datos**: `docs/ai-context/database/schema.md`
+- **Skills**: `docs/ai-skills/` (CRUD generator, etc.)
+
+## Convenciones
+
+### Idioma
+- Todo el código, comentarios y documentación en español
+- Nombres de variables y funciones pueden ser en español o inglés (consistente por archivo)
+
+### Validación
+- Usar Zod para validación de DTOs
+- Siempre usar `safeParse`, nunca `parse` directo
+- Extraer tipos con `z.infer<typeof schema>`
+
+```typescript
+const result = schema.safeParse(dto);
+if (!result.success) {
+  throw new BadRequestException(result.error.issues[0]?.message);
+}
+const data = result.data;
+```
+
+### Estructura de Respuestas API
+- Singular: `{ item, message }`
+- Lista: `{ items[], total, page, limit, totalPages }`
+
+### Soft Delete
+- Cambiar estado a ARCHIVADO, no eliminar físicamente
+- Excepto para recursos que tienen onDelete Cascade
+
+### Autenticación Backend
+- `@Public()` para endpoints públicos
+- `@Roles('ROL1', 'ROL2')` para proteger por rol
+- `@CurrentUser() user: RequestUser` para obtener usuario
+
+### Frontend
+- `'use client'` solo para componentes interactivos
+- Usar CSS Modules para estilos de componentes
+- `router.refresh()` después de mutaciones
+
+### Commits
+- En español
+- Formato: `tipo(scope): descripción`
+- Tipos: feat, fix, refactor, docs, test, chore
+
+## Archivos Importantes
+
+- `CLAUDE.md` - Contexto general del proyecto
+- `WORKFLOW.md` - Proceso de trabajo con issues
+- `docs/project-management/roadmap.md` - Fases del proyecto
+- `apps/api/prisma/schema.prisma` - Modelos de datos
+
+## Rutas Clave
+
+```
+apps/
+├── api/src/           # Backend NestJS
+│   ├── {modulo}/      # Módulos (cursos, lecciones, etc.)
+│   ├── common/        # Decoradores, guards, pipes
+│   └── prisma/        # Servicio Prisma
+├── web/src/
+│   ├── app/           # Páginas (App Router)
+│   ├── components/    # Componentes React
+│   └── hooks/         # Hooks personalizados
+```
+
+## Patrones Rápidos
+
+### Nuevo Endpoint
+1. Agregar método en controller con decoradores
+2. Agregar lógica en service
+3. Crear DTO con Zod si necesario
+4. Agregar API route proxy en frontend si requiere auth
+
+### Nuevo Componente
+1. Crear archivo .tsx con 'use client' si interactivo
+2. Crear .module.css para estilos
+3. Exportar desde barrel (index.ts) si existe
+
+### Nueva Página
+1. Crear `page.tsx` en ruta correspondiente
+2. Usar `auth()` para verificar sesión si protegida
+3. Usar Server Components por defecto

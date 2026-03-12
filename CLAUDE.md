@@ -533,3 +533,61 @@ Al completar una etapa o funcionalidad, **SIEMPRE actualizar** la documentación
    - Útil para nuevos desarrolladores
 
 - Consultar `docs/project-management/fase-0-tareas.md` para dependencias entre tareas
+
+---
+
+## 🤖 Sistema de Contexto para IA
+
+### Documentación Especializada para IAs
+
+El proyecto incluye documentación optimizada para asistentes de IA en `docs/ai-context/`:
+
+| Tipo         | Ubicación                            | Propósito                       |
+| ------------ | ------------------------------------ | ------------------------------- |
+| **Índice**   | `docs/ai-context/_index.md`          | Punto de entrada, guía de carga |
+| **Patrones** | `docs/ai-context/_patterns.md`       | Patrones de código del proyecto |
+| **Módulos**  | `docs/ai-context/modules/`           | Contexto por módulo backend     |
+| **Frontend** | `docs/ai-context/frontend/`          | Páginas, componentes, hooks     |
+| **Database** | `docs/ai-context/database/schema.md` | Schema Prisma                   |
+| **Skills**   | `docs/ai-skills/`                    | Generadores de código           |
+
+### Carga de Contexto por Tarea
+
+| Tarea                  | Contextos a Leer                          |
+| ---------------------- | ----------------------------------------- |
+| **Crear endpoint API** | `_patterns.md` + `modules/{modulo}.md`    |
+| **Crear formulario**   | `_patterns.md` + `frontend/components.md` |
+| **Generar CRUD**       | `ai-skills/crud-generator.md`             |
+| **Agregar endpoint**   | `ai-skills/api-endpoint.md`               |
+| **Crear formulario**   | `ai-skills/react-form.md`                 |
+
+### Skills Disponibles
+
+| Skill              | Archivo                            | Descripción                                 |
+| ------------------ | ---------------------------------- | ------------------------------------------- |
+| **CRUD Generator** | `docs/ai-skills/crud-generator.md` | Genera módulo completo (backend + frontend) |
+| **API Endpoint**   | `docs/ai-skills/api-endpoint.md`   | Agrega endpoint a módulo existente          |
+| **React Form**     | `docs/ai-skills/react-form.md`     | Crea formulario siguiendo patrones          |
+
+### Módulos Documentados
+
+- `auth` - Autenticación (NextAuth + JWT)
+- `cursos` - CRUD de cursos
+- `lecciones` - Gestión de lecciones
+- `inscripciones` - Sistema de inscripción
+- `uploads` - Subida de archivos
+- `categorias` - Categorías de cursos
+
+### Para Cursor
+
+El archivo `.cursorrules` en la raíz configura Cursor para usar estos contextos automáticamente.
+
+### Ejemplo de Uso
+
+```
+# En Claude Code:
+Lee docs/ai-context/_patterns.md y docs/ai-context/modules/cursos.md
+
+# Para generar un CRUD:
+Lee docs/ai-skills/crud-generator.md y genera un CRUD para Evaluacion
+```
