@@ -2,6 +2,8 @@
 
 > Ejecuta un issue de GitHub de principio a fin de forma autónoma usando TDD:
 > escribe los tests primero, luego implementa el código hasta que pasen, documenta y cierra el issue.
+>
+> **Requisito fundamental**: Ningún issue puede cerrarse sin tests que pasen. Sin tests = issue incompleto.
 
 ---
 
@@ -108,14 +110,35 @@ Si se especificó un número:
 ### PASO 1 — Leer el Issue
 
 ```bash
-gh issue view [número] --json title,body,labels,milestone | jq -r '"\(.title)\n\nLabels: \(.labels[].name // "ninguno")\n\n\(.body)"'
+gh issue view [número] --json title,body,labels
 ```
+
+> **Nota**: No usar `--json ... | jq` en entornos Windows — `jq` puede no estar disponible. Leer el JSON crudo directamente es suficiente.
 
 Extraer y registrar:
 - Objetivo principal
 - Checklist de subtareas (son los criterios de aceptación para los tests)
 - Labels: `backend`, `frontend`, `database`, etc.
 - Dependencias con otros issues
+- **Estado de implementación**: ¿el issue menciona que la implementación ya existe?
+
+#### Determinar el modo de trabajo según el estado del issue
+
+Luego de leer el issue, clasificarlo en uno de estos dos modos:
+
+| Modo | Condición | Flujo |
+|------|-----------|-------|
+| **Modo A — TDD completo** | Implementación NO existe | RED → GREEN: escribir tests, confirmar que fallan, implementar, confirmar que pasan |
+| **Modo B — Tests pendientes** | Implementación YA existe pero faltan tests | Escribir tests que cubran lo implementado, verificar que pasan, NO modificar implementación salvo bugs |
+
+**Señales de Modo B** (implementación existente):
+- El cuerpo del issue dice "implementación completada" o "Estado Actual: ✅"
+- El checklist técnico tiene ítems marcados con `[x]` pero los tests están como `[ ]`
+- Existe código en `apps/api/src/[modulo]/` pero no hay archivo `.spec.ts`
+
+**Regla para Modo B**: Los tests deben cubrir el comportamiento existente. Si un test falla porque la implementación tiene un bug, **corregir el bug** — no el test. El test describe el contrato correcto definido en el issue.
+
+**En ambos modos, cerrar el issue requiere tests pasando.** No hay excepción.
 
 ---
 
@@ -155,8 +178,9 @@ LEER: docs/technical/testing.md                     (guía completa de testing)
 
 ### PASO 3 — Crear Plan de Trabajo
 
-Crear un todo list antes de empezar. Estructura TDD:
+Crear un todo list antes de empezar. La estructura varía según el modo determinado en PASO 1:
 
+**Modo A — TDD completo** (implementación no existe):
 ```
 1. [Contexto]     Leer schema / patterns / módulo existente
 2. [Tests RED]    Escribir tests que describen el comportamiento esperado
@@ -169,13 +193,29 @@ Crear un todo list antes de empezar. Estructura TDD:
 9. [Cierre]       Cerrar el issue con comentario
 ```
 
+**Modo B — Tests pendientes** (implementación ya existe):
+```
+1. [Contexto]     Leer schema / patterns / código existente del módulo
+2. [Explorar]     Leer implementación existente (service, controller, module)
+3. [Tests GREEN]  Escribir tests que cubran el comportamiento implementado
+4. [Verificar]    Ejecutar tests → deben PASAR (si fallan, hay un bug — corregirlo)
+5. [Refactor]     Si se corrigieron bugs, verificar que todos los tests siguen en verde
+6. [Docs]         Actualizar documentación del sistema
+7. [Commit]       Commit con tests (+ correcciones si las hubo)
+8. [Cierre]       Cerrar el issue con comentario
+```
+8. [Commit]       Commit con tests + implementación
+9. [Cierre]       Cerrar el issue con comentario
+```
+
 ---
 
-### PASO 4 — Escribir Tests Primero (RED)
+### PASO 4 — Escribir Tests
 
-Antes de implementar, escribir los tests que describen **exactamente** lo que el issue pide.
+> **Modo A**: Escribir tests ANTES de implementar. Deben fallar (RED).
+> **Modo B**: Escribir tests DESPUÉS de leer la implementación. Deben pasar (GREEN).
 
-Cada item del checklist del issue = al menos un test.
+En ambos modos: cada ítem del checklist del issue = al menos un test.
 
 #### Dónde crear los archivos de test:
 
@@ -296,17 +336,22 @@ describe('[Componente]', () => {
 
 ---
 
-### PASO 5 — Verificar que los Tests Fallan (Confirmar RED)
+### PASO 5 — Verificar Estado de los Tests
 
 ```bash
 # Backend
-npm run test --workspace=@amauta/api -- --testPathPattern="[modulo]"
+npm run test -w @amauta/api -- --testPathPattern="[modulo]"
 
 # Frontend
-npm run test --workspace=@amauta/web -- --testPathPattern="[Componente]"
+npm run test -w @amauta/web -- --testPathPattern="[Componente]"
 ```
 
-**Los tests DEBEN fallar aquí.** Si pasan sin implementación, el test está mal escrito — revisar y corregir antes de continuar.
+**Modo A**: Los tests DEBEN fallar. Si pasan sin implementación, el test está mal escrito — revisar y corregir.
+
+**Modo B**: Los tests DEBEN pasar. Si alguno falla:
+- Investigar si es un bug en la implementación
+- Corregir el bug (nunca el test)
+- Si la implementación no se puede corregir de forma segura, documentar el caso y consultar al usuario
 
 ---
 
@@ -429,9 +474,12 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 
 ## Checklist Final
 
-- [ ] Tests escritos ANTES del código (RED → GREEN)
-- [ ] Tests fallan antes de implementar (confirmado)
-- [ ] Tests pasan después de implementar (confirmado)
+> ⛔ **Ningún issue puede cerrarse sin tests pasando. Sin excepción.**
+
+- [ ] Modo de trabajo determinado (A: TDD completo / B: tests pendientes)
+- [ ] **Modo A**: Tests escritos ANTES del código, confirmados en RED
+- [ ] **Modo B**: Implementación leída antes de escribir tests
+- [ ] Tests pasan en GREEN (confirmado con ejecución real)
 - [ ] Cobertura >80% en el módulo nuevo
 - [ ] Todos los items del checklist del issue cubiertos por tests
 - [ ] Código usa `safeParse` para validación
