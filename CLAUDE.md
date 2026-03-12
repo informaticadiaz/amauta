@@ -488,10 +488,29 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 - **ORM**: Prisma
 - **Base de Datos**: PostgreSQL 15+
 - **Caché**: Redis 7+ (en uso desde Fase 1)
-- **Desarrollo**: Docker Compose obligatorio para entorno local
 - **Deployment**: Dokploy en VPS (amauta.diazignacio.ar)
 
 Ver `docs/technical/architecture.md` para decisiones técnicas detalladas.
+
+### Entorno de Desarrollo (CRÍTICO) 🚨
+
+**La base de datos está en el VPS, NO local.**
+
+| Servicio        | Ubicación     | URL/Host                          |
+| --------------- | ------------- | --------------------------------- |
+| **PostgreSQL**  | VPS (Dokploy) | Producción                        |
+| **Redis**       | VPS (Dokploy) | Producción                        |
+| **Backend API** | VPS           | https://amauta-api.diazignacio.ar |
+| **Frontend**    | VPS           | https://amauta.diazignacio.ar     |
+
+**Implicaciones:**
+
+1. Los comandos de Prisma se ejecutan contra la DB de producción
+2. **NO hay DB local** por defecto (Docker Compose existe pero no se usa)
+3. Cualquier `prisma migrate` afecta producción directamente
+4. **SIEMPRE verificar** `prisma migrate status` antes de cambios
+
+**Para migraciones y DB, seguir**: `docs/ai-skills/prisma-db-management.md`
 
 ### Orden de Desarrollo
 
@@ -742,8 +761,9 @@ enum Prioridad {
 
 ### Skills Disponibles
 
-| Skill              | Archivo                            | Cuándo usar                         |
-| ------------------ | ---------------------------------- | ----------------------------------- |
-| **CRUD Generator** | `docs/ai-skills/crud-generator.md` | Crear módulo nuevo completo         |
-| **API Endpoint**   | `docs/ai-skills/api-endpoint.md`   | Agregar endpoint a módulo existente |
-| **React Form**     | `docs/ai-skills/react-form.md`     | Crear formulario nuevo              |
+| Skill              | Archivo                                  | Cuándo usar                                 |
+| ------------------ | ---------------------------------------- | ------------------------------------------- |
+| **Prisma & DB**    | `docs/ai-skills/prisma-db-management.md` | Migraciones, verificar DB, resolver errores |
+| **CRUD Generator** | `docs/ai-skills/crud-generator.md`       | Crear módulo nuevo completo                 |
+| **API Endpoint**   | `docs/ai-skills/api-endpoint.md`         | Agregar endpoint a módulo existente         |
+| **React Form**     | `docs/ai-skills/react-form.md`           | Crear formulario nuevo                      |

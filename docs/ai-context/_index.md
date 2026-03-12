@@ -80,11 +80,12 @@ Lee docs/ai-context/_patterns.md y docs/ai-context/modules/cursos.md
 
 ## Skills Disponibles
 
-| Skill          | Archivo                                                            | Uso                                        |
-| -------------- | ------------------------------------------------------------------ | ------------------------------------------ |
-| CRUD Generator | [`../ai-skills/crud-generator.md`](../ai-skills/crud-generator.md) | Generar módulo completo backend + frontend |
-| API Endpoint   | [`../ai-skills/api-endpoint.md`](../ai-skills/api-endpoint.md)     | Agregar endpoint a módulo existente        |
-| React Form     | [`../ai-skills/react-form.md`](../ai-skills/react-form.md)         | Crear formulario siguiendo patrones        |
+| Skill          | Archivo                                                                        | Uso                                         |
+| -------------- | ------------------------------------------------------------------------------ | ------------------------------------------- |
+| Prisma & DB    | [`../ai-skills/prisma-db-management.md`](../ai-skills/prisma-db-management.md) | Migraciones, verificar DB, resolver errores |
+| CRUD Generator | [`../ai-skills/crud-generator.md`](../ai-skills/crud-generator.md)             | Generar módulo completo backend + frontend  |
+| API Endpoint   | [`../ai-skills/api-endpoint.md`](../ai-skills/api-endpoint.md)                 | Agregar endpoint a módulo existente         |
+| React Form     | [`../ai-skills/react-form.md`](../ai-skills/react-form.md)                     | Crear formulario siguiendo patrones         |
 
 ---
 
