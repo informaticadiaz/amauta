@@ -1,288 +1,287 @@
 # Skill: NotebookLM Cuadernos
 
-> Genera un cuaderno de estudio en markdown sobre un tema de programación, listo para importar en NotebookLM. El contenido es completamente genérico — sin referencias a proyectos, datos o configuraciones específicas.
+> Genera una **serie completa de documentos** sobre un tema de programación para usar en NotebookLM. Una serie es un conjunto de 5-7 archivos que juntos forman un corpus rico suficiente para generar podcasts, videos y material de estudio.
 
 ---
 
 ## Uso
 
 ```
-Genera un cuaderno de estudio sobre [tema] para NotebookLM
+Genera una serie de cuadernos sobre [tema] para NotebookLM
 ```
 
 **Ejemplos:**
 
 ```
-Genera un cuaderno de estudio sobre TDD para NotebookLM
+Genera una serie de cuadernos sobre TDD para NotebookLM
 
-Genera un cuaderno de estudio sobre Docker Networking para NotebookLM
+Genera una serie de cuadernos sobre Docker y containerización para NotebookLM
 
-Genera un cuaderno de estudio sobre SOLID Principles para NotebookLM
+Genera una serie de cuadernos sobre patrones de diseño en TypeScript para NotebookLM
 
-Genera un cuaderno de estudio sobre PostgreSQL Indexes para NotebookLM
-
-Genera un cuaderno de estudio sobre JWT y autenticación para NotebookLM
+Genera una serie de cuadernos sobre autenticación y seguridad web para NotebookLM
 ```
 
 ---
 
 ## Parámetros
 
-| Parámetro  | Descripción                                      | Ejemplo              | Default       |
-| ---------- | ------------------------------------------------ | -------------------- | ------------- |
-| `tema`     | Tema de programación a estudiar                  | `TDD`                | —             |
-| `nivel`    | Profundidad del contenido                        | `introductorio`      | `intermedio`  |
-| `categoria`| Clasificación del tema                           | `testing`            | auto-detectar |
+| Parámetro   | Descripción                        | Ejemplo          |
+| ----------- | ---------------------------------- | ---------------- |
+| `tema`      | Tema amplio a cubrir               | `TDD`            |
+| `categoria` | Subcarpeta de destino (ver abajo)  | `testing`        |
+| `nivel`     | Profundidad del contenido          | `intermedio`     |
 
-**Niveles disponibles:**
-- `introductorio` — Conceptos básicos, analogías simples, ejemplos mínimos
-- `intermedio` — Conceptos + patrones + ejemplos reales (default)
-- `avanzado` — Profundidad, edge cases, trade-offs, comparativas
+**Categorías:**
 
-**Categorías disponibles:**
-
-| Categoría       | Temas de ejemplo                                       |
-| --------------- | ------------------------------------------------------ |
-| `patrones`      | Design Patterns, SOLID, Clean Architecture, DDD        |
-| `infraestructura` | Docker, CI/CD, Kubernetes, Networking, Reverse Proxy |
-| `lenguajes`     | TypeScript, SQL, Python, Rust, conceptos de lenguajes  |
-| `arquitectura`  | Microservicios, Monolito, Event-driven, CQRS           |
-| `testing`       | TDD, BDD, testing de integración, mocking, E2E         |
-| `seguridad`     | OWASP, JWT, OAuth, criptografía, autenticación         |
-| `bases-de-datos`| Indexes, queries, ORM, migraciones, transacciones      |
-| `ia`            | LLMs, prompting, agentes, RAG, fine-tuning             |
+| Categoría         | Temas de ejemplo                                    |
+| ----------------- | --------------------------------------------------- |
+| `patrones`        | Design Patterns, SOLID, Clean Architecture, DDD     |
+| `infraestructura` | Docker, CI/CD, Kubernetes, Networking               |
+| `lenguajes`       | TypeScript avanzado, SQL, Rust, conceptos           |
+| `arquitectura`    | Microservicios, Event-driven, CQRS, Monolito        |
+| `testing`         | TDD, BDD, testing de integración, E2E               |
+| `seguridad`       | OWASP, JWT, OAuth, autenticación                    |
+| `bases-de-datos`  | Indexes, queries, ORM, migraciones, transacciones   |
+| `ia`              | LLMs, prompting, agentes, flujos autónomos          |
 
 ---
 
-## Dónde Guardar el Archivo
+## Estructura de Archivos a Generar
 
 ```
-docs/NotebookLM/[categoria]/[NNN]-[nombre-del-tema].md
+docs/NotebookLM/[categoria]/[tema]/
+├── 00-indice.md              ← Mapa de la serie, resumen ejecutivo, glosario
+├── 01-[subtema].md           ← Fundamentos / ¿Qué es y por qué existe?
+├── 02-[subtema].md           ← Conceptos clave y mecanismos internos
+├── 03-[subtema].md           ← Patrones, técnicas y aplicación práctica
+├── 04-[subtema].md           ← Errores comunes, anti-patrones, trade-offs
+├── 05-[subtema].md           ← Casos de uso reales y comparativas
+└── prompts-notebooklm.md     ← Prompts listos para Audio Overview
 ```
 
-El número `NNN` es el siguiente correlativo dentro de la categoría. Si la carpeta no existe, crearla.
+**Mínimo**: 5 documentos + índice + prompts = 7 archivos
+**El tema debe descomponerse** en ángulos o dimensiones distintas, no en capítulos secuenciales.
 
-**Ejemplos:**
+---
+
+## Paso 1 — Descomponer el Tema en Documentos
+
+Antes de escribir, definir qué cubre cada archivo. La descomposición ideal trata el tema desde **ángulos diferentes**, no como capítulos de un libro:
+
 ```
-docs/NotebookLM/testing/001-tdd-test-driven-development.md
-docs/NotebookLM/infraestructura/001-docker-networking.md
-docs/NotebookLM/patrones/001-solid-principles.md
-docs/NotebookLM/seguridad/001-jwt-autenticacion.md
+EJEMPLO — TDD:
+──────────────────────────────────────────────────────
+00-indice.md          → Mapa completo de la serie
+01-fundamentos.md     → Qué es TDD, historia, ciclo RED/GREEN/REFACTOR
+02-escribir-tests.md  → Cómo escribir buenos tests (AAA, naming, mocks)
+03-tdd-en-practica.md → TDD en backends, frontends, APIs
+04-trade-offs.md      → Cuándo usar TDD, cuándo no, críticas reales
+05-casos-reales.md    → Ejemplos concretos de TDD completo
+prompts.md            → Un prompt por documento para Audio Overview
+
+EJEMPLO — Docker:
+──────────────────────────────────────────────────────
+00-indice.md               → Mapa
+01-fundamentos.md          → Containers vs VMs, conceptos base
+02-networking.md           → Redes en Docker, comunicación entre containers
+03-compose-y-volumes.md    → Docker Compose, persistencia de datos
+04-produccion.md           → Best practices, seguridad, optimización
+05-casos-uso.md            → Patrones reales de uso en desarrollo
+prompts.md                 → Prompts de audio
 ```
 
 ---
 
-## Estructura del Cuaderno a Generar
+## Paso 2 — Estilo de Cada Documento
 
-El documento generado debe seguir esta estructura exacta:
+Cada documento debe seguir este estilo. **No es un template rígido** — las secciones emergen del contenido, pero el estilo es consistente.
 
----
-
-### Plantilla
+### Encabezado
 
 ```markdown
-# [Título del Tema]
+# [Título descriptivo del subtema]
 
-> [Una oración que describe qué es y por qué importa]
-
----
-
-## ¿Qué es [Tema]?
-
-[2-3 párrafos explicando el concepto desde cero, sin asumir conocimiento previo del tema específico]
+> [Una oración que dice exactamente qué aprende el lector en este documento]
 
 ---
-
-## Modelo Mental: La Analogía
-
-```
-[Analogía visual o diagrama ASCII que hace el concepto intuitivo]
-[Usar comparaciones con cosas cotidianas o conceptos que cualquier dev conoce]
 ```
 
-[Explicación de la analogía en 1-2 párrafos]
-
----
-
-## Conceptos Clave
-
-### [Concepto 1]
-
-[Explicación + por qué importa]
-
-```[lenguaje]
-// Ejemplo de código mínimo que ilustra el concepto
-// Los identificadores son genéricos: User, Order, Product, etc.
-// Sin nombres de proyectos ni configuraciones específicas
-```
-
-### [Concepto 2]
-
-[Ídem]
-
-### [Concepto n]
-
-[Ídem]
-
----
-
-## Cómo Funciona en la Práctica
-
-### Caso 1: [Escenario común]
-
-[Descripción del escenario]
-
-```[lenguaje]
-// Código de ejemplo del escenario
-```
-
-### Caso 2: [Escenario más complejo]
-
-[Descripción]
-
-```[lenguaje]
-// Código
-```
-
----
-
-## Comparativa: Con vs Sin [Tema]
-
-| Aspecto          | Sin [Tema]            | Con [Tema]             |
-| ---------------- | --------------------- | ---------------------- |
-| [Aspecto 1]      | [Problema]            | [Solución]             |
-| [Aspecto 2]      | [Problema]            | [Solución]             |
-| [Aspecto 3]      | [Problema]            | [Solución]             |
-
----
-
-## Errores Comunes
-
-### ❌ Error 1: [Nombre del error]
-
-```[lenguaje]
-// Ejemplo del error
-```
-
-**Por qué es un problema:** [Explicación]
-
-**Solución:**
-
-```[lenguaje]
-// Ejemplo corregido
-```
-
-### ❌ Error 2: [Nombre del error]
-
-[Ídem]
-
----
-
-## Cuándo Usar (y Cuándo No)
-
-### ✅ Usar cuando:
-- [Situación 1]
-- [Situación 2]
-- [Situación 3]
-
-### ❌ No usar cuando:
-- [Situación 1]
-- [Situación 2]
-
----
-
-## Preguntas de Estudio
-
-> Estas preguntas están diseñadas para hacerle a NotebookLM después de cargar este documento.
-
-**Conceptuales:**
-1. ¿Qué problema resuelve [Tema] y cuándo surgió la necesidad?
-2. ¿Cuál es la diferencia entre [Concepto A] y [Concepto B] dentro de [Tema]?
-3. ¿Por qué [Principio fundamental] es importante en [Tema]?
-
-**Prácticas:**
-4. ¿Cómo implementarías [Tema] en un sistema de [tipo de sistema genérico]?
-5. ¿Qué pasa si ignoras [Tema] en un proyecto que crece con el tiempo?
-6. Dame un ejemplo paso a paso de [flujo principal del tema].
-
-**Comparativas:**
-7. ¿Cuáles son los trade-offs entre [opción A] y [opción B]?
-8. ¿En qué se diferencia [Tema] de [tema relacionado]?
-
----
-
-## Prompt para Audio Overview (NotebookLM)
-
-> Copiar este prompt en la sección "Customize" del Audio Overview de NotebookLM.
+### Diagramas ASCII para conceptos visuales
 
 ```
-Genera una conversación educativa sobre "[Tema]" basada en este documento.
+USAR SIEMPRE para:
+- Flujos y procesos
+- Comparaciones antes/después
+- Arquitecturas
+- Jerarquías
 
-AUDIENCIA: Desarrolladores de software que quieren entender [Tema] en profundidad.
+EJEMPLO:
+┌─────────────────────────────────────────────┐
+│ RED         GREEN         REFACTOR           │
+│                                              │
+│ Escribir  → Código mínimo → Limpiar código  │
+│ test que    para que el     sin romper       │
+│ FALLA       test PASE       tests            │
+└─────────────────────────────────────────────┘
+```
 
-PUNTOS CLAVE A CUBRIR:
-- Qué es [Tema] y qué problema resuelve
-- [Concepto clave 1] explicado con la analogía del documento
-- [Concepto clave 2] con ejemplos de código concretos
-- Los errores más comunes y cómo evitarlos
-- Cuándo tiene sentido aplicar [Tema] y cuándo no
+### Comparaciones ❌/✅
 
-ESTILO:
-- Didáctico, con ejemplos prácticos de código
-- Analogías accesibles para cualquier desarrollador
-- Honesto sobre las limitaciones y trade-offs
+```markdown
+❌ Sin TDD:
+"Escribo el código, luego escribo tests para que pasen"
+→ Los tests validan lo que el código hace, no lo que debería hacer
 
-TONO: Educativo, claro, sin hype. Incluir ejemplos que cualquier dev reconozca.
-DURACIÓN: 8-10 minutos
+✅ Con TDD:
+"Escribo el test que describe el comportamiento esperado, luego el código"
+→ El código existe para hacer pasar el test, no al revés
+```
+
+### Tablas de referencia
+
+```markdown
+| Situación                    | Herramienta        | Por qué               |
+| ---------------------------- | ------------------ | --------------------- |
+| Unit test de función pura    | Jest / Vitest      | Rápido, aislado       |
+| Test de componente React     | Testing Library    | Simula uso real       |
+| Test de endpoint HTTP        | Supertest          | Prueba la API real    |
+```
+
+### Referencia Rápida al final
+
+Cada documento termina con una sección `## Referencia Rápida` que resume los puntos clave en tablas o checklists. Es lo que NotebookLM usa para generar flashcards y resúmenes.
+
+### Densidad de contenido
+
+Cada documento debe tener:
+- **Mínimo 300 líneas** de contenido real (no relleno)
+- Al menos **3 bloques de código** con ejemplos reales
+- Al menos **2 diagramas ASCII** o comparaciones visuales
+- Al menos **1 tabla** de referencia
+- Sección `## Referencia Rápida` al final
+
+---
+
+## Paso 3 — Estructura del Índice (00-indice.md)
+
+```markdown
+# [Tema] — Índice de la Serie
+
+> [Descripción de qué cubre la serie completa y a quién está dirigida]
+
+---
+
+## Documentos de esta Serie
+
+| # | Documento | Tema |
+|---|-----------|------|
+| 01 | `01-xxx.md` | [qué cubre] |
+| 02 | `02-xxx.md` | [qué cubre] |
+...
+
+---
+
+## Resumen Ejecutivo
+
+### ¿Qué Aprenderás?
+[5-6 puntos concretos de conocimiento]
+
+### Principios Fundamentales
+[Los 3-5 principios del tema en diagrama o lista visual]
+
+---
+
+## Glosario Rápido
+
+| Término | Definición |
+|---------|------------|
+| [término 1] | [definición concisa] |
+...
+
+---
+
+## Cómo Usar Esta Serie
+
+### Para Principiantes
+[orden recomendado]
+
+### Para Referencia Rápida
+[cómo buscar temas específicos]
 ```
 
 ---
 
-## Referencias
+## Paso 4 — Estructura del Archivo de Prompts
 
-### Conceptos Relacionados
-- [Tema relacionado 1] — [por qué se relaciona]
-- [Tema relacionado 2] — [por qué se relaciona]
+```markdown
+# Prompts para NotebookLM — Serie "[Tema]"
 
-### Para Profundizar
-- [Libro o recurso estándar del tema]
-- [Documentación oficial si aplica]
-- [Artículo o video de referencia conocido]
+> Prompts para generar Audio Overview con NotebookLM basados en esta serie.
+
+---
+
+## Instrucciones de Uso
+1. Subir TODOS los documentos de la serie como fuentes en un mismo cuaderno
+2. Copiar el prompt del episodio deseado
+3. Pegar en Audio Overview → Customize → Generate
+
+---
+
+## Episodio 0: Introducción a la Serie (Opcional)
+**Documentos fuente:** `00-indice.md`
+```
+[prompt]
+```
+
+## Episodio 1: [Título]
+**Documento fuente:** `01-xxx.md`
+```
+[prompt con: audiencia, puntos clave, estilo, tono, duración]
+```
+
+[Un episodio por documento]
+
+---
+
+## Episodio Completo (Alternativa)
+**Documentos fuente:** Todos
+```
+[prompt que cubre toda la serie en 12-15 minutos]
+```
 ```
 
 ---
 
 ## Reglas de Contenido
 
-### Lo que DEBE incluir el cuaderno:
-- Código de ejemplo con identificadores genéricos (`User`, `Order`, `Product`, `Service`, `Repository`)
-- Analogías cotidianas que hagan el concepto intuitivo
-- Comparativas antes/después o con/sin
-- Errores comunes reales, no inventados
-- Preguntas diseñadas para sacarle valor a NotebookLM
+### Contenido genérico (obligatorio):
+- Identificadores en ejemplos de código: `User`, `Order`, `Product`, `Service`, `Post`
+- Tecnologías nombradas de forma genérica cuando sea posible
+- Sin nombres de proyectos, empresas, personas ni URLs reales
 
-### Lo que NO debe incluir:
-- ❌ Nombres de proyectos reales (ni el proyecto donde vive este skill)
-- ❌ URLs, IPs o configuraciones específicas de entornos
-- ❌ Nombres de personas o empresas como ejemplos
-- ❌ Datos sensibles de ningún tipo
-- ❌ Opiniones sobre tecnologías sin fundamento técnico
-- ❌ Contenido copiado de documentación oficial sin adaptación
+### Excepciones permitidas:
+- Nombrar tecnologías/frameworks cuando son el tema (ej: "en Docker", "en TypeScript")
+- Citar herramientas de testing reales (Jest, Vitest, Playwright) cuando es relevante
+- Referenciar conceptos con sus nombres estándar (SOLID, OWASP, REST, etc.)
 
-### Sobre el código de ejemplo:
-- Usar TypeScript o el lenguaje más natural para el tema
-- Identificadores en inglés, comentarios en español
-- Ejemplos auto-contenidos, que se entiendan sin contexto externo
-- Preferir ejemplos realistas sobre ejemplos triviales (`foo/bar`)
+### Calidad del contenido:
+- Ejemplos de código que compilan o son sintácticamente válidos
+- Comparativas honestas, incluyendo limitaciones y cuándo NO usar el tema
+- Analogías que simplifican sin distorsionar el concepto real
+- Errores comunes documentados porque realmente ocurren, no inventados
 
 ---
 
-## Checklist Post-Generación
+## Checklist de la Serie
 
-- [ ] El archivo está en `docs/NotebookLM/[categoria]/[NNN]-[tema].md`
-- [ ] No hay referencias a proyectos, empresas o datos específicos
-- [ ] Todos los ejemplos de código compilan o son sintácticamente válidos
-- [ ] Las preguntas de estudio son relevantes y abiertas (no sí/no)
-- [ ] El prompt de Audio Overview está adaptado al tema específico
-- [ ] La sección "Cuándo usar / Cuándo no" tiene al menos 2 items en cada lista
-- [ ] Los errores comunes son reales y tienen su corrección
+Antes de considerar la serie completa:
+
+- [ ] Mínimo 6 archivos generados (índice + 4 docs + prompts)
+- [ ] Cada documento tiene mínimo 300 líneas de contenido real
+- [ ] Cada documento tiene al menos 3 bloques de código
+- [ ] Cada documento termina con `## Referencia Rápida`
+- [ ] El índice tiene glosario y guía de uso de la serie
+- [ ] El archivo de prompts tiene un prompt por documento + uno completo
+- [ ] Ningún archivo referencia proyectos, datos o configs específicas
+- [ ] Los documentos se complementan sin repetirse innecesariamente
