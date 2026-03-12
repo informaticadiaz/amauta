@@ -223,10 +223,10 @@ describe('[Modulo]Service', () => {
 
 ```bash
 # Backend
-npm run test --workspace=@amauta/api -- --testPathPattern="[modulo]"
+npm run test --workspace=@amauta/api -- --testPathPatterns="[modulo]"
 
 # Frontend
-npm run test --workspace=@amauta/web -- --testPathPattern="[Componente]"
+npm run test --workspace=@amauta/web -- --testPathPatterns="[Componente]"
 ```
 
 **Los tests DEBEN fallar aquí.** Si pasan sin implementación, el test está mal escrito — revisar y corregir antes de continuar.
@@ -265,8 +265,8 @@ await this.prisma.[modulo].update({
 ### PASO 7 — Verificar que los Tests Pasan (GREEN) y Refactorizar
 
 ```bash
-npm run test --workspace=@amauta/api -- --testPathPattern="[modulo]"
-npm run test:cov --workspace=@amauta/api
+npm run test --workspace=@amauta/api -- --testPathPatterns="[modulo]"
+npm run test:cov --workspace=@amauta/api -- --testPathPatterns="[modulo]"
 ```
 
 Si algún test falla: corregir la implementación, **no el test**.
@@ -276,11 +276,35 @@ Una vez en verde, refactorizar si es necesario y ejecutar tests de nuevo.
 
 ---
 
-### PASO 8 — Actualizar Documentación del Sistema
+### PASO 8 — Actualizar las Tres Fuentes de Verdad (OBLIGATORIO)
 
-- `docs/sistema/README.md` → actualizar tabla de estado
-- `docs/sistema/etapa-X-[nombre].md` → cambiar ⏳ a ✅, agregar fecha y descripción
-- `docs/ai-context/modules/[modulo].md` → si se agregaron endpoints nuevos
+Estas tres actualizaciones son **siempre obligatorias** al completar un issue. No omitir ninguna.
+
+#### 1. `CLAUDE.md`
+- Mover el issue de "Próximos pasos" a "Completado en Fase 1"
+- Agregar bullets con lo implementado
+- Actualizar el contador: ej. `10/16` → `11/16`
+
+#### 2. `docs/project-management/roadmap.md`
+- Cambiar el estado del issue en la tabla del sprint: `📋 Pendiente` → `✅ Completado`
+- Si todos los issues del sprint están completos, actualizar el encabezado del sprint
+- Actualizar el contador de progreso de la fase: `10/16` → `11/16`
+
+#### 3. `docs/sistema/README.md`
+- Actualizar la tabla "En Desarrollo": mover el módulo a ✅ Funcional si ya es usable
+- Actualizar la fecha de última actualización
+- Actualizar el contador de la fase actual
+
+---
+
+### PASO 8b — Actualizar Contexto de IA (si aplica)
+
+Revisar `docs/ai-context/modules/[modulo].md`:
+- Si se crearon archivos de test → agregar a la tabla de archivos del módulo
+- Si se agregaron endpoints nuevos → agregar a la tabla de endpoints
+- Si cambió algún comportamiento → actualizar la sección "Notas para IA"
+
+Si el módulo **no tiene archivo de contexto** y se implementó algo significativo → crearlo usando `docs/ai-context/modules/cursos.md` como template.
 
 ---
 
@@ -311,15 +335,7 @@ EOF
 
 ---
 
-### PASO 10 — Actualizar CLAUDE.md (si aplica)
-
-Si el issue es un hito de Fase 1 (F1-0XX):
-- Mover el issue de "Próximos pasos" a "Completado en Fase 1"
-- Actualizar el contador: ej. `10/16` → `11/16`
-
----
-
-### PASO 11 — Cerrar el Issue
+### PASO 10 — Cerrar el Issue
 
 ```bash
 gh issue close [número] --comment "✅ Implementación completada con TDD.
@@ -336,28 +352,57 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 - [Módulo]: >80% statements
 
 **Documentación actualizada:**
-- ✅ docs/sistema/[archivo]
-- ✅ CLAUDE.md (si aplica)
+- ✅ CLAUDE.md (progreso [N]/16)
+- ✅ docs/project-management/roadmap.md
+- ✅ docs/sistema/README.md
+- ✅ docs/ai-context/modules/[modulo].md (si aplica)
 
 **Commit:** [hash corto]"
 ```
 
 ---
 
+### PASO 11 — Resumen Final (Terminar)
+
+Al completar todos los pasos anteriores, mostrar un resumen breve y **detenerse**. No ofrecer continuar con el siguiente issue ni hacer preguntas.
+
+```
+✅ Issue #[N] completado — [Título]
+
+- [qué se implementó, 1 línea]
+- Tests: [N] pasando, cobertura >80%
+- Fuentes de verdad actualizadas: CLAUDE.md · roadmap.md · docs/sistema/README.md
+- Commit: [hash]
+```
+
+---
+
 ## Checklist Final
 
+**Tests**
 - [ ] Tests escritos ANTES del código (RED → GREEN)
 - [ ] Tests fallan antes de implementar (confirmado)
 - [ ] Tests pasan después de implementar (confirmado)
 - [ ] Cobertura >80% en el módulo nuevo
 - [ ] Todos los items del checklist del issue cubiertos por tests
+
+**Código**
 - [ ] Código usa `safeParse` para validación
 - [ ] No hay deletes físicos sin justificación en el issue
 - [ ] Schema de Prisma consultado antes de cada query
 - [ ] Archivos de test incluidos en el commit
-- [ ] Documentación del sistema actualizada
-- [ ] CLAUDE.md refleja el nuevo progreso (si aplica)
+
+**Tres fuentes de verdad (OBLIGATORIO)**
+- [ ] `CLAUDE.md` actualizado (progreso + issue movido a completados)
+- [ ] `docs/project-management/roadmap.md` actualizado (estado del issue en sprint)
+- [ ] `docs/sistema/README.md` actualizado (tabla de módulos + fecha)
+
+**Contexto de IA**
+- [ ] `docs/ai-context/modules/[modulo].md` actualizado si hubo cambios
+
+**Cierre**
 - [ ] Issue cerrado con comentario descriptivo
+- [ ] Resumen final mostrado — skill terminada sin preguntar por el siguiente issue
 
 ---
 

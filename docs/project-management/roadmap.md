@@ -76,7 +76,7 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 
 **Duración estimada**: 6-8 semanas
 **Sprint 1-4**
-**Progreso**: 10/16 issues completados
+**Progreso**: 11/16 issues completados
 
 ### Progreso Sprint 1
 
@@ -98,16 +98,16 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 | #36   | F1-009: Catálogo público de cursos        | ✅ Completado |
 | #37   | F1-010: Página de detalle de curso        | ✅ Completado |
 
-### Próximos — Sprint 3
+### Progreso Sprint 3
 
-| Issue | Título                                          | Estado       | Prioridad   |
-| ----- | ----------------------------------------------- | ------------ | ----------- |
-| #38   | F1-011: API sistema de inscripción              | 📋 Pendiente | must-have   |
-| #39   | F1-012: UI de inscripción y mis cursos          | 📋 Pendiente | must-have   |
-| #40   | F1-013: Visualizador de lecciones para estud.   | 📋 Pendiente | must-have   |
-| #41   | F1-014: API seguimiento de progreso             | 📋 Pendiente | must-have   |
-| #42   | F1-015: UI marcar lecciones completadas         | 📋 Pendiente | must-have   |
-| #43   | F1-016: Dashboard de estudiante                 | 📋 Pendiente | should-have |
+| Issue | Título                                          | Estado        | Prioridad   |
+| ----- | ----------------------------------------------- | ------------- | ----------- |
+| #38   | F1-011: API sistema de inscripción              | ✅ Completado | must-have   |
+| #39   | F1-012: UI de inscripción y mis cursos          | 📋 Pendiente  | must-have   |
+| #40   | F1-013: Visualizador de lecciones para estud.   | 📋 Pendiente  | must-have   |
+| #41   | F1-014: API seguimiento de progreso             | 📋 Pendiente  | must-have   |
+| #42   | F1-015: UI marcar lecciones completadas         | 📋 Pendiente  | must-have   |
+| #43   | F1-016: Dashboard de estudiante                 | 📋 Pendiente  | should-have |
 
 ### Objetivos
 
