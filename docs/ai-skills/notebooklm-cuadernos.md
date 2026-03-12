@@ -31,6 +31,15 @@ Genera una serie de cuadernos sobre autenticación y seguridad web para Notebook
 | `tema`      | Tema amplio a cubrir               | `TDD`            |
 | `categoria` | Subcarpeta de destino (ver abajo)  | `testing`        |
 | `nivel`     | Profundidad del contenido          | `intermedio`     |
+| `diagramas` | Tipo de diagramas a usar           | `mermaid`        |
+
+**Opciones de `diagramas`:**
+
+| Valor    | Descripción                                                     | Cuándo usar                              |
+| -------- | --------------------------------------------------------------- | ---------------------------------------- |
+| `ascii`  | Diagramas con caracteres de texto (default)                     | Siempre legible, sin dependencias        |
+| `mermaid`| Diagramas con sintaxis Mermaid, renderizables en GitHub/VS Code | Cuando se quiere visualización gráfica   |
+| `ambos`  | Combinar ASCII para flujos simples y Mermaid para los complejos | Máxima claridad visual                   |
 
 **Categorías:**
 
@@ -107,16 +116,11 @@ Cada documento debe seguir este estilo. **No es un template rígido** — las se
 ---
 ```
 
-### Diagramas ASCII para conceptos visuales
+### Opción A — Diagramas ASCII
+
+Siempre legibles, sin dependencias de renderizado. Usar para flujos simples, comparaciones y arquitecturas.
 
 ```
-USAR SIEMPRE para:
-- Flujos y procesos
-- Comparaciones antes/después
-- Arquitecturas
-- Jerarquías
-
-EJEMPLO:
 ┌─────────────────────────────────────────────┐
 │ RED         GREEN         REFACTOR           │
 │                                              │
@@ -125,6 +129,134 @@ EJEMPLO:
 │ FALLA       test PASE       tests            │
 └─────────────────────────────────────────────┘
 ```
+
+---
+
+### Opción B — Diagramas Mermaid
+
+Mermaid es un lenguaje de diagramas en texto que se renderiza visualmente en GitHub, VS Code, Obsidian y otras herramientas. Se escribe como bloque de código con el tag `mermaid`.
+
+**Ventaja**: genera imágenes reales al renderizar. **Limitación**: no todos los visores lo soportan, pero el texto sigue siendo legible.
+
+#### Tipos disponibles y cuándo usarlos:
+
+**`flowchart` — Flujos y procesos**
+
+Ideal para: ciclos de desarrollo, flujos de decisión, pipelines.
+
+````markdown
+```mermaid
+flowchart TD
+    A[Escribir test] --> B{¿Test falla?}
+    B -->|No| C[El test está mal escrito]
+    B -->|Sí| D[Escribir código mínimo]
+    D --> E{¿Test pasa?}
+    E -->|No| D
+    E -->|Sí| F[Refactorizar]
+    F --> G{¿Tests siguen pasando?}
+    G -->|No| F
+    G -->|Sí| H[✅ Listo]
+```
+````
+
+**`sequenceDiagram` — Interacciones entre componentes**
+
+Ideal para: comunicación cliente-servidor, llamadas a APIs, flujos de autenticación.
+
+````markdown
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant A as API
+    participant DB as Base de Datos
+
+    C->>A: POST /login {email, password}
+    A->>DB: SELECT user WHERE email = ?
+    DB-->>A: user record
+    A->>A: Verificar password hash
+    A-->>C: 200 OK {token}
+```
+````
+
+**`classDiagram` — Estructuras y patrones OOP**
+
+Ideal para: design patterns, herencia, composición, módulos.
+
+````markdown
+```mermaid
+classDiagram
+    class Repository {
+        <<interface>>
+        +findById(id) Entity
+        +save(entity) void
+        +delete(id) void
+    }
+    class UserRepository {
+        +findById(id) User
+        +findByEmail(email) User
+        +save(user) void
+        +delete(id) void
+    }
+    class InMemoryUserRepository {
+        -users Map
+        +findById(id) User
+    }
+    Repository <|.. UserRepository
+    UserRepository <|-- InMemoryUserRepository
+```
+````
+
+**`stateDiagram-v2` — Máquinas de estado**
+
+Ideal para: ciclos de vida de entidades, estados de UI, flujos de autenticación.
+
+````markdown
+```mermaid
+stateDiagram-v2
+    [*] --> Borrador
+    Borrador --> EnRevision : enviar a revisión
+    EnRevision --> Publicado : aprobar
+    EnRevision --> Borrador : rechazar
+    Publicado --> Archivado : archivar
+    Archivado --> [*]
+```
+````
+
+**`erDiagram` — Relaciones entre entidades**
+
+Ideal para: modelado de datos, esquemas conceptuales, relaciones entre módulos.
+
+````markdown
+```mermaid
+erDiagram
+    USER ||--o{ ORDER : "realiza"
+    ORDER ||--|{ ORDER_ITEM : "contiene"
+    PRODUCT ||--o{ ORDER_ITEM : "aparece en"
+
+    USER {
+        string id
+        string email
+        string role
+    }
+    ORDER {
+        string id
+        string userId
+        string status
+    }
+```
+````
+
+#### Guía de elección por tema:
+
+| Tema del documento         | Tipo Mermaid recomendado          |
+| -------------------------- | --------------------------------- |
+| Ciclo TDD / CI/CD          | `flowchart`                       |
+| Autenticación / OAuth      | `sequenceDiagram`                 |
+| Design Patterns / SOLID    | `classDiagram`                    |
+| Estados de una entidad     | `stateDiagram-v2`                 |
+| Modelo de datos / DB       | `erDiagram`                       |
+| Arquitectura de sistema    | `flowchart` con subgraphs         |
+| Flujo de trabajo dev       | `flowchart` + `sequenceDiagram`   |
 
 ### Comparaciones ❌/✅
 
@@ -157,9 +289,11 @@ Cada documento termina con una sección `## Referencia Rápida` que resume los p
 Cada documento debe tener:
 - **Mínimo 300 líneas** de contenido real (no relleno)
 - Al menos **3 bloques de código** con ejemplos reales
-- Al menos **2 diagramas ASCII** o comparaciones visuales
+- Al menos **2 diagramas** (ASCII o Mermaid, según el parámetro `diagramas`)
 - Al menos **1 tabla** de referencia
 - Sección `## Referencia Rápida` al final
+
+**Regla para Mermaid**: si el parámetro `diagramas` es `mermaid` o `ambos`, usar el tipo de diagrama apropiado según la tabla de elección. Si un diagrama Mermaid no aporta claridad sobre ASCII, usar ASCII.
 
 ---
 
@@ -280,6 +414,8 @@ Antes de considerar la serie completa:
 - [ ] Mínimo 6 archivos generados (índice + 4 docs + prompts)
 - [ ] Cada documento tiene mínimo 300 líneas de contenido real
 - [ ] Cada documento tiene al menos 3 bloques de código
+- [ ] Cada documento tiene al menos 2 diagramas (ASCII o Mermaid según parámetro)
+- [ ] Si `diagramas=mermaid`: los tipos de diagrama corresponden al contenido (ver tabla de elección)
 - [ ] Cada documento termina con `## Referencia Rápida`
 - [ ] El índice tiene glosario y guía de uso de la serie
 - [ ] El archivo de prompts tiene un prompt por documento + uno completo
