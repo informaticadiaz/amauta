@@ -22,17 +22,23 @@ Cuando el usuario pide ejecutar o completar un issue de GitHub de forma autónom
 Si el usuario **no especificó un número de issue**, ejecutar este paso automáticamente:
 
 ```bash
-# Listar issues abiertos ordenados por número
-gh issue list --limit 20 --state open --json number,title,labels \
-  | jq -r '.[] | "#\(.number) [\(.labels[].name // "sin-label" | select(. != ""))] \(.title)"'
+# Listar issues abiertos — compatible Linux y Windows (no requiere jq)
+gh issue list --limit 20 --state open --json number,title,labels
+```
+
+Parsear el JSON directamente desde la respuesta (node siempre está disponible como fallback):
+```bash
+gh issue list --limit 20 --state open --json number,title,labels | node -e "
+const d = JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));
+d.forEach(i => console.log('#' + i.number + ' [' + i.labels.map(l=>l.name).join(', ') + '] ' + i.title));
+"
 ```
 
 Seleccionar el issue de **menor número** que corresponda a la fase actual (según `CLAUDE.md`).
 Luego leer el issue completo:
 
 ```bash
-gh issue view [número] --json title,body,labels,milestone \
-  | jq -r '"\(.title)\n\nLabels: \(.labels[].name // "ninguno")\n\n\(.body)"'
+gh issue view [número] --json title,body,labels,milestone
 ```
 
 Con esa información, presentar al usuario un resumen antes de continuar:
@@ -63,7 +69,7 @@ Con esa información, presentar al usuario un resumen antes de continuar:
 ### PASO 1 — Leer el Issue
 
 ```bash
-gh issue view [número] --json title,body,labels,milestone | jq -r '"\(.title)\n\nLabels: \(.labels[].name // "ninguno")\n\n\(.body)"'
+gh issue view [número] --json title,body,labels,milestone
 ```
 
 Extraer y registrar:
@@ -412,3 +418,16 @@ Al completar todos los pasos anteriores, mostrar un resumen breve y **detenerse*
 - **Sin contexto de módulo**: Usar `docs/ai-context/modules/cursos.md` y `apps/api/src/cursos/cursos.service.spec.ts` como referencia.
 - **Si un test es imposible de hacer fallar**: El comportamiento que testea ya existe — documentarlo y seguir.
 - **Ante ambigüedad en el issue**: La interpretación más conservadora, documentada en el comentario de cierre.
+
+## Compatibilidad de Entornos (Linux y Windows)
+
+El usuario trabaja en **ambos entornos**. Reglas para comandos bash:
+
+| ❌ Evitar | ✅ Usar en su lugar |
+| --------- | ------------------- |
+| `jq` (no siempre disponible en Windows) | `node -e "..."` o parsear el JSON directamente |
+| Rutas absolutas con `C:/...` | Rutas relativas desde la raíz del proyecto |
+| `git -C /ruta/absoluta` | `git` directamente (el CWD ya es el proyecto) |
+| `\| jq -r '...'` | `\| node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')); ..."` |
+
+**Herramientas siempre disponibles en ambos entornos:** `git`, `gh`, `npm`, `node`, `npx`
