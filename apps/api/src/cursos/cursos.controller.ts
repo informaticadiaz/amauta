@@ -18,6 +18,11 @@ import {
 } from '@nestjs/common';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports -- NestJS requires runtime import for DI
 import { CursosService, type CursoConEducador } from './cursos.service';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports -- NestJS requires runtime import for DI
+import {
+  InscripcionesService,
+  type InscripcionConCurso,
+} from '../inscripciones/inscripciones.service';
 import type { CreateCursoDto } from './dto/create-curso.dto';
 import type { UpdateCursoDto, PublicarCursoDto } from './dto/update-curso.dto';
 import type { QueryCursosDto } from './dto/query-cursos.dto';
@@ -37,9 +42,22 @@ interface ListaCursosResponse {
   totalPages: number;
 }
 
+interface InscripcionResponse {
+  inscripcion: InscripcionConCurso;
+  message: string;
+}
+
+interface EstadoInscripcionResponse {
+  inscripcion: InscripcionConCurso | null;
+  inscrito: boolean;
+}
+
 @Controller('cursos')
 export class CursosController {
-  constructor(private readonly cursosService: CursosService) {}
+  constructor(
+    private readonly cursosService: CursosService,
+    private readonly inscripcionesService: InscripcionesService
+  ) {}
 
   /**
    * Listar cursos públicos
@@ -87,6 +105,64 @@ export class CursosController {
     return {
       curso,
       message: 'Curso obtenido exitosamente',
+    };
+  }
+
+  /**
+   * Inscribirse en un curso
+   *
+   * POST /api/v1/cursos/:id/inscribir
+   */
+  @Post(':id/inscribir')
+  @Roles('ESTUDIANTE', 'EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN')
+  async inscribirse(
+    @Param('id') cursoId: string,
+    @CurrentUser() user: RequestUser
+  ): Promise<InscripcionResponse> {
+    const inscripcion = await this.inscripcionesService.inscribirse(
+      cursoId,
+      user.id
+    );
+    return {
+      inscripcion,
+      message: 'Te has inscrito exitosamente en el curso',
+    };
+  }
+
+  /**
+   * Cancelar inscripción en un curso
+   *
+   * DELETE /api/v1/cursos/:id/inscribir
+   */
+  @Delete(':id/inscribir')
+  @Roles('ESTUDIANTE', 'EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async cancelarInscripcion(
+    @Param('id') cursoId: string,
+    @CurrentUser() user: RequestUser
+  ): Promise<void> {
+    await this.inscripcionesService.cancelarInscripcion(cursoId, user.id);
+  }
+
+  /**
+   * Obtener estado de inscripción en un curso
+   *
+   * GET /api/v1/cursos/:id/inscripcion
+   */
+  @Get(':id/inscripcion')
+  @Roles('ESTUDIANTE', 'EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN')
+  async obtenerEstadoInscripcion(
+    @Param('id') cursoId: string,
+    @CurrentUser() user: RequestUser
+  ): Promise<EstadoInscripcionResponse> {
+    const inscripcion =
+      await this.inscripcionesService.obtenerEstadoInscripcion(
+        cursoId,
+        user.id
+      );
+    return {
+      inscripcion,
+      inscrito: inscripcion !== null && inscripcion.estado === 'ACTIVO',
     };
   }
 
