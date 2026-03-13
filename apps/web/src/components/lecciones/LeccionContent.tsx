@@ -26,12 +26,12 @@ interface Props {
 
 function getYouTubeId(url: string): string | null {
   const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
-  return match ? match[1] : null;
+  return match?.[1] ?? null;
 }
 
 function getVimeoId(url: string): string | null {
   const match = url.match(/vimeo\.com\/(\d+)/);
-  return match ? match[1] : null;
+  return match?.[1] ?? null;
 }
 
 function VideoPlayer({ contenido }: { contenido: ContenidoVideo }) {
@@ -86,19 +86,20 @@ function VideoPlayer({ contenido }: { contenido: ContenidoVideo }) {
   // Video local
   return (
     <div className="w-full overflow-hidden rounded-lg bg-black">
-      <video
-        src={videoUrl}
-        controls
-        className="w-full"
-        preload="metadata"
-      >
+      <video src={videoUrl} controls className="w-full" preload="metadata">
         Tu navegador no soporta la reproducción de video.
       </video>
     </div>
   );
 }
 
-function TextoContent({ contenido, titulo }: { contenido: ContenidoTexto; titulo: string }) {
+function TextoContent({
+  contenido,
+  titulo,
+}: {
+  contenido: ContenidoTexto;
+  titulo: string;
+}) {
   if (!contenido.html && !contenido.markdown) {
     return (
       <div className="flex h-32 items-center justify-center rounded-lg bg-[var(--overlay)] text-[var(--muted)]">
@@ -128,11 +129,15 @@ function TextoContent({ contenido, titulo }: { contenido: ContenidoTexto; titulo
 export function LeccionContent({ tipo, contenido, titulo }: Props) {
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-[var(--foreground)] lg:text-3xl">{titulo}</h1>
+      <h1 className="text-2xl font-bold text-[var(--foreground)] lg:text-3xl">
+        {titulo}
+      </h1>
 
       {tipo === 'VIDEO' && <VideoPlayer contenido={contenido} />}
 
-      {tipo === 'TEXTO' && <TextoContent contenido={contenido} titulo={titulo} />}
+      {tipo === 'TEXTO' && (
+        <TextoContent contenido={contenido} titulo={titulo} />
+      )}
 
       {tipo !== 'VIDEO' && tipo !== 'TEXTO' && (
         <div className="flex h-48 flex-col items-center justify-center gap-4 rounded-lg border border-[var(--border)] bg-[var(--overlay)] text-center">
@@ -150,9 +155,7 @@ export function LeccionContent({ tipo, contenido, titulo }: Props) {
             />
           </svg>
           <div>
-            <p className="font-medium text-[var(--foreground)]">
-              Próximamente
-            </p>
+            <p className="font-medium text-[var(--foreground)]">Próximamente</p>
             <p className="text-sm text-[var(--muted)]">
               Este tipo de contenido estará disponible en próximas versiones.
             </p>

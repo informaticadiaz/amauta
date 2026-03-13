@@ -56,6 +56,7 @@ LEER: docs/project-management/roadmap.md → sección de la fase actual
 ```
 
 Extraer:
+
 - Orden definido para los issues de la fase
 - Dependencias explícitas entre issues (cuál debe ir antes)
 - Issues marcados como `must-have` vs `should-have`
@@ -71,7 +72,7 @@ LEER: CLAUDE.md → sección "Próximos pasos" y "Completado en Fase X"
 Construir una tabla de verificación:
 
 | Issue | Título | GitHub | roadmap.md | CLAUDE.md |
-|-------|--------|--------|------------|-----------|
+| ----- | ------ | ------ | ---------- | --------- |
 | #38   | F1-011 | OPEN   | Pendiente  | Pendiente |
 | #37   | F1-010 | CLOSED | Completado | ✅        |
 
@@ -79,18 +80,19 @@ Construir una tabla de verificación:
 
 **Si hay divergencias**, resolverlas con estas reglas:
 
-| Divergencia | Fuente de verdad | Acción |
-|-------------|-----------------|--------|
-| Issue cerrado en GitHub pero pendiente en CLAUDE.md | GitHub | Actualizar CLAUDE.md |
-| Issue abierto en GitHub pero marcado completo en CLAUDE.md | GitHub | Reabrir o investigar |
-| Orden diferente entre roadmap.md y los issues de GitHub | roadmap.md | Seguir el orden del roadmap |
-| Progreso total diferente (ej: GitHub dice 10 cerrados, CLAUDE.md dice 8/16) | GitHub | Actualizar contador en CLAUDE.md |
+| Divergencia                                                                 | Fuente de verdad | Acción                           |
+| --------------------------------------------------------------------------- | ---------------- | -------------------------------- |
+| Issue cerrado en GitHub pero pendiente en CLAUDE.md                         | GitHub           | Actualizar CLAUDE.md             |
+| Issue abierto en GitHub pero marcado completo en CLAUDE.md                  | GitHub           | Reabrir o investigar             |
+| Orden diferente entre roadmap.md y los issues de GitHub                     | roadmap.md       | Seguir el orden del roadmap      |
+| Progreso total diferente (ej: GitHub dice 10 cerrados, CLAUDE.md dice 8/16) | GitHub           | Actualizar contador en CLAUDE.md |
 
 Mostrar las divergencias encontradas al usuario y proponer las correcciones antes de continuar.
 
 #### Determinar el próximo issue a trabajar
 
 Si no se especificó un número de issue:
+
 1. Tomar los issues OPEN en GitHub de la fase actual
 2. Ordenarlos según el orden definido en `roadmap.md`
 3. Aplicar criterios de selección (en orden de prioridad):
@@ -101,6 +103,7 @@ Si no se especificó un número de issue:
 5. Esperar confirmación antes de continuar
 
 Si se especificó un número:
+
 - Verificar que el issue existe y está OPEN en GitHub
 - Verificar que sus dependencias están cerradas
 - Si está cerrado o tiene dependencias pendientes, informar al usuario y sugerir el próximo válido
@@ -116,6 +119,7 @@ gh issue view [número] --json title,body,labels
 > **Nota**: No usar `--json ... | jq` en entornos Windows — `jq` puede no estar disponible. Leer el JSON crudo directamente es suficiente.
 
 Extraer y registrar:
+
 - Objetivo principal
 - Checklist de subtareas (son los criterios de aceptación para los tests)
 - Labels: `backend`, `frontend`, `database`, etc.
@@ -126,12 +130,13 @@ Extraer y registrar:
 
 Luego de leer el issue, clasificarlo en uno de estos dos modos:
 
-| Modo | Condición | Flujo |
-|------|-----------|-------|
-| **Modo A — TDD completo** | Implementación NO existe | RED → GREEN: escribir tests, confirmar que fallan, implementar, confirmar que pasan |
+| Modo                          | Condición                                  | Flujo                                                                                                  |
+| ----------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| **Modo A — TDD completo**     | Implementación NO existe                   | RED → GREEN: escribir tests, confirmar que fallan, implementar, confirmar que pasan                    |
 | **Modo B — Tests pendientes** | Implementación YA existe pero faltan tests | Escribir tests que cubran lo implementado, verificar que pasan, NO modificar implementación salvo bugs |
 
 **Señales de Modo B** (implementación existente):
+
 - El cuerpo del issue dice "implementación completada" o "Estado Actual: ✅"
 - El checklist técnico tiene ítems marcados con `[x]` pero los tests están como `[ ]`
 - Existe código en `apps/api/src/[modulo]/` pero no hay archivo `.spec.ts`
@@ -147,18 +152,21 @@ Luego de leer el issue, clasificarlo en uno de estos dos modos:
 Leer los archivos correspondientes **antes de escribir una sola línea de código o test**:
 
 #### Si toca base de datos o Prisma:
+
 ```
 LEER: docs/ai-context/database/schema.md
 LEER: apps/api/prisma/schema.prisma
 ```
 
 #### Si toca backend:
+
 ```
 LEER: docs/ai-context/_patterns.md
 LEER: docs/ai-context/modules/[modulo].md  (si existe)
 ```
 
 #### Si toca frontend:
+
 ```
 LEER: docs/ai-context/frontend/components.md
 LEER: docs/ai-context/frontend/pages.md
@@ -166,6 +174,7 @@ LEER: docs/ai-context/frontend/hooks.md    (si usa auth/roles)
 ```
 
 #### Para entender el patrón de tests existente:
+
 ```
 LEER: apps/api/src/cursos/cursos.service.spec.ts   (referencia de unit test backend)
 LEER: docs/technical/testing.md                     (guía completa de testing)
@@ -181,6 +190,7 @@ LEER: docs/technical/testing.md                     (guía completa de testing)
 Crear un todo list antes de empezar. La estructura varía según el modo determinado en PASO 1:
 
 **Modo A — TDD completo** (implementación no existe):
+
 ```
 1. [Contexto]     Leer schema / patterns / módulo existente
 2. [Tests RED]    Escribir tests que describen el comportamiento esperado
@@ -194,6 +204,7 @@ Crear un todo list antes de empezar. La estructura varía según el modo determi
 ```
 
 **Modo B — Tests pendientes** (implementación ya existe):
+
 ```
 1. [Contexto]     Leer schema / patterns / código existente del módulo
 2. [Explorar]     Leer implementación existente (service, controller, module)
@@ -204,8 +215,10 @@ Crear un todo list antes de empezar. La estructura varía según el modo determi
 7. [Commit]       Commit con tests (+ correcciones si las hubo)
 8. [Cierre]       Cerrar el issue con comentario
 ```
-8. [Commit]       Commit con tests + implementación
-9. [Cierre]       Cerrar el issue con comentario
+
+8. [Commit] Commit con tests + implementación
+9. [Cierre] Cerrar el issue con comentario
+
 ```
 
 ---
@@ -220,11 +233,13 @@ En ambos modos: cada ítem del checklist del issue = al menos un test.
 #### Dónde crear los archivos de test:
 
 ```
-Backend (service):    apps/api/src/[modulo]/[modulo].service.spec.ts
+
+Backend (service): apps/api/src/[modulo]/[modulo].service.spec.ts
 Backend (controller): apps/api/src/[modulo]/[modulo].controller.spec.ts
 Frontend (componente): apps/web/src/components/[Componente]/[Componente].test.tsx
-Frontend (página):     apps/web/src/app/[ruta]/page.test.tsx
-```
+Frontend (página): apps/web/src/app/[ruta]/page.test.tsx
+
+````
 
 #### Patrón de test backend (unit test de service):
 
@@ -307,7 +322,7 @@ describe('[Modulo]Service', () => {
     });
   });
 });
-```
+````
 
 #### Patrón de test frontend (componente):
 
@@ -349,6 +364,7 @@ npm run test -w @amauta/web -- --testPathPattern="[Componente]"
 **Modo A**: Los tests DEBEN fallar. Si pasan sin implementación, el test está mal escrito — revisar y corregir.
 
 **Modo B**: Los tests DEBEN pasar. Si alguno falla:
+
 - Investigar si es un bug en la implementación
 - Corregir el bug (nunca el test)
 - Si la implementación no se puede corregir de forma segura, documentar el caso y consultar al usuario
@@ -360,6 +376,7 @@ npm run test -w @amauta/web -- --testPathPattern="[Componente]"
 Escribir el código mínimo necesario para que los tests pasen. Seguir los patrones del proyecto:
 
 **Validación (SIEMPRE safeParse):**
+
 ```typescript
 const result = schema.safeParse(dto);
 if (!result.success) {
@@ -369,6 +386,7 @@ const data = result.data;
 ```
 
 **Eliminación (soft delete por defecto):**
+
 ```typescript
 await this.prisma.[modulo].update({
   where: { id },
@@ -377,6 +395,7 @@ await this.prisma.[modulo].update({
 ```
 
 **Estructura de respuestas:**
+
 ```typescript
 // Singular: { [modelo]: data, message: 'Acción exitosa' }
 // Lista:    { [modelos]: data[], total, page, limit, totalPages }
@@ -399,6 +418,39 @@ Si algún test falla: corregir la implementación, **no el test** (salvo que el 
 Una vez en verde, refactorizar si es necesario y ejecutar tests de nuevo para confirmar que siguen en verde.
 
 **Objetivo de cobertura mínima**: >80% statements en el módulo nuevo.
+
+---
+
+### PASO 7.5 — Verificar Tipos de TypeScript (CRÍTICO)
+
+> **Por qué este paso**: `next dev` y `nest start:dev` no verifican tipos completamente.
+> El build de producción (`next build`) sí lo hace y **fallará** si hay errores de tipo.
+> Este paso previene deployments fallidos.
+
+```bash
+# Backend - verificar tipos
+npx tsc --noEmit -p apps/api/tsconfig.json
+
+# Frontend - verificar tipos
+npx tsc --noEmit -p apps/web/tsconfig.json
+```
+
+**Si hay errores de tipo:**
+
+1. Corregir los errores (son errores reales que romperán producción)
+2. Ejecutar tests de nuevo para confirmar que siguen en verde
+3. Continuar al siguiente paso
+
+**Errores comunes que detecta este paso:**
+
+- `Type 'X | undefined' is not assignable to type 'X | null'`
+- `Property 'X' does not exist on type 'Y'`
+- `Cannot find module 'X'`
+- Imports incorrectos o tipos faltantes
+
+> **Nota**: Los errores en archivos `.test.tsx` o `.spec.ts` son aceptables si son de
+> dependencias de testing (`@testing-library`, `jest`, etc.) — estos archivos no se
+> incluyen en el build de producción.
 
 ---
 
@@ -442,6 +494,7 @@ EOF
 ### PASO 10 — Actualizar CLAUDE.md (si aplica)
 
 Si el issue es un hito de Fase 1 (F1-0XX):
+
 - Mover el issue de "Próximos pasos" a "Completado en Fase 1"
 - Actualizar el contador: ej. `10/16` → `11/16`
 
@@ -481,6 +534,7 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 - [ ] **Modo B**: Implementación leída antes de escribir tests
 - [ ] Tests pasan en GREEN (confirmado con ejecución real)
 - [ ] Cobertura >80% en el módulo nuevo
+- [ ] **TypeScript compila sin errores** (`tsc --noEmit` en backend y frontend)
 - [ ] Todos los items del checklist del issue cubiertos por tests
 - [ ] Código usa `safeParse` para validación
 - [ ] No hay deletes físicos sin justificación en el issue
@@ -498,3 +552,4 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 - **Sin contexto de módulo**: Usar `docs/ai-context/modules/cursos.md` y `apps/api/src/cursos/cursos.service.spec.ts` como referencia.
 - **Si un test es imposible de hacer fallar**: El comportamiento que testea ya existe — documentarlo y seguir.
 - **Ante ambigüedad en el issue**: La interpretación más conservadora, documentada en el comentario de cierre.
+- **TypeScript en dev vs prod**: `next dev` y `nest start:dev` no verifican tipos completos para priorizar velocidad. `next build` sí los verifica y fallará el deployment si hay errores. Siempre ejecutar `tsc --noEmit` antes de commit.
