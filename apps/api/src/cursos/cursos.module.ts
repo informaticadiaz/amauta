@@ -1,16 +1,14 @@
 /**
  * Módulo de Cursos
  *
- * Provee funcionalidad CRUD de cursos e inscripciones (sub-recurso)
+ * Provee funcionalidad CRUD de cursos
  */
 
 import { Module } from '@nestjs/common';
 import { CursosController } from './cursos.controller';
 import { CursosService } from './cursos.service';
-import { InscripcionesModule } from '../inscripciones/inscripciones.module';
 
 @Module({
-  imports: [InscripcionesModule],
   controllers: [CursosController],
   providers: [CursosService],
   exports: [CursosService],
