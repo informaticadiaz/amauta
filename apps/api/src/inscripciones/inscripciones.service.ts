@@ -90,6 +90,9 @@ export class InscripcionesService {
       if (inscripcionExistente.estado === 'ACTIVO') {
         throw new ConflictException('Ya estás inscrito en este curso');
       }
+      if (inscripcionExistente.estado === 'COMPLETADO') {
+        throw new ConflictException('Ya completaste este curso');
+      }
       // Si abandonó, reactivar la inscripción
       if (inscripcionExistente.estado === 'ABANDONADO') {
         const inscripcion = await this.prisma.inscripcion.update({
