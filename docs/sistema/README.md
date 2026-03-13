@@ -144,5 +144,5 @@ docs/sistema/
 
 ---
 
-**Última actualización**: 12/03/2026
+**Última actualización**: 13/03/2026
 **Fase actual**: Fase 1 - MVP Plataforma de Cursos (13/16 completados)

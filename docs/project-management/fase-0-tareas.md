@@ -364,14 +364,15 @@ Establecer las bases técnicas y de gestión del proyecto Amauta, configurando l
 **Estimación**: 2 puntos
 **Prioridad**: Could Have
 **Labels**: `docs`, `api`
+**Estado**: ✅ Completado (Issue #17 - 13/03/2026)
 
 **Checklist:**
 
-- [ ] Crear estructura para docs/technical/api-reference.md
-- [ ] Definir formato de documentación de endpoints
-- [ ] Considerar Swagger/OpenAPI para futuro
-- [ ] Documentar convenciones de REST API
-- [ ] Crear template para nuevos endpoints
+- [x] Crear estructura para docs/technical/api-reference.md
+- [x] Definir formato de documentación de endpoints
+- [x] Considerar Swagger/OpenAPI para futuro
+- [x] Documentar convenciones de REST API
+- [x] Crear template para nuevos endpoints
 
 ---
 

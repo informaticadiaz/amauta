@@ -36,6 +36,7 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 - [x] Estructura de proyecto (Turborepo con monorepo) - T-008
 - [x] Documentación técnica base
 - [x] Documentación de gestión
+- [x] Referencia de API (T-016)
 - [x] Configuración de repositorio (.gitignore, licencia, código de conducta) - T-001, T-002, T-003, T-004
 - [x] CI/CD pipeline básico (GitHub Actions) - T-005, T-006
 - [x] TypeScript configurado con strict mode - T-009
@@ -2638,5 +2639,5 @@ Revisar roadmap cada 3 sprints (6 semanas) para ajustar prioridades.
 
 ---
 
-**Última actualización**: 2024-12-30
+**Última actualización**: 2026-03-13
 **Próxima revisión**: Inicio de Fase 1
