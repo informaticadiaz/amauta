@@ -50,7 +50,6 @@ export async function POST(
     const response = await fetch(`${API_URL}/api/v1/cursos/${id}/inscribir`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${authToken}`,
       },
     });
