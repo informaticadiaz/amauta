@@ -314,6 +314,61 @@ Si el módulo **no tiene archivo de contexto** y se implementó algo significati
 
 ---
 
+### PASO 8c — Crear Documentación para Humanos (OBLIGATORIO)
+
+Crear el archivo `docs/human-context/issue-[N]-[slug].md` donde:
+- `[N]` = número del issue
+- `[slug]` = título del issue en kebab-case, corto (ej. `inscripcion-y-mis-cursos`)
+
+**Formato obligatorio:**
+
+```markdown
+# Issue #[N] — [Título del issue]
+
+**Qué podés hacer ahora:** [1 oración en lenguaje natural describiendo el resultado]
+
+---
+
+## [Rol o persona relevante], ahora podés:
+
+### [Funcionalidad 1]
+1. [Paso concreto con URL si aplica]
+2. [Paso concreto]
+3. [Resultado esperado]
+
+### [Funcionalidad 2]
+- [Descripción breve]
+- [Dónde encontrarla]
+
+---
+
+## Quién puede usarlo
+
+| Rol | ¿Puede usarlo? |
+| --- | --- |
+| ESTUDIANTE | ✅/❌ |
+| EDUCADOR | ✅/❌ |
+| ADMIN_ESCUELA | ✅/❌ |
+| SUPER_ADMIN | ✅/❌ |
+
+---
+
+## Usuarios de prueba para testear
+
+| Email | Contraseña | Rol |
+| --- | --- | --- |
+| [usuario relevante]@amauta.test | password123 | [ROL] |
+```
+
+**Reglas de escritura:**
+- Sin jerga técnica: no mencionar NestJS, Prisma, endpoints, DTOs, etc.
+- Orientado a la acción: "ahora podés hacer X"
+- Incluir URLs reales de producción cuando aplique (https://amauta.diazignacio.ar/...)
+- Si es solo backend (API sin UI), describir qué datos ya están disponibles para futuras pantallas
+- Máximo 1 página de largo
+
+---
+
 ### PASO 9 — Hacer Commit
 
 Incluir **siempre** los archivos de test junto con la implementación:
@@ -378,6 +433,7 @@ Al completar todos los pasos anteriores, mostrar un resumen breve y **detenerse*
 - [qué se implementó, 1 línea]
 - Tests: [N] pasando, cobertura >80%
 - Fuentes de verdad actualizadas: CLAUDE.md · roadmap.md · docs/sistema/README.md
+- Documentación: docs/human-context/issue-[N]-[slug].md
 - Commit: [hash]
 ```
 
@@ -405,6 +461,9 @@ Al completar todos los pasos anteriores, mostrar un resumen breve y **detenerse*
 
 **Contexto de IA**
 - [ ] `docs/ai-context/modules/[modulo].md` actualizado si hubo cambios
+
+**Documentación para humanos**
+- [ ] `docs/human-context/issue-[N]-[slug].md` creado con descripción no técnica
 
 **Cierre**
 - [ ] Issue cerrado con comentario descriptivo
