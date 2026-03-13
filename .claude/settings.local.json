@@ -5,7 +5,12 @@
       "Bash(gh *)",
       "Bash(npm *)",
       "Bash(ls*)",
-      "Bash(node_modules/.bin/jest *)"
+      "Bash(node_modules/.bin/jest *)",
+      "Bash(cd apps/web && npx jest --testPathPatterns=\"LeccionContent|LeccionSidebar|LeccionNavigation\" --no-coverage 2>&1 | tail -40)",
+      "Bash(npx jest:*)",
+      "Bash(find /c/Users/infor/DevHome/amauta -name \"jest.js\" -path \"*/next/jest.js\" 2>/dev/null | head -5)",
+      "Bash(npm ls:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
