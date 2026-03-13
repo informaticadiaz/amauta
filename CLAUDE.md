@@ -25,7 +25,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 ### Fase Actual: Fase 1 - MVP Plataforma de Cursos 🚧 EN PROGRESO
 
 **Inicio**: 30/12/2024
-**Progreso**: 12/16 issues completados
+**Progreso**: 13/16 issues completados
 
 #### Completado en Fase 1:
 
@@ -87,8 +87,15 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Toast de feedback al inscribirse/cancelar
   - API Routes proxy: inscribir (POST/DELETE), estado (GET), mis-cursos (GET)
 
+- ✅ **F1-013**: Visualizador de lecciones para estudiantes
+  - Página `/cursos/[slug]/lecciones/[leccionId]` con control de acceso (solo inscritos)
+  - Componente `LeccionSidebar` con lista de lecciones, indicador de progreso, colapsable
+  - Componente `LeccionContent` para texto (HTML) y video (YouTube/Vimeo/local)
+  - Componente `LeccionNavigation` con botones anterior/siguiente
+  - `MobileSidebarSheet` drawer para navegación en móvil
+  - Botón "Continuar curso" en InscripcionBtn ahora lleva a la primera lección
+
 #### Próximos pasos:
-- 📋 **F1-013**: Visualizador de lecciones para estudiantes
 - 📋 **F1-014**: API seguimiento de progreso
 - 📋 **F1-015**: UI marcar lecciones completadas
 - 📋 **F1-016**: Dashboard de estudiante

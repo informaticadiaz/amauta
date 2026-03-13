@@ -152,6 +152,13 @@ export default async function CursoDetallePage({ params }: PageProps) {
                 cursoSlug={curso.slug}
                 totalLecciones={curso._count.lecciones}
                 duracion={curso.duracion}
+                primeraLeccionId={
+                  curso.lecciones && curso.lecciones.length > 0
+                    ? curso.lecciones
+                        .filter((l) => l.publicada)
+                        .sort((a, b) => a.orden - b.orden)[0]?.id ?? null
+                    : null
+                }
               />
 
               {/* Card del educador */}

@@ -18,6 +18,7 @@ interface InscripcionBtnProps {
   totalLecciones: number;
   duracion: number | null;
   cursoSlug?: string;
+  primeraLeccionId?: string | null;
 }
 
 function CheckIcon() {
@@ -44,6 +45,7 @@ export function InscripcionBtn({
   totalLecciones,
   duracion,
   cursoSlug,
+  primeraLeccionId,
 }: InscripcionBtnProps) {
   const { status } = useSession();
   const router = useRouter();
@@ -228,7 +230,13 @@ export function InscripcionBtn({
               Ya estás inscrito
             </div>
             <Link
-              href={cursoSlug ? `/cursos/${cursoSlug}` : '/dashboard/mis-cursos'}
+              href={
+                cursoSlug && primeraLeccionId
+                  ? `/cursos/${cursoSlug}/lecciones/${primeraLeccionId}`
+                  : cursoSlug
+                    ? `/cursos/${cursoSlug}`
+                    : '/dashboard/mis-cursos'
+              }
               className="block w-full rounded-lg bg-primary px-6 py-3 text-center font-semibold text-white transition-colors hover:bg-primary/90 hover:no-underline"
             >
               Continuar curso
