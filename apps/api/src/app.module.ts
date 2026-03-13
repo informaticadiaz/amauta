@@ -26,11 +26,13 @@ import { JwtAuthGuard, RolesGuard } from './common/guards';
     }),
     PrismaModule,
     AuthModule,
+    // InscripcionesModule debe ir ANTES de CursosModule para que las rutas
+    // específicas (cursos/:id/inscribir) tengan prioridad sobre el catch-all (cursos/:id)
+    InscripcionesModule,
     CursosModule,
     LeccionesModule,
     UploadsModule,
     CategoriasModule,
-    InscripcionesModule,
   ],
   controllers: [AppController],
   providers: [
