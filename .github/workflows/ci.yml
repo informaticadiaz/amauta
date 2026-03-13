@@ -94,6 +94,8 @@ jobs:
 
       - name: Generate Prisma Client
         run: npm run prisma:generate --workspace=@amauta/api
+        env:
+          DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'
 
       - name: Check formatting
         run: npm run format:check
