@@ -1,0 +1,62 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|compact|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/contexto-sesion.sh",
+            "statusMessage": "Cargando contexto del proyecto..."
+          }
+        ]
+      }
+    ],
+
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/bloquear-destructivos.sh",
+            "statusMessage": "Verificando seguridad del comando..."
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/advertir-prisma.sh",
+            "statusMessage": "Verificando operación de base de datos..."
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/proteger-archivos.sh",
+            "statusMessage": "Verificando archivo..."
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/detectar-secretos.sh",
+            "statusMessage": "Verificando que no haya secretos..."
+          }
+        ]
+      }
+    ],
+
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/validar-schema-prisma.sh",
+            "statusMessage": "Validando schema de Prisma..."
+          }
+        ]
+      }
+    ]
+  }
+}
