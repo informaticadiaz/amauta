@@ -16,6 +16,7 @@ import { LeccionesModule } from './lecciones/lecciones.module';
 import { UploadsModule } from './uploads/uploads.module';
 import { CategoriasModule } from './categorias/categorias.module';
 import { InscripcionesModule } from './inscripciones/inscripciones.module';
+import { ProgresoModule } from './progreso/progreso.module';
 import { JwtAuthGuard, RolesGuard } from './common/guards';
 
 @Module({
@@ -31,6 +32,7 @@ import { JwtAuthGuard, RolesGuard } from './common/guards';
     UploadsModule,
     CategoriasModule,
     InscripcionesModule,
+    ProgresoModule,
   ],
   controllers: [AppController],
   providers: [
