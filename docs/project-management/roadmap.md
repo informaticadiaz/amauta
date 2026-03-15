@@ -160,8 +160,8 @@ Crear plataforma funcional donde educadores puedan publicar cursos y estudiantes
 
 Trabajo transversal para alinear contenidos con la currícula oficial argentina.
 
-| Issue | Título                                                    | Estado        |
-| ----- | --------------------------------------------------------- | ------------- |
+| Issue | Título                                                     | Estado        |
+| ----- | ---------------------------------------------------------- | ------------- |
 | #21   | Integración con NAP (Núcleos de Aprendizajes Prioritarios) | ✅ Completado |
 
 ---
@@ -170,14 +170,14 @@ Trabajo transversal para alinear contenidos con la currícula oficial argentina.
 
 **Duración estimada**: 4-6 semanas
 **Sprint 5-7**
-**Progreso**: 1/8 issues completados
+**Progreso**: 2/8 issues completados
 
 ### Progreso Sprint 5
 
-| Issue | Título                                             | Estado        | Prioridad   |
-| ----- | -------------------------------------------------- | ------------- | ----------- |
+| Issue | Título                                              | Estado        | Prioridad   |
+| ----- | --------------------------------------------------- | ------------- | ----------- |
 | #44   | F2-001: Manifest PWA, metadata e íconos instalables | ✅ Completado | must-have   |
-| #45   | F2-002: Service Worker base + estrategias de caché  | 📋 Pendiente  | must-have   |
+| #45   | F2-002: Service Worker base + estrategias de caché  | ✅ Completado | must-have   |
 | #46   | F2-003: Schema IndexedDB (Dexie) para offline       | 📋 Pendiente  | must-have   |
 | #47   | F2-004: Descarga offline de cursos (texto) + UI     | 📋 Pendiente  | should-have |
 | #48   | F2-005: Cache de videos offline con Cache API       | 📋 Pendiente  | should-have |

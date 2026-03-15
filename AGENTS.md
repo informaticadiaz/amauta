@@ -25,7 +25,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 ### Fase Actual: Fase 2 - Offline-First PWA 🟡 EN PROGRESO
 
 **Inicio**: 15/03/2026
-**Progreso**: 1/8 issues completados
+**Progreso**: 2/8 issues completados
 
 #### Completado en Fase 2:
 
@@ -34,9 +34,15 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Metadatos PWA en `layout.tsx` (manifest, themeColor, appleWebApp)
   - Set mínimo de íconos instalables (192, 512, apple touch)
 
+- ✅ **F2-002**: Service Worker base + estrategias de caché
+  - Configuración `@ducanh2912/next-pwa` en `next.config.js` con `dest: public`
+  - Estrategias de caché para assets, API auth y API pública
+  - Cache de imágenes con expiración de 30 días
+  - `reloadOnOnline` habilitado y SW desactivado en development
+
 #### Próximos pasos:
 
-- Continuar con F2-002: Service Worker base + estrategias de caché
+- Continuar con F2-003: Schema IndexedDB (Dexie) para offline
 
 ### Fase Anterior: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
 
@@ -214,15 +220,15 @@ El roadmap define:
 
 ### Fases del Roadmap (Resumen)
 
-| Fase | Nombre            | Estado         | Documento             |
-| ---- | ----------------- | -------------- | --------------------- |
-| 0    | Fundamentos       | ✅ Completado  | `fase-0-tareas.md`    |
-| 1    | MVP Cursos        | ✅ Completado  | `roadmap.md` → Fase 1 |
-| 2    | Offline-First PWA | 📋 Pendiente   | `roadmap.md` → Fase 2 |
-| 3    | Evaluaciones      | 📋 Pendiente   | `roadmap.md` → Fase 3 |
-| 4    | Módulo Escolar    | 📋 Pendiente   | `roadmap.md` → Fase 4 |
-| 5    | Comunidad         | 📋 Pendiente   | `roadmap.md` → Fase 5 |
-| 6-10 | Avanzadas         | 📋 Futuro      | `roadmap.md`          |
+| Fase | Nombre            | Estado        | Documento             |
+| ---- | ----------------- | ------------- | --------------------- |
+| 0    | Fundamentos       | ✅ Completado | `fase-0-tareas.md`    |
+| 1    | MVP Cursos        | ✅ Completado | `roadmap.md` → Fase 1 |
+| 2    | Offline-First PWA | 📋 Pendiente  | `roadmap.md` → Fase 2 |
+| 3    | Evaluaciones      | 📋 Pendiente  | `roadmap.md` → Fase 3 |
+| 4    | Módulo Escolar    | 📋 Pendiente  | `roadmap.md` → Fase 4 |
+| 5    | Comunidad         | 📋 Pendiente  | `roadmap.md` → Fase 5 |
+| 6-10 | Avanzadas         | 📋 Futuro     | `roadmap.md`          |
 
 ---
 
@@ -818,16 +824,16 @@ enum Prioridad {
 
 ### Skills Disponibles
 
-| Skill                    | Archivo                                  | Cuándo usar                                            |
-| ------------------------ | ---------------------------------------- | ------------------------------------------------------ |
-| **Prisma & DB**          | `docs/ai-skills/prisma-db-management.md` | Migraciones, verificar DB, resolver errores            |
-| **CRUD Generator**       | `docs/ai-skills/crud-generator.md`       | Crear módulo nuevo completo                            |
-| **API Endpoint**         | `docs/ai-skills/api-endpoint.md`         | Agregar endpoint a módulo existente                    |
-| **React Form**           | `docs/ai-skills/react-form.md`           | Crear formulario nuevo                                 |
-| **Complete Issue**       | `docs/ai-skills/complete-issue.md`       | Ejecutar un issue completo de forma autónoma           |
-| **Performance Review**   | `docs/ai-skills/performance-review.md`   | Analizar performance y generar informe con mejoras     |
-| **Security Audit**       | `docs/ai-skills/security-audit.md`       | Auditar vulnerabilidades de seguridad (OWASP Top 10)   |
-| **Fix Security Findings**| `docs/ai-skills/fix-security-findings.md`| Aplicar fixes de un informe de auditoría previo (contexto limpio, build verificado) |
-| **NotebookLM Cuadernos** | `docs/ai-skills/notebooklm-cuadernos.md` | Generar cuadernos de estudio genéricos para NotebookLM |
-| **PWA Mobile Design**    | `docs/ai-skills/pwa-mobile-design.md`    | Diseñar/auditar PWA orientada a mobile: manifest, SW, IndexedDB, sync, UI táctil       |
-| **Feature Audit**        | `docs/ai-skills/feature-audit.md`        | Auditar que las features implementadas funcionan y cumplen sus criterios de aceptación |
+| Skill                     | Archivo                                   | Cuándo usar                                                                            |
+| ------------------------- | ----------------------------------------- | -------------------------------------------------------------------------------------- |
+| **Prisma & DB**           | `docs/ai-skills/prisma-db-management.md`  | Migraciones, verificar DB, resolver errores                                            |
+| **CRUD Generator**        | `docs/ai-skills/crud-generator.md`        | Crear módulo nuevo completo                                                            |
+| **API Endpoint**          | `docs/ai-skills/api-endpoint.md`          | Agregar endpoint a módulo existente                                                    |
+| **React Form**            | `docs/ai-skills/react-form.md`            | Crear formulario nuevo                                                                 |
+| **Complete Issue**        | `docs/ai-skills/complete-issue.md`        | Ejecutar un issue completo de forma autónoma                                           |
+| **Performance Review**    | `docs/ai-skills/performance-review.md`    | Analizar performance y generar informe con mejoras                                     |
+| **Security Audit**        | `docs/ai-skills/security-audit.md`        | Auditar vulnerabilidades de seguridad (OWASP Top 10)                                   |
+| **Fix Security Findings** | `docs/ai-skills/fix-security-findings.md` | Aplicar fixes de un informe de auditoría previo (contexto limpio, build verificado)    |
+| **NotebookLM Cuadernos**  | `docs/ai-skills/notebooklm-cuadernos.md`  | Generar cuadernos de estudio genéricos para NotebookLM                                 |
+| **PWA Mobile Design**     | `docs/ai-skills/pwa-mobile-design.md`     | Diseñar/auditar PWA orientada a mobile: manifest, SW, IndexedDB, sync, UI táctil       |
+| **Feature Audit**         | `docs/ai-skills/feature-audit.md`         | Auditar que las features implementadas funcionan y cumplen sus criterios de aceptación |
