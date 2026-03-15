@@ -16,7 +16,9 @@
       "Bash(cd:*)",
       "Bash(node:*)",
       "Bash(ls:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(xargs grep:*)",
+      "Bash(npx prisma:*)"
     ]
   }
 }
