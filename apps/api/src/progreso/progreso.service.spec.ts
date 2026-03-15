@@ -112,11 +112,17 @@ describe('ProgresoService', () => {
       prisma.progreso.upsert.mockResolvedValue(mockProgreso);
       prisma.leccion.count.mockResolvedValue(5);
       prisma.progreso.count.mockResolvedValue(1);
-      prisma.inscripcion.update.mockResolvedValue({ ...mockInscripcion, progreso: 20 });
+      prisma.inscripcion.update.mockResolvedValue({
+        ...mockInscripcion,
+        progreso: 20,
+      });
     });
 
     it('debería marcar una lección como completada', async () => {
-      const result = await service.completarLeccion('leccion-123', 'estudiante-123');
+      const result = await service.completarLeccion(
+        'leccion-123',
+        'estudiante-123'
+      );
 
       expect(result.progreso).toEqual(mockProgreso);
       expect(result.message).toBe('Lección marcada como completada');
@@ -124,9 +130,15 @@ describe('ProgresoService', () => {
     });
 
     it('debería ser idempotente (no falla si ya estaba completada)', async () => {
-      prisma.progreso.upsert.mockResolvedValue({ ...mockProgreso, completado: true });
+      prisma.progreso.upsert.mockResolvedValue({
+        ...mockProgreso,
+        completado: true,
+      });
 
-      const result = await service.completarLeccion('leccion-123', 'estudiante-123');
+      const result = await service.completarLeccion(
+        'leccion-123',
+        'estudiante-123'
+      );
 
       expect(result.progreso.completado).toBe(true);
       expect(prisma.progreso.upsert).toHaveBeenCalledTimes(1);
@@ -211,7 +223,10 @@ describe('ProgresoService', () => {
     });
 
     it('debería retornar el progreso del estudiante en el curso', async () => {
-      const result = await service.obtenerProgresoCurso('curso-123', 'estudiante-123');
+      const result = await service.obtenerProgresoCurso(
+        'curso-123',
+        'estudiante-123'
+      );
 
       expect(result.cursoId).toBe('curso-123');
       expect(result.totalLecciones).toBe(10);
@@ -220,7 +235,10 @@ describe('ProgresoService', () => {
     });
 
     it('debería incluir el array de IDs de lecciones completadas', async () => {
-      const result = await service.obtenerProgresoCurso('curso-123', 'estudiante-123');
+      const result = await service.obtenerProgresoCurso(
+        'curso-123',
+        'estudiante-123'
+      );
 
       expect(result.leccionesCompletadasIds).toEqual([
         'leccion-1',
@@ -231,7 +249,10 @@ describe('ProgresoService', () => {
     });
 
     it('debería incluir la última lección accedida', async () => {
-      const result = await service.obtenerProgresoCurso('curso-123', 'estudiante-123');
+      const result = await service.obtenerProgresoCurso(
+        'curso-123',
+        'estudiante-123'
+      );
 
       expect(result.ultimaLeccion).toEqual({
         id: 'leccion-123',
@@ -243,7 +264,10 @@ describe('ProgresoService', () => {
     it('debería retornar ultimaLeccion null si no hay progreso', async () => {
       prisma.progreso.findFirst.mockResolvedValue(null);
 
-      const result = await service.obtenerProgresoCurso('curso-123', 'estudiante-123');
+      const result = await service.obtenerProgresoCurso(
+        'curso-123',
+        'estudiante-123'
+      );
 
       expect(result.ultimaLeccion).toBeNull();
     });
@@ -251,7 +275,10 @@ describe('ProgresoService', () => {
     it('debería calcular porcentaje 0 si no hay lecciones completadas', async () => {
       prisma.progreso.findMany.mockResolvedValue([]);
 
-      const result = await service.obtenerProgresoCurso('curso-123', 'estudiante-123');
+      const result = await service.obtenerProgresoCurso(
+        'curso-123',
+        'estudiante-123'
+      );
 
       expect(result.porcentaje).toBe(0);
       expect(result.leccionesCompletadasIds).toEqual([]);

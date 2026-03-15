@@ -15,7 +15,8 @@
       "Bash(chmod +x C:/Users/infor/DevHome/amauta/.claude/hooks/*.sh && echo \"OK\")",
       "Bash(cd:*)",
       "Bash(node:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(curl:*)"
     ]
   }
 }

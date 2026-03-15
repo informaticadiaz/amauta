@@ -11,19 +11,27 @@ interface Props {
   totalLecciones?: number;
 }
 
-export function ProgresoBar({ porcentaje, label, leccionesCompletadas, totalLecciones }: Props) {
+export function ProgresoBar({
+  porcentaje,
+  label,
+  leccionesCompletadas,
+  totalLecciones,
+}: Props) {
   const porcentajeSeguro = Math.min(100, Math.max(0, porcentaje));
 
   return (
     <div className="space-y-1">
-      {(label || (leccionesCompletadas !== undefined && totalLecciones !== undefined)) && (
+      {(label ||
+        (leccionesCompletadas !== undefined &&
+          totalLecciones !== undefined)) && (
         <div className="flex items-center justify-between text-xs text-[var(--muted)]">
           {label && <span>{label}</span>}
-          {leccionesCompletadas !== undefined && totalLecciones !== undefined && (
-            <span>
-              {leccionesCompletadas} de {totalLecciones}
-            </span>
-          )}
+          {leccionesCompletadas !== undefined &&
+            totalLecciones !== undefined && (
+              <span>
+                {leccionesCompletadas} de {totalLecciones}
+              </span>
+            )}
         </div>
       )}
 

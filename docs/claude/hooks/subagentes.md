@@ -55,6 +55,7 @@ SessionEnd
 Se dispara justo antes de que el subagente ejecute su primera herramienta.
 
 **Datos disponibles en el hook:**
+
 ```json
 {
   "hook_event_name": "SubagentStart",
@@ -66,6 +67,7 @@ Se dispara justo antes de que el subagente ejecute su primera herramienta.
 ```
 
 **Capacidades:**
+
 - Inyectar contexto adicional al subagente (via stdout)
 - No puede bloquear la creación del subagente
 - Útil para preparar el entorno o loguear el inicio
@@ -79,6 +81,7 @@ Se dispara justo antes de que el subagente ejecute su primera herramienta.
 Se dispara cuando el subagente termina de responder.
 
 **Datos disponibles:**
+
 ```json
 {
   "hook_event_name": "SubagentStop",
@@ -92,6 +95,7 @@ Se dispara cuando el subagente termina de responder.
 ```
 
 **Capacidades:**
+
 - **Puede bloquear** que el subagente termine (exit code 2)
 - Acceso al transcript completo del subagente
 - Útil para verificar que el subagente completó su tarea correctamente
@@ -120,10 +124,10 @@ description: Consultas de solo lectura a la base de datos
 tools: Bash
 hooks:
   PreToolUse:
-    - matcher: "Bash"
+    - matcher: 'Bash'
       hooks:
         - type: command
-          command: ".claude/hooks/solo-lectura.sh"
+          command: '.claude/hooks/solo-lectura.sh'
 ---
 ```
 
@@ -153,6 +157,7 @@ El tipo de hook más poderoso: lanza un subagente con acceso completo a herramie
 ```
 
 **Cómo funciona:**
+
 1. Claude termina de responder → se dispara `Stop`
 2. Se lanza un subagente verificador con las herramientas disponibles
 3. El subagente ejecuta tests, lee archivos, analiza el resultado
@@ -161,11 +166,11 @@ El tipo de hook más poderoso: lanza un subagente con acceso completo a herramie
 
 **Diferencia con `command` y `prompt`:**
 
-| Tipo | Herramientas | Turnos | Velocidad | Ideal para |
-|------|-------------|--------|-----------|------------|
-| `command` | No (solo bash) | 1 | Rápido | Validación simple |
-| `prompt` | No | 1 | Medio | Decisiones con razonamiento |
-| `agent` | Sí (Read, Bash, Grep...) | Hasta 50 | Lento | Verificación compleja |
+| Tipo      | Herramientas             | Turnos   | Velocidad | Ideal para                  |
+| --------- | ------------------------ | -------- | --------- | --------------------------- |
+| `command` | No (solo bash)           | 1        | Rápido    | Validación simple           |
+| `prompt`  | No                       | 1        | Medio     | Decisiones con razonamiento |
+| `agent`   | Sí (Read, Bash, Grep...) | Hasta 50 | Lento     | Verificación compleja       |
 
 ---
 
@@ -372,12 +377,12 @@ exit 0
 
 ## Tabla de Referencia Rápida
 
-| Evento | ¿Bloquea? | ¿Tiene transcript? | Matcher disponible |
-|--------|-----------|-------------------|-------------------|
-| `SubagentStart` | No | No | Tipo de agente |
-| `SubagentStop` | Sí | Sí (`agent_transcript_path`) | Tipo de agente |
-| `PreToolUse` (en subagente) | Sí | No | Nombre de herramienta |
-| `PostToolUse` (en subagente) | No | No | Nombre de herramienta |
+| Evento                       | ¿Bloquea? | ¿Tiene transcript?           | Matcher disponible    |
+| ---------------------------- | --------- | ---------------------------- | --------------------- |
+| `SubagentStart`              | No        | No                           | Tipo de agente        |
+| `SubagentStop`               | Sí        | Sí (`agent_transcript_path`) | Tipo de agente        |
+| `PreToolUse` (en subagente)  | Sí        | No                           | Nombre de herramienta |
+| `PostToolUse` (en subagente) | No        | No                           | Nombre de herramienta |
 
 ---
 

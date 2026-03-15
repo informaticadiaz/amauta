@@ -6,10 +6,10 @@ Detecta y bloquea la escritura de secretos hardcodeados en archivos de código.
 
 ## Archivos
 
-| Tipo | Ruta |
-|------|------|
-| Script | `.claude/hooks/detectar-secretos.sh` |
-| Configuración | `.claude/settings.json` |
+| Tipo          | Ruta                                 |
+| ------------- | ------------------------------------ |
+| Script        | `.claude/hooks/detectar-secretos.sh` |
+| Configuración | `.claude/settings.json`              |
 
 ---
 
@@ -37,15 +37,15 @@ Se dispara antes de editar o crear cualquier archivo. Analiza el contenido que C
 
 ## Qué detecta
 
-| Patrón | Ejemplo |
-|--------|---------|
-| API keys genéricas | `api_key = "abc123def456..."` |
-| Secrets genéricos | `secret: "mi-secreto-largo"` |
-| Passwords hardcodeados | `password = "miPassword123"` |
-| Tokens de acceso | `token = "eyJhbGci..."` |
-| Claves privadas RSA/EC | `-----BEGIN RSA PRIVATE KEY-----` |
-| Claves de Anthropic | `sk-ant-...` |
-| URLs de DB con credenciales | `postgresql://user:pass@host/db` |
+| Patrón                      | Ejemplo                           |
+| --------------------------- | --------------------------------- |
+| API keys genéricas          | `api_key = "abc123def456..."`     |
+| Secrets genéricos           | `secret: "mi-secreto-largo"`      |
+| Passwords hardcodeados      | `password = "miPassword123"`      |
+| Tokens de acceso            | `token = "eyJhbGci..."`           |
+| Claves privadas RSA/EC      | `-----BEGIN RSA PRIVATE KEY-----` |
+| Claves de Anthropic         | `sk-ant-...`                      |
+| URLs de DB con credenciales | `postgresql://user:pass@host/db`  |
 
 ---
 

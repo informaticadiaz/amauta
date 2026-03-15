@@ -46,9 +46,7 @@ describe('ProgresoController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ProgresoController],
-      providers: [
-        { provide: ProgresoService, useValue: mockProgresoService },
-      ],
+      providers: [{ provide: ProgresoService, useValue: mockProgresoService }],
     }).compile();
 
     controller = module.get<ProgresoController>(ProgresoController);
@@ -65,7 +63,10 @@ describe('ProgresoController', () => {
       };
       service.completarLeccion.mockResolvedValue(mockResult);
 
-      const result = await controller.completarLeccion('leccion-123', mockUser as never);
+      const result = await controller.completarLeccion(
+        'leccion-123',
+        mockUser as never
+      );
 
       expect(service.completarLeccion).toHaveBeenCalledWith(
         'leccion-123',
@@ -86,7 +87,10 @@ describe('ProgresoController', () => {
       };
       service.obtenerProgresoCurso.mockResolvedValue(mockResult);
 
-      const result = await controller.obtenerProgresoCurso('curso-123', mockUser as never);
+      const result = await controller.obtenerProgresoCurso(
+        'curso-123',
+        mockUser as never
+      );
 
       expect(service.obtenerProgresoCurso).toHaveBeenCalledWith(
         'curso-123',

@@ -36,19 +36,19 @@ Las lecciones son el contenido educativo de un curso. Cada curso tiene múltiple
 
 ### Frontend
 
-| Archivo                                                         | Propósito                 |
-| --------------------------------------------------------------- | ------------------------- |
-| `apps/web/src/app/api/cursos/[id]/lecciones/route.ts`           | Proxy crear lección       |
-| `apps/web/src/app/api/cursos/[id]/lecciones/reordenar/route.ts` | Proxy reordenar           |
-| `apps/web/src/app/api/lecciones/[id]/route.ts`                  | Proxy actualizar/eliminar |
-| `apps/web/src/app/dashboard/cursos/[id]/lecciones/page.tsx`           | Lista de lecciones (admin) |
-| `apps/web/src/app/cursos/[slug]/lecciones/[leccionId]/page.tsx`       | Visualizador (estudiante)  |
-| `apps/web/src/components/lecciones/LeccionForm.tsx`                   | Formulario                 |
-| `apps/web/src/components/lecciones/LeccionesManager.tsx`              | Gestión drag & drop        |
-| `apps/web/src/components/lecciones/LeccionContent.tsx`                | Renderiza contenido (texto/video) |
-| `apps/web/src/components/lecciones/LeccionSidebar.tsx`                | Sidebar con lista de lecciones   |
-| `apps/web/src/components/lecciones/LeccionNavigation.tsx`             | Botones anterior/siguiente       |
-| `apps/web/src/components/lecciones/MobileSidebarSheet.tsx`            | Drawer de lecciones en móvil     |
+| Archivo                                                         | Propósito                         |
+| --------------------------------------------------------------- | --------------------------------- |
+| `apps/web/src/app/api/cursos/[id]/lecciones/route.ts`           | Proxy crear lección               |
+| `apps/web/src/app/api/cursos/[id]/lecciones/reordenar/route.ts` | Proxy reordenar                   |
+| `apps/web/src/app/api/lecciones/[id]/route.ts`                  | Proxy actualizar/eliminar         |
+| `apps/web/src/app/dashboard/cursos/[id]/lecciones/page.tsx`     | Lista de lecciones (admin)        |
+| `apps/web/src/app/cursos/[slug]/lecciones/[leccionId]/page.tsx` | Visualizador (estudiante)         |
+| `apps/web/src/components/lecciones/LeccionForm.tsx`             | Formulario                        |
+| `apps/web/src/components/lecciones/LeccionesManager.tsx`        | Gestión drag & drop               |
+| `apps/web/src/components/lecciones/LeccionContent.tsx`          | Renderiza contenido (texto/video) |
+| `apps/web/src/components/lecciones/LeccionSidebar.tsx`          | Sidebar con lista de lecciones    |
+| `apps/web/src/components/lecciones/LeccionNavigation.tsx`       | Botones anterior/siguiente        |
+| `apps/web/src/components/lecciones/MobileSidebarSheet.tsx`      | Drawer de lecciones en móvil      |
 
 ---
 

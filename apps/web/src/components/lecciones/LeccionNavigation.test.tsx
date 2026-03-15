@@ -30,7 +30,9 @@ describe('LeccionNavigation', () => {
         leccionSiguiente={mockLeccionSiguiente}
       />
     );
-    expect(screen.getByRole('link', { name: /siguiente/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /siguiente/i })
+    ).toBeInTheDocument();
   });
 
   it('debería mostrar ambos botones cuando hay anterior y siguiente', () => {
@@ -42,7 +44,9 @@ describe('LeccionNavigation', () => {
       />
     );
     expect(screen.getByRole('link', { name: /anterior/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /siguiente/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /siguiente/i })
+    ).toBeInTheDocument();
   });
 
   it('no debería mostrar botón anterior en la primera lección', () => {
@@ -53,7 +57,9 @@ describe('LeccionNavigation', () => {
         leccionSiguiente={mockLeccionSiguiente}
       />
     );
-    expect(screen.queryByRole('link', { name: /anterior/i })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('link', { name: /anterior/i })
+    ).not.toBeInTheDocument();
   });
 
   it('no debería mostrar botón siguiente en la última lección', () => {
@@ -64,7 +70,9 @@ describe('LeccionNavigation', () => {
         leccionSiguiente={null}
       />
     );
-    expect(screen.queryByRole('link', { name: /siguiente/i })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('link', { name: /siguiente/i })
+    ).not.toBeInTheDocument();
   });
 
   it('debería incluir el título de la lección anterior en el botón', () => {
@@ -99,7 +107,13 @@ describe('LeccionNavigation', () => {
     );
     const linkAnterior = screen.getByRole('link', { name: /anterior/i });
     const linkSiguiente = screen.getByRole('link', { name: /siguiente/i });
-    expect(linkAnterior).toHaveAttribute('href', '/cursos/mi-curso/lecciones/lec-1');
-    expect(linkSiguiente).toHaveAttribute('href', '/cursos/mi-curso/lecciones/lec-3');
+    expect(linkAnterior).toHaveAttribute(
+      'href',
+      '/cursos/mi-curso/lecciones/lec-1'
+    );
+    expect(linkSiguiente).toHaveAttribute(
+      'href',
+      '/cursos/mi-curso/lecciones/lec-3'
+    );
   });
 });

@@ -3,6 +3,7 @@
 Hooks activos en el proyecto, qué hacen y por qué existen.
 
 Archivos:
+
 - Configuración: `.claude/settings.json`
 - Scripts: `.claude/hooks/*.sh`
 
@@ -10,14 +11,14 @@ Archivos:
 
 ## Resumen de Hooks Activos
 
-| Hook | Evento | Herramienta | Efecto |
-|------|--------|-------------|--------|
-| `contexto-sesion` | SessionStart | — | Inyecta contexto al iniciar/retomar sesión |
-| `bloquear-destructivos` | PreToolUse | Bash | Bloquea comandos irreversibles |
-| `advertir-prisma` | PreToolUse | Bash | Bloquea `migrate reset`, advierte sobre `migrate deploy` |
-| `proteger-archivos` | PreToolUse | Edit/Write | Bloquea edición de archivos críticos |
-| `detectar-secretos` | PreToolUse | Edit/Write | Bloquea escritura de secretos hardcodeados |
-| `validar-schema-prisma` | PostToolUse | Edit/Write | Valida sintaxis del schema.prisma al guardarlo |
+| Hook                    | Evento       | Herramienta | Efecto                                                   |
+| ----------------------- | ------------ | ----------- | -------------------------------------------------------- |
+| `contexto-sesion`       | SessionStart | —           | Inyecta contexto al iniciar/retomar sesión               |
+| `bloquear-destructivos` | PreToolUse   | Bash        | Bloquea comandos irreversibles                           |
+| `advertir-prisma`       | PreToolUse   | Bash        | Bloquea `migrate reset`, advierte sobre `migrate deploy` |
+| `proteger-archivos`     | PreToolUse   | Edit/Write  | Bloquea edición de archivos críticos                     |
+| `detectar-secretos`     | PreToolUse   | Edit/Write  | Bloquea escritura de secretos hardcodeados               |
+| `validar-schema-prisma` | PostToolUse  | Edit/Write  | Valida sintaxis del schema.prisma al guardarlo           |
 
 ---
 
@@ -40,6 +41,7 @@ Archivos:
 **Por qué existe:** Comandos como `rm -rf`, `git push --force` o `git reset --hard` son irreversibles. Aunque Claude generalmente los evita, un prompt descuidado o una instrucción ambigua podría llevar a ejecutarlos.
 
 **Qué bloquea:**
+
 - `rm -rf /`, `rm -rf .`, `rm -rf *`
 - `git push --force` / `git push -f`
 - `git reset --hard`
@@ -58,6 +60,7 @@ Archivos:
 **Por qué existe:** En Amauta **no hay base de datos local**. Cualquier operación de Prisma afecta directamente la base de datos de producción en el VPS. Un `migrate reset` borraría todos los datos reales.
 
 **Comportamiento:**
+
 - `prisma migrate reset` → **bloqueado** (destruye todos los datos)
 - `prisma migrate dev` / `prisma migrate deploy` → **advertencia** (Claude puede continuar, pero recibe el aviso)
 - `prisma generate`, `prisma validate`, `prisma format` → permitido sin aviso
@@ -71,6 +74,7 @@ Archivos:
 **Por qué existe:** Algunos archivos no deberían ser modificados por Claude porque tienen implicaciones que van más allá del código.
 
 **Qué protege:**
+
 - `.env`, `.env.production`, `.env.local` — contienen secretos reales
 - `.github/workflows/` — un cambio mal hecho rompe el pipeline de CI/CD
 - `package-lock.json` — generado automáticamente, no editar a mano
@@ -88,6 +92,7 @@ Archivos:
 **Por qué existe:** Claude puede hardcodear valores reales si el prompt no es cuidadoso. Este hook escanea el contenido antes de guardarlo.
 
 **Qué detecta:**
+
 - Patrones de API keys, secrets, passwords, tokens
 - Claves privadas (RSA, EC)
 - Claves de Anthropic (`sk-...`)
@@ -106,6 +111,7 @@ Archivos:
 **Por qué existe:** Los errores de sintaxis en el schema de Prisma no se detectan hasta ejecutar un comando de Prisma. Este hook valida inmediatamente después de cada cambio.
 
 **Efecto:**
+
 - Si el schema es válido → mensaje de confirmación, continúa
 - Si tiene errores → Claude los recibe y debe corregirlos antes de avanzar
 

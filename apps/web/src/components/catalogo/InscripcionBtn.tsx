@@ -145,7 +145,9 @@ export function InscripcionBtn({
             </h3>
             <p className="mb-6 text-sm text-[var(--muted)]">
               ¿Estás seguro de que querés cancelar tu inscripción en{' '}
-              <strong className="text-[var(--foreground)]">{cursoTitulo}</strong>
+              <strong className="text-[var(--foreground)]">
+                {cursoTitulo}
+              </strong>
               ? Tu progreso se perderá.
             </p>
             <div className="flex gap-3">

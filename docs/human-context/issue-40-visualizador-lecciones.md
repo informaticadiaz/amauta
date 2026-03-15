@@ -32,13 +32,13 @@
 
 ## Tipos de contenido soportados
 
-| Tipo | ¿Cómo se ve? |
-| --- | --- |
-| Texto | Se muestra como texto formateado en la página |
-| Video YouTube | Se reproduce directamente en la página (sin salir) |
-| Video Vimeo | Se reproduce directamente en la página |
-| Video propio | Se reproduce con el reproductor del navegador |
-| Quiz / Interactivo | Próximamente disponible |
+| Tipo               | ¿Cómo se ve?                                       |
+| ------------------ | -------------------------------------------------- |
+| Texto              | Se muestra como texto formateado en la página      |
+| Video YouTube      | Se reproduce directamente en la página (sin salir) |
+| Video Vimeo        | Se reproduce directamente en la página             |
+| Video propio       | Se reproduce con el reproductor del navegador      |
+| Quiz / Interactivo | Próximamente disponible                            |
 
 ---
 
@@ -50,19 +50,19 @@ Solo podés ver las lecciones si **estás inscrito en el curso**. Si entrás a l
 
 ## Quién puede usarlo
 
-| Rol | ¿Puede ver lecciones? |
-| --- | --- |
-| ESTUDIANTE | ✅ (si está inscrito) |
-| EDUCADOR | ✅ (si está inscrito) |
+| Rol           | ¿Puede ver lecciones? |
+| ------------- | --------------------- |
+| ESTUDIANTE    | ✅ (si está inscrito) |
+| EDUCADOR      | ✅ (si está inscrito) |
 | ADMIN_ESCUELA | ✅ (si está inscrito) |
-| SUPER_ADMIN | ✅ (si está inscrito) |
+| SUPER_ADMIN   | ✅ (si está inscrito) |
 
 ---
 
 ## Usuarios de prueba para testear
 
-| Email | Contraseña | Rol |
-| --- | --- | --- |
+| Email                   | Contraseña  | Rol        |
+| ----------------------- | ----------- | ---------- |
 | estudiante1@amauta.test | password123 | ESTUDIANTE |
 | estudiante2@amauta.test | password123 | ESTUDIANTE |
 

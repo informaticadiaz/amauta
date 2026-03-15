@@ -6,10 +6,10 @@ Controla las operaciones de Prisma que afectan la base de datos de producción.
 
 ## Archivos
 
-| Tipo | Ruta |
-|------|------|
-| Script | `.claude/hooks/advertir-prisma.sh` |
-| Configuración | `.claude/settings.json` |
+| Tipo          | Ruta                               |
+| ------------- | ---------------------------------- |
+| Script        | `.claude/hooks/advertir-prisma.sh` |
+| Configuración | `.claude/settings.json`            |
 
 ---
 
@@ -34,15 +34,15 @@ Se dispara antes de ejecutar cualquier comando bash. Internamente filtra solo lo
 
 ## Comportamiento por comando
 
-| Comando | Efecto del hook |
-|---------|----------------|
-| `prisma migrate reset` | **Bloqueado** — destruye todos los datos |
-| `prisma migrate dev` | **Advertencia** — Claude puede continuar pero recibe el aviso |
+| Comando                 | Efecto del hook                                               |
+| ----------------------- | ------------------------------------------------------------- |
+| `prisma migrate reset`  | **Bloqueado** — destruye todos los datos                      |
+| `prisma migrate dev`    | **Advertencia** — Claude puede continuar pero recibe el aviso |
 | `prisma migrate deploy` | **Advertencia** — Claude puede continuar pero recibe el aviso |
-| `prisma generate` | Permitido sin aviso |
-| `prisma validate` | Permitido sin aviso |
-| `prisma format` | Permitido sin aviso |
-| `prisma studio` | Permitido sin aviso |
+| `prisma generate`       | Permitido sin aviso                                           |
+| `prisma validate`       | Permitido sin aviso                                           |
+| `prisma format`         | Permitido sin aviso                                           |
+| `prisma studio`         | Permitido sin aviso                                           |
 
 ---
 

@@ -27,9 +27,9 @@ Ejecuta un análisis de performance completo del proyecto
 
 ## Parámetros
 
-| Parámetro | Descripción                                                            | Ejemplo                         |
-| --------- | ---------------------------------------------------------------------- | ------------------------------- |
-| `scope`   | Qué analizar: módulo, página, capa (backend/frontend/db), o "completo" | `módulo de inscripciones`       |
+| Parámetro | Descripción                                                            | Ejemplo                   |
+| --------- | ---------------------------------------------------------------------- | ------------------------- |
+| `scope`   | Qué analizar: módulo, página, capa (backend/frontend/db), o "completo" | `módulo de inscripciones` |
 
 ---
 
@@ -39,14 +39,15 @@ Ejecuta un análisis de performance completo del proyecto
 
 Determinar qué archivos analizar según el scope indicado:
 
-| Scope indicado         | Archivos a analizar                                                              |
-| ---------------------- | -------------------------------------------------------------------------------- |
-| Módulo backend         | `apps/api/src/[modulo]/**/*.ts` (service, controller, module)                    |
-| Página frontend        | `apps/web/src/app/[ruta]/**/*.tsx` + componentes usados                          |
-| Capa de base de datos  | `apps/api/src/**/*.service.ts` + `apps/api/prisma/schema.prisma`                 |
-| Completo               | Todo lo anterior en orden: DB → Backend → Frontend                               |
+| Scope indicado        | Archivos a analizar                                              |
+| --------------------- | ---------------------------------------------------------------- |
+| Módulo backend        | `apps/api/src/[modulo]/**/*.ts` (service, controller, module)    |
+| Página frontend       | `apps/web/src/app/[ruta]/**/*.tsx` + componentes usados          |
+| Capa de base de datos | `apps/api/src/**/*.service.ts` + `apps/api/prisma/schema.prisma` |
+| Completo              | Todo lo anterior en orden: DB → Backend → Frontend               |
 
 Antes de analizar:
+
 - Leer `apps/api/prisma/schema.prisma` para entender índices y relaciones
 - Leer `docs/ai-context/_patterns.md` para conocer los patrones del proyecto
 - Si hay módulo específico: leer `docs/ai-context/modules/[modulo].md`
@@ -65,7 +66,9 @@ Buscar patrones donde se hacen consultas dentro de loops:
 // ❌ PROBLEMA N+1: Una query por elemento
 const cursos = await prisma.curso.findMany();
 for (const curso of cursos) {
-  curso.lecciones = await prisma.leccion.findMany({ where: { cursoId: curso.id } });
+  curso.lecciones = await prisma.leccion.findMany({
+    where: { cursoId: curso.id },
+  });
 }
 
 // ✅ CORRECTO: Una sola query con include
@@ -137,6 +140,7 @@ const total = await prisma.leccion.count({ where: { cursoId } });
 #### 3.1 Caché ausente en endpoints de lectura frecuente
 
 Identificar endpoints GET que:
+
 - No tienen caché (`@CacheInterceptor`, Redis)
 - Son llamados frecuentemente (catálogo, detalle de curso, listas públicas)
 - Retornan datos que no cambian con frecuencia
@@ -151,6 +155,7 @@ Identificar endpoints GET que:
 #### 3.2 Operaciones síncronas bloqueantes
 
 Buscar código CPU-intensivo en el hilo principal:
+
 - Ordenamientos y filtros en memoria sobre arrays grandes (debería ser en DB)
 - Transformaciones de datos complejas sin streams
 - Cálculos matemáticos pesados sin workers
@@ -185,6 +190,7 @@ Buscar validaciones repetidas en controller y service para el mismo dato.
 #### 4.1 Rerenders innecesarios
 
 Buscar componentes que se re-renderizan sin necesidad:
+
 - Funciones creadas inline en JSX sin `useCallback`
 - Objetos creados inline como props sin `useMemo`
 - Componentes que no usan `memo` pero reciben props estables
@@ -209,12 +215,16 @@ const curso = await fetchCurso(slug);
 const lecciones = await fetchLecciones(curso.id);
 
 // ✅ Paralelo si el id es conocido por otra vía, o combinar en un endpoint
-const [curso, lecciones] = await Promise.all([fetchCurso(slug), fetchLecciones(slug)]);
+const [curso, lecciones] = await Promise.all([
+  fetchCurso(slug),
+  fetchLecciones(slug),
+]);
 ```
 
 #### 4.3 Imágenes sin optimizar
 
 Buscar uso de `<img>` nativo en lugar de `<Image>` de Next.js:
+
 ```typescript
 // ❌
 <img src={curso.imagen} />
@@ -254,13 +264,19 @@ dependencias, o sin array (se ejecuta en cada render):
 
 ```typescript
 // ❌ Se ejecuta en cada render (falta array de deps)
-useEffect(() => { fetchData(cursoId); });
+useEffect(() => {
+  fetchData(cursoId);
+});
 
 // ❌ Nunca se actualiza cuando cambia cursoId (deps vacías pero usa cursoId)
-useEffect(() => { fetchData(cursoId); }, []);
+useEffect(() => {
+  fetchData(cursoId);
+}, []);
 
 // ✅
-useEffect(() => { fetchData(cursoId); }, [cursoId]);
+useEffect(() => {
+  fetchData(cursoId);
+}, [cursoId]);
 ```
 
 ---
@@ -295,6 +311,7 @@ Producir el informe en este formato exacto:
 **Impacto:** [Descripción del impacto en el usuario: latencia, memoria, CPU, etc.]
 
 **Código actual:**
+
 ```typescript
 // código problemático con contexto suficiente
 ```
@@ -303,6 +320,7 @@ Producir el informe en este formato exacto:
 [Explicación técnica concisa — qué ocurre internamente, a qué escala empeora]
 
 **Solución recomendada:**
+
 ```typescript
 // código corregido
 ```
@@ -332,11 +350,11 @@ Producir el informe en este formato exacto:
 
 ### Métricas Proyectadas
 
-| Mejora                    | Estado actual (estimado) | Después de correcciones | Ganancia         |
-| ------------------------- | ------------------------ | ----------------------- | ---------------- |
-| Queries por request       | N                        | M                       | -X%              |
-| Tiempo de respuesta avg   | Xms                      | Yms                     | -Z%              |
-| Re-renders por interacción | N                        | M                        | -X%             |
+| Mejora                     | Estado actual (estimado) | Después de correcciones | Ganancia |
+| -------------------------- | ------------------------ | ----------------------- | -------- |
+| Queries por request        | N                        | M                       | -X%      |
+| Tiempo de respuesta avg    | Xms                      | Yms                     | -Z%      |
+| Re-renders por interacción | N                        | M                       | -X%      |
 
 > **Nota**: Las métricas son estimaciones basadas en análisis estático.
 > Para métricas reales usar: `EXPLAIN ANALYZE` en PostgreSQL, React DevTools Profiler,
@@ -373,12 +391,12 @@ Ordenado por ratio impacto/esfuerzo (lo más valioso primero):
 
 ## Niveles de Severidad
 
-| Nivel        | Símbolo | Criterio                                                                         |
-| ------------ | ------- | -------------------------------------------------------------------------------- |
-| **Crítico**  | 🔴      | Degrada performance O(n) o peor con datos reales — impacta a todos los usuarios  |
-| **Alto**     | 🟠      | Latencia perceptible o renders innecesarios — impacta experiencia notablemente   |
-| **Medio**    | 🟡      | Ineficiencia que escala mal o desperdicia recursos — visible bajo carga           |
-| **Bajo**     | 🔵      | Mejora de calidad / buenas prácticas — impacto menor, pero vale la pena resolver |
+| Nivel       | Símbolo | Criterio                                                                         |
+| ----------- | ------- | -------------------------------------------------------------------------------- |
+| **Crítico** | 🔴      | Degrada performance O(n) o peor con datos reales — impacta a todos los usuarios  |
+| **Alto**    | 🟠      | Latencia perceptible o renders innecesarios — impacta experiencia notablemente   |
+| **Medio**   | 🟡      | Ineficiencia que escala mal o desperdicia recursos — visible bajo carga          |
+| **Bajo**    | 🔵      | Mejora de calidad / buenas prácticas — impacto menor, pero vale la pena resolver |
 
 ## Notas para el Análisis
 

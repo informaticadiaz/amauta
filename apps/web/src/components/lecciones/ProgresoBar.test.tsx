@@ -41,7 +41,11 @@ describe('ProgresoBar', () => {
 
   it('debería mostrar la cantidad de lecciones completadas si se provee', () => {
     render(
-      <ProgresoBar porcentaje={50} leccionesCompletadas={3} totalLecciones={6} />
+      <ProgresoBar
+        porcentaje={50}
+        leccionesCompletadas={3}
+        totalLecciones={6}
+      />
     );
     expect(screen.getByText(/3.*6|3 de 6/i)).toBeInTheDocument();
   });

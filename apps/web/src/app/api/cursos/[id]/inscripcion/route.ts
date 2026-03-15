@@ -46,15 +46,12 @@ export async function GET(
     const { id } = await params;
     const authToken = await createAuthToken(token);
 
-    const response = await fetch(
-      `${API_URL}/api/v1/cursos/${id}/inscripcion`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      }
-    );
+    const response = await fetch(`${API_URL}/api/v1/cursos/${id}/inscripcion`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
 
     const data = await response.json();
     return NextResponse.json(data, { status: response.status });

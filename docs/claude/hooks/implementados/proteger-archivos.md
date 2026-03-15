@@ -6,10 +6,10 @@ Bloquea que Claude edite o cree archivos que no deberían modificarse sin superv
 
 ## Archivos
 
-| Tipo | Ruta |
-|------|------|
-| Script | `.claude/hooks/proteger-archivos.sh` |
-| Configuración | `.claude/settings.json` |
+| Tipo          | Ruta                                 |
+| ------------- | ------------------------------------ |
+| Script        | `.claude/hooks/proteger-archivos.sh` |
+| Configuración | `.claude/settings.json`              |
 
 ---
 
@@ -36,15 +36,15 @@ Se dispara antes de que Claude edite un archivo existente o cree uno nuevo. Veri
 
 ## Archivos protegidos
 
-| Patrón | Motivo |
-|--------|--------|
-| `.env` | Contiene secretos reales. Editar manualmente. |
-| `.env.production` | Variables de producción. Solo con supervisión. |
-| `.env.local` | Variables locales sensibles. Editar manualmente. |
-| `.github/workflows/` | Pipeline CI/CD. Un cambio mal hecho rompe el deploy. |
-| `package-lock.json` | Generado automáticamente. Actualizar con `npm install`. |
-| `.husky/` | Hooks de git del proyecto. Ya están configurados. |
-| `commitlint.config.*` | Reglas de commits del proyecto. No modificar. |
+| Patrón                | Motivo                                                  |
+| --------------------- | ------------------------------------------------------- |
+| `.env`                | Contiene secretos reales. Editar manualmente.           |
+| `.env.production`     | Variables de producción. Solo con supervisión.          |
+| `.env.local`          | Variables locales sensibles. Editar manualmente.        |
+| `.github/workflows/`  | Pipeline CI/CD. Un cambio mal hecho rompe el deploy.    |
+| `package-lock.json`   | Generado automáticamente. Actualizar con `npm install`. |
+| `.husky/`             | Hooks de git del proyecto. Ya están configurados.       |
+| `commitlint.config.*` | Reglas de commits del proyecto. No modificar.           |
 
 ---
 

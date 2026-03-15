@@ -12,7 +12,9 @@ import { SignJWT } from 'jose';
 const API_URL = process.env.API_URL || 'http://localhost:3001';
 const AUTH_SECRET = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET;
 
-async function createAuthToken(token: Record<string, unknown>): Promise<string> {
+async function createAuthToken(
+  token: Record<string, unknown>
+): Promise<string> {
   const secret = new TextEncoder().encode(AUTH_SECRET);
   return new SignJWT({
     id: token.id as string,
@@ -44,12 +46,15 @@ export async function POST(
     const { id } = await params;
     const authToken = await createAuthToken(token);
 
-    const response = await fetch(`${API_URL}/api/v1/lecciones/${id}/completar`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    });
+    const response = await fetch(
+      `${API_URL}/api/v1/lecciones/${id}/completar`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
 
     const data = await response.json();
     return NextResponse.json(data, { status: response.status });

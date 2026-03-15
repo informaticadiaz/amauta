@@ -17,7 +17,11 @@ interface Props {
   leccionSiguiente: LeccionRef | null;
 }
 
-export function LeccionNavigation({ cursoSlug, leccionAnterior, leccionSiguiente }: Props) {
+export function LeccionNavigation({
+  cursoSlug,
+  leccionAnterior,
+  leccionSiguiente,
+}: Props) {
   if (!leccionAnterior && !leccionSiguiente) {
     return null;
   }

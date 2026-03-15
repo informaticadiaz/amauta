@@ -120,7 +120,10 @@ describe('InscripcionesController', () => {
     it('debería retornar void (204 No Content)', async () => {
       mockInscripcionesService.cancelarInscripcion.mockResolvedValue(undefined);
 
-      const result = await controller.cancelarInscripcion('curso-123', mockUser);
+      const result = await controller.cancelarInscripcion(
+        'curso-123',
+        mockUser
+      );
 
       expect(result).toBeUndefined();
     });
@@ -210,10 +213,9 @@ describe('InscripcionesController', () => {
       const query = { page: 1, limit: 10 };
       await controller.listarMisInscripciones(mockUser, query);
 
-      expect(mockInscripcionesService.listarMisInscripciones).toHaveBeenCalledWith(
-        mockUser.id,
-        query
-      );
+      expect(
+        mockInscripcionesService.listarMisInscripciones
+      ).toHaveBeenCalledWith(mockUser.id, query);
     });
   });
 });

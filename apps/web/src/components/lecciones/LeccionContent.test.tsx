@@ -12,7 +12,11 @@ describe('LeccionContent', () => {
     it('debería renderizar contenido HTML de texto', () => {
       const contenido = { html: '<p>Hola mundo</p>', markdown: '# Hola' };
       render(
-        <LeccionContent tipo="TEXTO" contenido={contenido} titulo="Lección de texto" />
+        <LeccionContent
+          tipo="TEXTO"
+          contenido={contenido}
+          titulo="Lección de texto"
+        />
       );
       expect(screen.getByText('Hola mundo')).toBeInTheDocument();
     });
@@ -20,7 +24,11 @@ describe('LeccionContent', () => {
     it('debería mostrar el título de la lección', () => {
       const contenido = { html: '<p>Contenido</p>' };
       render(
-        <LeccionContent tipo="TEXTO" contenido={contenido} titulo="Mi Lección" />
+        <LeccionContent
+          tipo="TEXTO"
+          contenido={contenido}
+          titulo="Mi Lección"
+        />
       );
       expect(screen.getByText('Mi Lección')).toBeInTheDocument();
     });
@@ -40,7 +48,11 @@ describe('LeccionContent', () => {
         provider: 'youtube',
       };
       render(
-        <LeccionContent tipo="VIDEO" contenido={contenido} titulo="Video de YouTube" />
+        <LeccionContent
+          tipo="VIDEO"
+          contenido={contenido}
+          titulo="Video de YouTube"
+        />
       );
       const iframe = document.querySelector('iframe');
       expect(iframe).toBeInTheDocument();
@@ -53,7 +65,11 @@ describe('LeccionContent', () => {
         provider: 'vimeo',
       };
       render(
-        <LeccionContent tipo="VIDEO" contenido={contenido} titulo="Video de Vimeo" />
+        <LeccionContent
+          tipo="VIDEO"
+          contenido={contenido}
+          titulo="Video de Vimeo"
+        />
       );
       const iframe = document.querySelector('iframe');
       expect(iframe).toBeInTheDocument();
@@ -66,7 +82,11 @@ describe('LeccionContent', () => {
         provider: 'local',
       };
       render(
-        <LeccionContent tipo="VIDEO" contenido={contenido} titulo="Video local" />
+        <LeccionContent
+          tipo="VIDEO"
+          contenido={contenido}
+          titulo="Video local"
+        />
       );
       const video = document.querySelector('video');
       expect(video).toBeInTheDocument();
@@ -82,9 +102,7 @@ describe('LeccionContent', () => {
 
   describe('tipos no soportados', () => {
     it('debería mostrar mensaje para tipo QUIZ', () => {
-      render(
-        <LeccionContent tipo="QUIZ" contenido={{}} titulo="Quiz" />
-      );
+      render(<LeccionContent tipo="QUIZ" contenido={{}} titulo="Quiz" />);
       expect(screen.getByText(/próximamente/i)).toBeInTheDocument();
     });
   });

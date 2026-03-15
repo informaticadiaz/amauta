@@ -23,30 +23,27 @@ describe('CompletarLeccionBtn', () => {
   });
 
   it('debería mostrar "Marcar como completada" cuando no está completada', () => {
-    render(
-      <CompletarLeccionBtn leccionId="lec-1" completada={false} />
-    );
+    render(<CompletarLeccionBtn leccionId="lec-1" completada={false} />);
     expect(
       screen.getByRole('button', { name: /marcar como completada/i })
     ).toBeInTheDocument();
   });
 
   it('debería mostrar estado completado cuando completada=true', () => {
-    render(
-      <CompletarLeccionBtn leccionId="lec-1" completada={true} />
-    );
+    render(<CompletarLeccionBtn leccionId="lec-1" completada={true} />);
     expect(screen.getByText(/completada/i)).toBeInTheDocument();
   });
 
   it('debería llamar a la API al hacer click y actualizar estado optimísticamente', async () => {
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ progreso: { completado: true }, message: 'Lección marcada como completada' }),
+      json: async () => ({
+        progreso: { completado: true },
+        message: 'Lección marcada como completada',
+      }),
     });
 
-    render(
-      <CompletarLeccionBtn leccionId="lec-1" completada={false} />
-    );
+    render(<CompletarLeccionBtn leccionId="lec-1" completada={false} />);
 
     const btn = screen.getByRole('button', { name: /marcar como completada/i });
     fireEvent.click(btn);
@@ -68,11 +65,11 @@ describe('CompletarLeccionBtn', () => {
       json: async () => ({ progreso: { completado: true }, message: 'ok' }),
     });
 
-    render(
-      <CompletarLeccionBtn leccionId="lec-1" completada={false} />
-    );
+    render(<CompletarLeccionBtn leccionId="lec-1" completada={false} />);
 
-    fireEvent.click(screen.getByRole('button', { name: /marcar como completada/i }));
+    fireEvent.click(
+      screen.getByRole('button', { name: /marcar como completada/i })
+    );
 
     await waitFor(() => {
       expect(mockRefresh).toHaveBeenCalled();
@@ -85,22 +82,24 @@ describe('CompletarLeccionBtn', () => {
       json: async () => ({ message: 'Error' }),
     });
 
-    render(
-      <CompletarLeccionBtn leccionId="lec-1" completada={false} />
+    render(<CompletarLeccionBtn leccionId="lec-1" completada={false} />);
+
+    fireEvent.click(
+      screen.getByRole('button', { name: /marcar como completada/i })
     );
 
-    fireEvent.click(screen.getByRole('button', { name: /marcar como completada/i }));
-
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /marcar como completada/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: /marcar como completada/i })
+      ).toBeInTheDocument();
     });
   });
 
   it('debería deshabilitar el botón si ya está completada', () => {
-    render(
-      <CompletarLeccionBtn leccionId="lec-1" completada={true} />
-    );
-    const btn = screen.queryByRole('button', { name: /marcar como completada/i });
+    render(<CompletarLeccionBtn leccionId="lec-1" completada={true} />);
+    const btn = screen.queryByRole('button', {
+      name: /marcar como completada/i,
+    });
     // No debe mostrar el botón activo, o debe estar deshabilitado
     expect(btn).not.toBeInTheDocument();
   });
@@ -108,18 +107,22 @@ describe('CompletarLeccionBtn', () => {
   it('debería mostrar estado de carga durante la petición', async () => {
     let resolvePromise!: (value: unknown) => void;
     mockFetch.mockReturnValueOnce(
-      new Promise((resolve) => { resolvePromise = resolve; })
+      new Promise((resolve) => {
+        resolvePromise = resolve;
+      })
     );
 
-    render(
-      <CompletarLeccionBtn leccionId="lec-1" completada={false} />
-    );
+    render(<CompletarLeccionBtn leccionId="lec-1" completada={false} />);
 
-    fireEvent.click(screen.getByRole('button', { name: /marcar como completada/i }));
+    fireEvent.click(
+      screen.getByRole('button', { name: /marcar como completada/i })
+    );
 
     // Mientras carga: el botón está deshabilitado
     await waitFor(() => {
-      const btn = screen.queryByRole('button', { name: /marcar como completada/i });
+      const btn = screen.queryByRole('button', {
+        name: /marcar como completada/i,
+      });
       if (btn) {
         expect(btn).toBeDisabled();
       }
@@ -140,10 +143,16 @@ describe('CompletarLeccionBtn', () => {
     });
 
     render(
-      <CompletarLeccionBtn leccionId="lec-1" completada={false} onCompletada={onCompletada} />
+      <CompletarLeccionBtn
+        leccionId="lec-1"
+        completada={false}
+        onCompletada={onCompletada}
+      />
     );
 
-    fireEvent.click(screen.getByRole('button', { name: /marcar como completada/i }));
+    fireEvent.click(
+      screen.getByRole('button', { name: /marcar como completada/i })
+    );
 
     await waitFor(() => {
       expect(onCompletada).toHaveBeenCalled();

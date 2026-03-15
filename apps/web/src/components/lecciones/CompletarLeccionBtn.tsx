@@ -15,7 +15,11 @@ interface Props {
   onCompletada?: () => void;
 }
 
-export function CompletarLeccionBtn({ leccionId, completada = false, onCompletada }: Props) {
+export function CompletarLeccionBtn({
+  leccionId,
+  completada = false,
+  onCompletada,
+}: Props) {
   const router = useRouter();
   const [completadaState, setCompletadaState] = useState(completada);
   const [loading, setLoading] = useState(false);
@@ -33,7 +37,11 @@ export function CompletarLeccionBtn({ leccionId, completada = false, onCompletad
           strokeWidth="2.5"
           stroke="currentColor"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M4.5 12.75l6 6 9-13.5"
+          />
         </svg>
         Completada
       </div>
@@ -75,11 +83,7 @@ export function CompletarLeccionBtn({ leccionId, completada = false, onCompletad
     >
       {loading ? (
         <>
-          <svg
-            className="h-4 w-4 animate-spin"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
+          <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
             <circle
               className="opacity-25"
               cx="12"
@@ -105,7 +109,11 @@ export function CompletarLeccionBtn({ leccionId, completada = false, onCompletad
             strokeWidth="2"
             stroke="currentColor"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M4.5 12.75l6 6 9-13.5"
+            />
           </svg>
           Marcar como completada
         </>

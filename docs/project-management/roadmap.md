@@ -91,24 +91,24 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 
 ### Progreso Sprint 2
 
-| Issue | Título                                    | Estado        |
-| ----- | ----------------------------------------- | ------------- |
-| #33   | F1-006: Sistema de subida de imágenes     | ✅ Completado |
-| #34   | F1-007: API CRUD de lecciones             | ✅ Completado |
-| #35   | F1-008: UI para gestión de lecciones      | ✅ Completado |
-| #36   | F1-009: Catálogo público de cursos        | ✅ Completado |
-| #37   | F1-010: Página de detalle de curso        | ✅ Completado |
+| Issue | Título                                | Estado        |
+| ----- | ------------------------------------- | ------------- |
+| #33   | F1-006: Sistema de subida de imágenes | ✅ Completado |
+| #34   | F1-007: API CRUD de lecciones         | ✅ Completado |
+| #35   | F1-008: UI para gestión de lecciones  | ✅ Completado |
+| #36   | F1-009: Catálogo público de cursos    | ✅ Completado |
+| #37   | F1-010: Página de detalle de curso    | ✅ Completado |
 
 ### Progreso Sprint 3
 
-| Issue | Título                                          | Estado        | Prioridad   |
-| ----- | ----------------------------------------------- | ------------- | ----------- |
-| #38   | F1-011: API sistema de inscripción              | ✅ Completado | must-have   |
-| #39   | F1-012: UI de inscripción y mis cursos          | ✅ Completado | must-have   |
-| #40   | F1-013: Visualizador de lecciones para estud.   | ✅ Completado | must-have   |
-| #41   | F1-014: API seguimiento de progreso             | ✅ Completado | must-have   |
-| #42   | F1-015: UI marcar lecciones completadas         | ✅ Completado | must-have   |
-| #43   | F1-016: Dashboard de estudiante                 | ✅ Completado | should-have |
+| Issue | Título                                        | Estado        | Prioridad   |
+| ----- | --------------------------------------------- | ------------- | ----------- |
+| #38   | F1-011: API sistema de inscripción            | ✅ Completado | must-have   |
+| #39   | F1-012: UI de inscripción y mis cursos        | ✅ Completado | must-have   |
+| #40   | F1-013: Visualizador de lecciones para estud. | ✅ Completado | must-have   |
+| #41   | F1-014: API seguimiento de progreso           | ✅ Completado | must-have   |
+| #42   | F1-015: UI marcar lecciones completadas       | ✅ Completado | must-have   |
+| #43   | F1-016: Dashboard de estudiante               | ✅ Completado | should-have |
 
 ### Objetivos
 

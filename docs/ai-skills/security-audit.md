@@ -31,9 +31,9 @@ Ejecuta una auditoría de seguridad completa del proyecto
 
 ## Parámetros
 
-| Parámetro | Descripción                                                                    | Ejemplo                        |
-| --------- | ------------------------------------------------------------------------------ | ------------------------------ |
-| `scope`   | Qué auditar: módulo, capa (auth/api/frontend/uploads/db), o "completo"         | `módulo de inscripciones`      |
+| Parámetro | Descripción                                                            | Ejemplo                   |
+| --------- | ---------------------------------------------------------------------- | ------------------------- |
+| `scope`   | Qué auditar: módulo, capa (auth/api/frontend/uploads/db), o "completo" | `módulo de inscripciones` |
 
 ---
 
@@ -43,17 +43,18 @@ Ejecuta una auditoría de seguridad completa del proyecto
 
 Determinar qué archivos auditar según el scope indicado:
 
-| Scope indicado          | Archivos a auditar                                                                   |
-| ----------------------- | ------------------------------------------------------------------------------------ |
-| Módulo backend          | `apps/api/src/[modulo]/**/*.ts` (service, controller, guards, DTOs)                  |
-| Auth                    | `apps/api/src/auth/**` + `apps/web/src/app/api/auth/**` + middleware                 |
-| API Routes (frontend)   | `apps/web/src/app/api/**/*.ts`                                                       |
-| Uploads                 | `apps/api/src/uploads/**` + configuración de Multer/FastifyMultipart                 |
-| Base de datos           | `apps/api/src/**/*.service.ts` + `apps/api/prisma/schema.prisma`                     |
-| Frontend                | `apps/web/src/app/**/*.tsx` + `apps/web/src/components/**/*.tsx`                     |
-| Completo                | Todo lo anterior en orden: Auth → Backend → DB → Uploads → Frontend                 |
+| Scope indicado        | Archivos a auditar                                                   |
+| --------------------- | -------------------------------------------------------------------- |
+| Módulo backend        | `apps/api/src/[modulo]/**/*.ts` (service, controller, guards, DTOs)  |
+| Auth                  | `apps/api/src/auth/**` + `apps/web/src/app/api/auth/**` + middleware |
+| API Routes (frontend) | `apps/web/src/app/api/**/*.ts`                                       |
+| Uploads               | `apps/api/src/uploads/**` + configuración de Multer/FastifyMultipart |
+| Base de datos         | `apps/api/src/**/*.service.ts` + `apps/api/prisma/schema.prisma`     |
+| Frontend              | `apps/web/src/app/**/*.tsx` + `apps/web/src/components/**/*.tsx`     |
+| Completo              | Todo lo anterior en orden: Auth → Backend → DB → Uploads → Frontend  |
 
 Antes de auditar:
+
 - Leer `docs/technical/security-guide.md` para conocer las políticas del proyecto
 - Leer `apps/api/prisma/schema.prisma` para entender el modelo de datos
 - Leer `docs/ai-context/_patterns.md` para conocer los patrones esperados
@@ -81,6 +82,7 @@ async listarUsuarios() { ... }
 ```
 
 **Señales de riesgo:**
+
 - Controladores o métodos sin `@UseGuards(JwtAuthGuard)`
 - Uso de `@Public()` en endpoints que deberían requerir autenticación
 - Ausencia de `@Roles()` en operaciones sensibles (borrado, administración)
@@ -125,6 +127,7 @@ JwtModule.register({
 ```
 
 Buscar también:
+
 - Tokens almacenados en `localStorage` (frontend) — debería ser cookie httpOnly
 - Ausencia de validación del campo `sub` o `userId` en el payload
 - `alg: none` aceptado (raramente en NestJS, pero verificar config custom)
@@ -150,7 +153,9 @@ Prisma usa queries parametrizadas por defecto, PERO hay casos peligrosos:
 ```typescript
 // ❌ PELIGROSO: queryRaw con interpolación de string
 await this.prisma.$queryRaw`SELECT * FROM users WHERE email = ${userInput}`; // ✅ Safe (tagged template)
-await this.prisma.$queryRawUnsafe(`SELECT * FROM users WHERE email = '${userInput}'`); // ❌ CRÍTICO
+await this.prisma.$queryRawUnsafe(
+  `SELECT * FROM users WHERE email = '${userInput}'`
+); // ❌ CRÍTICO
 
 // ❌ PELIGROSO: orderBy desde input del usuario sin lista blanca
 const orderBy = { [req.query.sortBy]: req.query.order }; // SQL injection potencial
@@ -206,7 +211,8 @@ if (file.mimetype !== 'image/jpeg') throw new Error();
 import { fileTypeFromBuffer } from 'file-type';
 const type = await fileTypeFromBuffer(buffer);
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-if (!type || !ALLOWED_TYPES.includes(type.mime)) throw new BadRequestException();
+if (!type || !ALLOWED_TYPES.includes(type.mime))
+  throw new BadRequestException();
 ```
 
 #### 4.2 Path Traversal en nombres de archivo
@@ -228,10 +234,10 @@ const filepath = path.join(uploadsDir, safeFilename);
 ```typescript
 // Verificar que existe límite de tamaño en la configuración de Multer/FastifyMultipart
 // ❌ Sin límite
-fileSize: Infinity
+fileSize: Infinity;
 
 // ✅ Límite explícito
-fileSize: 5 * 1024 * 1024 // 5MB máximo
+fileSize: 5 * 1024 * 1024; // 5MB máximo
 ```
 
 #### 4.4 Ejecución de archivos subidos
@@ -264,8 +270,11 @@ export class CrearCursoDto {
 ```
 
 Verificar que el `ValidationPipe` está habilitado globalmente en `main.ts`:
+
 ```typescript
-app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
+app.useGlobalPipes(
+  new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true })
+);
 ```
 
 **`whitelist: true`** es crítico — sin él, propiedades extra del body (que no están en el DTO) pasan al servicio.
@@ -274,11 +283,13 @@ app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: t
 
 ```tsx
 // ❌ CRÍTICO: dangerouslySetInnerHTML sin sanitización
-<div dangerouslySetInnerHTML={{ __html: leccion.contenido }} />
+<div dangerouslySetInnerHTML={{ __html: leccion.contenido }} />;
 
 // ✅ Sanitizar con DOMPurify antes de renderizar HTML
 import DOMPurify from 'isomorphic-dompurify';
-<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(leccion.contenido) }} />
+<div
+  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(leccion.contenido) }}
+/>;
 ```
 
 Buscar: `dangerouslySetInnerHTML`, `.innerHTML =`, `eval(`, `Function(`.
@@ -312,9 +323,12 @@ return this.prisma.usuario.findMany();
 // ✅ Excluir campos sensibles
 return this.prisma.usuario.findMany({
   select: {
-    id: true, nombre: true, email: true, rol: true,
+    id: true,
+    nombre: true,
+    email: true,
+    rol: true,
     // passwordHash: OMITIDO
-  }
+  },
 });
 ```
 
@@ -325,8 +339,8 @@ Buscar: respuestas que incluyen `passwordHash`, `token`, `secret`, claves privad
 ```typescript
 // ❌ CRÍTICO: Secret expuesto al bundle del cliente
 // En next.config.js o en código:
-process.env.JWT_SECRET  // Solo disponible en servidor
-process.env.NEXT_PUBLIC_JWT_SECRET  // ❌ NEXT_PUBLIC_ lo expone al browser
+process.env.JWT_SECRET; // Solo disponible en servidor
+process.env.NEXT_PUBLIC_JWT_SECRET; // ❌ NEXT_PUBLIC_ lo expone al browser
 
 // Regla: NEVER usar NEXT_PUBLIC_ para secretos
 ```
@@ -363,6 +377,7 @@ app.enableCors({
 #### 6.5 Rate Limiting ausente
 
 Verificar que los endpoints sensibles tienen rate limiting:
+
 - `POST /auth/login` — prevenir brute force
 - `POST /auth/register` — prevenir spam
 - `POST /lecciones/:id/completar` — prevenir manipulación de progreso
@@ -379,6 +394,7 @@ Verificar que los endpoints sensibles tienen rate limiting:
 
 Revisar `package.json` en busca de versiones con CVEs conocidos.
 Buscar dependencias desactualizadas en paquetes críticos de seguridad:
+
 - `jsonwebtoken`, `next-auth`, `bcrypt`, `multer`
 
 #### 7.2 Manejo inseguro de errores
@@ -441,6 +457,7 @@ Producir el informe en este formato exacto:
 **Impacto:** [Descripción del impacto: acceso no autorizado, pérdida de datos, RCE, etc.]
 
 **Código vulnerable:**
+
 ```typescript
 // código vulnerable con contexto
 ```
@@ -449,6 +466,7 @@ Producir el informe en este formato exacto:
 [Descripción paso a paso de cómo un atacante podría explotar esto — sin código de explotación real, solo descripción conceptual]
 
 **Remediación:**
+
 ```typescript
 // código corregido
 ```
@@ -478,13 +496,13 @@ Producir el informe en este formato exacto:
 
 ### Resumen de Hallazgos
 
-| Severidad   | Cantidad | OWASP Categoría principal              |
-| ----------- | -------- | -------------------------------------- |
-| 🔴 Crítico  | N        |                                        |
-| 🟠 Alto     | N        |                                        |
-| 🟡 Medio    | N        |                                        |
-| 🔵 Bajo     | N        |                                        |
-| **Total**   | **N**    |                                        |
+| Severidad  | Cantidad | OWASP Categoría principal |
+| ---------- | -------- | ------------------------- |
+| 🔴 Crítico | N        |                           |
+| 🟠 Alto    | N        |                           |
+| 🟡 Medio   | N        |                           |
+| 🔵 Bajo    | N        |                           |
+| **Total**  | **N**    |                           |
 
 ---
 
@@ -513,13 +531,13 @@ Ordenado por riesgo/esfuerzo (más urgente primero):
 
 ## Niveles de Severidad
 
-| Nivel           | Símbolo | Criterio CVSS aproximado                                                           |
-| --------------- | ------- | ---------------------------------------------------------------------------------- |
-| **Crítico**     | 🔴      | CVSS 9.0-10.0 — Explotable remotamente sin auth, impacto total en datos/sistema   |
-| **Alto**        | 🟠      | CVSS 7.0-8.9 — Explotable con auth básica o localmente, impacto significativo     |
-| **Medio**       | 🟡      | CVSS 4.0-6.9 — Requiere condiciones específicas, impacto parcial                   |
-| **Bajo**        | 🔵      | CVSS 0.1-3.9 — Difícil de explotar, impacto mínimo o solo informativo             |
-| **Informativo** | ⚪      | Sin CVSS — Buenas prácticas, hardening adicional recomendado                       |
+| Nivel           | Símbolo | Criterio CVSS aproximado                                                        |
+| --------------- | ------- | ------------------------------------------------------------------------------- |
+| **Crítico**     | 🔴      | CVSS 9.0-10.0 — Explotable remotamente sin auth, impacto total en datos/sistema |
+| **Alto**        | 🟠      | CVSS 7.0-8.9 — Explotable con auth básica o localmente, impacto significativo   |
+| **Medio**       | 🟡      | CVSS 4.0-6.9 — Requiere condiciones específicas, impacto parcial                |
+| **Bajo**        | 🔵      | CVSS 0.1-3.9 — Difícil de explotar, impacto mínimo o solo informativo           |
+| **Informativo** | ⚪      | Sin CVSS — Buenas prácticas, hardening adicional recomendado                    |
 
 ## Notas para la Auditoría
 

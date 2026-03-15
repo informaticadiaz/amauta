@@ -2,7 +2,7 @@
 
 Los hooks son scripts o handlers que se ejecutan automáticamente en puntos específicos del ciclo de vida de Claude Code. Permiten automatizar acciones, aplicar reglas de seguridad y personalizar el comportamiento del agente de forma determinista.
 
-> **Diferencia clave**: los hooks son reglas que *siempre* se ejecutan, a diferencia de los skills que Claude puede decidir usar o no.
+> **Diferencia clave**: los hooks son reglas que _siempre_ se ejecutan, a diferencia de los skills que Claude puede decidir usar o no.
 
 ---
 
@@ -10,53 +10,53 @@ Los hooks son scripts o handlers que se ejecutan automáticamente en puntos espe
 
 ### Sesión
 
-| Evento | Cuándo se dispara |
-|--------|------------------|
-| `SessionStart` | Al iniciar o retomar una sesión |
-| `SessionEnd` | Al terminar la sesión |
+| Evento               | Cuándo se dispara                        |
+| -------------------- | ---------------------------------------- |
+| `SessionStart`       | Al iniciar o retomar una sesión          |
+| `SessionEnd`         | Al terminar la sesión                    |
 | `InstructionsLoaded` | Al cargar CLAUDE.md o archivos de reglas |
 
 ### Entrada del usuario
 
-| Evento | Cuándo se dispara |
-|--------|------------------|
-| `UserPromptSubmit` | Antes de que Claude procese el mensaje del usuario |
-| `ConfigChange` | Cuando un archivo de configuración cambia durante la sesión |
+| Evento             | Cuándo se dispara                                           |
+| ------------------ | ----------------------------------------------------------- |
+| `UserPromptSubmit` | Antes de que Claude procese el mensaje del usuario          |
+| `ConfigChange`     | Cuando un archivo de configuración cambia durante la sesión |
 
 ### Herramientas (los más usados)
 
-| Evento | Cuándo se dispara | ¿Bloquea? |
-|--------|------------------|-----------|
-| `PreToolUse` | Antes de ejecutar una herramienta | Sí |
-| `PostToolUse` | Después de que la herramienta termina | No |
-| `PostToolUseFailure` | Cuando la herramienta falla | No |
-| `PermissionRequest` | Cuando aparece un diálogo de permisos | Sí |
+| Evento               | Cuándo se dispara                     | ¿Bloquea? |
+| -------------------- | ------------------------------------- | --------- |
+| `PreToolUse`         | Antes de ejecutar una herramienta     | Sí        |
+| `PostToolUse`        | Después de que la herramienta termina | No        |
+| `PostToolUseFailure` | Cuando la herramienta falla           | No        |
+| `PermissionRequest`  | Cuando aparece un diálogo de permisos | Sí        |
 
 ### Control de flujo
 
-| Evento | Cuándo se dispara | ¿Bloquea? |
-|--------|------------------|-----------|
-| `Stop` | Cuando Claude termina de responder | Sí |
-| `TaskCompleted` | Cuando una tarea se marca como completada | Sí |
-| `SubagentStart` / `SubagentStop` | Al iniciar/terminar un subagente | No |
+| Evento                           | Cuándo se dispara                         | ¿Bloquea? |
+| -------------------------------- | ----------------------------------------- | --------- |
+| `Stop`                           | Cuando Claude termina de responder        | Sí        |
+| `TaskCompleted`                  | Cuando una tarea se marca como completada | Sí        |
+| `SubagentStart` / `SubagentStop` | Al iniciar/terminar un subagente          | No        |
 
 ### Contexto
 
-| Evento | Cuándo se dispara |
-|--------|------------------|
-| `PreCompact` / `PostCompact` | Antes/después de compactar el contexto |
-| `Notification` | Cuando el sistema envía una notificación |
+| Evento                       | Cuándo se dispara                        |
+| ---------------------------- | ---------------------------------------- |
+| `PreCompact` / `PostCompact` | Antes/después de compactar el contexto   |
+| `Notification`               | Cuando el sistema envía una notificación |
 
 ---
 
 ## Tipos de Handlers
 
-| Tipo | Descripción | Ideal para |
-|------|-------------|------------|
-| `command` | Script bash que recibe JSON por stdin | Validaciones, logging, formateo |
-| `http` | POST a un endpoint externo | Servicios remotos, webhooks |
-| `prompt` | Llamada a Claude Haiku para tomar decisiones | Decisiones con razonamiento |
-| `agent` | Subagente con acceso completo a herramientas | Verificaciones complejas |
+| Tipo      | Descripción                                  | Ideal para                      |
+| --------- | -------------------------------------------- | ------------------------------- |
+| `command` | Script bash que recibe JSON por stdin        | Validaciones, logging, formateo |
+| `http`    | POST a un endpoint externo                   | Servicios remotos, webhooks     |
+| `prompt`  | Llamada a Claude Haiku para tomar decisiones | Decisiones con razonamiento     |
+| `agent`   | Subagente con acceso completo a herramientas | Verificaciones complejas        |
 
 ---
 
@@ -94,6 +94,7 @@ Los hooks son scripts o handlers que se ejecutan automáticamente en puntos espe
 ### Campos disponibles
 
 **Handler `command`**:
+
 ```json
 {
   "type": "command",
@@ -105,6 +106,7 @@ Los hooks son scripts o handlers que se ejecutan automáticamente en puntos espe
 ```
 
 **Handler `http`**:
+
 ```json
 {
   "type": "http",
@@ -116,6 +118,7 @@ Los hooks son scripts o handlers que se ejecutan automáticamente en puntos espe
 ```
 
 **Handler `prompt`**:
+
 ```json
 {
   "type": "prompt",
@@ -130,11 +133,11 @@ Los hooks son scripts o handlers que se ejecutan automáticamente en puntos espe
 
 Los matchers son expresiones regulares que filtran cuándo se dispara el hook:
 
-| Evento | Matchea contra | Ejemplos |
-|--------|---------------|---------|
-| `PreToolUse`, `PostToolUse` | Nombre de la herramienta | `Bash`, `Edit\|Write`, `mcp__.*` |
-| `SessionStart` | Cómo inició la sesión | `startup`, `resume`, `compact` |
-| `Notification` | Tipo de notificación | `permission_prompt`, `idle_prompt` |
+| Evento                      | Matchea contra           | Ejemplos                           |
+| --------------------------- | ------------------------ | ---------------------------------- |
+| `PreToolUse`, `PostToolUse` | Nombre de la herramienta | `Bash`, `Edit\|Write`, `mcp__.*`   |
+| `SessionStart`              | Cómo inició la sesión    | `startup`, `resume`, `compact`     |
+| `Notification`              | Tipo de notificación     | `permission_prompt`, `idle_prompt` |
 
 > Los nombres de herramientas son case-sensitive: `Bash`, `Edit`, `Write`, `Read`, `Glob`, `Grep`.
 
@@ -142,21 +145,21 @@ Los matchers son expresiones regulares que filtran cuándo se dispara el hook:
 
 ## Códigos de Salida (Exit Codes)
 
-| Código | Significado | Efecto |
-|--------|-------------|--------|
-| `0` | Éxito | La acción continúa. stdout se agrega al contexto (solo `SessionStart`/`UserPromptSubmit`) |
-| `2` | Error bloqueante | La acción es bloqueada. stderr se envía como feedback a Claude |
-| Otros | Error no bloqueante | La acción continúa. stderr se loguea pero Claude no lo ve |
+| Código | Significado         | Efecto                                                                                    |
+| ------ | ------------------- | ----------------------------------------------------------------------------------------- |
+| `0`    | Éxito               | La acción continúa. stdout se agrega al contexto (solo `SessionStart`/`UserPromptSubmit`) |
+| `2`    | Error bloqueante    | La acción es bloqueada. stderr se envía como feedback a Claude                            |
+| Otros  | Error no bloqueante | La acción continúa. stderr se loguea pero Claude no lo ve                                 |
 
 ---
 
 ## Variables de Entorno Disponibles
 
-| Variable | Disponible en | Descripción |
-|----------|---------------|-------------|
-| `CLAUDE_PROJECT_DIR` | Todos | Ruta raíz del proyecto |
-| `CLAUDE_ENV_FILE` | `SessionStart` | Ruta donde escribir variables de entorno |
-| `CLAUDE_CODE_REMOTE` | Todos | `"true"` si es web, vacío si es CLI |
+| Variable             | Disponible en  | Descripción                              |
+| -------------------- | -------------- | ---------------------------------------- |
+| `CLAUDE_PROJECT_DIR` | Todos          | Ruta raíz del proyecto                   |
+| `CLAUDE_ENV_FILE`    | `SessionStart` | Ruta donde escribir variables de entorno |
+| `CLAUDE_CODE_REMOTE` | Todos          | `"true"` si es web, vacío si es CLI      |
 
 ---
 
@@ -288,6 +291,7 @@ exit 0
 ### 5. Notificación cuando Claude necesita atención
 
 **Windows (PowerShell)**:
+
 ```json
 {
   "hooks": {
@@ -307,6 +311,7 @@ exit 0
 ```
 
 **Linux**:
+
 ```json
 {
   "hooks": {
@@ -415,13 +420,13 @@ chmod +x .claude/hooks/mi-script.sh
 
 ## Troubleshooting
 
-| Problema | Causa | Solución |
-|----------|-------|----------|
-| Hook no se dispara | El matcher no coincide | Verificar con `/hooks`, respetar case-sensitive |
-| "command not found" | Ruta incorrecta | Usar `$CLAUDE_PROJECT_DIR` o rutas absolutas |
-| "jq: command not found" | jq no instalado | `winget install jqlang.jq` (Windows) / `brew install jq` (Mac) |
-| "JSON validation failed" | El shell imprime texto en startup | Envolver echo en `if [[ $- == *i* ]]; then ... fi` |
-| Script no ejecuta | Sin permisos | `chmod +x .claude/hooks/script.sh` |
+| Problema                 | Causa                             | Solución                                                       |
+| ------------------------ | --------------------------------- | -------------------------------------------------------------- |
+| Hook no se dispara       | El matcher no coincide            | Verificar con `/hooks`, respetar case-sensitive                |
+| "command not found"      | Ruta incorrecta                   | Usar `$CLAUDE_PROJECT_DIR` o rutas absolutas                   |
+| "jq: command not found"  | jq no instalado                   | `winget install jqlang.jq` (Windows) / `brew install jq` (Mac) |
+| "JSON validation failed" | El shell imprime texto en startup | Envolver echo en `if [[ $- == *i* ]]; then ... fi`             |
+| Script no ejecuta        | Sin permisos                      | `chmod +x .claude/hooks/script.sh`                             |
 
 ---
 

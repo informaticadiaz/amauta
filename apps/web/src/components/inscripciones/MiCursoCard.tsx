@@ -152,7 +152,11 @@ export function MiCursoCard({ inscripcion }: MiCursoCardProps) {
             href={`/cursos/${curso.slug}`}
             className="block w-full rounded-lg bg-primary px-4 py-2 text-center text-sm font-semibold text-white transition-colors hover:bg-primary/90 hover:no-underline"
           >
-            {progreso === 0 ? 'Comenzar' : progreso === 100 ? 'Ver curso' : 'Continuar'}
+            {progreso === 0
+              ? 'Comenzar'
+              : progreso === 100
+                ? 'Ver curso'
+                : 'Continuar'}
           </Link>
         </div>
       </div>

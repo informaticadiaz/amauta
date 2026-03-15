@@ -8,8 +8,20 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { LeccionSidebar } from './LeccionSidebar';
 
 const mockLecciones = [
-  { id: 'lec-1', titulo: 'Introducción', orden: 1, duracion: 10, publicada: true },
-  { id: 'lec-2', titulo: 'Conceptos básicos', orden: 2, duracion: 15, publicada: true },
+  {
+    id: 'lec-1',
+    titulo: 'Introducción',
+    orden: 1,
+    duracion: 10,
+    publicada: true,
+  },
+  {
+    id: 'lec-2',
+    titulo: 'Conceptos básicos',
+    orden: 2,
+    duracion: 15,
+    publicada: true,
+  },
   { id: 'lec-3', titulo: 'Práctica', orden: 3, duracion: 20, publicada: true },
 ];
 
@@ -59,7 +71,9 @@ describe('LeccionSidebar', () => {
         cursoSlug="mi-curso"
       />
     );
-    const toggleBtn = screen.getByRole('button', { name: /lecciones|menú|contenido/i });
+    const toggleBtn = screen.getByRole('button', {
+      name: /lecciones|menú|contenido/i,
+    });
     expect(toggleBtn).toBeInTheDocument();
   });
 
@@ -71,7 +85,9 @@ describe('LeccionSidebar', () => {
         cursoSlug="mi-curso"
       />
     );
-    const toggleBtn = screen.getByRole('button', { name: /lecciones|menú|contenido/i });
+    const toggleBtn = screen.getByRole('button', {
+      name: /lecciones|menú|contenido/i,
+    });
     fireEvent.click(toggleBtn);
     // Verificar que el sidebar se colapsa
     const sidebar = screen.getByTestId('leccion-sidebar');

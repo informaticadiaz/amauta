@@ -32,7 +32,12 @@ function formatDuracion(minutos: number): string {
   return `${minutos}min`;
 }
 
-export function LeccionSidebar({ lecciones, leccionActivaId, cursoSlug, leccionesCompletadasIds = [] }: Props) {
+export function LeccionSidebar({
+  lecciones,
+  leccionActivaId,
+  cursoSlug,
+  leccionesCompletadasIds = [],
+}: Props) {
   const [collapsed, setCollapsed] = useState(false);
 
   const total = lecciones.length;
@@ -60,7 +65,9 @@ export function LeccionSidebar({ lecciones, leccionActivaId, cursoSlug, leccione
 
         <button
           onClick={() => setCollapsed(!collapsed)}
-          aria-label={collapsed ? 'Abrir menú de lecciones' : 'Cerrar menú de lecciones'}
+          aria-label={
+            collapsed ? 'Abrir menú de lecciones' : 'Cerrar menú de lecciones'
+          }
           className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-[var(--overlay)]"
         >
           <svg

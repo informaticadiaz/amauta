@@ -6,10 +6,10 @@ Valida la sintaxis del archivo `schema.prisma` automáticamente cada vez que Cla
 
 ## Archivos
 
-| Tipo | Ruta |
-|------|------|
-| Script | `.claude/hooks/validar-schema-prisma.sh` |
-| Configuración | `.claude/settings.json` |
+| Tipo          | Ruta                                     |
+| ------------- | ---------------------------------------- |
+| Script        | `.claude/hooks/validar-schema-prisma.sh` |
+| Configuración | `.claude/settings.json`                  |
 
 ---
 
@@ -46,11 +46,13 @@ Solo actúa cuando el archivo modificado es `schema.prisma`. Para cualquier otro
 ## Qué ve Claude
 
 **Si el schema es válido:**
+
 ```
 schema.prisma válido ✓
 ```
 
 **Si tiene errores:**
+
 ```
 Error en schema.prisma:
 
@@ -125,12 +127,12 @@ Registrado en `settings.json` bajo `PostToolUse` (no `PreToolUse`) porque necesi
 
 Este hook usa `PostToolUse` (después) en lugar de `PreToolUse` (antes).
 
-| Hook | Evento | Puede bloquear |
-|------|--------|---------------|
-| `bloquear-destructivos` | PreToolUse | Sí |
-| `proteger-archivos` | PreToolUse | Sí |
-| `detectar-secretos` | PreToolUse | Sí |
-| `validar-schema-prisma` | **PostToolUse** | Sí\* |
+| Hook                    | Evento          | Puede bloquear |
+| ----------------------- | --------------- | -------------- |
+| `bloquear-destructivos` | PreToolUse      | Sí             |
+| `proteger-archivos`     | PreToolUse      | Sí             |
+| `detectar-secretos`     | PreToolUse      | Sí             |
+| `validar-schema-prisma` | **PostToolUse** | Sí\*           |
 
 \* En `PostToolUse`, `exit 2` hace que Claude reciba el error como feedback, pero el archivo **ya fue guardado**. Claude debe corregirlo y guardar de nuevo.
 

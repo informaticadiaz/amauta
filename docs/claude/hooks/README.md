@@ -27,14 +27,14 @@ amauta/
 
 ## Hooks Activos
 
-| Hook | Evento | Herramienta | Efecto |
-|------|--------|-------------|--------|
-| [contexto-sesion](implementados/contexto-sesion.md) | `SessionStart` | — | Inyecta contexto del proyecto al iniciar sesión |
-| [bloquear-destructivos](implementados/bloquear-destructivos.md) | `PreToolUse` | Bash | Bloquea comandos irreversibles |
-| [advertir-prisma](implementados/advertir-prisma.md) | `PreToolUse` | Bash | Controla operaciones de migración |
-| [proteger-archivos](implementados/proteger-archivos.md) | `PreToolUse` | Edit / Write | Bloquea edición de archivos críticos |
-| [detectar-secretos](implementados/detectar-secretos.md) | `PreToolUse` | Edit / Write | Bloquea secretos hardcodeados |
-| [validar-schema-prisma](implementados/validar-schema-prisma.md) | `PostToolUse` | Edit / Write | Valida el schema.prisma al guardarlo |
+| Hook                                                            | Evento         | Herramienta  | Efecto                                          |
+| --------------------------------------------------------------- | -------------- | ------------ | ----------------------------------------------- |
+| [contexto-sesion](implementados/contexto-sesion.md)             | `SessionStart` | —            | Inyecta contexto del proyecto al iniciar sesión |
+| [bloquear-destructivos](implementados/bloquear-destructivos.md) | `PreToolUse`   | Bash         | Bloquea comandos irreversibles                  |
+| [advertir-prisma](implementados/advertir-prisma.md)             | `PreToolUse`   | Bash         | Controla operaciones de migración               |
+| [proteger-archivos](implementados/proteger-archivos.md)         | `PreToolUse`   | Edit / Write | Bloquea edición de archivos críticos            |
+| [detectar-secretos](implementados/detectar-secretos.md)         | `PreToolUse`   | Edit / Write | Bloquea secretos hardcodeados                   |
+| [validar-schema-prisma](implementados/validar-schema-prisma.md) | `PostToolUse`  | Edit / Write | Valida el schema.prisma al guardarlo            |
 
 ---
 

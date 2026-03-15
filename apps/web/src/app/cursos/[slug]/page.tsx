@@ -154,9 +154,9 @@ export default async function CursoDetallePage({ params }: PageProps) {
                 duracion={curso.duracion}
                 primeraLeccionId={
                   curso.lecciones && curso.lecciones.length > 0
-                    ? curso.lecciones
+                    ? (curso.lecciones
                         .filter((l) => l.publicada)
-                        .sort((a, b) => a.orden - b.orden)[0]?.id ?? null
+                        .sort((a, b) => a.orden - b.orden)[0]?.id ?? null)
                     : null
                 }
               />

@@ -26,7 +26,11 @@ function StatCard({ valor, etiqueta, colorClass }: StatCardProps) {
   );
 }
 
-export function ResumenProgreso({ enProgreso, completados, totalInscritos }: Props) {
+export function ResumenProgreso({
+  enProgreso,
+  completados,
+  totalInscritos,
+}: Props) {
   return (
     <section>
       <h2 className="mb-4 text-xl font-semibold text-[var(--foreground)]">

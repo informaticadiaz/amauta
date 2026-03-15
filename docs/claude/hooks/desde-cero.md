@@ -13,6 +13,7 @@ Cuando trabajás con Claude, tenés dos formas de decirle cómo comportarse:
 
 ```markdown
 # CLAUDE.md
+
 - Nunca uses rm -rf
 - Siempre usá safeParse con Zod
 - No hardcodees API keys
@@ -70,6 +71,7 @@ Claude → [intenta hacer algo] → tu script → exit 0 (OK) o exit 2 (BLOQUEAD
 ## Tu primer hook: paso a paso
 
 ### Lo que queremos lograr
+
 Que Claude nunca pueda ejecutar `rm -rf`, sin importar lo que vos le pidas.
 
 ### Paso 1: Crear la carpeta de hooks
@@ -137,7 +139,7 @@ Los hooks se cargan al iniciar la sesión. Cerrá y volvé a abrir Claude Code.
 
 ### Paso 6: Probar
 
-Pedile a Claude: *"ejecutá rm -rf ./temp"*
+Pedile a Claude: _"ejecutá rm -rf ./temp"_
 
 Claude va a intentarlo, el hook lo va a interceptar, y vas a ver:
 
@@ -205,6 +207,7 @@ CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content')
 ```
 
 > `jq` es una herramienta para procesar JSON en bash. Si no la tenés:
+>
 > - Windows: `winget install jqlang.jq`
 > - macOS: `brew install jq`
 > - Linux: `apt-get install jq`
@@ -220,12 +223,12 @@ podés BLOQUEAR                              podés REACCIONAR
 (antes)                                     (después, no bloquea)
 ```
 
-| Evento | Cuándo | ¿Puede bloquear? | Uso típico |
-|--------|--------|-----------------|------------|
-| `PreToolUse` | Antes de ejecutar | Sí | Validar, bloquear |
-| `PostToolUse` | Después de ejecutar | No | Formatear, loguear |
-| `SessionStart` | Al iniciar sesión | No | Inyectar contexto |
-| `Stop` | Cuando Claude termina | Sí | Verificar calidad |
+| Evento         | Cuándo                | ¿Puede bloquear? | Uso típico         |
+| -------------- | --------------------- | ---------------- | ------------------ |
+| `PreToolUse`   | Antes de ejecutar     | Sí               | Validar, bloquear  |
+| `PostToolUse`  | Después de ejecutar   | No               | Formatear, loguear |
+| `SessionStart` | Al iniciar sesión     | No               | Inyectar contexto  |
+| `Stop`         | Cuando Claude termina | Sí               | Verificar calidad  |
 
 ---
 
@@ -248,10 +251,10 @@ Si no ponés matcher (o ponés `""`), el hook aplica a todas las herramientas.
 
 Tenés dos opciones:
 
-| Archivo | Alcance | Se commitea |
-|---------|---------|------------|
-| `.claude/settings.json` | Solo este proyecto | Sí, compartido con el equipo |
-| `~/.claude/settings.json` | Todos tus proyectos | No, solo tu máquina |
+| Archivo                   | Alcance             | Se commitea                  |
+| ------------------------- | ------------------- | ---------------------------- |
+| `.claude/settings.json`   | Solo este proyecto  | Sí, compartido con el equipo |
+| `~/.claude/settings.json` | Todos tus proyectos | No, solo tu máquina          |
 
 Para reglas del proyecto (proteger archivos, validar schema) → `.claude/settings.json`
 Para preferencias personales (notificaciones, logging) → `~/.claude/settings.json`
@@ -279,17 +282,18 @@ Si ves el mensaje de error y el exit code es 2, el hook funciona correctamente.
 
 ## Hooks vs. CLAUDE.md: cuándo usar cada uno
 
-| Situación | Usá |
-|-----------|-----|
-| "Quiero que Claude sepa el contexto del proyecto" | CLAUDE.md |
-| "Quiero que Claude siga un estilo de código" | CLAUDE.md |
-| "Quiero que Claude entienda la arquitectura" | CLAUDE.md |
-| "Quiero que **nunca** pueda hacer X, sin excepción" | Hook |
-| "Quiero que **siempre** se formatee el código al guardar" | Hook |
-| "Quiero que **siempre** se valide el schema de Prisma" | Hook |
-| "Quiero que **nunca** se commitee directamente en main" | Hook |
+| Situación                                                 | Usá       |
+| --------------------------------------------------------- | --------- |
+| "Quiero que Claude sepa el contexto del proyecto"         | CLAUDE.md |
+| "Quiero que Claude siga un estilo de código"              | CLAUDE.md |
+| "Quiero que Claude entienda la arquitectura"              | CLAUDE.md |
+| "Quiero que **nunca** pueda hacer X, sin excepción"       | Hook      |
+| "Quiero que **siempre** se formatee el código al guardar" | Hook      |
+| "Quiero que **siempre** se valide el schema de Prisma"    | Hook      |
+| "Quiero que **nunca** se commitee directamente en main"   | Hook      |
 
 **Regla simple:**
+
 - Si es conocimiento o contexto → CLAUDE.md
 - Si es una regla que no puede romperse → Hook
 

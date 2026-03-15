@@ -11,6 +11,7 @@ Ejecuta un issue de GitHub de principio a fin usando Test-Driven Development (TD
 ## Cuándo se activa
 
 Cuando el usuario pide ejecutar o completar un issue de GitHub de forma autónoma, por ejemplo:
+
 - "Ejecuta el issue #42 de forma autónoma"
 - "Completá el issue #15"
 - "Resolvé el issue #8 siguiendo el workflow"
@@ -27,6 +28,7 @@ gh issue list --limit 20 --state open --json number,title,labels
 ```
 
 Parsear el JSON directamente desde la respuesta (node siempre está disponible como fallback):
+
 ```bash
 gh issue list --limit 20 --state open --json number,title,labels | node -e "
 const d = JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));
@@ -52,6 +54,7 @@ Con esa información, presentar al usuario un resumen antes de continuar:
 > **Objetivo:** [1 oración que describe qué se va a construir]
 >
 > **Problemas a resolver:**
+>
 > - [problema/tarea 1 del checklist]
 > - [problema/tarea 2 del checklist]
 > - [...]
@@ -73,6 +76,7 @@ gh issue view [número] --json title,body,labels,milestone
 ```
 
 Extraer y registrar:
+
 - Objetivo principal
 - Checklist de subtareas (son los criterios de aceptación para los tests)
 - Labels: `backend`, `frontend`, `database`, etc.
@@ -85,18 +89,21 @@ Extraer y registrar:
 **ANTES de escribir una sola línea de código o test**, leer los archivos correspondientes:
 
 #### Si toca base de datos o Prisma:
+
 ```
 LEER: docs/ai-context/database/schema.md
 LEER: apps/api/prisma/schema.prisma
 ```
 
 #### Si toca backend:
+
 ```
 LEER: docs/ai-context/_patterns.md
 LEER: docs/ai-context/modules/[modulo].md  (si existe)
 ```
 
 #### Si toca frontend:
+
 ```
 LEER: docs/ai-context/frontend/components.md
 LEER: docs/ai-context/frontend/pages.md
@@ -104,6 +111,7 @@ LEER: docs/ai-context/frontend/hooks.md    (si usa auth/roles)
 ```
 
 #### Para entender el patrón de tests existente:
+
 ```
 LEER: apps/api/src/cursos/cursos.service.spec.ts   (referencia de unit test backend)
 LEER: docs/technical/testing.md                     (guía completa de testing)
@@ -139,6 +147,7 @@ Antes de implementar, escribir los tests que describen **exactamente** lo que el
 Cada item del checklist del issue = al menos un test.
 
 #### Dónde crear los archivos de test:
+
 ```
 Backend (service):     apps/api/src/[modulo]/[modulo].service.spec.ts
 Backend (controller):  apps/api/src/[modulo]/[modulo].controller.spec.ts
@@ -244,6 +253,7 @@ npm run test --workspace=@amauta/web -- --testPathPatterns="[Componente]"
 Escribir el código mínimo necesario para que los tests pasen. Patrones obligatorios:
 
 **Validación (SIEMPRE safeParse):**
+
 ```typescript
 const result = schema.safeParse(dto);
 if (!result.success) {
@@ -253,6 +263,7 @@ const data = result.data;
 ```
 
 **Eliminación (soft delete por defecto):**
+
 ```typescript
 await this.prisma.[modulo].update({
   where: { id },
@@ -261,6 +272,7 @@ await this.prisma.[modulo].update({
 ```
 
 **Estructura de respuestas:**
+
 ```typescript
 // Singular: { [modelo]: data, message: 'Acción exitosa' }
 // Lista:    { [modelos]: data[], total, page, limit, totalPages }
@@ -287,16 +299,19 @@ Una vez en verde, refactorizar si es necesario y ejecutar tests de nuevo.
 Estas tres actualizaciones son **siempre obligatorias** al completar un issue. No omitir ninguna.
 
 #### 1. `AGENTS.md`
+
 - Mover el issue de "Próximos pasos" a "Completado en Fase 1"
 - Agregar bullets con lo implementado
 - Actualizar el contador: ej. `10/16` → `11/16`
 
 #### 2. `docs/project-management/roadmap.md`
+
 - Cambiar el estado del issue en la tabla del sprint: `📋 Pendiente` → `✅ Completado`
 - Si todos los issues del sprint están completos, actualizar el encabezado del sprint
 - Actualizar el contador de progreso de la fase: `10/16` → `11/16`
 
 #### 3. `docs/sistema/README.md`
+
 - Actualizar la tabla "En Desarrollo": mover el módulo a ✅ Funcional si ya es usable
 - Actualizar la fecha de última actualización
 - Actualizar el contador de la fase actual
@@ -306,6 +321,7 @@ Estas tres actualizaciones son **siempre obligatorias** al completar un issue. N
 ### PASO 8b — Actualizar Contexto de IA (si aplica)
 
 Revisar `docs/ai-context/modules/[modulo].md`:
+
 - Si se crearon archivos de test → agregar a la tabla de archivos del módulo
 - Si se agregaron endpoints nuevos → agregar a la tabla de endpoints
 - Si cambió algún comportamiento → actualizar la sección "Notas para IA"
@@ -317,6 +333,7 @@ Si el módulo **no tiene archivo de contexto** y se implementó algo significati
 ### PASO 8c — Crear Documentación para Humanos (OBLIGATORIO)
 
 Crear el archivo `docs/human-context/issue-[N]-[slug].md` donde:
+
 - `[N]` = número del issue
 - `[slug]` = título del issue en kebab-case, corto (ej. `inscripcion-y-mis-cursos`)
 
@@ -332,11 +349,13 @@ Crear el archivo `docs/human-context/issue-[N]-[slug].md` donde:
 ## [Rol o persona relevante], ahora podés:
 
 ### [Funcionalidad 1]
+
 1. [Paso concreto con URL si aplica]
 2. [Paso concreto]
 3. [Resultado esperado]
 
 ### [Funcionalidad 2]
+
 - [Descripción breve]
 - [Dónde encontrarla]
 
@@ -344,23 +363,24 @@ Crear el archivo `docs/human-context/issue-[N]-[slug].md` donde:
 
 ## Quién puede usarlo
 
-| Rol | ¿Puede usarlo? |
-| --- | --- |
-| ESTUDIANTE | ✅/❌ |
-| EDUCADOR | ✅/❌ |
-| ADMIN_ESCUELA | ✅/❌ |
-| SUPER_ADMIN | ✅/❌ |
+| Rol           | ¿Puede usarlo? |
+| ------------- | -------------- |
+| ESTUDIANTE    | ✅/❌          |
+| EDUCADOR      | ✅/❌          |
+| ADMIN_ESCUELA | ✅/❌          |
+| SUPER_ADMIN   | ✅/❌          |
 
 ---
 
 ## Usuarios de prueba para testear
 
-| Email | Contraseña | Rol |
-| --- | --- | --- |
+| Email                           | Contraseña  | Rol   |
+| ------------------------------- | ----------- | ----- |
 | [usuario relevante]@amauta.test | password123 | [ROL] |
 ```
 
 **Reglas de escritura:**
+
 - Sin jerga técnica: no mencionar NestJS, Prisma, endpoints, DTOs, etc.
 - Orientado a la acción: "ahora podés hacer X"
 - Incluir URLs reales de producción cuando aplique (https://amauta.diazignacio.ar/...)
@@ -442,6 +462,7 @@ Al completar todos los pasos anteriores, mostrar un resumen breve y **detenerse*
 ## Checklist Final
 
 **Tests**
+
 - [ ] Tests escritos ANTES del código (RED → GREEN)
 - [ ] Tests fallan antes de implementar (confirmado)
 - [ ] Tests pasan después de implementar (confirmado)
@@ -449,23 +470,28 @@ Al completar todos los pasos anteriores, mostrar un resumen breve y **detenerse*
 - [ ] Todos los items del checklist del issue cubiertos por tests
 
 **Código**
+
 - [ ] Código usa `safeParse` para validación
 - [ ] No hay deletes físicos sin justificación en el issue
 - [ ] Schema de Prisma consultado antes de cada query
 - [ ] Archivos de test incluidos en el commit
 
 **Tres fuentes de verdad (OBLIGATORIO)**
+
 - [ ] `AGENTS.md` actualizado (progreso + issue movido a completados)
 - [ ] `docs/project-management/roadmap.md` actualizado (estado del issue en sprint)
 - [ ] `docs/sistema/README.md` actualizado (tabla de módulos + fecha)
 
 **Contexto de IA**
+
 - [ ] `docs/ai-context/modules/[modulo].md` actualizado si hubo cambios
 
 **Documentación para humanos**
+
 - [ ] `docs/human-context/issue-[N]-[slug].md` creado con descripción no técnica
 
 **Cierre**
+
 - [ ] Issue cerrado con comentario descriptivo
 - [ ] Resumen final mostrado — skill terminada sin preguntar por el siguiente issue
 
@@ -482,11 +508,11 @@ Al completar todos los pasos anteriores, mostrar un resumen breve y **detenerse*
 
 El usuario trabaja en **ambos entornos**. Reglas para comandos bash:
 
-| ❌ Evitar | ✅ Usar en su lugar |
-| --------- | ------------------- |
-| `jq` (no siempre disponible en Windows) | `node -e "..."` o parsear el JSON directamente |
-| Rutas absolutas con `C:/...` | Rutas relativas desde la raíz del proyecto |
-| `git -C /ruta/absoluta` | `git` directamente (el CWD ya es el proyecto) |
-| `\| jq -r '...'` | `\| node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')); ..."` |
+| ❌ Evitar                               | ✅ Usar en su lugar                                                                     |
+| --------------------------------------- | --------------------------------------------------------------------------------------- |
+| `jq` (no siempre disponible en Windows) | `node -e "..."` o parsear el JSON directamente                                          |
+| Rutas absolutas con `C:/...`            | Rutas relativas desde la raíz del proyecto                                              |
+| `git -C /ruta/absoluta`                 | `git` directamente (el CWD ya es el proyecto)                                           |
+| `\| jq -r '...'`                        | `\| node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')); ..."` |
 
 **Herramientas siempre disponibles en ambos entornos:** `git`, `gh`, `npm`, `node`, `npx`

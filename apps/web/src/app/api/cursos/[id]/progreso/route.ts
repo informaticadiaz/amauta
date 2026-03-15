@@ -12,7 +12,9 @@ import { SignJWT } from 'jose';
 const API_URL = process.env.API_URL || 'http://localhost:3001';
 const AUTH_SECRET = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET;
 
-async function createAuthToken(token: Record<string, unknown>): Promise<string> {
+async function createAuthToken(
+  token: Record<string, unknown>
+): Promise<string> {
   const secret = new TextEncoder().encode(AUTH_SECRET);
   return new SignJWT({
     id: token.id as string,

@@ -55,9 +55,7 @@ describe('CursosRecomendados', () => {
 
   it('debería mostrar mensaje cuando no hay recomendaciones', () => {
     render(<CursosRecomendados cursos={[]} />);
-    expect(
-      screen.getByText(/explorá el catálogo/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/explorá el catálogo/i)).toBeInTheDocument();
   });
 
   it('debería mostrar el nivel del curso', () => {

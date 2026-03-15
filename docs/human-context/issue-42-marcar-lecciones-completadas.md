@@ -35,23 +35,24 @@
 
 ## Quién puede usarlo
 
-| Rol | ¿Puede marcar lecciones? |
-| --- | --- |
-| ESTUDIANTE | ✅ Sí |
-| EDUCADOR | ✅ Sí (si está inscripto) |
-| ADMIN_ESCUELA | ❌ No aplica |
-| SUPER_ADMIN | ❌ No aplica |
+| Rol           | ¿Puede marcar lecciones?  |
+| ------------- | ------------------------- |
+| ESTUDIANTE    | ✅ Sí                     |
+| EDUCADOR      | ✅ Sí (si está inscripto) |
+| ADMIN_ESCUELA | ❌ No aplica              |
+| SUPER_ADMIN   | ❌ No aplica              |
 
 ---
 
 ## Usuarios de prueba para testear
 
-| Email | Contraseña | Rol |
-| --- | --- | --- |
+| Email                   | Contraseña  | Rol        |
+| ----------------------- | ----------- | ---------- |
 | estudiante1@amauta.test | password123 | ESTUDIANTE |
 | estudiante2@amauta.test | password123 | ESTUDIANTE |
 
 **Cómo testear:**
+
 1. Logeate como `estudiante1@amauta.test`
 2. Andá a "Mis Cursos" en el dashboard
 3. Entrá a cualquier curso inscripto

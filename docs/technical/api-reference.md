@@ -83,7 +83,7 @@ Parámetros estándar:
 
 Copiar y completar el siguiente template por cada endpoint:
 
-```markdown
+````markdown
 ### [NOMBRE DEL ENDPOINT]
 
 - **Método**: `GET | POST | PATCH | DELETE`
@@ -94,15 +94,15 @@ Copiar y completar el siguiente template por cada endpoint:
 
 #### Path Params
 
-| Param | Tipo | Requerido | Descripción |
-| ----- | ---- | --------- | ----------- |
-| id    | string (cuid) | Sí | ID del recurso |
+| Param | Tipo          | Requerido | Descripción    |
+| ----- | ------------- | --------- | -------------- |
+| id    | string (cuid) | Sí        | ID del recurso |
 
 #### Query Params
 
-| Param | Tipo | Requerido | Default | Descripción |
-| ----- | ---- | --------- | ------- | ----------- |
-| page  | number | No | 1 | Página |
+| Param | Tipo   | Requerido | Default | Descripción |
+| ----- | ------ | --------- | ------- | ----------- |
+| page  | number | No        | 1       | Página      |
 
 #### Body (si aplica)
 
@@ -111,6 +111,7 @@ Copiar y completar el siguiente template por cada endpoint:
   "campo": "valor"
 }
 ```
+````
 
 #### Respuestas
 
@@ -130,6 +131,7 @@ Copiar y completar el siguiente template por cada endpoint:
   "message": "Datos inválidos"
 }
 ```
+
 ```
 
 ## Consideraciones para Swagger/OpenAPI
@@ -147,3 +149,4 @@ Cuando se incorpore Swagger/OpenAPI:
 - [ ] Request y response con ejemplos
 - [ ] Códigos de estado definidos
 - [ ] Paginación y filtros si aplica
+```

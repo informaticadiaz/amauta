@@ -154,7 +154,9 @@ describe('InscripcionesService', () => {
 
     it('debería reactivar una inscripción abandonada', async () => {
       prisma.curso.findUnique.mockResolvedValue(mockCursoPublicado);
-      prisma.inscripcion.findUnique.mockResolvedValue(mockInscripcionAbandonada);
+      prisma.inscripcion.findUnique.mockResolvedValue(
+        mockInscripcionAbandonada
+      );
       prisma.inscripcion.update.mockResolvedValue({
         ...mockInscripcionAbandonada,
         estado: 'ACTIVO',
@@ -200,7 +202,9 @@ describe('InscripcionesService', () => {
     });
 
     it('debería lanzar BadRequestException si ya está abandonada', async () => {
-      prisma.inscripcion.findUnique.mockResolvedValue(mockInscripcionAbandonada);
+      prisma.inscripcion.findUnique.mockResolvedValue(
+        mockInscripcionAbandonada
+      );
 
       await expect(
         service.cancelarInscripcion('curso-123', 'usuario-123')

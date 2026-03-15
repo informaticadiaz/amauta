@@ -6,10 +6,10 @@ Inyecta el contexto crítico del proyecto cada vez que se inicia o retoma una se
 
 ## Archivos
 
-| Tipo | Ruta |
-|------|------|
-| Script | `.claude/hooks/contexto-sesion.sh` |
-| Configuración | `.claude/settings.json` |
+| Tipo          | Ruta                               |
+| ------------- | ---------------------------------- |
+| Script        | `.claude/hooks/contexto-sesion.sh` |
+| Configuración | `.claude/settings.json`            |
 
 ---
 
@@ -32,6 +32,7 @@ Evento: `SessionStart`
 Matcher: `startup | compact | resume`
 
 Es decir, se dispara cuando:
+
 - Abrís Claude Code por primera vez en el proyecto
 - Ejecutás `/compact` para liberar contexto
 - Ejecutás `/resume` para retomar una sesión anterior

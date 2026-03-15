@@ -6,10 +6,10 @@ Bloquea comandos bash que pueden causar daño irreversible en el proyecto o la i
 
 ## Archivos
 
-| Tipo | Ruta |
-|------|------|
-| Script | `.claude/hooks/bloquear-destructivos.sh` |
-| Configuración | `.claude/settings.json` |
+| Tipo          | Ruta                                     |
+| ------------- | ---------------------------------------- |
+| Script        | `.claude/hooks/bloquear-destructivos.sh` |
+| Configuración | `.claude/settings.json`                  |
 
 ---
 
@@ -32,18 +32,18 @@ Se dispara **antes** de ejecutar cualquier comando bash. Si el comando coincide 
 
 ## Qué bloquea
 
-| Comando | Motivo |
-|---------|--------|
-| `rm -rf /` | Borrado recursivo desde la raíz |
-| `rm -rf .` | Borrado recursivo del directorio actual |
-| `rm -rf *` | Borrado masivo con wildcard |
-| `git push --force` / `git push -f` | Reescribe el historial remoto compartido |
-| `git reset --hard` | Descarta todos los cambios locales sin recuperación |
-| `git clean -fd` / `git clean -fxd` | Elimina archivos no rastreados permanentemente |
-| `DROP DATABASE` | Elimina la base de datos completa |
-| `DROP TABLE` | Elimina una tabla con todos sus datos |
-| `TRUNCATE TABLE` | Vacía una tabla sin posibilidad de rollback |
-| `DELETE FROM ... WHERE 1=1` | Elimina todos los registros de una tabla |
+| Comando                            | Motivo                                              |
+| ---------------------------------- | --------------------------------------------------- |
+| `rm -rf /`                         | Borrado recursivo desde la raíz                     |
+| `rm -rf .`                         | Borrado recursivo del directorio actual             |
+| `rm -rf *`                         | Borrado masivo con wildcard                         |
+| `git push --force` / `git push -f` | Reescribe el historial remoto compartido            |
+| `git reset --hard`                 | Descarta todos los cambios locales sin recuperación |
+| `git clean -fd` / `git clean -fxd` | Elimina archivos no rastreados permanentemente      |
+| `DROP DATABASE`                    | Elimina la base de datos completa                   |
+| `DROP TABLE`                       | Elimina una tabla con todos sus datos               |
+| `TRUNCATE TABLE`                   | Vacía una tabla sin posibilidad de rollback         |
+| `DELETE FROM ... WHERE 1=1`        | Elimina todos los registros de una tabla            |
 
 ---
 

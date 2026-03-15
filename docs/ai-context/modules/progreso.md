@@ -10,11 +10,11 @@ El módulo de progreso registra cuáles lecciones ha completado cada estudiante 
 
 ### Roles y Permisos
 
-| Acción                         | ESTUDIANTE | EDUCADOR          | ADMIN_ESCUELA | SUPER_ADMIN |
-| ------------------------------ | ---------- | ----------------- | ------------- | ----------- |
-| Marcar lección completada      | Sí         | Sí (propio curso) | Sí            | Sí          |
-| Ver progreso propio            | Sí         | Sí                | Sí            | Sí          |
-| Ver progreso de estudiantes    | -          | Sí (propio curso) | Sí            | Sí          |
+| Acción                      | ESTUDIANTE | EDUCADOR          | ADMIN_ESCUELA | SUPER_ADMIN |
+| --------------------------- | ---------- | ----------------- | ------------- | ----------- |
+| Marcar lección completada   | Sí         | Sí (propio curso) | Sí            | Sí          |
+| Ver progreso propio         | Sí         | Sí                | Sí            | Sí          |
+| Ver progreso de estudiantes | -          | Sí (propio curso) | Sí            | Sí          |
 
 ---
 
@@ -22,23 +22,23 @@ El módulo de progreso registra cuáles lecciones ha completado cada estudiante 
 
 ### Backend
 
-| Archivo                                               | Propósito             |
-| ----------------------------------------------------- | --------------------- |
-| `apps/api/src/progreso/progreso.module.ts`            | Módulo NestJS         |
-| `apps/api/src/progreso/progreso.controller.ts`        | Endpoints REST        |
-| `apps/api/src/progreso/progreso.service.ts`           | Lógica de negocio     |
-| `apps/api/src/progreso/progreso.service.spec.ts`      | Tests del service     |
-| `apps/api/src/progreso/progreso.controller.spec.ts`   | Tests del controller  |
+| Archivo                                             | Propósito            |
+| --------------------------------------------------- | -------------------- |
+| `apps/api/src/progreso/progreso.module.ts`          | Módulo NestJS        |
+| `apps/api/src/progreso/progreso.controller.ts`      | Endpoints REST       |
+| `apps/api/src/progreso/progreso.service.ts`         | Lógica de negocio    |
+| `apps/api/src/progreso/progreso.service.spec.ts`    | Tests del service    |
+| `apps/api/src/progreso/progreso.controller.spec.ts` | Tests del controller |
 
 ---
 
 ## Endpoints API
 
-| Método | Ruta                                | Auth | Roles      | Descripción                        |
-| ------ | ----------------------------------- | ---- | ---------- | ---------------------------------- |
-| POST   | `/lecciones/:id/completar`          | Sí   | Todos      | Marcar lección completada          |
-| GET    | `/cursos/:id/progreso`              | Sí   | Todos      | Mi progreso en el curso            |
-| GET    | `/cursos/:id/estudiantes/progreso`  | Sí   | EDUCADOR+  | Progreso de todos los estudiantes  |
+| Método | Ruta                               | Auth | Roles     | Descripción                       |
+| ------ | ---------------------------------- | ---- | --------- | --------------------------------- |
+| POST   | `/lecciones/:id/completar`         | Sí   | Todos     | Marcar lección completada         |
+| GET    | `/cursos/:id/progreso`             | Sí   | Todos     | Mi progreso en el curso           |
+| GET    | `/cursos/:id/estudiantes/progreso` | Sí   | EDUCADOR+ | Progreso de todos los estudiantes |
 
 ---
 
@@ -78,6 +78,7 @@ model Progreso {
 ## Respuestas
 
 ### POST /lecciones/:id/completar
+
 ```json
 {
   "progreso": {
@@ -93,6 +94,7 @@ model Progreso {
 ```
 
 ### GET /cursos/:id/progreso
+
 ```json
 {
   "cursoId": "...",
@@ -104,6 +106,7 @@ model Progreso {
 ```
 
 ### GET /cursos/:id/estudiantes/progreso
+
 ```json
 {
   "cursoId": "...",
@@ -111,7 +114,12 @@ model Progreso {
   "total": 3,
   "estudiantes": [
     {
-      "usuario": { "id": "...", "nombre": "...", "apellido": "...", "email": "..." },
+      "usuario": {
+        "id": "...",
+        "nombre": "...",
+        "apellido": "...",
+        "email": "..."
+      },
       "leccionesCompletadas": 4,
       "totalLecciones": 10,
       "porcentaje": 40,

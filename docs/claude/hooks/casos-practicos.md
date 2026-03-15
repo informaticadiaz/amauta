@@ -64,7 +64,12 @@ exit 0
     "PreToolUse": [
       {
         "matcher": "Bash",
-        "hooks": [{ "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/bloquear-destructivos.sh" }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/bloquear-destructivos.sh"
+          }
+        ]
       }
     ]
   }
@@ -125,7 +130,12 @@ exit 0
     "PreToolUse": [
       {
         "matcher": "Write|Edit",
-        "hooks": [{ "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/detectar-secretos.sh" }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/detectar-secretos.sh"
+          }
+        ]
       }
     ]
   }
@@ -211,7 +221,12 @@ exit 0
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
-        "hooks": [{ "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/auto-formatear.sh" }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/auto-formatear.sh"
+          }
+        ]
       }
     ]
   }
@@ -499,7 +514,12 @@ exit 0
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
-        "hooks": [{ "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/validar-schema-prisma.sh" }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/validar-schema-prisma.sh"
+          }
+        ]
       }
     ]
   }
@@ -576,7 +596,12 @@ exit 0
     "SessionStart": [
       {
         "matcher": "startup|compact|resume",
-        "hooks": [{ "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/contexto-proyecto.sh" }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/contexto-proyecto.sh"
+          }
+        ]
       }
     ]
   }
@@ -664,7 +689,13 @@ exit 0
   "hooks": {
     "PreToolUse": [
       {
-        "hooks": [{ "type": "command", "command": "~/.claude/hooks/log-sesion.sh", "async": true }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/log-sesion.sh",
+            "async": true
+          }
+        ]
       }
     ]
   }
@@ -733,7 +764,13 @@ exit 0
   "hooks": {
     "Stop": [
       {
-        "hooks": [{ "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/notificar-fin.sh", "async": true }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/notificar-fin.sh",
+            "async": true
+          }
+        ]
       }
     ]
   }
@@ -783,7 +820,12 @@ exit 0
     "SessionStart": [
       {
         "matcher": "startup",
-        "hooks": [{ "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/verificar-entorno.sh" }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/verificar-entorno.sh"
+          }
+        ]
       }
     ]
   }

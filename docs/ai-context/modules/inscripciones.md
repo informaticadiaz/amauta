@@ -23,26 +23,26 @@ Permite a los usuarios inscribirse en cursos publicados. Registra el estado de l
 
 ### Backend
 
-| Archivo                                                          | Propósito               |
-| ---------------------------------------------------------------- | ----------------------- |
-| `apps/api/src/inscripciones/inscripciones.module.ts`             | Módulo NestJS           |
-| `apps/api/src/inscripciones/inscripciones.controller.ts`         | Endpoints REST          |
-| `apps/api/src/inscripciones/inscripciones.service.ts`            | Lógica de negocio       |
-| `apps/api/src/inscripciones/inscripciones.service.spec.ts`       | Tests unitarios service (18 tests, 100% cobertura) |
-| `apps/api/src/inscripciones/inscripciones.controller.spec.ts`    | Tests unitarios controller (8 tests, 100% cobertura) |
-| `apps/api/src/inscripciones/dto/query-inscripciones.dto.ts`      | Schema Zod para filtros |
-| `apps/api/src/inscripciones/dto/inscribirse.dto.ts`              | Schema Zod (si aplica)  |
+| Archivo                                                       | Propósito                                            |
+| ------------------------------------------------------------- | ---------------------------------------------------- |
+| `apps/api/src/inscripciones/inscripciones.module.ts`          | Módulo NestJS                                        |
+| `apps/api/src/inscripciones/inscripciones.controller.ts`      | Endpoints REST                                       |
+| `apps/api/src/inscripciones/inscripciones.service.ts`         | Lógica de negocio                                    |
+| `apps/api/src/inscripciones/inscripciones.service.spec.ts`    | Tests unitarios service (18 tests, 100% cobertura)   |
+| `apps/api/src/inscripciones/inscripciones.controller.spec.ts` | Tests unitarios controller (8 tests, 100% cobertura) |
+| `apps/api/src/inscripciones/dto/query-inscripciones.dto.ts`   | Schema Zod para filtros                              |
+| `apps/api/src/inscripciones/dto/inscribirse.dto.ts`           | Schema Zod (si aplica)                               |
 
 ### Frontend
 
-| Archivo                                                      | Propósito                          |
-| ------------------------------------------------------------ | ---------------------------------- |
-| `apps/web/src/app/api/cursos/[id]/inscribir/route.ts`        | Proxy POST/DELETE inscribirse      |
-| `apps/web/src/app/api/cursos/[id]/inscripcion/route.ts`      | Proxy GET estado de inscripción    |
-| `apps/web/src/app/api/mis-cursos/route.ts`                   | Proxy GET mis inscripciones        |
-| `apps/web/src/app/dashboard/mis-cursos/page.tsx`             | Página lista de cursos inscritos   |
-| `apps/web/src/components/catalogo/InscripcionBtn.tsx`        | Botón inscripción con lógica real  |
-| `apps/web/src/components/inscripciones/MiCursoCard.tsx`      | Tarjeta de curso inscrito          |
+| Archivo                                                 | Propósito                         |
+| ------------------------------------------------------- | --------------------------------- |
+| `apps/web/src/app/api/cursos/[id]/inscribir/route.ts`   | Proxy POST/DELETE inscribirse     |
+| `apps/web/src/app/api/cursos/[id]/inscripcion/route.ts` | Proxy GET estado de inscripción   |
+| `apps/web/src/app/api/mis-cursos/route.ts`              | Proxy GET mis inscripciones       |
+| `apps/web/src/app/dashboard/mis-cursos/page.tsx`        | Página lista de cursos inscritos  |
+| `apps/web/src/components/catalogo/InscripcionBtn.tsx`   | Botón inscripción con lógica real |
+| `apps/web/src/components/inscripciones/MiCursoCard.tsx` | Tarjeta de curso inscrito         |
 
 ---
 

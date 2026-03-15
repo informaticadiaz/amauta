@@ -83,23 +83,31 @@ async function getLeccion(leccionId: string): Promise<Leccion | null> {
 
 async function verificarInscripcion(cursoId: string): Promise<boolean> {
   try {
-    const data = await api.get<InscripcionResponse>(`/cursos/${cursoId}/inscripcion`);
+    const data = await api.get<InscripcionResponse>(
+      `/cursos/${cursoId}/inscripcion`
+    );
     return data.inscrito === true;
   } catch {
     return false;
   }
 }
 
-async function getProgreso(cursoId: string): Promise<ProgresoCursoResponse | null> {
+async function getProgreso(
+  cursoId: string
+): Promise<ProgresoCursoResponse | null> {
   try {
-    const data = await api.get<ProgresoCursoResponse>(`/cursos/${cursoId}/progreso`);
+    const data = await api.get<ProgresoCursoResponse>(
+      `/cursos/${cursoId}/progreso`
+    );
     return data;
   } catch {
     return null;
   }
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const leccion = await getLeccion(params.leccionId);
   return {
     title: leccion ? `${leccion.titulo} | Amauta` : 'Lección | Amauta',
@@ -149,7 +157,8 @@ export default async function LeccionPage({ params }: PageProps) {
     .sort((a, b) => a.orden - b.orden);
 
   const indexActual = leccionesPublicadas.findIndex((l) => l.id === leccionId);
-  const leccionAnterior = indexActual > 0 ? (leccionesPublicadas[indexActual - 1] ?? null) : null;
+  const leccionAnterior =
+    indexActual > 0 ? (leccionesPublicadas[indexActual - 1] ?? null) : null;
   const leccionSiguiente =
     indexActual < leccionesPublicadas.length - 1
       ? (leccionesPublicadas[indexActual + 1] ?? null)
@@ -214,7 +223,9 @@ export default async function LeccionPage({ params }: PageProps) {
               <h2 className="mb-2 font-semibold text-[var(--foreground)]">
                 Descripción
               </h2>
-              <p className="text-sm text-[var(--muted)]">{leccionData.descripcion}</p>
+              <p className="text-sm text-[var(--muted)]">
+                {leccionData.descripcion}
+              </p>
             </div>
           )}
 
@@ -230,7 +241,10 @@ export default async function LeccionPage({ params }: PageProps) {
                 />
               </div>
             )}
-            <CompletarLeccionBtn leccionId={leccionId} completada={completada} />
+            <CompletarLeccionBtn
+              leccionId={leccionId}
+              completada={completada}
+            />
           </div>
 
           <LeccionNavigation

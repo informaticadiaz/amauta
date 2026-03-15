@@ -30,7 +30,11 @@ function formatDuracion(minutos: number): string {
   return `${minutos}min`;
 }
 
-export function MobileSidebarSheet({ lecciones, leccionActivaId, cursoSlug }: Props) {
+export function MobileSidebarSheet({
+  lecciones,
+  leccionActivaId,
+  cursoSlug,
+}: Props) {
   const [open, setOpen] = useState(false);
 
   return (

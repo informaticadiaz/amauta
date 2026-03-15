@@ -34,9 +34,9 @@ Ejecuta un diseño PWA mobile sobre el service worker
 
 ## Parámetros
 
-| Parámetro | Descripción                                                                          | Ejemplo                         |
-| --------- | ------------------------------------------------------------------------------------ | ------------------------------- |
-| `scope`   | Qué diseñar/analizar: pantalla, flujo, capa técnica (sw/manifest/sync), o "completo" | `flujo de descarga offline`     |
+| Parámetro | Descripción                                                                          | Ejemplo                     |
+| --------- | ------------------------------------------------------------------------------------ | --------------------------- |
+| `scope`   | Qué diseñar/analizar: pantalla, flujo, capa técnica (sw/manifest/sync), o "completo" | `flujo de descarga offline` |
 
 ---
 
@@ -46,17 +46,18 @@ Ejecuta un diseño PWA mobile sobre el service worker
 
 Determinar qué archivos leer y qué aspectos analizar según el scope:
 
-| Scope indicado          | Archivos a analizar / implementar                                                              |
-| ----------------------- | ---------------------------------------------------------------------------------------------- |
-| Manifest / íconos       | `apps/web/public/manifest.json` + `apps/web/next.config.*`                                     |
-| Service Worker          | `apps/web/src/service-worker.ts` + config de next-pwa                                          |
-| IndexedDB / offline DB  | `apps/web/src/lib/db/offline-db.ts` + stores relacionadas                                      |
-| Background Sync         | `apps/web/src/lib/sync/` + service worker sync handlers                                        |
-| Pantalla/componente UI  | `apps/web/src/app/[ruta]/**/*.tsx` + componentes usados                                        |
-| Flujo completo offline  | Todo lo anterior: Manifest → SW → IndexedDB → Sync → UI                                        |
-| Completo del proyecto   | Audit de todo: instalabilidad, offline, sync, UI mobile, Lighthouse                            |
+| Scope indicado         | Archivos a analizar / implementar                                   |
+| ---------------------- | ------------------------------------------------------------------- |
+| Manifest / íconos      | `apps/web/public/manifest.json` + `apps/web/next.config.*`          |
+| Service Worker         | `apps/web/src/service-worker.ts` + config de next-pwa               |
+| IndexedDB / offline DB | `apps/web/src/lib/db/offline-db.ts` + stores relacionadas           |
+| Background Sync        | `apps/web/src/lib/sync/` + service worker sync handlers             |
+| Pantalla/componente UI | `apps/web/src/app/[ruta]/**/*.tsx` + componentes usados             |
+| Flujo completo offline | Todo lo anterior: Manifest → SW → IndexedDB → Sync → UI             |
+| Completo del proyecto  | Audit de todo: instalabilidad, offline, sync, UI mobile, Lighthouse |
 
 Antes de comenzar:
+
 - Leer `docs/project-management/roadmap.md` sección "Fase 2" para entender los objetivos
 - Leer `apps/web/public/manifest.json` si existe
 - Leer `apps/web/next.config.*` para ver config actual de PWA
@@ -81,13 +82,24 @@ El `manifest.json` debe tener obligatoriamente:
   "background_color": "#ffffff",
   "theme_color": "#3b82f6",
   "icons": [
-    { "src": "/icons/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable any" },
-    { "src": "/icons/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable any" }
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
   ]
 }
 ```
 
 **Verificar:**
+
 - [ ] `display: "standalone"` — elimina la barra del browser al instalar
 - [ ] Ícono 192x192 con `purpose: "maskable any"` — obligatorio para Android
 - [ ] Ícono 512x512 — obligatorio para splash screen
@@ -141,23 +153,26 @@ const pwaConfig = withPWA({
   },
 });
 
-export default pwaConfig({ /* next config */ });
+export default pwaConfig({
+  /* next config */
+});
 ```
 
 **Verificar:**
+
 - [ ] SW desactivado en development (evita bugs de caché durante dev)
 - [ ] `dest: 'public'` — genera SW en carpeta pública
 - [ ] `reloadOnOnline: true` — recarga automática al recuperar conexión
 
 #### 3.2 Estrategias de Caché Recomendadas
 
-| Recurso              | Estrategia            | Razón                                           |
-| -------------------- | --------------------- | ----------------------------------------------- |
-| Assets estáticos     | `CacheFirst`          | No cambian entre deployments (CSS, JS, fonts)   |
-| API autenticada      | `NetworkFirst`        | Datos del usuario deben estar frescos           |
-| API pública (cursos) | `StaleWhileRevalidate`| Balance entre velocidad y frescura              |
-| Imágenes de cursos   | `CacheFirst` (30 días)| Imágenes no cambian frecuentemente              |
-| Videos descargados   | `CacheFirst` (60 días)| Contenido offline explícitamente descargado     |
+| Recurso              | Estrategia             | Razón                                         |
+| -------------------- | ---------------------- | --------------------------------------------- |
+| Assets estáticos     | `CacheFirst`           | No cambian entre deployments (CSS, JS, fonts) |
+| API autenticada      | `NetworkFirst`         | Datos del usuario deben estar frescos         |
+| API pública (cursos) | `StaleWhileRevalidate` | Balance entre velocidad y frescura            |
+| Imágenes de cursos   | `CacheFirst` (30 días) | Imágenes no cambian frecuentemente            |
+| Videos descargados   | `CacheFirst` (60 días) | Contenido offline explícitamente descargado   |
 
 #### 3.3 Manejo del Estado Offline en UI
 
@@ -204,8 +219,10 @@ export function OfflineBanner() {
   if (isOnline) return null;
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-amber-500 text-white
-                    text-sm text-center py-2 px-4 flex items-center justify-center gap-2">
+    <div
+      className="fixed top-0 left-0 right-0 z-50 bg-amber-500 text-white
+                    text-sm text-center py-2 px-4 flex items-center justify-center gap-2"
+    >
       <WifiOff className="h-4 w-4 shrink-0" />
       <span>Sin conexión — usando contenido descargado</span>
     </div>
@@ -239,10 +256,10 @@ export interface LeccionOffline {
   id: string;
   cursoId: string;
   titulo: string;
-  contenido: string;      // HTML para lecciones de texto
+  contenido: string; // HTML para lecciones de texto
   tipo: 'VIDEO' | 'TEXTO';
   videoUrl?: string;
-  videoBlobKey?: string;  // Key en Cache API para video descargado
+  videoBlobKey?: string; // Key en Cache API para video descargado
   orden: number;
 }
 
@@ -255,9 +272,9 @@ export interface ProgresoOffline {
 }
 
 export interface SyncPendiente {
-  id?: number;            // autoincrement
+  id?: number; // autoincrement
   tipo: 'completar-leccion' | 'inscribir' | 'cancelar-inscripcion';
-  payload: string;        // JSON serializado
+  payload: string; // JSON serializado
   timestamp: Date;
   intentos: number;
 }
@@ -271,9 +288,9 @@ export class OfflineDB extends Dexie {
   constructor() {
     super('AmautaOfflineDB');
     this.version(1).stores({
-      cursos:        'id, fechaDescarga',
-      lecciones:     'id, cursoId, orden',
-      progreso:      'leccionId, cursoId, sincronizado',
+      cursos: 'id, fechaDescarga',
+      lecciones: 'id, cursoId, orden',
+      progreso: 'leccionId, cursoId, sincronizado',
       syncPendiente: '++id, tipo, timestamp',
     });
   }
@@ -283,6 +300,7 @@ export const db = new OfflineDB();
 ```
 
 **Verificar:**
+
 - [ ] Índices en campos usados en queries (cursoId, sincronizado)
 - [ ] `++id` para tablas con autoincrement
 - [ ] Videos grandes → usar Cache API (no IndexedDB) para blobs
@@ -296,7 +314,10 @@ Usar la Cache API del Service Worker directamente:
 // apps/web/src/lib/db/video-cache.ts
 const VIDEO_CACHE = 'amauta-videos-v1';
 
-export async function cacheVideo(leccionId: string, videoUrl: string): Promise<void> {
+export async function cacheVideo(
+  leccionId: string,
+  videoUrl: string
+): Promise<void> {
   const cache = await caches.open(VIDEO_CACHE);
   const cacheKey = `/offline/video/${leccionId}`;
 
@@ -304,7 +325,9 @@ export async function cacheVideo(leccionId: string, videoUrl: string): Promise<v
   await cache.put(cacheKey, response);
 }
 
-export async function getVideoOfflineUrl(leccionId: string): Promise<string | null> {
+export async function getVideoOfflineUrl(
+  leccionId: string
+): Promise<string | null> {
   const cache = await caches.open(VIDEO_CACHE);
   const response = await cache.match(`/offline/video/${leccionId}`);
 
@@ -341,7 +364,10 @@ export async function encolarSync(
   });
 
   // Registrar Background Sync si disponible
-  if ('serviceWorker' in navigator && 'sync' in ServiceWorkerRegistration.prototype) {
+  if (
+    'serviceWorker' in navigator &&
+    'sync' in ServiceWorkerRegistration.prototype
+  ) {
     const registration = await navigator.serviceWorker.ready;
     await (registration as any).sync.register('amauta-sync');
   } else {
@@ -353,9 +379,7 @@ export async function encolarSync(
 }
 
 export async function procesarColaSinc(): Promise<void> {
-  const pendientes = await db.syncPendiente
-    .orderBy('timestamp')
-    .toArray();
+  const pendientes = await db.syncPendiente.orderBy('timestamp').toArray();
 
   for (const item of pendientes) {
     try {
@@ -390,7 +414,9 @@ export async function resolveProgresoConflict(
   }
 
   // Si ninguno está completado, gana el más reciente
-  return local.timestamp > remoteDate ? local : { ...local, completada: remote.completada };
+  return local.timestamp > remoteDate
+    ? local
+    : { ...local, completada: remote.completada };
 }
 ```
 
@@ -411,6 +437,7 @@ Los elementos táctiles deben tener mínimo **44x44px** (iOS) / **48x48dp** (And
 ```
 
 **Verificar en componentes de lecciones:**
+
 - [ ] Botón "Completar lección" → mínimo 44px de alto
 - [ ] Items del sidebar de lecciones → mínimo 44px de alto
 - [ ] Botones anterior/siguiente → mínimo 44px
@@ -633,13 +660,13 @@ Si el scope es **implementación**: producir el código listo para usar.
 
 ### Instalabilidad
 
-| Requisito                  | Estado      | Detalle                              |
-| -------------------------- | ----------- | ------------------------------------ |
-| Manifest.json              | ✅/❌/⚠️    | [detalle]                            |
-| Service Worker registrado  | ✅/❌/⚠️    | [detalle]                            |
-| HTTPS                      | ✅          | Dokploy con SSL                      |
-| Ícono 192x192 maskable     | ✅/❌/⚠️    | [detalle]                            |
-| Ícono 512x512              | ✅/❌/⚠️    | [detalle]                            |
+| Requisito                 | Estado   | Detalle         |
+| ------------------------- | -------- | --------------- |
+| Manifest.json             | ✅/❌/⚠️ | [detalle]       |
+| Service Worker registrado | ✅/❌/⚠️ | [detalle]       |
+| HTTPS                     | ✅       | Dokploy con SSL |
+| Ícono 192x192 maskable    | ✅/❌/⚠️ | [detalle]       |
+| Ícono 512x512             | ✅/❌/⚠️ | [detalle]       |
 
 ---
 
@@ -653,6 +680,7 @@ Si el scope es **implementación**: producir el código listo para usar.
 **Impacto en mobile:** [Descripción del impacto en el usuario mobile]
 
 **Situación actual:**
+
 ```tsx
 // código problemático
 ```
@@ -661,6 +689,7 @@ Si el scope es **implementación**: producir el código listo para usar.
 [Explicación: teclado que tapa, target pequeño, sin feedback offline, etc.]
 
 **Solución recomendada:**
+
 ```tsx
 // código corregido
 ```

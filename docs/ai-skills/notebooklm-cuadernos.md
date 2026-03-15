@@ -26,33 +26,33 @@ Genera una serie de cuadernos sobre autenticación y seguridad web para Notebook
 
 ## Parámetros
 
-| Parámetro   | Descripción                        | Ejemplo          |
-| ----------- | ---------------------------------- | ---------------- |
-| `tema`      | Tema amplio a cubrir               | `TDD`            |
-| `categoria` | Subcarpeta de destino (ver abajo)  | `testing`        |
-| `nivel`     | Profundidad del contenido          | `intermedio`     |
-| `diagramas` | Tipo de diagramas a usar           | `mermaid`        |
+| Parámetro   | Descripción                       | Ejemplo      |
+| ----------- | --------------------------------- | ------------ |
+| `tema`      | Tema amplio a cubrir              | `TDD`        |
+| `categoria` | Subcarpeta de destino (ver abajo) | `testing`    |
+| `nivel`     | Profundidad del contenido         | `intermedio` |
+| `diagramas` | Tipo de diagramas a usar          | `mermaid`    |
 
 **Opciones de `diagramas`:**
 
-| Valor    | Descripción                                                     | Cuándo usar                              |
-| -------- | --------------------------------------------------------------- | ---------------------------------------- |
-| `ascii`  | Diagramas con caracteres de texto (default)                     | Siempre legible, sin dependencias        |
-| `mermaid`| Diagramas con sintaxis Mermaid, renderizables en GitHub/VS Code | Cuando se quiere visualización gráfica   |
-| `ambos`  | Combinar ASCII para flujos simples y Mermaid para los complejos | Máxima claridad visual                   |
+| Valor     | Descripción                                                     | Cuándo usar                            |
+| --------- | --------------------------------------------------------------- | -------------------------------------- |
+| `ascii`   | Diagramas con caracteres de texto (default)                     | Siempre legible, sin dependencias      |
+| `mermaid` | Diagramas con sintaxis Mermaid, renderizables en GitHub/VS Code | Cuando se quiere visualización gráfica |
+| `ambos`   | Combinar ASCII para flujos simples y Mermaid para los complejos | Máxima claridad visual                 |
 
 **Categorías:**
 
-| Categoría         | Temas de ejemplo                                    |
-| ----------------- | --------------------------------------------------- |
-| `patrones`        | Design Patterns, SOLID, Clean Architecture, DDD     |
-| `infraestructura` | Docker, CI/CD, Kubernetes, Networking               |
-| `lenguajes`       | TypeScript avanzado, SQL, Rust, conceptos           |
-| `arquitectura`    | Microservicios, Event-driven, CQRS, Monolito        |
-| `testing`         | TDD, BDD, testing de integración, E2E               |
-| `seguridad`       | OWASP, JWT, OAuth, autenticación                    |
-| `bases-de-datos`  | Indexes, queries, ORM, migraciones, transacciones   |
-| `ia`              | LLMs, prompting, agentes, flujos autónomos          |
+| Categoría         | Temas de ejemplo                                  |
+| ----------------- | ------------------------------------------------- |
+| `patrones`        | Design Patterns, SOLID, Clean Architecture, DDD   |
+| `infraestructura` | Docker, CI/CD, Kubernetes, Networking             |
+| `lenguajes`       | TypeScript avanzado, SQL, Rust, conceptos         |
+| `arquitectura`    | Microservicios, Event-driven, CQRS, Monolito      |
+| `testing`         | TDD, BDD, testing de integración, E2E             |
+| `seguridad`       | OWASP, JWT, OAuth, autenticación                  |
+| `bases-de-datos`  | Indexes, queries, ORM, migraciones, transacciones |
+| `ia`              | LLMs, prompting, agentes, flujos autónomos        |
 
 ---
 
@@ -248,15 +248,15 @@ erDiagram
 
 #### Guía de elección por tema:
 
-| Tema del documento         | Tipo Mermaid recomendado          |
-| -------------------------- | --------------------------------- |
-| Ciclo TDD / CI/CD          | `flowchart`                       |
-| Autenticación / OAuth      | `sequenceDiagram`                 |
-| Design Patterns / SOLID    | `classDiagram`                    |
-| Estados de una entidad     | `stateDiagram-v2`                 |
-| Modelo de datos / DB       | `erDiagram`                       |
-| Arquitectura de sistema    | `flowchart` con subgraphs         |
-| Flujo de trabajo dev       | `flowchart` + `sequenceDiagram`   |
+| Tema del documento      | Tipo Mermaid recomendado        |
+| ----------------------- | ------------------------------- |
+| Ciclo TDD / CI/CD       | `flowchart`                     |
+| Autenticación / OAuth   | `sequenceDiagram`               |
+| Design Patterns / SOLID | `classDiagram`                  |
+| Estados de una entidad  | `stateDiagram-v2`               |
+| Modelo de datos / DB    | `erDiagram`                     |
+| Arquitectura de sistema | `flowchart` con subgraphs       |
+| Flujo de trabajo dev    | `flowchart` + `sequenceDiagram` |
 
 ### Comparaciones ❌/✅
 
@@ -273,11 +273,11 @@ erDiagram
 ### Tablas de referencia
 
 ```markdown
-| Situación                    | Herramienta        | Por qué               |
-| ---------------------------- | ------------------ | --------------------- |
-| Unit test de función pura    | Jest / Vitest      | Rápido, aislado       |
-| Test de componente React     | Testing Library    | Simula uso real       |
-| Test de endpoint HTTP        | Supertest          | Prueba la API real    |
+| Situación                 | Herramienta     | Por qué            |
+| ------------------------- | --------------- | ------------------ |
+| Unit test de función pura | Jest / Vitest   | Rápido, aislado    |
+| Test de componente React  | Testing Library | Simula uso real    |
+| Test de endpoint HTTP     | Supertest       | Prueba la API real |
 ```
 
 ### Referencia Rápida al final
@@ -287,6 +287,7 @@ Cada documento termina con una sección `## Referencia Rápida` que resume los p
 ### Densidad de contenido
 
 Cada documento debe tener:
+
 - **Mínimo 300 líneas** de contenido real (no relleno)
 - Al menos **3 bloques de código** con ejemplos reales
 - Al menos **2 diagramas** (ASCII o Mermaid, según el parámetro `diagramas`)
@@ -308,10 +309,11 @@ Cada documento debe tener:
 
 ## Documentos de esta Serie
 
-| # | Documento | Tema |
-|---|-----------|------|
-| 01 | `01-xxx.md` | [qué cubre] |
-| 02 | `02-xxx.md` | [qué cubre] |
+| #   | Documento   | Tema        |
+| --- | ----------- | ----------- |
+| 01  | `01-xxx.md` | [qué cubre] |
+| 02  | `02-xxx.md` | [qué cubre] |
+
 ...
 
 ---
@@ -319,18 +321,21 @@ Cada documento debe tener:
 ## Resumen Ejecutivo
 
 ### ¿Qué Aprenderás?
+
 [5-6 puntos concretos de conocimiento]
 
 ### Principios Fundamentales
+
 [Los 3-5 principios del tema en diagrama o lista visual]
 
 ---
 
 ## Glosario Rápido
 
-| Término | Definición |
-|---------|------------|
+| Término     | Definición           |
+| ----------- | -------------------- |
 | [término 1] | [definición concisa] |
+
 ...
 
 ---
@@ -338,9 +343,11 @@ Cada documento debe tener:
 ## Cómo Usar Esta Serie
 
 ### Para Principiantes
+
 [orden recomendado]
 
 ### Para Referencia Rápida
+
 [cómo buscar temas específicos]
 ```
 
@@ -356,6 +363,7 @@ Cada documento debe tener:
 ---
 
 ## Instrucciones de Uso
+
 1. Subir TODOS los documentos de la serie como fuentes en un mismo cuaderno
 2. Copiar el prompt del episodio deseado
 3. Pegar en Audio Overview → Customize → Generate
@@ -363,15 +371,20 @@ Cada documento debe tener:
 ---
 
 ## Episodio 0: Introducción a la Serie (Opcional)
+
 **Documentos fuente:** `00-indice.md`
 ```
+
 [prompt]
+
 ```
 
 ## Episodio 1: [Título]
 **Documento fuente:** `01-xxx.md`
 ```
+
 [prompt con: audiencia, puntos clave, estilo, tono, duración]
+
 ```
 
 [Un episodio por documento]
@@ -381,8 +394,11 @@ Cada documento debe tener:
 ## Episodio Completo (Alternativa)
 **Documentos fuente:** Todos
 ```
+
 [prompt que cubre toda la serie en 12-15 minutos]
+
 ```
+
 ```
 
 ---
@@ -390,16 +406,19 @@ Cada documento debe tener:
 ## Reglas de Contenido
 
 ### Contenido genérico (obligatorio):
+
 - Identificadores en ejemplos de código: `User`, `Order`, `Product`, `Service`, `Post`
 - Tecnologías nombradas de forma genérica cuando sea posible
 - Sin nombres de proyectos, empresas, personas ni URLs reales
 
 ### Excepciones permitidas:
+
 - Nombrar tecnologías/frameworks cuando son el tema (ej: "en Docker", "en TypeScript")
 - Citar herramientas de testing reales (Jest, Vitest, Playwright) cuando es relevante
 - Referenciar conceptos con sus nombres estándar (SOLID, OWASP, REST, etc.)
 
 ### Calidad del contenido:
+
 - Ejemplos de código que compilan o son sintácticamente válidos
 - Comparativas honestas, incluyendo limitaciones y cuándo NO usar el tema
 - Analogías que simplifican sin distorsionar el concepto real

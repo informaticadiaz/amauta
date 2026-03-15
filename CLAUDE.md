@@ -121,6 +121,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - 19 tests frontend (3 suites, 100% statements)
 
 #### Próximos pasos:
+
 - Fase 1 completada. Ver `docs/project-management/roadmap.md` → Fase 2
 
 **Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 1"
@@ -800,14 +801,15 @@ enum Prioridad {
 
 ### Skills Disponibles
 
-| Skill              | Archivo                                  | Cuándo usar                                 |
-| ------------------ | ---------------------------------------- | ------------------------------------------- |
-| **Prisma & DB**      | `docs/ai-skills/prisma-db-management.md` | Migraciones, verificar DB, resolver errores       |
-| **CRUD Generator**   | `docs/ai-skills/crud-generator.md`       | Crear módulo nuevo completo                       |
-| **API Endpoint**     | `docs/ai-skills/api-endpoint.md`         | Agregar endpoint a módulo existente               |
-| **React Form**       | `docs/ai-skills/react-form.md`           | Crear formulario nuevo                            |
-| **Complete Issue**       | `docs/ai-skills/complete-issue.md`           | Ejecutar un issue completo de forma autónoma          |
-| **Performance Review**   | `docs/ai-skills/performance-review.md`       | Analizar performance y generar informe con mejoras    |
-| **Security Audit**       | `docs/ai-skills/security-audit.md`           | Auditar vulnerabilidades de seguridad (OWASP Top 10)  |
-| **NotebookLM Cuadernos** | `docs/ai-skills/notebooklm-cuadernos.md`     | Generar cuadernos de estudio genéricos para NotebookLM|
-| **PWA Mobile Design**    | `docs/ai-skills/pwa-mobile-design.md`        | Diseñar/auditar PWA orientada a mobile: manifest, SW, IndexedDB, sync, UI táctil|
+| Skill                    | Archivo                                  | Cuándo usar                                                                            |
+| ------------------------ | ---------------------------------------- | -------------------------------------------------------------------------------------- |
+| **Prisma & DB**          | `docs/ai-skills/prisma-db-management.md` | Migraciones, verificar DB, resolver errores                                            |
+| **CRUD Generator**       | `docs/ai-skills/crud-generator.md`       | Crear módulo nuevo completo                                                            |
+| **API Endpoint**         | `docs/ai-skills/api-endpoint.md`         | Agregar endpoint a módulo existente                                                    |
+| **React Form**           | `docs/ai-skills/react-form.md`           | Crear formulario nuevo                                                                 |
+| **Complete Issue**       | `docs/ai-skills/complete-issue.md`       | Ejecutar un issue completo de forma autónoma                                           |
+| **Performance Review**   | `docs/ai-skills/performance-review.md`   | Analizar performance y generar informe con mejoras                                     |
+| **Security Audit**       | `docs/ai-skills/security-audit.md`       | Auditar vulnerabilidades de seguridad (OWASP Top 10)                                   |
+| **NotebookLM Cuadernos** | `docs/ai-skills/notebooklm-cuadernos.md` | Generar cuadernos de estudio genéricos para NotebookLM                                 |
+| **PWA Mobile Design**    | `docs/ai-skills/pwa-mobile-design.md`    | Diseñar/auditar PWA orientada a mobile: manifest, SW, IndexedDB, sync, UI táctil       |
+| **Feature Audit**        | `docs/ai-skills/feature-audit.md`        | Auditar que las features implementadas funcionan y cumplen sus criterios de aceptación |
