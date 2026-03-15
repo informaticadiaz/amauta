@@ -25,7 +25,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 ### Fase Actual: Fase 1 - MVP Plataforma de Cursos 🚧 EN PROGRESO
 
 **Inicio**: 30/12/2024
-**Progreso**: 14/16 issues completados
+**Progreso**: 15/16 issues completados
 
 #### Completado en Fase 1:
 
@@ -98,14 +98,21 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 - ✅ **F1-014**: API seguimiento de progreso
   - Módulo `progreso` con service, controller y tests
   - `POST /lecciones/:id/completar` — marcar lección completada (idempotente)
-  - `GET /cursos/:id/progreso` — progreso del estudiante en el curso
+  - `GET /cursos/:id/progreso` — progreso del estudiante en el curso (incluye `leccionesCompletadasIds`)
   - `GET /cursos/:id/estudiantes/progreso` — progreso de todos los estudiantes (educador)
   - Actualización automática del porcentaje en la inscripción
   - Marca inscripción como COMPLETADO al llegar al 100%
-  - 20 tests (100% statements, 89% branches)
+  - 21 tests (100% statements, 89% branches)
+
+- ✅ **F1-015**: UI marcar lecciones completadas
+  - Componente `CompletarLeccionBtn` con actualización optimista del UI
+  - Componente `ProgresoBar` con barra visual, porcentaje y conteo de lecciones
+  - `LeccionSidebar` actualizado: checkmarks basados en datos reales de la API
+  - Visualizador de lección muestra progreso real y botón completar
+  - API Routes proxy: completar lección (POST), progreso curso (GET)
+  - 40 tests frontend (5 suites) + 21 tests backend
 
 #### Próximos pasos:
-- 📋 **F1-015**: UI marcar lecciones completadas
 - 📋 **F1-016**: Dashboard de estudiante
 
 **Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 1"

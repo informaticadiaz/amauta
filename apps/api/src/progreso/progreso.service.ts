@@ -30,6 +30,7 @@ export interface ProgresoCursoResponse {
   cursoId: string;
   totalLecciones: number;
   leccionesCompletadas: number;
+  leccionesCompletadasIds: string[];
   porcentaje: number;
   ultimaLeccion: {
     id: string;
@@ -183,19 +184,23 @@ export class ProgresoService {
       throw new ForbiddenException('No estás inscripto en este curso');
     }
 
-    // Contar lecciones publicadas y completadas
-    const [totalLecciones, leccionesCompletadas] = await Promise.all([
+    // Contar lecciones publicadas y obtener completadas
+    const [totalLecciones, progresoCompletado] = await Promise.all([
       this.prisma.leccion.count({
         where: { cursoId, publicada: true },
       }),
-      this.prisma.progreso.count({
+      this.prisma.progreso.findMany({
         where: {
           usuarioId,
           leccion: { cursoId },
           completado: true,
         },
+        select: { leccionId: true },
       }),
     ]);
+
+    const leccionesCompletadas = progresoCompletado.length;
+    const leccionesCompletadasIds = progresoCompletado.map((p) => p.leccionId);
 
     const porcentaje =
       totalLecciones > 0
@@ -218,6 +223,7 @@ export class ProgresoService {
       cursoId,
       totalLecciones,
       leccionesCompletadas,
+      leccionesCompletadasIds,
       porcentaje,
       ultimaLeccion: ultimoProgreso?.leccion ?? null,
     };

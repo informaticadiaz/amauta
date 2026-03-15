@@ -50,6 +50,7 @@ describe('ProgresoService', () => {
     progreso: {
       upsert: jest.fn(),
       count: jest.fn(),
+      findMany: jest.fn(),
       findFirst: jest.fn(),
     },
   };
@@ -191,11 +192,18 @@ describe('ProgresoService', () => {
   });
 
   describe('obtenerProgresoCurso', () => {
+    const mockProgresoLecciones = [
+      { leccionId: 'leccion-1' },
+      { leccionId: 'leccion-2' },
+      { leccionId: 'leccion-3' },
+      { leccionId: 'leccion-4' },
+    ];
+
     beforeEach(() => {
       prisma.curso.findUnique.mockResolvedValue(mockCurso);
       prisma.inscripcion.findUnique.mockResolvedValue(mockInscripcion);
       prisma.leccion.count.mockResolvedValue(10);
-      prisma.progreso.count.mockResolvedValue(4);
+      prisma.progreso.findMany.mockResolvedValue(mockProgresoLecciones);
       prisma.progreso.findFirst.mockResolvedValue({
         ...mockProgreso,
         leccion: { id: 'leccion-123', titulo: 'Lección de Prueba', orden: 0 },
@@ -209,6 +217,17 @@ describe('ProgresoService', () => {
       expect(result.totalLecciones).toBe(10);
       expect(result.leccionesCompletadas).toBe(4);
       expect(result.porcentaje).toBe(40);
+    });
+
+    it('debería incluir el array de IDs de lecciones completadas', async () => {
+      const result = await service.obtenerProgresoCurso('curso-123', 'estudiante-123');
+
+      expect(result.leccionesCompletadasIds).toEqual([
+        'leccion-1',
+        'leccion-2',
+        'leccion-3',
+        'leccion-4',
+      ]);
     });
 
     it('debería incluir la última lección accedida', async () => {
@@ -230,11 +249,12 @@ describe('ProgresoService', () => {
     });
 
     it('debería calcular porcentaje 0 si no hay lecciones completadas', async () => {
-      prisma.progreso.count.mockResolvedValue(0);
+      prisma.progreso.findMany.mockResolvedValue([]);
 
       const result = await service.obtenerProgresoCurso('curso-123', 'estudiante-123');
 
       expect(result.porcentaje).toBe(0);
+      expect(result.leccionesCompletadasIds).toEqual([]);
     });
 
     it('debería lanzar NotFoundException si el curso no existe', async () => {

@@ -35,7 +35,7 @@ describe('LeccionSidebar', () => {
         cursoSlug="mi-curso"
       />
     );
-    const leccionActiva = screen.getByText('Conceptos básicos').closest('a, div, li');
+    const leccionActiva = screen.getByText('Conceptos básicos').closest('a');
     expect(leccionActiva).toHaveAttribute('aria-current', 'true');
   });
 
@@ -86,6 +86,38 @@ describe('LeccionSidebar', () => {
         cursoSlug="mi-curso"
       />
     );
-    expect(screen.getByText(/3/)).toBeInTheDocument();
+    expect(screen.getByText('3 lecciones')).toBeInTheDocument();
+  });
+
+  it('debería mostrar checkmarks para lecciones completadas por ID', () => {
+    render(
+      <LeccionSidebar
+        lecciones={mockLecciones}
+        leccionActivaId="lec-2"
+        cursoSlug="mi-curso"
+        leccionesCompletadasIds={['lec-1']}
+      />
+    );
+    // lec-1 completada: tiene SVG checkmark (no número)
+    // El indicador de lec-1 NO debe mostrar "1" sino el checkmark
+    const indicadores = screen.getAllByRole('link');
+    const linkLec1 = indicadores.find((el) =>
+      el.getAttribute('href')?.includes('lec-1')
+    );
+    expect(linkLec1).toBeInTheDocument();
+  });
+
+  it('debería NO mostrar checkmarks cuando leccionesCompletadasIds está vacío', () => {
+    render(
+      <LeccionSidebar
+        lecciones={mockLecciones}
+        leccionActivaId="lec-1"
+        cursoSlug="mi-curso"
+        leccionesCompletadasIds={[]}
+      />
+    );
+    // Todos los indicadores muestran números, no checkmarks
+    expect(screen.getByText('2')).toBeInTheDocument();
+    expect(screen.getByText('3')).toBeInTheDocument();
   });
 });

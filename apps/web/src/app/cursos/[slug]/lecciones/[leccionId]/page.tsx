@@ -13,6 +13,8 @@ import { LeccionSidebar } from '@/components/lecciones/LeccionSidebar';
 import { LeccionContent } from '@/components/lecciones/LeccionContent';
 import { LeccionNavigation } from '@/components/lecciones/LeccionNavigation';
 import { MobileSidebarSheet } from '@/components/lecciones/MobileSidebarSheet';
+import { CompletarLeccionBtn } from '@/components/lecciones/CompletarLeccionBtn';
+import { ProgresoBar } from '@/components/lecciones/ProgresoBar';
 
 type TipoLeccion = 'VIDEO' | 'TEXTO' | 'QUIZ' | 'INTERACTIVO' | 'DESCARGABLE';
 
@@ -46,6 +48,14 @@ interface InscripcionResponse {
   inscrito: boolean;
 }
 
+interface ProgresoCursoResponse {
+  cursoId: string;
+  totalLecciones: number;
+  leccionesCompletadas: number;
+  leccionesCompletadasIds: string[];
+  porcentaje: number;
+}
+
 interface PageProps {
   params: {
     slug: string;
@@ -77,6 +87,15 @@ async function verificarInscripcion(cursoId: string): Promise<boolean> {
     return data.inscrito === true;
   } catch {
     return false;
+  }
+}
+
+async function getProgreso(cursoId: string): Promise<ProgresoCursoResponse | null> {
+  try {
+    const data = await api.get<ProgresoCursoResponse>(`/cursos/${cursoId}/progreso`);
+    return data;
+  } catch {
+    return null;
   }
 }
 
@@ -116,6 +135,14 @@ export default async function LeccionPage({ params }: PageProps) {
     redirect(`/cursos/${slug}`);
   }
 
+  // Obtener progreso del estudiante
+  const progreso = await getProgreso(cursoData.id);
+  const leccionesCompletadasIds = progreso?.leccionesCompletadasIds ?? [];
+  const porcentaje = progreso?.porcentaje ?? 0;
+  const leccionesCompletadas = progreso?.leccionesCompletadas ?? 0;
+  const totalLecciones = progreso?.totalLecciones ?? 0;
+  const completada = leccionesCompletadasIds.includes(leccionId);
+
   // Lecciones publicadas ordenadas
   const leccionesPublicadas = cursoData.lecciones
     .filter((l) => l.publicada)
@@ -136,6 +163,7 @@ export default async function LeccionPage({ params }: PageProps) {
           lecciones={leccionesPublicadas}
           leccionActivaId={leccionId}
           cursoSlug={slug}
+          leccionesCompletadasIds={leccionesCompletadasIds}
         />
       </aside>
 
@@ -160,6 +188,17 @@ export default async function LeccionPage({ params }: PageProps) {
               )}
             </div>
           </div>
+
+          {/* Barra de progreso en header móvil */}
+          {totalLecciones > 0 && (
+            <div className="px-4 pb-3">
+              <ProgresoBar
+                porcentaje={porcentaje}
+                leccionesCompletadas={leccionesCompletadas}
+                totalLecciones={totalLecciones}
+              />
+            </div>
+          )}
         </div>
 
         {/* Contenido de la lección */}
@@ -178,6 +217,21 @@ export default async function LeccionPage({ params }: PageProps) {
               <p className="text-sm text-[var(--muted)]">{leccionData.descripcion}</p>
             </div>
           )}
+
+          {/* Progreso desktop y botón completar */}
+          <div className="mt-8 flex flex-col gap-4 border-t border-[var(--border)] pt-8 sm:flex-row sm:items-center sm:justify-between">
+            {totalLecciones > 0 && (
+              <div className="min-w-0 flex-1 sm:max-w-xs">
+                <ProgresoBar
+                  porcentaje={porcentaje}
+                  label="Tu progreso"
+                  leccionesCompletadas={leccionesCompletadas}
+                  totalLecciones={totalLecciones}
+                />
+              </div>
+            )}
+            <CompletarLeccionBtn leccionId={leccionId} completada={completada} />
+          </div>
 
           <LeccionNavigation
             cursoSlug={slug}

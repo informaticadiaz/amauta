@@ -22,6 +22,7 @@ interface Props {
   lecciones: Leccion[];
   leccionActivaId: string;
   cursoSlug: string;
+  leccionesCompletadasIds?: string[];
 }
 
 function formatDuracion(minutos: number): string {
@@ -31,11 +32,10 @@ function formatDuracion(minutos: number): string {
   return `${minutos}min`;
 }
 
-export function LeccionSidebar({ lecciones, leccionActivaId, cursoSlug }: Props) {
+export function LeccionSidebar({ lecciones, leccionActivaId, cursoSlug, leccionesCompletadasIds = [] }: Props) {
   const [collapsed, setCollapsed] = useState(false);
 
   const total = lecciones.length;
-  const indexActivo = lecciones.findIndex((l) => l.id === leccionActivaId);
 
   return (
     <div
@@ -86,7 +86,7 @@ export function LeccionSidebar({ lecciones, leccionActivaId, cursoSlug }: Props)
         <nav className="flex-1 overflow-y-auto py-2">
           {lecciones.map((leccion, index) => {
             const isActive = leccion.id === leccionActivaId;
-            const isCompleted = index < indexActivo;
+            const isCompleted = leccionesCompletadasIds.includes(leccion.id);
 
             return (
               <Link
