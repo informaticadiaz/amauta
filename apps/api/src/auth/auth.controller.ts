@@ -5,6 +5,7 @@
  */
 
 import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Throttle, SkipThrottle } from '@nestjs/throttler';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports -- NestJS requires runtime import for DI
 import { AuthService, type AuthUser } from './auth.service';
 import type { LoginDto } from './dto/login.dto';
@@ -27,6 +28,7 @@ export class AuthController {
    * POST /api/v1/auth/login
    */
   @Public()
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @Post('login')
   async login(@Body() dto: LoginDto): Promise<AuthResponse> {
     const user = await this.authService.login(dto);
@@ -42,6 +44,7 @@ export class AuthController {
    * POST /api/v1/auth/register
    */
   @Public()
+  @Throttle({ default: { limit: 3, ttl: 300000 } })
   @Post('register')
   async register(@Body() dto: RegisterDto): Promise<AuthResponse> {
     const user = await this.authService.register(dto);
@@ -56,6 +59,7 @@ export class AuthController {
    *
    * GET /api/v1/auth/me
    */
+  @SkipThrottle()
   @Get('me')
   async getMe(@CurrentUser() user: RequestUser): Promise<AuthUser> {
     // El usuario ya está verificado por el guard
@@ -63,11 +67,10 @@ export class AuthController {
   }
 
   /**
-   * Obtener usuario por ID (para verificar sesión)
+   * Obtener usuario por ID (requiere autenticación)
    *
    * GET /api/v1/auth/user/:id
    */
-  @Public()
   @Get('user/:id')
   async getUser(@Param('id') id: string): Promise<AuthUser | null> {
     return this.authService.getUserById(id);

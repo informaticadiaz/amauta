@@ -1,41 +1,29 @@
-# Skill: Security Audit
-
-> Actúa como un ingeniero senior especializado en seguridad de aplicaciones web.
-> Audita el código del proyecto en busca de vulnerabilidades de seguridad y genera
-> un informe estructurado con hallazgos priorizados, código de explotación conceptual
-> y remediaciones concretas.
->
-> **Alcance**: Backend (NestJS/Fastify), Frontend (Next.js/React), Base de datos (PostgreSQL/Prisma),
-> Autenticación (NextAuth.js/JWT), APIs REST.
->
-> **Referencia**: OWASP Top 10, CWE/SANS Top 25, guía interna `docs/technical/security-guide.md`.
-
+---
+name: security-audit
+description: Use this skill when the user asks to run a security audit on the codebase. Triggered by phrases like "ejecuta una auditoría de seguridad", "auditá la seguridad de", "security audit", "revisión de seguridad", or "auditá el módulo de [X]".
+version: 1.0.0
 ---
 
-## Uso
+# Security Audit — Auditoría de Seguridad
 
-```
-Ejecuta una auditoría de seguridad sobre [scope]
-```
+Actúa como un ingeniero senior especializado en seguridad de aplicaciones web.
+Audita el código del proyecto en busca de vulnerabilidades de seguridad y genera
+un informe estructurado con hallazgos priorizados, código de explotación conceptual
+y remediaciones concretas.
 
-**Ejemplos:**
+**Alcance**: Backend (NestJS/Fastify), Frontend (Next.js/React), Base de datos (PostgreSQL/Prisma),
+Autenticación (NextAuth.js/JWT), APIs REST.
 
-```
-Ejecuta una auditoría de seguridad sobre el módulo de autenticación
-Ejecuta una auditoría de seguridad sobre las API routes del frontend
-Ejecuta una auditoría de seguridad sobre el módulo de uploads
-Ejecuta una auditoría de seguridad completa del proyecto
-```
+**Referencia**: OWASP Top 10, CWE/SANS Top 25, guía interna `docs/technical/security-guide.md`.
 
----
+## Cuándo se activa
 
-## Parámetros
+Cuando el usuario pide una auditoría de seguridad, por ejemplo:
 
-| Parámetro | Descripción                                                            | Ejemplo                   |
-| --------- | ---------------------------------------------------------------------- | ------------------------- |
-| `scope`   | Qué auditar: módulo, capa (auth/api/frontend/uploads/db), o "completo" | `módulo de inscripciones` |
-
----
+- "Ejecuta una auditoría de seguridad sobre el módulo de autenticación"
+- "Auditá la seguridad de las API routes del frontend"
+- "Security audit del módulo de uploads"
+- "Revisión de seguridad completa del proyecto"
 
 ## Proceso de Auditoría (Ejecutar en Orden)
 
@@ -210,14 +198,16 @@ Buscar también:
 Prisma usa queries parametrizadas por defecto, PERO hay casos peligrosos:
 
 ```typescript
-// ❌ PELIGROSO: queryRaw con interpolación de string
-await this.prisma.$queryRaw`SELECT * FROM users WHERE email = ${userInput}`; // ✅ Safe (tagged template)
+// ✅ Safe (tagged template)
+await this.prisma.$queryRaw`SELECT * FROM users WHERE email = ${userInput}`;
+
+// ❌ CRÍTICO
 await this.prisma.$queryRawUnsafe(
   `SELECT * FROM users WHERE email = '${userInput}'`
-); // ❌ CRÍTICO
+);
 
 // ❌ PELIGROSO: orderBy desde input del usuario sin lista blanca
-const orderBy = { [req.query.sortBy]: req.query.order }; // SQL injection potencial
+const orderBy = { [req.query.sortBy]: req.query.order };
 await this.prisma.curso.findMany({ orderBy });
 
 // ✅ Lista blanca para campos de ordenamiento
@@ -244,7 +234,7 @@ Buscar: `exec(`, `execSync(`, `spawn(` con input del usuario.
 #### 3.3 Server-Side Request Forgery (SSRF)
 
 ```typescript
-// ❌ Fetch a URL controlada por el usuario
+// ❌ Fetch a URL controlada por el usuario (host controlable)
 const response = await fetch(req.body.webhookUrl);
 
 // ✅ Validar contra lista blanca de dominios
@@ -336,7 +326,7 @@ app.useGlobalPipes(
 );
 ```
 
-**`whitelist: true`** es crítico — sin él, propiedades extra del body (que no están en el DTO) pasan al servicio.
+**`whitelist: true`** es crítico — sin él, propiedades extra del body pasan al servicio.
 
 #### 5.2 Cross-Site Scripting (XSS) en Frontend
 
@@ -346,9 +336,7 @@ app.useGlobalPipes(
 
 // ✅ Sanitizar con DOMPurify antes de renderizar HTML
 import DOMPurify from 'isomorphic-dompurify';
-<div
-  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(leccion.contenido) }}
-/>;
+<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(leccion.contenido) }} />;
 ```
 
 Buscar: `dangerouslySetInnerHTML`, `.innerHTML =`, `eval(`, `Function(`.
@@ -393,6 +381,9 @@ return this.prisma.usuario.findMany({
 
 Buscar: respuestas que incluyen `passwordHash`, `token`, `secret`, claves privadas.
 
+```typescript
+```
+
 #### 6.2 Variables de entorno expuestas al cliente (Next.js)
 
 ```typescript
@@ -420,6 +411,18 @@ Verificar que `NEXT_PUBLIC_*` variables no contienen: JWT secrets, API keys priv
 app.register(helmet);
 ```
 
+#### 6.5 Rate Limiting ausente
+
+Verificar que los endpoints sensibles tienen rate limiting:
+
+- `POST /auth/login` — prevenir brute force
+- `POST /auth/register` — prevenir spam
+- `POST /lecciones/:id/completar` — prevenir manipulación de progreso
+
+```typescript
+// Buscar: @Throttle() o ThrottlerModule en auth.module.ts
+```
+
 #### 6.4 CORS mal configurado
 
 ```typescript
@@ -431,18 +434,6 @@ app.enableCors({
   origin: [process.env.FRONTEND_URL],
   credentials: true,
 });
-```
-
-#### 6.5 Rate Limiting ausente
-
-Verificar que los endpoints sensibles tienen rate limiting:
-
-- `POST /auth/login` — prevenir brute force
-- `POST /auth/register` — prevenir spam
-- `POST /lecciones/:id/completar` — prevenir manipulación de progreso
-
-```typescript
-// Buscar: @Throttle() o ThrottlerModule en auth.module.ts
 ```
 
 ---
@@ -461,7 +452,6 @@ Buscar dependencias desactualizadas en paquetes críticos de seguridad:
 ```typescript
 // ❌ Stack traces expuestos al cliente en producción
 throw new Error(`DB query failed: ${query} with params ${params}`);
-// Incluye información interna en el mensaje de error
 
 // ✅ Mensaje genérico al cliente, log interno
 this.logger.error('DB query failed', { query, params, error });
@@ -506,7 +496,7 @@ El informe debe comenzar con:
 
 ### Resumen Ejecutivo
 
-[2-4 oraciones describiendo el estado general de seguridad, los vectores de ataque principales encontrados y el riesgo global para el sistema]
+[2-4 oraciones describiendo el estado general de seguridad, los vectores de ataque principales encontrados y el riesgo global]
 
 ---
 
@@ -543,7 +533,27 @@ El informe debe comenzar con:
 
 #### 🟠 ALTO — [Nombre de la vulnerabilidad]
 
-[mismo formato]
+**CWE/OWASP:** CWE-XXX / A0X:2021
+**Archivo:** `ruta/al/archivo.ts` línea X
+**Vector de ataque:** [Autenticado / No autenticado] → [HTTP / Local]
+**Impacto:** [Descripción del impacto]
+
+**Código vulnerable:**
+
+```typescript
+// código vulnerable con contexto
+```
+
+**Cómo se explotaría:**
+[Descripción conceptual paso a paso]
+
+**Remediación:**
+
+```typescript
+// código corregido
+```
+
+**Esfuerzo de remediación:** [Bajo / Medio / Alto]
 
 ---
 
@@ -572,8 +582,6 @@ El informe debe comenzar con:
 ---
 
 ### Plan de Remediación Priorizado
-
-Ordenado por riesgo/esfuerzo (más urgente primero):
 
 1. **[Vulnerabilidad 1]** — Riesgo: Crítico / Esfuerzo: Bajo → **Resolver antes del próximo deploy**
 2. **[Vulnerabilidad 2]** — Riesgo: Alto / Esfuerzo: Medio → **Resolver en este sprint**
@@ -614,6 +622,49 @@ Si ya existe un archivo con ese nombre (misma fecha, scope y tipo), agregar sufi
 Después de guardar, informar al usuario:
 
 > "✅ Informe guardado en `docs/auditorias/auditoria-[triage|deepdive]-[scope]-[fecha].md`"
+
+---
+
+### PASO 10 — Propuesta de Remediación Autónoma
+
+Después de guardar el informe, clasificar cada hallazgo encontrado en dos categorías y mostrar la siguiente tabla al usuario:
+
+**Automatizables** — Claude puede aplicar el fix directamente:
+- Cambios de código (eliminar decoradores, agregar validaciones, restringir campos retornados)
+- Cambios de configuración (agregar módulos, configurar guards, ajustar imports)
+- Instalación de dependencias de seguridad faltantes
+
+**Requieren intervención manual** — no automatizables:
+- Rotación de secrets/API keys en producción
+- Cambios de infraestructura (firewall, WAF, HTTPS forzado a nivel servidor)
+- Configuración de servicios externos (CDN, proveedor de email, DNS)
+- Políticas organizacionales o de equipo
+
+Mostrar al usuario:
+
+```
+## ¿Aplicamos los fixes?
+
+| Hallazgo | Severidad | ¿Automatizable? | Esfuerzo |
+|----------|-----------|-----------------|---------|
+| [hallazgo 1] | 🔴 Crítico | ✅ Sí | Bajo |
+| [hallazgo 2] | 🟠 Alto   | ✅ Sí | Medio |
+| [hallazgo N] | 🟡 Medio  | ⚠️ Manual | — |
+
+Para aplicar los fixes con contexto limpio (recomendado), iniciá una nueva
+conversación y ejecutá:
+
+  /fix-security-findings docs/auditorias/auditoria-[tipo]-[scope]-[fecha].md
+
+El skill generará la contraparte:
+  docs/auditorias/fix-security-[tipo]-[scope]-[fecha].md
+
+Esto permite ver el estado de todas las auditorías de un vistazo en docs/auditorias/.
+```
+
+**Por qué contexto limpio**: la auditoría acumula mucho contexto de lectura de archivos.
+El skill de remediación trabaja mejor partiendo solo del informe guardado,
+sin el ruido de la sesión de auditoría.
 
 ---
 

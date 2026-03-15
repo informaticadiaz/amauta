@@ -810,6 +810,7 @@ enum Prioridad {
 | **Complete Issue**       | `docs/ai-skills/complete-issue.md`       | Ejecutar un issue completo de forma autónoma                                           |
 | **Performance Review**   | `docs/ai-skills/performance-review.md`   | Analizar performance y generar informe con mejoras                                     |
 | **Security Audit**       | `docs/ai-skills/security-audit.md`       | Auditar vulnerabilidades de seguridad (OWASP Top 10)                                   |
+| **Fix Security Findings**| `docs/ai-skills/fix-security-findings.md`| Aplicar fixes de un informe de auditoría previo (contexto limpio, build verificado)    |
 | **NotebookLM Cuadernos** | `docs/ai-skills/notebooklm-cuadernos.md` | Generar cuadernos de estudio genéricos para NotebookLM                                 |
 | **PWA Mobile Design**    | `docs/ai-skills/pwa-mobile-design.md`    | Diseñar/auditar PWA orientada a mobile: manifest, SW, IndexedDB, sync, UI táctil       |
 | **Feature Audit**        | `docs/ai-skills/feature-audit.md`        | Auditar que las features implementadas funcionan y cumplen sus criterios de aceptación |
