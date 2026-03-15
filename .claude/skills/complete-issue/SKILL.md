@@ -8,6 +8,14 @@ version: 1.0.0
 
 Ejecuta un issue de GitHub de principio a fin usando Test-Driven Development (TDD).
 
+## Mensaje inicial (OBLIGATORIO)
+
+Al activarse esta skill, **siempre** iniciar con este mensaje exacto antes de cualquier otra acción:
+
+```
+Iniciando complete-issue: voy a listar issues abiertas, seleccionar la de menor número de la fase actual según CLAUDE.md, leerla y proponértela para confirmación.
+```
+
 ## Cuándo se activa
 
 Cuando el usuario pide ejecutar o completar un issue de GitHub de forma autónoma, por ejemplo:
@@ -26,6 +34,8 @@ Si el usuario **no especificó un número de issue**, ejecutar este paso automá
 # Listar issues abiertos — compatible Linux y Windows (no requiere jq)
 gh issue list --limit 20 --state open --json number,title,labels
 ```
+
+**Regla**: no preguntar por el número de issue si el usuario no lo indicó. Ejecutar el PASO 0 y proponer un issue.
 
 Parsear el JSON directamente desde la respuesta (node siempre está disponible como fallback):
 
