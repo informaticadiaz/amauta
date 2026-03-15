@@ -22,7 +22,23 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
+### Fase Actual: Fase 2 - Offline-First PWA 🟡 EN PROGRESO
+
+**Inicio**: 15/03/2026
+**Progreso**: 1/8 issues completados
+
+#### Completado en Fase 2:
+
+- ✅ **F2-001**: Manifest PWA, metadata e íconos instalables
+  - `manifest.json` completo con íconos maskable y screenshots
+  - Metadatos PWA en `layout.tsx` (manifest, themeColor, appleWebApp)
+  - Set mínimo de íconos instalables (192, 512, apple touch)
+
+#### Próximos pasos:
+
+- Continuar con F2-002: Service Worker base + estrategias de caché
+
+### Fase Anterior: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
 
 **Inicio**: 30/12/2024
 **Progreso**: 16/16 issues completados ✅ FASE 1 COMPLETADA
@@ -120,11 +136,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Dashboard diferenciado para estudiantes vs educadores/admins
   - 19 tests frontend (3 suites, 100% statements)
 
-#### Próximos pasos:
-
-- Fase 1 completada. Ver `docs/project-management/roadmap.md` → Fase 2
-
-**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 1"
+**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 2"
 
 #### Iniciativas Curriculares (Post-Fase 1)
 
