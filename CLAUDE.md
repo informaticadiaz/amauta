@@ -799,4 +799,7 @@ enum Prioridad {
 | **API Endpoint**     | `docs/ai-skills/api-endpoint.md`         | Agregar endpoint a módulo existente               |
 | **React Form**       | `docs/ai-skills/react-form.md`           | Crear formulario nuevo                            |
 | **Complete Issue**       | `docs/ai-skills/complete-issue.md`           | Ejecutar un issue completo de forma autónoma          |
+| **Performance Review**   | `docs/ai-skills/performance-review.md`       | Analizar performance y generar informe con mejoras    |
+| **Security Audit**       | `docs/ai-skills/security-audit.md`           | Auditar vulnerabilidades de seguridad (OWASP Top 10)  |
 | **NotebookLM Cuadernos** | `docs/ai-skills/notebooklm-cuadernos.md`     | Generar cuadernos de estudio genéricos para NotebookLM|
+| **PWA Mobile Design**    | `docs/ai-skills/pwa-mobile-design.md`        | Diseñar/auditar PWA orientada a mobile: manifest, SW, IndexedDB, sync, UI táctil|
