@@ -25,7 +25,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 ### Fase Actual: Fase 2 - Offline-First PWA 🟡 EN PROGRESO
 
 **Inicio**: 15/03/2026
-**Progreso**: 2/8 issues completados
+**Progreso**: 3/8 issues completados
 
 #### Completado en Fase 2:
 
@@ -40,9 +40,14 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Cache de imágenes con expiración de 30 días
   - `reloadOnOnline` habilitado y SW desactivado en development
 
+- ✅ **F2-003**: Schema IndexedDB (Dexie) para offline
+  - `offline-db.ts` con tablas `cursos`, `lecciones`, `progreso`, `syncPendiente`
+  - Índices para `cursoId`, `orden`, `sincronizado` y `timestamp`
+  - Tipos TS alineados a dominio y `db` singleton exportado
+
 #### Próximos pasos:
 
-- Continuar con F2-003: Schema IndexedDB (Dexie) para offline
+- Continuar con F2-004: Descarga offline de cursos (texto) + UI de progreso
 
 ### Fase Anterior: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
 
