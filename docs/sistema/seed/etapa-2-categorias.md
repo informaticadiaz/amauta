@@ -1,8 +1,8 @@
 # Etapa 2: Categorías, Instituciones y Grupos
 
 > **Estado**: ✅ Completado
-> **Fecha**: 2025-12-30
-> **Issue**: [#24](https://github.com/informaticadiaz/amauta/issues/24)
+> **Fecha**: 2026-03-15
+> **Issue**: [#24](https://github.com/informaticadiaz/amauta/issues/24) · Actualización NAP: [#21](https://github.com/informaticadiaz/amauta/issues/21)
 
 ## Resumen
 
@@ -12,16 +12,18 @@ Esta etapa crea la estructura organizativa del sistema: categorías para clasifi
 
 ### Categorías Creadas
 
-Se crearon **6 categorías** curriculares:
+Se crearon **8 categorías** curriculares alineadas con los NAP:
 
-| Categoría           | Descripción                                       | Icono      |
-| ------------------- | ------------------------------------------------- | ---------- |
-| Matemáticas         | Álgebra, geometría, cálculo y estadística         | calculator |
-| Lengua y Literatura | Gramática, comprensión lectora, redacción         | book-open  |
-| Ciencias Naturales  | Biología, física, química y astronomía            | flask      |
-| Ciencias Sociales   | Historia, geografía, educación cívica             | globe      |
-| Arte                | Plástica, música y expresión artística            | palette    |
-| Tecnología          | Informática, programación, herramientas digitales | laptop     |
+| Categoría                    | Descripción                                             | Icono      |
+| ---------------------------- | ------------------------------------------------------- | ---------- |
+| Matemáticas                  | Álgebra, geometría, cálculo y estadística               | calculator |
+| Lengua y Literatura          | Gramática, comprensión lectora, redacción y literatura  | book-open  |
+| Ciencias Naturales           | Biología, física, química y astronomía                  | flask      |
+| Ciencias Sociales            | Historia, geografía, educación cívica y economía        | globe      |
+| Educación Artística          | Artes visuales, música, danza, teatro y audiovisual     | palette    |
+| Educación Tecnológica        | Tecnología, procesos técnicos y pensamiento sociotécnico | laptop     |
+| Educación Física             | Corporeidad, movimiento, juegos y vida saludable        | activity   |
+| Formación Ética y Ciudadana  | Ciudadanía, derechos, convivencia y participación       | scale      |
 
 ### Instituciones Creadas
 
@@ -94,7 +96,7 @@ Al completar esta etapa:
 
 | Modelo          | Cantidad |
 | --------------- | -------- |
-| Categoria       | 6        |
+| Categoria       | 8        |
 | Institucion     | 2        |
 | Grupo           | 4        |
 | GrupoEstudiante | 4        |
@@ -103,7 +105,7 @@ Al completar esta etapa:
 
 **Etapa 3**: [Cursos y Lecciones](etapa-3-cursos.md)
 
-- Crear 6 cursos de ejemplo
+- Crear 7 cursos de ejemplo
 - Crear lecciones de diferentes tipos
 - Agregar recursos
 

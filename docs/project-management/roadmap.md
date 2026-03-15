@@ -156,6 +156,16 @@ Crear plataforma funcional donde educadores puedan publicar cursos y estudiantes
 
 ---
 
+## Iniciativas Curriculares (Post-Fase 1)
+
+Trabajo transversal para alinear contenidos con la currícula oficial argentina.
+
+| Issue | Título                                                    | Estado        |
+| ----- | --------------------------------------------------------- | ------------- |
+| #21   | Integración con NAP (Núcleos de Aprendizajes Prioritarios) | ✅ Completado |
+
+---
+
 ## Fase 2: Offline-First & PWA
 
 **Duración estimada**: 4-6 semanas
@@ -2639,5 +2649,5 @@ Revisar roadmap cada 3 sprints (6 semanas) para ajustar prioridades.
 
 ---
 
-**Última actualización**: 2026-03-13
+**Última actualización**: 2026-03-15
 **Próxima revisión**: Inicio de Fase 1

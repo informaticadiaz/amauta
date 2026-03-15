@@ -10,8 +10,8 @@ El seed se desarrolló en 5 etapas durante la Fase 0 del proyecto:
 | Etapa | Documento                                            | Contenido                      |
 | ----- | ---------------------------------------------------- | ------------------------------ |
 | 1     | [Usuarios y Perfiles](etapa-1-usuarios.md)           | 10 usuarios con 4 roles        |
-| 2     | [Categorías e Instituciones](etapa-2-categorias.md)  | 6 categorías, 2 instituciones  |
-| 3     | [Cursos y Lecciones](etapa-3-cursos.md)              | 6 cursos, 15 lecciones         |
+| 2     | [Categorías e Instituciones](etapa-2-categorias.md)  | 8 categorías, 2 instituciones  |
+| 3     | [Cursos y Lecciones](etapa-3-cursos.md)              | 7 cursos, 17 lecciones         |
 | 4     | [Inscripciones y Progreso](etapa-4-inscripciones.md) | 12 inscripciones, 28 progresos |
 | 5     | [Módulo Administrativo](etapa-5-administrativo.md)   | Asistencias, calificaciones    |
 
@@ -21,12 +21,12 @@ El seed se desarrolló en 5 etapas durante la Fase 0 del proyecto:
 | -------------- | --------- | ------------------------------- |
 | usuarios       | 10        | Todos los roles representados   |
 | perfiles       | 10        | Info extendida de cada usuario  |
-| categorias     | 6         | Categorías curriculares         |
+| categorias     | 8         | Categorías curriculares         |
 | instituciones  | 2         | Escuelas de ejemplo             |
 | grupos         | 4         | Clases/divisiones               |
-| cursos         | 6         | Cursos de ejemplo por categoría |
-| lecciones      | 15        | Video, texto, quiz              |
-| recursos       | 8         | Archivos adjuntos               |
+| cursos         | 7         | Cursos de ejemplo por categoría |
+| lecciones      | 17        | Video, texto, quiz              |
+| recursos       | 9         | Archivos adjuntos               |
 | inscripciones  | 12        | Estudiantes en cursos           |
 | progresos      | 28        | Avance en lecciones             |
 | asistencias    | 40        | 10 días × 4 estudiantes         |
@@ -41,4 +41,4 @@ Ver [etapa-1-usuarios.md](etapa-1-usuarios.md) para la lista completa de emails 
 
 ---
 
-**Completado**: 30/12/2024 (Fase 0)
+**Completado**: 30/12/2024 (Fase 0) · **Actualizado**: 15/03/2026

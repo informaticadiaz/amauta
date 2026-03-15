@@ -36,11 +36,71 @@ interface CursoSeed {
   nivel: Nivel;
   estado: EstadoCurso;
   duracion: number;
+  nivelEducativo: 'INICIAL' | 'PRIMARIA' | 'SECUNDARIA';
   imagen?: string;
   lecciones: LeccionSeed[];
 }
 
-const cursosData: CursoSeed[] = [
+export const cursosData: CursoSeed[] = [
+  // Curso 0: Juego y Movimiento en Nivel Inicial (Ana Martínez - Educación Física)
+  {
+    titulo: 'Juego y Movimiento en Nivel Inicial',
+    slug: 'juego-movimiento-inicial',
+    descripcion:
+      'Propuestas lúdicas y de movimiento para niñas y niños de Nivel Inicial, alineadas a los NAP.',
+    educadorEmail: 'educador1@amauta.test',
+    categoriaSlug: 'educacion-fisica',
+    nivel: Nivel.PRINCIPIANTE,
+    estado: EstadoCurso.PUBLICADO,
+    duracion: 120,
+    nivelEducativo: 'INICIAL',
+    imagen: '/images/cursos/juego-movimiento.jpg',
+    lecciones: [
+      {
+        titulo: 'El juego como aprendizaje',
+        descripcion: 'El rol del juego en el desarrollo integral',
+        orden: 1,
+        tipo: TipoLeccion.VIDEO,
+        duracion: 15,
+        contenido: {
+          videoUrl: 'https://example.com/videos/juego-aprendizaje.mp4',
+          transcript:
+            'El juego es una forma natural de aprender en el Nivel Inicial...',
+        },
+        publicada: true,
+        recursos: [
+          {
+            nombre: 'Guía de juegos motores',
+            tipo: 'pdf',
+            url: '/recursos/inicial/guia-juegos-motores.pdf',
+            tamano: 412000,
+            disponibleOffline: true,
+          },
+        ],
+      },
+      {
+        titulo: 'Movimientos y exploración del espacio',
+        descripcion: 'Actividades para reconocer el cuerpo y el entorno',
+        orden: 2,
+        tipo: TipoLeccion.TEXTO,
+        duracion: 20,
+        contenido: {
+          markdown: `# Movimientos y Exploración
+
+## Objetivo
+Reconocer el cuerpo en movimiento y explorar el espacio de manera segura.
+
+## Actividades sugeridas
+- Caminatas libres con cambios de ritmo
+- Juegos de equilibrio con líneas en el piso
+- Imitación de animales en movimiento`,
+        },
+        publicada: true,
+        recursos: [],
+      },
+    ],
+  },
+
   // Curso 1: Álgebra Básica (Ana Martínez - Matemáticas)
   {
     titulo: 'Álgebra Básica',
@@ -52,6 +112,7 @@ const cursosData: CursoSeed[] = [
     nivel: Nivel.PRINCIPIANTE,
     estado: EstadoCurso.PUBLICADO,
     duracion: 180,
+    nivelEducativo: 'PRIMARIA',
     imagen: '/images/cursos/algebra-basica.jpg',
     lecciones: [
       {
@@ -155,6 +216,7 @@ Una **constante** es un valor que no cambia. Los números como 5, 10, -3 son con
     nivel: Nivel.INTERMEDIO,
     estado: EstadoCurso.BORRADOR,
     duracion: 240,
+    nivelEducativo: 'PRIMARIA',
     lecciones: [
       {
         titulo: 'Introducción a la geometría',
@@ -215,6 +277,7 @@ Una **constante** es un valor que no cambia. Los números como 5, 10, -3 son con
     nivel: Nivel.PRINCIPIANTE,
     estado: EstadoCurso.PUBLICADO,
     duracion: 150,
+    nivelEducativo: 'PRIMARIA',
     imagen: '/images/cursos/comprension-lectora.jpg',
     lecciones: [
       {
@@ -317,6 +380,7 @@ Lee el siguiente párrafo e identifica la idea principal...`,
     nivel: Nivel.INTERMEDIO,
     estado: EstadoCurso.REVISION,
     duracion: 200,
+    nivelEducativo: 'PRIMARIA',
     lecciones: [
       {
         titulo: 'Estructura de un párrafo',
@@ -400,6 +464,7 @@ Concluye el párrafo y puede hacer transición al siguiente.
     nivel: Nivel.PRINCIPIANTE,
     estado: EstadoCurso.PUBLICADO,
     duracion: 210,
+    nivelEducativo: 'SECUNDARIA',
     imagen: '/images/cursos/biologia-celular.jpg',
     lecciones: [
       {
@@ -511,6 +576,7 @@ Sistema de transporte interno de la célula.`,
     nivel: Nivel.AVANZADO,
     estado: EstadoCurso.BORRADOR,
     duracion: 300,
+    nivelEducativo: 'SECUNDARIA',
     lecciones: [
       {
         titulo: '¿Qué es la física?',

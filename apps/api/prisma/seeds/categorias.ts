@@ -12,7 +12,7 @@ interface CategoriaSeed {
   icono: string;
 }
 
-const categoriasData: CategoriaSeed[] = [
+export const categoriasData: CategoriaSeed[] = [
   {
     nombre: 'Matemáticas',
     slug: 'matematicas',
@@ -38,16 +38,28 @@ const categoriasData: CategoriaSeed[] = [
     icono: 'globe',
   },
   {
-    nombre: 'Arte',
-    slug: 'arte',
-    descripcion: 'Plástica, música y expresión artística',
+    nombre: 'Educación Artística',
+    slug: 'educacion-artistica',
+    descripcion: 'Artes visuales, música, danza, teatro y audiovisual',
     icono: 'palette',
   },
   {
-    nombre: 'Tecnología',
-    slug: 'tecnologia',
-    descripcion: 'Informática, programación y herramientas digitales',
+    nombre: 'Educación Tecnológica',
+    slug: 'educacion-tecnologica',
+    descripcion: 'Tecnología, procesos técnicos y pensamiento sociotécnico',
     icono: 'laptop',
+  },
+  {
+    nombre: 'Educación Física',
+    slug: 'educacion-fisica',
+    descripcion: 'Corporeidad, movimiento, juegos y vida saludable',
+    icono: 'activity',
+  },
+  {
+    nombre: 'Formación Ética y Ciudadana',
+    slug: 'formacion-etica-ciudadana',
+    descripcion: 'Ciudadanía, derechos, convivencia y participación',
+    icono: 'scale',
   },
 ];
 

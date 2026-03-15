@@ -245,22 +245,45 @@ Las categorías se crean en el seed inicial:
 // apps/api/prisma/seeds/categorias.ts
 const categorias = [
   {
-    nombre: 'Programación',
-    descripcion: 'Desarrollo de software',
-    icono: 'code',
-  },
-  {
     nombre: 'Matemáticas',
-    descripcion: 'Álgebra, cálculo, estadística',
+    descripcion: 'Álgebra, geometría, cálculo y estadística',
     icono: 'calculator',
   },
-  { nombre: 'Idiomas', descripcion: 'Inglés, español, etc.', icono: 'globe' },
   {
-    nombre: 'Ciencias',
-    descripcion: 'Física, química, biología',
+    nombre: 'Lengua y Literatura',
+    descripcion: 'Gramática, comprensión lectora, redacción y literatura',
+    icono: 'book-open',
+  },
+  {
+    nombre: 'Ciencias Naturales',
+    descripcion: 'Biología, física, química y astronomía',
     icono: 'flask',
   },
-  { nombre: 'Arte', descripcion: 'Dibujo, pintura, diseño', icono: 'palette' },
+  {
+    nombre: 'Ciencias Sociales',
+    descripcion: 'Historia, geografía, educación cívica y economía',
+    icono: 'globe',
+  },
+  {
+    nombre: 'Educación Artística',
+    descripcion: 'Artes visuales, música, danza, teatro y audiovisual',
+    icono: 'palette',
+  },
+  {
+    nombre: 'Educación Tecnológica',
+    descripcion: 'Tecnología, procesos técnicos y pensamiento sociotécnico',
+    icono: 'laptop',
+  },
+  {
+    nombre: 'Educación Física',
+    descripcion: 'Corporeidad, movimiento, juegos y vida saludable',
+    icono: 'activity',
+  },
+  {
+    nombre: 'Formación Ética y Ciudadana',
+    descripcion: 'Ciudadanía, derechos, convivencia y participación',
+    icono: 'scale',
+  },
 ];
 ```
 

@@ -18,6 +18,7 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 | Autenticación    | [autenticacion.md](autenticacion.md)   | ✅ Funcional | Login, registro de usuarios     |
 | Roles y Permisos | [roles-permisos.md](roles-permisos.md) | ✅ Funcional | Control de acceso por rol       |
 | Datos de Prueba  | [seed/](seed/README.md)                | ✅ Cargados  | Usuarios, cursos, inscripciones |
+| Currícula NAP    | [curricula-nap.md](curricula-nap.md)   | ✅ Documentado | Alineación curricular argentina |
 
 ### En Desarrollo
 
@@ -133,6 +134,7 @@ Ver [seed/etapa-1-usuarios.md](seed/etapa-1-usuarios.md) para lista completa.
 ```
 docs/sistema/
 ├── README.md           ← Esta guía general
+├── curricula-nap.md    ← Alineación curricular NAP
 ├── autenticacion.md    ← Cómo funciona el login/registro
 ├── roles-permisos.md   ← Qué puede hacer cada rol
 └── seed/               ← Datos de prueba (histórico)
