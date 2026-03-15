@@ -77,7 +77,7 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 
 **Duración estimada**: 6-8 semanas
 **Sprint 1-4**
-**Progreso**: 15/16 issues completados
+**Progreso**: 16/16 issues completados ✅ FASE 1 COMPLETADA
 
 ### Progreso Sprint 1
 
@@ -108,7 +108,7 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 | #40   | F1-013: Visualizador de lecciones para estud.   | ✅ Completado | must-have   |
 | #41   | F1-014: API seguimiento de progreso             | ✅ Completado | must-have   |
 | #42   | F1-015: UI marcar lecciones completadas         | ✅ Completado | must-have   |
-| #43   | F1-016: Dashboard de estudiante                 | 📋 Pendiente  | should-have |
+| #43   | F1-016: Dashboard de estudiante                 | ✅ Completado | should-have |
 
 ### Objetivos
 
