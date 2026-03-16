@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Project Manager'
+  short_description: 'Planifica el proyecto Amauta y propone issues'
+  default_prompt: '/project-manager'
