@@ -2664,4 +2664,4 @@ Revisar roadmap cada 3 sprints (6 semanas) para ajustar prioridades.
 ---
 
 **Última actualización**: 2026-03-15
-**Próxima revisión**: Inicio de Fase 1
+**Próxima revisión**: Inicio de Fase 3
