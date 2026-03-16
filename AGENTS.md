@@ -25,7 +25,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 ### Fase Actual: Fase 2 - Offline-First PWA 🟡 EN PROGRESO
 
 **Inicio**: 15/03/2026
-**Progreso**: 4/8 issues completados
+**Progreso**: 5/8 issues completados
 
 #### Completado en Fase 2:
 
@@ -51,9 +51,15 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Progreso visual de descarga y opción de eliminar descargas
   - Rutas offline para curso y lecciones en `/offline/cursos/[slug]`
 
+- ✅ **F2-005**: Cache de videos offline con Cache API
+  - Helper `video-cache.ts` para cachear, recuperar y eliminar videos
+  - Descarga de lecciones de video en `DownloadCursoButton` con key persistida
+  - Reproducción offline en páginas `/offline` usando Cache API
+  - Limpieza de cache de video al eliminar descargas
+
 #### Próximos pasos:
 
-- Continuar con F2-005: Cache de videos offline con Cache API
+- Continuar con F2-006: Cola de sync offline + Background Sync
 
 ### Fase Anterior: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
 

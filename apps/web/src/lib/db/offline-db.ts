@@ -31,6 +31,8 @@ export interface LeccionOffline {
   tipo: TipoLeccion;
   orden: number;
   videoUrl?: string;
+  videoCacheKey?: string;
+  videoProvider?: 'youtube' | 'vimeo' | 'local';
   actualizadoEn: Date;
 }
 

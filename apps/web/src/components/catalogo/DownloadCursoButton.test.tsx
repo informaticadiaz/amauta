@@ -7,10 +7,15 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DownloadCursoButton } from './DownloadCursoButton';
 import { db } from '@/lib/db/offline-db';
+import { cacheVideo, deleteVideoCache } from '@/lib/offline/video-cache';
 
 jest.mock('@/lib/db/offline-db', () => {
   const deleteMock = jest.fn().mockResolvedValue(undefined);
-  const equalsMock = jest.fn(() => ({ delete: deleteMock }));
+  const toArrayMock = jest.fn().mockResolvedValue([]);
+  const equalsMock = jest.fn(() => ({
+    delete: deleteMock,
+    toArray: toArrayMock,
+  }));
   const whereMock = jest.fn(() => ({ equals: equalsMock }));
 
   return {
@@ -25,9 +30,15 @@ jest.mock('@/lib/db/offline-db', () => {
         where: whereMock,
       },
     },
-    __mocks__: { deleteMock, equalsMock, whereMock },
+    __mocks__: { deleteMock, equalsMock, whereMock, toArrayMock },
   };
 });
+
+jest.mock('@/lib/offline/video-cache', () => ({
+  cacheVideo: jest.fn(),
+  deleteVideoCache: jest.fn(),
+  getVideoOfflineUrl: jest.fn(),
+}));
 
 const mockDb = db as unknown as {
   cursos: {
@@ -39,6 +50,11 @@ const mockDb = db as unknown as {
     bulkPut: jest.Mock;
     where: jest.Mock;
   };
+};
+
+const mockVideoCache = {
+  cacheVideo: cacheVideo as jest.Mock,
+  deleteVideoCache: deleteVideoCache as jest.Mock,
 };
 
 const cursoBase = {
@@ -64,6 +80,7 @@ describe('DownloadCursoButton', () => {
     jest.clearAllMocks();
     setOnline(true);
     global.fetch = jest.fn();
+    mockVideoCache.cacheVideo.mockResolvedValue('cache-key-1');
   });
 
   it('debería mostrar el botón de descarga cuando no hay curso offline', async () => {
@@ -97,8 +114,8 @@ describe('DownloadCursoButton', () => {
             id: 'leccion-2',
             cursoId: 'curso-1',
             titulo: 'Constantes',
-            contenido: { markdown: 'Texto' },
-            tipo: 'TEXTO',
+            contenido: { videoUrl: 'https://videos.test/constantes.mp4' },
+            tipo: 'VIDEO',
             orden: 2,
             publicada: true,
             updatedAt: '2026-03-15T00:00:00.000Z',
@@ -118,6 +135,10 @@ describe('DownloadCursoButton', () => {
     await waitFor(() => {
       expect(mockDb.cursos.put).toHaveBeenCalledTimes(1);
       expect(mockDb.lecciones.bulkPut).toHaveBeenCalledTimes(1);
+      expect(mockVideoCache.cacheVideo).toHaveBeenCalledWith(
+        'leccion-2',
+        'https://videos.test/constantes.mp4'
+      );
     });
 
     expect(
@@ -127,6 +148,11 @@ describe('DownloadCursoButton', () => {
 
   it('debería eliminar la descarga y limpiar IndexedDB', async () => {
     mockDb.cursos.get.mockResolvedValue({ id: 'curso-1' });
+    const { toArrayMock } = jest.requireMock('@/lib/db/offline-db').__mocks__;
+    toArrayMock.mockResolvedValue([
+      { id: 'leccion-1', tipo: 'TEXTO' },
+      { id: 'leccion-2', tipo: 'VIDEO', videoCacheKey: 'cache-key-1' },
+    ]);
 
     render(<DownloadCursoButton curso={cursoBase} totalLecciones={3} />);
 
@@ -138,6 +164,9 @@ describe('DownloadCursoButton', () => {
     await waitFor(() => {
       expect(mockDb.lecciones.where).toHaveBeenCalledWith('cursoId');
       expect(mockDb.cursos.delete).toHaveBeenCalledWith('curso-1');
+      expect(mockVideoCache.deleteVideoCache).toHaveBeenCalledWith(
+        'cache-key-1'
+      );
     });
 
     expect(

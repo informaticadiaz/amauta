@@ -13,6 +13,7 @@ import {
   type CursoOffline,
   type LeccionOffline,
 } from '@/lib/db/offline-db';
+import { getVideoOfflineUrl } from '@/lib/offline/video-cache';
 import { LeccionContent } from '@/components/lecciones/LeccionContent';
 
 interface PageProps {
@@ -30,6 +31,7 @@ export default function OfflineLeccionPage({ params }: PageProps) {
     null
   );
   const [loading, setLoading] = useState(true);
+  const [videoOfflineUrl, setVideoOfflineUrl] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -69,6 +71,44 @@ export default function OfflineLeccionPage({ params }: PageProps) {
       active = false;
     };
   }, [slug, leccionId]);
+
+  useEffect(() => {
+    let active = true;
+    let objectUrl: string | null = null;
+
+    async function loadVideo() {
+      if (!leccionActual || leccionActual.tipo !== 'VIDEO') {
+        setVideoOfflineUrl(null);
+        return;
+      }
+
+      if (!leccionActual.videoCacheKey) {
+        setVideoOfflineUrl(null);
+        return;
+      }
+
+      const offlineUrl = await getVideoOfflineUrl(leccionActual.videoCacheKey);
+
+      if (!active) {
+        if (offlineUrl) {
+          URL.revokeObjectURL(offlineUrl);
+        }
+        return;
+      }
+
+      objectUrl = offlineUrl;
+      setVideoOfflineUrl(offlineUrl);
+    }
+
+    loadVideo();
+
+    return () => {
+      active = false;
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, [leccionActual]);
 
   const navigation = useMemo(() => {
     if (!leccionActual) {
@@ -136,8 +176,17 @@ export default function OfflineLeccionPage({ params }: PageProps) {
 
       <main className="mx-auto max-w-4xl px-6 py-8">
         <LeccionContent
-          tipo="TEXTO"
-          contenido={{ html: leccionActual.contenido }}
+          tipo={leccionActual.tipo}
+          contenido={
+            leccionActual.tipo === 'VIDEO'
+              ? {
+                  videoUrl: videoOfflineUrl ?? leccionActual.videoUrl,
+                  provider: videoOfflineUrl
+                    ? 'local'
+                    : leccionActual.videoProvider,
+                }
+              : { html: leccionActual.contenido }
+          }
           titulo={leccionActual.titulo}
         />
 

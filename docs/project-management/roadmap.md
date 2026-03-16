@@ -170,7 +170,7 @@ Trabajo transversal para alinear contenidos con la currícula oficial argentina.
 
 **Duración estimada**: 4-6 semanas
 **Sprint 5-7**
-**Progreso**: 4/8 issues completados
+**Progreso**: 5/8 issues completados
 
 ### Progreso Sprint 5
 
@@ -180,7 +180,7 @@ Trabajo transversal para alinear contenidos con la currícula oficial argentina.
 | #45   | F2-002: Service Worker base + estrategias de caché  | ✅ Completado | must-have   |
 | #46   | F2-003: Schema IndexedDB (Dexie) para offline       | ✅ Completado | must-have   |
 | #47   | F2-004: Descarga offline de cursos (texto) + UI     | ✅ Completado | should-have |
-| #48   | F2-005: Cache de videos offline con Cache API       | 📋 Pendiente  | should-have |
+| #48   | F2-005: Cache de videos offline con Cache API       | ✅ Completado | should-have |
 | #49   | F2-006: Cola de sync offline + Background Sync      | 📋 Pendiente  | must-have   |
 | #50   | F2-007: UI de estado offline + almacenamiento       | 📋 Pendiente  | should-have |
 | #51   | F2-008: Tests offline + checklist Lighthouse PWA    | 📋 Pendiente  | should-have |

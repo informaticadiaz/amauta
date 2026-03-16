@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { db } from '@/lib/db/offline-db';
 import { ProgresoBar } from '@/components/lecciones/ProgresoBar';
 import { extractHtmlFromContenido } from '@/lib/offline/markdown';
+import { cacheVideo, deleteVideoCache } from '@/lib/offline/video-cache';
 
 interface CursoBase {
   id: string;
@@ -38,6 +39,11 @@ interface LeccionApi {
 interface LeccionesResponse {
   lecciones: LeccionApi[];
   total: number;
+}
+
+interface ContenidoVideo {
+  videoUrl?: string;
+  provider?: 'youtube' | 'vimeo' | 'local';
 }
 
 interface DownloadCursoButtonProps {
@@ -126,13 +132,15 @@ export function DownloadCursoButton({
 
       const data = (await response.json()) as LeccionesResponse;
       const lecciones = Array.isArray(data.lecciones) ? data.lecciones : [];
-      const leccionesTexto = lecciones.filter(
-        (leccion) => leccion.publicada && leccion.tipo === 'TEXTO'
+      const leccionesDescargables = lecciones.filter(
+        (leccion) =>
+          leccion.publicada &&
+          (leccion.tipo === 'TEXTO' || leccion.tipo === 'VIDEO')
       );
 
-      if (leccionesTexto.length === 0) {
+      if (leccionesDescargables.length === 0) {
         throw new Error(
-          'Este curso no tiene lecciones de texto publicadas para descargar.'
+          'Este curso no tiene lecciones de texto o video publicadas para descargar.'
         );
       }
 
@@ -142,27 +150,61 @@ export function DownloadCursoButton({
         cursoId: string;
         titulo: string;
         contenido: string;
-        tipo: 'TEXTO';
+        tipo: 'TEXTO' | 'VIDEO';
         orden: number;
         actualizadoEn: Date;
+        videoUrl?: string;
+        videoCacheKey?: string;
+        videoProvider?: 'youtube' | 'vimeo' | 'local';
       }[];
 
-      for (let index = 0; index < leccionesTexto.length; index += 1) {
-        const leccion = leccionesTexto[index];
-        const contenido = extractHtmlFromContenido(leccion.contenido ?? {});
+      for (let index = 0; index < leccionesDescargables.length; index += 1) {
+        const leccion = leccionesDescargables[index];
 
-        leccionesOffline.push({
-          id: leccion.id,
-          cursoId: curso.id,
-          titulo: leccion.titulo,
-          contenido,
-          tipo: 'TEXTO',
-          orden: leccion.orden ?? index,
-          actualizadoEn: new Date(leccion.updatedAt ?? now),
-        });
+        if (leccion.tipo === 'TEXTO') {
+          const contenido = extractHtmlFromContenido(leccion.contenido ?? {});
+
+          leccionesOffline.push({
+            id: leccion.id,
+            cursoId: curso.id,
+            titulo: leccion.titulo,
+            contenido,
+            tipo: 'TEXTO',
+            orden: leccion.orden ?? index,
+            actualizadoEn: new Date(leccion.updatedAt ?? now),
+          });
+        }
+
+        if (leccion.tipo === 'VIDEO') {
+          const contenidoVideo = leccion.contenido as ContenidoVideo;
+
+          if (!contenidoVideo.videoUrl) {
+            throw new Error(
+              `No se encontró el video de la lección "${leccion.titulo}".`
+            );
+          }
+
+          const videoCacheKey = await cacheVideo(
+            leccion.id,
+            contenidoVideo.videoUrl
+          );
+
+          leccionesOffline.push({
+            id: leccion.id,
+            cursoId: curso.id,
+            titulo: leccion.titulo,
+            contenido: '',
+            tipo: 'VIDEO',
+            orden: leccion.orden ?? index,
+            actualizadoEn: new Date(leccion.updatedAt ?? now),
+            videoUrl: contenidoVideo.videoUrl,
+            videoCacheKey,
+            videoProvider: contenidoVideo.provider,
+          });
+        }
 
         const porcentaje = Math.round(
-          ((index + 1) / leccionesTexto.length) * 100
+          ((index + 1) / leccionesDescargables.length) * 100
         );
         setProgress(porcentaje);
       }
@@ -209,6 +251,18 @@ export function DownloadCursoButton({
   async function handleDelete() {
     setError(null);
     try {
+      const leccionesCurso = await db.lecciones
+        .where('cursoId')
+        .equals(curso.id)
+        .toArray();
+
+      await Promise.all(
+        leccionesCurso
+          .map((leccion) => leccion.videoCacheKey)
+          .filter((cacheKey): cacheKey is string => Boolean(cacheKey))
+          .map((cacheKey) => deleteVideoCache(cacheKey))
+      );
+
       await db.lecciones.where('cursoId').equals(curso.id).delete();
       await db.cursos.delete(curso.id);
       setStatus('idle');
