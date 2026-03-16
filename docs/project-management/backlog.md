@@ -13,7 +13,7 @@
 **Fase 0**: ✅ Completada (30/12/2024)
 **Fase 1**: ✅ Completada (16/16 issues completados)
 **Fase 2**: ✅ Completada (8/8 issues completados)
-**Fase 3**: 📋 Pendiente (preparación de issues)
+**Fase 3**: 📋 Pendiente (preparación completa)
 
 ## Cómo usar este documento
 
@@ -35,9 +35,9 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 | Issue | Título                                                      | Estado  |
 | ----- | ----------------------------------------------------------- | ------- |
-| #52   | F3-001: Refinar historias y criterios de aceptación         | Backlog |
+| #52   | F3-001: Refinar historias y criterios de aceptación         | ✅ Done |
 | #53   | F3-002: Matriz de dependencias UI/Backend para Evaluaciones | ✅ Done |
-| #54   | F3-003: Diseño funcional de flujos de evaluación (roles)    | Backlog |
+| #54   | F3-003: Diseño funcional de flujos de evaluación (roles)    | ✅ Done |
 
 ### Sprint 0 (Fase 0) - ✅ COMPLETADO
 
@@ -271,7 +271,7 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 - **Done**: Fases 0, 1 y 2 completadas
 - **Ready for Development**: por definir (Fase 3)
-- **Needs Refinement**: Fase 3 (Evaluaciones) → #52, #53, #54
+- **Needs Refinement**: 0 items (preparación Fase 3 completada)
 - **Research Done**: 1 item (NAP #21 - investigación completada)
 - **Blocked**: 0 items
 
@@ -304,10 +304,7 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 ### Para iniciar Fase 3
 
-1. Completar #52 (criterios de aceptación por tipo de pregunta)
-2. Completar #53 (dependencias UI/Backend)
-3. Completar #54 (flujos funcionales por rol)
-4. Planificar Sprint 8 con issues refinadas
+1. Planificar Sprint 8 con issues refinadas
 
 ---
 

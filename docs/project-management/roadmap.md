@@ -586,9 +586,9 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 | ----- | -------------------------------------------------------- | ------------- |
 | #52   | F3-001: Refinar historias y criterios de aceptación      | ✅ Completado |
 | #53   | F3-002: Matriz de dependencias UI/Backend                | ✅ Completado |
-| #54   | F3-003: Diseño funcional de flujos de evaluación (roles) | Backlog       |
+| #54   | F3-003: Diseño funcional de flujos de evaluación (roles) | ✅ Completado |
 
-**Progreso preparación**: 2/3 issues completados
+**Progreso preparación**: 3/3 issues completados ✅
 
 ### Objetivos
 
@@ -635,6 +635,10 @@ Agregar sistema robusto de evaluación y certificación de conocimientos que per
 4. **HU-S-04**: Revisar respuestas luego de finalizar (si el educador lo habilita).
 5. **HU-S-05**: Descargar/compartir certificado al completar el curso.
 6. **HU-S-06**: Obtener retroalimentación de respuestas incorrectas.
+
+### Diseño funcional de flujos (F3-003)
+
+Documento detallado: `docs/project-management/fase-3-flujos-evaluaciones.md`
 
 ### Funcionalidades Técnicas
 

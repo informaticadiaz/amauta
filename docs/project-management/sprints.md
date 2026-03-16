@@ -7,9 +7,9 @@
 
 ### Issues de preparación (Fase 3)
 
-- #52 F3-001: Refinar historias y criterios de aceptación
-- #53 F3-002: Matriz de dependencias UI/Backend
-- #54 F3-003: Diseño funcional de flujos de evaluación
+- ✅ #52 F3-001: Refinar historias y criterios de aceptación
+- ✅ #53 F3-002: Matriz de dependencias UI/Backend
+- ✅ #54 F3-003: Diseño funcional de flujos de evaluación
 
 ### Último Sprint Completado ✅
 

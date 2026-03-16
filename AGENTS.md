@@ -77,18 +77,19 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 #### Próximos pasos:
 
-- Preparar issues y dependencias para Fase 3 (Evaluaciones)
-- Continuar preparación Fase 3 (2/3 issues completados)
+- Preparación Fase 3 (Evaluaciones) completada
+- Iniciar Sprint 8 con issues refinadas
 
-#### Preparación Fase 3 - Evaluaciones (en curso)
+#### Preparación Fase 3 - Evaluaciones (completada)
 
 - ✅ **F3-001**: Refinar historias y criterios de aceptación
   - Historias refinadas para Educador y Estudiante
   - Criterios de aceptación por tipo de pregunta
   - Dependencias UI/Backend registradas en roadmap
 - ✅ **F3-002**: Matriz de dependencias UI/Backend
-- ⏳ **F3-003**: Diseño funcional de flujos de evaluación (roles)
-- ⏳ **F3-003**: Diseño funcional de flujos de evaluación (roles)
+- ✅ **F3-003**: Diseño funcional de flujos de evaluación (roles)
+  - Flujos funcionales por rol documentados
+  - Casos límite definidos (intentos, tiempo, puntaje mínimo)
 
 ### Fase Anterior: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
 
@@ -575,7 +576,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 2 completada (8/8 issues completados)
+- **Fase actual**: Fase 2 completada (8/8 issues completados) · Preparación Fase 3 completada (3/3)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**
