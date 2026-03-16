@@ -580,6 +580,14 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 **Duración estimada**: 4-5 semanas
 **Sprint 8-10**
 
+### Preparación de Fase 3 (issues)
+
+| Issue | Título                                                   | Estado  |
+| ----- | -------------------------------------------------------- | ------- |
+| #52   | F3-001: Refinar historias y criterios de aceptación      | Backlog |
+| #53   | F3-002: Matriz de dependencias UI/Backend                | Backlog |
+| #54   | F3-003: Diseño funcional de flujos de evaluación (roles) | Backlog |
+
 ### Objetivos
 
 Agregar sistema robusto de evaluación y certificación de conocimientos que permita a educadores medir el aprendizaje y a estudiantes validar sus conocimientos.

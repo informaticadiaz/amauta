@@ -31,6 +31,14 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 **Objetivo**: Preparar issues, criterios y dependencias para Fase 3 (Evaluaciones).
 **Referencia**: `docs/project-management/roadmap.md` → Fase 3
 
+### Issues de preparación (Fase 3)
+
+| Issue | Título                                                      | Estado  |
+| ----- | ----------------------------------------------------------- | ------- |
+| #52   | F3-001: Refinar historias y criterios de aceptación         | Backlog |
+| #53   | F3-002: Matriz de dependencias UI/Backend para Evaluaciones | Backlog |
+| #54   | F3-003: Diseño funcional de flujos de evaluación (roles)    | Backlog |
+
 ### Sprint 0 (Fase 0) - ✅ COMPLETADO
 
 **Fechas**: 01/12/2024 - 30/12/2024
@@ -263,7 +271,7 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 - **Done**: Fases 0, 1 y 2 completadas
 - **Ready for Development**: por definir (Fase 3)
-- **Needs Refinement**: Fase 3 (Evaluaciones)
+- **Needs Refinement**: Fase 3 (Evaluaciones) → #52, #53, #54
 - **Research Done**: 1 item (NAP #21 - investigación completada)
 - **Blocked**: 0 items
 
@@ -296,10 +304,10 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 ### Para iniciar Fase 3
 
-1. Refinar historias de Evaluaciones y Certificaciones
-2. Definir criterios de aceptación por tipo de pregunta
-3. Identificar dependencias de UI/Backend
-4. Crear issues pequeñas con labels `phase-3`
+1. Completar #52 (criterios de aceptación por tipo de pregunta)
+2. Completar #53 (dependencias UI/Backend)
+3. Completar #54 (flujos funcionales por rol)
+4. Planificar Sprint 8 con issues refinadas
 
 ---
 

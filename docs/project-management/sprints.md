@@ -5,6 +5,12 @@
 **Fase**: Fase 3 - Evaluaciones y Certificaciones
 **Objetivo**: Definir backlog refinado, criterios de aceptación y dependencias para iniciar Sprint 8.
 
+### Issues de preparación (Fase 3)
+
+- #52 F3-001: Refinar historias y criterios de aceptación
+- #53 F3-002: Matriz de dependencias UI/Backend
+- #54 F3-003: Diseño funcional de flujos de evaluación
+
 ### Último Sprint Completado ✅
 
 **Sprint 7 - Offline First (Fase 2)**
