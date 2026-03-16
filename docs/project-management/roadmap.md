@@ -590,6 +590,14 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 
 **Progreso preparación**: 3/3 issues completados ✅
 
+### Sprint 8 (iniciado)
+
+| Issue | Título                                       | Estado   |
+| ----- | -------------------------------------------- | -------- |
+| #55   | F3-004: Modelo base de Evaluaciones (Prisma) | 📋 To Do |
+| #56   | F3-005: Endpoint crear evaluación (educador) | 📋 To Do |
+| #57   | F3-006: UI básica de crear evaluación        | 📋 To Do |
+
 ### Objetivos
 
 Agregar sistema robusto de evaluación y certificación de conocimientos que permita a educadores medir el aprendizaje y a estudiantes validar sus conocimientos.

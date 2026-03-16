@@ -1,11 +1,17 @@
 # Gestión de Sprints - Amauta
 
-## Sprint Actual: Sin sprint activo (preparación Fase 3)
+## Sprint Actual: Sprint 8 - Evaluaciones
 
 **Fase**: Fase 3 - Evaluaciones y Certificaciones
-**Objetivo**: Definir backlog refinado, criterios de aceptación y dependencias para iniciar Sprint 8.
+**Objetivo**: Base técnica + UI mínima para creación de evaluaciones.
 
-### Issues de preparación (Fase 3)
+### Issues comprometidas
+
+- 📋 #55 F3-004: Modelo base de Evaluaciones (Prisma)
+- 📋 #56 F3-005: Endpoint crear evaluación (educador)
+- 📋 #57 F3-006: UI básica de crear evaluación
+
+### Preparación Fase 3 (completada)
 
 - ✅ #52 F3-001: Refinar historias y criterios de aceptación
 - ✅ #53 F3-002: Matriz de dependencias UI/Backend

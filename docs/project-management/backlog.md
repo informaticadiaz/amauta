@@ -26,12 +26,20 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
-## Sprint Actual: Sin sprint activo (preparación Fase 3)
+## Sprint Actual: Sprint 8 - Evaluaciones
 
-**Objetivo**: Preparar issues, criterios y dependencias para Fase 3 (Evaluaciones).
+**Objetivo**: Iniciar Fase 3 con base técnica y UI mínima para evaluaciones.
 **Referencia**: `docs/project-management/roadmap.md` → Fase 3
 
-### Issues de preparación (Fase 3)
+### Issues comprometidas (Sprint 8)
+
+| Issue | Título                                       | Estado   |
+| ----- | -------------------------------------------- | -------- |
+| #55   | F3-004: Modelo base de Evaluaciones (Prisma) | 📋 To Do |
+| #56   | F3-005: Endpoint crear evaluación (educador) | 📋 To Do |
+| #57   | F3-006: UI básica de crear evaluación        | 📋 To Do |
+
+### Preparación Fase 3 (completada)
 
 | Issue | Título                                                      | Estado  |
 | ----- | ----------------------------------------------------------- | ------- |
@@ -302,9 +310,9 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 ## Próximos Pasos
 
-### Para iniciar Fase 3
+### Para Fase 3
 
-1. Planificar Sprint 8 con issues refinadas
+1. Ejecutar Sprint 8 con issues #55, #56 y #57
 
 ---
 
