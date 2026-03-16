@@ -243,6 +243,7 @@ export default async function LeccionPage({ params }: PageProps) {
             )}
             <CompletarLeccionBtn
               leccionId={leccionId}
+              cursoId={cursoData.id}
               completada={completada}
             />
           </div>

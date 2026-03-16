@@ -6,11 +6,22 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { CompletarLeccionBtn } from './CompletarLeccionBtn';
+import {
+  encolarSync,
+  guardarProgresoOffline,
+  marcarProgresoSincronizado,
+} from '@/lib/sync/sync-manager';
 
 // Mock de next/navigation
 const mockRefresh = jest.fn();
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ refresh: mockRefresh }),
+}));
+
+jest.mock('@/lib/sync/sync-manager', () => ({
+  encolarSync: jest.fn(),
+  guardarProgresoOffline: jest.fn(),
+  marcarProgresoSincronizado: jest.fn(),
 }));
 
 // Mock global fetch
@@ -20,17 +31,33 @@ global.fetch = mockFetch;
 describe('CompletarLeccionBtn', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    Object.defineProperty(navigator, 'onLine', {
+      value: true,
+      configurable: true,
+    });
   });
 
   it('debería mostrar "Marcar como completada" cuando no está completada', () => {
-    render(<CompletarLeccionBtn leccionId="lec-1" completada={false} />);
+    render(
+      <CompletarLeccionBtn
+        leccionId="lec-1"
+        cursoId="curso-1"
+        completada={false}
+      />
+    );
     expect(
       screen.getByRole('button', { name: /marcar como completada/i })
     ).toBeInTheDocument();
   });
 
   it('debería mostrar estado completado cuando completada=true', () => {
-    render(<CompletarLeccionBtn leccionId="lec-1" completada={true} />);
+    render(
+      <CompletarLeccionBtn
+        leccionId="lec-1"
+        cursoId="curso-1"
+        completada={true}
+      />
+    );
     expect(screen.getByText(/completada/i)).toBeInTheDocument();
   });
 
@@ -43,7 +70,13 @@ describe('CompletarLeccionBtn', () => {
       }),
     });
 
-    render(<CompletarLeccionBtn leccionId="lec-1" completada={false} />);
+    render(
+      <CompletarLeccionBtn
+        leccionId="lec-1"
+        cursoId="curso-1"
+        completada={false}
+      />
+    );
 
     const btn = screen.getByRole('button', { name: /marcar como completada/i });
     fireEvent.click(btn);
@@ -57,6 +90,7 @@ describe('CompletarLeccionBtn', () => {
       '/api/lecciones/lec-1/completar',
       expect.objectContaining({ method: 'POST' })
     );
+    expect(marcarProgresoSincronizado).toHaveBeenCalledWith('lec-1');
   });
 
   it('debería llamar a router.refresh() después de completar exitosamente', async () => {
@@ -65,7 +99,13 @@ describe('CompletarLeccionBtn', () => {
       json: async () => ({ progreso: { completado: true }, message: 'ok' }),
     });
 
-    render(<CompletarLeccionBtn leccionId="lec-1" completada={false} />);
+    render(
+      <CompletarLeccionBtn
+        leccionId="lec-1"
+        cursoId="curso-1"
+        completada={false}
+      />
+    );
 
     fireEvent.click(
       screen.getByRole('button', { name: /marcar como completada/i })
@@ -82,7 +122,13 @@ describe('CompletarLeccionBtn', () => {
       json: async () => ({ message: 'Error' }),
     });
 
-    render(<CompletarLeccionBtn leccionId="lec-1" completada={false} />);
+    render(
+      <CompletarLeccionBtn
+        leccionId="lec-1"
+        cursoId="curso-1"
+        completada={false}
+      />
+    );
 
     fireEvent.click(
       screen.getByRole('button', { name: /marcar como completada/i })
@@ -93,10 +139,17 @@ describe('CompletarLeccionBtn', () => {
         screen.getByRole('button', { name: /marcar como completada/i })
       ).toBeInTheDocument();
     });
+    expect(encolarSync).not.toHaveBeenCalled();
   });
 
   it('debería deshabilitar el botón si ya está completada', () => {
-    render(<CompletarLeccionBtn leccionId="lec-1" completada={true} />);
+    render(
+      <CompletarLeccionBtn
+        leccionId="lec-1"
+        cursoId="curso-1"
+        completada={true}
+      />
+    );
     const btn = screen.queryByRole('button', {
       name: /marcar como completada/i,
     });
@@ -112,7 +165,13 @@ describe('CompletarLeccionBtn', () => {
       })
     );
 
-    render(<CompletarLeccionBtn leccionId="lec-1" completada={false} />);
+    render(
+      <CompletarLeccionBtn
+        leccionId="lec-1"
+        cursoId="curso-1"
+        completada={false}
+      />
+    );
 
     fireEvent.click(
       screen.getByRole('button', { name: /marcar como completada/i })
@@ -145,6 +204,7 @@ describe('CompletarLeccionBtn', () => {
     render(
       <CompletarLeccionBtn
         leccionId="lec-1"
+        cursoId="curso-1"
         completada={false}
         onCompletada={onCompletada}
       />
@@ -157,5 +217,37 @@ describe('CompletarLeccionBtn', () => {
     await waitFor(() => {
       expect(onCompletada).toHaveBeenCalled();
     });
+  });
+
+  it('debería encolar la acción cuando está offline', async () => {
+    Object.defineProperty(navigator, 'onLine', {
+      value: false,
+      configurable: true,
+    });
+
+    render(
+      <CompletarLeccionBtn
+        leccionId="lec-1"
+        cursoId="curso-1"
+        completada={false}
+      />
+    );
+
+    fireEvent.click(
+      screen.getByRole('button', { name: /marcar como completada/i })
+    );
+
+    await waitFor(() => {
+      expect(encolarSync).toHaveBeenCalledWith(
+        'completar-leccion',
+        expect.objectContaining({
+          leccionId: 'lec-1',
+          cursoId: 'curso-1',
+          completada: true,
+        })
+      );
+    });
+    expect(mockFetch).not.toHaveBeenCalled();
+    expect(guardarProgresoOffline).toHaveBeenCalled();
   });
 });

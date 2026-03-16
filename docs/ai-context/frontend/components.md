@@ -35,18 +35,21 @@ apps/web/src/components/
 │   ├── LeccionForm.tsx
 │   └── LeccionesList.tsx
 │
-└── catalogo/                # Catálogo público
-    ├── CatalogoCursos.tsx
-    ├── CursoCardPublic.tsx
-    ├── BuscadorCursos.tsx
-    ├── FiltrosCursos.tsx
-    ├── PaginacionCursos.tsx
-    ├── CursoHeader.tsx
-    ├── CursoInfo.tsx
-    ├── CursoTemario.tsx
-    ├── EducadorCard.tsx
-    ├── InscripcionBtn.tsx
-    └── DownloadCursoButton.tsx
+├── catalogo/                # Catálogo público
+│   ├── CatalogoCursos.tsx
+│   ├── CursoCardPublic.tsx
+│   ├── BuscadorCursos.tsx
+│   ├── FiltrosCursos.tsx
+│   ├── PaginacionCursos.tsx
+│   ├── CursoHeader.tsx
+│   ├── CursoInfo.tsx
+│   ├── CursoTemario.tsx
+│   ├── EducadorCard.tsx
+│   ├── InscripcionBtn.tsx
+│   └── DownloadCursoButton.tsx
+│
+└── offline/                 # Offline/PWA
+    └── SyncManagerClient.tsx
 ```
 
 ---

@@ -11,6 +11,7 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { encolarSync } from '@/lib/sync/sync-manager';
 
 interface InscripcionBtnProps {
   cursoId: string;
@@ -62,7 +63,7 @@ export function InscripcionBtn({
     } else if (status !== 'loading') {
       setLoadingStatus(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [status, cursoId]);
 
   async function fetchEstado() {
@@ -81,6 +82,13 @@ export function InscripcionBtn({
     setLoading(true);
     setError(null);
     try {
+      if (!navigator.onLine) {
+        setInscrito(true);
+        mostrarToast('Sin conexión: inscripción pendiente de sincronización');
+        await encolarSync('inscribir', { cursoId });
+        return;
+      }
+
       const res = await fetch(`/api/cursos/${cursoId}/inscribir`, {
         method: 'POST',
       });
@@ -92,7 +100,13 @@ export function InscripcionBtn({
       mostrarToast('¡Te has inscrito exitosamente!');
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error desconocido');
+      if (!navigator.onLine) {
+        setInscrito(true);
+        mostrarToast('Sin conexión: inscripción pendiente de sincronización');
+        await encolarSync('inscribir', { cursoId });
+      } else {
+        setError(err instanceof Error ? err.message : 'Error desconocido');
+      }
     } finally {
       setLoading(false);
     }
@@ -103,6 +117,13 @@ export function InscripcionBtn({
     setError(null);
     setShowConfirm(false);
     try {
+      if (!navigator.onLine) {
+        setInscrito(false);
+        mostrarToast('Sin conexión: cancelación pendiente de sincronización');
+        await encolarSync('cancelar-inscripcion', { cursoId });
+        return;
+      }
+
       const res = await fetch(`/api/cursos/${cursoId}/inscribir`, {
         method: 'DELETE',
       });
@@ -114,7 +135,13 @@ export function InscripcionBtn({
       mostrarToast('Inscripción cancelada');
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error desconocido');
+      if (!navigator.onLine) {
+        setInscrito(false);
+        mostrarToast('Sin conexión: cancelación pendiente de sincronización');
+        await encolarSync('cancelar-inscripcion', { cursoId });
+      } else {
+        setError(err instanceof Error ? err.message : 'Error desconocido');
+      }
     } finally {
       setLoading(false);
     }

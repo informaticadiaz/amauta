@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { SessionProvider } from '@/components/auth/SessionProvider';
+import { SyncManagerClient } from '@/components/offline/SyncManagerClient';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -36,7 +37,10 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body>
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <SyncManagerClient />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );

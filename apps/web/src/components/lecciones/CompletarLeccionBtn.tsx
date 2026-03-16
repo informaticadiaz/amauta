@@ -8,15 +8,22 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import {
+  encolarSync,
+  guardarProgresoOffline,
+  marcarProgresoSincronizado,
+} from '@/lib/sync/sync-manager';
 
 interface Props {
   leccionId: string;
+  cursoId: string;
   completada?: boolean;
   onCompletada?: () => void;
 }
 
 export function CompletarLeccionBtn({
   leccionId,
+  cursoId,
   completada = false,
   onCompletada,
 }: Props) {
@@ -54,21 +61,61 @@ export function CompletarLeccionBtn({
     setCompletadaState(true);
 
     try {
+      if (!navigator.onLine) {
+        const timestamp = new Date();
+        await guardarProgresoOffline({
+          leccionId,
+          cursoId,
+          completada: true,
+          timestamp,
+          sincronizado: 0,
+        });
+        await encolarSync('completar-leccion', {
+          leccionId,
+          cursoId,
+          completada: true,
+        });
+        onCompletada?.();
+        return;
+      }
+
       const response = await fetch(`/api/lecciones/${leccionId}/completar`, {
         method: 'POST',
       });
 
       if (!response.ok) {
-        // Revertir si falla
+        // Revertir si falla con respuesta del servidor
         setCompletadaState(false);
         return;
       }
 
+      const timestamp = new Date();
+      await guardarProgresoOffline({
+        leccionId,
+        cursoId,
+        completada: true,
+        timestamp,
+        sincronizado: 1,
+      });
+      await marcarProgresoSincronizado(leccionId);
       onCompletada?.();
       router.refresh();
     } catch {
-      // Revertir si hay error de red
-      setCompletadaState(false);
+      // Error de red: encolar y mantener estado optimista
+      const timestamp = new Date();
+      await guardarProgresoOffline({
+        leccionId,
+        cursoId,
+        completada: true,
+        timestamp,
+        sincronizado: 0,
+      });
+      await encolarSync('completar-leccion', {
+        leccionId,
+        cursoId,
+        completada: true,
+      });
+      onCompletada?.();
     } finally {
       setLoading(false);
     }

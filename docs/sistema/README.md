@@ -22,21 +22,22 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 
 ### En Desarrollo
 
-| Módulo                       | Estado       | Sprint   |
-| ---------------------------- | ------------ | -------- |
-| Gestión de Cursos            | ✅ Funcional | Sprint 1 |
-| Catálogo de Cursos           | ✅ Funcional | Sprint 2 |
-| Inscripciones                | ✅ Funcional | Sprint 3 |
-| UI Inscripción y Mis Cursos  | ✅ Funcional | Sprint 4 |
-| Visualizador de Lecciones    | ✅ Funcional | Sprint 4 |
-| Progreso de Estudiantes      | ✅ Funcional | Sprint 4 |
-| Marcar Lecciones Completadas | ✅ Funcional | Sprint 4 |
-| Dashboard de Estudiante      | ✅ Funcional | Sprint 4 |
-| Instalabilidad PWA           | ✅ Funcional | Sprint 5 |
-| Service Worker PWA (caché)   | ✅ Funcional | Sprint 5 |
-| Base de datos offline (IDB)  | ✅ Funcional | Sprint 5 |
-| Descarga offline de cursos   | ✅ Funcional | Sprint 5 |
-| Cache de videos offline      | ✅ Funcional | Sprint 5 |
+| Módulo                         | Estado       | Sprint   |
+| ------------------------------ | ------------ | -------- |
+| Gestión de Cursos              | ✅ Funcional | Sprint 1 |
+| Catálogo de Cursos             | ✅ Funcional | Sprint 2 |
+| Inscripciones                  | ✅ Funcional | Sprint 3 |
+| UI Inscripción y Mis Cursos    | ✅ Funcional | Sprint 4 |
+| Visualizador de Lecciones      | ✅ Funcional | Sprint 4 |
+| Progreso de Estudiantes        | ✅ Funcional | Sprint 4 |
+| Marcar Lecciones Completadas   | ✅ Funcional | Sprint 4 |
+| Dashboard de Estudiante        | ✅ Funcional | Sprint 4 |
+| Instalabilidad PWA             | ✅ Funcional | Sprint 5 |
+| Service Worker PWA (caché)     | ✅ Funcional | Sprint 5 |
+| Base de datos offline (IDB)    | ✅ Funcional | Sprint 5 |
+| Descarga offline de cursos     | ✅ Funcional | Sprint 5 |
+| Cache de videos offline        | ✅ Funcional | Sprint 5 |
+| Sync offline + Background Sync | ✅ Funcional | Sprint 5 |
 
 ## Roles del Sistema
 
@@ -154,4 +155,4 @@ docs/sistema/
 ---
 
 **Última actualización**: 15/03/2026
-**Fase actual**: Fase 2 - Offline-First PWA 🟡 EN PROGRESO (5/8)
+**Fase actual**: Fase 2 - Offline-First PWA 🟡 EN PROGRESO (6/8)

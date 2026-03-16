@@ -25,7 +25,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 ### Fase Actual: Fase 2 - Offline-First PWA 🟡 EN PROGRESO
 
 **Inicio**: 15/03/2026
-**Progreso**: 5/8 issues completados
+**Progreso**: 6/8 issues completados
 
 #### Completado en Fase 2:
 
@@ -57,9 +57,16 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Reproducción offline en páginas `/offline` usando Cache API
   - Limpieza de cache de video al eliminar descargas
 
+- ✅ **F2-006**: Cola de sync offline + Background Sync
+  - Utilidad `sync-manager.ts` para encolar y procesar sync offline
+  - Background Sync registrado en SW con import de `sw-sync.js`
+  - Fallback de sync inmediato al reconectar sin soporte de Background Sync
+  - Reintentos con límite y resolución de conflictos (last-write-wins)
+  - Integración con completar lección e inscripciones offline
+
 #### Próximos pasos:
 
-- Continuar con F2-006: Cola de sync offline + Background Sync
+- Continuar con F2-007: UI de estado offline + almacenamiento
 
 ### Fase Anterior: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
 

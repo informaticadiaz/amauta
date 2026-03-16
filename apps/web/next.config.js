@@ -97,6 +97,7 @@ const withPWAConfig = withPWA({
   runtimeCaching,
   workboxOptions: {
     disableDevLogs: true,
+    importScripts: ['/sw-sync.js'],
   },
 });
 
