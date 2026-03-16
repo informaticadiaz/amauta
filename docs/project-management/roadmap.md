@@ -582,11 +582,13 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 
 ### Preparación de Fase 3 (issues)
 
-| Issue | Título                                                   | Estado  |
-| ----- | -------------------------------------------------------- | ------- |
-| #52   | F3-001: Refinar historias y criterios de aceptación      | Backlog |
-| #53   | F3-002: Matriz de dependencias UI/Backend                | Backlog |
-| #54   | F3-003: Diseño funcional de flujos de evaluación (roles) | Backlog |
+| Issue | Título                                                   | Estado        |
+| ----- | -------------------------------------------------------- | ------------- |
+| #52   | F3-001: Refinar historias y criterios de aceptación      | ✅ Completado |
+| #53   | F3-002: Matriz de dependencias UI/Backend                | Backlog       |
+| #54   | F3-003: Diseño funcional de flujos de evaluación (roles) | Backlog       |
+
+**Progreso preparación**: 1/3 issues completados
 
 ### Objetivos
 
@@ -613,6 +615,26 @@ Agregar sistema robusto de evaluación y certificación de conocimientos que per
 - Puedo ver mi historial de intentos de evaluaciones
 - Puedo revisar mis respuestas después de completar
 - Puedo obtener retroalimentación sobre respuestas incorrectas
+
+### Historias refinadas (Fase 3)
+
+#### Educador
+
+1. **HU-E-01**: Crear evaluaciones con banco de preguntas reutilizable.
+2. **HU-E-02**: Definir criterios de aprobación (puntaje mínimo, intentos máximos y tiempo límite).
+3. **HU-E-03**: Crear preguntas de 6 tipos (opción múltiple, selección múltiple, verdadero/falso, respuesta corta, respuesta larga, emparejamiento).
+4. **HU-E-04**: Ver estadísticas de rendimiento por evaluación y por pregunta.
+5. **HU-E-05**: Exportar resultados en CSV/PDF.
+6. **HU-E-06**: Ver tiempo promedio de respuesta por pregunta.
+
+#### Estudiante
+
+1. **HU-S-01**: Resolver evaluaciones dentro del curso con navegación clara entre preguntas.
+2. **HU-S-02**: Recibir puntaje y feedback inmediato en preguntas auto-calificables.
+3. **HU-S-03**: Ver historial de intentos con fecha, puntaje y estado (aprobado/reprobado).
+4. **HU-S-04**: Revisar respuestas luego de finalizar (si el educador lo habilita).
+5. **HU-S-05**: Descargar/compartir certificado al completar el curso.
+6. **HU-S-06**: Obtener retroalimentación de respuestas incorrectas.
 
 ### Funcionalidades Técnicas
 
@@ -702,6 +724,57 @@ interface PreguntaEmparejamiento {
   puntaje: number;
 }
 ```
+
+#### Criterios de aceptación por tipo de pregunta
+
+**Opción múltiple (MULTIPLE_CHOICE)**
+
+- Debe permitir exactamente 1 opción correcta.
+- Si el estudiante elige la opción correcta, obtiene el puntaje completo.
+- Debe mostrar feedback por opción cuando exista.
+
+**Selección múltiple (MULTIPLE_SELECT)**
+
+- Debe permitir marcar varias opciones.
+- Si `puntajeParcial = true`, el puntaje se calcula por aciertos menos penalización por errores.
+- Si `puntajeParcial = false`, solo puntaje completo si todas las correctas y ninguna incorrecta.
+
+**Verdadero/Falso (TRUE_FALSE)**
+
+- Debe permitir elegir entre 2 opciones.
+- Puntaje completo solo si coincide con la respuesta correcta.
+- Debe poder mostrar explicación opcional.
+
+**Respuesta corta (SHORT_ANSWER)**
+
+- Debe aceptar múltiples respuestas válidas.
+- Debe respetar `caseSensitive`.
+- Debe normalizar espacios en blanco (trim) antes de comparar.
+
+**Respuesta larga (ESSAY)**
+
+- Debe validar mínimo y máximo de caracteres.
+- Siempre requiere revisión manual y no asigna puntaje automático.
+- Debe mostrar rúbrica/criterios al educador.
+
+**Emparejamiento (MATCHING)**
+
+- Debe presentar pares izquierda/derecha mezclados.
+- Puntaje completo si todos los pares son correctos.
+- No admite puntaje parcial en MVP (salvo definición explícita en evaluación).
+
+#### Dependencias UI/Backend (Fase 3)
+
+| Tema                      | Backend (API/Reglas)                               | UI (Pantallas/Componentes)                               |
+| ------------------------- | -------------------------------------------------- | -------------------------------------------------------- |
+| Banco de preguntas        | CRUD preguntas + validación por tipo               | Editor de preguntas por tipo + preview                   |
+| Evaluaciones              | CRUD evaluaciones + asociación a cursos            | Formulario de creación + listado                         |
+| Intentos de evaluación    | Registro de intento + control de límites           | Flujo de render de evaluación + estados (en curso/final) |
+| Calificación automática   | Motor de calificación por tipo                     | Feedback inmediato y resumen final                       |
+| Revisión manual (ESSAY)   | Cola de revisión + actualización de puntaje        | Panel de revisión para educador                          |
+| Certificados              | Generación + almacenamiento + verificación pública | Página de descarga/compartir + verificación              |
+| Analíticas                | Agregados por evaluación/pregunta                  | Dashboard con métricas y gráficos                        |
+| Exportación de resultados | Export CSV/PDF con filtros                         | Botón de exportar + selección de rango/curso             |
 
 #### Sistema de Calificación Automática
 
@@ -2671,5 +2744,5 @@ Revisar roadmap cada 3 sprints (6 semanas) para ajustar prioridades.
 
 ---
 
-**Última actualización**: 2026-03-15
+**Última actualización**: 2026-03-16
 **Próxima revisión**: Inicio de Fase 3
