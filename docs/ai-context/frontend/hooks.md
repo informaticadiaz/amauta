@@ -6,9 +6,12 @@
 
 ## Hooks Disponibles
 
-| Hook               | Archivo                     | Propósito                  |
-| ------------------ | --------------------------- | -------------------------- |
-| `useAuthorization` | `hooks/useAuthorization.ts` | Verificar roles y permisos |
+| Hook                     | Archivo                           | Propósito                          |
+| ------------------------ | --------------------------------- | ---------------------------------- |
+| `useAuthorization`       | `hooks/useAuthorization.ts`       | Verificar roles y permisos         |
+| `useNetworkStatus`       | `hooks/useNetworkStatus.ts`       | Detectar estado online/offline     |
+| `useOfflineStorageStats` | `hooks/useOfflineStorageStats.ts` | Resumen de espacio offline         |
+| `useSyncStatus`          | `hooks/useSyncStatus.ts`          | Estado de sincronizacion pendiente |
 
 ---
 

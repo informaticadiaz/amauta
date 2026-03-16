@@ -13,6 +13,7 @@ import { CursoTemario } from '@/components/catalogo/CursoTemario';
 import { EducadorCard } from '@/components/catalogo/EducadorCard';
 import { InscripcionBtn } from '@/components/catalogo/InscripcionBtn';
 import { DownloadCursoButton } from '@/components/catalogo/DownloadCursoButton';
+import { OfflineStatusPanel } from '@/components/offline/OfflineStatusPanel';
 
 interface Leccion {
   id: string;
@@ -176,6 +177,10 @@ export default async function CursoDetallePage({ params }: PageProps) {
                   }}
                   totalLecciones={curso._count.lecciones}
                 />
+              </div>
+
+              <div className="mt-6">
+                <OfflineStatusPanel />
               </div>
 
               {/* Card del educador */}

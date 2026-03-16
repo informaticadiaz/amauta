@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { SessionProvider } from '@/components/auth/SessionProvider';
+import { OfflineBanner } from '@/components/offline/OfflineBanner';
 import { SyncManagerClient } from '@/components/offline/SyncManagerClient';
 import './globals.css';
 
@@ -38,6 +39,7 @@ export default function RootLayout({
     <html lang="es">
       <body>
         <SessionProvider>
+          <OfflineBanner />
           <SyncManagerClient />
           {children}
         </SessionProvider>

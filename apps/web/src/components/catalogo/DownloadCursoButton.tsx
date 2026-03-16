@@ -13,6 +13,7 @@ import { db } from '@/lib/db/offline-db';
 import { ProgresoBar } from '@/components/lecciones/ProgresoBar';
 import { extractHtmlFromContenido } from '@/lib/offline/markdown';
 import { cacheVideo, deleteVideoCache } from '@/lib/offline/video-cache';
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 
 interface CursoBase {
   id: string;
@@ -61,28 +62,7 @@ export function DownloadCursoButton({
   const [status, setStatus] = useState<DownloadStatus>('idle');
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
-  const [isOnline, setIsOnline] = useState(true);
-
-  useEffect(() => {
-    const online = typeof navigator !== 'undefined' ? navigator.onLine : true;
-    setIsOnline(online);
-
-    function handleOnline() {
-      setIsOnline(true);
-    }
-
-    function handleOffline() {
-      setIsOnline(false);
-    }
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, []);
+  const { isOnline } = useNetworkStatus();
 
   useEffect(() => {
     let active = true;

@@ -15,6 +15,7 @@ import { LeccionNavigation } from '@/components/lecciones/LeccionNavigation';
 import { MobileSidebarSheet } from '@/components/lecciones/MobileSidebarSheet';
 import { CompletarLeccionBtn } from '@/components/lecciones/CompletarLeccionBtn';
 import { ProgresoBar } from '@/components/lecciones/ProgresoBar';
+import { SyncStatusBadge } from '@/components/offline/SyncStatusBadge';
 
 type TipoLeccion = 'VIDEO' | 'TEXTO' | 'QUIZ' | 'INTERACTIVO' | 'DESCARGABLE';
 
@@ -241,11 +242,14 @@ export default async function LeccionPage({ params }: PageProps) {
                 />
               </div>
             )}
-            <CompletarLeccionBtn
-              leccionId={leccionId}
-              cursoId={cursoData.id}
-              completada={completada}
-            />
+            <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+              <SyncStatusBadge />
+              <CompletarLeccionBtn
+                leccionId={leccionId}
+                cursoId={cursoData.id}
+                completada={completada}
+              />
+            </div>
           </div>
 
           <LeccionNavigation

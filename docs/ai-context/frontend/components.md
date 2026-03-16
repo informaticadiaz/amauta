@@ -49,7 +49,11 @@ apps/web/src/components/
 │   └── DownloadCursoButton.tsx
 │
 └── offline/                 # Offline/PWA
-    └── SyncManagerClient.tsx
+    ├── OfflineBanner.tsx
+    ├── OfflineStatusPanel.tsx
+    ├── OfflineStorageIndicator.tsx
+    ├── SyncManagerClient.tsx
+    └── SyncStatusBadge.tsx
 ```
 
 ---

@@ -25,7 +25,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 ### Fase Actual: Fase 2 - Offline-First PWA 🟡 EN PROGRESO
 
 **Inicio**: 15/03/2026
-**Progreso**: 6/8 issues completados
+**Progreso**: 7/8 issues completados
 
 #### Completado en Fase 2:
 
@@ -64,9 +64,15 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Reintentos con límite y resolución de conflictos (last-write-wins)
   - Integración con completar lección e inscripciones offline
 
+- ✅ **F2-007**: UI de estado offline + almacenamiento
+  - Hook `useNetworkStatus` para detectar online/offline
+  - Banner global offline en layout
+  - Indicador de sincronizacion en paginas de curso y leccion
+  - Resumen de espacio estimado usado por descargas
+
 #### Próximos pasos:
 
-- Continuar con F2-007: UI de estado offline + almacenamiento
+- Continuar con F2-008: Tests offline + checklist Lighthouse PWA
 
 ### Fase Anterior: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
 
