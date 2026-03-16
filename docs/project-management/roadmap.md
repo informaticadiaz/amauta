@@ -585,10 +585,10 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 | Issue | Título                                                   | Estado        |
 | ----- | -------------------------------------------------------- | ------------- |
 | #52   | F3-001: Refinar historias y criterios de aceptación      | ✅ Completado |
-| #53   | F3-002: Matriz de dependencias UI/Backend                | Backlog       |
+| #53   | F3-002: Matriz de dependencias UI/Backend                | ✅ Completado |
 | #54   | F3-003: Diseño funcional de flujos de evaluación (roles) | Backlog       |
 
-**Progreso preparación**: 1/3 issues completados
+**Progreso preparación**: 2/3 issues completados
 
 ### Objetivos
 
@@ -775,6 +775,24 @@ interface PreguntaEmparejamiento {
 | Certificados              | Generación + almacenamiento + verificación pública | Página de descarga/compartir + verificación              |
 | Analíticas                | Agregados por evaluación/pregunta                  | Dashboard con métricas y gráficos                        |
 | Exportación de resultados | Export CSV/PDF con filtros                         | Botón de exportar + selección de rango/curso             |
+
+**Matriz por flujo (endpoints, pantallas y dependencias)**
+
+| Flujo                            | Backend (endpoints/reglas)                                                                                                | UI (pantallas/componentes)                                                                                  | Dependencias cruzadas                                                                                               |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Crear evaluación (educador)      | Crear/editar evaluación, asociar a curso, definir criterios (puntaje mínimo, intentos, tiempo), validación de estructura  | Formulario/wizard de creación, selector de curso, builder de preguntas, preview, estados borrador/publicado | UI depende de catálogo de tipos y reglas de validación; Backend depende de IDs de curso y preguntas existentes      |
+| Banco de preguntas               | CRUD preguntas, tags/etiquetas, validación por tipo, preview server-side opcional                                         | Listado con filtros, editor por tipo, vista previa                                                          | UI bloqueada sin reglas de validación por tipo; Backend requiere definición estable de tipos y opciones             |
+| Resolver evaluación (estudiante) | Crear intento, obtener evaluación + preguntas, guardar respuestas parciales, finalizar intento, control de límites/tiempo | Player de evaluación, navegación por preguntas, autosave, timer, estados en curso/finalizada                | UI depende de endpoints de obtener evaluación e intento activo; Backend depende de reglas de intento y temporizador |
+| Resultados y feedback            | Calcular puntaje, detalle por pregunta, estado aprobado/reprobado, historial de intentos                                  | Resumen final, feedback por pregunta, historial de intentos                                                 | UI depende de motor de calificación y políticas de visibilidad; Backend depende de respuestas guardadas             |
+| Revisión manual (ESSAY)          | Cola de revisión, asignación, actualización de puntaje/comentarios                                                        | Panel de revisión para educador, rúbrica, cambio de estado                                                  | UI depende de cola de revisión; Backend depende de criterios definidos por evaluación                               |
+| Certificados                     | Generación, almacenamiento, verificación pública, control de elegibilidad                                                 | Página de descarga/compartir, verificación                                                                  | UI depende de resultado final y elegibilidad; Backend depende de finalización de curso y evaluación                 |
+| Analíticas y exportación         | Agregados por evaluación/pregunta, export CSV/PDF con filtros                                                             | Dashboard con métricas, filtros por curso/fecha, botón exportar                                             | UI depende de endpoints de agregación; Backend depende de datos completos de intentos y preguntas                   |
+
+**Dependencias transversales**
+
+- Requiere autenticación y roles para todas las rutas de evaluaciones.
+- Depende de cursos/lecciones para asociar evaluaciones a contenidos.
+- Depende de inscripciones para validar acceso de estudiantes.
 
 #### Sistema de Calificación Automática
 

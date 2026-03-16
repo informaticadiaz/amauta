@@ -78,7 +78,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 #### Próximos pasos:
 
 - Preparar issues y dependencias para Fase 3 (Evaluaciones)
-- Continuar preparación Fase 3 (1/3 issues completados)
+- Continuar preparación Fase 3 (2/3 issues completados)
 
 #### Preparación Fase 3 - Evaluaciones (en curso)
 
@@ -86,7 +86,8 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Historias refinadas para Educador y Estudiante
   - Criterios de aceptación por tipo de pregunta
   - Dependencias UI/Backend registradas en roadmap
-- ⏳ **F3-002**: Matriz de dependencias UI/Backend
+- ✅ **F3-002**: Matriz de dependencias UI/Backend
+- ⏳ **F3-003**: Diseño funcional de flujos de evaluación (roles)
 - ⏳ **F3-003**: Diseño funcional de flujos de evaluación (roles)
 
 ### Fase Anterior: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA

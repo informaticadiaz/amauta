@@ -36,7 +36,7 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 | Issue | Título                                                      | Estado  |
 | ----- | ----------------------------------------------------------- | ------- |
 | #52   | F3-001: Refinar historias y criterios de aceptación         | Backlog |
-| #53   | F3-002: Matriz de dependencias UI/Backend para Evaluaciones | Backlog |
+| #53   | F3-002: Matriz de dependencias UI/Backend para Evaluaciones | ✅ Done |
 | #54   | F3-003: Diseño funcional de flujos de evaluación (roles)    | Backlog |
 
 ### Sprint 0 (Fase 0) - ✅ COMPLETADO
