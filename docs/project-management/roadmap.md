@@ -170,7 +170,7 @@ Trabajo transversal para alinear contenidos con la currícula oficial argentina.
 
 **Duración estimada**: 4-6 semanas
 **Sprint 5-7**
-**Progreso**: 7/8 issues completados
+**Progreso**: 8/8 issues completados ✅ FASE 2 COMPLETADA
 
 ### Progreso Sprint 5
 
@@ -183,7 +183,7 @@ Trabajo transversal para alinear contenidos con la currícula oficial argentina.
 | #48   | F2-005: Cache de videos offline con Cache API       | ✅ Completado | should-have |
 | #49   | F2-006: Cola de sync offline + Background Sync      | ✅ Completado | must-have   |
 | #50   | F2-007: UI de estado offline + almacenamiento       | ✅ Completado | should-have |
-| #51   | F2-008: Tests offline + checklist Lighthouse PWA    | 📋 Pendiente  | should-have |
+| #51   | F2-008: Tests offline + checklist Lighthouse PWA    | ✅ Completado | should-have |
 
 ### Objetivos
 

@@ -33,15 +33,16 @@ Ver [DEPLOYMENT_PROGRESS.md](../../DEPLOYMENT_PROGRESS.md) para estado detallado
 ### Guías de Desarrollo
 
 10. [🧪 Testing](./testing.md) - Cómo escribir y ejecutar tests
-11. [🔧 Patrones y Recetas](./patterns.md) - Soluciones a problemas comunes
-12. [👁️ Code Review](./code-review.md) - Proceso y criterios de revisión
-13. [🐛 Debugging](./debugging.md) - Cómo diagnosticar problemas
-14. [🔒 Seguridad para Devs](./security-guide.md) - Prácticas de seguridad
-15. [⚡ Performance](./performance.md) - Optimización y métricas
+11. [📱 Lighthouse PWA](./lighthouse-pwa.md) - Checklist y guía rápida
+12. [🔧 Patrones y Recetas](./patterns.md) - Soluciones a problemas comunes
+13. [👁️ Code Review](./code-review.md) - Proceso y criterios de revisión
+14. [🐛 Debugging](./debugging.md) - Cómo diagnosticar problemas
+15. [🔒 Seguridad para Devs](./security-guide.md) - Prácticas de seguridad
+16. [⚡ Performance](./performance.md) - Optimización y métricas
 
 ### Decisiones Arquitectónicas (ADR)
 
-16. [ADR Index](./adr/README.md) - Registro de decisiones arquitectónicas
+17. [ADR Index](./adr/README.md) - Registro de decisiones arquitectónicas
     - [001 - Monorepo con Turborepo](./adr/001-monorepo-turborepo.md)
     - [002 - NestJS + Fastify](./adr/002-nestjs-fastify.md)
     - [003 - Prisma ORM](./adr/003-prisma-orm.md)
@@ -50,18 +51,18 @@ Ver [DEPLOYMENT_PROGRESS.md](../../DEPLOYMENT_PROGRESS.md) para estado detallado
 
 ### Docker y Deployment
 
-17. [🐳 Guía de Puertos y Redes en Docker](./docker-ports-networking-guide.md)
-18. [📦 Entendiendo Dokploy](./understanding-dokploy-deployment.md)
-19. [🚀 Deployment con Dokploy UI](./dokploy-ui-deployment-guide.md)
+18. [🐳 Guía de Puertos y Redes en Docker](./docker-ports-networking-guide.md)
+19. [📦 Entendiendo Dokploy](./understanding-dokploy-deployment.md)
+20. [🚀 Deployment con Dokploy UI](./dokploy-ui-deployment-guide.md)
 
 ### Seguridad y Deployment
 
-20. [⭐ Índice de Seguridad](./SECURITY_README.md) - **LEER PRIMERO**
-21. [📊 Estado del Deployment](../../DEPLOYMENT_PROGRESS.md) - **Estado actual de producción**
-22. [Análisis VPS y Deployment](./vps-deployment-analysis.md)
-23. [Almacenamiento de Datos Sensibles](./PRIVATE_DATA_STORAGE.md)
-24. [Repositorio Privado](./PRIVATE_REPO_REFERENCE.md)
-25. [Guía de Sanitización](../../.github/SECURITY_SANITIZATION.md)
+21. [⭐ Índice de Seguridad](./SECURITY_README.md) - **LEER PRIMERO**
+22. [📊 Estado del Deployment](../../DEPLOYMENT_PROGRESS.md) - **Estado actual de producción**
+23. [Análisis VPS y Deployment](./vps-deployment-analysis.md)
+24. [Almacenamiento de Datos Sensibles](./PRIVATE_DATA_STORAGE.md)
+25. [Repositorio Privado](./PRIVATE_REPO_REFERENCE.md)
+26. [Guía de Sanitización](../../.github/SECURITY_SANITIZATION.md)
 
 ## Propósito
 

@@ -39,6 +39,7 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 | Cache de videos offline            | ✅ Funcional | Sprint 5 |
 | Sync offline + Background Sync     | ✅ Funcional | Sprint 5 |
 | UI estado offline + almacenamiento | ✅ Funcional | Sprint 6 |
+| Tests offline + Lighthouse PWA     | ✅ Funcional | Sprint 7 |
 
 ## Roles del Sistema
 
@@ -156,4 +157,4 @@ docs/sistema/
 ---
 
 **Última actualización**: 15/03/2026
-**Fase actual**: Fase 2 - Offline-First PWA 🟡 EN PROGRESO (7/8)
+**Fase actual**: Fase 2 - Offline-First PWA ✅ COMPLETADA (8/8)

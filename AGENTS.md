@@ -22,10 +22,10 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 2 - Offline-First PWA 🟡 EN PROGRESO
+### Fase Actual: Fase 2 - Offline-First PWA ✅ COMPLETADA
 
 **Inicio**: 15/03/2026
-**Progreso**: 7/8 issues completados
+**Progreso**: 8/8 issues completados
 
 #### Completado en Fase 2:
 
@@ -70,9 +70,14 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Indicador de sincronizacion en paginas de curso y leccion
   - Resumen de espacio estimado usado por descargas
 
+- ✅ **F2-008**: Tests offline + checklist Lighthouse PWA
+  - Tests unitarios para `offline-db` y `sync-manager`
+  - Tests de UI para descarga offline y estado de conexión
+  - Guía rápida Lighthouse PWA con resultados mínimos esperados
+
 #### Próximos pasos:
 
-- Continuar con F2-008: Tests offline + checklist Lighthouse PWA
+- Preparar issues y dependencias para Fase 3 (Evaluaciones)
 
 ### Fase Anterior: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
 
@@ -254,7 +259,7 @@ El roadmap define:
 | ---- | ----------------- | ------------- | --------------------- |
 | 0    | Fundamentos       | ✅ Completado | `fase-0-tareas.md`    |
 | 1    | MVP Cursos        | ✅ Completado | `roadmap.md` → Fase 1 |
-| 2    | Offline-First PWA | 📋 Pendiente  | `roadmap.md` → Fase 2 |
+| 2    | Offline-First PWA | ✅ Completado | `roadmap.md` → Fase 2 |
 | 3    | Evaluaciones      | 📋 Pendiente  | `roadmap.md` → Fase 3 |
 | 4    | Módulo Escolar    | 📋 Pendiente  | `roadmap.md` → Fase 4 |
 | 5    | Comunidad         | 📋 Pendiente  | `roadmap.md` → Fase 5 |
@@ -559,7 +564,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 1 completada (16/16 issues completados)
+- **Fase actual**: Fase 2 completada (8/8 issues completados)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**
