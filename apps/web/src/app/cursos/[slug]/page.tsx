@@ -12,6 +12,7 @@ import { CursoInfo } from '@/components/catalogo/CursoInfo';
 import { CursoTemario } from '@/components/catalogo/CursoTemario';
 import { EducadorCard } from '@/components/catalogo/EducadorCard';
 import { InscripcionBtn } from '@/components/catalogo/InscripcionBtn';
+import { DownloadCursoButton } from '@/components/catalogo/DownloadCursoButton';
 
 interface Leccion {
   id: string;
@@ -160,6 +161,22 @@ export default async function CursoDetallePage({ params }: PageProps) {
                     : null
                 }
               />
+
+              <div className="mt-6">
+                <DownloadCursoButton
+                  curso={{
+                    id: curso.id,
+                    slug: curso.slug,
+                    titulo: curso.titulo,
+                    descripcion: curso.descripcion,
+                    imagen: curso.imagen,
+                    nivel: curso.nivel,
+                    duracion: curso.duracion,
+                    categoriaId: curso.categoria.id,
+                  }}
+                  totalLecciones={curso._count.lecciones}
+                />
+              </div>
 
               {/* Card del educador */}
               <EducadorCard educador={curso.educador} />

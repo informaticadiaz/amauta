@@ -33,6 +33,14 @@ apps/web/src/app/
 │   ├── page.tsx                 # /cursos
 │   └── [slug]/page.tsx          # /cursos/[slug]
 │
+├── offline/                      # Experiencia offline
+│   └── cursos/
+│       └── [slug]/
+│           ├── page.tsx          # /offline/cursos/[slug]
+│           └── lecciones/
+│               └── [leccionId]/
+│                   └── page.tsx  # /offline/cursos/[slug]/lecciones/[leccionId]
+│
 └── api/                          # API Routes (proxy al backend)
     ├── auth/
     ├── cursos/

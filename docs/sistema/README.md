@@ -35,6 +35,7 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 | Instalabilidad PWA           | ✅ Funcional | Sprint 5 |
 | Service Worker PWA (caché)   | ✅ Funcional | Sprint 5 |
 | Base de datos offline (IDB)  | ✅ Funcional | Sprint 5 |
+| Descarga offline de cursos   | ✅ Funcional | Sprint 5 |
 
 ## Roles del Sistema
 
@@ -152,4 +153,4 @@ docs/sistema/
 ---
 
 **Última actualización**: 15/03/2026
-**Fase actual**: Fase 2 - Offline-First PWA 🟡 EN PROGRESO (3/8)
+**Fase actual**: Fase 2 - Offline-First PWA 🟡 EN PROGRESO (4/8)

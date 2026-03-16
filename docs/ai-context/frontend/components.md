@@ -45,7 +45,8 @@ apps/web/src/components/
     ├── CursoInfo.tsx
     ├── CursoTemario.tsx
     ├── EducadorCard.tsx
-    └── InscripcionBtn.tsx
+    ├── InscripcionBtn.tsx
+    └── DownloadCursoButton.tsx
 ```
 
 ---
