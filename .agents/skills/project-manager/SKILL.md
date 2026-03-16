@@ -55,6 +55,10 @@ Permite planificar y coordinar el trabajo del proyecto Amauta usando los documen
   - `AGENTS.md`
   - `docs/project-management/roadmap.md`
   - `docs/sistema/README.md`
+- Cuando se modifique documentacion y el cambio este aprobado:
+  - Hacer commit en espanol con mensaje descriptivo.
+  - Hacer push.
+  - Solo omitir commit/push si el usuario lo solicita explicitamente.
 
 ### 5. Mensajes
 

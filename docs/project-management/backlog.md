@@ -1,6 +1,6 @@
 # Product Backlog - Amauta
 
-**Última actualización**: 2026-01-02
+**Última actualización**: 2026-03-16
 **Product Owner**: [Por definir]
 
 ## 🟢 Estado de Producción
@@ -11,7 +11,9 @@
 | Backend API | https://amauta-api.diazignacio.ar |
 
 **Fase 0**: ✅ Completada (30/12/2024)
-**Fase 1**: 🚧 En progreso (3/16 issues completados)
+**Fase 1**: ✅ Completada (16/16 issues completados)
+**Fase 2**: ✅ Completada (8/8 issues completados)
+**Fase 3**: 📋 Pendiente (preparación de issues)
 
 ## Cómo usar este documento
 
@@ -24,26 +26,10 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
-## Sprint Actual: Sprint 1 (Fase 1 - MVP)
+## Sprint Actual: Sin sprint activo (preparación Fase 3)
 
-**Fechas**: 30/12/2024 - En curso
-**Objetivo**: Implementar autenticación, autorización y base del sistema de cursos
-**Issues totales**: 16 (ver `gh issue list --label phase-1`)
-
-### Comprometido para Sprint 1
-
-| ID     | Tarea                            | Tipo     | Estado   | Prioridad |
-| ------ | -------------------------------- | -------- | -------- | --------- |
-| F1-001 | Autenticación con NextAuth.js v5 | Backend  | ✅ Done  | Must      |
-| F1-002 | Autorización por roles (RBAC)    | Backend  | ✅ Done  | Must      |
-| F1-003 | Layout base responsive           | Frontend | ✅ Done  | Must      |
-| F1-004 | API CRUD de cursos               | Backend  | 📋 Ready | Must      |
-| F1-005 | UI crear/editar cursos           | Frontend | 📋 Ready | Must      |
-| F1-006 | Sistema de subida de imágenes    | Full     | 📋 Ready | Should    |
-| F1-007 | API CRUD de lecciones            | Backend  | 📋 Ready | Must      |
-| F1-008 | UI para gestión de lecciones     | Frontend | 📋 Ready | Must      |
-
-**Progreso**: 3/16 issues completados (18.75%)
+**Objetivo**: Preparar issues, criterios y dependencias para Fase 3 (Evaluaciones).
+**Referencia**: `docs/project-management/roadmap.md` → Fase 3
 
 ### Sprint 0 (Fase 0) - ✅ COMPLETADO
 
@@ -171,7 +157,7 @@ Ver `docs/project-management/fase-0-tareas.md` para detalle completo.
 
 ### FASE 2: Offline-First & PWA (Sprints 5-7)
 
-**Estado**: Backlog
+**Estado**: ✅ Completada
 **Prioridad**: Should Have
 
 | ID     | Historia de Usuario                                    | Estimación | Estado  | Sprint   |
@@ -267,16 +253,17 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 ### Distribución por Fase
 
-- **Fase 0**: 76 puntos (89% completado - 62 puntos done)
-- **Fase 1**: 110 puntos
-- **Fase 2**: 31 puntos
-- **Épica Transversal NAP**: 17 puntos (issue #21)
+- **Fase 0**: ✅ Completada
+- **Fase 1**: ✅ Completada
+- **Fase 2**: ✅ Completada
+- **Fase 3**: 📋 Pendiente (en preparación)
+- **Épica Transversal NAP**: 🔄 En progreso
 
 ### Backlog Health
 
-- **Done**: 16 items (Fase 0)
-- **Ready for Development**: 2 items (T-014, T-014b)
-- **Needs Refinement**: 35+ items (Fase 1+)
+- **Done**: Fases 0, 1 y 2 completadas
+- **Ready for Development**: por definir (Fase 3)
+- **Needs Refinement**: Fase 3 (Evaluaciones)
 - **Research Done**: 1 item (NAP #21 - investigación completada)
 - **Blocked**: 0 items
 
@@ -307,19 +294,12 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 ## Próximos Pasos
 
-### Para Sprint 1 (después de Sprint 0)
+### Para iniciar Fase 3
 
-1. Refinar historias US-001 a US-005 (Autenticación)
-2. Crear mockups para pantallas de login/registro
-3. Definir API endpoints necesarios
-4. Estimar con Planning Poker
-
-### Para Fase 1 completa
-
-1. Detallar todas las épicas 1-4
-2. Dividir historias grandes (>8 puntos)
-3. Crear designs/wireframes
-4. Validar con stakeholders
+1. Refinar historias de Evaluaciones y Certificaciones
+2. Definir criterios de aceptación por tipo de pregunta
+3. Identificar dependencias de UI/Backend
+4. Crear issues pequeñas con labels `phase-3`
 
 ---
 
@@ -330,5 +310,5 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 - Las prioridades pueden ajustarse según feedback de usuarios
 - Nuevas historias pueden agregarse en cualquier momento
 
-**Última revisión**: 02/01/2026
-**Próxima revisión**: Al completar Sprint 1
+**Última revisión**: 16/03/2026
+**Próxima revisión**: Inicio de Fase 3
