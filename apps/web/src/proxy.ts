@@ -50,7 +50,7 @@ function getRequiredRoles(pathname: string): Rol[] | null {
   return null; // No requiere rol específico, solo autenticación
 }
 
-export default auth((req) => {
+const proxy = auth((req) => {
   const { nextUrl, auth: session } = req;
   const isLoggedIn = !!session?.user;
   const pathname = nextUrl.pathname;
@@ -92,6 +92,8 @@ export default auth((req) => {
 
   return NextResponse.next();
 });
+
+export default proxy;
 
 export const config = {
   matcher: [

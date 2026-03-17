@@ -57,15 +57,17 @@ interface CursosResponse {
   totalPages: number;
 }
 
+type CursosSearchParams = {
+  page?: string;
+  buscar?: string;
+  categoriaId?: string;
+  nivel?: string;
+  ordenarPor?: string;
+  orden?: string;
+};
+
 interface PageProps {
-  searchParams: {
-    page?: string;
-    buscar?: string;
-    categoriaId?: string;
-    nivel?: string;
-    ordenarPor?: string;
-    orden?: string;
-  };
+  searchParams: Promise<CursosSearchParams>;
 }
 
 async function getCategorias(): Promise<Categoria[]> {
@@ -78,9 +80,7 @@ async function getCategorias(): Promise<Categoria[]> {
   }
 }
 
-async function getCursos(
-  params: PageProps['searchParams']
-): Promise<CursosResponse> {
+async function getCursos(params: CursosSearchParams): Promise<CursosResponse> {
   try {
     const queryParams = new URLSearchParams();
 
@@ -114,9 +114,10 @@ async function getCursos(
 }
 
 export default async function CursosPage({ searchParams }: PageProps) {
+  const resolvedSearchParams = await searchParams;
   const [categorias, cursosData] = await Promise.all([
     getCategorias(),
-    getCursos(searchParams),
+    getCursos(resolvedSearchParams),
   ]);
 
   return (

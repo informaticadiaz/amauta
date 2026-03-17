@@ -62,9 +62,9 @@ interface CursoResponse {
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 /**
@@ -86,7 +86,8 @@ async function getCurso(slug: string): Promise<Curso | null> {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const curso = await getCurso(params.slug);
+  const { slug } = await params;
+  const curso = await getCurso(slug);
 
   if (!curso) {
     return {
@@ -113,7 +114,8 @@ export async function generateMetadata({
 }
 
 export default async function CursoDetallePage({ params }: PageProps) {
-  const curso = await getCurso(params.slug);
+  const { slug } = await params;
+  const curso = await getCurso(slug);
 
   // 404 si el curso no existe
   if (!curso) {

@@ -140,6 +140,9 @@ export function DownloadCursoButton({
 
       for (let index = 0; index < leccionesDescargables.length; index += 1) {
         const leccion = leccionesDescargables[index];
+        if (!leccion) {
+          continue;
+        }
 
         if (leccion.tipo === 'TEXTO') {
           const contenido = extractHtmlFromContenido(leccion.contenido ?? {});

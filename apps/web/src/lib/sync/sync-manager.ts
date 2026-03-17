@@ -8,6 +8,12 @@ import { resolveProgresoLocal } from './conflict-resolution';
 const SYNC_TAG = 'amauta-sync';
 const MAX_INTENTOS = 5;
 
+type BackgroundSyncRegistration = ServiceWorkerRegistration & {
+  sync?: {
+    register(tag: string): Promise<void>;
+  };
+};
+
 type SyncPayloadBase = {
   timestamp?: string;
 };
@@ -39,7 +45,8 @@ async function registrarBackgroundSync(): Promise<void> {
   if (!supportsBackgroundSync()) return;
 
   try {
-    const registration = await navigator.serviceWorker.ready;
+    const registration = (await navigator.serviceWorker
+      .ready) as BackgroundSyncRegistration;
     if (registration?.sync?.register) {
       await registration.sync.register(SYNC_TAG);
     }
@@ -62,9 +69,9 @@ export async function marcarProgresoSincronizado(
   await db.progreso.update(leccionId, { sincronizado: 1 });
 }
 
-export async function encolarSync(
-  tipo: SyncPayload['tipo'],
-  payload: Omit<SyncPayload, 'tipo'>
+export async function encolarSync<T extends SyncPayload['tipo']>(
+  tipo: T,
+  payload: Omit<Extract<SyncPayload, { tipo: T }>, 'tipo'>
 ): Promise<void> {
   const now = new Date();
   const payloadConTimestamp = {
@@ -108,7 +115,10 @@ function elegirGanador(
   nuevo: SyncPendiente,
   nuevoPayload: SyncPayload
 ) {
-  if (actualPayload.tipo === 'completar-leccion') {
+  if (
+    actualPayload.tipo === 'completar-leccion' &&
+    nuevoPayload.tipo === 'completar-leccion'
+  ) {
     if (actualPayload.completada !== nuevoPayload.completada) {
       return nuevoPayload.completada ? nuevo : actual;
     }
@@ -161,7 +171,7 @@ function consolidarPendientes(pendientes: SyncPendiente[]) {
   return { ordenados, descartados };
 }
 
-async function ejecutarSync(item: SyncPendiente, payload: SyncPayload) {
+async function ejecutarSync(payload: SyncPayload) {
   if (payload.tipo === 'completar-leccion') {
     const response = await fetch(
       `/api/lecciones/${payload.leccionId}/completar`,
@@ -209,7 +219,7 @@ export async function procesarColaSync(): Promise<void> {
     }
 
     try {
-      await ejecutarSync(item, payload);
+      await ejecutarSync(payload);
       await db.syncPendiente.delete(item.id);
     } catch {
       const intentos = item.intentos + 1;

@@ -58,10 +58,10 @@ interface ProgresoCursoResponse {
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
     leccionId: string;
-  };
+  }>;
 }
 
 async function getCurso(slug: string): Promise<Curso | null> {
@@ -109,14 +109,15 @@ async function getProgreso(
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const leccion = await getLeccion(params.leccionId);
+  const { leccionId } = await params;
+  const leccion = await getLeccion(leccionId);
   return {
     title: leccion ? `${leccion.titulo} | Amauta` : 'Lección | Amauta',
   };
 }
 
 export default async function LeccionPage({ params }: PageProps) {
-  const { slug, leccionId } = params;
+  const { slug, leccionId } = await params;
 
   // Verificar autenticación
   const session = await auth();

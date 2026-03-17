@@ -6,7 +6,7 @@
 
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { use, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import {
   db,
@@ -15,13 +15,13 @@ import {
 } from '@/lib/db/offline-db';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default function OfflineCursoPage({ params }: PageProps) {
-  const { slug } = params;
+  const { slug } = use(params);
   const [curso, setCurso] = useState<CursoOffline | null>(null);
   const [lecciones, setLecciones] = useState<LeccionOffline[]>([]);
   const [loading, setLoading] = useState(true);

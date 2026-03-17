@@ -6,7 +6,7 @@
 
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { use, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import {
   db,
@@ -17,14 +17,14 @@ import { getVideoOfflineUrl } from '@/lib/offline/video-cache';
 import { LeccionContent } from '@/components/lecciones/LeccionContent';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
     leccionId: string;
-  };
+  }>;
 }
 
 export default function OfflineLeccionPage({ params }: PageProps) {
-  const { slug, leccionId } = params;
+  const { slug, leccionId } = use(params);
   const [curso, setCurso] = useState<CursoOffline | null>(null);
   const [lecciones, setLecciones] = useState<LeccionOffline[]>([]);
   const [leccionActual, setLeccionActual] = useState<LeccionOffline | null>(
