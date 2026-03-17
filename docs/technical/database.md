@@ -591,6 +591,17 @@ pnpm prisma migrate dev --name agregar_tabla_asistencia
 pnpm prisma migrate deploy
 ```
 
+**Nota de producción (Amauta):**
+
+En el deployment actual, el contenedor de la API ejecuta automáticamente:
+
+```
+npx prisma migrate deploy
+```
+
+al iniciar (ver `apps/api/Dockerfile`, `CMD`). Por lo tanto, un deploy de la API
+aplica migraciones pendientes sin intervención manual.
+
 ### Rollback
 
 ```bash

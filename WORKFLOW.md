@@ -370,6 +370,13 @@ gh issue list --milestone "Sprint 1"
 - Usar heredoc para mensajes multilínea
 - Firmar con Co-Authored-By: Claude
 
+### Deploy y Migraciones (Producción)
+
+- En producción, el contenedor de la API ejecuta automáticamente
+  `npx prisma migrate deploy` al iniciar (configurado en `apps/api/Dockerfile`).
+- Por lo tanto, un deploy de la API aplica migraciones pendientes sin pasos manuales.
+- Si se requiere control manual, mover la migración a un step explícito del pipeline.
+
 ### Comunicación
 
 - Ser claro y conciso

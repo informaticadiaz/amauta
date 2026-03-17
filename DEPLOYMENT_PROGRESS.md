@@ -14,6 +14,21 @@ curl https://amauta.diazignacio.ar          # Frontend
 curl https://amauta-api.diazignacio.ar/health  # Backend API
 ```
 
+### 🧩 Migraciones Prisma en Producción (IMPORTANTE)
+
+En producción, el contenedor de la API ejecuta automáticamente las migraciones
+al iniciar. Esto está configurado en el `Dockerfile` del API:
+
+```
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
+```
+
+**Implicaciones:**
+
+- Cada deploy de la API aplica migraciones pendientes con `prisma migrate deploy`.
+- No es necesario ejecutar manualmente `migrate deploy` si el deploy ya corrió.
+- Si se requiere control manual, mover la migración a un step explícito del pipeline.
+
 ---
 
 ## 📊 Resumen Ejecutivo
