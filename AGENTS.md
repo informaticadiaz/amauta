@@ -677,8 +677,20 @@ Ver `docs/technical/architecture.md` para decisiones técnicas detalladas.
 2. **NO hay DB local** por defecto (Docker Compose existe pero no se usa)
 3. Cualquier `prisma migrate` afecta producción directamente
 4. **SIEMPRE verificar** `prisma migrate status` antes de cambios
+5. Si cambia `apps/api/prisma/schema.prisma`, debe existir una migración versionada en `apps/api/prisma/migrations/`
+6. `prisma db push` no es un flujo válido para cambios normales del proyecto
 
 **Para migraciones y DB, seguir**: `docs/ai-skills/prisma-db-management.md`
+
+### Política Obligatoria de Prisma (SIN EXCEPCIONES)
+
+1. Todo cambio en `apps/api/prisma/schema.prisma` requiere migración versionada en `apps/api/prisma/migrations/`.
+2. Antes de tocar Prisma, ejecutar `npx prisma migrate status`.
+3. Después de cambiar el schema, ejecutar `npx prisma validate`.
+4. Antes de aplicar migraciones, revisar el SQL generado.
+5. En producción solo usar `npx prisma migrate deploy` como flujo normal.
+6. `npx prisma db push` queda prohibido como reemplazo de migraciones.
+7. Si hay drift o desalineación entre DB y schema, detener el desarrollo y resolver primero la inconsistencia.
 
 ### Orden de Desarrollo
 

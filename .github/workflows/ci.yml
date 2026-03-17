@@ -69,6 +69,35 @@ jobs:
             echo "✅ $file validado"
           done
 
+      - name: Enforce Prisma migrations
+        shell: bash
+        run: |
+          echo "🛡️ Verificando disciplina de Prisma..."
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE_SHA="${{ github.event.before }}"
+          fi
+
+          if [ -z "$BASE_SHA" ] || [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            echo "ℹ️ No hay base SHA utilizable; se omite enforcement de diff en este evento."
+            exit 0
+          fi
+
+          CHANGED_FILES="$(git diff --name-only "$BASE_SHA" HEAD)"
+          echo "$CHANGED_FILES"
+
+          if echo "$CHANGED_FILES" | grep -q '^apps/api/prisma/schema\.prisma$'; then
+            if ! echo "$CHANGED_FILES" | grep -q '^apps/api/prisma/migrations/'; then
+              echo "❌ Cambió apps/api/prisma/schema.prisma sin cambios en apps/api/prisma/migrations/"
+              echo "Cada cambio de schema debe incluir una migración versionada."
+              exit 1
+            fi
+          fi
+
+          echo "✅ Regla de migraciones Prisma validada"
+
   # Job 2: Build (se expandirá cuando tengamos código)
   build:
     name: Build del Proyecto
@@ -94,6 +123,11 @@ jobs:
 
       - name: Generate Prisma Client
         run: npm run prisma:generate --workspace=@amauta/api
+        env:
+          DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'
+
+      - name: Validate Prisma schema
+        run: cd apps/api && npx prisma validate
         env:
           DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'
 

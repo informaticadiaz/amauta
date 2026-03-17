@@ -2,6 +2,16 @@
 
 > Protocolo para trabajar con Prisma, migraciones y la base de datos en producción (VPS).
 
+## Politica del Proyecto (obligatoria)
+
+- Todo cambio en `apps/api/prisma/schema.prisma` requiere migracion versionada en `apps/api/prisma/migrations/`.
+- `npx prisma migrate status` se ejecuta antes de tocar el schema.
+- `npx prisma validate` se ejecuta despues de tocar el schema.
+- El SQL de la migracion se revisa antes de aplicarlo.
+- En produccion el flujo normal usa `npx prisma migrate deploy`.
+- `npx prisma db push` no es un flujo valido para cambios normales del proyecto.
+- Si hay drift o desalineacion entre DB y schema, se detiene el desarrollo hasta resolverlo.
+
 ---
 
 ## Contexto del Entorno
@@ -71,16 +81,16 @@ npx prisma migrate diff \
 
 ### Comandos por Situación
 
-| Situación             | Comando                             | Notas                         |
-| --------------------- | ----------------------------------- | ----------------------------- |
-| Ver estado            | `npx prisma migrate status`         | Siempre primero               |
-| Crear migración (dev) | `npx prisma migrate dev --name xxx` | Crea + aplica + genera client |
-| Aplicar en prod       | `npx prisma migrate deploy`         | Solo aplica pendientes        |
-| Regenerar client      | `npx prisma generate`               | Si cambió el schema           |
-| Ver DB real           | `npx prisma studio`                 | UI en localhost:5555          |
-| Validar schema        | `npx prisma validate`               | Sin conectar a DB             |
-| Sincronizar desde DB  | `npx prisma db pull`                | ⚠️ Sobrescribe schema.prisma  |
-| Push sin migración    | `npx prisma db push`                | ⚠️ Solo dev, pierde historial |
+| Situación             | Comando                             | Notas                          |
+| --------------------- | ----------------------------------- | ------------------------------ |
+| Ver estado            | `npx prisma migrate status`         | Siempre primero                |
+| Crear migración (dev) | `npx prisma migrate dev --name xxx` | Crea + aplica + genera client  |
+| Aplicar en prod       | `npx prisma migrate deploy`         | Solo aplica pendientes         |
+| Regenerar client      | `npx prisma generate`               | Si cambió el schema            |
+| Ver DB real           | `npx prisma studio`                 | UI en localhost:5555           |
+| Validar schema        | `npx prisma validate`               | Sin conectar a DB              |
+| Sincronizar desde DB  | `npx prisma db pull`                | ⚠️ Sobrescribe schema.prisma   |
+| Push sin migración    | `npx prisma db push`                | ❌ Prohibido como flujo normal |
 
 ---
 
@@ -171,6 +181,9 @@ npx prisma db push --force-reset
 
 # NUNCA - sin verificar primero
 npx prisma db pull  # sobrescribe tu schema
+
+# NUNCA - reemplazar migraciones versionadas
+npx prisma db push
 ```
 
 ### ✅ SIEMPRE hacer
@@ -180,6 +193,7 @@ npx prisma db pull  # sobrescribe tu schema
 3. **Usar `migrate deploy`** en producción, no `migrate dev`
 4. **Revisar la migración SQL** antes de aplicar
 5. **Probar en local** si es posible
+6. **Crear migración versionada** si cambió `schema.prisma`
 
 ---
 
@@ -241,6 +255,7 @@ Antes de ejecutar `prisma migrate dev` o `prisma migrate deploy`:
 - [ ] ¿Ejecuté `prisma migrate status`?
 - [ ] ¿Sé a qué base de datos estoy conectado? (local vs VPS)
 - [ ] ¿El schema.prisma está validado? (`prisma validate`)
+- [ ] ¿Existe migración versionada si cambió `schema.prisma`?
 - [ ] ¿Hay backup de la DB si es producción?
 - [ ] ¿Revisé el SQL que se va a ejecutar?
 - [ ] ¿Los cambios son backwards compatible? (no rompen la app actual)
@@ -283,3 +298,4 @@ DATABASE_URL=postgresql://USER:PASS@VPS_HOST:5432/amauta_prod
 3. **Verificar estado** (`migrate status`) antes de cualquier operación
 4. **Leer el schema real** (`schema.prisma`) antes de escribir queries
 5. **Si hay duda**, preguntar al usuario en lugar de asumir
+6. **No sugerir `prisma db push`** como solución estándar para cambios de schema

@@ -61,6 +61,8 @@ No concebimos la educación como un producto, sino como un **derecho social**. N
 - **Prisma** - ORM
 - **Redis 7+** - Caché y sesiones (desde Fase 1)
 
+> Política de Prisma: todo cambio en `apps/api/prisma/schema.prisma` requiere migración versionada. `prisma db push` no se usa como flujo normal del proyecto.
+
 ### DevOps
 
 - **Turborepo** - Monorepo build system

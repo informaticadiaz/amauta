@@ -93,6 +93,7 @@ Extraer y registrar:
 ```
 LEER: docs/ai-context/database/schema.md
 LEER: apps/api/prisma/schema.prisma
+LEER: docs/ai-skills/prisma-db-management.md
 ```
 
 #### Si toca backend:
@@ -119,6 +120,14 @@ LEER: docs/technical/testing.md                     (guía completa de testing)
 
 > **Regla absoluta**: Nunca inventar nombres de campos, enums, relaciones o tablas.
 > Verificar en el schema antes de usarlos en tests o en código.
+>
+> **Regla absoluta para Prisma**:
+>
+> - Ejecutar `npx prisma migrate status` antes de editar `apps/api/prisma/schema.prisma`.
+> - Si hay drift o migraciones pendientes inesperadas, detener el flujo y resolver eso antes de continuar.
+> - Si cambia `apps/api/prisma/schema.prisma`, debe existir una migración en `apps/api/prisma/migrations/`.
+> - `prisma db push` no es un flujo válido para cambios normales del proyecto.
+> - Revisar el SQL de la migración antes de dar el issue por terminado.
 
 ---
 
@@ -128,14 +137,16 @@ Crear un todo list antes de empezar. Estructura TDD:
 
 ```
 1. [Contexto]     Leer schema / patterns / módulo existente
-2. [Tests RED]    Escribir tests que describen el comportamiento esperado
-3. [Verificar]    Ejecutar tests → deben FALLAR (confirmar que el test es válido)
-4. [Implementar]  Escribir el código mínimo para que los tests pasen
-5. [Tests GREEN]  Ejecutar tests → deben PASAR
-6. [Refactor]     Limpiar código sin romper tests, ejecutar tests de nuevo
-7. [Docs]         Actualizar documentación del sistema
-8. [Commit]       Commit con tests + implementación
-9. [Cierre]       Cerrar el issue con comentario
+2. [Prisma]       Verificar `prisma migrate status` si el issue toca DB/Prisma
+3. [Tests RED]    Escribir tests que describen el comportamiento esperado
+4. [Verificar]    Ejecutar tests → deben FALLAR (confirmar que el test es válido)
+5. [Implementar]  Escribir el código mínimo para que los tests pasen
+6. [Migración]    Crear/revisar migración si cambió `schema.prisma`
+7. [Tests GREEN]  Ejecutar tests → deben PASAR
+8. [Refactor]     Limpiar código sin romper tests, ejecutar tests de nuevo
+9. [Docs]         Actualizar documentación del sistema
+10. [Commit]      Commit con tests + implementación
+11. [Cierre]      Cerrar el issue con comentario
 ```
 
 ---
@@ -291,6 +302,18 @@ Si algún test falla: corregir la implementación, **no el test**.
 Una vez en verde, refactorizar si es necesario y ejecutar tests de nuevo.
 
 **Objetivo de cobertura mínima**: >80% statements en el módulo nuevo.
+
+**Si el issue toca Prisma además ejecutar:**
+
+```bash
+npx prisma validate
+```
+
+Si cambió `apps/api/prisma/schema.prisma`, confirmar también:
+
+- existe una migración nueva en `apps/api/prisma/migrations/`
+- el SQL de esa migración fue revisado
+- no se usó `prisma db push` como reemplazo de `migrate`
 
 ---
 
@@ -475,6 +498,14 @@ Al completar todos los pasos anteriores, mostrar un resumen breve y **detenerse*
 - [ ] No hay deletes físicos sin justificación en el issue
 - [ ] Schema de Prisma consultado antes de cada query
 - [ ] Archivos de test incluidos en el commit
+
+**Prisma**
+
+- [ ] Se ejecutó `npx prisma migrate status` antes de cambiar schema
+- [ ] Si cambió `apps/api/prisma/schema.prisma`, existe migración en `apps/api/prisma/migrations/`
+- [ ] Se ejecutó `npx prisma validate`
+- [ ] Se revisó el SQL de la migración
+- [ ] No se usó `prisma db push` como flujo normal
 
 **Tres fuentes de verdad (OBLIGATORIO)**
 

@@ -61,6 +61,15 @@ npm run start:dev --workspace=@amauta/api
 npm run start --workspace=@amauta/api
 ```
 
+### Regla Obligatoria para Prisma
+
+- Si cambiás `prisma/schema.prisma`, tenés que crear una migración en `prisma/migrations/`.
+- Antes de editar el schema: `cd apps/api && npx prisma migrate status`
+- Después de editar el schema: `cd apps/api && npx prisma validate`
+- Revisá el SQL de la migración antes de aplicarla.
+- No uses `npx prisma db push` como reemplazo del flujo de migraciones.
+- En producción, el flujo normal usa `npx prisma migrate deploy`.
+
 ### Variables de Entorno
 
 Copiar `.env.example` a `.env.local` y configurar:

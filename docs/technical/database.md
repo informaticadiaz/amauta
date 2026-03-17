@@ -579,16 +579,31 @@ USING GIN (to_tsvector('spanish', titulo || ' ' || descripcion));
 
 ## Migraciones
 
+### Política Obligatoria
+
+- Todo cambio en `apps/api/prisma/schema.prisma` debe venir acompañado por una migración en `apps/api/prisma/migrations/`.
+- Antes de modificar el schema, ejecutar `cd apps/api && npx prisma migrate status`.
+- Después de modificar el schema, ejecutar `cd apps/api && npx prisma validate`.
+- Revisar el SQL de la migración antes de aplicarla.
+- En producción usar `npx prisma migrate deploy` como flujo normal.
+- `npx prisma db push` no se usa como reemplazo de migraciones versionadas.
+- Si aparece drift entre base y schema, detener el desarrollo hasta resolver la inconsistencia.
+
 ### Crear Migración
 
 ```bash
-pnpm prisma migrate dev --name agregar_tabla_asistencia
+cd apps/api
+npx prisma migrate status
+npx prisma migrate dev --name agregar_tabla_asistencia
+npx prisma validate
 ```
 
 ### Aplicar en Producción
 
 ```bash
-pnpm prisma migrate deploy
+cd apps/api
+npx prisma migrate deploy
+npx prisma migrate status
 ```
 
 **Nota de producción (Amauta):**
@@ -607,7 +622,7 @@ aplica migraciones pendientes sin intervención manual.
 ```bash
 # Prisma no tiene rollback automático
 # Crear migración inversa manualmente
-pnpm prisma migrate dev --name revertir_cambio_x
+npx prisma migrate dev --name revertir_cambio_x
 ```
 
 ## Seeds (Datos Iniciales)

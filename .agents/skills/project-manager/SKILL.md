@@ -15,6 +15,7 @@ Permite planificar y coordinar el trabajo del proyecto Amauta usando los documen
 2. Propuesta de issues pequenas alineadas al roadmap y a la fase actual.
 3. Creacion de issues en GitHub solo con aprobacion explicita.
 4. Coordinacion de actualizaciones de documentacion con aprobacion explicita.
+5. Aplicar reglas operativas obligatorias cuando una issue afecte Prisma o base de datos.
 
 ## Workflow
 
@@ -31,6 +32,7 @@ Permite planificar y coordinar el trabajo del proyecto Amauta usando los documen
 - Si hay issues pendientes: listarlas y pedir foco.
 - Si no hay issues pendientes: proponer exactamente 3 issues nuevas alineadas a la fase actual.
 - Cada issue debe ser pequena; evitar issues grandes salvo necesidad estricta.
+- Separar cambios de schema, cambios de backend y cambios de UI en issues distintas salvo dependencia tecnica inevitable.
 - Para cada issue, incluir:
   - Titulo
   - Objetivo
@@ -38,6 +40,20 @@ Permite planificar y coordinar el trabajo del proyecto Amauta usando los documen
   - Checklist de tareas
   - Labels sugeridos
   - Dependencias (si existen)
+
+### 2b. Reglas para issues que tocan Prisma
+
+Si una issue modifica `apps/api/prisma/schema.prisma` o depende de cambios de base de datos:
+
+- Incluir en el checklist:
+  - revisar `docs/ai-skills/prisma-db-management.md`
+  - ejecutar `npx prisma migrate status`
+  - crear migracion versionada en `apps/api/prisma/migrations/`
+  - revisar el SQL de la migracion
+  - actualizar documentacion tecnica si cambia el modelo
+- Aclarar explicitamente que `prisma db push` no es un flujo valido para cambios normales.
+- Marcar dependencias con precision: primero schema/migracion, despues endpoint, despues UI.
+- Si la issue mezcla demasiadas responsabilidades, dividirla antes de proponerla.
 
 ### 3. Aprobacion y creacion
 
@@ -71,3 +87,5 @@ Permite planificar y coordinar el trabajo del proyecto Amauta usando los documen
 - No inventar estados o fases.
 - Seguir `WORKFLOW.md` para trabajo con issues.
 - Mantener issues pequenas.
+- No proponer issues de Prisma sin checklist de migracion y validacion.
+- No proponer trabajo que asuma `db push` o cambios manuales en DB como flujo normal.

@@ -9,6 +9,7 @@ Este documento define el flujo de trabajo estándar para trabajar con issues en 
 3. **Trazabilidad**: Vincular commits con issues
 4. **Comunicación clara**: Usar español y ser descriptivo
 5. **Automatización**: Usar herramientas para minimizar errores
+6. **Disciplina de Prisma**: Todo cambio de schema requiere migración versionada y validación
 
 ## Flujo de Trabajo Completo
 
@@ -110,6 +111,15 @@ gh issue view <número> --json title,body,labels | jq -r '"\(.title)\n\n\(.body)
 2. **Cambios incrementales**: Hacer cambios pequeños y verificables
 3. **Seguir estándares**: Consultar `docs/technical/coding-standards.md`
 4. **Actualizar todo list**: Marcar progreso conforme avanzas
+
+**Regla adicional si el issue toca Prisma o base de datos:**
+
+1. Ejecutar `cd apps/api && npx prisma migrate status` antes de editar `prisma/schema.prisma`
+2. Si hay drift o migraciones pendientes inesperadas, detenerse y resolver eso primero
+3. Si cambia `prisma/schema.prisma`, crear una migración versionada en `prisma/migrations/`
+4. Ejecutar `cd apps/api && npx prisma validate`
+5. Revisar el SQL de la migración antes de cerrar el issue
+6. No usar `prisma db push` como sustituto del flujo de migraciones
 
 **Verificación:**
 
@@ -315,6 +325,14 @@ Antes de cerrar un issue, verificar:
 - [ ] ✅ El issue está referenciado en el commit
 - [ ] ✅ El todo list está limpio y completo
 
+Si el issue cambió Prisma, además verificar:
+
+- [ ] ✅ Se ejecutó `npx prisma migrate status` antes del cambio
+- [ ] ✅ Existe migración versionada en `apps/api/prisma/migrations/`
+- [ ] ✅ Se ejecutó `npx prisma validate`
+- [ ] ✅ Se revisó el SQL de la migración
+- [ ] ✅ No se usó `prisma db push` como flujo normal
+
 ---
 
 ## Comandos Útiles de GitHub CLI
@@ -393,6 +411,9 @@ gh issue list --milestone "Sprint 1"
 - ❌ No referenciar el issue en el commit
 - ❌ Cerrar issue sin verificar checklist completo
 - ❌ No verificar que el código sigue estándares
+- ❌ Cambiar `prisma/schema.prisma` sin migración
+- ❌ Usar `prisma db push` como reemplazo de `migrate`
+- ❌ Ignorar drift de Prisma y seguir desarrollando encima
 
 ---
 
