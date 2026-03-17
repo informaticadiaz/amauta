@@ -41,6 +41,8 @@ model Usuario {
   comunicados    Comunicado[]
   gruposCreados  Grupo[]
   gruposEstudiante GrupoEstudiante[]
+  evaluacionesCreadas Evaluacion[] @relation("Evaluador")
+  intentosEvaluacion  IntentoEvaluacion[]
 
   @@index([email])
   @@index([rol])
@@ -125,6 +127,7 @@ model Curso {
   // Relaciones
   lecciones     Leccion[]
   inscripciones Inscripcion[]
+  evaluaciones  Evaluacion[]
 
   @@index([educadorId])
   @@index([categoriaId])
@@ -262,6 +265,100 @@ model Progreso {
   @@index([usuarioId])
   @@index([leccionId])
   @@map("progresos")
+}
+
+// ==================================
+// EVALUACIONES
+// ==================================
+
+/// Evaluación asociada a un curso
+model Evaluacion {
+  id          String  @id @default(cuid())
+  titulo      String
+  descripcion String?
+
+  cursoId String
+  curso   Curso  @relation(fields: [cursoId], references: [id], onDelete: Cascade)
+
+  creadorId String
+  creador   Usuario @relation("Evaluador", fields: [creadorId], references: [id])
+
+  tiempoLimiteMin Int?
+  puntajeMinimo   Float?
+  intentosMaximos Int?
+
+  publicada  Boolean @default(false)
+  publicadoEn DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relaciones
+  preguntas Pregunta[]
+  intentos  IntentoEvaluacion[]
+
+  @@index([cursoId])
+  @@index([creadorId])
+  @@map("evaluaciones")
+}
+
+/// Pregunta de una evaluación
+model Pregunta {
+  id          String  @id @default(cuid())
+  enunciado   String
+  tipo        TipoPregunta
+  orden       Int
+  puntaje     Float   @default(1)
+
+  opciones    Json?
+  respuesta   Json?
+
+  evaluacionId String
+  evaluacion   Evaluacion @relation(fields: [evaluacionId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([evaluacionId])
+  @@index([orden])
+  @@map("preguntas")
+}
+
+/// Intento de un estudiante en una evaluación
+model IntentoEvaluacion {
+  id String @id @default(cuid())
+
+  evaluacionId String
+  evaluacion   Evaluacion @relation(fields: [evaluacionId], references: [id], onDelete: Cascade)
+
+  usuarioId String
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+
+  numero    Int   @default(1)
+  puntaje   Float @default(0)
+  completado Boolean @default(false)
+  tiempoEmpleadoSeg Int?
+
+  iniciadoEn  DateTime @default(now())
+  completadoEn DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([evaluacionId, usuarioId, numero])
+  @@index([evaluacionId])
+  @@index([usuarioId])
+  @@map("intentos_evaluacion")
+}
+
+/// Tipo de pregunta para evaluaciones
+enum TipoPregunta {
+  OPCION_MULTIPLE
+  SELECCION_MULTIPLE
+  VERDADERO_FALSO
+  RESPUESTA_CORTA
+  RESPUESTA_LARGA
+  EMPAREJAMIENTO
 }
 
 // ==================================

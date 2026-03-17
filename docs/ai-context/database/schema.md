@@ -17,6 +17,12 @@ Usuario (1) ──────< Curso (educador)
     │                   │
     │                   └──────< Inscripcion >── Usuario
     │
+    └──────< Evaluacion >── Curso
+                    │
+                    ├──────< Pregunta
+                    │
+                    └──────< IntentoEvaluacion >── Usuario
+    │
     └──────< Perfil (1:1)
 
 Categoria (1) ──────< Curso
@@ -224,6 +230,94 @@ model Progreso {
 }
 ```
 
+### Evaluación
+
+```prisma
+model Evaluacion {
+  id          String  @id @default(cuid())
+  titulo      String
+  descripcion String?
+
+  cursoId String
+  curso   Curso  @relation(fields: [cursoId], references: [id], onDelete: Cascade)
+
+  creadorId String
+  creador   Usuario @relation("Evaluador", fields: [creadorId], references: [id])
+
+  tiempoLimiteMin Int?
+  puntajeMinimo   Float?
+  intentosMaximos Int?
+
+  publicada   Boolean @default(false)
+  publicadoEn DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  preguntas Pregunta[]
+  intentos  IntentoEvaluacion[]
+
+  @@index([cursoId])
+  @@index([creadorId])
+  @@map("evaluaciones")
+}
+```
+
+### Pregunta
+
+```prisma
+model Pregunta {
+  id        String  @id @default(cuid())
+  enunciado String
+  tipo      TipoPregunta
+  orden     Int
+  puntaje   Float   @default(1)
+
+  opciones  Json?
+  respuesta Json?
+
+  evaluacionId String
+  evaluacion   Evaluacion @relation(fields: [evaluacionId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([evaluacionId])
+  @@index([orden])
+  @@map("preguntas")
+}
+```
+
+### IntentoEvaluacion
+
+```prisma
+model IntentoEvaluacion {
+  id String @id @default(cuid())
+
+  evaluacionId String
+  evaluacion   Evaluacion @relation(fields: [evaluacionId], references: [id], onDelete: Cascade)
+
+  usuarioId String
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+
+  numero    Int   @default(1)
+  puntaje   Float @default(0)
+  completado Boolean @default(false)
+  tiempoEmpleadoSeg Int?
+
+  iniciadoEn  DateTime @default(now())
+  completadoEn DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([evaluacionId, usuarioId, numero])
+  @@index([evaluacionId])
+  @@index([usuarioId])
+  @@map("intentos_evaluacion")
+}
+```
+
 ### Categoría
 
 ```prisma
@@ -351,6 +445,16 @@ enum EstadoInscripcion {
   ACTIVO
   COMPLETADO
   ABANDONADO
+}
+
+// Tipos de pregunta
+enum TipoPregunta {
+  OPCION_MULTIPLE
+  SELECCION_MULTIPLE
+  VERDADERO_FALSO
+  RESPUESTA_CORTA
+  RESPUESTA_LARGA
+  EMPAREJAMIENTO
 }
 
 // Tipos de institución
