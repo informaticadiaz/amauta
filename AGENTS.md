@@ -31,7 +31,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 - ✅ **F2-001**: Manifest PWA, metadata e íconos instalables
   - `manifest.json` completo con íconos maskable y screenshots
-  - Metadatos PWA en `layout.tsx` (manifest, themeColor, appleWebApp)
+  - Metadatos PWA en `layout.tsx` (`manifest`, `appleWebApp`) y `viewport.themeColor`
   - Set mínimo de íconos instalables (192, 512, apple touch)
 
 - ✅ **F2-002**: Service Worker base + estrategias de caché
@@ -39,6 +39,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Estrategias de caché para assets, API auth y API pública
   - Cache de imágenes con expiración de 30 días
   - `reloadOnOnline` habilitado y SW desactivado en development
+  - En Next.js 16 el proyecto usa `next build --webpack` y `next dev --webpack` por compatibilidad con `next-pwa`
 
 - ✅ **F2-003**: Schema IndexedDB (Dexie) para offline
   - `offline-db.ts` con tablas `cursos`, `lecciones`, `progreso`, `syncPendiente`
@@ -107,7 +108,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Guards globales: `JwtAuthGuard`, `RolesGuard`
   - Decoradores: `@Roles()`, `@Public()`, `@CurrentUser()`
   - Hook frontend: `useAuthorization`
-  - Middleware con protección por rol
+  - Proxy con protección por rol (`apps/web/src/proxy.ts`)
 
 - ✅ **F1-003**: Layout base responsive
   - Tailwind CSS v3 configurado

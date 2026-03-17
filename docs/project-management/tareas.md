@@ -219,6 +219,10 @@ a "Mis Cursos" y le da acceso a todas las lecciones.
 Refactorizar verificación de autenticación para usar middleware
 de Next.js 14 en lugar de HOCs.
 
+Nota 2026-03-17:
+En Next.js 16 esta responsabilidad quedó implementada en `apps/web/src/proxy.ts`
+(antes `middleware.ts`).
+
 ### Motivación
 
 - Mejor performance (verifica en edge)
@@ -227,7 +231,7 @@ de Next.js 14 en lugar de HOCs.
 
 ### Approach
 
-1. Crear middleware.ts en root
+1. Crear `proxy.ts` en root de `src/` para auth/autorización
 2. Definir rutas protegidas con matcher
 3. Migrar lógica de verificación de sesión
 4. Actualizar todas las páginas protegidas
@@ -235,7 +239,7 @@ de Next.js 14 en lugar de HOCs.
 
 ### Checklist
 
-- [ ] Crear middleware.ts
+- [ ] Crear `proxy.ts`
 - [ ] Migrar lógica de auth
 - [ ] Actualizar 10 páginas protegidas
 - [ ] Verificar que redirecciones funcionan

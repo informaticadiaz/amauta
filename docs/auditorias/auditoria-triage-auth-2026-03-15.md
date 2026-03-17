@@ -4,6 +4,7 @@
 **Tipo:** Triage — Crítico y Alto solamente
 **Auditor:** Senior Security Engineer (IA)
 **Archivos analizados:**
+
 - `apps/api/src/auth/auth.controller.ts`
 - `apps/api/src/auth/auth.service.ts`
 - `apps/api/src/auth/auth.module.ts`
@@ -16,7 +17,7 @@
 - `apps/api/src/config/env.ts`
 - `apps/web/src/lib/auth.ts`
 - `apps/web/src/lib/auth.config.ts`
-- `apps/web/src/middleware.ts`
+- `apps/web/src/proxy.ts` (antes `middleware.ts`)
 - `apps/web/src/app/api/auth/[...nextauth]/route.ts`
 - `apps/web/src/app/api/auth/register/route.ts`
 
@@ -156,13 +157,13 @@ async register(@Body() dto: RegisterDto) { ... }
 
 ## Resumen de Hallazgos
 
-| Severidad | Cantidad | OWASP Categoría principal |
-|-----------|----------|--------------------------|
-| 🔴 Crítico | 0 | — |
-| 🟠 Alto | 2 | A01 Broken Access Control, A07 Auth Failures |
-| 🟡 Medio | — | _(no auditado en Triage)_ |
-| 🔵 Bajo | — | _(no auditado en Triage)_ |
-| **Total** | **2** | |
+| Severidad  | Cantidad | OWASP Categoría principal                    |
+| ---------- | -------- | -------------------------------------------- |
+| 🔴 Crítico | 0        | —                                            |
+| 🟠 Alto    | 2        | A01 Broken Access Control, A07 Auth Failures |
+| 🟡 Medio   | —        | _(no auditado en Triage)_                    |
+| 🔵 Bajo    | —        | _(no auditado en Triage)_                    |
+| **Total**  | **2**    |                                              |
 
 ---
 

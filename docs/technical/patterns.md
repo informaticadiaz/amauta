@@ -357,12 +357,12 @@ import { RequireRole, AccessDenied } from '@/components/auth';
 </RequireRole>
 ```
 
-#### Middleware: Protección de rutas
+#### Proxy: Protección de rutas
 
-Las rutas protegidas por rol se configuran en `middleware.ts`:
+En Next.js 16 las rutas protegidas por rol se configuran en `proxy.ts`:
 
 ```typescript
-// middleware.ts
+// proxy.ts
 const ROUTE_ROLES = [
   { path: '/admin', roles: ['ADMIN_ESCUELA', 'SUPER_ADMIN'] },
   {

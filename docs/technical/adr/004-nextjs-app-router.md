@@ -80,6 +80,15 @@ Necesitamos elegir un framework de frontend para Amauta. El frontend debe:
 5. **Integración con Turborepo**: Ambos de Vercel, excelente soporte
 6. **PWA**: next-pwa funciona bien con App Router
 
+## Estado actual
+
+- El proyecto fue migrado a **Next.js 16** el 2026-03-17.
+- `params` y `searchParams` se usan con la semántica async de App Router donde aplica.
+- La protección de rutas en edge usa `proxy.ts` en lugar de `middleware.ts`.
+- La PWA sigue usando `@ducanh2912/next-pwa`, por lo que el proyecto ejecuta
+  `next dev --webpack` y `next build --webpack` mientras no se migre esa parte
+  a una configuración compatible con Turbopack.
+
 ## Consecuencias
 
 ### Positivas
