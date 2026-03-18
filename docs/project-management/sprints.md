@@ -1,15 +1,15 @@
 # Gestión de Sprints - Amauta
 
-## Sprint Actual: Sprint 8 - Evaluaciones
+## Sprint Actual: Sprint 9 - Evaluaciones (PLANIFICADO)
 
 **Fase**: Fase 3 - Evaluaciones y Certificaciones
-**Objetivo**: Base técnica + UI mínima para creación de evaluaciones.
+**Objetivo**: Consolidar listado y detalle básico de evaluaciones para educadores.
 
 ### Issues comprometidas
 
-- 📋 #55 F3-004: Modelo base de Evaluaciones (Prisma)
-- 📋 #56 F3-005: Endpoint crear evaluación (educador)
-- 📋 #57 F3-006: UI básica de crear evaluación
+- 📋 #58 F3-007: Endpoint listar evaluaciones por curso
+- 📋 #59 F3-008: UI listado de evaluaciones (educador)
+- 📋 #60 F3-009: Endpoint obtener detalle de evaluación (educador)
 
 ### Preparación Fase 3 (completada)
 
@@ -19,10 +19,10 @@
 
 ### Último Sprint Completado ✅
 
-**Sprint 7 - Offline First (Fase 2)**
+**Sprint 8 - Evaluaciones (Fase 3)**
 
 - Estado: ✅ Completado
-- Referencia: `docs/project-management/roadmap.md` → Fase 2
+- Referencia: `docs/project-management/roadmap.md` → Fase 3
 
 ---
 

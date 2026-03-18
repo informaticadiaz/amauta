@@ -1,6 +1,6 @@
 # Product Backlog - Amauta
 
-**Última actualización**: 2026-03-16
+**Última actualización**: 2026-03-18
 **Product Owner**: [Por definir]
 
 ## 🟢 Estado de Producción
@@ -13,7 +13,7 @@
 **Fase 0**: ✅ Completada (30/12/2024)
 **Fase 1**: ✅ Completada (16/16 issues completados)
 **Fase 2**: ✅ Completada (8/8 issues completados)
-**Fase 3**: 📋 Pendiente (preparación completa)
+**Fase 3**: 🚧 En progreso (Sprint 8 completado)
 
 ## Cómo usar este documento
 
@@ -26,18 +26,31 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
-## Sprint Actual: Sprint 8 - Evaluaciones
+## Sprint Actual: Sprint 9 - Evaluaciones (PLANIFICADO)
+
+**Objetivo**: Consolidar listado y detalle básico de evaluaciones para educadores.
+**Referencia**: `docs/project-management/roadmap.md` → Fase 3
+
+### Issues comprometidas (Sprint 9)
+
+| Issue | Título                                                    | Estado   |
+| ----- | --------------------------------------------------------- | -------- |
+| #58   | F3-007: Endpoint listar evaluaciones por curso            | 📋 To Do |
+| #59   | F3-008: UI listado de evaluaciones (educador)             | 📋 To Do |
+| #60   | F3-009: Endpoint obtener detalle de evaluación (educador) | 📋 To Do |
+
+## Sprint 8 - Evaluaciones (COMPLETADO)
 
 **Objetivo**: Iniciar Fase 3 con base técnica y UI mínima para evaluaciones.
 **Referencia**: `docs/project-management/roadmap.md` → Fase 3
 
 ### Issues comprometidas (Sprint 8)
 
-| Issue | Título                                       | Estado   |
-| ----- | -------------------------------------------- | -------- |
-| #55   | F3-004: Modelo base de Evaluaciones (Prisma) | 📋 To Do |
-| #56   | F3-005: Endpoint crear evaluación (educador) | 📋 To Do |
-| #57   | F3-006: UI básica de crear evaluación        | 📋 To Do |
+| Issue | Título                                       | Estado  |
+| ----- | -------------------------------------------- | ------- |
+| #55   | F3-004: Modelo base de Evaluaciones (Prisma) | ✅ Done |
+| #56   | F3-005: Endpoint crear evaluación (educador) | ✅ Done |
+| #57   | F3-006: UI básica de crear evaluación        | ✅ Done |
 
 ### Preparación Fase 3 (completada)
 
@@ -272,13 +285,13 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 - **Fase 0**: ✅ Completada
 - **Fase 1**: ✅ Completada
 - **Fase 2**: ✅ Completada
-- **Fase 3**: 📋 Pendiente (en preparación)
+- **Fase 3**: 🚧 En progreso (Sprint 8 completado)
 - **Épica Transversal NAP**: 🔄 En progreso
 
 ### Backlog Health
 
 - **Done**: Fases 0, 1 y 2 completadas
-- **Ready for Development**: por definir (Fase 3)
+- **Ready for Development**: Sprint 9 definido
 - **Needs Refinement**: 0 items (preparación Fase 3 completada)
 - **Research Done**: 1 item (NAP #21 - investigación completada)
 - **Blocked**: 0 items
@@ -312,7 +325,7 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 ### Para Fase 3
 
-1. Ejecutar Sprint 8 con issues #55, #56 y #57
+1. Ejecutar Sprint 9 con issues #58, #59 y #60
 
 ---
 
@@ -323,5 +336,5 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 - Las prioridades pueden ajustarse según feedback de usuarios
 - Nuevas historias pueden agregarse en cualquier momento
 
-**Última revisión**: 16/03/2026
-**Próxima revisión**: Inicio de Fase 3
+**Última revisión**: 18/03/2026
+**Próxima revisión**: Inicio de Sprint 9
