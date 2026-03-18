@@ -594,7 +594,7 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 
 | Issue | Título                                       | Estado   |
 | ----- | -------------------------------------------- | -------- |
-| #55   | F3-004: Modelo base de Evaluaciones (Prisma) | 📋 To Do |
+| #55   | F3-004: Modelo base de Evaluaciones (Prisma) | ✅ Done  |
 | #56   | F3-005: Endpoint crear evaluación (educador) | 📋 To Do |
 | #57   | F3-006: UI básica de crear evaluación        | 📋 To Do |
 

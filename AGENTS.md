@@ -22,7 +22,33 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 2 - Offline-First PWA ✅ COMPLETADA
+### Fase Actual: Fase 3 - Evaluaciones 🚧 EN PROGRESO (Sprint 8)
+
+**Progreso**: Sprint 8 en curso (1/3 issues completados)
+
+#### Sprint 8 (Evaluaciones)
+
+- ✅ **F3-004**: Modelo base de Evaluaciones (Prisma)
+- 📋 **F3-005**: Endpoint crear evaluación (educador)
+- 📋 **F3-006**: UI básica de crear evaluación
+
+#### Próximos pasos:
+
+- Continuar Sprint 8 con #56 y #57
+- Mantener preparación Fase 3 como base de criterios
+
+#### Preparación Fase 3 - Evaluaciones (completada)
+
+- ✅ **F3-001**: Refinar historias y criterios de aceptación
+  - Historias refinadas para Educador y Estudiante
+  - Criterios de aceptación por tipo de pregunta
+  - Dependencias UI/Backend registradas en roadmap
+- ✅ **F3-002**: Matriz de dependencias UI/Backend
+- ✅ **F3-003**: Diseño funcional de flujos de evaluación (roles)
+  - Flujos funcionales por rol documentados
+  - Casos límite definidos (intentos, tiempo, puntaje mínimo)
+
+### Fase Anterior: Fase 2 - Offline-First PWA ✅ COMPLETADA
 
 **Inicio**: 15/03/2026
 **Progreso**: 8/8 issues completados
@@ -75,22 +101,6 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Tests unitarios para `offline-db` y `sync-manager`
   - Tests de UI para descarga offline y estado de conexión
   - Guía rápida Lighthouse PWA con resultados mínimos esperados
-
-#### Próximos pasos:
-
-- Preparación Fase 3 (Evaluaciones) completada
-- Iniciar Sprint 8 con issues refinadas
-
-#### Preparación Fase 3 - Evaluaciones (completada)
-
-- ✅ **F3-001**: Refinar historias y criterios de aceptación
-  - Historias refinadas para Educador y Estudiante
-  - Criterios de aceptación por tipo de pregunta
-  - Dependencias UI/Backend registradas en roadmap
-- ✅ **F3-002**: Matriz de dependencias UI/Backend
-- ✅ **F3-003**: Diseño funcional de flujos de evaluación (roles)
-  - Flujos funcionales por rol documentados
-  - Casos límite definidos (intentos, tiempo, puntaje mínimo)
 
 ### Fase Anterior: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
 
@@ -190,7 +200,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Dashboard diferenciado para estudiantes vs educadores/admins
   - 19 tests frontend (3 suites, 100% statements)
 
-**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 2"
+**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 1"
 
 #### Iniciativas Curriculares (Post-Fase 1)
 
@@ -268,15 +278,15 @@ El roadmap define:
 
 ### Fases del Roadmap (Resumen)
 
-| Fase | Nombre            | Estado        | Documento             |
-| ---- | ----------------- | ------------- | --------------------- |
-| 0    | Fundamentos       | ✅ Completado | `fase-0-tareas.md`    |
-| 1    | MVP Cursos        | ✅ Completado | `roadmap.md` → Fase 1 |
-| 2    | Offline-First PWA | ✅ Completado | `roadmap.md` → Fase 2 |
-| 3    | Evaluaciones      | 📋 Pendiente  | `roadmap.md` → Fase 3 |
-| 4    | Módulo Escolar    | 📋 Pendiente  | `roadmap.md` → Fase 4 |
-| 5    | Comunidad         | 📋 Pendiente  | `roadmap.md` → Fase 5 |
-| 6-10 | Avanzadas         | 📋 Futuro     | `roadmap.md`          |
+| Fase | Nombre            | Estado         | Documento             |
+| ---- | ----------------- | -------------- | --------------------- |
+| 0    | Fundamentos       | ✅ Completado  | `fase-0-tareas.md`    |
+| 1    | MVP Cursos        | ✅ Completado  | `roadmap.md` → Fase 1 |
+| 2    | Offline-First PWA | ✅ Completado  | `roadmap.md` → Fase 2 |
+| 3    | Evaluaciones      | 🚧 En Progreso | `roadmap.md` → Fase 3 |
+| 4    | Módulo Escolar    | 📋 Pendiente   | `roadmap.md` → Fase 4 |
+| 5    | Comunidad         | 📋 Pendiente   | `roadmap.md` → Fase 5 |
+| 6-10 | Avanzadas         | 📋 Futuro      | `roadmap.md`          |
 
 ---
 
@@ -577,7 +587,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 2 completada (8/8 issues completados) · Preparación Fase 3 completada (3/3)
+- **Fase actual**: Fase 3 en progreso (Sprint 8, 1/3 issues completados)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**

@@ -22,10 +22,9 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
+### Fase Actual: Fase 3 - Evaluaciones 🚧 EN PROGRESO (Sprint 8)
 
-**Inicio**: 30/12/2024
-**Progreso**: 16/16 issues completados ✅ FASE 1 COMPLETADA
+**Progreso**: Sprint 8 en curso (1/3 issues completados)
 
 #### Completado en Fase 1:
 
@@ -122,9 +121,15 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 #### Próximos pasos:
 
-- Fase 1 completada. Ver `docs/project-management/roadmap.md` → Fase 2
+- Continuar Sprint 8: #56 (Endpoint crear evaluación) y #57 (UI básica crear evaluación)
 
-**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 1"
+**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 3"
+
+### Fase Anterior: Fase 2 - Offline-First PWA ✅ COMPLETADA
+
+**Progreso**: 8/8 issues completados ✅ FASE 2 COMPLETADA
+
+**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 2"
 
 ### Fase Anterior: Fase 0 ✅ COMPLETADA
 
@@ -200,9 +205,9 @@ El roadmap define:
 | Fase | Nombre            | Estado         | Documento             |
 | ---- | ----------------- | -------------- | --------------------- |
 | 0    | Fundamentos       | ✅ Completado  | `fase-0-tareas.md`    |
-| 1    | MVP Cursos        | 🚧 En Progreso | `roadmap.md` → Fase 1 |
-| 2    | Offline-First PWA | 📋 Pendiente   | `roadmap.md` → Fase 2 |
-| 3    | Evaluaciones      | 📋 Pendiente   | `roadmap.md` → Fase 3 |
+| 1    | MVP Cursos        | ✅ Completado  | `roadmap.md` → Fase 1 |
+| 2    | Offline-First PWA | ✅ Completado  | `roadmap.md` → Fase 2 |
+| 3    | Evaluaciones      | 🚧 En Progreso | `roadmap.md` → Fase 3 |
 | 4    | Módulo Escolar    | 📋 Pendiente   | `roadmap.md` → Fase 4 |
 | 5    | Comunidad         | 📋 Pendiente   | `roadmap.md` → Fase 5 |
 | 6-10 | Avanzadas         | 📋 Futuro      | `roadmap.md`          |
@@ -506,7 +511,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 1 en progreso (10/16 issues completados)
+- **Fase actual**: Fase 3 en progreso (Sprint 8, 1/3 issues completados)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**
@@ -801,16 +806,16 @@ enum Prioridad {
 
 ### Skills Disponibles
 
-| Skill                    | Archivo                                  | Cuándo usar                                                                            |
-| ------------------------ | ---------------------------------------- | -------------------------------------------------------------------------------------- |
-| **Prisma & DB**          | `docs/ai-skills/prisma-db-management.md` | Migraciones, verificar DB, resolver errores                                            |
-| **CRUD Generator**       | `docs/ai-skills/crud-generator.md`       | Crear módulo nuevo completo                                                            |
-| **API Endpoint**         | `docs/ai-skills/api-endpoint.md`         | Agregar endpoint a módulo existente                                                    |
-| **React Form**           | `docs/ai-skills/react-form.md`           | Crear formulario nuevo                                                                 |
-| **Complete Issue**       | `docs/ai-skills/complete-issue.md`       | Ejecutar un issue completo de forma autónoma                                           |
-| **Performance Review**   | `docs/ai-skills/performance-review.md`   | Analizar performance y generar informe con mejoras                                     |
-| **Security Audit**       | `docs/ai-skills/security-audit.md`       | Auditar vulnerabilidades de seguridad (OWASP Top 10)                                   |
-| **Fix Security Findings**| `docs/ai-skills/fix-security-findings.md`| Aplicar fixes de un informe de auditoría previo (contexto limpio, build verificado)    |
-| **NotebookLM Cuadernos** | `docs/ai-skills/notebooklm-cuadernos.md` | Generar cuadernos de estudio genéricos para NotebookLM                                 |
-| **PWA Mobile Design**    | `docs/ai-skills/pwa-mobile-design.md`    | Diseñar/auditar PWA orientada a mobile: manifest, SW, IndexedDB, sync, UI táctil       |
-| **Feature Audit**        | `docs/ai-skills/feature-audit.md`        | Auditar que las features implementadas funcionan y cumplen sus criterios de aceptación |
+| Skill                     | Archivo                                   | Cuándo usar                                                                            |
+| ------------------------- | ----------------------------------------- | -------------------------------------------------------------------------------------- |
+| **Prisma & DB**           | `docs/ai-skills/prisma-db-management.md`  | Migraciones, verificar DB, resolver errores                                            |
+| **CRUD Generator**        | `docs/ai-skills/crud-generator.md`        | Crear módulo nuevo completo                                                            |
+| **API Endpoint**          | `docs/ai-skills/api-endpoint.md`          | Agregar endpoint a módulo existente                                                    |
+| **React Form**            | `docs/ai-skills/react-form.md`            | Crear formulario nuevo                                                                 |
+| **Complete Issue**        | `docs/ai-skills/complete-issue.md`        | Ejecutar un issue completo de forma autónoma                                           |
+| **Performance Review**    | `docs/ai-skills/performance-review.md`    | Analizar performance y generar informe con mejoras                                     |
+| **Security Audit**        | `docs/ai-skills/security-audit.md`        | Auditar vulnerabilidades de seguridad (OWASP Top 10)                                   |
+| **Fix Security Findings** | `docs/ai-skills/fix-security-findings.md` | Aplicar fixes de un informe de auditoría previo (contexto limpio, build verificado)    |
+| **NotebookLM Cuadernos**  | `docs/ai-skills/notebooklm-cuadernos.md`  | Generar cuadernos de estudio genéricos para NotebookLM                                 |
+| **PWA Mobile Design**     | `docs/ai-skills/pwa-mobile-design.md`     | Diseñar/auditar PWA orientada a mobile: manifest, SW, IndexedDB, sync, UI táctil       |
+| **Feature Audit**         | `docs/ai-skills/feature-audit.md`         | Auditar que las features implementadas funcionan y cumplen sus criterios de aceptación |
