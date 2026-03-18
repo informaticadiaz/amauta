@@ -24,17 +24,20 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ### Fase Actual: Fase 3 - Evaluaciones 🚧 EN PROGRESO (Sprint 8)
 
-**Progreso**: Sprint 8 en curso (1/3 issues completados)
+**Progreso**: Sprint 8 en curso (2/3 issues completados)
 
 #### Sprint 8 (Evaluaciones)
 
 - ✅ **F3-004**: Modelo base de Evaluaciones (Prisma)
-- 📋 **F3-005**: Endpoint crear evaluación (educador)
+- ✅ **F3-005**: Endpoint crear evaluación (educador)
+  - Endpoint `POST /evaluaciones` con validación Zod
+  - Verificación de propiedad del curso en el servicio
+  - Tests unitarios de controller y service
 - 📋 **F3-006**: UI básica de crear evaluación
 
 #### Próximos pasos:
 
-- Continuar Sprint 8 con #56 y #57
+- Continuar Sprint 8 con #57
 - Mantener preparación Fase 3 como base de criterios
 
 #### Preparación Fase 3 - Evaluaciones (completada)
@@ -587,7 +590,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 3 en progreso (Sprint 8, 1/3 issues completados)
+- **Fase actual**: Fase 3 en progreso (Sprint 8, 2/3 issues completados)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**
@@ -879,6 +882,7 @@ enum Prioridad {
 - `inscripciones` - Sistema de inscripción
 - `uploads` - Subida de archivos
 - `categorias` - Categorías de cursos
+- `evaluaciones` - Evaluaciones (creación básica)
 
 ### Skills Disponibles
 

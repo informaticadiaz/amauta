@@ -18,6 +18,7 @@ import { UploadsModule } from './uploads/uploads.module';
 import { CategoriasModule } from './categorias/categorias.module';
 import { InscripcionesModule } from './inscripciones/inscripciones.module';
 import { ProgresoModule } from './progreso/progreso.module';
+import { EvaluacionesModule } from './evaluaciones/evaluaciones.module';
 import { JwtAuthGuard, RolesGuard } from './common/guards';
 
 @Module({
@@ -28,8 +29,8 @@ import { JwtAuthGuard, RolesGuard } from './common/guards';
     }),
     ThrottlerModule.forRoot([
       {
-        ttl: 60000,  // ventana de 1 minuto
-        limit: 100,  // límite general (auth endpoints tienen límites más estrictos)
+        ttl: 60000, // ventana de 1 minuto
+        limit: 100, // límite general (auth endpoints tienen límites más estrictos)
       },
     ]),
     PrismaModule,
@@ -40,6 +41,7 @@ import { JwtAuthGuard, RolesGuard } from './common/guards';
     CategoriasModule,
     InscripcionesModule,
     ProgresoModule,
+    EvaluacionesModule,
   ],
   controllers: [AppController],
   providers: [

@@ -22,25 +22,25 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 
 ### En Desarrollo
 
-| Módulo                                            | Estado           | Sprint   |
-| ------------------------------------------------- | ---------------- | -------- |
-| Gestión de Cursos                                 | ✅ Funcional     | Sprint 1 |
-| Catálogo de Cursos                                | ✅ Funcional     | Sprint 2 |
-| Inscripciones                                     | ✅ Funcional     | Sprint 3 |
-| UI Inscripción y Mis Cursos                       | ✅ Funcional     | Sprint 4 |
-| Visualizador de Lecciones                         | ✅ Funcional     | Sprint 4 |
-| Progreso de Estudiantes                           | ✅ Funcional     | Sprint 4 |
-| Marcar Lecciones Completadas                      | ✅ Funcional     | Sprint 4 |
-| Dashboard de Estudiante                           | ✅ Funcional     | Sprint 4 |
-| Instalabilidad PWA                                | ✅ Funcional     | Sprint 5 |
-| Service Worker PWA (caché)                        | ✅ Funcional     | Sprint 5 |
-| Base de datos offline (IDB)                       | ✅ Funcional     | Sprint 5 |
-| Descarga offline de cursos                        | ✅ Funcional     | Sprint 5 |
-| Cache de videos offline                           | ✅ Funcional     | Sprint 5 |
-| Sync offline + Background Sync                    | ✅ Funcional     | Sprint 5 |
-| UI estado offline + almacenamiento                | ✅ Funcional     | Sprint 6 |
-| Tests offline + Lighthouse PWA                    | ✅ Funcional     | Sprint 7 |
-| Evaluaciones y certificaciones (flujos definidos) | 📋 Planificación | Sprint 8 |
+| Módulo                             | Estado           | Sprint   |
+| ---------------------------------- | ---------------- | -------- |
+| Gestión de Cursos                  | ✅ Funcional     | Sprint 1 |
+| Catálogo de Cursos                 | ✅ Funcional     | Sprint 2 |
+| Inscripciones                      | ✅ Funcional     | Sprint 3 |
+| UI Inscripción y Mis Cursos        | ✅ Funcional     | Sprint 4 |
+| Visualizador de Lecciones          | ✅ Funcional     | Sprint 4 |
+| Progreso de Estudiantes            | ✅ Funcional     | Sprint 4 |
+| Marcar Lecciones Completadas       | ✅ Funcional     | Sprint 4 |
+| Dashboard de Estudiante            | ✅ Funcional     | Sprint 4 |
+| Instalabilidad PWA                 | ✅ Funcional     | Sprint 5 |
+| Service Worker PWA (caché)         | ✅ Funcional     | Sprint 5 |
+| Base de datos offline (IDB)        | ✅ Funcional     | Sprint 5 |
+| Descarga offline de cursos         | ✅ Funcional     | Sprint 5 |
+| Cache de videos offline            | ✅ Funcional     | Sprint 5 |
+| Sync offline + Background Sync     | ✅ Funcional     | Sprint 5 |
+| UI estado offline + almacenamiento | ✅ Funcional     | Sprint 6 |
+| Tests offline + Lighthouse PWA     | ✅ Funcional     | Sprint 7 |
+| Evaluaciones (creación básica)     | 🚧 En desarrollo | Sprint 8 |
 
 ## Roles del Sistema
 
@@ -157,5 +157,5 @@ docs/sistema/
 
 ---
 
-**Última actualización**: 16/03/2026
-**Fase actual**: Fase 2 ✅ COMPLETADA (8/8) · Preparación Fase 3 completada (3/3)
+**Última actualización**: 17/03/2026
+**Fase actual**: Fase 3 🚧 EN PROGRESO (Sprint 8, 2/3)

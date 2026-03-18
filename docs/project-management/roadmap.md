@@ -595,7 +595,7 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 | Issue | Título                                       | Estado   |
 | ----- | -------------------------------------------- | -------- |
 | #55   | F3-004: Modelo base de Evaluaciones (Prisma) | ✅ Done  |
-| #56   | F3-005: Endpoint crear evaluación (educador) | 📋 To Do |
+| #56   | F3-005: Endpoint crear evaluación (educador) | ✅ Done  |
 | #57   | F3-006: UI básica de crear evaluación        | 📋 To Do |
 
 ### Objetivos
@@ -2774,5 +2774,5 @@ Revisar roadmap cada 3 sprints (6 semanas) para ajustar prioridades.
 
 ---
 
-**Última actualización**: 2026-03-16
+**Última actualización**: 2026-03-17
 **Próxima revisión**: Inicio de Fase 3
