@@ -590,13 +590,13 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 
 **Progreso preparación**: 3/3 issues completados ✅
 
-### Sprint 8 (iniciado)
+### Sprint 8 (completado)
 
-| Issue | Título                                       | Estado   |
-| ----- | -------------------------------------------- | -------- |
-| #55   | F3-004: Modelo base de Evaluaciones (Prisma) | ✅ Done  |
-| #56   | F3-005: Endpoint crear evaluación (educador) | ✅ Done  |
-| #57   | F3-006: UI básica de crear evaluación        | 📋 To Do |
+| Issue | Título                                       | Estado  |
+| ----- | -------------------------------------------- | ------- |
+| #55   | F3-004: Modelo base de Evaluaciones (Prisma) | ✅ Done |
+| #56   | F3-005: Endpoint crear evaluación (educador) | ✅ Done |
+| #57   | F3-006: UI básica de crear evaluación        | ✅ Done |
 
 ### Objetivos
 

@@ -94,6 +94,26 @@ export function Sidebar() {
       ),
     },
     {
+      href: '/dashboard/evaluaciones',
+      label: 'Evaluaciones',
+      show: canManageCourses,
+      icon: (
+        <svg
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9 12h6m-6 4h6M7.5 3.75h6.75A2.25 2.25 0 0116.5 6v12A2.25 2.25 0 0114.25 20.25H7.5A2.25 2.25 0 015.25 18V6A2.25 2.25 0 017.5 3.75z"
+          />
+        </svg>
+      ),
+    },
+    {
       href: '/dashboard/usuarios',
       label: 'Usuarios',
       show: isAdmin,
