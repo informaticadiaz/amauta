@@ -33,15 +33,19 @@ El módulo de evaluaciones permite a educadores crear una evaluación asociada a
 
 ### Frontend
 
-| Archivo                                                          | Propósito                   |
-| ---------------------------------------------------------------- | --------------------------- |
-| `apps/web/src/app/api/evaluaciones/route.ts`                     | Proxy GET/POST evaluaciones |
-| `apps/web/src/app/dashboard/evaluaciones/page.tsx`               | Listado con cursos          |
-| `apps/web/src/app/dashboard/evaluaciones/nueva/page.tsx`         | Crear evaluación (página)   |
-| `apps/web/src/components/evaluaciones/EvaluacionForm.tsx`        | Formulario                  |
-| `apps/web/src/components/evaluaciones/EvaluacionForm.test.tsx`   | Tests del formulario        |
-| `apps/web/src/components/evaluaciones/EvaluacionesList.tsx`      | Listado con estados         |
-| `apps/web/src/components/evaluaciones/EvaluacionesList.test.tsx` | Tests listado básico        |
+| Archivo                                                           | Propósito                   |
+| ----------------------------------------------------------------- | --------------------------- |
+| `apps/web/src/app/api/evaluaciones/route.ts`                      | Proxy GET/POST evaluaciones |
+| `apps/web/src/app/api/evaluaciones/[id]/route.ts`                 | Proxy GET detalle           |
+| `apps/web/src/app/dashboard/evaluaciones/page.tsx`                | Listado con cursos          |
+| `apps/web/src/app/dashboard/evaluaciones/nueva/page.tsx`          | Crear evaluación (página)   |
+| `apps/web/src/app/dashboard/evaluaciones/[id]/page.tsx`           | Detalle evaluación (página) |
+| `apps/web/src/components/evaluaciones/EvaluacionForm.tsx`         | Formulario                  |
+| `apps/web/src/components/evaluaciones/EvaluacionForm.test.tsx`    | Tests del formulario        |
+| `apps/web/src/components/evaluaciones/EvaluacionDetalle.tsx`      | Detalle evaluación          |
+| `apps/web/src/components/evaluaciones/EvaluacionDetalle.test.tsx` | Test detalle evaluación     |
+| `apps/web/src/components/evaluaciones/EvaluacionesList.tsx`       | Listado con estados         |
+| `apps/web/src/components/evaluaciones/EvaluacionesList.test.tsx`  | Tests listado básico        |
 
 ---
 
