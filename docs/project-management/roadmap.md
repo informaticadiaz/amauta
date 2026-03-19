@@ -1305,6 +1305,14 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 
 **Progreso preparación**: 3/3 issues completados ✅
 
+### Sprint 12 (inicio)
+
+| Issue | Título                                                   | Estado   |
+| ----- | -------------------------------------------------------- | -------- |
+| #67   | F4-004: API Periodos Académicos + Escala de Calificación | 📋 To Do |
+| #68   | F4-005: API Gestión de Grupos/Clases (CRUD + estados)    | 📋 To Do |
+| #69   | F4-006: UI Gestión de Grupos/Clases (Listado + Form)     | 📋 To Do |
+
 ### Objetivos
 
 Implementar un sistema completo de gestión administrativa escolar que permita a instituciones educativas gestionar estudiantes, asistencias, calificaciones y comunicaciones de manera eficiente.

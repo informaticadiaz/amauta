@@ -14,7 +14,7 @@
 **Fase 1**: ✅ Completada (16/16 issues completados)
 **Fase 2**: ✅ Completada (8/8 issues completados)
 **Fase 3**: ✅ Completada (Sprint 8-10 completados)
-**Fase 4**: ✅ Preparación completada (Sprint 11)
+**Fase 4**: 🚧 En ejecución (Sprint 12)
 
 ## Cómo usar este documento
 
@@ -27,7 +27,20 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
-## Sprint Actual: Sprint 11 - Preparación Fase 4 (COMPLETADO)
+## Sprint Actual: Sprint 12 - Módulo Escolar (INICIO)
+
+**Objetivo**: Iniciar ejecución de Fase 4 con la base administrativa escolar (configuración + grupos).
+**Referencia**: `docs/project-management/roadmap.md` → Fase 4
+
+### Issues comprometidas (Sprint 12)
+
+| Issue | Título                                                   | Estado   |
+| ----- | -------------------------------------------------------- | -------- |
+| #67   | F4-004: API Periodos Académicos + Escala de Calificación | 📋 To Do |
+| #68   | F4-005: API Gestión de Grupos/Clases (CRUD + estados)    | 📋 To Do |
+| #69   | F4-006: UI Gestión de Grupos/Clases (Listado + Form)     | 📋 To Do |
+
+## Sprint 11 - Preparación Fase 4 (COMPLETADO)
 
 **Objetivo**: Preparar Fase 4 (Módulo Escolar) con historias, dependencias y flujos por rol.
 **Referencia**: `docs/project-management/roadmap.md` → Fase 4

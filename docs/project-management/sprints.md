@@ -1,6 +1,17 @@
 # Gestión de Sprints - Amauta
 
-## Sprint Actual: Sprint 11 - Preparación Fase 4 (COMPLETADO)
+## Sprint Actual: Sprint 12 - Módulo Escolar (INICIO)
+
+**Fase**: Fase 4 - Módulo Escolar
+**Objetivo**: Iniciar ejecución con configuración institucional y gestión de grupos.
+
+### Issues comprometidas
+
+- 📋 #67 F4-004: API Periodos Académicos + Escala de Calificación (Institución)
+- 📋 #68 F4-005: API Gestión de Grupos/Clases (CRUD + estados)
+- 📋 #69 F4-006: UI Gestión de Grupos/Clases (Listado + Form)
+
+## Sprint 11 - Preparación Fase 4 (COMPLETADO)
 
 **Fase**: Fase 4 - Módulo Escolar
 **Objetivo**: Preparar historias, dependencias y flujos por rol para iniciar el módulo escolar.
