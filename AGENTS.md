@@ -24,7 +24,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ### Fase Actual: Fase 3 - Evaluaciones 🚧 EN PROGRESO (Sprint 9)
 
-**Progreso**: Sprint 9 en progreso (1/3 issues completados)
+**Progreso**: Sprint 9 en progreso (2/3 issues completados)
 
 #### Sprint 8 (Evaluaciones) ✅ Completado
 
@@ -44,12 +44,14 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Endpoint `GET /cursos/:cursoId/evaluaciones` con paginación
   - DTO de query con `page`, `limit` y filtro `publicada`
   - Validación de propiedad del curso + tests unitarios
-- ⏳ **F3-008**: UI listado de evaluaciones (educador)
+- ✅ **F3-008**: UI listado de evaluaciones (educador)
+  - Página `/dashboard/evaluaciones` con listado por curso
+  - Proxy `GET /api/evaluaciones` y estados loading/empty/error
+  - Tests básicos para rendering y empty state
 - ⏳ **F3-009**: Endpoint obtener detalle de evaluación (educador)
 
 #### Próximos pasos:
 
-- Completar F3-008 (UI listado)
 - Completar F3-009 (detalle evaluación)
 - Mantener preparación Fase 3 como base de criterios
 

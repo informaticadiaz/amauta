@@ -5,6 +5,27 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { auth } from '@/lib/auth';
+import { api } from '@/lib/api';
+import { EvaluacionesList } from '@/components/evaluaciones/EvaluacionesList';
+
+interface CursoItem {
+  id: string;
+  titulo: string;
+}
+
+interface CursosResponse {
+  cursos: CursoItem[];
+}
+
+async function getMisCursos(): Promise<CursoItem[]> {
+  try {
+    const data = await api.get<CursosResponse>('/cursos/mis-cursos');
+    return data.cursos || [];
+  } catch (error) {
+    console.error('Error al obtener cursos:', error);
+    return [];
+  }
+}
 
 export default async function EvaluacionesPage({
   searchParams,
@@ -22,6 +43,7 @@ export default async function EvaluacionesPage({
     redirect('/dashboard');
   }
 
+  const cursos = await getMisCursos();
   const params = await searchParams;
   const showSuccess = params?.creada === '1';
 
@@ -64,9 +86,7 @@ export default async function EvaluacionesPage({
         </div>
       )}
 
-      <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--background)] p-6 text-sm text-[var(--muted)]">
-        Todavía no hay evaluaciones creadas. Empezá creando la primera.
-      </div>
+      <EvaluacionesList cursos={cursos} />
     </div>
   );
 }

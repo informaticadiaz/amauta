@@ -1,5 +1,5 @@
 /**
- * API Route: Proxy para crear evaluaciones
+ * API Route: Proxy para crear y listar evaluaciones
  */
 
 import type { NextRequest } from 'next/server';
@@ -56,6 +56,55 @@ export async function POST(request: NextRequest) {
     console.error('Error en evaluaciones proxy:', error);
     return NextResponse.json(
       { message: 'Error al crear evaluación' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    const token = await getToken({
+      req: request,
+      secret: AUTH_SECRET,
+      secureCookie: true,
+      salt: '__Secure-authjs.session-token',
+    });
+    if (!token) {
+      return NextResponse.json({ message: 'No autenticado' }, { status: 401 });
+    }
+
+    const authToken = await createAuthToken(token);
+    const { searchParams } = new URL(request.url);
+    const cursoId = searchParams.get('cursoId');
+
+    if (!cursoId) {
+      return NextResponse.json(
+        { message: 'cursoId es requerido' },
+        { status: 400 }
+      );
+    }
+
+    searchParams.delete('cursoId');
+    const query = searchParams.toString();
+
+    const response = await fetch(
+      `${API_URL}/api/v1/cursos/${cursoId}/evaluaciones${
+        query ? `?${query}` : ''
+      }`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+    return NextResponse.json(data, { status: response.status });
+  } catch (error) {
+    console.error('Error en evaluaciones proxy:', error);
+    return NextResponse.json(
+      { message: 'Error al obtener evaluaciones' },
       { status: 500 }
     );
   }

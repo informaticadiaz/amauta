@@ -603,10 +603,10 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 | Issue | Título                                               | Estado       |
 | ----- | ---------------------------------------------------- | ------------ |
 | #58   | F3-007: Endpoint listar evaluaciones por curso       | ✅ Done      |
-| #59   | F3-008: UI listado de evaluaciones (educador)        | 📋 Pendiente |
+| #59   | F3-008: UI listado de evaluaciones (educador)        | ✅ Done      |
 | #60   | F3-009: Endpoint obtener detalle de evaluación (edu) | 📋 Pendiente |
 
-**Progreso Sprint 9**: 1/3 issues completados
+**Progreso Sprint 9**: 2/3 issues completados
 
 ### Objetivos
 
