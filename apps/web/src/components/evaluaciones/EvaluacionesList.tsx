@@ -55,8 +55,9 @@ export function EvaluacionesList({ cursos }: EvaluacionesListProps) {
   const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
-    if (!cursoId && cursos.length > 0) {
-      setCursoId(cursos[0].id);
+    const primerCurso = cursos[0];
+    if (!cursoId && primerCurso) {
+      setCursoId(primerCurso.id);
     }
   }, [cursoId, cursos]);
 
