@@ -1300,10 +1300,10 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 | Issue | Título                                                     | Estado        |
 | ----- | ---------------------------------------------------------- | ------------- |
 | #64   | F4-001: Refinar historias y criterios de aceptación        | ✅ Completado |
-| #65   | F4-002: Matriz de dependencias UI/Backend (Fase 4)         | 📋 To Do      |
+| #65   | F4-002: Matriz de dependencias UI/Backend (Fase 4)         | ✅ Completado |
 | #66   | F4-003: Diseño funcional de flujos administrativos (roles) | 📋 To Do      |
 
-**Progreso preparación**: 1/3 issues completados 🚧
+**Progreso preparación**: 2/3 issues completados 🚧
 
 ### Objetivos
 
@@ -1398,6 +1398,40 @@ Implementar un sistema completo de gestión administrativa escolar que permita a
 - Necesidad de roles y permisos finos para Admin Escolar vs Educador.
 - Riesgo de carga masiva sin validaciones (duplicados o asignaciones cruzadas).
 - Dependencia de datos base: instituciones, grupos y usuarios cargados.
+
+### Dependencias UI/Backend (Fase 4)
+
+| Tema                              | Backend (API/Reglas)                                                        | UI (Pantallas/Componentes)                                                      |
+| --------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Configuración institucional       | Periodos académicos, escala de calificación, calendario escolar             | Pantalla de configuración institucional                                         |
+| Gestión de grupos/clases          | CRUD grupos, estados activo/inactivo, filtros por ciclo lectivo             | Listado de grupos, formulario crear/editar, filtros por ciclo/estado            |
+| Asignación estudiantes a grupos   | Asignación masiva, validación de duplicados, registro de auditoría          | Carga masiva, vista previa de altas/errores, confirmación                       |
+| Asignación educadores a grupos    | Asignación por rol (titular/suplente), validación por institución           | Selector de educadores, roles por grupo, listado de asignaciones                |
+| Registro de asistencias           | Crear/editar asistencia por fecha y grupo, estados y motivo obligatorio     | Pantalla de carga rápida por grupo, selector de fecha, edición en el día        |
+| Carga de calificaciones           | Registro por periodo y materia, validación de escala, export resumen        | Pantalla de carga de notas, selector periodo/materia, botón exportar            |
+| Comunicados institucionales       | CRUD comunicados, prioridad, audiencia objetivo, notificaciones             | Editor de comunicados, listado con estados, detalle del comunicado              |
+| Reportes asistencia y rendimiento | Agregados por grupo/periodo, filtros por fecha, exportación                 | Panel de reportes, filtros, vista de métricas, descarga                         |
+| Historial académico               | Resumen de asistencias y calificaciones por estudiante, descarga de boletín | Vista de historial con gráficos simples, selector de periodo, botón de descarga |
+
+**Matriz por flujo (endpoints, pantallas y dependencias)**
+
+| Flujo                             | Backend (endpoints/reglas)                                                      | UI (pantallas/componentes)                                                   | Dependencias cruzadas                                                   |
+| --------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Configurar periodos y escala      | CRUD periodos académicos, definición de escala, validaciones por institución    | Configuración institucional, formularios de periodos y escala                | Bloquea carga de calificaciones y reportes; requiere institución activa |
+| Crear grupo/clase                 | Crear/editar grupo, filtros por ciclo, desactivar grupo                         | Listado + formulario de grupo, filtros                                       | Depende de periodos académicos y datos base de institución              |
+| Asignar estudiantes a grupo       | Asignación masiva, detección de duplicados, registro de auditoría               | Carga masiva con preview, confirmación                                       | Depende de grupos creados y estudiantes activos                         |
+| Asignar educadores a grupo        | Asignación con rol, validación por institución                                  | Selector de educadores, listado de asignaciones                              | Depende de grupos creados; habilita panel de educador                   |
+| Registrar asistencia diaria       | Crear/editar asistencia por fecha, reglas de edición en el día, estados válidos | Pantalla de carga rápida, selector de fecha, edición                         | Depende de estudiantes asignados a grupo y calendario institucional     |
+| Cargar calificaciones por periodo | Crear/editar calificaciones, validación de escala, export resumen               | Pantalla de notas, selector periodo/materia, exportar                        | Depende de periodos académicos y escala configurada                     |
+| Publicar comunicado               | Crear comunicado, audiencia, prioridad, notificación                            | Editor, listado y detalle de comunicados                                     | Depende de roles y segmentación (grupo/institución)                     |
+| Generar reportes                  | Agregados de asistencia y rendimiento, filtros por fecha/periodo, exportación   | Panel de reportes, filtros, descarga                                         | Depende de datos históricos de asistencia y calificaciones              |
+| Consultar historial académico     | Resumen por estudiante, cálculo de métricas, descarga de boletín                | Vista de historial, gráficos simples, selector de periodo, botón de descarga | Depende de asistencia y calificaciones registradas                      |
+
+**Dependencias transversales**
+
+- Autenticación y roles diferenciados (Admin Escolar vs Educador vs Estudiante/Apoderado).
+- Multi-tenant por institución para aislar datos y validaciones.
+- Datos base previos: usuarios, instituciones y grupos activos.
 
 ### Funcionalidades Técnicas
 

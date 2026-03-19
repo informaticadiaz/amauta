@@ -36,8 +36,8 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 | Issue | Título                                                     | Estado   |
 | ----- | ---------------------------------------------------------- | -------- |
-| #64   | F4-001: Refinar historias y criterios de aceptación        | 📋 To Do |
-| #65   | F4-002: Matriz de dependencias UI/Backend (Fase 4)         | 📋 To Do |
+| #64   | F4-001: Refinar historias y criterios de aceptación        | ✅ Done  |
+| #65   | F4-002: Matriz de dependencias UI/Backend (Fase 4)         | ✅ Done  |
 | #66   | F4-003: Diseño funcional de flujos administrativos (roles) | 📋 To Do |
 
 ## Sprint 10 - Evaluaciones (COMPLETADO)
