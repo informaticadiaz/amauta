@@ -127,8 +127,8 @@ Ver `docs/project-management/fase-0-tareas.md` para detalle completo.
 | T-003  | Crear Code of Conduct          | 2          | ✅ Done | Sprint 0 |
 | T-004  | Crear Contributing Guidelines  | 3          | ✅ Done | Sprint 0 |
 | T-007  | Configurar pre-commit hooks    | 3          | ✅ Done | Sprint 0 |
-| T-014  | Crear seed data                | 3          | Backlog | Sprint 0 |
-| T-014b | Expandir CI (lint, type-check) | 3          | Backlog | Sprint 0 |
+| T-014  | Crear seed data                | 3          | ✅ Done | Sprint 0 |
+| T-014b | Expandir CI (lint, type-check) | 3          | ✅ Done | Sprint 0 |
 
 **Subtotal Should Have Fase 0**: 14 puntos (8 completados, 6 pendientes)
 
@@ -318,7 +318,7 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 ### Backlog Health
 
 - **Done**: Fases 0, 1 y 2 completadas
-- **Ready for Development**: Definir Sprint 11 / Fase 4
+- **Ready for Development**: Definir Sprint 12 / Fase 4 (ejecución)
 - **Needs Refinement**: 0 items (preparación Fase 3 completada)
 - **Research Done**: 1 item (NAP #21 - investigación completada)
 - **Blocked**: 0 items

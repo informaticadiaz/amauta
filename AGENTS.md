@@ -38,7 +38,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Proxy `POST /api/evaluaciones` y feedback de éxito/error
   - Página base `/dashboard/evaluaciones` con CTA de creación
 
-#### Sprint 9 (Evaluaciones) Ô£à Completado
+#### Sprint 9 (Evaluaciones) ✅ Completado
 
 - ✅ **F3-007**: Endpoint listar evaluaciones por curso (educador)
   - Endpoint `GET /cursos/:cursoId/evaluaciones` con paginación
@@ -330,8 +330,8 @@ El roadmap define:
 | 0    | Fundamentos       | ✅ Completado  | `fase-0-tareas.md`    |
 | 1    | MVP Cursos        | ✅ Completado  | `roadmap.md` → Fase 1 |
 | 2    | Offline-First PWA | ✅ Completado  | `roadmap.md` → Fase 2 |
-| 3    | Evaluaciones      | 🚧 En Progreso | `roadmap.md` → Fase 3 |
-| 4    | Módulo Escolar    | 📋 Pendiente   | `roadmap.md` → Fase 4 |
+| 3    | Evaluaciones      | ✅ Completado  | `roadmap.md` → Fase 3 |
+| 4    | Módulo Escolar    | ✅ Preparación | `roadmap.md` → Fase 4 |
 | 5    | Comunidad         | 📋 Pendiente   | `roadmap.md` → Fase 5 |
 | 6-10 | Avanzadas         | 📋 Futuro      | `roadmap.md`          |
 

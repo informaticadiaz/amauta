@@ -606,7 +606,7 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 | #59   | F3-008: UI listado de evaluaciones (educador)        | ✅ Done |
 | #60   | F3-009: Endpoint obtener detalle de evaluación (edu) | ✅ Done |
 
-**Progreso Sprint 9**: 3/3 issues completados Ô£à
+**Progreso Sprint 9**: 3/3 issues completados ✅
 
 ### Sprint 10 (completado)
 
@@ -2901,4 +2901,4 @@ Revisar roadmap cada 3 sprints (6 semanas) para ajustar prioridades.
 ---
 
 **Última actualización**: 2026-03-18
-**Próxima revisión**: Inicio de Fase 3
+**Próxima revisión**: Inicio de Fase 4
