@@ -26,7 +26,7 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
-## Sprint Actual: Sprint 9 - Evaluaciones (PLANIFICADO)
+## Sprint Actual: Sprint 9 - Evaluaciones (COMPLETADO)
 
 **Objetivo**: Consolidar listado y detalle básico de evaluaciones para educadores.
 **Referencia**: `docs/project-management/roadmap.md` → Fase 3
@@ -325,7 +325,7 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 ### Para Fase 3
 
-1. Ejecutar Sprint 9 con issues #58, #59 y #60
+1. Cerrar Sprint 9 (issues #58, #59 y #60 completados)
 
 ---
 

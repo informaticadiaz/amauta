@@ -1,6 +1,6 @@
 # Gestión de Sprints - Amauta
 
-## Sprint Actual: Sprint 9 - Evaluaciones (PLANIFICADO)
+## Sprint Actual: Sprint 9 - Evaluaciones (COMPLETADO)
 
 **Fase**: Fase 3 - Evaluaciones y Certificaciones
 **Objetivo**: Consolidar listado y detalle básico de evaluaciones para educadores.

@@ -606,7 +606,7 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 | #59   | F3-008: UI listado de evaluaciones (educador)        | ✅ Done |
 | #60   | F3-009: Endpoint obtener detalle de evaluación (edu) | ✅ Done |
 
-**Progreso Sprint 9**: 3/3 issues completados
+**Progreso Sprint 9**: 3/3 issues completados Ô£à
 
 ### Objetivos
 

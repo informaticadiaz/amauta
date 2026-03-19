@@ -38,7 +38,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Proxy `POST /api/evaluaciones` y feedback de éxito/error
   - Página base `/dashboard/evaluaciones` con CTA de creación
 
-#### Sprint 9 (Evaluaciones)
+#### Sprint 9 (Evaluaciones) Ô£à Completado
 
 - ✅ **F3-007**: Endpoint listar evaluaciones por curso (educador)
   - Endpoint `GET /cursos/:cursoId/evaluaciones` con paginación
