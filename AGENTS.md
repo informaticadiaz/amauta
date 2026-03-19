@@ -22,9 +22,9 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 3 - Evaluaciones ✅ COMPLETADA (Sprint 10)
+### Fase Actual: Preparación Fase 4 - Módulo Escolar 🚧 EN CURSO
 
-**Progreso**: Sprint 10 completado (3/3 issues completados)
+**Progreso**: 1/3 issues de preparación completados
 
 #### Sprint 8 (Evaluaciones) ✅ Completado
 
@@ -69,9 +69,14 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Proxy `PATCH /api/evaluaciones/:id/publicar`
   - Feedback de éxito/error y test de interacción
 
-#### Próximos pasos:
+#### Preparación Fase 4 - Módulo Escolar (en curso)
 
-- Definir issues de Fase 4 (Módulo Escolar)
+- ✅ **F4-001**: Refinar historias y criterios de aceptación (Fase 4)
+  - Historias clave definidas por rol (Admin Escolar, Educador, Estudiante/Apoderado)
+  - Criterios de aceptación verificables por historia
+  - Riesgos y dependencias registradas en roadmap
+- ⏳ **F4-002**: Matriz de dependencias UI/Backend (Fase 4)
+- ⏳ **F4-003**: Diseño funcional de flujos administrativos (roles)
 
 #### Preparación Fase 3 - Evaluaciones (completada)
 

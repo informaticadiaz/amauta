@@ -1297,11 +1297,13 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 
 ### Preparación de Fase 4 (issues)
 
-| Issue | Título                                                     | Estado   |
-| ----- | ---------------------------------------------------------- | -------- |
-| #64   | F4-001: Refinar historias y criterios de aceptación        | 📋 To Do |
-| #65   | F4-002: Matriz de dependencias UI/Backend (Fase 4)         | 📋 To Do |
-| #66   | F4-003: Diseño funcional de flujos administrativos (roles) | 📋 To Do |
+| Issue | Título                                                     | Estado        |
+| ----- | ---------------------------------------------------------- | ------------- |
+| #64   | F4-001: Refinar historias y criterios de aceptación        | ✅ Completado |
+| #65   | F4-002: Matriz de dependencias UI/Backend (Fase 4)         | 📋 To Do      |
+| #66   | F4-003: Diseño funcional de flujos administrativos (roles) | 📋 To Do      |
+
+**Progreso preparación**: 1/3 issues completados 🚧
 
 ### Objetivos
 
@@ -1339,6 +1341,63 @@ Implementar un sistema completo de gestión administrativa escolar que permita a
 - Puedo descargar mi boletín de calificaciones
 - Puedo ver el calendario académico
 - Puedo ver estadísticas de mi rendimiento
+
+### Historias clave y criterios de aceptación (Fase 4)
+
+#### 1) Gestión de grupos/clases (Admin Escolar)
+
+- Se puede crear, editar y desactivar un grupo con nombre, grado/nivel, turno y ciclo lectivo.
+- El listado de grupos permite filtrar por ciclo lectivo y estado (activo/inactivo).
+- Un grupo desactivado no acepta nuevas asignaciones pero conserva historial.
+
+#### 2) Asignación masiva de estudiantes a grupos (Admin Escolar)
+
+- Se puede asignar una lista de estudiantes a un grupo en una sola acción.
+- El sistema muestra resumen de altas/duplicados/errores antes de confirmar.
+- Queda registro de la fecha y usuario que realizó la asignación.
+
+#### 3) Asignación de educadores a grupos (Admin Escolar)
+
+- Se puede asignar uno o más educadores a un grupo con rol (titular/suplente).
+- El educador asignado ve el grupo en su panel inmediatamente.
+- El sistema impide asignar educadores de otra institución.
+
+#### 4) Registro de asistencias diarias (Admin Escolar / Educador)
+
+- Se puede registrar asistencia por fecha y grupo con estados: presente, ausente, tardanza, justificado.
+- La carga rápida permite marcar múltiples estudiantes en una sola pantalla.
+- Se puede editar una asistencia dentro del mismo día con motivo obligatorio.
+
+#### 5) Carga de calificaciones por periodo (Admin Escolar / Educador)
+
+- Se puede seleccionar periodo académico y materia antes de cargar notas.
+- Se valida que la escala de calificación corresponda a la institución.
+- Se puede exportar el resumen de notas por grupo en formato descargable.
+
+#### 6) Comunicados institucionales (Admin Escolar / Educador)
+
+- Se puede publicar un comunicado con tipo y prioridad (general, académico, urgente).
+- Los destinatarios reciben notificación y pueden ver el comunicado en su panel.
+- Queda registro de fecha de publicación y audiencia objetivo.
+
+#### 7) Reportes de asistencia y rendimiento (Admin Escolar)
+
+- Se puede generar reporte por grupo, periodo y rango de fechas.
+- El reporte incluye métricas mínimas: % asistencia y promedio de calificaciones.
+- Se puede exportar el reporte para auditoría.
+
+#### 8) Consulta de historial académico (Estudiante/Apoderado)
+
+- Se puede ver historial de asistencias por periodo con gráficos simples.
+- Se puede ver calificaciones por materia y periodo en una vista consolidada.
+- Se puede descargar un boletín/resumen del periodo seleccionado.
+
+### Riesgos y dependencias
+
+- Dependencia de definición de periodos académicos y escala de calificación por institución.
+- Necesidad de roles y permisos finos para Admin Escolar vs Educador.
+- Riesgo de carga masiva sin validaciones (duplicados o asignaciones cruzadas).
+- Dependencia de datos base: instituciones, grupos y usuarios cargados.
 
 ### Funcionalidades Técnicas
 
