@@ -598,15 +598,15 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 | #56   | F3-005: Endpoint crear evaluación (educador) | ✅ Done |
 | #57   | F3-006: UI básica de crear evaluación        | ✅ Done |
 
-### Sprint 9 (en progreso)
+### Sprint 9 (completado)
 
-| Issue | Título                                               | Estado       |
-| ----- | ---------------------------------------------------- | ------------ |
-| #58   | F3-007: Endpoint listar evaluaciones por curso       | ✅ Done      |
-| #59   | F3-008: UI listado de evaluaciones (educador)        | ✅ Done      |
-| #60   | F3-009: Endpoint obtener detalle de evaluación (edu) | 📋 Pendiente |
+| Issue | Título                                               | Estado  |
+| ----- | ---------------------------------------------------- | ------- |
+| #58   | F3-007: Endpoint listar evaluaciones por curso       | ✅ Done |
+| #59   | F3-008: UI listado de evaluaciones (educador)        | ✅ Done |
+| #60   | F3-009: Endpoint obtener detalle de evaluación (edu) | ✅ Done |
 
-**Progreso Sprint 9**: 2/3 issues completados
+**Progreso Sprint 9**: 3/3 issues completados
 
 ### Objetivos
 

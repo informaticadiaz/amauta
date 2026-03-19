@@ -136,4 +136,30 @@ export class EvaluacionesService {
       totalPages: Math.ceil(total / limit),
     };
   }
+
+  /**
+   * Obtiene el detalle de una evaluación (sin preguntas)
+   */
+  async obtenerDetalle(
+    evaluacionId: string,
+    usuarioId: string
+  ): Promise<EvaluacionResponse> {
+    const evaluacion = await this.prisma.evaluacion.findUnique({
+      where: { id: evaluacionId },
+      include: { curso: { select: { educadorId: true } } },
+    });
+
+    if (!evaluacion) {
+      throw new NotFoundException('Evaluación no encontrada');
+    }
+
+    if (evaluacion.curso.educadorId !== usuarioId) {
+      throw new ForbiddenException(
+        'No tienes permiso para ver esta evaluación'
+      );
+    }
+
+    const { curso: _curso, ...detalle } = evaluacion;
+    return detalle;
+  }
 }

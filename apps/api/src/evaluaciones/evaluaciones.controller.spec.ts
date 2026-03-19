@@ -4,6 +4,7 @@
  * Criterios de aceptación testeados:
  * - [ ] Endpoint POST /evaluaciones
  * - [ ] Usa ID del educador autenticado
+ * - [ ] Endpoint GET /evaluaciones/:id
  */
 
 import type { TestingModule } from '@nestjs/testing';
@@ -18,6 +19,7 @@ describe('EvaluacionesController', () => {
   const mockEvaluacionesService = {
     crear: jest.fn(),
     listarPorCurso: jest.fn(),
+    obtenerDetalle: jest.fn(),
   };
 
   const mockUser: RequestUser = {
@@ -136,6 +138,37 @@ describe('EvaluacionesController', () => {
       expect(mockEvaluacionesService.listarPorCurso).toHaveBeenCalledWith(
         'curso-123',
         { page: 1, limit: 10 },
+        mockUser.id
+      );
+    });
+  });
+
+  describe('GET /evaluaciones/:id', () => {
+    it('debería retornar una evaluación con mensaje de éxito', async () => {
+      mockEvaluacionesService.obtenerDetalle.mockResolvedValue(mockEvaluacion);
+
+      const result = await controller.obtenerDetalle(
+        'evaluacion-123',
+        mockUser
+      );
+
+      expect(result).toEqual({
+        evaluacion: mockEvaluacion,
+        message: 'Evaluación obtenida exitosamente',
+      });
+      expect(mockEvaluacionesService.obtenerDetalle).toHaveBeenCalledWith(
+        'evaluacion-123',
+        'educador-123'
+      );
+    });
+
+    it('debería usar el ID del usuario autenticado', async () => {
+      mockEvaluacionesService.obtenerDetalle.mockResolvedValue(mockEvaluacion);
+
+      await controller.obtenerDetalle('evaluacion-123', mockUser);
+
+      expect(mockEvaluacionesService.obtenerDetalle).toHaveBeenCalledWith(
+        'evaluacion-123',
         mockUser.id
       );
     });

@@ -5,6 +5,7 @@
  * - [ ] DTO + validación con safeParse
  * - [ ] Crear evaluación con datos válidos
  * - [ ] Validar curso existente y propiedad del educador
+ * - [ ] Obtener detalle de evaluación con verificación de propietario
  */
 
 // Mock @prisma/client ANTES de cualquier import que lo use
@@ -36,6 +37,7 @@ describe('EvaluacionesService', () => {
     },
     evaluacion: {
       create: jest.fn(),
+      findUnique: jest.fn(),
       findMany: jest.fn(),
       count: jest.fn(),
     },
@@ -205,6 +207,45 @@ describe('EvaluacionesService', () => {
           'educador-123'
         )
       ).rejects.toThrow(BadRequestException);
+    });
+  });
+
+  describe('obtenerDetalle', () => {
+    it('debería retornar la evaluación si el educador es propietario', async () => {
+      prisma.evaluacion.findUnique.mockResolvedValue({
+        ...mockEvaluacion,
+        curso: { educadorId: 'educador-123' },
+      });
+
+      const result = await service.obtenerDetalle(
+        'evaluacion-123',
+        'educador-123'
+      );
+
+      expect(result).toEqual(mockEvaluacion);
+      expect(prisma.evaluacion.findUnique).toHaveBeenCalledWith({
+        where: { id: 'evaluacion-123' },
+        include: { curso: { select: { educadorId: true } } },
+      });
+    });
+
+    it('debería lanzar NotFoundException si la evaluación no existe', async () => {
+      prisma.evaluacion.findUnique.mockResolvedValue(null);
+
+      await expect(
+        service.obtenerDetalle('evaluacion-999', 'educador-123')
+      ).rejects.toThrow(NotFoundException);
+    });
+
+    it('debería lanzar ForbiddenException si no es propietario del curso', async () => {
+      prisma.evaluacion.findUnique.mockResolvedValue({
+        ...mockEvaluacion,
+        curso: { educadorId: 'otro-educador' },
+      });
+
+      await expect(
+        service.obtenerDetalle('evaluacion-123', 'educador-123')
+      ).rejects.toThrow(ForbiddenException);
     });
   });
 });

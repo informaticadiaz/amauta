@@ -52,6 +52,7 @@ Base: `/api/v1/evaluaciones`
 | ------ | ------------------------------- | ---- | --------- | ------------------------------- |
 | POST   | `/`                             | Sí   | EDUCADOR+ | Crear evaluación básica         |
 | GET    | `/cursos/:cursoId/evaluaciones` | Sí   | EDUCADOR+ | Listar evaluaciones de un curso |
+| GET    | `/:id`                          | Sí   | EDUCADOR+ | Obtener detalle de evaluación   |
 
 ### Body (POST /)
 
@@ -111,3 +112,4 @@ model Evaluacion {
 2. **Propiedad**: verificar que el curso exista y pertenezca al educador.
 3. **Publicación**: por defecto `publicada` es `false`, no se setea al crear.
 4. **Listado**: usar `queryEvaluacionesSchema` y respuesta paginada estándar.
+5. **Detalle**: validar propiedad usando `curso.educadorId` y no incluir preguntas.

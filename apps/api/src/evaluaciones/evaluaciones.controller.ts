@@ -44,4 +44,20 @@ export class EvaluacionesController {
   ): Promise<ListaEvaluacionesResponse> {
     return this.evaluacionesService.listarPorCurso(cursoId, query, user.id);
   }
+
+  @Get('evaluaciones/:id')
+  @Roles('EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN')
+  async obtenerDetalle(
+    @Param('id') id: string,
+    @CurrentUser() user: RequestUser
+  ): Promise<EvaluacionResponse> {
+    const evaluacion = await this.evaluacionesService.obtenerDetalle(
+      id,
+      user.id
+    );
+    return {
+      evaluacion,
+      message: 'Evaluación obtenida exitosamente',
+    };
+  }
 }
