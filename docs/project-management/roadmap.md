@@ -598,6 +598,16 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 | #56   | F3-005: Endpoint crear evaluación (educador) | ✅ Done |
 | #57   | F3-006: UI básica de crear evaluación        | ✅ Done |
 
+### Sprint 9 (en progreso)
+
+| Issue | Título                                               | Estado       |
+| ----- | ---------------------------------------------------- | ------------ |
+| #58   | F3-007: Endpoint listar evaluaciones por curso       | ✅ Done      |
+| #59   | F3-008: UI listado de evaluaciones (educador)        | 📋 Pendiente |
+| #60   | F3-009: Endpoint obtener detalle de evaluación (edu) | 📋 Pendiente |
+
+**Progreso Sprint 9**: 1/3 issues completados
+
 ### Objetivos
 
 Agregar sistema robusto de evaluación y certificación de conocimientos que permita a educadores medir el aprendizaje y a estudiantes validar sus conocimientos.
@@ -2774,5 +2784,5 @@ Revisar roadmap cada 3 sprints (6 semanas) para ajustar prioridades.
 
 ---
 
-**Última actualización**: 2026-03-17
+**Última actualización**: 2026-03-18
 **Próxima revisión**: Inicio de Fase 3

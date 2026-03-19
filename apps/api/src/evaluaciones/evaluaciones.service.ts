@@ -16,9 +16,20 @@ import {
   createEvaluacionSchema,
   type CreateEvaluacionDto,
 } from './dto/create-evaluacion.dto';
+import {
+  queryEvaluacionesSchema,
+  type QueryEvaluacionesDto,
+} from './dto/query-evaluaciones.dto';
 import type { Evaluacion } from '@prisma/client';
 
 export type EvaluacionResponse = Evaluacion;
+export interface ListaEvaluacionesResponse {
+  evaluaciones: Evaluacion[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
 
 @Injectable()
 export class EvaluacionesService {
@@ -81,5 +92,48 @@ export class EvaluacionesService {
     });
 
     return evaluacion;
+  }
+
+  /**
+   * Lista evaluaciones de un curso con paginación
+   */
+  async listarPorCurso(
+    cursoId: string,
+    query: QueryEvaluacionesDto,
+    usuarioId: string
+  ): Promise<ListaEvaluacionesResponse> {
+    const result = queryEvaluacionesSchema.safeParse(query);
+    if (!result.success) {
+      const message = result.error.issues[0]?.message ?? 'Parámetros inválidos';
+      throw new BadRequestException(message);
+    }
+
+    const { page, limit, publicada } = result.data;
+    const skip = (page - 1) * limit;
+
+    await this.verificarPropietarioCurso(cursoId, usuarioId);
+
+    const where = {
+      cursoId,
+      ...(publicada !== undefined ? { publicada } : {}),
+    };
+
+    const [evaluaciones, total] = await Promise.all([
+      this.prisma.evaluacion.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.evaluacion.count({ where }),
+    ]);
+
+    return {
+      evaluaciones,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 }

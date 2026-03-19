@@ -40,7 +40,7 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 | Sync offline + Background Sync     | ✅ Funcional | Sprint 5 |
 | UI estado offline + almacenamiento | ✅ Funcional | Sprint 6 |
 | Tests offline + Lighthouse PWA     | ✅ Funcional | Sprint 7 |
-| Evaluaciones (creación básica)     | ✅ Funcional | Sprint 8 |
+| Evaluaciones (creación y listado)  | ✅ Funcional | Sprint 9 |
 
 ## Roles del Sistema
 
@@ -157,5 +157,5 @@ docs/sistema/
 
 ---
 
-**Última actualización**: 17/03/2026
-**Fase actual**: Fase 3 🚧 EN PROGRESO (Sprint 8, 3/3)
+**Última actualización**: 18/03/2026
+**Fase actual**: Fase 3 🚧 EN PROGRESO (Sprint 9, 1/3)

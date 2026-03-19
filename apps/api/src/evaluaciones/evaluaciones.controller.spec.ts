@@ -17,6 +17,7 @@ describe('EvaluacionesController', () => {
 
   const mockEvaluacionesService = {
     crear: jest.fn(),
+    listarPorCurso: jest.fn(),
   };
 
   const mockUser: RequestUser = {
@@ -87,6 +88,54 @@ describe('EvaluacionesController', () => {
 
       expect(mockEvaluacionesService.crear).toHaveBeenCalledWith(
         createDto,
+        mockUser.id
+      );
+    });
+  });
+
+  describe('GET /cursos/:cursoId/evaluaciones', () => {
+    it('debería retornar evaluaciones paginadas del curso', async () => {
+      const mockResult = {
+        evaluaciones: [mockEvaluacion],
+        total: 1,
+        page: 1,
+        limit: 10,
+        totalPages: 1,
+      };
+      mockEvaluacionesService.listarPorCurso.mockResolvedValue(mockResult);
+
+      const result = await controller.listarPorCurso(
+        'curso-123',
+        { page: 1, limit: 10 },
+        mockUser
+      );
+
+      expect(result).toEqual(mockResult);
+      expect(mockEvaluacionesService.listarPorCurso).toHaveBeenCalledWith(
+        'curso-123',
+        { page: 1, limit: 10 },
+        'educador-123'
+      );
+    });
+
+    it('debería usar el ID del usuario autenticado', async () => {
+      mockEvaluacionesService.listarPorCurso.mockResolvedValue({
+        evaluaciones: [],
+        total: 0,
+        page: 1,
+        limit: 10,
+        totalPages: 0,
+      });
+
+      await controller.listarPorCurso(
+        'curso-123',
+        { page: 1, limit: 10 },
+        mockUser
+      );
+
+      expect(mockEvaluacionesService.listarPorCurso).toHaveBeenCalledWith(
+        'curso-123',
+        { page: 1, limit: 10 },
         mockUser.id
       );
     });

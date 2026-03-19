@@ -36,6 +36,8 @@ describe('EvaluacionesService', () => {
     },
     evaluacion: {
       create: jest.fn(),
+      findMany: jest.fn(),
+      count: jest.fn(),
     },
   };
 
@@ -120,6 +122,89 @@ describe('EvaluacionesService', () => {
       await expect(service.crear(dtoInvalido, 'educador-123')).rejects.toThrow(
         BadRequestException
       );
+    });
+  });
+
+  describe('listarPorCurso', () => {
+    it('debería retornar evaluaciones paginadas del curso', async () => {
+      prisma.curso.findUnique.mockResolvedValue({ educadorId: 'educador-123' });
+      prisma.evaluacion.findMany.mockResolvedValue([mockEvaluacion]);
+      prisma.evaluacion.count.mockResolvedValue(1);
+
+      const result = await service.listarPorCurso(
+        'curso-123',
+        { page: 1, limit: 10 },
+        'educador-123'
+      );
+
+      expect(result).toEqual({
+        evaluaciones: [mockEvaluacion],
+        total: 1,
+        page: 1,
+        limit: 10,
+        totalPages: 1,
+      });
+      expect(prisma.evaluacion.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { cursoId: 'curso-123' },
+          skip: 0,
+          take: 10,
+        })
+      );
+    });
+
+    it('debería aplicar filtro por publicada cuando se proporciona', async () => {
+      prisma.curso.findUnique.mockResolvedValue({ educadorId: 'educador-123' });
+      prisma.evaluacion.findMany.mockResolvedValue([]);
+      prisma.evaluacion.count.mockResolvedValue(0);
+
+      await service.listarPorCurso(
+        'curso-123',
+        { page: 1, limit: 10, publicada: true },
+        'educador-123'
+      );
+
+      expect(prisma.evaluacion.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { cursoId: 'curso-123', publicada: true },
+        })
+      );
+    });
+
+    it('debería lanzar NotFoundException si el curso no existe', async () => {
+      prisma.curso.findUnique.mockResolvedValue(null);
+
+      await expect(
+        service.listarPorCurso(
+          'curso-123',
+          { page: 1, limit: 10 },
+          'educador-123'
+        )
+      ).rejects.toThrow(NotFoundException);
+    });
+
+    it('debería lanzar ForbiddenException si no es propietario del curso', async () => {
+      prisma.curso.findUnique.mockResolvedValue({ educadorId: 'otro-123' });
+
+      await expect(
+        service.listarPorCurso(
+          'curso-123',
+          { page: 1, limit: 10 },
+          'educador-123'
+        )
+      ).rejects.toThrow(ForbiddenException);
+    });
+
+    it('debería lanzar BadRequestException con query inválida', async () => {
+      prisma.curso.findUnique.mockResolvedValue({ educadorId: 'educador-123' });
+
+      await expect(
+        service.listarPorCurso(
+          'curso-123',
+          { page: 0, limit: 10 },
+          'educador-123'
+        )
+      ).rejects.toThrow(BadRequestException);
     });
   });
 });
