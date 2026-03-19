@@ -26,6 +26,7 @@ El módulo de evaluaciones permite a educadores crear una evaluación asociada a
 | `apps/api/src/evaluaciones/evaluaciones.controller.ts`      | Endpoint REST              |
 | `apps/api/src/evaluaciones/evaluaciones.service.ts`         | Lógica de negocio          |
 | `apps/api/src/evaluaciones/dto/create-evaluacion.dto.ts`    | Schema Zod para crear      |
+| `apps/api/src/evaluaciones/dto/publicar-evaluacion.dto.ts`  | Schema Zod para publicar   |
 | `apps/api/src/evaluaciones/dto/query-evaluaciones.dto.ts`   | Schema Zod para listado    |
 | `apps/api/src/evaluaciones/evaluaciones.controller.spec.ts` | Tests unitarios controller |
 | `apps/api/src/evaluaciones/evaluaciones.service.spec.ts`    | Tests unitarios service    |
@@ -53,6 +54,7 @@ Base: `/api/v1/evaluaciones`
 | POST   | `/`                             | Sí   | EDUCADOR+ | Crear evaluación básica         |
 | GET    | `/cursos/:cursoId/evaluaciones` | Sí   | EDUCADOR+ | Listar evaluaciones de un curso |
 | GET    | `/:id`                          | Sí   | EDUCADOR+ | Obtener detalle de evaluación   |
+| PATCH  | `/:id/publicar`                 | Sí   | EDUCADOR+ | Publicar o despublicar          |
 
 ### Body (POST /)
 
@@ -113,3 +115,4 @@ model Evaluacion {
 3. **Publicación**: por defecto `publicada` es `false`, no se setea al crear.
 4. **Listado**: usar `queryEvaluacionesSchema` y respuesta paginada estándar.
 5. **Detalle**: validar propiedad usando `curso.educadorId` y no incluir preguntas.
+6. **Publicar**: actualizar `publicada` y `publicadoEn` según el flag `publicar`.

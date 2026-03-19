@@ -6,6 +6,7 @@
  * - [ ] Crear evaluación con datos válidos
  * - [ ] Validar curso existente y propiedad del educador
  * - [ ] Obtener detalle de evaluación con verificación de propietario
+ * - [ ] Publicar/despublicar evaluación con validación de propietario
  */
 
 // Mock @prisma/client ANTES de cualquier import que lo use
@@ -40,6 +41,7 @@ describe('EvaluacionesService', () => {
       findUnique: jest.fn(),
       findMany: jest.fn(),
       count: jest.fn(),
+      update: jest.fn(),
     },
   };
 
@@ -246,6 +248,101 @@ describe('EvaluacionesService', () => {
       await expect(
         service.obtenerDetalle('evaluacion-123', 'educador-123')
       ).rejects.toThrow(ForbiddenException);
+    });
+  });
+
+  describe('cambiarEstadoPublicacion', () => {
+    it('debería publicar una evaluación', async () => {
+      prisma.evaluacion.findUnique.mockResolvedValue({
+        ...mockEvaluacion,
+        curso: { educadorId: 'educador-123' },
+      });
+      prisma.evaluacion.update.mockResolvedValue({
+        ...mockEvaluacion,
+        publicada: true,
+        publicadoEn: new Date(),
+      });
+
+      const result = await service.cambiarEstadoPublicacion(
+        'evaluacion-123',
+        { publicar: true },
+        'educador-123'
+      );
+
+      expect(result.publicada).toBe(true);
+      expect(prisma.evaluacion.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            publicada: true,
+            publicadoEn: expect.any(Date),
+          }),
+        })
+      );
+    });
+
+    it('debería despublicar una evaluación', async () => {
+      prisma.evaluacion.findUnique.mockResolvedValue({
+        ...mockEvaluacion,
+        curso: { educadorId: 'educador-123' },
+      });
+      prisma.evaluacion.update.mockResolvedValue({
+        ...mockEvaluacion,
+        publicada: false,
+        publicadoEn: null,
+      });
+
+      const result = await service.cambiarEstadoPublicacion(
+        'evaluacion-123',
+        { publicar: false },
+        'educador-123'
+      );
+
+      expect(result.publicada).toBe(false);
+      expect(prisma.evaluacion.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            publicada: false,
+            publicadoEn: null,
+          }),
+        })
+      );
+    });
+
+    it('debería lanzar NotFoundException si la evaluación no existe', async () => {
+      prisma.evaluacion.findUnique.mockResolvedValue(null);
+
+      await expect(
+        service.cambiarEstadoPublicacion(
+          'evaluacion-999',
+          { publicar: true },
+          'educador-123'
+        )
+      ).rejects.toThrow(NotFoundException);
+    });
+
+    it('debería lanzar ForbiddenException si no es propietario del curso', async () => {
+      prisma.evaluacion.findUnique.mockResolvedValue({
+        ...mockEvaluacion,
+        curso: { educadorId: 'otro-educador' },
+      });
+
+      await expect(
+        service.cambiarEstadoPublicacion(
+          'evaluacion-123',
+          { publicar: true },
+          'educador-123'
+        )
+      ).rejects.toThrow(ForbiddenException);
+    });
+
+    it('debería lanzar BadRequestException con datos inválidos', async () => {
+      await expect(
+        service.cambiarEstadoPublicacion(
+          'evaluacion-123',
+          {} as { publicar: boolean },
+          'educador-123'
+        )
+      ).rejects.toThrow(BadRequestException);
     });
   });
 });

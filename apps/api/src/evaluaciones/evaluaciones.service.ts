@@ -20,6 +20,10 @@ import {
   queryEvaluacionesSchema,
   type QueryEvaluacionesDto,
 } from './dto/query-evaluaciones.dto';
+import {
+  publicarEvaluacionSchema,
+  type PublicarEvaluacionDto,
+} from './dto/publicar-evaluacion.dto';
 import type { Evaluacion } from '@prisma/client';
 
 export type EvaluacionResponse = Evaluacion;
@@ -161,5 +165,46 @@ export class EvaluacionesService {
 
     const { curso: _curso, ...detalle } = evaluacion;
     return detalle;
+  }
+
+  /**
+   * Publica o despublica una evaluación
+   */
+  async cambiarEstadoPublicacion(
+    evaluacionId: string,
+    dto: PublicarEvaluacionDto,
+    usuarioId: string
+  ): Promise<EvaluacionResponse> {
+    const result = publicarEvaluacionSchema.safeParse(dto);
+    if (!result.success) {
+      const message = result.error.issues[0]?.message ?? 'Datos inválidos';
+      throw new BadRequestException(message);
+    }
+
+    const evaluacion = await this.prisma.evaluacion.findUnique({
+      where: { id: evaluacionId },
+      include: { curso: { select: { educadorId: true } } },
+    });
+
+    if (!evaluacion) {
+      throw new NotFoundException('Evaluación no encontrada');
+    }
+
+    if (evaluacion.curso.educadorId !== usuarioId) {
+      throw new ForbiddenException(
+        'No tienes permiso para modificar esta evaluación'
+      );
+    }
+
+    const { publicar } = result.data;
+    const publicada = publicar;
+    const publicadoEn = publicar ? new Date() : null;
+
+    const actualizado = await this.prisma.evaluacion.update({
+      where: { id: evaluacionId },
+      data: { publicada, publicadoEn },
+    });
+
+    return actualizado;
   }
 }

@@ -5,6 +5,7 @@
  * - [ ] Endpoint POST /evaluaciones
  * - [ ] Usa ID del educador autenticado
  * - [ ] Endpoint GET /evaluaciones/:id
+ * - [ ] Endpoint PATCH /evaluaciones/:id/publicar
  */
 
 import type { TestingModule } from '@nestjs/testing';
@@ -20,6 +21,7 @@ describe('EvaluacionesController', () => {
     crear: jest.fn(),
     listarPorCurso: jest.fn(),
     obtenerDetalle: jest.fn(),
+    cambiarEstadoPublicacion: jest.fn(),
   };
 
   const mockUser: RequestUser = {
@@ -169,6 +171,60 @@ describe('EvaluacionesController', () => {
 
       expect(mockEvaluacionesService.obtenerDetalle).toHaveBeenCalledWith(
         'evaluacion-123',
+        mockUser.id
+      );
+    });
+  });
+
+  describe('PATCH /evaluaciones/:id/publicar', () => {
+    it('debería publicar una evaluación', async () => {
+      mockEvaluacionesService.cambiarEstadoPublicacion.mockResolvedValue({
+        ...mockEvaluacion,
+        publicada: true,
+        publicadoEn: new Date(),
+      });
+
+      const result = await controller.cambiarEstadoPublicacion(
+        'evaluacion-123',
+        { publicar: true },
+        mockUser
+      );
+
+      expect(result).toEqual({
+        evaluacion: expect.objectContaining({ publicada: true }),
+        message: 'Evaluación publicada exitosamente',
+      });
+      expect(
+        mockEvaluacionesService.cambiarEstadoPublicacion
+      ).toHaveBeenCalledWith(
+        'evaluacion-123',
+        { publicar: true },
+        'educador-123'
+      );
+    });
+
+    it('debería despublicar una evaluación', async () => {
+      mockEvaluacionesService.cambiarEstadoPublicacion.mockResolvedValue({
+        ...mockEvaluacion,
+        publicada: false,
+        publicadoEn: null,
+      });
+
+      const result = await controller.cambiarEstadoPublicacion(
+        'evaluacion-123',
+        { publicar: false },
+        mockUser
+      );
+
+      expect(result).toEqual({
+        evaluacion: expect.objectContaining({ publicada: false }),
+        message: 'Evaluación despublicada',
+      });
+      expect(
+        mockEvaluacionesService.cambiarEstadoPublicacion
+      ).toHaveBeenCalledWith(
+        'evaluacion-123',
+        { publicar: false },
         mockUser.id
       );
     });

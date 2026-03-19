@@ -22,9 +22,9 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 3 - Evaluaciones 🚧 EN PROGRESO (Sprint 9)
+### Fase Actual: Fase 3 - Evaluaciones 🚧 EN PROGRESO (Sprint 10)
 
-**Progreso**: Sprint 9 completado (3/3 issues completados)
+**Progreso**: Sprint 10 en progreso (1/3 issues completados)
 
 #### Sprint 8 (Evaluaciones) ✅ Completado
 
@@ -53,9 +53,18 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Validación de propiedad/permiso
   - Tests unitarios de controller y service
 
+#### Sprint 10 (Evaluaciones) 🚧 En progreso
+
+- ✅ **F3-010**: Endpoint publicar/despublicar evaluación (educador)
+  - Endpoint `PATCH /evaluaciones/:id/publicar`
+  - Validación de propiedad/permiso
+  - Actualización de `publicada` y `publicadoEn`
+  - Tests unitarios de controller y service
+
 #### Próximos pasos:
 
-- Mantener preparación Fase 3 como base de criterios
+- F3-011: UI detalle de evaluación (educador)
+- F3-012: UI toggle publicar/despublicar evaluación
 
 #### Preparación Fase 3 - Evaluaciones (completada)
 
@@ -607,7 +616,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 3 en progreso (Sprint 9, 3/3 issues completados)
+- **Fase actual**: Fase 3 en progreso (Sprint 10, 1/3 issues completados)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**

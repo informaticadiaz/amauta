@@ -13,7 +13,7 @@
 **Fase 0**: ✅ Completada (30/12/2024)
 **Fase 1**: ✅ Completada (16/16 issues completados)
 **Fase 2**: ✅ Completada (8/8 issues completados)
-**Fase 3**: 🚧 En progreso (Sprint 8 completado)
+**Fase 3**: 🚧 En progreso (Sprint 8 y 9 completados)
 
 ## Cómo usar este documento
 
@@ -26,18 +26,31 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
-## Sprint Actual: Sprint 9 - Evaluaciones (COMPLETADO)
+## Sprint Actual: Sprint 10 - Evaluaciones (PLANIFICADO)
+
+**Objetivo**: Publicación y detalle de evaluaciones para educadores.
+**Referencia**: `docs/project-management/roadmap.md` → Fase 3
+
+### Issues comprometidas (Sprint 10)
+
+| Issue | Título                                            | Estado   |
+| ----- | ------------------------------------------------- | -------- |
+| #61   | F3-010: Endpoint publicar/despublicar evaluación  | 📋 To Do |
+| #62   | F3-011: UI detalle de evaluación (educador)       | 📋 To Do |
+| #63   | F3-012: UI toggle publicar/despublicar evaluación | 📋 To Do |
+
+## Sprint 9 - Evaluaciones (COMPLETADO)
 
 **Objetivo**: Consolidar listado y detalle básico de evaluaciones para educadores.
 **Referencia**: `docs/project-management/roadmap.md` → Fase 3
 
 ### Issues comprometidas (Sprint 9)
 
-| Issue | Título                                                    | Estado   |
-| ----- | --------------------------------------------------------- | -------- |
-| #58   | F3-007: Endpoint listar evaluaciones por curso            | 📋 To Do |
-| #59   | F3-008: UI listado de evaluaciones (educador)             | 📋 To Do |
-| #60   | F3-009: Endpoint obtener detalle de evaluación (educador) | 📋 To Do |
+| Issue | Título                                                    | Estado  |
+| ----- | --------------------------------------------------------- | ------- |
+| #58   | F3-007: Endpoint listar evaluaciones por curso            | ✅ Done |
+| #59   | F3-008: UI listado de evaluaciones (educador)             | ✅ Done |
+| #60   | F3-009: Endpoint obtener detalle de evaluación (educador) | ✅ Done |
 
 ## Sprint 8 - Evaluaciones (COMPLETADO)
 
@@ -325,7 +338,7 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 ### Para Fase 3
 
-1. Cerrar Sprint 9 (issues #58, #59 y #60 completados)
+1. Planificar Sprint 10 con issues #61, #62 y #63
 
 ---
 

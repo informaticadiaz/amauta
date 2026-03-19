@@ -2,7 +2,15 @@
  * Controller de Evaluaciones
  */
 
-import { Body, Controller, Get, Post, Param, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { Roles, CurrentUser } from '../common/decorators';
 import type { RequestUser } from '../common/guards';
 import type { EvaluacionesService } from './evaluaciones.service';
@@ -12,6 +20,7 @@ import {
 } from './evaluaciones.service';
 import type { CreateEvaluacionDto } from './dto/create-evaluacion.dto';
 import type { QueryEvaluacionesDto } from './dto/query-evaluaciones.dto';
+import type { PublicarEvaluacionDto } from './dto/publicar-evaluacion.dto';
 
 interface EvaluacionResponse {
   evaluacion: EvaluacionEntity;
@@ -58,6 +67,27 @@ export class EvaluacionesController {
     return {
       evaluacion,
       message: 'Evaluación obtenida exitosamente',
+    };
+  }
+
+  @Patch('evaluaciones/:id/publicar')
+  @Roles('EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN')
+  async cambiarEstadoPublicacion(
+    @Param('id') id: string,
+    @Body() dto: PublicarEvaluacionDto,
+    @CurrentUser() user: RequestUser
+  ): Promise<EvaluacionResponse> {
+    const evaluacion = await this.evaluacionesService.cambiarEstadoPublicacion(
+      id,
+      dto,
+      user.id
+    );
+    const message = dto.publicar
+      ? 'Evaluación publicada exitosamente'
+      : 'Evaluación despublicada';
+    return {
+      evaluacion,
+      message,
     };
   }
 }

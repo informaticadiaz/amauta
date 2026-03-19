@@ -608,6 +608,16 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 
 **Progreso Sprint 9**: 3/3 issues completados Ô£à
 
+### Sprint 10 (en progreso)
+
+| Issue | Título                                            | Estado       |
+| ----- | ------------------------------------------------- | ------------ |
+| #61   | F3-010: Endpoint publicar/despublicar evaluación  | ✅ Done      |
+| #62   | F3-011: UI detalle de evaluación (educador)       | 📋 Pendiente |
+| #63   | F3-012: UI toggle publicar/despublicar evaluación | 📋 Pendiente |
+
+**Progreso Sprint 10**: 1/3 issues completados 🚧
+
 ### Objetivos
 
 Agregar sistema robusto de evaluación y certificación de conocimientos que permita a educadores medir el aprendizaje y a estudiantes validar sus conocimientos.
