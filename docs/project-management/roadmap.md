@@ -608,15 +608,15 @@ export function DownloadCursoButton({ cursoId }: { cursoId: string }) {
 
 **Progreso Sprint 9**: 3/3 issues completados Ô£à
 
-### Sprint 10 (en progreso)
+### Sprint 10 (completado)
 
-| Issue | Título                                            | Estado       |
-| ----- | ------------------------------------------------- | ------------ |
-| #61   | F3-010: Endpoint publicar/despublicar evaluación  | ✅ Done      |
-| #62   | F3-011: UI detalle de evaluación (educador)       | ✅ Done      |
-| #63   | F3-012: UI toggle publicar/despublicar evaluación | 📋 Pendiente |
+| Issue | Título                                            | Estado  |
+| ----- | ------------------------------------------------- | ------- |
+| #61   | F3-010: Endpoint publicar/despublicar evaluación  | ✅ Done |
+| #62   | F3-011: UI detalle de evaluación (educador)       | ✅ Done |
+| #63   | F3-012: UI toggle publicar/despublicar evaluación | ✅ Done |
 
-**Progreso Sprint 10**: 2/3 issues completados 🚧
+**Progreso Sprint 10**: 3/3 issues completados ✅
 
 ### Objetivos
 

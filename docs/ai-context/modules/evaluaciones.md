@@ -37,6 +37,7 @@ El módulo de evaluaciones permite a educadores crear una evaluación asociada a
 | ----------------------------------------------------------------- | --------------------------- |
 | `apps/web/src/app/api/evaluaciones/route.ts`                      | Proxy GET/POST evaluaciones |
 | `apps/web/src/app/api/evaluaciones/[id]/route.ts`                 | Proxy GET detalle           |
+| `apps/web/src/app/api/evaluaciones/[id]/publicar/route.ts`        | Proxy PATCH publicar        |
 | `apps/web/src/app/dashboard/evaluaciones/page.tsx`                | Listado con cursos          |
 | `apps/web/src/app/dashboard/evaluaciones/nueva/page.tsx`          | Crear evaluación (página)   |
 | `apps/web/src/app/dashboard/evaluaciones/[id]/page.tsx`           | Detalle evaluación (página) |
