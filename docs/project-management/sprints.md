@@ -1,6 +1,6 @@
 # Gestión de Sprints - Amauta
 
-## Sprint Actual: Sprint 11 - Preparación Fase 4 (PLANIFICACIÓN)
+## Sprint Actual: Sprint 11 - Preparación Fase 4 (COMPLETADO)
 
 **Fase**: Fase 4 - Módulo Escolar
 **Objetivo**: Preparar historias, dependencias y flujos por rol para iniciar el módulo escolar.
@@ -9,7 +9,7 @@
 
 - ✅ #64 F4-001: Refinar historias y criterios de aceptación (Fase 4)
 - ✅ #65 F4-002: Matriz de dependencias UI/Backend (Fase 4)
-- 📋 #66 F4-003: Diseño funcional de flujos administrativos (roles)
+- ✅ #66 F4-003: Diseño funcional de flujos administrativos (roles)
 
 ### Preparación Fase 3 (completada)
 

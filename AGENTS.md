@@ -22,9 +22,9 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Preparación Fase 4 - Módulo Escolar 🚧 EN CURSO
+### Fase Actual: Preparación Fase 4 - Módulo Escolar ✅ COMPLETADA
 
-**Progreso**: 2/3 issues de preparación completados
+**Progreso**: 3/3 issues de preparación completados
 
 #### Sprint 8 (Evaluaciones) ✅ Completado
 
@@ -69,7 +69,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Proxy `PATCH /api/evaluaciones/:id/publicar`
   - Feedback de éxito/error y test de interacción
 
-#### Preparación Fase 4 - Módulo Escolar (en curso)
+#### Preparación Fase 4 - Módulo Escolar (completada)
 
 - ✅ **F4-001**: Refinar historias y criterios de aceptación (Fase 4)
   - Historias clave definidas por rol (Admin Escolar, Educador, Estudiante/Apoderado)
@@ -79,7 +79,10 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Módulos backend y pantallas UI identificadas por tema
   - Matriz por flujo con dependencias cruzadas para ordenar implementación
   - Dependencias transversales documentadas en el roadmap
-- ⏳ **F4-003**: Diseño funcional de flujos administrativos (roles)
+- ✅ **F4-003**: Diseño funcional de flujos administrativos (roles)
+  - Flujos definidos por rol (Admin Escolar, Educador, Estudiante/Apoderado)
+  - Casos límite y permisos por rol documentados
+  - Prioridades por sprint establecidas para implementación
 
 #### Preparación Fase 3 - Evaluaciones (completada)
 
@@ -631,7 +634,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 3 completada (Sprint 10, 3/3 issues completados)
+- **Fase actual**: Preparación Fase 4 completada (3/3 issues)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**

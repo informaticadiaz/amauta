@@ -1301,9 +1301,9 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 | ----- | ---------------------------------------------------------- | ------------- |
 | #64   | F4-001: Refinar historias y criterios de aceptación        | ✅ Completado |
 | #65   | F4-002: Matriz de dependencias UI/Backend (Fase 4)         | ✅ Completado |
-| #66   | F4-003: Diseño funcional de flujos administrativos (roles) | 📋 To Do      |
+| #66   | F4-003: Diseño funcional de flujos administrativos (roles) | ✅ Completado |
 
-**Progreso preparación**: 2/3 issues completados 🚧
+**Progreso preparación**: 3/3 issues completados ✅
 
 ### Objetivos
 
@@ -1384,6 +1384,11 @@ Implementar un sistema completo de gestión administrativa escolar que permita a
 
 - Se puede generar reporte por grupo, periodo y rango de fechas.
 - El reporte incluye métricas mínimas: % asistencia y promedio de calificaciones.
+
+### Diseño funcional de flujos (F4-003)
+
+Documento detallado: `docs/project-management/fase-4-flujos-administrativos.md`
+
 - Se puede exportar el reporte para auditoría.
 
 #### 8) Consulta de historial académico (Estudiante/Apoderado)
