@@ -1295,6 +1295,14 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 **Duración estimada**: 6-8 semanas
 **Sprint 11-14**
 
+### Preparación de Fase 4 (issues)
+
+| Issue | Título                                                     | Estado   |
+| ----- | ---------------------------------------------------------- | -------- |
+| #64   | F4-001: Refinar historias y criterios de aceptación        | 📋 To Do |
+| #65   | F4-002: Matriz de dependencias UI/Backend (Fase 4)         | 📋 To Do |
+| #66   | F4-003: Diseño funcional de flujos administrativos (roles) | 📋 To Do |
+
 ### Objetivos
 
 Implementar un sistema completo de gestión administrativa escolar que permita a instituciones educativas gestionar estudiantes, asistencias, calificaciones y comunicaciones de manera eficiente.

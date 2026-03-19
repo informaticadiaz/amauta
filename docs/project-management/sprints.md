@@ -1,15 +1,15 @@
 # Gestión de Sprints - Amauta
 
-## Sprint Actual: Sprint 10 - Evaluaciones (PLANIFICADO)
+## Sprint Actual: Sprint 11 - Preparación Fase 4 (PLANIFICACIÓN)
 
-**Fase**: Fase 3 - Evaluaciones y Certificaciones
-**Objetivo**: Publicación y detalle de evaluaciones para educadores.
+**Fase**: Fase 4 - Módulo Escolar
+**Objetivo**: Preparar historias, dependencias y flujos por rol para iniciar el módulo escolar.
 
 ### Issues comprometidas
 
-- 📋 #61 F3-010: Endpoint publicar/despublicar evaluación (educador)
-- 📋 #62 F3-011: UI detalle de evaluación (educador)
-- 📋 #63 F3-012: UI toggle publicar/despublicar evaluación
+- 📋 #64 F4-001: Refinar historias y criterios de aceptación (Fase 4)
+- 📋 #65 F4-002: Matriz de dependencias UI/Backend (Fase 4)
+- 📋 #66 F4-003: Diseño funcional de flujos administrativos (roles)
 
 ### Preparación Fase 3 (completada)
 
@@ -19,7 +19,7 @@
 
 ### Último Sprint Completado ✅
 
-**Sprint 9 - Evaluaciones (Fase 3)**
+**Sprint 10 - Evaluaciones (Fase 3)**
 
 - Estado: ✅ Completado
 - Referencia: `docs/project-management/roadmap.md` → Fase 3

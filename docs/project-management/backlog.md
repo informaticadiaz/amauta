@@ -13,7 +13,8 @@
 **Fase 0**: ✅ Completada (30/12/2024)
 **Fase 1**: ✅ Completada (16/16 issues completados)
 **Fase 2**: ✅ Completada (8/8 issues completados)
-**Fase 3**: 🚧 En progreso (Sprint 8 y 9 completados)
+**Fase 3**: ✅ Completada (Sprint 8-10 completados)
+**Fase 4**: 🚧 En preparación (Sprint 11)
 
 ## Cómo usar este documento
 
@@ -26,18 +27,31 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
-## Sprint Actual: Sprint 10 - Evaluaciones (PLANIFICADO)
+## Sprint Actual: Sprint 11 - Preparación Fase 4 (PLANIFICACIÓN)
+
+**Objetivo**: Preparar Fase 4 (Módulo Escolar) con historias, dependencias y flujos por rol.
+**Referencia**: `docs/project-management/roadmap.md` → Fase 4
+
+### Issues comprometidas (Sprint 11)
+
+| Issue | Título                                                     | Estado   |
+| ----- | ---------------------------------------------------------- | -------- |
+| #64   | F4-001: Refinar historias y criterios de aceptación        | 📋 To Do |
+| #65   | F4-002: Matriz de dependencias UI/Backend (Fase 4)         | 📋 To Do |
+| #66   | F4-003: Diseño funcional de flujos administrativos (roles) | 📋 To Do |
+
+## Sprint 10 - Evaluaciones (COMPLETADO)
 
 **Objetivo**: Publicación y detalle de evaluaciones para educadores.
 **Referencia**: `docs/project-management/roadmap.md` → Fase 3
 
 ### Issues comprometidas (Sprint 10)
 
-| Issue | Título                                            | Estado   |
-| ----- | ------------------------------------------------- | -------- |
-| #61   | F3-010: Endpoint publicar/despublicar evaluación  | 📋 To Do |
-| #62   | F3-011: UI detalle de evaluación (educador)       | 📋 To Do |
-| #63   | F3-012: UI toggle publicar/despublicar evaluación | 📋 To Do |
+| Issue | Título                                            | Estado  |
+| ----- | ------------------------------------------------- | ------- |
+| #61   | F3-010: Endpoint publicar/despublicar evaluación  | ✅ Done |
+| #62   | F3-011: UI detalle de evaluación (educador)       | ✅ Done |
+| #63   | F3-012: UI toggle publicar/despublicar evaluación | ✅ Done |
 
 ## Sprint 9 - Evaluaciones (COMPLETADO)
 
@@ -298,13 +312,13 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 - **Fase 0**: ✅ Completada
 - **Fase 1**: ✅ Completada
 - **Fase 2**: ✅ Completada
-- **Fase 3**: 🚧 En progreso (Sprint 8 completado)
+- **Fase 3**: ✅ Completada (Sprint 8-10 completados)
 - **Épica Transversal NAP**: 🔄 En progreso
 
 ### Backlog Health
 
 - **Done**: Fases 0, 1 y 2 completadas
-- **Ready for Development**: Sprint 9 definido
+- **Ready for Development**: Definir Sprint 11 / Fase 4
 - **Needs Refinement**: 0 items (preparación Fase 3 completada)
 - **Research Done**: 1 item (NAP #21 - investigación completada)
 - **Blocked**: 0 items
@@ -336,9 +350,9 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 ## Próximos Pasos
 
-### Para Fase 3
+### Para Fase 4
 
-1. Planificar Sprint 10 con issues #61, #62 y #63
+1. Ejecutar Sprint 11 de preparación (F4-001 a F4-003)
 
 ---
 
@@ -350,4 +364,4 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 - Nuevas historias pueden agregarse en cualquier momento
 
 **Última revisión**: 18/03/2026
-**Próxima revisión**: Inicio de Sprint 9
+**Próxima revisión**: Inicio de Fase 4
