@@ -182,6 +182,12 @@ export function CursoCard({ curso, onPublishToggle }: CursoCardProps) {
           >
             Editar
           </Link>
+          <Link
+            href={`/dashboard/cursos/${curso.id}/lecciones`}
+            className="flex-1 rounded-lg border border-[var(--border)] px-3 py-2 text-center text-sm font-medium text-[var(--foreground)] transition-colors hover:bg-[var(--border)]"
+          >
+            Lecciones
+          </Link>
           <button
             onClick={handlePublishToggle}
             disabled={isUpdating || curso.estado === 'ARCHIVADO'}
