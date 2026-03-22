@@ -136,8 +136,8 @@ export default async function LeccionPage({ params }: PageProps) {
   }
 
   // A partir de acá, curso y leccion son no-null (notFound() lanza una excepción)
-  const cursoData = curso!;
-  const leccionData = leccion!;
+  const cursoData = curso as NonNullable<typeof curso>;
+  const leccionData = leccion as NonNullable<typeof leccion>;
 
   // Verificar inscripción
   const inscrito = await verificarInscripcion(cursoData.id);

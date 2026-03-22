@@ -149,7 +149,7 @@ function consolidarPendientes(pendientes: SyncPendiente[]) {
 
     const existentePayload = parsePayload(existente);
     if (!existentePayload) {
-      descartados.push(existente.id!);
+      descartados.push(existente.id as number);
       resultado.set(key, item);
       continue;
     }
@@ -159,7 +159,7 @@ function consolidarPendientes(pendientes: SyncPendiente[]) {
     if (ganador.id === existente.id) {
       descartados.push(item.id);
     } else {
-      descartados.push(existente.id!);
+      descartados.push(existente.id as number);
       resultado.set(key, item);
     }
   }
