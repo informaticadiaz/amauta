@@ -8,10 +8,10 @@ export const updatePeriodoSchema = z
       .max(100, 'El nombre no puede exceder 100 caracteres')
       .optional(),
     fechaInicio: z.coerce
-      .date({ errorMap: () => ({ message: 'La fecha de inicio es inválida' }) })
+      .date({ error: () => ({ message: 'La fecha de inicio es inválida' }) })
       .optional(),
     fechaFin: z.coerce
-      .date({ errorMap: () => ({ message: 'La fecha de fin es inválida' }) })
+      .date({ error: () => ({ message: 'La fecha de fin es inválida' }) })
       .optional(),
   })
   .refine(

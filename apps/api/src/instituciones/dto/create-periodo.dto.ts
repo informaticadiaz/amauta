@@ -7,10 +7,10 @@ export const createPeriodoSchema = z
       .min(1, 'El nombre del período es requerido')
       .max(100, 'El nombre no puede exceder 100 caracteres'),
     fechaInicio: z.coerce.date({
-      errorMap: () => ({ message: 'La fecha de inicio es inválida' }),
+      error: () => ({ message: 'La fecha de inicio es inválida' }),
     }),
     fechaFin: z.coerce.date({
-      errorMap: () => ({ message: 'La fecha de fin es inválida' }),
+      error: () => ({ message: 'La fecha de fin es inválida' }),
     }),
   })
   .refine((data) => data.fechaFin > data.fechaInicio, {
