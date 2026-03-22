@@ -63,17 +63,17 @@ Presentar al usuario el siguiente mensaje interactivo:
 
 **Scopes disponibles:**
 
-| # | Scope | Archivos |
-|---|-------|---------|
-| 1 | `auth` | Autenticación y autorización (JWT, NextAuth, guards) |
-| 2 | `cursos` | Módulo de cursos (service, controller, DTOs) |
-| 3 | `lecciones` | Módulo de lecciones |
-| 4 | `inscripciones` | Módulo de inscripciones |
-| 5 | `uploads` | Subida de archivos |
-| 6 | `api-routes` | API Routes del frontend (Next.js) |
-| 7 | `frontend` | Componentes y páginas React |
-| 8 | `database` | Queries Prisma y schema |
-| 9 | `completo` | Todo el proyecto (Auth → Backend → DB → Uploads → Frontend) |
+| #   | Scope           | Archivos                                                    |
+| --- | --------------- | ----------------------------------------------------------- |
+| 1   | `auth`          | Autenticación y autorización (JWT, NextAuth, guards)        |
+| 2   | `cursos`        | Módulo de cursos (service, controller, DTOs)                |
+| 3   | `lecciones`     | Módulo de lecciones                                         |
+| 4   | `inscripciones` | Módulo de inscripciones                                     |
+| 5   | `uploads`       | Subida de archivos                                          |
+| 6   | `api-routes`    | API Routes del frontend (Next.js)                           |
+| 7   | `frontend`      | Componentes y páginas React                                 |
+| 8   | `database`      | Queries Prisma y schema                                     |
+| 9   | `completo`      | Todo el proyecto (Auth → Backend → DB → Uploads → Frontend) |
 
 **Auditorías previas:** [lista del paso 0.1]
 
@@ -604,6 +604,7 @@ docs/auditorias/auditoria-deepdive-[scope]-[YYYY-MM-DD].md    ← para Deep Dive
 ```
 
 **Ejemplos:**
+
 - `docs/auditorias/auditoria-triage-auth-2026-03-15.md`
 - `docs/auditorias/auditoria-deepdive-auth-2026-03-15.md`
 - `docs/auditorias/auditoria-triage-completo-2026-03-15.md`

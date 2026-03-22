@@ -51,17 +51,17 @@ Presentar al usuario el siguiente mensaje interactivo:
 
 **Scopes disponibles:**
 
-| # | Scope | Archivos |
-|---|-------|---------|
-| 1 | `auth` | Autenticación y autorización (JWT, NextAuth, guards) |
-| 2 | `cursos` | Módulo de cursos (service, controller, DTOs) |
-| 3 | `lecciones` | Módulo de lecciones |
-| 4 | `inscripciones` | Módulo de inscripciones |
-| 5 | `uploads` | Subida de archivos |
-| 6 | `api-routes` | API Routes del frontend (Next.js) |
-| 7 | `frontend` | Componentes y páginas React |
-| 8 | `database` | Queries Prisma y schema |
-| 9 | `completo` | Todo el proyecto (Auth → Backend → DB → Uploads → Frontend) |
+| #   | Scope           | Archivos                                                    |
+| --- | --------------- | ----------------------------------------------------------- |
+| 1   | `auth`          | Autenticación y autorización (JWT, NextAuth, guards)        |
+| 2   | `cursos`        | Módulo de cursos (service, controller, DTOs)                |
+| 3   | `lecciones`     | Módulo de lecciones                                         |
+| 4   | `inscripciones` | Módulo de inscripciones                                     |
+| 5   | `uploads`       | Subida de archivos                                          |
+| 6   | `api-routes`    | API Routes del frontend (Next.js)                           |
+| 7   | `frontend`      | Componentes y páginas React                                 |
+| 8   | `database`      | Queries Prisma y schema                                     |
+| 9   | `completo`      | Todo el proyecto (Auth → Backend → DB → Uploads → Frontend) |
 
 **Auditorías previas:** [lista del paso 0.1]
 
@@ -336,7 +336,9 @@ app.useGlobalPipes(
 
 // ✅ Sanitizar con DOMPurify antes de renderizar HTML
 import DOMPurify from 'isomorphic-dompurify';
-<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(leccion.contenido) }} />;
+<div
+  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(leccion.contenido) }}
+/>;
 ```
 
 Buscar: `dangerouslySetInnerHTML`, `.innerHTML =`, `eval(`, `Function(`.
@@ -382,6 +384,7 @@ return this.prisma.usuario.findMany({
 Buscar: respuestas que incluyen `passwordHash`, `token`, `secret`, claves privadas.
 
 ```typescript
+
 ```
 
 #### 6.2 Variables de entorno expuestas al cliente (Next.js)
@@ -612,6 +615,7 @@ docs/auditorias/auditoria-deepdive-[scope]-[YYYY-MM-DD].md    ← para Deep Dive
 ```
 
 **Ejemplos:**
+
 - `docs/auditorias/auditoria-triage-auth-2026-03-15.md`
 - `docs/auditorias/auditoria-deepdive-auth-2026-03-15.md`
 - `docs/auditorias/auditoria-triage-completo-2026-03-15.md`
@@ -630,11 +634,13 @@ Después de guardar, informar al usuario:
 Después de guardar el informe, clasificar cada hallazgo encontrado en dos categorías y mostrar la siguiente tabla al usuario:
 
 **Automatizables** — Claude puede aplicar el fix directamente:
+
 - Cambios de código (eliminar decoradores, agregar validaciones, restringir campos retornados)
 - Cambios de configuración (agregar módulos, configurar guards, ajustar imports)
 - Instalación de dependencias de seguridad faltantes
 
 **Requieren intervención manual** — no automatizables:
+
 - Rotación de secrets/API keys en producción
 - Cambios de infraestructura (firewall, WAF, HTTPS forzado a nivel servidor)
 - Configuración de servicios externos (CDN, proveedor de email, DNS)

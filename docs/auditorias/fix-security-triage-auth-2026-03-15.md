@@ -8,10 +8,10 @@
 
 ## Fixes Aplicados ✅
 
-| # | Hallazgo | Severidad | Archivos modificados | Estado |
-|---|----------|-----------|---------------------|--------|
-| 1 | Endpoint público expone datos personales de usuarios | 🟠 Alto | `apps/api/src/auth/auth.controller.ts` | ✅ Aplicado |
-| 2 | Sin rate limiting en endpoints de autenticación | 🟠 Alto | `apps/api/src/app.module.ts`, `apps/api/src/auth/auth.controller.ts`, `apps/api/package.json` | ✅ Aplicado |
+| #   | Hallazgo                                             | Severidad | Archivos modificados                                                                          | Estado      |
+| --- | ---------------------------------------------------- | --------- | --------------------------------------------------------------------------------------------- | ----------- |
+| 1   | Endpoint público expone datos personales de usuarios | 🟠 Alto   | `apps/api/src/auth/auth.controller.ts`                                                        | ✅ Aplicado |
+| 2   | Sin rate limiting en endpoints de autenticación      | 🟠 Alto   | `apps/api/src/app.module.ts`, `apps/api/src/auth/auth.controller.ts`, `apps/api/package.json` | ✅ Aplicado |
 
 ---
 
@@ -94,6 +94,7 @@ Durante la verificación del build se detectaron **14 errores TypeScript pre-exi
 No quedan acciones pendientes para los hallazgos de esta auditoría.
 
 Se recomienda ejecutar una nueva auditoría sobre otros scopes:
+
 - `uploads` — validación de tipo de archivo y path traversal
 - `api-routes` — API Routes del frontend (Next.js)
 - `frontend` — XSS en componentes React

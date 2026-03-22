@@ -41,9 +41,9 @@
 
 ## Usuarios de prueba para testear
 
-| Email                 | Contraseña  | Rol           |
-| --------------------- | ----------- | ------------- |
-| educador1@amauta.test | password123 | EDUCADOR      |
-| admin1@amauta.test    | password123 | ADMIN_ESCUELA |
-| superadmin@amauta.test | password123 | SUPER_ADMIN   |
+| Email                   | Contraseña  | Rol           |
+| ----------------------- | ----------- | ------------- |
+| educador1@amauta.test   | password123 | EDUCADOR      |
+| admin1@amauta.test      | password123 | ADMIN_ESCUELA |
+| superadmin@amauta.test  | password123 | SUPER_ADMIN   |
 | estudiante1@amauta.test | password123 | ESTUDIANTE    |

@@ -29,8 +29,8 @@
 
 ## Parámetros
 
-| Parámetro | Descripción | Ejemplo |
-|-----------|-------------|---------|
+| Parámetro         | Descripción                                                     | Ejemplo                                               |
+| ----------------- | --------------------------------------------------------------- | ----------------------------------------------------- |
 | `ruta-al-informe` | Path al informe `.md` generado por `/security-audit` (opcional) | `docs/auditorias/auditoria-triage-auth-2026-03-15.md` |
 
 ---
@@ -130,20 +130,22 @@ Hallazgos: N críticos, N altos, N medios, N bajos
 
 Leer el informe completo e identificar para cada hallazgo:
 
-| Campo | Qué extraer |
-|-------|-------------|
-| Nombre | Título del hallazgo |
-| Severidad | 🔴/🟠/🟡/🔵 |
-| Archivo | Ruta y línea del código vulnerable |
-| Remediación | Código corregido de la sección "Remediación" del informe |
-| Automatizable | ¿Puede aplicarse editando código/config local? |
+| Campo         | Qué extraer                                              |
+| ------------- | -------------------------------------------------------- |
+| Nombre        | Título del hallazgo                                      |
+| Severidad     | 🔴/🟠/🟡/🔵                                              |
+| Archivo       | Ruta y línea del código vulnerable                       |
+| Remediación   | Código corregido de la sección "Remediación" del informe |
+| Automatizable | ¿Puede aplicarse editando código/config local?           |
 
 **Automatizables:**
+
 - Cambios de código fuente (eliminar decoradores, agregar imports, modificar lógica)
 - Agregar módulos/guards/pipes en configuración de NestJS o Next.js
 - Instalar dependencias npm de seguridad
 
 **Requieren intervención manual:**
+
 - Rotación de secrets en producción (JWT_SECRET, AUTH_SECRET, etc.)
 - Cambios de infraestructura (firewall, HTTPS, WAF)
 - Configuración de servicios externos
@@ -170,6 +172,7 @@ Para cada hallazgo automatizable, **en orden estricto de severidad**:
 1. **Leer el archivo afectado** — SIEMPRE leer antes de editar, nunca editar de memoria.
 
 2. **Si se necesitan dependencias nuevas**, instalarlas primero:
+
    ```bash
    npm install <paquete> --workspace=@amauta/api   # o @amauta/web
    ```
@@ -224,15 +227,15 @@ npm run build --workspace=@amauta/web 2>&1 | tail -20
 
 ## Fixes Aplicados ✅
 
-| # | Hallazgo | Severidad | Archivo modificado | Estado |
-|---|----------|-----------|-------------------|--------|
-| 1 | [nombre] | 🔴 Crítico | `ruta/archivo.ts` | ✅ Aplicado |
-| 2 | [nombre] | 🟠 Alto   | `ruta/archivo.ts` | ✅ Aplicado |
+| #   | Hallazgo | Severidad  | Archivo modificado | Estado      |
+| --- | -------- | ---------- | ------------------ | ----------- |
+| 1   | [nombre] | 🔴 Crítico | `ruta/archivo.ts`  | ✅ Aplicado |
+| 2   | [nombre] | 🟠 Alto    | `ruta/archivo.ts`  | ✅ Aplicado |
 
 ## Requieren Intervención Manual ⚠️
 
-| Hallazgo | Severidad | Motivo | Acción requerida |
-|----------|-----------|--------|-----------------|
+| Hallazgo | Severidad | Motivo   | Acción requerida       |
+| -------- | --------- | -------- | ---------------------- |
 | [nombre] | 🟡 Medio  | [motivo] | [instrucción concreta] |
 
 ## Estado del Build
@@ -266,16 +269,16 @@ Informar al usuario:
 
 ## Niveles de Automatización
 
-| Tipo de fix | Automatizable | Ejemplo |
-|-------------|--------------|---------|
-| Eliminar decorador inseguro | ✅ Sí | Quitar `@Public()` de endpoint sensible |
-| Agregar guard/throttle | ✅ Sí | `@Throttle()`, `@UseGuards(RolesGuard)` |
-| Instalar dependencia | ✅ Sí | `npm install @nestjs/throttler` |
-| Restringir campos en respuesta | ✅ Sí | Agregar `select` en query Prisma |
-| Sanitizar HTML en frontend | ✅ Sí | Agregar `DOMPurify.sanitize()` |
-| Rotar JWT_SECRET en producción | ⚠️ Manual | Requiere acceso al servidor |
-| Configurar firewall / rate limit en proxy | ⚠️ Manual | Requiere acceso a infraestructura |
-| Forzar HTTPS a nivel servidor | ⚠️ Manual | Requiere configuración de Nginx/Dokploy |
+| Tipo de fix                               | Automatizable | Ejemplo                                 |
+| ----------------------------------------- | ------------- | --------------------------------------- |
+| Eliminar decorador inseguro               | ✅ Sí         | Quitar `@Public()` de endpoint sensible |
+| Agregar guard/throttle                    | ✅ Sí         | `@Throttle()`, `@UseGuards(RolesGuard)` |
+| Instalar dependencia                      | ✅ Sí         | `npm install @nestjs/throttler`         |
+| Restringir campos en respuesta            | ✅ Sí         | Agregar `select` en query Prisma        |
+| Sanitizar HTML en frontend                | ✅ Sí         | Agregar `DOMPurify.sanitize()`          |
+| Rotar JWT_SECRET en producción            | ⚠️ Manual     | Requiere acceso al servidor             |
+| Configurar firewall / rate limit en proxy | ⚠️ Manual     | Requiere acceso a infraestructura       |
+| Forzar HTTPS a nivel servidor             | ⚠️ Manual     | Requiere configuración de Nginx/Dokploy |
 
 ---
 

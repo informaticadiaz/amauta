@@ -8,24 +8,24 @@ Amauta ahora organiza sus categorías de cursos siguiendo las **áreas curricula
 
 ## Mapeo de Áreas NAP → Categorías de Amauta
 
-| Área NAP                           | Categoría en Amauta             | Propósito |
-| ---------------------------------- | ------------------------------- | --------- |
-| Matemática                         | Matemáticas                     | Habilidades numéricas y razonamiento |
-| Lengua y Literatura                | Lengua y Literatura             | Lectura, escritura y oralidad |
-| Ciencias Naturales                 | Ciencias Naturales              | Naturaleza, ambiente y ciencia |
-| Ciencias Sociales                  | Ciencias Sociales               | Historia, geografía y sociedad |
-| Educación Artística                | Educación Artística             | Artes visuales, música, danza y teatro |
-| Educación Tecnológica              | Educación Tecnológica           | Tecnología y procesos sociotécnicos |
-| Educación Física                   | Educación Física                | Movimiento, juego y vida saludable |
-| Formación Ética y Ciudadana        | Formación Ética y Ciudadana     | Ciudadanía, derechos y convivencia |
+| Área NAP                    | Categoría en Amauta         | Propósito                              |
+| --------------------------- | --------------------------- | -------------------------------------- |
+| Matemática                  | Matemáticas                 | Habilidades numéricas y razonamiento   |
+| Lengua y Literatura         | Lengua y Literatura         | Lectura, escritura y oralidad          |
+| Ciencias Naturales          | Ciencias Naturales          | Naturaleza, ambiente y ciencia         |
+| Ciencias Sociales           | Ciencias Sociales           | Historia, geografía y sociedad         |
+| Educación Artística         | Educación Artística         | Artes visuales, música, danza y teatro |
+| Educación Tecnológica       | Educación Tecnológica       | Tecnología y procesos sociotécnicos    |
+| Educación Física            | Educación Física            | Movimiento, juego y vida saludable     |
+| Formación Ética y Ciudadana | Formación Ética y Ciudadana | Ciudadanía, derechos y convivencia     |
 
 ## Cursos de ejemplo por nivel educativo
 
-| Nivel educativo | Curso de ejemplo | Categoría |
-| -------------- | ---------------- | --------- |
-| Inicial        | Juego y Movimiento en Nivel Inicial | Educación Física |
-| Primaria       | Álgebra Básica | Matemáticas |
-| Secundaria     | Biología Celular | Ciencias Naturales |
+| Nivel educativo | Curso de ejemplo                    | Categoría          |
+| --------------- | ----------------------------------- | ------------------ |
+| Inicial         | Juego y Movimiento en Nivel Inicial | Educación Física   |
+| Primaria        | Álgebra Básica                      | Matemáticas        |
+| Secundaria      | Biología Celular                    | Ciencias Naturales |
 
 > Estos cursos sirven como referencia para construir futuros contenidos alineados con la currícula oficial.
 

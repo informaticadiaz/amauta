@@ -14,7 +14,9 @@ describe('Seed NAP', () => {
       'formacion-etica-ciudadana',
     ].sort();
 
-    const actualSlugs = categoriasData.map((categoria) => categoria.slug).sort();
+    const actualSlugs = categoriasData
+      .map((categoria) => categoria.slug)
+      .sort();
 
     expect(actualSlugs).toEqual(expectedSlugs);
     expect(new Set(actualSlugs).size).toBe(expectedSlugs.length);

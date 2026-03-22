@@ -14,15 +14,15 @@ Esta etapa crea el contenido educativo principal: cursos con lecciones de difere
 
 Se crearon **7 cursos** con diferentes estados y niveles:
 
-| Curso                           | Educador        | Categoría              | Nivel        | Estado    |
-| ------------------------------- | --------------- | ---------------------- | ------------ | --------- |
-| Juego y Movimiento en Inicial   | Ana Martínez    | Educación Física       | PRINCIPIANTE | PUBLICADO |
-| Álgebra Básica                  | Ana Martínez    | Matemáticas            | PRINCIPIANTE | PUBLICADO |
-| Geometría Plana                 | Ana Martínez    | Matemáticas            | INTERMEDIO   | BORRADOR  |
-| Comprensión Lectora             | Pedro Sánchez   | Lengua y Literatura    | PRINCIPIANTE | PUBLICADO |
-| Taller de Redacción             | Pedro Sánchez   | Lengua y Literatura    | INTERMEDIO   | REVISION  |
-| Biología Celular                | Laura Fernández | Ciencias Naturales     | PRINCIPIANTE | PUBLICADO |
-| Introducción a Física           | Laura Fernández | Ciencias Naturales     | AVANZADO     | BORRADOR  |
+| Curso                         | Educador        | Categoría           | Nivel        | Estado    |
+| ----------------------------- | --------------- | ------------------- | ------------ | --------- |
+| Juego y Movimiento en Inicial | Ana Martínez    | Educación Física    | PRINCIPIANTE | PUBLICADO |
+| Álgebra Básica                | Ana Martínez    | Matemáticas         | PRINCIPIANTE | PUBLICADO |
+| Geometría Plana               | Ana Martínez    | Matemáticas         | INTERMEDIO   | BORRADOR  |
+| Comprensión Lectora           | Pedro Sánchez   | Lengua y Literatura | PRINCIPIANTE | PUBLICADO |
+| Taller de Redacción           | Pedro Sánchez   | Lengua y Literatura | INTERMEDIO   | REVISION  |
+| Biología Celular              | Laura Fernández | Ciencias Naturales  | PRINCIPIANTE | PUBLICADO |
+| Introducción a Física         | Laura Fernández | Ciencias Naturales  | AVANZADO     | BORRADOR  |
 
 ### Lecciones Creadas
 
@@ -39,17 +39,17 @@ Se crearon **17 lecciones** de diferentes tipos:
 
 Se crearon **9 recursos** adjuntos:
 
-| Recurso                           | Tipo  | Lección                          |
-| --------------------------------- | ----- | -------------------------------- |
-| Guía de juegos motores            | PDF   | El juego como aprendizaje        |
-| Guía de introducción al álgebra   | PDF   | ¿Qué es el álgebra?              |
-| Plantillas de figuras geométricas | PDF   | Intro a la geometría             |
-| Checklist de comprensión lectora  | PDF   | Estrategias de lectura           |
-| Textos de práctica adicionales    | PDF   | Práctica de comprensión          |
-| Plantilla de párrafo              | PDF   | Estructura de un párrafo         |
-| Infografía de la célula           | Image | La célula: unidad de vida        |
-| Diagrama interactivo de la célula | PDF   | Partes de la célula              |
-| Línea del tiempo de la física     | PDF   | ¿Qué es la física?               |
+| Recurso                           | Tipo  | Lección                   |
+| --------------------------------- | ----- | ------------------------- |
+| Guía de juegos motores            | PDF   | El juego como aprendizaje |
+| Guía de introducción al álgebra   | PDF   | ¿Qué es el álgebra?       |
+| Plantillas de figuras geométricas | PDF   | Intro a la geometría      |
+| Checklist de comprensión lectora  | PDF   | Estrategias de lectura    |
+| Textos de práctica adicionales    | PDF   | Práctica de comprensión   |
+| Plantilla de párrafo              | PDF   | Estructura de un párrafo  |
+| Infografía de la célula           | Image | La célula: unidad de vida |
+| Diagrama interactivo de la célula | PDF   | Partes de la célula       |
+| Línea del tiempo de la física     | PDF   | ¿Qué es la física?        |
 
 ## Estructura de un Curso
 

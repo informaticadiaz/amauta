@@ -14,16 +14,16 @@ Esta etapa crea la estructura organizativa del sistema: categorías para clasifi
 
 Se crearon **8 categorías** curriculares alineadas con los NAP:
 
-| Categoría                    | Descripción                                             | Icono      |
-| ---------------------------- | ------------------------------------------------------- | ---------- |
-| Matemáticas                  | Álgebra, geometría, cálculo y estadística               | calculator |
-| Lengua y Literatura          | Gramática, comprensión lectora, redacción y literatura  | book-open  |
-| Ciencias Naturales           | Biología, física, química y astronomía                  | flask      |
-| Ciencias Sociales            | Historia, geografía, educación cívica y economía        | globe      |
-| Educación Artística          | Artes visuales, música, danza, teatro y audiovisual     | palette    |
-| Educación Tecnológica        | Tecnología, procesos técnicos y pensamiento sociotécnico | laptop     |
-| Educación Física             | Corporeidad, movimiento, juegos y vida saludable        | activity   |
-| Formación Ética y Ciudadana  | Ciudadanía, derechos, convivencia y participación       | scale      |
+| Categoría                   | Descripción                                              | Icono      |
+| --------------------------- | -------------------------------------------------------- | ---------- |
+| Matemáticas                 | Álgebra, geometría, cálculo y estadística                | calculator |
+| Lengua y Literatura         | Gramática, comprensión lectora, redacción y literatura   | book-open  |
+| Ciencias Naturales          | Biología, física, química y astronomía                   | flask      |
+| Ciencias Sociales           | Historia, geografía, educación cívica y economía         | globe      |
+| Educación Artística         | Artes visuales, música, danza, teatro y audiovisual      | palette    |
+| Educación Tecnológica       | Tecnología, procesos técnicos y pensamiento sociotécnico | laptop     |
+| Educación Física            | Corporeidad, movimiento, juegos y vida saludable         | activity   |
+| Formación Ética y Ciudadana | Ciudadanía, derechos, convivencia y participación        | scale      |
 
 ### Instituciones Creadas
 
