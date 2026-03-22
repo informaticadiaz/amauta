@@ -163,13 +163,20 @@ jobs:
         run: |
           echo "🚀 Disparando deploy en Dokploy..."
 
-          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -L \
-            -X GET "${{ secrets.DOKPLOY_WEBHOOK_URL }}")
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "${{ secrets.DOKPLOY_WEBHOOK_URL }}" \
+            -H "Content-Type: application/json" \
+            -H "x-github-event: push" \
+            -d '{"ref":"refs/heads/master","repository":{"name":"amauta","full_name":"informaticadiaz/amauta"}}')
 
-          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
-            echo "✅ Deploy disparado correctamente (HTTP $HTTP_STATUS)"
+          HTTP_STATUS=$(echo "$RESPONSE" | tail -1)
+          BODY=$(echo "$RESPONSE" | head -1)
+
+          echo "HTTP $HTTP_STATUS: $BODY"
+
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 400 ]; then
+            echo "✅ Deploy disparado correctamente"
           else
-            echo "❌ Error al disparar el deploy (HTTP $HTTP_STATUS)"
+            echo "❌ Error al disparar el deploy"
             exit 1
           fi
 
