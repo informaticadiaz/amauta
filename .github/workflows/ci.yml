@@ -163,7 +163,7 @@ jobs:
         run: |
           echo "🚀 Disparando deploy en Dokploy..."
 
-          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -L \
             -X GET "${{ secrets.DOKPLOY_WEBHOOK_URL }}")
 
           if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
