@@ -30,6 +30,8 @@ coverage/
 # NEVER commit these files - they contain sensitive data
 .env.production.local
 .env.staging.local
+docker-compose.override.yml
+.claude/settings.local.json
 *.credentials
 *.secrets
 secrets/
