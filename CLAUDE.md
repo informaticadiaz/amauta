@@ -22,9 +22,33 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 3 - Evaluaciones 🚧 EN PROGRESO (Sprint 8)
+### Fase Actual: Fase 4 - Módulo Escolar 🚧 EN PROGRESO
 
-**Progreso**: Sprint 8 en curso (1/3 issues completados)
+**Progreso**: 1/6 issues de features completados (F4-001 a F4-003 fueron planning)
+
+#### Completado en Fase 4:
+
+- ✅ **F4-001**: Refinar historias y criterios de aceptación (Fase 4) — planning
+- ✅ **F4-002**: Matriz de dependencias UI/Backend (Fase 4) — planning
+- ✅ **F4-003**: Diseño funcional de flujos administrativos (roles) — planning
+- ✅ **F4-004**: API Periodos Académicos + Escala de Calificación (Institución)
+  - Modelos Prisma: `PeriodoAcademico`, `EscalaCalificacion` + migración
+  - Módulo `instituciones` con service, controller y DTOs Zod
+  - CRUD de períodos por institución (soft delete con `activo = false`)
+  - Endpoint upsert de escala de calificación por institución (1:1)
+  - 24 tests (98% statements, 100% funciones)
+
+#### Próximos pasos:
+
+- Continuar Fase 4: #68 (F4-005: API Grupos/Clases) y #69 (F4-006: UI Grupos/Clases)
+
+**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 4"
+
+### Fase Anterior: Fase 3 - Evaluaciones ✅ COMPLETADA
+
+**Progreso**: 12/12 issues completados ✅ FASE 3 COMPLETADA
+
+**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 3"
 
 #### Completado en Fase 1:
 
@@ -119,12 +143,6 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Dashboard diferenciado para estudiantes vs educadores/admins
   - 19 tests frontend (3 suites, 100% statements)
 
-#### Próximos pasos:
-
-- Continuar Sprint 8: #56 (Endpoint crear evaluación) y #57 (UI básica crear evaluación)
-
-**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 3"
-
 ### Fase Anterior: Fase 2 - Offline-First PWA ✅ COMPLETADA
 
 **Progreso**: 8/8 issues completados ✅ FASE 2 COMPLETADA
@@ -207,8 +225,8 @@ El roadmap define:
 | 0    | Fundamentos       | ✅ Completado  | `fase-0-tareas.md`    |
 | 1    | MVP Cursos        | ✅ Completado  | `roadmap.md` → Fase 1 |
 | 2    | Offline-First PWA | ✅ Completado  | `roadmap.md` → Fase 2 |
-| 3    | Evaluaciones      | 🚧 En Progreso | `roadmap.md` → Fase 3 |
-| 4    | Módulo Escolar    | 📋 Pendiente   | `roadmap.md` → Fase 4 |
+| 3    | Evaluaciones      | ✅ Completado  | `roadmap.md` → Fase 3 |
+| 4    | Módulo Escolar    | 🚧 En Progreso | `roadmap.md` → Fase 4 |
 | 5    | Comunidad         | 📋 Pendiente   | `roadmap.md` → Fase 5 |
 | 6-10 | Avanzadas         | 📋 Futuro      | `roadmap.md`          |
 
@@ -511,7 +529,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 3 en progreso (Sprint 8, 1/3 issues completados)
+- **Fase actual**: Fase 4 en progreso (F4-004 completado, próximos: #68, #69)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**

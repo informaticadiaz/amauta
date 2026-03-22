@@ -19,6 +19,7 @@ import { CategoriasModule } from './categorias/categorias.module';
 import { InscripcionesModule } from './inscripciones/inscripciones.module';
 import { ProgresoModule } from './progreso/progreso.module';
 import { EvaluacionesModule } from './evaluaciones/evaluaciones.module';
+import { InstitucionesModule } from './instituciones/instituciones.module';
 import { JwtAuthGuard, RolesGuard } from './common/guards';
 
 @Module({
@@ -42,6 +43,7 @@ import { JwtAuthGuard, RolesGuard } from './common/guards';
     InscripcionesModule,
     ProgresoModule,
     EvaluacionesModule,
+    InstitucionesModule,
   ],
   controllers: [AppController],
   providers: [

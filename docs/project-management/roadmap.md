@@ -1307,11 +1307,11 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 
 ### Sprint 12 (inicio)
 
-| Issue | Título                                                   | Estado   |
-| ----- | -------------------------------------------------------- | -------- |
-| #67   | F4-004: API Periodos Académicos + Escala de Calificación | 📋 To Do |
-| #68   | F4-005: API Gestión de Grupos/Clases (CRUD + estados)    | 📋 To Do |
-| #69   | F4-006: UI Gestión de Grupos/Clases (Listado + Form)     | 📋 To Do |
+| Issue | Título                                                   | Estado        |
+| ----- | -------------------------------------------------------- | ------------- |
+| #67   | F4-004: API Periodos Académicos + Escala de Calificación | ✅ Completado |
+| #68   | F4-005: API Gestión de Grupos/Clases (CRUD + estados)    | 📋 To Do      |
+| #69   | F4-006: UI Gestión de Grupos/Clases (Listado + Form)     | 📋 To Do      |
 
 ### Objetivos
 
