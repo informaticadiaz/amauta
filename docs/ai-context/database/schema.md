@@ -382,6 +382,9 @@ model Grupo {
   grado   String?
   seccion String?
 
+  periodoAcademicoId String?
+  periodoAcademico   PeriodoAcademico? @relation(fields: [periodoAcademicoId], references: [id])
+
   institucionId String
   institucion   Institucion @relation(fields: [institucionId], references: [id])
 
@@ -399,7 +402,54 @@ model Grupo {
 
   @@index([institucionId])
   @@index([educadorId])
+  @@index([periodoAcademicoId])
   @@map("grupos")
+}
+```
+
+### PeriodoAcademico
+
+```prisma
+model PeriodoAcademico {
+  id String @id @default(cuid())
+  institucionId String
+  institucion   Institucion @relation(fields: [institucionId], references: [id])
+
+  nombre      String
+  fechaInicio DateTime
+  fechaFin    DateTime
+  orden       Int
+  activo      Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  grupos Grupo[]
+
+  @@index([institucionId])
+  @@index([activo])
+  @@map("periodos_academicos")
+}
+```
+
+### EscalaCalificacion
+
+```prisma
+model EscalaCalificacion {
+  id String @id @default(cuid())
+  institucionId String @unique
+  institucion   Institucion @relation(fields: [institucionId], references: [id])
+
+  minima           Float
+  maxima           Float
+  minimaAprobacion Float
+  decimales        Int @default(1)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([institucionId])
+  @@map("escalas_calificacion")
 }
 ```
 
