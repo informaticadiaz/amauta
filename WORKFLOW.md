@@ -132,6 +132,47 @@ gh issue view <número> --json title,body,labels | jq -r '"\(.title)\n\n\(.body)
 
 ### 5. Hacer Commit
 
+#### Paso previo (commit seguro y sincronizado)
+
+Antes de commitear, asegurar que el branch este alineado con remoto y no haya sorpresas:
+
+```bash
+git status -sb
+git fetch origin
+git status -sb
+git log --oneline --decorate -n 5
+```
+
+Si hay commits remotos nuevos, rebasar antes de commitear:
+
+```bash
+git pull --rebase
+```
+
+Reglas:
+
+- ✅ No commitear si el branch esta atras de `origin`
+- ✅ Resolver conflictos antes de seguir
+- ✅ Revisar `git status -sb` despues del rebase
+
+Si hay cambios locales sin commitear y necesitas rebase, usar `stash`:
+
+```bash
+git status -sb
+git stash push -u -m "wip antes de rebase"
+git pull --rebase
+git stash pop
+```
+
+Si hay conflictos luego del `stash pop`, resolverlos y continuar.
+
+#### Checklist pre-commit (calidad minima)
+
+- ✅ `git status -sb` limpio (solo archivos esperados)
+- ✅ Tests relevantes pasados (ej: `npm run test --workspace=@amauta/api -- --testPathPatterns=...`)
+- ✅ Typecheck si aplica (ej: `npx tsc --noEmit -p apps/api/tsconfig.json`)
+- ✅ Documentacion actualizada si aplica
+
 **Formato de mensaje:**
 
 ```
@@ -441,5 +482,5 @@ Para proponer cambios, crear un issue con label `workflow-improvement`.
 
 ---
 
-**Última actualización**: 2025-12-18
+**Última actualización**: 2026-03-24
 **Versión**: 1.0.0
