@@ -480,6 +480,7 @@ CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
 
 - Cada deploy de la API aplica migraciones pendientes con `prisma migrate deploy`.
 - No es necesario ejecutar manualmente `migrate deploy` si el deploy ya corrió.
+- El workflow de GitHub Actions valida el deploy con un healthcheck a `/health`.
 
 ## Estructura del Proyecto
 

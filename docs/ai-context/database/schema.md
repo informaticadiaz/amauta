@@ -619,6 +619,14 @@ npx prisma db seed
 
 ---
 
+## CI/CD de Base de Datos (Producción)
+
+- El contenedor de la API ejecuta `npx prisma migrate deploy` al iniciar.
+- El workflow de GitHub Actions valida el despliegue con un healthcheck HTTP.
+- Si el healthcheck falla, el job de deploy falla y queda visible en el run.
+
+---
+
 ## Notas para IA
 
 1. **cuid()**: IDs únicos, no UUIDs

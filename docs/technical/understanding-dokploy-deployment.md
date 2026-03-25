@@ -339,6 +339,11 @@ Total: ~2.6GB / 4GB → 65% de uso
    - Domain: amauta.diazignacio.ar
    - Env vars: [configurar desde secrets]
 
+### Validación Post-Deploy (CI/CD)
+
+- GitHub Actions valida el deploy con un healthcheck a `/health`.
+- Si el endpoint no responde HTTP 200, el job de deploy falla y queda visible en el run.
+
 7. Deploy
    - Click: "Deploy" en cada aplicación
    - Monitorear logs

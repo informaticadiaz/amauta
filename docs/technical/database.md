@@ -617,6 +617,11 @@ npx prisma migrate deploy
 al iniciar (ver `apps/api/Dockerfile`, `CMD`). Por lo tanto, un deploy de la API
 aplica migraciones pendientes sin intervención manual.
 
+**CI/CD de DB:**
+
+- El workflow de GitHub Actions valida el deploy con healthcheck HTTP a `/health`.
+- Si el healthcheck falla, el job de deploy falla y queda visible en el run.
+
 ### Rollback
 
 ```bash

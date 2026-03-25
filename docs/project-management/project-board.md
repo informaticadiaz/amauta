@@ -76,7 +76,7 @@ Implementar autenticación, autorización y sistema base de cursos.
 - **Issues totales**: 16
 - **Issues completados**: 2 (12.5%)
 - **Fechas**: 30/12/2024 - En curso
-- **Deployment**: ✅ EN PRODUCCIÓN (auto-deploy con Dokploy)
+- **Deployment**: ✅ EN PRODUCCIÓN (auto-deploy con Dokploy + healthcheck post-deploy en GitHub Actions)
 
 ### Issues Completados
 
@@ -98,7 +98,7 @@ Establecer la infraestructura base del proyecto y deployment en producción.
 - **Desarrolladores**: Claude Code
 - **Puntos completados**: 57 puntos
 - **Fechas**: 01/12/2024 - 30/12/2024
-- **Deployment**: ✅ EN PRODUCCIÓN
+- **Deployment**: ✅ EN PRODUCCIÓN (healthcheck post-deploy en CI/CD)
 
 ---
 

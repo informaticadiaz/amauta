@@ -419,6 +419,11 @@ docker exec amauta-redis redis-cli ping
 # Respuesta esperada: PONG
 ```
 
+#### CI/CD Healthcheck
+
+- GitHub Actions valida el deploy con un healthcheck a `/health`.
+- Si el endpoint no responde HTTP 200, el job de deploy falla.
+
 #### SSL/TLS
 
 ```bash
