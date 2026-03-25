@@ -180,6 +180,26 @@ jobs:
             exit 1
           fi
 
+      - name: Esperar healthcheck de API
+        run: |
+          echo "🩺 Esperando healthcheck de la API..."
+          HEALTH_URL="https://amauta-api.diazignacio.ar/health"
+          MAX_RETRIES=12
+          SLEEP_SECONDS=10
+
+          for i in $(seq 1 $MAX_RETRIES); do
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$HEALTH_URL" || true)
+            if [ "$HTTP_CODE" = "200" ]; then
+              echo "✅ Healthcheck OK (HTTP 200)"
+              exit 0
+            fi
+            echo "⏳ Intento $i/$MAX_RETRIES: HTTP $HTTP_CODE"
+            sleep "$SLEEP_SECONDS"
+          done
+
+          echo "❌ Healthcheck falló después de $((MAX_RETRIES * SLEEP_SECONDS))s"
+          exit 1
+
   # Job 4: Resumen
   summary:
     name: Resumen CI
