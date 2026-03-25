@@ -10,6 +10,7 @@ import {
   Patch,
   Param,
   Query,
+  Inject,
 } from '@nestjs/common';
 import { Roles, CurrentUser } from '../common/decorators';
 import type { RequestUser } from '../common/guards';
@@ -29,7 +30,10 @@ interface EvaluacionResponse {
 
 @Controller()
 export class EvaluacionesController {
-  constructor(private readonly evaluacionesService: EvaluacionesService) {}
+  constructor(
+    @Inject(EvaluacionesService)
+    private readonly evaluacionesService: EvaluacionesService
+  ) {}
 
   @Post('evaluaciones')
   @Roles('EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN')

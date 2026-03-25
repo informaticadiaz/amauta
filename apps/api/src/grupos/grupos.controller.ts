@@ -13,6 +13,7 @@ import {
   Patch,
   Post,
   Query,
+  Inject,
 } from '@nestjs/common';
 import { Roles, CurrentUser } from '../common/decorators';
 import type { RequestUser } from '../common/guards';
@@ -29,7 +30,9 @@ interface GrupoWrapper {
 
 @Controller()
 export class GruposController {
-  constructor(private readonly gruposService: GruposService) {}
+  constructor(
+    @Inject(GruposService) private readonly gruposService: GruposService
+  ) {}
 
   @Post('instituciones/:institucionId/grupos')
   @Roles('ADMIN_ESCUELA', 'SUPER_ADMIN')

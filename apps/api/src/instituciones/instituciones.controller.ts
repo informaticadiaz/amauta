@@ -9,6 +9,7 @@ import {
   Param,
   HttpCode,
   HttpStatus,
+  Inject,
 } from '@nestjs/common';
 import { Roles, CurrentUser } from '../common/decorators';
 import type { RequestUser } from '../common/guards';
@@ -16,7 +17,10 @@ import type { InstitucionesService } from './instituciones.service';
 
 @Controller('instituciones')
 export class InstitucionesController {
-  constructor(private readonly institucionesService: InstitucionesService) {}
+  constructor(
+    @Inject(InstitucionesService)
+    private readonly institucionesService: InstitucionesService
+  ) {}
 
   // ============================================================
   // PERÍODOS ACADÉMICOS
