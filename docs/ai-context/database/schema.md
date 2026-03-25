@@ -359,8 +359,10 @@ model Institucion {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  grupos      Grupo[]
-  comunicados Comunicado[]
+  grupos             Grupo[]
+  comunicados        Comunicado[]
+  periodosAcademicos PeriodoAcademico[]
+  escalaCalificacion EscalaCalificacion?
 
   @@map("instituciones")
 }
@@ -418,7 +420,7 @@ model PeriodoAcademico {
   nombre      String
   fechaInicio DateTime
   fechaFin    DateTime
-  orden       Int
+  orden       Int @default(1)
   activo      Boolean @default(true)
 
   createdAt DateTime @default(now())
@@ -440,15 +442,14 @@ model EscalaCalificacion {
   institucionId String @unique
   institucion   Institucion @relation(fields: [institucionId], references: [id])
 
-  minima           Float
-  maxima           Float
-  minimaAprobacion Float
-  decimales        Int @default(1)
+  notaMinima     Float @default(0)
+  notaMaxima     Float @default(10)
+  notaAprobacion Float @default(6)
+  descripcion    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([institucionId])
   @@map("escalas_calificacion")
 }
 ```

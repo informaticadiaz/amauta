@@ -407,7 +407,7 @@ model PeriodoAcademico {
   nombre      String
   fechaInicio DateTime
   fechaFin    DateTime
-  orden       Int
+  orden       Int @default(1)
   activo      Boolean @default(true)
 
   createdAt DateTime @default(now())
@@ -427,15 +427,14 @@ model EscalaCalificacion {
   institucionId String @unique
   institucion   Institucion @relation(fields: [institucionId], references: [id])
 
-  minima           Float
-  maxima           Float
-  minimaAprobacion Float
-  decimales        Int @default(1)
+  notaMinima     Float @default(0)
+  notaMaxima     Float @default(10)
+  notaAprobacion Float @default(6)
+  descripcion    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([institucionId])
   @@map("escalas_calificacion")
 }
 
@@ -586,43 +585,3 @@ enum Prioridad {
   URGENTE
 }
 
-// ==================================
-// CONFIGURACIÓN INSTITUCIONAL
-// ==================================
-
-/// Período académico de una institución (trimestre, semestre, etc.)
-model PeriodoAcademico {
-  id   String @id @default(cuid())
-  nombre String // "1er Trimestre 2025", "Semestre I", etc.
-
-  institucionId String
-  institucion   Institucion @relation(fields: [institucionId], references: [id])
-
-  fechaInicio DateTime
-  fechaFin    DateTime
-  activo      Boolean @default(true)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([institucionId])
-  @@map("periodos_academicos")
-}
-
-/// Escala de calificación de una institución (1:1)
-model EscalaCalificacion {
-  id String @id @default(cuid())
-
-  institucionId String      @unique
-  institucion   Institucion @relation(fields: [institucionId], references: [id])
-
-  notaMinima     Float @default(0)
-  notaMaxima     Float @default(10)
-  notaAprobacion Float @default(6)
-  descripcion    String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("escalas_calificacion")
-}
