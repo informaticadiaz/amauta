@@ -119,3 +119,6 @@ amauta-deployment-private/
 # Los PDFs de NAP no se incluyen en el repo por su tamaño (28MB)
 # Ver docs/nap/README.md para instrucciones de descarga
 docs/nap/**/*.pdf
+
+# Local agent/editor settings
+.claude/settings.local.json
