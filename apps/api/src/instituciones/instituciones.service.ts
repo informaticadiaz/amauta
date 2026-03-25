@@ -2,15 +2,16 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  Inject,
 } from '@nestjs/common';
-import type { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { createPeriodoSchema } from './dto/create-periodo.dto';
 import { updatePeriodoSchema } from './dto/update-periodo.dto';
 import { upsertEscalaSchema } from './dto/upsert-escala.dto';
 
 @Injectable()
 export class InstitucionesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
 
   // ============================================================
   // PERÍODOS ACADÉMICOS
