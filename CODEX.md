@@ -22,12 +22,44 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 1 - MVP Plataforma de Cursos 🚧 EN PROGRESO
+### Fase Actual: Fase 4 - Módulo Escolar 🚧 EN PROGRESO
 
-**Inicio**: 30/12/2024
-**Progreso**: 13/16 issues completados
+**Progreso**: Sprint 12 en curso (2/3 issues completados)
 
-#### Completado en Fase 1:
+#### Completado en Fase 4:
+
+- ✅ **F4-001**: Refinar historias y criterios de aceptación (Fase 4) — planning
+- ✅ **F4-002**: Matriz de dependencias UI/Backend (Fase 4) — planning
+- ✅ **F4-003**: Diseño funcional de flujos administrativos (roles) — planning
+- ✅ **F4-004**: API Periodos Académicos + Escala de Calificación (Institución)
+  - Modelos Prisma: `PeriodoAcademico`, `EscalaCalificacion` + migración
+  - Módulo `instituciones` con service, controller y DTOs Zod
+  - CRUD de períodos por institución (soft delete con `activo = false`)
+  - Endpoint upsert de escala de calificación por institución (1:1)
+  - 24 tests (98% statements, 100% funciones)
+- ✅ **F4-005**: API Gestión de Grupos/Clases (CRUD + estados)
+  - Relación con `PeriodoAcademico` y filtros por periodo/estado
+  - Validación de institución y educador
+  - Tests unitarios de controller y service
+
+#### Próximos pasos:
+
+- Sprint 12: #69 (UI Gestión de Grupos/Clases)
+
+**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 4"
+
+### Fase Anterior: Fase 3 - Evaluaciones ✅ COMPLETADA
+
+**Progreso**: 12/12 issues completados ✅ FASE 3 COMPLETADA
+
+**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 3"
+
+### Fase Anterior: Fase 2 - Offline-First PWA ✅ COMPLETADA
+
+**Inicio**: 15/03/2026
+**Progreso**: 8/8 issues completados
+
+### Fase Anterior: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
 
 - ✅ **F1-001**: Autenticación con NextAuth.js v5
   - Login y registro funcionales
@@ -94,14 +126,6 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Componente `LeccionNavigation` con botones anterior/siguiente
   - `MobileSidebarSheet` drawer para navegación en móvil
   - Botón "Continuar curso" en InscripcionBtn ahora lleva a la primera lección
-
-#### Próximos pasos:
-
-- 📋 **F1-014**: API seguimiento de progreso
-- 📋 **F1-015**: UI marcar lecciones completadas
-- 📋 **F1-016**: Dashboard de estudiante
-
-**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 1"
 
 ### Fase Anterior: Fase 0 ✅ COMPLETADA
 
@@ -177,10 +201,10 @@ El roadmap define:
 | Fase | Nombre            | Estado         | Documento             |
 | ---- | ----------------- | -------------- | --------------------- |
 | 0    | Fundamentos       | ✅ Completado  | `fase-0-tareas.md`    |
-| 1    | MVP Cursos        | 🚧 En Progreso | `roadmap.md` → Fase 1 |
-| 2    | Offline-First PWA | 📋 Pendiente   | `roadmap.md` → Fase 2 |
-| 3    | Evaluaciones      | 📋 Pendiente   | `roadmap.md` → Fase 3 |
-| 4    | Módulo Escolar    | 📋 Pendiente   | `roadmap.md` → Fase 4 |
+| 1    | MVP Cursos        | ✅ Completado  | `roadmap.md` → Fase 1 |
+| 2    | Offline-First PWA | ✅ Completado  | `roadmap.md` → Fase 2 |
+| 3    | Evaluaciones      | ✅ Completado  | `roadmap.md` → Fase 3 |
+| 4    | Módulo Escolar    | 🚧 En Progreso | `roadmap.md` → Fase 4 |
 | 5    | Comunidad         | 📋 Pendiente   | `roadmap.md` → Fase 5 |
 | 6-10 | Avanzadas         | 📋 Futuro      | `roadmap.md`          |
 
@@ -384,6 +408,11 @@ Ver `apps/api/prisma/README.md` para tabla completa con nombres y descripciones.
 - `.github/workflows/ci.yml` - Pipeline de CI/CD
 - `.github/README.md` - Documentación de workflows
 
+**Nota CI/CD DB (Producción):**
+
+- El contenedor de la API ejecuta `npx prisma migrate deploy` al iniciar.
+- El workflow valida el deploy con healthcheck HTTP a `/health`; si falla, el job de deploy falla.
+
 ### Monorepo
 
 - `turbo.json` - Configuración de Turborepo
@@ -483,7 +512,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 1 en progreso (10/16 issues completados)
+- **Fase actual**: Fase 4 en progreso (Sprint 12, 2/3 issues completados)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**

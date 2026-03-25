@@ -22,9 +22,9 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Preparación Fase 4 - Módulo Escolar ✅ COMPLETADA
+### Fase Actual: Fase 4 - Módulo Escolar 🚧 EN PROGRESO
 
-**Progreso**: 3/3 issues de preparación completados
+**Progreso**: Sprint 12 en curso (2/3 issues completados)
 
 #### Sprint 8 (Evaluaciones) ✅ Completado
 
@@ -69,20 +69,21 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Proxy `PATCH /api/evaluaciones/:id/publicar`
   - Feedback de éxito/error y test de interacción
 
-#### Preparación Fase 4 - Módulo Escolar (completada)
+#### Completado en Fase 4:
 
-- ✅ **F4-001**: Refinar historias y criterios de aceptación (Fase 4)
-  - Historias clave definidas por rol (Admin Escolar, Educador, Estudiante/Apoderado)
-  - Criterios de aceptación verificables por historia
-  - Riesgos y dependencias registradas en roadmap
-- ✅ **F4-002**: Matriz de dependencias UI/Backend (Fase 4)
-  - Módulos backend y pantallas UI identificadas por tema
-  - Matriz por flujo con dependencias cruzadas para ordenar implementación
-  - Dependencias transversales documentadas en el roadmap
-- ✅ **F4-003**: Diseño funcional de flujos administrativos (roles)
-  - Flujos definidos por rol (Admin Escolar, Educador, Estudiante/Apoderado)
-  - Casos límite y permisos por rol documentados
-  - Prioridades por sprint establecidas para implementación
+- ✅ **F4-001**: Refinar historias y criterios de aceptación (Fase 4) — planning
+- ✅ **F4-002**: Matriz de dependencias UI/Backend (Fase 4) — planning
+- ✅ **F4-003**: Diseño funcional de flujos administrativos (roles) — planning
+- ✅ **F4-004**: API Periodos Académicos + Escala de Calificación (Institución)
+  - Modelos Prisma: `PeriodoAcademico`, `EscalaCalificacion` + migración
+  - Módulo `instituciones` con service, controller y DTOs Zod
+  - CRUD de períodos por institución (soft delete con `activo = false`)
+  - Endpoint upsert de escala de calificación por institución (1:1)
+  - 24 tests (98% statements, 100% funciones)
+- ✅ **F4-005**: API Gestión de Grupos/Clases (CRUD + estados)
+  - Relación con `PeriodoAcademico` y filtros por periodo/estado
+  - Validación de institución y educador
+  - Tests unitarios de controller y service
 
 #### Preparación Fase 3 - Evaluaciones (completada)
 
@@ -95,10 +96,9 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Flujos funcionales por rol documentados
   - Casos límite definidos (intentos, tiempo, puntaje mínimo)
 
-### Fase Anterior: Fase 2 - Offline-First PWA ✅ COMPLETADA
+### Fase Anterior: Fase 3 - Evaluaciones ✅ COMPLETADA
 
-**Inicio**: 15/03/2026
-**Progreso**: 8/8 issues completados
+**Progreso**: 12/12 issues completados ✅ FASE 3 COMPLETADA
 
 #### Completado en Fase 2:
 
@@ -149,7 +149,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Tests de UI para descarga offline y estado de conexión
   - Guía rápida Lighthouse PWA con resultados mínimos esperados
 
-### Fase Anterior: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
+### Fase Anterior: Fase 2 - Offline-First PWA ✅ COMPLETADA
 
 **Inicio**: 30/12/2024
 **Progreso**: 16/16 issues completados ✅ FASE 1 COMPLETADA
@@ -252,6 +252,8 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 #### Iniciativas Curriculares (Post-Fase 1)
 
 - ✅ **NAP** (Issue #21): categorías alineadas a áreas oficiales, cursos de ejemplo por nivel y documentación en `docs/sistema/curricula-nap.md`
+
+### Fase Anterior: Fase 1 - MVP Plataforma de Cursos ✅ COMPLETADA
 
 ### Fase Anterior: Fase 0 ✅ COMPLETADA
 
@@ -534,6 +536,11 @@ Ver `apps/api/prisma/README.md` para tabla completa con nombres y descripciones.
 
 - `.github/workflows/ci.yml` - Pipeline de CI/CD
 - `.github/README.md` - Documentación de workflows
+
+**Nota CI/CD DB (Producción):**
+
+- El contenedor de la API ejecuta `npx prisma migrate deploy` al iniciar.
+- El workflow valida el deploy con healthcheck HTTP a `/health`; si falla, el job de deploy falla.
 
 ### Monorepo
 

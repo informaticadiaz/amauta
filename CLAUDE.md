@@ -434,6 +434,11 @@ Ver `apps/api/prisma/README.md` para tabla completa con nombres y descripciones.
 - `.github/workflows/ci.yml` - Pipeline de CI/CD
 - `.github/README.md` - Documentación de workflows
 
+**Nota CI/CD DB (Producción):**
+
+- El contenedor de la API ejecuta `npx prisma migrate deploy` al iniciar.
+- El workflow valida el deploy con healthcheck HTTP a `/health`; si falla, el job de deploy falla.
+
 ### Monorepo
 
 - `turbo.json` - Configuración de Turborepo
