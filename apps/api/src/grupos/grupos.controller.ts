@@ -17,8 +17,11 @@ import {
 } from '@nestjs/common';
 import { Roles, CurrentUser } from '../common/decorators';
 import type { RequestUser } from '../common/guards';
-import type { GruposService } from './grupos.service';
-import { type GrupoResponse, type ListaGruposResponse } from './grupos.service';
+import {
+  GruposService,
+  type GrupoResponse,
+  type ListaGruposResponse,
+} from './grupos.service';
 import type { CreateGrupoDto } from './dto/create-grupo.dto';
 import type { UpdateGrupoDto } from './dto/update-grupo.dto';
 import type { QueryGruposDto } from './dto/query-grupos.dto';

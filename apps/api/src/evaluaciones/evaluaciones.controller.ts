@@ -14,8 +14,8 @@ import {
 } from '@nestjs/common';
 import { Roles, CurrentUser } from '../common/decorators';
 import type { RequestUser } from '../common/guards';
-import type { EvaluacionesService } from './evaluaciones.service';
 import {
+  EvaluacionesService,
   type EvaluacionResponse as EvaluacionEntity,
   type ListaEvaluacionesResponse,
 } from './evaluaciones.service';
