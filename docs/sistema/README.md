@@ -149,6 +149,11 @@ docs/sistema/
 ├── curricula-nap.md    ← Alineación curricular NAP
 ├── autenticacion.md    ← Cómo funciona el login/registro
 ├── roles-permisos.md   ← Qué puede hacer cada rol
+├── modulos/            ← Documentación funcional por módulo
+│   ├── README.md
+│   ├── cursos.md       ← ✅ Módulo de cursos
+│   ├── inscripciones.md ← ✅ Módulo de inscripciones
+│   └── lecciones.md    ← ✅ Módulo de lecciones
 └── seed/               ← Datos de prueba (histórico)
     ├── README.md
     ├── etapa-1-usuarios.md

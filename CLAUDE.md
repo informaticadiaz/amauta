@@ -846,3 +846,4 @@ enum Prioridad {
 | **NotebookLM Cuadernos**  | `docs/ai-skills/notebooklm-cuadernos.md`  | Generar cuadernos de estudio genéricos para NotebookLM                                 |
 | **PWA Mobile Design**     | `docs/ai-skills/pwa-mobile-design.md`     | Diseñar/auditar PWA orientada a mobile: manifest, SW, IndexedDB, sync, UI táctil       |
 | **Feature Audit**         | `docs/ai-skills/feature-audit.md`         | Auditar que las features implementadas funcionan y cumplen sus criterios de aceptación |
+| **Functional Docs**       | `docs/ai-skills/functional-docs.md`       | Generar documentación funcional de módulos para usuarios finales (no técnica)          |
