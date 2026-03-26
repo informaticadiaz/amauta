@@ -25,9 +25,16 @@ import {
 import type { CreateGrupoDto } from './dto/create-grupo.dto';
 import type { UpdateGrupoDto } from './dto/update-grupo.dto';
 import type { QueryGruposDto } from './dto/query-grupos.dto';
+import type { AsignarEstudiantesGrupoDto } from './dto/asignar-estudiantes.dto';
+import type { QueryGrupoEstudiantesDto } from './dto/query-grupo-estudiantes.dto';
 
 interface GrupoWrapper {
   grupo: GrupoResponse;
+  message: string;
+}
+
+interface AsignacionEstudiantesWrapper {
+  resultado: Awaited<ReturnType<GruposService['asignarEstudiantes']>>;
   message: string;
 }
 
@@ -96,5 +103,45 @@ export class GruposController {
     @CurrentUser() user: RequestUser
   ): Promise<void> {
     await this.gruposService.eliminar(id, user.id);
+  }
+
+  @Post('grupos/:id/estudiantes')
+  @Roles('ADMIN_ESCUELA', 'SUPER_ADMIN')
+  async asignarEstudiantes(
+    @Param('id') id: string,
+    @Body() dto: AsignarEstudiantesGrupoDto,
+    @CurrentUser() user: RequestUser
+  ): Promise<AsignacionEstudiantesWrapper> {
+    const resultado = await this.gruposService.asignarEstudiantes(
+      id,
+      dto,
+      user.id
+    );
+
+    return {
+      resultado,
+      message: 'Asignación de estudiantes completada',
+    };
+  }
+
+  @Get('grupos/:id/estudiantes')
+  @Roles('ADMIN_ESCUELA', 'SUPER_ADMIN')
+  async listarEstudiantes(
+    @Param('id') id: string,
+    @Query() query: QueryGrupoEstudiantesDto,
+    @CurrentUser() user: RequestUser
+  ): Promise<Awaited<ReturnType<GruposService['listarEstudiantes']>>> {
+    return this.gruposService.listarEstudiantes(id, query, user.id);
+  }
+
+  @Delete('grupos/:id/estudiantes/:estudianteId')
+  @Roles('ADMIN_ESCUELA', 'SUPER_ADMIN')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async removerEstudiante(
+    @Param('id') id: string,
+    @Param('estudianteId') estudianteId: string,
+    @CurrentUser() user: RequestUser
+  ): Promise<void> {
+    await this.gruposService.removerEstudiante(id, estudianteId, user.id);
   }
 }

@@ -17,6 +17,9 @@
 - Filtrar grupos por periodo académico
 - Filtrar grupos por estado (activo/inactivo)
 - Ver la lista de todos los grupos de tu institución
+- Asignar múltiples estudiantes a un grupo en una sola acción
+- Ver el listado de estudiantes por grupo
+- Remover estudiantes sin borrar el historial
 
 ### Como Educador
 
@@ -110,6 +113,29 @@ Desde la página de grupos, usá los filtros disponibles.
 
 ---
 
+### Asignar Estudiantes a un Grupo
+
+**¿Qué es?**
+Agregar varios estudiantes a un grupo en una sola operación.
+
+**¿Quién puede usarlo?**
+Administradores de escuela y Super administradores.
+
+**¿Qué valida el sistema?**
+
+- Que el estudiante exista
+- Que tenga rol de estudiante
+- Que pertenezca a la misma institución del grupo
+- Que no esté ya asignado activamente
+
+**¿Qué devuelve?**
+
+Un resumen con estudiantes agregados, duplicados y errores detectados.
+
+Si una asignación fue removida antes, el sistema puede reactivarla sin perder historial.
+
+---
+
 ## Estados de un Grupo
 
 | Estado       | Significado                      | ¿Se pueden agregar estudiantes? |
@@ -149,6 +175,10 @@ No se pueden eliminar grupos, solo desactivar. Esto preserva el historial acadé
 
 Sí. Un estudiante puede pertenecer a múltiples grupos (ej: diferentes materias).
 
+### ¿Qué pasa si remuevo un estudiante de un grupo?
+
+La asignación no se borra físicamente. Se desactiva y conserva el historial para auditoría o futura reactivación.
+
 ### ¿Qué pasa si desactivo un grupo con estudiantes?
 
 Los estudiantes mantienen su historial pero no pueden recibir nuevas asistencias o calificaciones en ese grupo.
@@ -161,7 +191,6 @@ No. Cada institución solo ve sus propios grupos.
 
 ## Próximas Mejoras
 
-- [ ] Asignación masiva de estudiantes a grupos
 - [ ] Asignación de múltiples educadores por grupo
 - [ ] Exportar lista de estudiantes por grupo
 - [ ] Duplicar grupos de un periodo a otro

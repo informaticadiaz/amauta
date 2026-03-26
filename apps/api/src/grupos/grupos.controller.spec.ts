@@ -4,6 +4,9 @@
  * Criterios de aceptación testeados:
  * - [x] CRUD de grupos con estado activo/inactivo
  * - [x] Filtro por ciclo lectivo y estado
+ * - [x] Asignación masiva de estudiantes (F4-007)
+ * - [x] Listado de estudiantes de un grupo
+ * - [x] Remoción de estudiantes de un grupo
  */
 
 import type { TestingModule } from '@nestjs/testing';
@@ -21,6 +24,9 @@ describe('GruposController', () => {
     obtenerPorId: jest.fn(),
     actualizar: jest.fn(),
     eliminar: jest.fn(),
+    asignarEstudiantes: jest.fn(),
+    listarEstudiantes: jest.fn(),
+    removerEstudiante: jest.fn(),
   };
 
   const mockUser: RequestUser = {
@@ -34,6 +40,8 @@ describe('GruposController', () => {
   const cuidGrupo = 'ckr0000000000000000000011';
   const cuidEducador = 'ckr0000000000000000000012';
   const cuidPeriodo = 'ckr0000000000000000000013';
+  const cuidEstudiante1 = 'ckr0000000000000000000014';
+  const cuidEstudiante2 = 'ckr0000000000000000000015';
 
   const mockGrupo = {
     id: cuidGrupo,
@@ -162,6 +170,94 @@ describe('GruposController', () => {
       expect(result).toBeUndefined();
       expect(mockGruposService.eliminar).toHaveBeenCalledWith(
         'grupo-1',
+        mockUser.id
+      );
+    });
+  });
+
+  // =========================================
+  // Tests de Asignación de Estudiantes (F4-007)
+  // =========================================
+
+  describe('POST /grupos/:id/estudiantes', () => {
+    const asignarDto = {
+      estudiantesIds: [cuidEstudiante1, cuidEstudiante2],
+    };
+
+    it('debería asignar estudiantes y retornar resumen', async () => {
+      const mockResult = {
+        agregados: [cuidEstudiante1, cuidEstudiante2],
+        duplicados: [],
+        errores: [],
+      };
+      mockGruposService.asignarEstudiantes.mockResolvedValue(mockResult);
+
+      const result = await controller.asignarEstudiantes(
+        cuidGrupo,
+        asignarDto,
+        mockUser
+      );
+
+      expect(result).toEqual({
+        resultado: mockResult,
+        message: 'Asignación de estudiantes completada',
+      });
+      expect(mockGruposService.asignarEstudiantes).toHaveBeenCalledWith(
+        cuidGrupo,
+        asignarDto,
+        mockUser.id
+      );
+    });
+  });
+
+  describe('GET /grupos/:id/estudiantes', () => {
+    const mockEstudiante = {
+      id: cuidEstudiante1,
+      email: 'estudiante1@amauta.test',
+      nombre: 'Juan',
+      apellido: 'Pérez',
+      inscritoEn: new Date(),
+    };
+
+    it('debería listar estudiantes del grupo', async () => {
+      const mockResult = {
+        estudiantes: [mockEstudiante],
+        total: 1,
+        page: 1,
+        limit: 10,
+        totalPages: 1,
+      };
+      mockGruposService.listarEstudiantes.mockResolvedValue(mockResult);
+
+      const result = await controller.listarEstudiantes(
+        cuidGrupo,
+        { page: 1, limit: 10 },
+        mockUser
+      );
+
+      expect(result).toEqual(mockResult);
+      expect(mockGruposService.listarEstudiantes).toHaveBeenCalledWith(
+        cuidGrupo,
+        { page: 1, limit: 10 },
+        mockUser.id
+      );
+    });
+  });
+
+  describe('DELETE /grupos/:id/estudiantes/:estudianteId', () => {
+    it('debería remover un estudiante del grupo', async () => {
+      mockGruposService.removerEstudiante.mockResolvedValue(undefined);
+
+      const result = await controller.removerEstudiante(
+        cuidGrupo,
+        cuidEstudiante1,
+        mockUser
+      );
+
+      expect(result).toBeUndefined();
+      expect(mockGruposService.removerEstudiante).toHaveBeenCalledWith(
+        cuidGrupo,
+        cuidEstudiante1,
         mockUser.id
       );
     });

@@ -13,12 +13,47 @@ import { PrismaService } from '../prisma/prisma.service';
 import { createGrupoSchema, type CreateGrupoDto } from './dto/create-grupo.dto';
 import { updateGrupoSchema, type UpdateGrupoDto } from './dto/update-grupo.dto';
 import { queryGruposSchema, type QueryGruposDto } from './dto/query-grupos.dto';
+import {
+  asignarEstudiantesGrupoSchema,
+  type AsignarEstudiantesGrupoDto,
+} from './dto/asignar-estudiantes.dto';
+import {
+  queryGrupoEstudiantesSchema,
+  type QueryGrupoEstudiantesDto,
+} from './dto/query-grupo-estudiantes.dto';
 import type { Grupo } from '@prisma/client';
 
 export type GrupoResponse = Grupo;
 
 export interface ListaGruposResponse {
   grupos: Grupo[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface AsignacionEstudiantesError {
+  estudianteId: string;
+  razon: string;
+}
+
+export interface AsignacionEstudiantesResponse {
+  agregados: string[];
+  duplicados: string[];
+  errores: AsignacionEstudiantesError[];
+}
+
+export interface GrupoEstudianteResponse {
+  id: string;
+  email: string;
+  nombre: string;
+  apellido: string;
+  inscritoEn: Date;
+}
+
+export interface ListaGrupoEstudiantesResponse {
+  estudiantes: GrupoEstudianteResponse[];
   total: number;
   page: number;
   limit: number;
@@ -146,6 +181,28 @@ export class GruposService {
         'El educador no pertenece a la institución'
       );
     }
+  }
+
+  private async obtenerGrupoYValidarAcceso(
+    grupoId: string,
+    usuarioId: string
+  ): Promise<{ id: string; institucionId: string; activo: boolean }> {
+    const grupo = await this.prisma.grupo.findUnique({
+      where: { id: grupoId },
+      select: {
+        id: true,
+        institucionId: true,
+        activo: true,
+      },
+    });
+
+    if (!grupo) {
+      throw new NotFoundException('Grupo no encontrado');
+    }
+
+    await this.resolverInstitucionId(grupo.institucionId, usuarioId);
+
+    return grupo;
   }
 
   /**
@@ -308,6 +365,258 @@ export class GruposService {
     await this.prisma.grupo.update({
       where: { id },
       data: { activo: false },
+    });
+  }
+
+  async asignarEstudiantes(
+    grupoId: string,
+    dto: AsignarEstudiantesGrupoDto,
+    usuarioId: string
+  ): Promise<AsignacionEstudiantesResponse> {
+    const result = asignarEstudiantesGrupoSchema.safeParse(dto);
+    if (!result.success) {
+      const message = result.error.issues[0]?.message ?? 'Datos inválidos';
+      throw new BadRequestException(message);
+    }
+
+    const grupo = await this.obtenerGrupoYValidarAcceso(grupoId, usuarioId);
+    if (!grupo.activo) {
+      throw new BadRequestException(
+        'No se pueden asignar estudiantes a un grupo inactivo'
+      );
+    }
+
+    const estudiantesIds = [...new Set(result.data.estudiantesIds)];
+
+    const [institucion, estudiantes, asignacionesExistentes] =
+      await Promise.all([
+        this.prisma.institucion.findUnique({
+          where: { id: grupo.institucionId },
+          select: { nombre: true },
+        }),
+        this.prisma.usuario.findMany({
+          where: { id: { in: estudiantesIds } },
+          select: {
+            id: true,
+            email: true,
+            nombre: true,
+            apellido: true,
+            rol: true,
+            perfil: { select: { institucion: true } },
+          },
+        }),
+        this.prisma.grupoEstudiante.findMany({
+          where: {
+            grupoId,
+            estudianteId: { in: estudiantesIds },
+          },
+          select: {
+            estudianteId: true,
+            activo: true,
+          },
+        }),
+      ]);
+
+    if (!institucion) {
+      throw new NotFoundException('Institución no encontrada');
+    }
+
+    const estudiantesMap = new Map(
+      estudiantes.map((estudiante) => [estudiante.id, estudiante])
+    );
+    const asignacionesMap = new Map(
+      asignacionesExistentes.map((asignacion) => [
+        asignacion.estudianteId,
+        asignacion,
+      ])
+    );
+
+    const agregados: string[] = [];
+    const duplicados: string[] = [];
+    const errores: AsignacionEstudiantesError[] = [];
+    const nuevosIds: string[] = [];
+    const reactivarIds: string[] = [];
+
+    for (const estudianteId of estudiantesIds) {
+      const estudiante = estudiantesMap.get(estudianteId);
+      if (!estudiante) {
+        errores.push({
+          estudianteId,
+          razon: 'Estudiante no encontrado',
+        });
+        continue;
+      }
+
+      if (estudiante.rol !== 'ESTUDIANTE') {
+        errores.push({
+          estudianteId,
+          razon: 'El usuario no tiene rol ESTUDIANTE',
+        });
+        continue;
+      }
+
+      if (estudiante.perfil?.institucion !== institucion.nombre) {
+        errores.push({
+          estudianteId,
+          razon: 'El estudiante no pertenece a la institución',
+        });
+        continue;
+      }
+
+      const asignacion = asignacionesMap.get(estudianteId);
+      if (asignacion?.activo) {
+        duplicados.push(estudianteId);
+        continue;
+      }
+
+      if (asignacion && !asignacion.activo) {
+        reactivarIds.push(estudianteId);
+        agregados.push(estudianteId);
+        continue;
+      }
+
+      nuevosIds.push(estudianteId);
+      agregados.push(estudianteId);
+    }
+
+    const ahora = new Date();
+    const operations = [];
+
+    if (nuevosIds.length > 0) {
+      operations.push(
+        this.prisma.grupoEstudiante.createMany({
+          data: nuevosIds.map((estudianteId) => ({
+            grupoId,
+            estudianteId,
+            asignadoPorId: usuarioId,
+            inscritoEn: ahora,
+            activo: true,
+          })),
+        })
+      );
+    }
+
+    for (const estudianteId of reactivarIds) {
+      operations.push(
+        this.prisma.grupoEstudiante.update({
+          where: {
+            grupoId_estudianteId: {
+              grupoId,
+              estudianteId,
+            },
+          },
+          data: {
+            activo: true,
+            inscritoEn: ahora,
+            asignadoPorId: usuarioId,
+            removidoEn: null,
+            removidoPorId: null,
+          },
+        })
+      );
+    }
+
+    if (operations.length > 0) {
+      await this.prisma.$transaction(operations);
+    }
+
+    return {
+      agregados,
+      duplicados,
+      errores,
+    };
+  }
+
+  async listarEstudiantes(
+    grupoId: string,
+    query: QueryGrupoEstudiantesDto,
+    usuarioId: string
+  ): Promise<ListaGrupoEstudiantesResponse> {
+    const result = queryGrupoEstudiantesSchema.safeParse(query);
+    if (!result.success) {
+      const message = result.error.issues[0]?.message ?? 'Parámetros inválidos';
+      throw new BadRequestException(message);
+    }
+
+    await this.obtenerGrupoYValidarAcceso(grupoId, usuarioId);
+
+    const { page, limit } = result.data;
+    const skip = (page - 1) * limit;
+    const where = {
+      grupoId,
+      activo: true,
+    };
+
+    const [asignaciones, total] = await Promise.all([
+      this.prisma.grupoEstudiante.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { inscritoEn: 'desc' },
+        select: {
+          inscritoEn: true,
+          estudiante: {
+            select: {
+              id: true,
+              email: true,
+              nombre: true,
+              apellido: true,
+            },
+          },
+        },
+      }),
+      this.prisma.grupoEstudiante.count({ where }),
+    ]);
+
+    return {
+      estudiantes: asignaciones.map((asignacion) => ({
+        ...asignacion.estudiante,
+        inscritoEn: asignacion.inscritoEn,
+      })),
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
+  }
+
+  async removerEstudiante(
+    grupoId: string,
+    estudianteId: string,
+    usuarioId: string
+  ): Promise<void> {
+    await this.obtenerGrupoYValidarAcceso(grupoId, usuarioId);
+
+    const asignacion = await this.prisma.grupoEstudiante.findUnique({
+      where: {
+        grupoId_estudianteId: {
+          grupoId,
+          estudianteId,
+        },
+      },
+      select: {
+        grupoId: true,
+        estudianteId: true,
+        activo: true,
+      },
+    });
+
+    if (!asignacion?.activo) {
+      throw new NotFoundException('La asignación del estudiante no existe');
+    }
+
+    await this.prisma.grupoEstudiante.update({
+      where: {
+        grupoId_estudianteId: {
+          grupoId,
+          estudianteId,
+        },
+      },
+      data: {
+        activo: false,
+        removidoEn: new Date(),
+        removidoPorId: usuarioId,
+      },
     });
   }
 }

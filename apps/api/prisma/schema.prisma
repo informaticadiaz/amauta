@@ -40,7 +40,9 @@ model Usuario {
   calificaciones Calificacion[]
   comunicados    Comunicado[]
   gruposCreados  Grupo[]
-  gruposEstudiante GrupoEstudiante[]
+  gruposEstudiante           GrupoEstudiante[] @relation("GrupoEstudianteUsuario")
+  asignacionesGrupoRealizadas GrupoEstudiante[] @relation("GrupoEstudianteAsignadoPor")
+  remocionesGrupoRealizadas   GrupoEstudiante[] @relation("GrupoEstudianteRemovidoPor")
   evaluacionesCreadas Evaluacion[] @relation("Evaluador")
   intentosEvaluacion  IntentoEvaluacion[]
 
@@ -476,11 +478,24 @@ model GrupoEstudiante {
   grupo   Grupo  @relation(fields: [grupoId], references: [id])
 
   estudianteId String
-  estudiante   Usuario @relation(fields: [estudianteId], references: [id])
+  estudiante   Usuario @relation("GrupoEstudianteUsuario", fields: [estudianteId], references: [id])
+
+  asignadoPorId String?
+  asignadoPor   Usuario? @relation("GrupoEstudianteAsignadoPor", fields: [asignadoPorId], references: [id])
+
+  removidoPorId String?
+  removidoPor   Usuario? @relation("GrupoEstudianteRemovidoPor", fields: [removidoPorId], references: [id])
 
   inscritoEn DateTime @default(now())
+  activo     Boolean  @default(true)
+  removidoEn DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@id([grupoId, estudianteId])
+  @@index([grupoId, activo])
+  @@index([estudianteId, activo])
   @@map("grupos_estudiantes")
 }
 
@@ -584,4 +599,3 @@ enum Prioridad {
   ALTA
   URGENTE
 }
-

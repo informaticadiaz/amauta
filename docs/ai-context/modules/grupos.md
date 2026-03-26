@@ -39,13 +39,16 @@ Permite a administradores escolares crear, editar y desactivar grupos dentro de 
 
 Base: `/api/v1`
 
-| Método | Ruta                                   | Auth | Roles          | Descripción                          |
-| ------ | -------------------------------------- | ---- | -------------- | ------------------------------------ |
-| POST   | `/instituciones/:institucionId/grupos` | Sí   | ADMIN_ESCUELA+ | Crear grupo                          |
-| GET    | `/instituciones/:institucionId/grupos` | Sí   | ADMIN_ESCUELA+ | Listar con filtros (activo, periodo) |
-| GET    | `/grupos/:id`                          | Sí   | ADMIN_ESCUELA+ | Obtener grupo por ID                 |
-| PATCH  | `/grupos/:id`                          | Sí   | ADMIN_ESCUELA+ | Actualizar grupo                     |
-| DELETE | `/grupos/:id`                          | Sí   | ADMIN_ESCUELA+ | Desactivar grupo (soft delete)       |
+| Método | Ruta                                    | Auth | Roles          | Descripción                          |
+| ------ | --------------------------------------- | ---- | -------------- | ------------------------------------ |
+| POST   | `/instituciones/:institucionId/grupos`  | Sí   | ADMIN_ESCUELA+ | Crear grupo                          |
+| GET    | `/instituciones/:institucionId/grupos`  | Sí   | ADMIN_ESCUELA+ | Listar con filtros (activo, periodo) |
+| GET    | `/grupos/:id`                           | Sí   | ADMIN_ESCUELA+ | Obtener grupo por ID                 |
+| PATCH  | `/grupos/:id`                           | Sí   | ADMIN_ESCUELA+ | Actualizar grupo                     |
+| DELETE | `/grupos/:id`                           | Sí   | ADMIN_ESCUELA+ | Desactivar grupo (soft delete)       |
+| POST   | `/grupos/:id/estudiantes`               | Sí   | ADMIN_ESCUELA+ | Asignar estudiantes de forma masiva  |
+| GET    | `/grupos/:id/estudiantes`               | Sí   | ADMIN_ESCUELA+ | Listar estudiantes del grupo         |
+| DELETE | `/grupos/:id/estudiantes/:estudianteId` | Sí   | ADMIN_ESCUELA+ | Remover estudiante (soft delete)     |
 
 ---
 
@@ -75,6 +78,11 @@ model Grupo {
 2. **Periodo académico**: debe pertenecer a la institución.
 3. **Educador**: debe tener rol EDUCADOR y pertenecer a la institución.
 4. **Soft delete**: se desactiva con `activo=false`.
+5. **Asignación masiva**: los estudiantes deben tener rol `ESTUDIANTE`.
+6. **Pertenencia**: los estudiantes deben pertenecer a la misma institución del grupo.
+7. **Duplicados**: si una asignación sigue activa, se reporta como duplicado.
+8. **Reactivación**: una asignación inactiva puede reactivarse sin perder historial.
+9. **Auditoría**: `GrupoEstudiante` guarda fecha de asignación, usuario asignador y datos de remoción lógica.
 
 ---
 
