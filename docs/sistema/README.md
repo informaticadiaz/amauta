@@ -13,12 +13,13 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 
 ### Implementadas
 
-| Módulo           | Documento                              | Estado         | Descripción                     |
-| ---------------- | -------------------------------------- | -------------- | ------------------------------- |
-| Autenticación    | [autenticacion.md](autenticacion.md)   | ✅ Funcional   | Login, registro de usuarios     |
-| Roles y Permisos | [roles-permisos.md](roles-permisos.md) | ✅ Funcional   | Control de acceso por rol       |
-| Datos de Prueba  | [seed/](seed/README.md)                | ✅ Cargados    | Usuarios, cursos, inscripciones |
-| Currícula NAP    | [curricula-nap.md](curricula-nap.md)   | ✅ Documentado | Alineación curricular argentina |
+| Módulo           | Documento                              | Estado         | Descripción                                    |
+| ---------------- | -------------------------------------- | -------------- | ---------------------------------------------- |
+| Autenticación    | [autenticacion.md](autenticacion.md)   | ✅ Funcional   | Login, registro de usuarios                    |
+| Roles y Permisos | [roles-permisos.md](roles-permisos.md) | ✅ Funcional   | Control de acceso por rol                      |
+| Datos de Prueba  | [seed/](seed/README.md)                | ✅ Cargados    | Usuarios, cursos, inscripciones                |
+| Currícula NAP    | [curricula-nap.md](curricula-nap.md)   | ✅ Documentado | Alineación curricular argentina                |
+| CI/CD Pipeline   | —                                      | ✅ Funcional   | Deploy automático vía GitHub Actions + Dokploy |
 
 ### En Desarrollo
 

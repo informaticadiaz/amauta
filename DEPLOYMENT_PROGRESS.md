@@ -67,6 +67,54 @@ CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
 
 ---
 
+## 🚀 Pipeline CI/CD (Issue #71)
+
+**Estado**: ✅ Configurado — pendiente de activar secret `DOKPLOY_WEBHOOK_URL`
+
+### Flujo completo
+
+```
+Push a master
+  → GitHub Actions: validate → build (lint + type-check + build + tests)
+  → (si todo pasa) GitHub Actions llama webhook de Dokploy
+  → Dokploy redespliega: nuevo build Docker
+  → Container arranca: prisma migrate deploy → node dist/main.js ✅
+  → Healthcheck confirma que la API responde en /health
+```
+
+### Activar el deploy automático (pasos manuales pendientes)
+
+1. **Obtener la URL del webhook en Dokploy**:
+   - Ir a http://72.60.144.210:3000 → servicio API → pestaña "General" o "Webhooks"
+   - Copiar la URL del webhook de deploy
+
+2. **Agregar el secret en GitHub**:
+   - Ir a https://github.com/informaticadiaz/amauta/settings/secrets/actions
+   - Crear secret: `DOKPLOY_WEBHOOK_URL` con la URL copiada
+
+3. **Hacer un push a master** — el pipeline se ejecuta automáticamente.
+
+### Jobs del workflow
+
+| Job        | Cuándo se ejecuta   | Qué hace                                     |
+| ---------- | ------------------- | -------------------------------------------- |
+| `validate` | Siempre             | Estructura, secrets, docs, disciplina Prisma |
+| `build`    | Si validate pasa    | lint, type-check, build, tests API + Web     |
+| `deploy`   | Solo push a master  | Webhook → Dokploy → healthcheck              |
+| `summary`  | Siempre (after all) | Resumen del estado del pipeline              |
+
+### Migraciones automáticas
+
+Las migraciones Prisma se aplican automáticamente al arrancar el contenedor:
+
+```dockerfile
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
+```
+
+No es necesario ejecutar migraciones manualmente en cada deploy.
+
+---
+
 ## 🎯 Próximos Pasos (Opcionales)
 
 **Sistema ONLINE!** Mejoras sugeridas:
@@ -75,8 +123,9 @@ CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
    - 5 etapas de seed implementadas (Issues #23-27)
    - 10 usuarios, 6 cursos, 15 lecciones, datos administrativos
 
-2. **Configurar Webhooks**
-   - Auto-deploy en push a master
+2. ~~**Configurar Webhooks** (Issue #71)~~ ✅ COMPLETADO (2026-03-25)
+   - Pipeline CI/CD con GitHub Actions + Dokploy webhook
+   - Tests activados en CI (API + Web)
 
 3. **Monitoring y Backups**
    - Configurar alertas

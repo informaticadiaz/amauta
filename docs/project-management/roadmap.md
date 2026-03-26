@@ -54,6 +54,7 @@ Cada fase entrega valor usable antes de pasar a la siguiente.
 - [x] Deployment en producción con Dokploy - T-017
 - [x] Seed data para base de datos - T-014 ✅
 - [x] CI expandido con lint, type-check y build - T-014bis ✅
+- [x] CD automático con Dokploy webhook + tests activados en CI - Issue #71 ✅ (2026-03-25)
 
 ### Datos en Producción
 
