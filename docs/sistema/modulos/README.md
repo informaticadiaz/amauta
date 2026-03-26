@@ -13,11 +13,14 @@ Esta carpeta contiene documentación no técnica de cada módulo de Amauta. Cada
 
 ## Módulos Documentados
 
-| Módulo        | Documento                            | Estado       |
-| ------------- | ------------------------------------ | ------------ |
-| Cursos        | [cursos.md](cursos.md)               | ✅ Funcional |
-| Inscripciones | [inscripciones.md](inscripciones.md) | ✅ Funcional |
-| Lecciones     | [lecciones.md](lecciones.md)         | ✅ Funcional |
+| Módulo                      | Documento                            | Estado       |
+| --------------------------- | ------------------------------------ | ------------ |
+| Cursos                      | [cursos.md](cursos.md)               | ✅ Funcional |
+| Inscripciones               | [inscripciones.md](inscripciones.md) | ✅ Funcional |
+| Lecciones                   | [lecciones.md](lecciones.md)         | ✅ Funcional |
+| Grupos / Clases             | [grupos.md](grupos.md)               | ✅ Funcional |
+| Evaluaciones                | [evaluaciones.md](evaluaciones.md)   | ✅ Funcional |
+| Configuración Institucional | [instituciones.md](instituciones.md) | ✅ Funcional |
 
 ## Generar Documentación
 

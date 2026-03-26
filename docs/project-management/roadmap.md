@@ -1,5 +1,7 @@
 # Roadmap - Amauta
 
+**Última actualización**: 2026-03-26
+
 ## Visión General
 
 Este roadmap establece la estrategia de desarrollo de Amauta en fases incrementales, priorizando funcionalidad básica primero y agregando complejidad de manera gradual.
@@ -1305,13 +1307,23 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 
 **Progreso preparación**: 3/3 issues completados ✅
 
-### Sprint 12 (inicio)
+### Sprint 12 ✅ Completado
 
 | Issue | Título                                                   | Estado        |
 | ----- | -------------------------------------------------------- | ------------- |
 | #67   | F4-004: API Periodos Académicos + Escala de Calificación | ✅ Completado |
-| #68   | F4-005: API Gestión de Grupos/Clases (CRUD + estados)    | 📋 To Do      |
-| #69   | F4-006: UI Gestión de Grupos/Clases (Listado + Form)     | 📋 To Do      |
+| #68   | F4-005: API Gestión de Grupos/Clases (CRUD + estados)    | ✅ Completado |
+| #69   | F4-006: UI Gestión de Grupos/Clases (Listado + Form)     | ✅ Completado |
+
+**Progreso Sprint 12**: 3/3 issues completados ✅
+
+### Sprint 13 (próximo)
+
+| Issue | Título                                                | Estado   |
+| ----- | ----------------------------------------------------- | -------- |
+| #72   | F4-007: API Asignación masiva de estudiantes a grupos | 📋 To Do |
+| #73   | F4-008: API Asignación de educadores a grupos         | 📋 To Do |
+| #74   | F4-009: UI Asignación de estudiantes y educadores     | 📋 To Do |
 
 ### Objetivos
 

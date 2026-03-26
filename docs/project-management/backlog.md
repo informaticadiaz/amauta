@@ -1,6 +1,6 @@
 # Product Backlog - Amauta
 
-**Última actualización**: 2026-03-18
+**Última actualización**: 2026-03-26
 **Product Owner**: [Por definir]
 
 ## 🟢 Estado de Producción
@@ -14,7 +14,7 @@
 **Fase 1**: ✅ Completada (16/16 issues completados)
 **Fase 2**: ✅ Completada (8/8 issues completados)
 **Fase 3**: ✅ Completada (Sprint 8-10 completados)
-**Fase 4**: 🚧 En ejecución (Sprint 12)
+**Fase 4**: 🚧 En ejecución (Sprint 12 ✅, Sprint 13 por iniciar)
 
 ## Cómo usar este documento
 
@@ -27,18 +27,31 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
-## Sprint Actual: Sprint 12 - Módulo Escolar (INICIO)
+## Sprint Actual: Sprint 13 - Módulo Escolar (por iniciar)
 
-**Objetivo**: Iniciar ejecución de Fase 4 con la base administrativa escolar (configuración + grupos).
+**Objetivo**: Asignación de estudiantes y educadores a grupos.
+**Referencia**: `docs/project-management/roadmap.md` → Fase 4
+
+### Issues planificadas (Sprint 13)
+
+| Issue | Título                                                | Estado   |
+| ----- | ----------------------------------------------------- | -------- |
+| #72   | F4-007: API Asignación masiva de estudiantes a grupos | 📋 To Do |
+| #73   | F4-008: API Asignación de educadores a grupos         | 📋 To Do |
+| #74   | F4-009: UI Asignación de estudiantes y educadores     | 📋 To Do |
+
+## Sprint 12 - Módulo Escolar Base (COMPLETADO)
+
+**Objetivo**: Base administrativa escolar (configuración + grupos).
 **Referencia**: `docs/project-management/roadmap.md` → Fase 4
 
 ### Issues comprometidas (Sprint 12)
 
-| Issue | Título                                                   | Estado   |
-| ----- | -------------------------------------------------------- | -------- |
-| #67   | F4-004: API Periodos Académicos + Escala de Calificación | 📋 To Do |
-| #68   | F4-005: API Gestión de Grupos/Clases (CRUD + estados)    | 📋 To Do |
-| #69   | F4-006: UI Gestión de Grupos/Clases (Listado + Form)     | 📋 To Do |
+| Issue | Título                                                   | Estado  |
+| ----- | -------------------------------------------------------- | ------- |
+| #67   | F4-004: API Periodos Académicos + Escala de Calificación | ✅ Done |
+| #68   | F4-005: API Gestión de Grupos/Clases (CRUD + estados)    | ✅ Done |
+| #69   | F4-006: UI Gestión de Grupos/Clases (Listado + Form)     | ✅ Done |
 
 ## Sprint 11 - Preparación Fase 4 (COMPLETADO)
 
@@ -330,9 +343,9 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 ### Backlog Health
 
-- **Done**: Fases 0, 1 y 2 completadas
-- **Ready for Development**: Definir Sprint 12 / Fase 4 (ejecución)
-- **Needs Refinement**: 0 items (preparación Fase 3 completada)
+- **Done**: Fases 0, 1, 2, 3 completadas + Sprint 12 de Fase 4
+- **Ready for Development**: Sprint 13 / Fase 4 (asignaciones)
+- **Needs Refinement**: 0 items
 - **Research Done**: 1 item (NAP #21 - investigación completada)
 - **Blocked**: 0 items
 
@@ -365,7 +378,9 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 ### Para Fase 4
 
-1. Iniciar ejecución de Fase 4 (Sprint 12)
+1. Crear issues #72, #73, #74 para Sprint 13
+2. Implementar asignación masiva de estudiantes a grupos
+3. Implementar asignación de educadores a grupos
 
 ---
 
@@ -376,5 +391,5 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 - Las prioridades pueden ajustarse según feedback de usuarios
 - Nuevas historias pueden agregarse en cualquier momento
 
-**Última revisión**: 18/03/2026
-**Próxima revisión**: Inicio de Fase 4
+**Última revisión**: 26/03/2026
+**Próxima revisión**: Fin de Sprint 13
