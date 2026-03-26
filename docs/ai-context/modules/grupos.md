@@ -86,8 +86,47 @@ model Grupo {
 
 ---
 
+---
+
+## Frontend (F4-006)
+
+### Proxies Next.js
+
+| Ruta                  | Métodos            | Descripción                                     |
+| --------------------- | ------------------ | ----------------------------------------------- |
+| `/api/grupos`         | GET, POST          | Lista y crea grupos (requiere `institucionId`)  |
+| `/api/grupos/[id]`    | GET, PATCH, DELETE | Opera sobre un grupo específico                 |
+| `/api/mi-institucion` | GET                | Retorna `{ institucionId, nombre, periodos[] }` |
+
+### Componentes
+
+| Archivo                                              | Descripción                                           |
+| ---------------------------------------------------- | ----------------------------------------------------- |
+| `apps/web/src/components/grupos/GruposList.tsx`      | Lista con filtros estado/período, loading/error/vacío |
+| `apps/web/src/components/grupos/GrupoForm.tsx`       | Formulario crear/editar                               |
+| `apps/web/src/components/grupos/GruposList.test.tsx` | 9 tests                                               |
+| `apps/web/src/components/grupos/GrupoForm.test.tsx`  | 10 tests                                              |
+
+### Páginas
+
+| Ruta                            | Descripción                  |
+| ------------------------------- | ---------------------------- |
+| `/dashboard/grupos`             | Listado (solo ADMIN_ESCUELA) |
+| `/dashboard/grupos/nuevo`       | Crear grupo                  |
+| `/dashboard/grupos/[id]/editar` | Editar grupo                 |
+
+### Nuevo endpoint backend (instituciones)
+
+`GET /api/v1/instituciones/mi-institucion` (ADMIN_ESCUELA)
+→ Retorna `{ institucionId, nombre, periodos[] }`
+→ Resuelve la institución del admin desde su perfil
+
+---
+
 ## Notas para IA
 
 1. **Multi-tenant**: resolver institución desde `perfil.institucion`.
-2. **SUPER_ADMIN**: debe enviar `institucionId` en rutas de creación/listado.
-3. **Filtros**: `activo` y `periodoAcademicoId`.
+2. **SUPER_ADMIN**: debe enviar `institucionId` en rutas de creación/listado (la UI aún no lo soporta).
+3. **Filtros**: `activo` (boolean) y `periodoAcademicoId` (cuid).
+4. **Patrón frontend**: el server component llama `/instituciones/mi-institucion` primero, luego pasa `institucionId` y `periodos` como props al client component.
+5. **educadorId**: en crear es obligatorio (texto UUID). En editar es opcional.

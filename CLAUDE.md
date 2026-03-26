@@ -24,7 +24,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ### Fase Actual: Fase 4 - Módulo Escolar 🚧 EN PROGRESO (Sprint 13)
 
-**Progreso**: Sprint 12 completado ✅ | Sprint 13 por iniciar
+**Progreso**: Sprint 12 completado ✅ | Sprint 13 en curso
 
 #### Completado en Fase 4:
 
@@ -42,15 +42,25 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Validación de institución y educador
   - Tests unitarios de controller y service
 - ✅ **F4-006**: UI Gestión de Grupos/Clases (Listado + Form)
-  - Página de listado con filtros por periodo y estado
-  - Formulario de creación/edición de grupos
-  - Integración con API de grupos
+  - Endpoint backend `GET /instituciones/mi-institucion` para ADMIN_ESCUELA
+  - Componentes `GruposList` (filtros estado/período) y `GrupoForm` (crear/editar)
+  - Páginas: `/dashboard/grupos`, `/dashboard/grupos/nuevo`, `/dashboard/grupos/[id]/editar`
+  - Proxies Next.js: `/api/grupos`, `/api/grupos/[id]`, `/api/mi-institucion`
+  - "Grupos" en el sidebar (solo ADMIN_ESCUELA)
+  - 19 tests frontend (2 suites, 100% pasando)
 
 #### Próximos pasos (Sprint 13):
 
-- #72: F4-007 - API Asignación masiva de estudiantes a grupos
-- #73: F4-008 - API Asignación de educadores a grupos
 - #74: F4-009 - UI Asignación de estudiantes y educadores
+
+#### Issues de infraestructura completados:
+
+- ✅ **Issue #71**: CD Pipeline automático con GitHub Actions + Dokploy
+  - Tests activados en CI (API + Web, antes comentados)
+  - Job `deploy` dispara webhook de Dokploy solo en push a master
+  - Healthcheck post-deploy confirma que la API responde
+  - Documentado en `DEPLOYMENT_PROGRESS.md`
+  - **Pendiente manual**: configurar secret `DOKPLOY_WEBHOOK_URL` en GitHub Settings
 
 **Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 4"
 

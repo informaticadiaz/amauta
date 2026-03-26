@@ -126,6 +126,42 @@ export class InstitucionesService {
   }
 
   // ============================================================
+  // MI INSTITUCIÓN
+  // ============================================================
+
+  async obtenerMiInstitucion(usuarioId: string) {
+    const usuario = await this.prisma.usuario.findUnique({
+      where: { id: usuarioId },
+      select: { perfil: { select: { institucion: true } } },
+    });
+
+    if (!usuario?.perfil?.institucion) {
+      throw new BadRequestException('Usuario sin institución asociada');
+    }
+
+    const institucion = await this.prisma.institucion.findFirst({
+      where: { nombre: usuario.perfil.institucion },
+      select: { id: true, nombre: true },
+    });
+
+    if (!institucion) {
+      throw new NotFoundException('Institución no encontrada');
+    }
+
+    const periodos = await this.prisma.periodoAcademico.findMany({
+      where: { institucionId: institucion.id },
+      orderBy: { fechaInicio: 'desc' },
+      select: { id: true, nombre: true, activo: true },
+    });
+
+    return {
+      institucionId: institucion.id,
+      nombre: institucion.nombre,
+      periodos,
+    };
+  }
+
+  // ============================================================
   // HELPERS
   // ============================================================
 

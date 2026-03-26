@@ -23,6 +23,16 @@ export class InstitucionesController {
   ) {}
 
   // ============================================================
+  // MI INSTITUCIÓN
+  // ============================================================
+
+  @Get('mi-institucion')
+  @Roles('ADMIN_ESCUELA')
+  async miInstitucion(@CurrentUser() user: RequestUser) {
+    return this.institucionesService.obtenerMiInstitucion(user.id);
+  }
+
+  // ============================================================
   // PERÍODOS ACADÉMICOS
   // ============================================================
 
