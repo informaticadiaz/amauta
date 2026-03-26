@@ -171,4 +171,4 @@ docs/sistema/
 ---
 
 **Última actualización**: 26/03/2026
-**Fase actual**: Fase 4 en curso (Sprint 13 iniciado, F4-007 backend completado)
+**Fase actual**: Fase 4 en curso (Sprint 13 iniciado, F4-007 y F4-008 backend completados)

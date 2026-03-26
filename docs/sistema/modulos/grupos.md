@@ -18,8 +18,11 @@
 - Filtrar grupos por estado (activo/inactivo)
 - Ver la lista de todos los grupos de tu institución
 - Asignar múltiples estudiantes a un grupo en una sola acción
+- Asignar uno o más educadores a un grupo con rol titular o suplente
 - Ver el listado de estudiantes por grupo
+- Ver el listado de educadores por grupo
 - Remover estudiantes sin borrar el historial
+- Remover educadores sin borrar el historial
 
 ### Como Educador
 
@@ -136,6 +139,27 @@ Si una asignación fue removida antes, el sistema puede reactivarla sin perder h
 
 ---
 
+### Asignar Educadores a un Grupo
+
+**¿Qué es?**
+Agregar educadores a un grupo indicando si actúan como titular o suplente.
+
+**¿Quién puede usarlo?**
+Administradores de escuela y Super administradores.
+
+**¿Qué valida el sistema?**
+
+- Que el educador exista
+- Que tenga rol de educador
+- Que pertenezca a la misma institución del grupo
+- Que no esté ya asignado activamente al mismo grupo
+
+**¿Qué devuelve?**
+
+La asignación creada con el rol definido. Si la asignación había sido removida antes, el sistema la reactiva sin perder historial.
+
+---
+
 ## Estados de un Grupo
 
 | Estado       | Significado                      | ¿Se pueden agregar estudiantes? |
@@ -175,6 +199,10 @@ No se pueden eliminar grupos, solo desactivar. Esto preserva el historial acadé
 
 Sí. Un estudiante puede pertenecer a múltiples grupos (ej: diferentes materias).
 
+### ¿Un grupo puede tener varios educadores?
+
+Sí. Un grupo puede tener un educador titular y uno o más suplentes, siempre dentro de la misma institución.
+
 ### ¿Qué pasa si remuevo un estudiante de un grupo?
 
 La asignación no se borra físicamente. Se desactiva y conserva el historial para auditoría o futura reactivación.
@@ -191,6 +219,5 @@ No. Cada institución solo ve sus propios grupos.
 
 ## Próximas Mejoras
 
-- [ ] Asignación de múltiples educadores por grupo
 - [ ] Exportar lista de estudiantes por grupo
 - [ ] Duplicar grupos de un periodo a otro

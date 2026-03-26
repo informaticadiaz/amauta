@@ -21,6 +21,14 @@ import {
   queryGrupoEstudiantesSchema,
   type QueryGrupoEstudiantesDto,
 } from './dto/query-grupo-estudiantes.dto';
+import {
+  asignarEducadorGrupoSchema,
+  type AsignarEducadorGrupoDto,
+} from './dto/asignar-educador.dto';
+import {
+  queryGrupoEducadoresSchema,
+  type QueryGrupoEducadoresDto,
+} from './dto/query-grupo-educadores.dto';
 import type { Grupo } from '@prisma/client';
 
 export type GrupoResponse = Grupo;
@@ -54,6 +62,46 @@ export interface GrupoEstudianteResponse {
 
 export interface ListaGrupoEstudiantesResponse {
   estudiantes: GrupoEstudianteResponse[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface GrupoEducadorResponse {
+  id: string;
+  email: string;
+  nombre: string;
+  apellido: string;
+  rol: 'TITULAR' | 'SUPLENTE';
+  asignadoEn: Date;
+}
+
+export interface ListaGrupoEducadoresResponse {
+  educadores: GrupoEducadorResponse[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface GrupoEducadorAsignacionResponse {
+  grupoId: string;
+  educadorId: string;
+  rol: 'TITULAR' | 'SUPLENTE';
+  activo: boolean;
+  asignadoEn: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface MiGrupoEducadorResponse extends Grupo {
+  rol: 'TITULAR' | 'SUPLENTE';
+  asignadoEn: Date;
+}
+
+export interface ListaMisGruposEducadorResponse {
+  grupos: MiGrupoEducadorResponse[];
   total: number;
   page: number;
   limit: number;
@@ -618,5 +666,230 @@ export class GruposService {
         removidoPorId: usuarioId,
       },
     });
+  }
+
+  async asignarEducador(
+    grupoId: string,
+    dto: AsignarEducadorGrupoDto,
+    usuarioId: string
+  ): Promise<GrupoEducadorAsignacionResponse> {
+    const result = asignarEducadorGrupoSchema.safeParse(dto);
+    if (!result.success) {
+      const message = result.error.issues[0]?.message ?? 'Datos inválidos';
+      throw new BadRequestException(message);
+    }
+
+    const grupo = await this.obtenerGrupoYValidarAcceso(grupoId, usuarioId);
+    if (!grupo.activo) {
+      throw new BadRequestException(
+        'No se pueden asignar educadores a un grupo inactivo'
+      );
+    }
+
+    const { educadorId, rol } = result.data;
+
+    await this.validarEducador(educadorId, grupo.institucionId);
+
+    const asignacionExistente = await this.prisma.grupoEducador.findUnique({
+      where: {
+        grupoId_educadorId: {
+          grupoId,
+          educadorId,
+        },
+      },
+    });
+
+    if (asignacionExistente?.activo) {
+      throw new BadRequestException(
+        'El educador ya está asignado a este grupo'
+      );
+    }
+
+    if (asignacionExistente && !asignacionExistente.activo) {
+      return this.prisma.grupoEducador.update({
+        where: {
+          grupoId_educadorId: {
+            grupoId,
+            educadorId,
+          },
+        },
+        data: {
+          rol,
+          activo: true,
+          asignadoEn: new Date(),
+          asignadoPorId: usuarioId,
+          removidoEn: null,
+          removidoPorId: null,
+        },
+      });
+    }
+
+    return this.prisma.grupoEducador.create({
+      data: {
+        grupoId,
+        educadorId,
+        rol,
+        asignadoEn: new Date(),
+        asignadoPorId: usuarioId,
+        activo: true,
+      },
+    });
+  }
+
+  async listarEducadores(
+    grupoId: string,
+    query: QueryGrupoEducadoresDto,
+    usuarioId: string
+  ): Promise<ListaGrupoEducadoresResponse> {
+    const result = queryGrupoEducadoresSchema.safeParse(query);
+    if (!result.success) {
+      const message = result.error.issues[0]?.message ?? 'Parámetros inválidos';
+      throw new BadRequestException(message);
+    }
+
+    await this.obtenerGrupoYValidarAcceso(grupoId, usuarioId);
+
+    const { page, limit } = result.data;
+    const skip = (page - 1) * limit;
+    const where = {
+      grupoId,
+      activo: true,
+    };
+
+    const [asignaciones, total] = await Promise.all([
+      this.prisma.grupoEducador.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { asignadoEn: 'desc' },
+        select: {
+          rol: true,
+          asignadoEn: true,
+          educador: {
+            select: {
+              id: true,
+              email: true,
+              nombre: true,
+              apellido: true,
+            },
+          },
+        },
+      }),
+      this.prisma.grupoEducador.count({ where }),
+    ]);
+
+    return {
+      educadores: asignaciones.map((asignacion) => ({
+        ...asignacion.educador,
+        rol: asignacion.rol,
+        asignadoEn: asignacion.asignadoEn,
+      })),
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
+  }
+
+  async removerEducador(
+    grupoId: string,
+    educadorId: string,
+    usuarioId: string
+  ): Promise<void> {
+    await this.obtenerGrupoYValidarAcceso(grupoId, usuarioId);
+
+    const asignacion = await this.prisma.grupoEducador.findUnique({
+      where: {
+        grupoId_educadorId: {
+          grupoId,
+          educadorId,
+        },
+      },
+      select: {
+        grupoId: true,
+        educadorId: true,
+        activo: true,
+      },
+    });
+
+    if (!asignacion?.activo) {
+      throw new NotFoundException('La asignación del educador no existe');
+    }
+
+    await this.prisma.grupoEducador.update({
+      where: {
+        grupoId_educadorId: {
+          grupoId,
+          educadorId,
+        },
+      },
+      data: {
+        activo: false,
+        removidoEn: new Date(),
+        removidoPorId: usuarioId,
+      },
+    });
+  }
+
+  async listarMisGruposComoEducador(
+    query: QueryGrupoEducadoresDto,
+    usuarioId: string
+  ): Promise<ListaMisGruposEducadorResponse> {
+    const result = queryGrupoEducadoresSchema.safeParse(query);
+    if (!result.success) {
+      const message = result.error.issues[0]?.message ?? 'Parámetros inválidos';
+      throw new BadRequestException(message);
+    }
+
+    const usuario = await this.prisma.usuario.findUnique({
+      where: { id: usuarioId },
+      select: {
+        rol: true,
+      },
+    });
+
+    if (!usuario) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    if (usuario.rol !== 'EDUCADOR') {
+      throw new BadRequestException(
+        'Solo los educadores pueden consultar sus grupos asignados'
+      );
+    }
+
+    const { page, limit } = result.data;
+    const skip = (page - 1) * limit;
+    const where = {
+      educadorId: usuarioId,
+      activo: true,
+    };
+
+    const [asignaciones, total] = await Promise.all([
+      this.prisma.grupoEducador.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { asignadoEn: 'desc' },
+        select: {
+          rol: true,
+          asignadoEn: true,
+          grupo: true,
+        },
+      }),
+      this.prisma.grupoEducador.count({ where }),
+    ]);
+
+    return {
+      grupos: asignaciones.map((asignacion) => ({
+        ...asignacion.grupo,
+        rol: asignacion.rol,
+        asignadoEn: asignacion.asignadoEn,
+      })),
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 }

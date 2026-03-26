@@ -7,6 +7,10 @@
  * - [x] Asignación masiva de estudiantes (F4-007)
  * - [x] Listado de estudiantes de un grupo
  * - [x] Remoción de estudiantes de un grupo
+ * - [ ] Asignación de educadores (F4-008)
+ * - [ ] Listado de educadores de un grupo
+ * - [ ] Remoción de educadores de un grupo
+ * - [ ] Listado de grupos del educador actual
  */
 
 import type { TestingModule } from '@nestjs/testing';
@@ -27,6 +31,10 @@ describe('GruposController', () => {
     asignarEstudiantes: jest.fn(),
     listarEstudiantes: jest.fn(),
     removerEstudiante: jest.fn(),
+    asignarEducador: jest.fn(),
+    listarEducadores: jest.fn(),
+    removerEducador: jest.fn(),
+    listarMisGruposComoEducador: jest.fn(),
   };
 
   const mockUser: RequestUser = {
@@ -260,6 +268,127 @@ describe('GruposController', () => {
         cuidEstudiante1,
         mockUser.id
       );
+    });
+  });
+
+  describe('POST /grupos/:id/educadores', () => {
+    const asignarDto = {
+      educadorId: cuidEducador,
+      rol: 'TITULAR' as const,
+    };
+
+    it('debería asignar un educador al grupo', async () => {
+      const mockAsignacion = {
+        grupoId: cuidGrupo,
+        educadorId: cuidEducador,
+        rol: 'TITULAR',
+        activo: true,
+      };
+      mockGruposService.asignarEducador.mockResolvedValue(mockAsignacion);
+
+      const result = await controller.asignarEducador(
+        cuidGrupo,
+        asignarDto,
+        mockUser
+      );
+
+      expect(result).toEqual({
+        asignacion: mockAsignacion,
+        message: 'Educador asignado exitosamente',
+      });
+      expect(mockGruposService.asignarEducador).toHaveBeenCalledWith(
+        cuidGrupo,
+        asignarDto,
+        mockUser.id
+      );
+    });
+  });
+
+  describe('GET /grupos/:id/educadores', () => {
+    it('debería listar educadores del grupo', async () => {
+      const mockResult = {
+        educadores: [
+          {
+            id: cuidEducador,
+            email: 'educador1@amauta.test',
+            nombre: 'Ana',
+            apellido: 'Suarez',
+            rol: 'TITULAR',
+            asignadoEn: new Date(),
+          },
+        ],
+        total: 1,
+        page: 1,
+        limit: 10,
+        totalPages: 1,
+      };
+      mockGruposService.listarEducadores.mockResolvedValue(mockResult);
+
+      const result = await controller.listarEducadores(
+        cuidGrupo,
+        { page: 1, limit: 10 },
+        mockUser
+      );
+
+      expect(result).toEqual(mockResult);
+      expect(mockGruposService.listarEducadores).toHaveBeenCalledWith(
+        cuidGrupo,
+        { page: 1, limit: 10 },
+        mockUser.id
+      );
+    });
+  });
+
+  describe('DELETE /grupos/:id/educadores/:educadorId', () => {
+    it('debería remover un educador del grupo', async () => {
+      mockGruposService.removerEducador.mockResolvedValue(undefined);
+
+      const result = await controller.removerEducador(
+        cuidGrupo,
+        cuidEducador,
+        mockUser
+      );
+
+      expect(result).toBeUndefined();
+      expect(mockGruposService.removerEducador).toHaveBeenCalledWith(
+        cuidGrupo,
+        cuidEducador,
+        mockUser.id
+      );
+    });
+  });
+
+  describe('GET /educadores/me/grupos', () => {
+    it('debería listar los grupos del educador actual', async () => {
+      const mockResult = {
+        grupos: [
+          {
+            ...mockGrupo,
+            rol: 'TITULAR',
+            asignadoEn: new Date(),
+          },
+        ],
+        total: 1,
+        page: 1,
+        limit: 10,
+        totalPages: 1,
+      };
+      mockGruposService.listarMisGruposComoEducador.mockResolvedValue(
+        mockResult
+      );
+
+      const result = await controller.listarMisGruposComoEducador(
+        { page: 1, limit: 10 },
+        {
+          ...mockUser,
+          rol: 'EDUCADOR',
+        }
+      );
+
+      expect(result).toEqual(mockResult);
+      expect(
+        mockGruposService.listarMisGruposComoEducador
+      ).toHaveBeenCalledWith({ page: 1, limit: 10 }, mockUser.id);
     });
   });
 });

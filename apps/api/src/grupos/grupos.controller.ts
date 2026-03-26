@@ -27,6 +27,8 @@ import type { UpdateGrupoDto } from './dto/update-grupo.dto';
 import type { QueryGruposDto } from './dto/query-grupos.dto';
 import type { AsignarEstudiantesGrupoDto } from './dto/asignar-estudiantes.dto';
 import type { QueryGrupoEstudiantesDto } from './dto/query-grupo-estudiantes.dto';
+import type { AsignarEducadorGrupoDto } from './dto/asignar-educador.dto';
+import type { QueryGrupoEducadoresDto } from './dto/query-grupo-educadores.dto';
 
 interface GrupoWrapper {
   grupo: GrupoResponse;
@@ -35,6 +37,11 @@ interface GrupoWrapper {
 
 interface AsignacionEstudiantesWrapper {
   resultado: Awaited<ReturnType<GruposService['asignarEstudiantes']>>;
+  message: string;
+}
+
+interface AsignacionEducadorWrapper {
+  asignacion: Awaited<ReturnType<GruposService['asignarEducador']>>;
   message: string;
 }
 
@@ -143,5 +150,56 @@ export class GruposController {
     @CurrentUser() user: RequestUser
   ): Promise<void> {
     await this.gruposService.removerEstudiante(id, estudianteId, user.id);
+  }
+
+  @Post('grupos/:id/educadores')
+  @Roles('ADMIN_ESCUELA', 'SUPER_ADMIN')
+  async asignarEducador(
+    @Param('id') id: string,
+    @Body() dto: AsignarEducadorGrupoDto,
+    @CurrentUser() user: RequestUser
+  ): Promise<AsignacionEducadorWrapper> {
+    const asignacion = await this.gruposService.asignarEducador(
+      id,
+      dto,
+      user.id
+    );
+
+    return {
+      asignacion,
+      message: 'Educador asignado exitosamente',
+    };
+  }
+
+  @Get('grupos/:id/educadores')
+  @Roles('ADMIN_ESCUELA', 'SUPER_ADMIN')
+  async listarEducadores(
+    @Param('id') id: string,
+    @Query() query: QueryGrupoEducadoresDto,
+    @CurrentUser() user: RequestUser
+  ): Promise<Awaited<ReturnType<GruposService['listarEducadores']>>> {
+    return this.gruposService.listarEducadores(id, query, user.id);
+  }
+
+  @Delete('grupos/:id/educadores/:educadorId')
+  @Roles('ADMIN_ESCUELA', 'SUPER_ADMIN')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async removerEducador(
+    @Param('id') id: string,
+    @Param('educadorId') educadorId: string,
+    @CurrentUser() user: RequestUser
+  ): Promise<void> {
+    await this.gruposService.removerEducador(id, educadorId, user.id);
+  }
+
+  @Get('educadores/me/grupos')
+  @Roles('EDUCADOR')
+  async listarMisGruposComoEducador(
+    @Query() query: QueryGrupoEducadoresDto,
+    @CurrentUser() user: RequestUser
+  ): Promise<
+    Awaited<ReturnType<GruposService['listarMisGruposComoEducador']>>
+  > {
+    return this.gruposService.listarMisGruposComoEducador(query, user.id);
   }
 }

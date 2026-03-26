@@ -1317,13 +1317,13 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 
 **Progreso Sprint 12**: 3/3 issues completados ✅
 
-### Sprint 13 (próximo)
+### Sprint 13 (en curso)
 
-| Issue | Título                                                | Estado   |
-| ----- | ----------------------------------------------------- | -------- |
-| #72   | F4-007: API Asignación masiva de estudiantes a grupos | 📋 To Do |
-| #73   | F4-008: API Asignación de educadores a grupos         | 📋 To Do |
-| #74   | F4-009: UI Asignación de estudiantes y educadores     | 📋 To Do |
+| Issue | Título                                                | Estado        |
+| ----- | ----------------------------------------------------- | ------------- |
+| #72   | F4-007: API Asignación masiva de estudiantes a grupos | ✅ Completado |
+| #73   | F4-008: API Asignación de educadores a grupos         | ✅ Completado |
+| #74   | F4-009: UI Asignación de estudiantes y educadores     | 📋 To Do      |
 
 ### Objetivos
 

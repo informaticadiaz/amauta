@@ -379,8 +379,7 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 ### Para Fase 4
 
 1. Crear issues #72, #73, #74 para Sprint 13
-2. Implementar asignación masiva de estudiantes a grupos
-3. Implementar asignación de educadores a grupos
+2. Completar la UI de asignación de estudiantes y educadores a grupos (#74)
 
 ---
 

@@ -11,6 +11,10 @@
  * - [x] Detección de duplicados
  * - [x] Listado de estudiantes de un grupo
  * - [x] Remoción de estudiantes de un grupo
+ * - [ ] Asignación de educadores a grupos (F4-008)
+ * - [ ] Listado de educadores de un grupo
+ * - [ ] Remoción de educadores de un grupo
+ * - [ ] Listado de grupos del educador actual
  */
 
 jest.mock('@prisma/client', () => ({
@@ -57,6 +61,13 @@ describe('GruposService', () => {
       update: jest.fn(),
       count: jest.fn(),
     },
+    grupoEducador: {
+      findMany: jest.fn(),
+      findUnique: jest.fn(),
+      create: jest.fn(),
+      update: jest.fn(),
+      count: jest.fn(),
+    },
     $transaction: jest.fn(),
   };
 
@@ -80,6 +91,8 @@ describe('GruposService', () => {
   const cuidEstudiante1 = 'ckr0000000000000000000004';
   const cuidEstudiante2 = 'ckr0000000000000000000005';
   const cuidEstudiante3 = 'ckr0000000000000000000006';
+  const cuidEducador2 = 'ckr0000000000000000000007';
+  const cuidEducador3 = 'ckr0000000000000000000008';
 
   const estudiante1 = {
     id: cuidEstudiante1,
@@ -119,6 +132,24 @@ describe('GruposService', () => {
     activo: true,
     createdAt: new Date(),
     updatedAt: new Date(),
+  };
+
+  const educador2 = {
+    id: cuidEducador2,
+    email: 'educador2@amauta.test',
+    nombre: 'Ana',
+    apellido: 'Suarez',
+    rol: 'EDUCADOR',
+    perfil: { institucion: 'Escuela Belgrano' },
+  };
+
+  const educadorOtraInst = {
+    id: cuidEducador3,
+    email: 'educador3@amauta.test',
+    nombre: 'Luis',
+    apellido: 'Diaz',
+    rol: 'EDUCADOR',
+    perfil: { institucion: 'Otra Escuela' },
   };
 
   beforeEach(async () => {
@@ -569,6 +600,250 @@ describe('GruposService', () => {
           'admin-1'
         )
       ).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('asignarEducador', () => {
+    const asignarDto = {
+      educadorId: cuidEducador2,
+      rol: 'TITULAR' as const,
+    };
+
+    it('debería asignar un educador válido al grupo', async () => {
+      prisma.grupo.findUnique.mockResolvedValue(grupo);
+      prisma.usuario.findUnique
+        .mockResolvedValueOnce(adminUser)
+        .mockResolvedValueOnce(educador2);
+      prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
+      prisma.institucion.findUnique.mockResolvedValue(institucion);
+      prisma.grupoEducador.findUnique.mockResolvedValue(null);
+      prisma.grupoEducador.create.mockResolvedValue({
+        grupoId: cuidGrupo,
+        educadorId: cuidEducador2,
+        rol: 'TITULAR',
+        activo: true,
+        asignadoEn: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      const result = await service.asignarEducador(
+        cuidGrupo,
+        asignarDto,
+        'admin-1'
+      );
+
+      expect(result.educadorId).toBe(cuidEducador2);
+      expect(prisma.grupoEducador.create).toHaveBeenCalledWith({
+        data: expect.objectContaining({
+          grupoId: cuidGrupo,
+          educadorId: cuidEducador2,
+          rol: 'TITULAR',
+          asignadoPorId: 'admin-1',
+          activo: true,
+        }),
+      });
+    });
+
+    it('debería reactivar una asignación inactiva', async () => {
+      prisma.grupo.findUnique.mockResolvedValue(grupo);
+      prisma.usuario.findUnique
+        .mockResolvedValueOnce(adminUser)
+        .mockResolvedValueOnce(educador2);
+      prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
+      prisma.institucion.findUnique.mockResolvedValue(institucion);
+      prisma.grupoEducador.findUnique.mockResolvedValue({
+        grupoId: cuidGrupo,
+        educadorId: cuidEducador2,
+        activo: false,
+      });
+      prisma.grupoEducador.update.mockResolvedValue({
+        grupoId: cuidGrupo,
+        educadorId: cuidEducador2,
+        rol: 'SUPLENTE',
+        activo: true,
+      });
+
+      const result = await service.asignarEducador(
+        cuidGrupo,
+        { educadorId: cuidEducador2, rol: 'SUPLENTE' },
+        'admin-1'
+      );
+
+      expect(result.rol).toBe('SUPLENTE');
+      expect(prisma.grupoEducador.update).toHaveBeenCalledWith({
+        where: {
+          grupoId_educadorId: {
+            grupoId: cuidGrupo,
+            educadorId: cuidEducador2,
+          },
+        },
+        data: expect.objectContaining({
+          rol: 'SUPLENTE',
+          activo: true,
+          asignadoPorId: 'admin-1',
+          removidoEn: null,
+          removidoPorId: null,
+        }),
+      });
+    });
+
+    it('debería lanzar error si el educador es de otra institución', async () => {
+      prisma.grupo.findUnique.mockResolvedValue(grupo);
+      prisma.usuario.findUnique
+        .mockResolvedValueOnce(adminUser)
+        .mockResolvedValueOnce(educadorOtraInst);
+      prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
+      prisma.institucion.findUnique.mockResolvedValue(institucion);
+
+      await expect(
+        service.asignarEducador(cuidGrupo, asignarDto, 'admin-1')
+      ).rejects.toThrow(BadRequestException);
+    });
+
+    it('debería lanzar error si el usuario no es educador', async () => {
+      prisma.grupo.findUnique.mockResolvedValue(grupo);
+      prisma.usuario.findUnique
+        .mockResolvedValueOnce(adminUser)
+        .mockResolvedValueOnce({ ...educador2, rol: 'ESTUDIANTE' });
+      prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
+      prisma.institucion.findUnique.mockResolvedValue(institucion);
+
+      await expect(
+        service.asignarEducador(cuidGrupo, asignarDto, 'admin-1')
+      ).rejects.toThrow(BadRequestException);
+    });
+
+    it('debería lanzar error si la asignación ya existe activa', async () => {
+      prisma.grupo.findUnique.mockResolvedValue(grupo);
+      prisma.usuario.findUnique
+        .mockResolvedValueOnce(adminUser)
+        .mockResolvedValueOnce(educador2);
+      prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
+      prisma.institucion.findUnique.mockResolvedValue(institucion);
+      prisma.grupoEducador.findUnique.mockResolvedValue({
+        grupoId: cuidGrupo,
+        educadorId: cuidEducador2,
+        activo: true,
+      });
+
+      await expect(
+        service.asignarEducador(cuidGrupo, asignarDto, 'admin-1')
+      ).rejects.toThrow(BadRequestException);
+    });
+  });
+
+  describe('listarEducadores', () => {
+    it('debería listar educadores asignados al grupo', async () => {
+      prisma.grupo.findUnique.mockResolvedValue(grupo);
+      prisma.usuario.findUnique.mockResolvedValue(adminUser);
+      prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
+      prisma.grupoEducador.findMany.mockResolvedValue([
+        {
+          rol: 'TITULAR',
+          asignadoEn: new Date(),
+          educador: {
+            id: cuidEducador2,
+            email: 'educador2@amauta.test',
+            nombre: 'Ana',
+            apellido: 'Suarez',
+          },
+        },
+      ]);
+      prisma.grupoEducador.count.mockResolvedValue(1);
+
+      const result = await service.listarEducadores(
+        cuidGrupo,
+        { page: 1, limit: 10 },
+        'admin-1'
+      );
+
+      expect(result.educadores).toHaveLength(1);
+      expect(result.educadores[0]).toEqual(
+        expect.objectContaining({
+          id: cuidEducador2,
+          rol: 'TITULAR',
+        })
+      );
+      expect(result.total).toBe(1);
+    });
+  });
+
+  describe('removerEducador', () => {
+    it('debería remover un educador asignado del grupo', async () => {
+      prisma.grupo.findUnique.mockResolvedValue(grupo);
+      prisma.usuario.findUnique.mockResolvedValue(adminUser);
+      prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
+      prisma.grupoEducador.findUnique.mockResolvedValue({
+        grupoId: cuidGrupo,
+        educadorId: cuidEducador2,
+        activo: true,
+      });
+      prisma.grupoEducador.update.mockResolvedValue({});
+
+      await service.removerEducador(cuidGrupo, cuidEducador2, 'admin-1');
+
+      expect(prisma.grupoEducador.update).toHaveBeenCalledWith({
+        where: {
+          grupoId_educadorId: {
+            grupoId: cuidGrupo,
+            educadorId: cuidEducador2,
+          },
+        },
+        data: expect.objectContaining({
+          activo: false,
+          removidoPorId: 'admin-1',
+        }),
+      });
+    });
+  });
+
+  describe('listarMisGruposComoEducador', () => {
+    it('debería listar grupos asignados al educador actual', async () => {
+      prisma.usuario.findUnique.mockResolvedValue({
+        rol: 'EDUCADOR',
+        perfil: { institucion: 'Escuela Belgrano' },
+      });
+      prisma.grupoEducador.findMany.mockResolvedValue([
+        {
+          rol: 'TITULAR',
+          asignadoEn: new Date(),
+          grupo,
+        },
+      ]);
+      prisma.grupoEducador.count.mockResolvedValue(1);
+
+      const result = await service.listarMisGruposComoEducador(
+        { page: 1, limit: 10 },
+        cuidEducador2
+      );
+
+      expect(result.grupos).toHaveLength(1);
+      expect(result.grupos[0]).toEqual(
+        expect.objectContaining({
+          id: cuidGrupo,
+          rol: 'TITULAR',
+        })
+      );
+      expect(prisma.grupoEducador.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: {
+            educadorId: cuidEducador2,
+            activo: true,
+          },
+        })
+      );
+    });
+
+    it('debería rechazar usuarios que no son educadores', async () => {
+      prisma.usuario.findUnique.mockResolvedValue({
+        rol: 'ADMIN_ESCUELA',
+        perfil: { institucion: 'Escuela Belgrano' },
+      });
+
+      await expect(
+        service.listarMisGruposComoEducador({ page: 1, limit: 10 }, 'admin-1')
+      ).rejects.toThrow(BadRequestException);
     });
   });
 });

@@ -43,6 +43,9 @@ model Usuario {
   gruposEstudiante           GrupoEstudiante[] @relation("GrupoEstudianteUsuario")
   asignacionesGrupoRealizadas GrupoEstudiante[] @relation("GrupoEstudianteAsignadoPor")
   remocionesGrupoRealizadas   GrupoEstudiante[] @relation("GrupoEstudianteRemovidoPor")
+  gruposEducador              GrupoEducador[] @relation("GrupoEducadorUsuario")
+  asignacionesEducadorRealizadas GrupoEducador[] @relation("GrupoEducadorAsignadoPor")
+  remocionesEducadorRealizadas   GrupoEducador[] @relation("GrupoEducadorRemovidoPor")
   evaluacionesCreadas Evaluacion[] @relation("Evaluador")
   intentosEvaluacion  IntentoEvaluacion[]
 
@@ -463,6 +466,7 @@ model Grupo {
 
   // Relaciones
   estudiantes    GrupoEstudiante[]
+  educadores     GrupoEducador[]
   asistencias    Asistencia[]
   calificaciones Calificacion[]
 
@@ -497,6 +501,41 @@ model GrupoEstudiante {
   @@index([grupoId, activo])
   @@index([estudianteId, activo])
   @@map("grupos_estudiantes")
+}
+
+/// Rol del educador dentro del grupo
+enum RolGrupoEducador {
+  TITULAR
+  SUPLENTE
+}
+
+/// Relación muchos a muchos entre grupos y educadores
+model GrupoEducador {
+  grupoId String
+  grupo   Grupo  @relation(fields: [grupoId], references: [id])
+
+  educadorId String
+  educador   Usuario @relation("GrupoEducadorUsuario", fields: [educadorId], references: [id])
+
+  rol RolGrupoEducador
+
+  asignadoPorId String?
+  asignadoPor   Usuario? @relation("GrupoEducadorAsignadoPor", fields: [asignadoPorId], references: [id])
+
+  removidoPorId String?
+  removidoPor   Usuario? @relation("GrupoEducadorRemovidoPor", fields: [removidoPorId], references: [id])
+
+  asignadoEn DateTime @default(now())
+  activo     Boolean  @default(true)
+  removidoEn DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@id([grupoId, educadorId])
+  @@index([grupoId, activo])
+  @@index([educadorId, activo])
+  @@map("grupos_educadores")
 }
 
 /// Registro de asistencia
