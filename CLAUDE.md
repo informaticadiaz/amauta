@@ -62,15 +62,6 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Documentado en `DEPLOYMENT_PROGRESS.md`
   - **Pendiente manual**: configurar secret `DOKPLOY_WEBHOOK_URL` en GitHub Settings
 
-#### Issues de infraestructura completados:
-
-- ✅ **Issue #71**: CD Pipeline automático con GitHub Actions + Dokploy
-  - Tests activados en CI (API + Web, antes comentados)
-  - Job `deploy` dispara webhook de Dokploy solo en push a master
-  - Healthcheck post-deploy confirma que la API responde
-  - Documentado en `DEPLOYMENT_PROGRESS.md`
-  - **Pendiente manual**: configurar secret `DOKPLOY_WEBHOOK_URL` en GitHub Settings
-
 **Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 4"
 
 ### Fase Anterior: Fase 3 - Evaluaciones ✅ COMPLETADA
