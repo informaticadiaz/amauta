@@ -25,6 +25,8 @@ describe('InstitucionesController', () => {
     eliminarPeriodo: jest.fn(),
     obtenerEscala: jest.fn(),
     upsertEscala: jest.fn(),
+    listarEstudiantes: jest.fn(),
+    listarEducadores: jest.fn(),
   };
 
   const mockUser: RequestUser = {
@@ -55,6 +57,22 @@ describe('InstitucionesController', () => {
     descripcion: null,
     createdAt: new Date(),
     updatedAt: new Date(),
+  };
+
+  const mockUsuarios = {
+    usuarios: [
+      {
+        id: 'user-1',
+        email: 'estudiante@escuela.test',
+        nombre: 'Ana',
+        apellido: 'Pérez',
+        activo: true,
+      },
+    ],
+    total: 1,
+    page: 1,
+    limit: 10,
+    totalPages: 1,
   };
 
   beforeEach(async () => {
@@ -182,6 +200,50 @@ describe('InstitucionesController', () => {
         message: expect.any(String),
       });
       expect(mockService.upsertEscala).toHaveBeenCalledWith('inst-123', dto);
+    });
+  });
+
+  // ============================================================
+  // GET /instituciones/:institucionId/estudiantes
+  // ============================================================
+  describe('listarEstudiantes', () => {
+    it('debería retornar la lista de estudiantes con paginación', async () => {
+      mockService.listarEstudiantes.mockResolvedValue(mockUsuarios);
+
+      const result = await controller.listarEstudiantes(
+        'inst-123',
+        { page: 1, limit: 10, buscar: 'ana' },
+        mockUser
+      );
+
+      expect(result).toEqual(mockUsuarios);
+      expect(mockService.listarEstudiantes).toHaveBeenCalledWith(
+        'inst-123',
+        { page: 1, limit: 10, buscar: 'ana' },
+        mockUser.id
+      );
+    });
+  });
+
+  // ============================================================
+  // GET /instituciones/:institucionId/educadores
+  // ============================================================
+  describe('listarEducadores', () => {
+    it('debería retornar la lista de educadores con paginación', async () => {
+      mockService.listarEducadores.mockResolvedValue(mockUsuarios);
+
+      const result = await controller.listarEducadores(
+        'inst-123',
+        { page: 1, limit: 10 },
+        mockUser
+      );
+
+      expect(result).toEqual(mockUsuarios);
+      expect(mockService.listarEducadores).toHaveBeenCalledWith(
+        'inst-123',
+        { page: 1, limit: 10 },
+        mockUser.id
+      );
     });
   });
 });

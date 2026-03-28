@@ -9,11 +9,13 @@ import {
   Param,
   HttpCode,
   HttpStatus,
+  Query,
   Inject,
 } from '@nestjs/common';
 import { Roles, CurrentUser } from '../common/decorators';
 import type { RequestUser } from '../common/guards';
 import { InstitucionesService } from './instituciones.service';
+import type { QueryUsuariosInstitucionDto } from './dto/query-usuarios-institucion.dto';
 
 @Controller('instituciones')
 export class InstitucionesController {
@@ -30,6 +32,38 @@ export class InstitucionesController {
   @Roles('ADMIN_ESCUELA')
   async miInstitucion(@CurrentUser() user: RequestUser) {
     return this.institucionesService.obtenerMiInstitucion(user.id);
+  }
+
+  // ============================================================
+  // USUARIOS POR INSTITUCIÓN
+  // ============================================================
+
+  @Get(':institucionId/estudiantes')
+  @Roles('ADMIN_ESCUELA', 'SUPER_ADMIN')
+  async listarEstudiantes(
+    @Param('institucionId') institucionId: string,
+    @Query() query: QueryUsuariosInstitucionDto,
+    @CurrentUser() user: RequestUser
+  ) {
+    return this.institucionesService.listarEstudiantes(
+      institucionId,
+      query,
+      user.id
+    );
+  }
+
+  @Get(':institucionId/educadores')
+  @Roles('ADMIN_ESCUELA', 'SUPER_ADMIN')
+  async listarEducadores(
+    @Param('institucionId') institucionId: string,
+    @Query() query: QueryUsuariosInstitucionDto,
+    @CurrentUser() user: RequestUser
+  ) {
+    return this.institucionesService.listarEducadores(
+      institucionId,
+      query,
+      user.id
+    );
   }
 
   // ============================================================

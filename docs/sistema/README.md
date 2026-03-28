@@ -45,6 +45,7 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 | Configuración institucional (periodos y escala)           | ✅ Funcional (API)          | Sprint 12   |
 | Gestión de grupos/clases                                  | ✅ Funcional (API + UI)     | Sprint 12   |
 | Asignación de estudiantes a grupos (API)                  | ✅ Funcional (API)          | Sprint 13   |
+| Listado de usuarios por institución (API)                 | ✅ Funcional (API)          | Sprint 13   |
 | Módulo Escolar (asistencias, calificaciones, comunicados) | 📝 Planificación completada | Prep Fase 4 |
 
 ## Roles del Sistema
@@ -170,5 +171,5 @@ docs/sistema/
 
 ---
 
-**Última actualización**: 26/03/2026
+**Última actualización**: 28/03/2026
 **Fase actual**: Fase 4 en curso (Sprint 13 iniciado, F4-007 y F4-008 backend completados)

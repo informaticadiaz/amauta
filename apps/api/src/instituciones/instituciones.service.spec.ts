@@ -29,6 +29,7 @@ describe('InstitucionesService', () => {
   const mockPrisma = {
     institucion: {
       findUnique: jest.fn(),
+      findFirst: jest.fn(),
     },
     periodoAcademico: {
       create: jest.fn(),
@@ -39,6 +40,11 @@ describe('InstitucionesService', () => {
     escalaCalificacion: {
       findUnique: jest.fn(),
       upsert: jest.fn(),
+    },
+    usuario: {
+      findUnique: jest.fn(),
+      findMany: jest.fn(),
+      count: jest.fn(),
     },
   };
 
@@ -69,6 +75,14 @@ describe('InstitucionesService', () => {
     descripcion: 'Escala 0-10, aprobado con 6',
     createdAt: new Date(),
     updatedAt: new Date(),
+  };
+
+  const mockUsuario = {
+    id: 'user-1',
+    email: 'estudiante@escuela.test',
+    nombre: 'Ana',
+    apellido: 'Pérez',
+    activo: true,
   };
 
   beforeEach(async () => {
@@ -309,6 +323,87 @@ describe('InstitucionesService', () => {
       await expect(
         service.upsertEscala('inst-inexistente', dto)
       ).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  // ============================================================
+  // listarEstudiantes
+  // ============================================================
+  describe('listarEstudiantes', () => {
+    const query = { page: 1, limit: 10, buscar: 'ana' };
+
+    it('debería listar estudiantes de la institución del admin', async () => {
+      mockPrisma.usuario.findUnique.mockResolvedValue({
+        rol: 'ADMIN_ESCUELA',
+        perfil: { institucion: mockInstitucion.nombre },
+      });
+      mockPrisma.institucion.findFirst.mockResolvedValue(mockInstitucion);
+      mockPrisma.usuario.findMany.mockResolvedValue([mockUsuario]);
+      mockPrisma.usuario.count.mockResolvedValue(1);
+
+      const result = await service.listarEstudiantes(
+        'inst-123',
+        query,
+        'admin-123'
+      );
+
+      expect(result.usuarios).toHaveLength(1);
+      expect(result.total).toBe(1);
+      expect(mockPrisma.usuario.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({ rol: 'ESTUDIANTE' }),
+        })
+      );
+    });
+
+    it('debería listar estudiantes para SUPER_ADMIN', async () => {
+      mockPrisma.usuario.findUnique.mockResolvedValue({
+        rol: 'SUPER_ADMIN',
+        perfil: { institucion: null },
+      });
+      mockPrisma.institucion.findUnique.mockResolvedValue(mockInstitucion);
+      mockPrisma.usuario.findMany.mockResolvedValue([mockUsuario]);
+      mockPrisma.usuario.count.mockResolvedValue(1);
+
+      const result = await service.listarEstudiantes(
+        'inst-123',
+        { page: 1, limit: 10 },
+        'super-1'
+      );
+
+      expect(result.total).toBe(1);
+      expect(mockPrisma.institucion.findUnique).toHaveBeenCalledWith({
+        where: { id: 'inst-123' },
+        select: { id: true, nombre: true },
+      });
+    });
+  });
+
+  // ============================================================
+  // listarEducadores
+  // ============================================================
+  describe('listarEducadores', () => {
+    it('debería listar educadores de la institución', async () => {
+      mockPrisma.usuario.findUnique.mockResolvedValue({
+        rol: 'ADMIN_ESCUELA',
+        perfil: { institucion: mockInstitucion.nombre },
+      });
+      mockPrisma.institucion.findFirst.mockResolvedValue(mockInstitucion);
+      mockPrisma.usuario.findMany.mockResolvedValue([mockUsuario]);
+      mockPrisma.usuario.count.mockResolvedValue(1);
+
+      const result = await service.listarEducadores(
+        'inst-123',
+        { page: 1, limit: 10 },
+        'admin-123'
+      );
+
+      expect(result.total).toBe(1);
+      expect(mockPrisma.usuario.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({ rol: 'EDUCADOR' }),
+        })
+      );
     });
   });
 });

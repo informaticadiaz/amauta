@@ -48,6 +48,10 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Proxies Next.js: `/api/grupos`, `/api/grupos/[id]`, `/api/mi-institucion`
   - "Grupos" en el sidebar (solo ADMIN_ESCUELA)
   - 19 tests frontend (2 suites, 100% pasando)
+- ✅ **F4-010**: API listado de estudiantes y educadores por institución
+  - Endpoints `GET /instituciones/:id/estudiantes` y `GET /instituciones/:id/educadores`
+  - Filtros opcionales por búsqueda (`buscar`) y paginación (`page`, `limit`)
+  - Validación de permisos (ADMIN_ESCUELA/SUPER_ADMIN)
 
 #### Próximos pasos (Sprint 13):
 

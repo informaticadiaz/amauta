@@ -3,7 +3,7 @@
 > La configuración institucional permite a cada escuela o institución personalizar períodos académicos y escalas de calificación según sus necesidades.
 
 **Estado**: ✅ Funcional (API)
-**Última actualización**: 2026-03-26
+**Última actualización**: 2026-03-28
 
 ---
 
@@ -15,6 +15,7 @@
 - Configurar la escala de calificación de tu institución
 - Activar o desactivar períodos académicos
 - Ver el historial de períodos anteriores
+- Listar estudiantes y educadores de tu institución para asignarlos a grupos
 
 ### Como Super Administrador
 
@@ -102,6 +103,30 @@ Administradores de escuela y Super administradores.
 | Decimal (1-10) | 1      | 10     | 6          |
 | Centesimal     | 0      | 100    | 60         |
 | Conceptual     | 1      | 5      | 3          |
+
+---
+
+### Listado de Usuarios de la Institución
+
+#### ¿Qué es?
+
+Un listado filtrable de estudiantes y educadores disponibles para asignarlos a grupos y clases.
+
+#### ¿Quién puede usarlo?
+
+Administradores de escuela y Super administradores.
+
+#### ¿Qué filtros existen?
+
+- **Buscar** por nombre, apellido o email
+- **Paginación** para navegar grandes listados
+
+#### ¿Qué datos se muestran?
+
+- ID del usuario
+- Nombre y apellido
+- Email
+- Estado activo
 
 ---
 
