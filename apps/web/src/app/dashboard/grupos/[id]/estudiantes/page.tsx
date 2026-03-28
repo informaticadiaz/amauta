@@ -1,28 +1,22 @@
 /**
- * Página para editar un grupo existente
+ * Página de asignación de estudiantes a grupos
  */
 
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { auth } from '@/lib/auth';
 import { api, ApiClientError } from '@/lib/api';
-import { GrupoForm } from '@/components/grupos/GrupoForm';
+import { GrupoEstudiantesSection } from '@/components/grupos/GrupoEstudiantesSection';
 
 interface MiInstitucionResponse {
   institucionId: string;
   nombre: string;
-  periodos: Array<{ id: string; nombre: string; activo: boolean }>;
 }
 
 interface GrupoResponse {
   grupo: {
     id: string;
     nombre: string;
-    grado: string | null;
-    seccion: string | null;
-    activo: boolean;
-    periodoAcademicoId: string | null;
-    educadorId: string;
   };
 }
 
@@ -52,7 +46,7 @@ async function getGrupo(id: string): Promise<GrupoResponse | null> {
   }
 }
 
-export default async function EditarGrupoPage({
+export default async function GrupoEstudiantesPage({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -84,38 +78,42 @@ export default async function EditarGrupoPage({
   }
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-[var(--foreground)]">
-          Editar grupo
-        </h1>
-        <p className="mt-1 text-sm text-[var(--muted)]">
-          {grupoData.grupo.nombre} — {miInstitucion.nombre}
-        </p>
+    <div className="space-y-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <nav className="text-xs text-[var(--muted)]">
+            <Link href="/dashboard/grupos" className="hover:underline">
+              Grupos
+            </Link>{' '}
+            / {grupoData.grupo.nombre}
+          </nav>
+          <h1 className="text-2xl font-bold text-[var(--foreground)]">
+            Estudiantes del grupo
+          </h1>
+          <p className="text-sm text-[var(--muted)]">
+            {miInstitucion.nombre} · {grupoData.grupo.nombre}
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <Link
+            href={`/dashboard/grupos/${id}/educadores`}
+            className="rounded-md border border-[var(--border)] px-4 py-2 text-sm font-medium text-[var(--foreground)] hover:bg-[var(--border)]"
+          >
+            Ver educadores
+          </Link>
+          <Link
+            href={`/dashboard/grupos/${id}/editar`}
+            className="rounded-md border border-[var(--border)] px-4 py-2 text-sm font-medium text-[var(--foreground)] hover:bg-[var(--border)]"
+          >
+            Volver al grupo
+          </Link>
+        </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-6">
-        <GrupoForm
-          institucionId={miInstitucion.institucionId}
-          periodos={miInstitucion.periodos}
-          grupo={grupoData.grupo}
-        />
-      </div>
-
-      <div className="flex flex-wrap items-center gap-3">
-        <Link
-          href={`/dashboard/grupos/${id}/estudiantes`}
-          className="rounded-md border border-[var(--border)] px-4 py-2 text-sm font-medium text-[var(--foreground)] hover:bg-[var(--border)]"
-        >
-          Gestionar estudiantes
-        </Link>
-        <Link
-          href={`/dashboard/grupos/${id}/educadores`}
-          className="rounded-md border border-[var(--border)] px-4 py-2 text-sm font-medium text-[var(--foreground)] hover:bg-[var(--border)]"
-        >
-          Gestionar educadores
-        </Link>
-      </div>
+      <GrupoEstudiantesSection
+        grupoId={id}
+        institucionId={miInstitucion.institucionId}
+      />
     </div>
   );
 }

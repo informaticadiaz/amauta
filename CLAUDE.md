@@ -52,10 +52,15 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Endpoints `GET /instituciones/:id/estudiantes` y `GET /instituciones/:id/educadores`
   - Filtros opcionales por búsqueda (`buscar`) y paginación (`page`, `limit`)
   - Validación de permisos (ADMIN_ESCUELA/SUPER_ADMIN)
+- ✅ **F4-009**: UI Asignación de estudiantes y educadores a grupos
+  - Páginas: `/dashboard/grupos/[id]/estudiantes` y `/dashboard/grupos/[id]/educadores`
+  - Selector de usuarios por institución con búsqueda y paginación
+  - Preview de asignaciones (agregados/duplicados/errores)
+  - Gestión de asignaciones actuales con remoción y confirmación
 
 #### Próximos pasos (Sprint 13):
 
-- #74: F4-009 - UI Asignación de estudiantes y educadores
+- (sin pendientes)
 
 #### Issues de infraestructura completados:
 

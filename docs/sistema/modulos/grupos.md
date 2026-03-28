@@ -3,7 +3,7 @@
 > Los grupos (o clases) permiten organizar estudiantes dentro de una institución educativa, facilitando el registro de asistencias, calificaciones y comunicaciones.
 
 **Estado**: ✅ Funcional (API + UI)
-**Última actualización**: 2026-03-26
+**Última actualización**: 2026-03-28
 
 ---
 
@@ -124,6 +124,9 @@ Agregar varios estudiantes a un grupo en una sola operación.
 **¿Quién puede usarlo?**
 Administradores de escuela y Super administradores.
 
+**¿Cómo accedo?**
+Desde la pantalla del grupo: "Gestionar estudiantes".
+
 **¿Qué valida el sistema?**
 
 - Que el estudiante exista
@@ -146,6 +149,9 @@ Agregar educadores a un grupo indicando si actúan como titular o suplente.
 
 **¿Quién puede usarlo?**
 Administradores de escuela y Super administradores.
+
+**¿Cómo accedo?**
+Desde la pantalla del grupo: "Gestionar educadores".
 
 **¿Qué valida el sistema?**
 
@@ -186,6 +192,14 @@ La asignación creada con el rol definido. Si la asignación había sido removid
 2. Filtrá por el periodo académico anterior
 3. Para cada grupo, hacé clic en "Desactivar"
 4. Los grupos quedan inactivos pero conservan su historial
+
+### Asignar estudiantes y educadores a un grupo
+
+1. Entrá a "Grupos" y abrí el grupo que querés gestionar
+2. Seleccioná "Gestionar estudiantes" o "Gestionar educadores"
+3. Elegí los usuarios de tu institución
+4. Revisá el preview (agregados / duplicados / errores)
+5. Confirmá la asignación
 
 ---
 
