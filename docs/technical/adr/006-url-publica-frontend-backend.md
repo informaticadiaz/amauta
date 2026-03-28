@@ -2,7 +2,7 @@
 
 ## Estado
 
-Propuesto
+Aceptado
 
 ## Fecha
 
@@ -85,6 +85,8 @@ API_URL=https://amauta-api.diazignacio.ar
 API_URL=https://amauta-api.diazignacio.ar
 NEXT_PUBLIC_API_URL=https://amauta-api.diazignacio.ar
 ```
+
+Esta decisión queda aceptada porque el despliegue documentado del proyecto ya opera con dominios públicos estables y los templates de producción del frontend modelan esa expectativa.
 
 ## Razones
 
@@ -283,6 +285,13 @@ Intentar URL interna, fallback a pública si falla.
 
 **Rechazado**: Overkill para 2 servicios, complejidad alta, no apropiado para Amauta.
 
+## Evidencia de adopción
+
+- `C:\Users\infor\DevHome\amauta\DEPLOYMENT_PROGRESS.md` documenta frontend y backend públicos en:
+  - `https://amauta.diazignacio.ar`
+  - `https://amauta-api.diazignacio.ar`
+- `C:\Users\infor\DevHome\amauta\apps\web\.env.production.example` usa URLs públicas HTTPS como patrón de configuración.
+
 ## Referencias
 
 - **Análisis completo**: `docs/NotebookLM/001-analisis-networking-frontend-backend.md`
@@ -292,6 +301,8 @@ Intentar URL interna, fallback a pública si falla.
 - **Roadmap**: `docs/project-management/roadmap.md` (Fase 2: PWA Offline-First)
 - **OWASP Top 10**: https://owasp.org/www-project-top-ten/
 - **ADR-005**: `docs/technical/adr/005-deployment-dokploy.md` (Contexto de deployment)
+- `C:\Users\infor\DevHome\amauta\DEPLOYMENT_PROGRESS.md`
+- `C:\Users\infor\DevHome\amauta\apps\web\.env.production.example`
 
 ## Notas
 

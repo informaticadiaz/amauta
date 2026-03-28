@@ -26,13 +26,17 @@ Los ADRs documentan las decisiones arquitectónicas importantes del proyecto. Ca
 
 ## Índice de ADRs
 
-| #                                  | Título                          | Estado   | Fecha   |
-| ---------------------------------- | ------------------------------- | -------- | ------- |
-| [001](./001-monorepo-turborepo.md) | Usar Turborepo para monorepo    | Aceptado | 2024-12 |
-| [002](./002-nestjs-fastify.md)     | Backend con NestJS + Fastify    | Aceptado | 2024-12 |
-| [003](./003-prisma-orm.md)         | Usar Prisma como ORM            | Aceptado | 2024-12 |
-| [004](./004-nextjs-app-router.md)  | Frontend con Next.js App Router | Aceptado | 2024-12 |
-| [005](./005-deployment-dokploy.md) | Deployment con Dokploy en VPS   | Aceptado | 2024-12 |
+| #                                              | Título                                               | Estado   | Fecha   |
+| ---------------------------------------------- | ---------------------------------------------------- | -------- | ------- |
+| [001](./001-monorepo-turborepo.md)             | Usar Turborepo para monorepo                         | Aceptado | 2024-12 |
+| [002](./002-nestjs-fastify.md)                 | Backend con NestJS + Fastify                         | Aceptado | 2024-12 |
+| [003](./003-prisma-orm.md)                     | Usar Prisma como ORM                                 | Aceptado | 2024-12 |
+| [004](./004-nextjs-app-router.md)              | Frontend con Next.js App Router                      | Aceptado | 2024-12 |
+| [005](./005-deployment-dokploy.md)             | Deployment con Dokploy en VPS                        | Aceptado | 2024-12 |
+| [006](./006-url-publica-frontend-backend.md)   | URL pública HTTPS entre frontend y backend           | Aceptado | 2026-01 |
+| [007](./007-nextauth-puente-jwt-backend.md)    | NextAuth como sesión web y JWT firmado hacia backend | Aceptado | 2026-03 |
+| [008](./008-offline-first-pwa.md)              | Estrategia offline-first para la PWA                 | Aceptado | 2026-03 |
+| [009](./009-prisma-migraciones-controladas.md) | Migraciones Prisma versionadas y deploy controlado   | Aceptado | 2026-03 |
 
 ## Template para nuevos ADRs
 
@@ -96,4 +100,4 @@ YYYY-MM-DD
 
 ---
 
-**Última actualización**: 2025-12-23
+**Última actualización**: 2026-03-28
