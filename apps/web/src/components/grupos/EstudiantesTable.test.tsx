@@ -28,9 +28,7 @@ describe('EstudiantesTable', () => {
   });
 
   it('debería mostrar estado de carga', () => {
-    (global.fetch as jest.Mock).mockImplementation(
-      () => new Promise(() => {})
-    );
+    (global.fetch as jest.Mock).mockImplementation(() => new Promise(() => {}));
 
     render(<EstudiantesTable grupoId="grupo-1" />);
 
