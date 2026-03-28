@@ -25,7 +25,10 @@ interface EstudiantesTableProps {
 
 const PAGE_LIMIT = 10;
 
-export function EstudiantesTable({ grupoId, reloadKey = 0 }: EstudiantesTableProps) {
+export function EstudiantesTable({
+  grupoId,
+  reloadKey = 0,
+}: EstudiantesTableProps) {
   const [data, setData] = useState<ListaEstudiantesResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -198,7 +201,9 @@ export function EstudiantesTable({ grupoId, reloadKey = 0 }: EstudiantesTablePro
                     {estudiante.email}
                   </td>
                   <td className="px-4 py-3 text-[var(--muted)]">
-                    {new Date(estudiante.inscritoEn).toLocaleDateString('es-AR')}
+                    {new Date(estudiante.inscritoEn).toLocaleDateString(
+                      'es-AR'
+                    )}
                   </td>
                   <td className="px-4 py-3 text-right">
                     <button

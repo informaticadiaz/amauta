@@ -28,9 +28,7 @@ async function createAuthToken(
 
 export async function DELETE(
   request: NextRequest,
-  {
-    params,
-  }: { params: Promise<{ id: string; estudianteId: string }> }
+  { params }: { params: Promise<{ id: string; estudianteId: string }> }
 ) {
   try {
     const token = await getToken({

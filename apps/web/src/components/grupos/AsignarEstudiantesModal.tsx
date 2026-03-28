@@ -131,7 +131,7 @@ export function AsignarEstudiantesModal({
         }
 
         if (isActive) setAssignedIds(ids);
-      } catch (err) {
+      } catch {
         if (isActive) setAssignedIds([]);
       }
     }
@@ -310,7 +310,8 @@ export function AsignarEstudiantesModal({
           </div>
           {resultado && (
             <div className="text-xs text-[var(--muted)]">
-              Resultado última asignación: {resultado.agregados.length} agregados,
+              Resultado última asignación: {resultado.agregados.length}{' '}
+              agregados,
               {` ${resultado.duplicados.length} duplicados`} y
               {` ${resultado.errores.length} errores`}.
             </div>

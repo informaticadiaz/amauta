@@ -26,7 +26,10 @@ interface EducadoresListProps {
 
 const PAGE_LIMIT = 10;
 
-export function EducadoresList({ grupoId, reloadKey = 0 }: EducadoresListProps) {
+export function EducadoresList({
+  grupoId,
+  reloadKey = 0,
+}: EducadoresListProps) {
   const [data, setData] = useState<ListaEducadoresResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -114,7 +117,9 @@ export function EducadoresList({ grupoId, reloadKey = 0 }: EducadoresListProps) 
           : prev
       );
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al remover educador');
+      setError(
+        err instanceof Error ? err.message : 'Error al remover educador'
+      );
     }
   }
 

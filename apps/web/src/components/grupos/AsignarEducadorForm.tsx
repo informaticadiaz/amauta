@@ -113,7 +113,9 @@ export function AsignarEducadorForm({
       setRol('TITULAR');
       onAssigned();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al asignar educador');
+      setError(
+        err instanceof Error ? err.message : 'Error al asignar educador'
+      );
     } finally {
       setSubmitting(false);
     }
