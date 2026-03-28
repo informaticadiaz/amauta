@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Up Dev Windows'
+  short_description: 'Levanta y diagnostica entornos locales en Windows'
+  default_prompt: 'Levanta mi entorno local en Windows con backend y frontend, validando envs, healthchecks y dependencias.'
