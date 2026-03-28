@@ -272,7 +272,7 @@ export function InscripcionBtn({
               }
               className="block w-full rounded-lg bg-primary px-6 py-3 text-center font-semibold text-white transition-colors hover:bg-primary/90 hover:no-underline"
             >
-              {estaCompletado ? 'Ver de nuevo' : 'Entrar al curso'}
+              Ver de nuevo
             </Link>
             {!estaCompletado && (
               <button
