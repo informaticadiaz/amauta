@@ -47,6 +47,9 @@ interface LeccionResponse {
 
 interface InscripcionResponse {
   inscrito: boolean;
+  inscripcion: {
+    estado: 'ACTIVO' | 'COMPLETADO' | 'ABANDONADO';
+  } | null;
 }
 
 interface ProgresoCursoResponse {
@@ -87,7 +90,7 @@ async function verificarInscripcion(cursoId: string): Promise<boolean> {
     const data = await api.get<InscripcionResponse>(
       `/cursos/${cursoId}/inscripcion`
     );
-    return data.inscrito === true;
+    return data.inscripcion?.estado !== 'ABANDONADO';
   } catch {
     return false;
   }

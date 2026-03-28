@@ -120,7 +120,7 @@ export class InscripcionesController {
       );
     return {
       inscripcion,
-      inscrito: inscripcion !== null && inscripcion.estado === 'ACTIVO',
+      inscrito: inscripcion !== null && inscripcion.estado !== 'ABANDONADO',
     };
   }
 }

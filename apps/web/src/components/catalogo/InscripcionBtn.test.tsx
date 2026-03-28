@@ -24,7 +24,7 @@ describe('InscripcionBtn offline', () => {
 
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ inscrito: false }),
+      json: async () => ({ inscrito: false, inscripcion: null }),
     });
   });
 
@@ -51,6 +51,6 @@ describe('InscripcionBtn offline', () => {
       );
     });
 
-    expect(screen.getByText(/ya estás inscrito/i)).toBeInTheDocument();
+    expect(screen.getByText(/ya estás inscripto/i)).toBeInTheDocument();
   });
 });

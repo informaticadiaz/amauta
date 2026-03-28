@@ -50,7 +50,9 @@ export function InscripcionBtn({
 }: InscripcionBtnProps) {
   const { status } = useSession();
   const router = useRouter();
-  const [inscrito, setInscrito] = useState(false);
+  const [estado, setEstado] = useState<
+    'ACTIVO' | 'COMPLETADO' | 'ABANDONADO' | null
+  >(null);
   const [loadingStatus, setLoadingStatus] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -71,7 +73,7 @@ export function InscripcionBtn({
       const res = await fetch(`/api/cursos/${cursoId}/inscripcion`);
       if (res.ok) {
         const data = await res.json();
-        setInscrito(data.inscrito === true);
+        setEstado(data.inscripcion?.estado ?? null);
       }
     } finally {
       setLoadingStatus(false);
@@ -83,7 +85,7 @@ export function InscripcionBtn({
     setError(null);
     try {
       if (!navigator.onLine) {
-        setInscrito(true);
+        setEstado('ACTIVO');
         mostrarToast('Sin conexión: inscripción pendiente de sincronización');
         await encolarSync('inscribir', { cursoId });
         return;
@@ -96,12 +98,12 @@ export function InscripcionBtn({
         const data = await res.json();
         throw new Error(data.message || 'Error al inscribirse');
       }
-      setInscrito(true);
+      setEstado('ACTIVO');
       mostrarToast('¡Te has inscrito exitosamente!');
       router.refresh();
     } catch (err) {
       if (!navigator.onLine) {
-        setInscrito(true);
+        setEstado('ACTIVO');
         mostrarToast('Sin conexión: inscripción pendiente de sincronización');
         await encolarSync('inscribir', { cursoId });
       } else {
@@ -118,7 +120,7 @@ export function InscripcionBtn({
     setShowConfirm(false);
     try {
       if (!navigator.onLine) {
-        setInscrito(false);
+        setEstado('ABANDONADO');
         mostrarToast('Sin conexión: cancelación pendiente de sincronización');
         await encolarSync('cancelar-inscripcion', { cursoId });
         return;
@@ -131,12 +133,12 @@ export function InscripcionBtn({
         const data = await res.json();
         throw new Error(data.message || 'Error al cancelar');
       }
-      setInscrito(false);
+      setEstado('ABANDONADO');
       mostrarToast('Inscripción cancelada');
       router.refresh();
     } catch (err) {
       if (!navigator.onLine) {
-        setInscrito(false);
+        setEstado('ABANDONADO');
         mostrarToast('Sin conexión: cancelación pendiente de sincronización');
         await encolarSync('cancelar-inscripcion', { cursoId });
       } else {
@@ -153,6 +155,8 @@ export function InscripcionBtn({
   }
 
   const isLoading = status === 'loading' || loadingStatus;
+  const tieneAcceso = estado !== null && estado !== 'ABANDONADO';
+  const estaCompletado = estado === 'COMPLETADO';
 
   return (
     <>
@@ -240,7 +244,7 @@ export function InscripcionBtn({
           >
             Iniciar sesión para inscribirse
           </Link>
-        ) : inscrito ? (
+        ) : tieneAcceso ? (
           <div className="space-y-3">
             <div className="flex items-center justify-center gap-2 rounded-lg bg-green-100 px-4 py-2 text-sm font-medium text-green-800">
               <svg
@@ -256,7 +260,7 @@ export function InscripcionBtn({
                   d="M4.5 12.75l6 6 9-13.5"
                 />
               </svg>
-              Ya estás inscrito
+              {estaCompletado ? 'Curso completado' : 'Ya estás inscripto'}
             </div>
             <Link
               href={
@@ -268,15 +272,17 @@ export function InscripcionBtn({
               }
               className="block w-full rounded-lg bg-primary px-6 py-3 text-center font-semibold text-white transition-colors hover:bg-primary/90 hover:no-underline"
             >
-              Continuar curso
+              {estaCompletado ? 'Ver de nuevo' : 'Entrar al curso'}
             </Link>
-            <button
-              onClick={() => setShowConfirm(true)}
-              disabled={loading}
-              className="w-full rounded-lg border border-[var(--border)] px-6 py-2 text-sm font-medium text-[var(--muted)] transition-colors hover:bg-[var(--border)] hover:text-[var(--foreground)] disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              Cancelar inscripción
-            </button>
+            {!estaCompletado && (
+              <button
+                onClick={() => setShowConfirm(true)}
+                disabled={loading}
+                className="w-full rounded-lg border border-[var(--border)] px-6 py-2 text-sm font-medium text-[var(--muted)] transition-colors hover:bg-[var(--border)] hover:text-[var(--foreground)] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                Cancelar inscripción
+              </button>
+            )}
           </div>
         ) : (
           <button
