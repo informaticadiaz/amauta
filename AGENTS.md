@@ -329,11 +329,11 @@ El roadmap define:
 
 4. DOCUMENTAR
    └── Actualizar docs/sistema/ con funcionalidades completadas
-   └── Actualizar AGENTS.md si cambia el estado del proyecto
+   └── Actualizar AGENTS.md y CLAUDE.md si cambia el estado del proyecto
 
 5. CERRAR FASE
    └── Verificar criterios de éxito del roadmap
-   └── Actualizar estado en AGENTS.md y roadmap.md
+   └── Actualizar estado en AGENTS.md, CLAUDE.md y roadmap.md
 ```
 
 ### Checklist Antes de Empezar una Fase Nueva
