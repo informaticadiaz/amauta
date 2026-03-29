@@ -470,6 +470,10 @@ amauta/
 - Mensajes de commit en español
 - Seguir formato descriptivo y claro
 - Incluir contexto del cambio
+- Antes de `git commit`, ejecutar preventivamente el equivalente de `lint-staged` segun los archivos modificados para evitar correcciones inesperadas en el hook
+- Para `*.ts`, `*.tsx`, `*.js`, `*.jsx`: ejecutar `eslint --fix` y `prettier --write`
+- Para `*.md`, `*.json`, `*.yml`, `*.yaml`: ejecutar `prettier --write`
+- Tener presente que el repo ejecuta `npx lint-staged` en `.husky/pre-commit` y `commitlint` en `.husky/commit-msg`
 
 ### Documentación
 
