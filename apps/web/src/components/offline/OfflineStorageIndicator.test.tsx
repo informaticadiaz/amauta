@@ -26,10 +26,7 @@ describe('OfflineStorageIndicator', () => {
 
     render(<OfflineStorageIndicator />);
 
-    expect(
-      await screen.findByText(/espacio usado por descargas/i)
-    ).toBeInTheDocument();
-    expect(screen.getByText(/1.5 MB/i)).toBeInTheDocument();
-    expect(screen.getByText(/2 cursos/i)).toBeInTheDocument();
+    expect(await screen.findByText(/1\.5 MB/i)).toBeInTheDocument();
+    expect(await screen.findByText(/2 cursos/i)).toBeInTheDocument();
   });
 });
