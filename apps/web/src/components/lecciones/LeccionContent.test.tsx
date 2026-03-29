@@ -8,6 +8,17 @@ import { render, screen } from '@testing-library/react';
 import { LeccionContent } from './LeccionContent';
 
 describe('LeccionContent', () => {
+  function setOnline(value: boolean) {
+    Object.defineProperty(window.navigator, 'onLine', {
+      configurable: true,
+      value,
+    });
+  }
+
+  beforeEach(() => {
+    setOnline(true);
+  });
+
   describe('tipo TEXTO', () => {
     it('debería renderizar contenido HTML de texto', () => {
       const contenido = { html: '<p>Hola mundo</p>', markdown: '# Hola' };
@@ -113,6 +124,26 @@ describe('LeccionContent', () => {
         <LeccionContent tipo="VIDEO" contenido={{}} titulo="Video sin URL" />
       );
       expect(screen.getByText(/video no disponible/i)).toBeInTheDocument();
+    });
+
+    it('debería mostrar mensaje offline para videos externos', () => {
+      setOnline(false);
+
+      render(
+        <LeccionContent
+          tipo="VIDEO"
+          contenido={{
+            videoUrl: 'https://www.youtube.com/watch?v=IBm4QyDO50o',
+            provider: 'youtube',
+          }}
+          titulo="Video externo"
+        />
+      );
+
+      expect(
+        screen.getByText(/no está disponible sin conexión/i)
+      ).toBeInTheDocument();
+      expect(document.querySelector('iframe')).not.toBeInTheDocument();
     });
   });
 

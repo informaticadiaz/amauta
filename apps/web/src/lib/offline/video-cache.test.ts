@@ -6,6 +6,8 @@ import {
   cacheVideo,
   deleteVideoCache,
   getVideoOfflineUrl,
+  inferVideoProvider,
+  isVideoCacheableOffline,
 } from './video-cache';
 
 describe('video-cache', () => {
@@ -75,5 +77,18 @@ describe('video-cache', () => {
 
     expect(cacheMock.delete).toHaveBeenCalledWith('/offline/videos/leccion-1');
     expect(result).toBe(true);
+  });
+
+  it('debería inferir youtube y marcarlo como no cacheable', () => {
+    expect(
+      inferVideoProvider('https://www.youtube.com/watch?v=IBm4QyDO50o')
+    ).toBe('youtube');
+    expect(
+      isVideoCacheableOffline('https://www.youtube.com/watch?v=IBm4QyDO50o')
+    ).toBe(false);
+  });
+
+  it('debería considerar un video local como cacheable', () => {
+    expect(isVideoCacheableOffline('/uploads/video.mp4')).toBe(true);
   });
 });

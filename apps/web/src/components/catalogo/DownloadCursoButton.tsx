@@ -12,7 +12,12 @@ import { useRouter } from 'next/navigation';
 import { db } from '@/lib/db/offline-db';
 import { ProgresoBar } from '@/components/lecciones/ProgresoBar';
 import { extractHtmlFromContenido } from '@/lib/offline/markdown';
-import { cacheVideo, deleteVideoCache } from '@/lib/offline/video-cache';
+import {
+  cacheVideo,
+  deleteVideoCache,
+  inferVideoProvider,
+  isVideoCacheableOffline,
+} from '@/lib/offline/video-cache';
 import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 
 interface CursoBase {
@@ -167,10 +172,16 @@ export function DownloadCursoButton({
             );
           }
 
-          const videoCacheKey = await cacheVideo(
-            leccion.id,
-            contenidoVideo.videoUrl
+          const videoProvider = inferVideoProvider(
+            contenidoVideo.videoUrl,
+            contenidoVideo.provider
           );
+          const videoCacheKey = isVideoCacheableOffline(
+            contenidoVideo.videoUrl,
+            videoProvider
+          )
+            ? await cacheVideo(leccion.id, contenidoVideo.videoUrl)
+            : undefined;
 
           leccionesOffline.push({
             id: leccion.id,
@@ -182,7 +193,7 @@ export function DownloadCursoButton({
             actualizadoEn: new Date(leccion.updatedAt ?? now),
             videoUrl: contenidoVideo.videoUrl,
             videoCacheKey,
-            videoProvider: contenidoVideo.provider,
+            videoProvider,
           });
         }
 
@@ -272,7 +283,8 @@ export function DownloadCursoButton({
       </div>
 
       <p className="text-sm text-[var(--muted)]">
-        Guardá las lecciones de texto para estudiarlas sin conexión.
+        Guardá las lecciones de texto y los videos descargables para estudiar
+        sin conexión.
       </p>
 
       <div className="mt-4 space-y-3">

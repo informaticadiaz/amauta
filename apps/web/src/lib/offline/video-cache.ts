@@ -1,8 +1,36 @@
 const VIDEO_CACHE_NAME = 'amauta-video-cache-v1';
 const VIDEO_CACHE_PREFIX = '/offline/videos/';
 
+export type VideoProvider = 'youtube' | 'vimeo' | 'local';
+
 function buildCacheKey(leccionId: string) {
   return `${VIDEO_CACHE_PREFIX}${leccionId}`;
+}
+
+export function inferVideoProvider(
+  videoUrl: string,
+  provider?: VideoProvider
+): VideoProvider {
+  if (provider) {
+    return provider;
+  }
+
+  if (/youtube\.com|youtu\.be/.test(videoUrl)) {
+    return 'youtube';
+  }
+
+  if (/vimeo\.com/.test(videoUrl)) {
+    return 'vimeo';
+  }
+
+  return 'local';
+}
+
+export function isVideoCacheableOffline(
+  videoUrl: string,
+  provider?: VideoProvider
+): boolean {
+  return inferVideoProvider(videoUrl, provider) === 'local';
 }
 
 export async function cacheVideo(

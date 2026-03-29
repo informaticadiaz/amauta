@@ -38,6 +38,32 @@ jest.mock('@/lib/offline/video-cache', () => ({
   cacheVideo: jest.fn(),
   deleteVideoCache: jest.fn(),
   getVideoOfflineUrl: jest.fn(),
+  inferVideoProvider: jest.fn((videoUrl: string, provider?: string) => {
+    if (provider) {
+      return provider;
+    }
+
+    if (/youtube\.com|youtu\.be/.test(videoUrl)) {
+      return 'youtube';
+    }
+
+    if (/vimeo\.com/.test(videoUrl)) {
+      return 'vimeo';
+    }
+
+    return 'local';
+  }),
+  isVideoCacheableOffline: jest.fn((videoUrl: string, provider?: string) => {
+    const resolvedProvider = provider
+      ? provider
+      : /youtube\.com|youtu\.be/.test(videoUrl)
+        ? 'youtube'
+        : /vimeo\.com/.test(videoUrl)
+          ? 'vimeo'
+          : 'local';
+
+    return resolvedProvider === 'local';
+  }),
 }));
 
 const mockDb = db as unknown as {
@@ -172,5 +198,63 @@ describe('DownloadCursoButton', () => {
     expect(
       await screen.findByRole('button', { name: /descargar para offline/i })
     ).toBeInTheDocument();
+  });
+
+  it('debería descargar el curso aunque el video sea de YouTube', async () => {
+    mockDb.cursos.get.mockResolvedValue(null);
+
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        lecciones: [
+          {
+            id: 'leccion-1',
+            cursoId: 'curso-1',
+            titulo: 'Introducción',
+            contenido: { html: '<p>Texto</p>' },
+            tipo: 'TEXTO',
+            orden: 1,
+            publicada: true,
+            updatedAt: '2026-03-15T00:00:00.000Z',
+          },
+          {
+            id: 'leccion-2',
+            cursoId: 'curso-1',
+            titulo: 'Video de apoyo',
+            contenido: {
+              videoUrl: 'https://www.youtube.com/watch?v=IBm4QyDO50o',
+            },
+            tipo: 'VIDEO',
+            orden: 2,
+            publicada: true,
+            updatedAt: '2026-03-15T00:00:00.000Z',
+          },
+        ],
+        total: 2,
+      }),
+    });
+
+    render(<DownloadCursoButton curso={cursoBase} totalLecciones={2} />);
+
+    const button = await screen.findByRole('button', {
+      name: /descargar para offline/i,
+    });
+    await userEvent.click(button);
+
+    await waitFor(() => {
+      expect(mockDb.cursos.put).toHaveBeenCalledTimes(1);
+      expect(mockDb.lecciones.bulkPut).toHaveBeenCalledTimes(1);
+    });
+
+    expect(mockVideoCache.cacheVideo).not.toHaveBeenCalled();
+    expect(mockDb.lecciones.bulkPut).toHaveBeenCalledWith(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: 'leccion-2',
+          videoProvider: 'youtube',
+          videoCacheKey: undefined,
+        }),
+      ])
+    );
   });
 });

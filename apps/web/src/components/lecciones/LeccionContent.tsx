@@ -4,6 +4,8 @@
  * Renderiza el contenido de una lección según su tipo (TEXTO, VIDEO, etc.)
  */
 
+import { inferVideoProvider } from '@/lib/offline/video-cache';
+
 interface ContenidoTexto {
   html?: string;
   markdown?: string;
@@ -22,25 +24,6 @@ interface Props {
   tipo: TipoLeccion;
   contenido: Contenido;
   titulo: string;
-}
-
-function inferVideoProvider(
-  videoUrl: string,
-  provider?: ContenidoVideo['provider']
-): ContenidoVideo['provider'] {
-  if (provider) {
-    return provider;
-  }
-
-  if (/youtube\.com|youtu\.be/.test(videoUrl)) {
-    return 'youtube';
-  }
-
-  if (/vimeo\.com/.test(videoUrl)) {
-    return 'vimeo';
-  }
-
-  return 'local';
 }
 
 function getYouTubeId(url: string): string | null {
@@ -65,6 +48,21 @@ function VideoPlayer({ contenido }: { contenido: ContenidoVideo }) {
   }
 
   const resolvedProvider = inferVideoProvider(videoUrl, provider);
+  const offlineEmbedBlocked =
+    typeof navigator !== 'undefined' &&
+    navigator.onLine === false &&
+    resolvedProvider !== 'local';
+
+  if (offlineEmbedBlocked) {
+    return (
+      <div className="flex min-h-64 items-center justify-center rounded-lg bg-[var(--overlay)] px-6 text-center text-[var(--muted)]">
+        <p>
+          Este video depende de una plataforma externa y no está disponible sin
+          conexión.
+        </p>
+      </div>
+    );
+  }
 
   if (resolvedProvider === 'youtube') {
     const videoId = getYouTubeId(videoUrl);
