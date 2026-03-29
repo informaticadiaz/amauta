@@ -20,6 +20,11 @@ const customJestConfig = {
   // Module paths
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    // Forzar React 19 del workspace (evita conflicto con React 18 del root)
+    '^react$': '<rootDir>/node_modules/react',
+    '^react-dom$': '<rootDir>/node_modules/react-dom',
+    '^react-dom/(.*)$': '<rootDir>/node_modules/react-dom/$1',
+    '^react/(.*)$': '<rootDir>/node_modules/react/$1',
   },
 
   // Coverage
