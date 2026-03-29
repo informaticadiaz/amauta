@@ -63,22 +63,27 @@ describe('CursosService', () => {
     },
   };
 
+  // IDs con formato CUID válido (requerido por validación Zod)
+  const EDUCADOR_ID = 'cjld2cjxh0000qzrmn831i7rn';
+  const CATEGORIA_ID = 'clh3zqxkv0000l308g5z3x1y2';
+  const CURSO_ID = 'clh3zqxkv0001l308g5z3x1y3';
+
   // Datos de prueba
   const mockEducador = {
-    id: 'educador-123',
+    id: EDUCADOR_ID,
     nombre: 'Juan',
     apellido: 'Pérez',
     avatar: null,
   };
 
   const mockCategoria = {
-    id: 'categoria-123',
+    id: CATEGORIA_ID,
     nombre: 'Matemáticas',
     slug: 'matematicas',
   };
 
   const mockCurso = {
-    id: 'curso-123',
+    id: CURSO_ID,
     titulo: 'Curso de Prueba',
     descripcion: 'Descripción del curso de prueba',
     slug: 'curso-de-prueba',
@@ -90,8 +95,8 @@ describe('CursosService', () => {
     publicadoEn: null,
     createdAt: new Date(),
     updatedAt: new Date(),
-    educadorId: 'educador-123',
-    categoriaId: 'categoria-123',
+    educadorId: EDUCADOR_ID,
+    categoriaId: CATEGORIA_ID,
     educador: mockEducador,
     categoria: mockCategoria,
     _count: {
@@ -119,7 +124,7 @@ describe('CursosService', () => {
     const createCursoDto = {
       titulo: 'Nuevo Curso',
       descripcion: 'Descripción del nuevo curso de prueba',
-      categoriaId: 'categoria-123',
+      categoriaId: CATEGORIA_ID,
       nivel: 'PRINCIPIANTE' as const,
       idioma: 'es',
     };
@@ -133,7 +138,7 @@ describe('CursosService', () => {
         descripcion: createCursoDto.descripcion,
       });
 
-      const result = await service.crear(createCursoDto, 'educador-123');
+      const result = await service.crear(createCursoDto, EDUCADOR_ID);
 
       expect(result.titulo).toBe(createCursoDto.titulo);
       expect(prisma.curso.create).toHaveBeenCalled();
@@ -144,7 +149,7 @@ describe('CursosService', () => {
       prisma.curso.findUnique.mockResolvedValue(null);
       prisma.curso.create.mockResolvedValue(mockCurso);
 
-      await service.crear(createCursoDto, 'educador-123');
+      await service.crear(createCursoDto, EDUCADOR_ID);
 
       expect(prisma.curso.create).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -158,15 +163,15 @@ describe('CursosService', () => {
     it('debería lanzar BadRequestException si la categoría no existe', async () => {
       prisma.categoria.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.crear(createCursoDto, 'educador-123')
-      ).rejects.toThrow(BadRequestException);
+      await expect(service.crear(createCursoDto, EDUCADOR_ID)).rejects.toThrow(
+        BadRequestException
+      );
     });
 
     it('debería lanzar BadRequestException con título muy corto', async () => {
       const dtoInvalido = { ...createCursoDto, titulo: 'AB' };
 
-      await expect(service.crear(dtoInvalido, 'educador-123')).rejects.toThrow(
+      await expect(service.crear(dtoInvalido, EDUCADOR_ID)).rejects.toThrow(
         BadRequestException
       );
     });
@@ -174,7 +179,7 @@ describe('CursosService', () => {
     it('debería lanzar BadRequestException con descripción muy corta', async () => {
       const dtoInvalido = { ...createCursoDto, descripcion: 'Corta' };
 
-      await expect(service.crear(dtoInvalido, 'educador-123')).rejects.toThrow(
+      await expect(service.crear(dtoInvalido, EDUCADOR_ID)).rejects.toThrow(
         BadRequestException
       );
     });
@@ -182,7 +187,7 @@ describe('CursosService', () => {
     it('debería lanzar BadRequestException con nivel inválido', async () => {
       const dtoInvalido = { ...createCursoDto, nivel: 'INVALIDO' as never };
 
-      await expect(service.crear(dtoInvalido, 'educador-123')).rejects.toThrow(
+      await expect(service.crear(dtoInvalido, EDUCADOR_ID)).rejects.toThrow(
         BadRequestException
       );
     });
@@ -225,13 +230,13 @@ describe('CursosService', () => {
       await service.listar({
         page: 1,
         limit: 10,
-        categoriaId: 'categoria-123',
+        categoriaId: CATEGORIA_ID,
       });
 
       expect(prisma.curso.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
           where: expect.objectContaining({
-            categoriaId: 'categoria-123',
+            categoriaId: CATEGORIA_ID,
           }),
         })
       );
@@ -313,7 +318,7 @@ describe('CursosService', () => {
       prisma.curso.findMany.mockResolvedValue([mockCurso]);
       prisma.curso.count.mockResolvedValue(1);
 
-      const result = await service.listarMisCursos('educador-123', {
+      const result = await service.listarMisCursos(EDUCADOR_ID, {
         page: 1,
         limit: 10,
       });
@@ -321,7 +326,7 @@ describe('CursosService', () => {
       expect(prisma.curso.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
           where: expect.objectContaining({
-            educadorId: 'educador-123',
+            educadorId: EDUCADOR_ID,
           }),
         })
       );
@@ -332,11 +337,11 @@ describe('CursosService', () => {
       prisma.curso.findMany.mockResolvedValue([]);
       prisma.curso.count.mockResolvedValue(0);
 
-      await service.listarMisCursos('educador-123', { page: 1, limit: 10 });
+      await service.listarMisCursos(EDUCADOR_ID, { page: 1, limit: 10 });
 
       // Verificar que se filtra por educadorId
       const call = prisma.curso.findMany.mock.calls[0][0];
-      expect(call.where.educadorId).toBe('educador-123');
+      expect(call.where.educadorId).toBe(EDUCADOR_ID);
     });
   });
 
@@ -344,12 +349,12 @@ describe('CursosService', () => {
     it('debería retornar un curso por ID', async () => {
       prisma.curso.findUnique.mockResolvedValue(mockCurso);
 
-      const result = await service.obtenerPorId('curso-123');
+      const result = await service.obtenerPorId(CURSO_ID);
 
       expect(result).toEqual(mockCurso);
       expect(prisma.curso.findUnique).toHaveBeenCalledWith(
         expect.objectContaining({
-          where: { id: 'curso-123' },
+          where: { id: CURSO_ID },
         })
       );
     });
@@ -394,7 +399,7 @@ describe('CursosService', () => {
 
     it('debería actualizar un curso con datos válidos', async () => {
       prisma.curso.findUnique.mockResolvedValueOnce({
-        educadorId: 'educador-123',
+        educadorId: EDUCADOR_ID,
         titulo: 'Título Original',
         slug: 'titulo-original',
       });
@@ -404,9 +409,9 @@ describe('CursosService', () => {
       });
 
       const result = await service.actualizar(
-        'curso-123',
+        CURSO_ID,
         updateCursoDto,
-        'educador-123'
+        EDUCADOR_ID
       );
 
       expect(result.titulo).toBe(updateCursoDto.titulo);
@@ -417,26 +422,26 @@ describe('CursosService', () => {
       prisma.curso.findUnique.mockResolvedValue(null);
 
       await expect(
-        service.actualizar('inexistente', updateCursoDto, 'educador-123')
+        service.actualizar('inexistente', updateCursoDto, EDUCADOR_ID)
       ).rejects.toThrow(NotFoundException);
     });
 
     it('debería lanzar ForbiddenException si no es el propietario', async () => {
       prisma.curso.findUnique.mockResolvedValue({
-        educadorId: 'otro-educador',
+        educadorId: 'cjld2cjxh0001qzrmn831i7rx',
         titulo: 'Título Original',
         slug: 'titulo-original',
       });
 
       await expect(
-        service.actualizar('curso-123', updateCursoDto, 'educador-123')
+        service.actualizar(CURSO_ID, updateCursoDto, EDUCADOR_ID)
       ).rejects.toThrow(ForbiddenException);
     });
 
     it('debería regenerar slug si cambia el título', async () => {
       prisma.curso.findUnique
         .mockResolvedValueOnce({
-          educadorId: 'educador-123',
+          educadorId: EDUCADOR_ID,
           titulo: 'Título Original',
           slug: 'titulo-original',
         })
@@ -448,9 +453,9 @@ describe('CursosService', () => {
       });
 
       await service.actualizar(
-        'curso-123',
+        CURSO_ID,
         { titulo: 'Nuevo Título' },
-        'educador-123'
+        EDUCADOR_ID
       );
 
       expect(prisma.curso.update).toHaveBeenCalledWith(
@@ -467,7 +472,7 @@ describe('CursosService', () => {
   describe('cambiarEstadoPublicacion', () => {
     it('debería publicar un curso', async () => {
       prisma.curso.findUnique.mockResolvedValue({
-        educadorId: 'educador-123',
+        educadorId: EDUCADOR_ID,
         estado: 'BORRADOR',
       });
       prisma.curso.update.mockResolvedValue({
@@ -477,9 +482,9 @@ describe('CursosService', () => {
       });
 
       const result = await service.cambiarEstadoPublicacion(
-        'curso-123',
+        CURSO_ID,
         { publicar: true },
-        'educador-123'
+        EDUCADOR_ID
       );
 
       expect(result.estado).toBe('PUBLICADO');
@@ -495,7 +500,7 @@ describe('CursosService', () => {
 
     it('debería despublicar un curso', async () => {
       prisma.curso.findUnique.mockResolvedValue({
-        educadorId: 'educador-123',
+        educadorId: EDUCADOR_ID,
         estado: 'PUBLICADO',
       });
       prisma.curso.update.mockResolvedValue({
@@ -505,9 +510,9 @@ describe('CursosService', () => {
       });
 
       const result = await service.cambiarEstadoPublicacion(
-        'curso-123',
+        CURSO_ID,
         { publicar: false },
-        'educador-123'
+        EDUCADOR_ID
       );
 
       expect(result.estado).toBe('BORRADOR');
@@ -523,15 +528,15 @@ describe('CursosService', () => {
 
     it('debería lanzar ForbiddenException si no es el propietario', async () => {
       prisma.curso.findUnique.mockResolvedValue({
-        educadorId: 'otro-educador',
+        educadorId: 'cjld2cjxh0001qzrmn831i7rx',
         estado: 'BORRADOR',
       });
 
       await expect(
         service.cambiarEstadoPublicacion(
-          'curso-123',
+          CURSO_ID,
           { publicar: true },
-          'educador-123'
+          EDUCADOR_ID
         )
       ).rejects.toThrow(ForbiddenException);
     });
@@ -540,17 +545,17 @@ describe('CursosService', () => {
   describe('eliminar', () => {
     it('debería hacer soft delete (cambiar a ARCHIVADO)', async () => {
       prisma.curso.findUnique.mockResolvedValue({
-        educadorId: 'educador-123',
+        educadorId: EDUCADOR_ID,
       });
       prisma.curso.update.mockResolvedValue({
         ...mockCurso,
         estado: 'ARCHIVADO',
       });
 
-      await service.eliminar('curso-123', 'educador-123');
+      await service.eliminar(CURSO_ID, EDUCADOR_ID);
 
       expect(prisma.curso.update).toHaveBeenCalledWith({
-        where: { id: 'curso-123' },
+        where: { id: CURSO_ID },
         data: { estado: 'ARCHIVADO' },
       });
     });
@@ -559,18 +564,18 @@ describe('CursosService', () => {
       prisma.curso.findUnique.mockResolvedValue(null);
 
       await expect(
-        service.eliminar('inexistente', 'educador-123')
+        service.eliminar('inexistente', EDUCADOR_ID)
       ).rejects.toThrow(NotFoundException);
     });
 
     it('debería lanzar ForbiddenException si no es el propietario', async () => {
       prisma.curso.findUnique.mockResolvedValue({
-        educadorId: 'otro-educador',
+        educadorId: 'cjld2cjxh0001qzrmn831i7rx',
       });
 
-      await expect(
-        service.eliminar('curso-123', 'educador-123')
-      ).rejects.toThrow(ForbiddenException);
+      await expect(service.eliminar(CURSO_ID, EDUCADOR_ID)).rejects.toThrow(
+        ForbiddenException
+      );
     });
   });
 });
