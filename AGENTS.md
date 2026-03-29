@@ -84,6 +84,13 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Relación con `PeriodoAcademico` y filtros por periodo/estado
   - Validación de institución y educador
   - Tests unitarios de controller y service
+- ✅ **F4-006**: UI Gestión de Grupos/Clases (Listado + Form)
+  - Endpoint backend `GET /instituciones/mi-institucion` para ADMIN_ESCUELA
+  - Componentes `GruposList` (filtros estado/período) y `GrupoForm` (crear/editar)
+  - Páginas: `/dashboard/grupos`, `/dashboard/grupos/nuevo`, `/dashboard/grupos/[id]/editar`
+  - Proxies Next.js: `/api/grupos`, `/api/grupos/[id]`, `/api/mi-institucion`
+  - "Grupos" en el sidebar (solo ADMIN_ESCUELA)
+  - 19 tests frontend (2 suites, 100% pasando)
 - ✅ **F4-007**: API Asignación masiva de estudiantes a grupos
   - Endpoints `POST`, `GET` y `DELETE` en `/grupos/:id/estudiantes`
   - Validación de institución, rol `ESTUDIANTE` y duplicados
@@ -355,7 +362,7 @@ El roadmap define:
 | 1    | MVP Cursos        | ✅ Completado  | `roadmap.md` → Fase 1 |
 | 2    | Offline-First PWA | ✅ Completado  | `roadmap.md` → Fase 2 |
 | 3    | Evaluaciones      | ✅ Completado  | `roadmap.md` → Fase 3 |
-| 4    | Módulo Escolar    | ✅ Preparación | `roadmap.md` → Fase 4 |
+| 4    | Módulo Escolar    | 🚧 En Progreso | `roadmap.md` → Fase 4 |
 | 5    | Comunidad         | 📋 Pendiente   | `roadmap.md` → Fase 5 |
 | 6-10 | Avanzadas         | 📋 Futuro      | `roadmap.md`          |
 
@@ -663,7 +670,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Preparación Fase 4 completada (3/3 issues)
+- **Fase actual**: Fase 4 en progreso (Sprint 12 y Sprint 13 completados)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**
