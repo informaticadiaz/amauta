@@ -508,11 +508,97 @@ npx tsc --noEmit -p apps/web/tsconfig.json
 
 ---
 
-### PASO 8 — Actualizar Documentación del Sistema
+### PASO 8 — Generar Documentación (OBLIGATORIO)
 
-- `docs/sistema/README.md` → actualizar tabla de estado
+> ⛔ **Ningún issue puede cerrarse sin estos dos artefactos actualizados. Sin excepción.**
+
+---
+
+#### 8.1 — Actualizar `docs/ai-context/` (contexto para la IA)
+
+La IA lee estos archivos antes de codear en issues futuros. Mantenerlos actualizados es crítico para la calidad del desarrollo automatizado.
+
+| Tipo de issue                           | Qué actualizar                                                                       |
+| --------------------------------------- | ------------------------------------------------------------------------------------ |
+| DB / Prisma                             | `docs/ai-context/database/schema.md` → reflejar modelos, relaciones e índices nuevos |
+| Backend — módulo nuevo                  | Crear `docs/ai-context/modules/{modulo}.md` con endpoints, permisos y ejemplos       |
+| Backend — endpoints en módulo existente | Actualizar `docs/ai-context/modules/{modulo}.md` → tabla de endpoints                |
+| Frontend — páginas nuevas               | Actualizar `docs/ai-context/frontend/pages.md`                                       |
+| Frontend — componentes nuevos           | Actualizar `docs/ai-context/frontend/components.md`                                  |
+| Patrones nuevos o cambios de convención | Actualizar `docs/ai-context/_patterns.md`                                            |
+
+Si el archivo del módulo no existe, **crearlo**. Usar `docs/ai-context/modules/cursos.md` como plantilla de referencia.
+
+También actualizar si aplica:
+
+- `docs/sistema/README.md` → tabla de estado general
 - `docs/sistema/etapa-X-[nombre].md` → cambiar ⏳ a ✅, agregar fecha y descripción
-- `docs/ai-context/modules/[modulo].md` → si se agregaron endpoints nuevos
+
+---
+
+#### 8.2 — Crear `docs/human-context/issue-{número}-{slug}.md` (descripción funcional para humanos)
+
+**SIEMPRE crear este archivo** — uno por issue, sin importar si es backend, frontend o DB.
+
+Es el artefacto que permite a un humano entender qué funcionalidad se implementó, con qué rol probarla y qué esperar. Forma la base de la revisión periódica del sistema.
+
+**Nombre del archivo:** `issue-{número}-{slug}.md` donde el slug es el título del issue en minúsculas con guiones. Ej: `issue-79-calificaciones-periodo-academico.md`
+
+**Formato obligatorio:**
+
+```markdown
+# Issue #{número} — {título del issue}
+
+**Qué podés hacer ahora:** [una línea que resume la funcionalidad nueva en lenguaje de usuario]
+
+---
+
+## Como [Rol principal], ahora podés:
+
+### [Acción principal]
+
+1. [Paso concreto]
+2. [Paso concreto]
+3. [Resultado esperado]
+
+### [Acción secundaria si aplica]
+
+...
+
+---
+
+## Quién puede usarlo
+
+| Rol           | ¿Puede usarlo? |
+| ------------- | -------------- |
+| ESTUDIANTE    | ❌ / ✅        |
+| EDUCADOR      | ❌ / ✅        |
+| ADMIN_ESCUELA | ❌ / ✅        |
+| SUPER_ADMIN   | ❌ / ✅        |
+
+---
+
+## Usuarios de prueba para testear
+
+| Email                 | Contraseña  | Rol           |
+| --------------------- | ----------- | ------------- |
+| admin1@amauta.test    | password123 | ADMIN_ESCUELA |
+| educador1@amauta.test | password123 | EDUCADOR      |
+
+---
+
+## Nota (solo si aplica)
+
+> Si el issue es solo backend sin UI: explicar cómo probar via API (endpoint, método, body de ejemplo).
+> Si hay limitaciones conocidas: documentarlas aquí.
+```
+
+**Reglas de contenido:**
+
+- Lenguaje natural, sin jerga técnica
+- Orientado a probar la funcionalidad, no a describir la implementación
+- Si es API sin UI: describir cómo probar con curl o cliente HTTP, incluir ejemplo de request/response
+- Si es DB/Prisma sin API ni UI: describir el cambio de modelo y su impacto funcional futuro
 
 ---
 
@@ -595,7 +681,8 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 - [ ] No hay deletes físicos sin justificación en el issue
 - [ ] Schema de Prisma consultado antes de cada query
 - [ ] Archivos de test incluidos en el commit
-- [ ] Documentación del sistema actualizada
+- [ ] `docs/ai-context/` actualizado según tipo de issue (módulo, schema, frontend)
+- [ ] `docs/human-context/issue-{número}-{slug}.md` creado con formato obligatorio
 - [ ] CLAUDE.md refleja el nuevo progreso (si aplica)
 - [ ] Issue cerrado con comentario descriptivo
 
