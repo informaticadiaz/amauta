@@ -1332,11 +1332,11 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 
 | Issue | Título                                               | Estado         |
 | ----- | ---------------------------------------------------- | -------------- |
-| #76   | F4-011: API Registro diario de asistencias por grupo | 📋 Planificado |
-| #78   | F4-012: UI Carga rápida de asistencias por grupo     | 📋 Planificado |
+| #76   | F4-011: API Registro diario de asistencias por grupo | ✅ Completado  |
+| #78   | F4-012: UI Carga rápida de asistencias por grupo     | ✅ Completado  |
 | #77   | F4-013: API Resumen mensual de asistencias por grupo | 📋 Planificado |
 
-**Progreso Sprint 14**: 0/3 issues iniciadas
+**Progreso Sprint 14**: 2/3 issues completados 🚧
 
 ### Objetivos
 

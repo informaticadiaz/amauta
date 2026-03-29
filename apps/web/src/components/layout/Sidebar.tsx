@@ -25,6 +25,7 @@ export function Sidebar() {
     canEnrollInCourses,
     isAdmin,
     isAdminEscuela,
+    isEducador,
     isLoading,
   } = useAuthorization();
 
@@ -110,6 +111,26 @@ export function Sidebar() {
             strokeLinecap="round"
             strokeLinejoin="round"
             d="M9 12h6m-6 4h6M7.5 3.75h6.75A2.25 2.25 0 0116.5 6v12A2.25 2.25 0 0114.25 20.25H7.5A2.25 2.25 0 015.25 18V6A2.25 2.25 0 017.5 3.75z"
+          />
+        </svg>
+      ),
+    },
+    {
+      href: '/dashboard/asistencias',
+      label: 'Asistencias',
+      show: isAdminEscuela || isEducador,
+      icon: (
+        <svg
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3.75 6.75h16.5M7.5 3.75v6m9-6v6m-9 4.5h9m-9 4.5h5.25M6 21h12a2.25 2.25 0 002.25-2.25V8.25A2.25 2.25 0 0018 6H6A2.25 2.25 0 003.75 8.25v10.5A2.25 2.25 0 006 21z"
           />
         </svg>
       ),

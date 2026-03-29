@@ -74,7 +74,13 @@ interface MobileMenuProps {
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const pathname = usePathname();
-  const { isAuthenticated, canManageCourses, isAdmin } = useAuthorization();
+  const {
+    isAuthenticated,
+    canManageCourses,
+    isAdmin,
+    isAdminEscuela,
+    isEducador,
+  } = useAuthorization();
 
   if (!isOpen) return null;
 
@@ -85,6 +91,11 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       href: '/dashboard/mis-cursos',
       label: 'Mis cursos',
       show: isAuthenticated,
+    },
+    {
+      href: '/dashboard/asistencias',
+      label: 'Asistencias',
+      show: isAdminEscuela || isEducador,
     },
     {
       href: '/dashboard/crear-curso',

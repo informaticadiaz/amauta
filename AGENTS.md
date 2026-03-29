@@ -120,6 +120,12 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Permisos para `ADMIN_ESCUELA` y educadores asignados al grupo
   - Edición solo el mismo día con observación obligatoria cuando cambia un registro existente
   - Tests unitarios de controller y service + documentación del contrato público
+- ✅ **F4-012**: UI Carga rápida de asistencias por grupo
+  - Página `/dashboard/asistencias` para `ADMIN_ESCUELA` y `EDUCADOR`
+  - Selector de grupo/fecha con origen de datos según rol
+  - Proxies Next.js `GET/PUT /api/grupos/:id/asistencias` y `GET /api/educadores/me/grupos`
+  - Grilla por estudiante con estados rápidos, observación y cambios pendientes
+  - Tests de UI, navegación y proxies frontend
 
 #### Preparación Fase 3 - Evaluaciones (completada)
 
