@@ -36,7 +36,7 @@ describe('PaginacionCursos', () => {
 
     const currentPageBtn = screen.getByLabelText('Página 3');
     expect(currentPageBtn).toBeInTheDocument();
-    expect(currentPageBtn).toHaveClass('bg-primary', 'text-white');
+    expect(currentPageBtn).toHaveAttribute('aria-current', 'page');
   });
 
   it('deshabilita botón anterior en la primera página', () => {

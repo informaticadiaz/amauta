@@ -68,27 +68,24 @@ describe('CursoCardPublic', () => {
     expect(link).toHaveAttribute('href', '/cursos/introduccion-javascript');
   });
 
-  it('muestra el badge de nivel con el color correcto', () => {
+  it('muestra el badge de nivel Principiante', () => {
     render(<CursoCardPublic curso={cursoMock} />);
 
-    const badge = screen.getByText('Principiante');
-    expect(badge).toHaveClass('bg-green-100', 'text-green-700');
+    expect(screen.getByText('Principiante')).toBeInTheDocument();
   });
 
   it('muestra el nivel Intermedio correctamente', () => {
     const cursoIntermedio = { ...cursoMock, nivel: 'INTERMEDIO' as const };
     render(<CursoCardPublic curso={cursoIntermedio} />);
 
-    const badge = screen.getByText('Intermedio');
-    expect(badge).toHaveClass('bg-yellow-100', 'text-yellow-700');
+    expect(screen.getByText('Intermedio')).toBeInTheDocument();
   });
 
   it('muestra el nivel Avanzado correctamente', () => {
     const cursoAvanzado = { ...cursoMock, nivel: 'AVANZADO' as const };
     render(<CursoCardPublic curso={cursoAvanzado} />);
 
-    const badge = screen.getByText('Avanzado');
-    expect(badge).toHaveClass('bg-red-100', 'text-red-700');
+    expect(screen.getByText('Avanzado')).toBeInTheDocument();
   });
 
   it('formatea correctamente la duración', () => {

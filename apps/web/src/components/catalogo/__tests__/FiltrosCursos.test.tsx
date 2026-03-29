@@ -103,7 +103,7 @@ describe('FiltrosCursos', () => {
     const programacionBtn = screen.getByRole('button', {
       name: 'Programación',
     });
-    expect(programacionBtn).toHaveClass('bg-primary', 'text-white');
+    expect(programacionBtn).toHaveAttribute('aria-pressed', 'true');
   });
 
   it('marca filtro de nivel como activo', () => {
@@ -111,7 +111,7 @@ describe('FiltrosCursos', () => {
     render(<FiltrosCursos categorias={categoriasMock} />);
 
     const intermedioBtn = screen.getByRole('button', { name: 'Intermedio' });
-    expect(intermedioBtn).toHaveClass('bg-primary', 'text-white');
+    expect(intermedioBtn).toHaveAttribute('aria-pressed', 'true');
   });
 
   it('muestra botón de limpiar cuando hay filtros activos', () => {

@@ -127,9 +127,8 @@ describe('EvaluacionDetalle', () => {
       );
     });
 
-    expect(await screen.findByText(/publicada/i)).toBeInTheDocument();
     expect(
-      await screen.findByText(/publicada exitosamente/i)
+      await screen.findByText(/evaluacion publicada exitosamente/i)
     ).toBeInTheDocument();
   });
 });

@@ -92,6 +92,7 @@ export function FiltrosCursos({ categorias }: FiltrosCursosProps) {
                 <button
                   key={cat.id}
                   onClick={() => toggleFiltro('categoriaId', cat.id)}
+                  aria-pressed={isActive}
                   className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
                     isActive
                       ? 'bg-[var(--primary)] text-white font-medium'
@@ -118,6 +119,7 @@ export function FiltrosCursos({ categorias }: FiltrosCursosProps) {
               <button
                 key={nivel.value}
                 onClick={() => toggleFiltro('nivel', nivel.value)}
+                aria-pressed={isActive}
                 className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
                   isActive
                     ? 'bg-[var(--primary)] text-white font-medium'
