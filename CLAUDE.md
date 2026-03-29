@@ -22,9 +22,9 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 4 - Módulo Escolar 🚧 EN PROGRESO (Sprint 13)
+### Fase Actual: Fase 4 - Módulo Escolar 🚧 EN PROGRESO
 
-**Progreso**: Sprint 12 completado ✅ | Sprint 13 en curso
+**Progreso**: Sprint 13 completado ✅
 
 #### Completado en Fase 4:
 
@@ -58,9 +58,9 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Preview de asignaciones (agregados/duplicados/errores)
   - Gestión de asignaciones actuales con remoción y confirmación
 
-#### Próximos pasos (Sprint 13):
+#### Próximos pasos:
 
-- (sin pendientes)
+- Definir alcance e issues del Sprint 14
 
 #### Issues de infraestructura completados:
 
@@ -563,7 +563,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 4 en progreso (Sprint 12 completado, Sprint 13 por iniciar)
+- **Fase actual**: Fase 4 en progreso (Sprint 12 y Sprint 13 completados)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**

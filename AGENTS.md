@@ -24,7 +24,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ### Fase Actual: Fase 4 - Módulo Escolar 🚧 EN PROGRESO
 
-**Progreso**: Sprint 13 en curso (backend F4-007 y F4-008 completados)
+**Progreso**: Sprint 13 completado ✅
 
 #### Sprint 8 (Evaluaciones) ✅ Completado
 
@@ -97,6 +97,15 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Soft delete de asignaciones con posibilidad de reactivación
   - Auditoría básica en `GrupoEducador` para altas y remociones
   - Tests unitarios de controller y service
+- ✅ **F4-010**: API listado de estudiantes y educadores por institución
+  - Endpoints `GET /instituciones/:id/estudiantes` y `GET /instituciones/:id/educadores`
+  - Filtros opcionales por búsqueda (`buscar`) y paginación (`page`, `limit`)
+  - Validación de permisos (ADMIN_ESCUELA/SUPER_ADMIN)
+- ✅ **F4-009**: UI Asignación de estudiantes y educadores a grupos
+  - Páginas: `/dashboard/grupos/[id]/estudiantes` y `/dashboard/grupos/[id]/educadores`
+  - Selector de usuarios por institución con búsqueda y paginación
+  - Preview de asignaciones (agregados/duplicados/errores)
+  - Gestión de asignaciones actuales con remoción y confirmación
 
 #### Preparación Fase 3 - Evaluaciones (completada)
 
