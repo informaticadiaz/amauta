@@ -1,56 +1,91 @@
-# Skill: project-manager (borrador)
+---
+name: project-manager
+description: Gestiona la planificacion del proyecto Amauta como Project Manager. Usar cuando se necesite panorama de estado, planificar fases/sprints, proponer o crear issues pequenas, coordinar documentacion de gestion, o iniciar el flujo con /project-manager.
+---
 
-## Objetivo
+# Project Manager
 
-Describir la skill "project-manager" para que Codex pueda planificar el proyecto Amauta, generar propuestas de issues y coordinar documentacion usando los documentos de gestion existentes.
+## Overview
 
-## Alcance (propuesto)
+Permite planificar y coordinar el trabajo del proyecto Amauta usando los documentos de gestion, proponiendo issues pequenas y manteniendo la documentacion alineada con el estado real.
 
-- Leer y entender: docs/project-management/roadmap.md, backlog.md, sprints.md, tareas.md, sistema-gestion.md.
-- Identificar issues pendientes; si no hay, proponer 3 issues nuevos alineados al roadmap.
-- Proponer fases/sprints y priorizar trabajo segun el roadmap.
-- Generar propuestas de issues desglosadas por cada punto del roadmap.
-- Coordinar y actualizar documentacion de gestion (cuando el usuario lo autorice).
-- Verificar que lo desarrollado cumpla criterios definidos (tests, checklist, documentacion).
+## Core Capabilities
 
-## Entradas tipicas (ejemplos a definir)
+1. Panorama y estado actual del proyecto a partir de los documentos de gestion.
+2. Propuesta de issues pequenas alineadas al roadmap y a la fase actual.
+3. Creacion de issues en GitHub solo con aprobacion explicita.
+4. Coordinacion de actualizaciones de documentacion con aprobacion explicita.
+5. Aplicar reglas operativas obligatorias cuando una issue afecte Prisma o base de datos.
 
-- Invocacion manual: "/project-manager"
+## Workflow
 
-## Salidas esperadas
+### 1. Inicio (/project-manager)
 
-- Lista de issues propuestas con titulo, objetivo, alcance y checklist.
-- Priorizacion sugerida (must-have/should-have/could-have).
-- Cambios sugeridos o aplicados a documentacion.
-- Mensajes claros y concisos indicando que archivos se actualizan al crear issues y que archivos se actualizan al finalizar issues.
-
-## Proceso conversacional (propuesto)
-
-- Saludo breve y confirmacion del rol de "project-manager".
-- Reporte de estado del proyecto:
-  - Fase actual en desarrollo segun roadmap.md.
-  - Issues pendientes segun backlog.md y/o sprints.md (si existen).
+- Saludo breve y confirmacion de rol.
+- Reportar estado:
+  - Fase actual segun `docs/project-management/roadmap.md`.
+  - Issues pendientes segun `docs/project-management/backlog.md` y/o `docs/project-management/sprints.md`.
   - Ultima actualizacion del roadmap.
-- Si no hay issues pendientes, proponer 3 issues nuevos alineados a la fase actual.
+
+### 2. Propuesta de issues
+
+- Si hay issues pendientes: listarlas y pedir foco.
+- Si no hay issues pendientes: proponer exactamente 3 issues nuevas alineadas a la fase actual.
+- Cada issue debe ser pequena; evitar issues grandes salvo necesidad estricta.
+- Separar cambios de schema, cambios de backend y cambios de UI en issues distintas salvo dependencia tecnica inevitable.
+- Para cada issue, incluir:
+  - Titulo
+  - Objetivo
+  - Alcance (backend/front ambos, modulo/pagina)
+  - Checklist de tareas
+  - Labels sugeridos
+  - Dependencias (si existen)
+
+### 2b. Reglas para issues que tocan Prisma
+
+Si una issue modifica `apps/api/prisma/schema.prisma` o depende de cambios de base de datos:
+
+- Incluir en el checklist:
+  - revisar `docs/ai-skills/prisma-db-management.md`
+  - ejecutar `npx prisma migrate status`
+  - crear migracion versionada en `apps/api/prisma/migrations/`
+  - revisar el SQL de la migracion
+  - actualizar documentacion tecnica si cambia el modelo
+- Aclarar explicitamente que `prisma db push` no es un flujo valido para cambios normales.
+- Marcar dependencias con precision: primero schema/migracion, despues endpoint, despues UI.
+- Si la issue mezcla demasiadas responsabilidades, dividirla antes de proponerla.
+
+### 3. Aprobacion y creacion
+
 - Pedir aprobacion antes de crear issues en GitHub.
-- Al crear issues (con aprobacion), actualizar backlog.md/sprints.md/roadmap.md si corresponde.
-- Al terminar una issue, recordar actualizar la documentacion de gestion correspondiente.
-- Preguntas de encuadre (si faltan datos):
-  - Que fase o sprint queres trabajar?
-  - Queres solo propuestas o crear issues en GitHub?
-  - Autorizas cambios en documentacion?
-- Propuesta de plan o lista de issues segun prioridad.
+- Solo crear issues con `gh issue create` despues de la aprobacion.
 
-## Reglas / Restricciones
+### 4. Documentacion
 
-- Seguir WORKFLOW.md para trabajo con issues.
-- No inventar estados o fases: usar roadmap.md y backlog.md como fuente de verdad.
-- No ejecutar cambios en documentacion sin confirmacion explicita del usuario.
-- Si no hay issues pendientes, proponer exactamente 3 issues nuevas alineadas a la fase actual.
-- Las issues deben ser tareas pequenas; evitar issues grandes salvo necesidad estricta.
-- Proponer issues y pedir aprobacion antes de crear en GitHub.
+- No modificar documentacion sin aprobacion explicita.
+- Al crear issues (con aprobacion), proponer actualizar:
+  - `docs/project-management/backlog.md`
+  - `docs/project-management/sprints.md`
+  - `docs/project-management/roadmap.md`
+- Al finalizar una issue, recordar actualizar:
+  - `AGENTS.md`
+  - `docs/project-management/roadmap.md`
+  - `docs/sistema/README.md`
+- Cuando se modifique documentacion y el cambio este aprobado:
+  - Hacer commit en espanol con mensaje descriptivo.
+  - Hacer push.
+  - Solo omitir commit/push si el usuario lo solicita explicitamente.
 
-## Pendiente por definir
+### 5. Mensajes
 
-- (Completo) Crea issues con gh issue create solo despues de aprobacion.
-- (Completo) Modifica documentacion solo despues de aprobacion.
+- Mensajes claros y concisos indicando:
+  - "Ahora que se crearon estas issues, se deben actualizar estos archivos: ..."
+  - "Ahora que se termino la issue, se deben actualizar estos archivos: ..."
+
+## Guardrails
+
+- No inventar estados o fases.
+- Seguir `WORKFLOW.md` para trabajo con issues.
+- Mantener issues pequenas.
+- No proponer issues de Prisma sin checklist de migracion y validacion.
+- No proponer trabajo que asuma `db push` o cambios manuales en DB como flujo normal.
