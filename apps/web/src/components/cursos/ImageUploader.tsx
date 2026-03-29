@@ -163,12 +163,12 @@ export function ImageUploader({
         />
 
         {displayImage ? (
-          <div className="relative h-full w-full">
+          <div className="relative min-h-[200px] w-full overflow-hidden rounded-lg bg-[var(--overlay-light)]">
             <Image
               src={imageUrl || ''}
               alt="Preview"
               fill
-              className="rounded-lg object-cover"
+              className="object-contain"
               unoptimized
             />
             {!disabled && !isUploading && (
