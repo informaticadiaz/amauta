@@ -1295,8 +1295,8 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 
 ## Fase 4: Módulo Administrativo Escolar
 
-**Duración estimada**: 6-8 semanas
-**Sprint 11-14**
+**Duración estimada**: 7-9 semanas
+**Sprint 11-15**
 
 ### Preparación de Fase 4 (issues)
 
@@ -1328,7 +1328,7 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 
 **Progreso Sprint 13**: 3/3 issues completados ✅
 
-### Sprint 14 📋 Planificado
+### Sprint 14 ✅ Completado
 
 | Issue | Título                                               | Estado        |
 | ----- | ---------------------------------------------------- | ------------- |
@@ -1337,6 +1337,16 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 | #77   | F4-013: API Resumen mensual de asistencias por grupo | ✅ Completado |
 
 **Progreso Sprint 14**: 3/3 issues completados ✅
+
+### Sprint 15 📋 Planificado
+
+| Issue | Título                                                            | Estado         |
+| ----- | ----------------------------------------------------------------- | -------------- |
+| #79   | F4-014: Prisma Calificaciones por periodo académico e institución | 📋 Planificado |
+| #80   | F4-015: API Carga y listado de calificaciones por periodo         | 📋 Planificado |
+| #81   | F4-016: UI Carga rápida de calificaciones por grupo y periodo     | 📋 Planificado |
+
+**Progreso Sprint 15**: 0/3 issues completados
 
 ### Objetivos
 

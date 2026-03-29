@@ -1,6 +1,17 @@
 # Gestión de Sprints - Amauta
 
-## Sprint Actual: Sprint 14 - Módulo Escolar (COMPLETADO)
+## Sprint Actual: Sprint 15 - Módulo Escolar (PLANIFICADO)
+
+**Fase**: Fase 4 - Módulo Escolar
+**Objetivo**: Iniciar el bloque de calificaciones con ajuste de modelo, API operativa y UI de carga rápida por grupo y periodo.
+
+### Issues comprometidas
+
+- 📋 #79 F4-014: Prisma Calificaciones por periodo académico e institución
+- 📋 #80 F4-015: API Carga y listado de calificaciones por periodo
+- 📋 #81 F4-016: UI Carga rápida de calificaciones por grupo y periodo
+
+## Sprint 14 - Módulo Escolar (COMPLETADO)
 
 **Fase**: Fase 4 - Módulo Escolar
 **Objetivo**: Iniciar el bloque operativo de asistencias con base backend, UI de carga rápida y resumen mensual.
@@ -52,7 +63,7 @@
 
 ### Último Sprint Completado ✅
 
-**Sprint 13 - Módulo Escolar (Fase 4)**
+**Sprint 14 - Módulo Escolar (Fase 4)**
 
 - Estado: ✅ Completado
 - Referencia: `docs/project-management/roadmap.md` → Fase 4
