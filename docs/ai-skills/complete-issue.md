@@ -1,9 +1,9 @@
 # Skill: Complete Issue
 
 > Ejecuta un issue de GitHub de principio a fin de forma autónoma usando TDD:
-> escribe los tests primero, luego implementa el código hasta que pasen, documenta y cierra el issue.
+> escribe primero los tests de mayor valor, luego implementa el código hasta que pasen, documenta y cierra el issue.
 >
-> **Requisito fundamental**: Ningún issue puede cerrarse sin tests que pasen. Sin tests = issue incompleto.
+> **Requisito fundamental**: Ningún issue de código puede cerrarse sin verificación automatizada suficiente. Mantener TDD, pero evitando tests redundantes, triviales o costosos sin valor real.
 
 ---
 
@@ -121,7 +121,7 @@ gh issue view [número] --json title,body,labels
 Extraer y registrar:
 
 - Objetivo principal
-- Checklist de subtareas (son los criterios de aceptación para los tests)
+- Checklist de subtareas (insumo para derivar escenarios de test, no una equivalencia 1:1)
 - Labels: `backend`, `frontend`, `database`, etc.
 - Dependencias con otros issues
 - **Estado de implementación**: ¿el issue menciona que la implementación ya existe?
@@ -178,6 +178,7 @@ LEER: docs/ai-context/frontend/hooks.md    (si usa auth/roles)
 ```
 LEER: apps/api/src/cursos/cursos.service.spec.ts   (referencia de unit test backend)
 LEER: docs/technical/testing.md                     (guía completa de testing)
+LEER: docs/ai-skills/amauta-high-value-tests.md     (criterio obligatorio para diseñar tests)
 ```
 
 > **Regla absoluta**: Nunca inventar nombres de campos, enums, relaciones o tablas.
@@ -216,11 +217,6 @@ Crear un todo list antes de empezar. La estructura varía según el modo determi
 8. [Cierre]       Cerrar el issue con comentario
 ```
 
-8. [Commit] Commit con tests + implementación
-9. [Cierre] Cerrar el issue con comentario
-
-```
-
 ---
 
 ### PASO 4 — Escribir Tests
@@ -228,7 +224,43 @@ Crear un todo list antes de empezar. La estructura varía según el modo determi
 > **Modo A**: Escribir tests ANTES de implementar. Deben fallar (RED).
 > **Modo B**: Escribir tests DESPUÉS de leer la implementación. Deben pasar (GREEN).
 
-En ambos modos: cada ítem del checklist del issue = al menos un test.
+Antes de definir cualquier test, aplicar obligatoriamente:
+
+`docs/ai-skills/amauta-high-value-tests.md`
+
+En ambos modos, derivar una **matriz mínima de tests de alto valor**. No convertir el checklist del issue en una lista mecánica de tests.
+
+#### Regla de selección de tests
+
+Crear tests solo si cubren al menos una de estas categorías:
+
+- regla de negocio relevante
+- permiso, ownership o seguridad
+- validación con ramas reales
+- transición de estado o efecto lateral importante
+- regresión conocida o bug probable
+- caso límite con impacto real
+
+No crear tests para:
+
+- delegación trivial de controller sin lógica propia
+- mapeos obvios o getters/setters
+- texto, markup o props sin comportamiento relevante
+- duplicados de otro test que ya cubre el mismo contrato
+- líneas solo para subir cobertura
+
+#### Regla de densidad
+
+- Un issue puede resolverse con pocos tests si cubren el comportamiento crítico.
+- Un checklist puede mapearse a menos tests si varios ítems pertenecen al mismo flujo.
+- Si una rama no agrega riesgo real, no necesita test dedicado.
+
+#### Prioridad recomendada
+
+1. Service o capa de negocio
+2. Integración liviana o utilidades críticas
+3. Controller solo si agrega lógica, transformación o manejo de errores propio
+4. UI solo para comportamiento visible importante
 
 #### Dónde crear los archivos de test:
 
@@ -239,7 +271,7 @@ Backend (controller): apps/api/src/[modulo]/[modulo].controller.spec.ts
 Frontend (componente): apps/web/src/components/[Componente]/[Componente].test.tsx
 Frontend (página): apps/web/src/app/[ruta]/page.test.tsx
 
-````
+```
 
 #### Patrón de test backend (unit test de service):
 
@@ -267,8 +299,9 @@ import { PrismaService } from '../prisma/prisma.service';
 
 describe('[Modulo]Service', () => {
   let service: [Modulo]Service;
+  let prisma: ReturnType<typeof createMockPrisma>;
 
-  const mockPrisma = {
+  const createMockPrisma = () => ({
     [modulo]: {
       findMany: jest.fn(),
       findUnique: jest.fn(),
@@ -276,39 +309,38 @@ describe('[Modulo]Service', () => {
       update: jest.fn(),
       count: jest.fn(),
     },
-  };
+  });
 
   beforeEach(async () => {
+    prisma = createMockPrisma();
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         [Modulo]Service,
-        { provide: PrismaService, useValue: mockPrisma },
+        { provide: PrismaService, useValue: prisma },
       ],
     }).compile();
 
     service = module.get<[Modulo]Service>([Modulo]Service);
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   // Un describe por método público
   describe('[método]', () => {
     it('debería [comportamiento esperado] cuando [condición]', async () => {
       // Arrange
-      mockPrisma.[modulo].[método].mockResolvedValue([datos mock]);
+      prisma.[modulo].[método].mockResolvedValue([datos mock]);
 
       // Act
       const result = await service.[método]([args]);
 
       // Assert
       expect(result).[matcher];
-      expect(mockPrisma.[modulo].[método]).toHaveBeenCalledWith([args esperados]);
+      expect(prisma.[modulo].[método]).toHaveBeenCalledWith([args esperados]);
     });
 
     it('debería lanzar NotFoundException cuando el recurso no existe', async () => {
-      mockPrisma.[modulo].findUnique.mockResolvedValue(null);
+      prisma.[modulo].findUnique.mockResolvedValue(null);
 
       await expect(service.[método]('id-inexistente')).rejects.toThrow(
         NotFoundException
@@ -322,7 +354,15 @@ describe('[Modulo]Service', () => {
     });
   });
 });
-````
+```
+
+#### Reglas obligatorias para tests backend
+
+- Usar mocks frescos por test o por `beforeEach`; no compartir implementaciones persistentes.
+- Preferir `jest.resetAllMocks()` cuando el test configure `mockResolvedValue`, `mockImplementation` o secuencias.
+- Preferir `mockResolvedValueOnce(...)` cuando el flujo depende de múltiples consultas consecutivas.
+- No testear controller y service con el mismo set de casos si el controller solo delega.
+- Si el riesgo vive en el service, testear el service.
 
 #### Patrón de test frontend (componente):
 
@@ -339,7 +379,7 @@ describe('[Componente]', () => {
   });
 
   it('debería [comportamiento] cuando el usuario [acción]', async () => {
-    const mockFn = vi.fn();
+    const mockFn = jest.fn();
     render(<[Componente] onAction={mockFn} />);
 
     await userEvent.click(screen.getByRole('button', { name: /[texto]/i }));
@@ -348,6 +388,11 @@ describe('[Componente]', () => {
   });
 });
 ```
+
+#### Regla obligatoria para frontend
+
+- Testear comportamiento visible o interacción importante, no estructura interna irrelevante.
+- Si la lógica puede probarse sin DOM, preferir test unitario de utilidad o hook antes que un render pesado.
 
 ---
 
@@ -418,6 +463,15 @@ Si algún test falla: corregir la implementación, **no el test** (salvo que el 
 Una vez en verde, refactorizar si es necesario y ejecutar tests de nuevo para confirmar que siguen en verde.
 
 **Objetivo de cobertura mínima**: >80% statements en el módulo nuevo.
+
+#### Criterio de salida para tests
+
+Antes de cerrar el issue, verificar:
+
+- los tests nuevos cubren comportamiento importante y no duplicado
+- el set total de tests del módulo sigue siendo entendible y mantenible
+- no se agregaron tests solo para cumplir cobertura o checklist
+- los mocks no dejan estado persistente entre casos
 
 ---
 
@@ -535,7 +589,8 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 - [ ] Tests pasan en GREEN (confirmado con ejecución real)
 - [ ] Cobertura >80% en el módulo nuevo
 - [ ] **TypeScript compila sin errores** (`tsc --noEmit` en backend y frontend)
-- [ ] Todos los items del checklist del issue cubiertos por tests
+- [ ] `docs/ai-skills/amauta-high-value-tests.md` aplicado para decidir alcance y volumen de tests
+- [ ] Los tests cubren el contrato importante sin duplicación innecesaria
 - [ ] Código usa `safeParse` para validación
 - [ ] No hay deletes físicos sin justificación en el issue
 - [ ] Schema de Prisma consultado antes de cada query

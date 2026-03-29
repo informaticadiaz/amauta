@@ -147,6 +147,7 @@ jobs:
         run: npm run test --workspace=@amauta/api
         env:
           DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'
+          NODE_OPTIONS: '--max-old-space-size=4096'
 
       - name: Tests Web
         run: npm run test:ci --workspace=@amauta/web
