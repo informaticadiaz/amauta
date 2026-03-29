@@ -111,8 +111,8 @@ describe('CursosService', () => {
     service = module.get<CursosService>(CursosService);
     prisma = module.get(PrismaService);
 
-    // Reset mocks
-    jest.clearAllMocks();
+    // Reset mocks (resetAllMocks limpia implementaciones, clearAllMocks solo calls)
+    jest.resetAllMocks();
   });
 
   describe('crear', () => {
@@ -393,7 +393,7 @@ describe('CursosService', () => {
     };
 
     it('debería actualizar un curso con datos válidos', async () => {
-      prisma.curso.findUnique.mockResolvedValue({
+      prisma.curso.findUnique.mockResolvedValueOnce({
         educadorId: 'educador-123',
         titulo: 'Título Original',
         slug: 'titulo-original',
