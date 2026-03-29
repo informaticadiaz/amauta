@@ -3,7 +3,7 @@
 > Los grupos (o clases) permiten organizar estudiantes dentro de una institución educativa, facilitando el registro de asistencias, calificaciones y comunicaciones.
 
 **Estado**: ✅ Funcional (API + UI)
-**Última actualización**: 2026-03-28
+**Última actualización**: 2026-03-29
 
 ---
 
@@ -21,6 +21,7 @@
 - Asignar uno o más educadores a un grupo con rol titular o suplente
 - Ver el listado de estudiantes por grupo
 - Ver el listado de educadores por grupo
+- Registrar asistencias diarias por grupo y fecha
 - Remover estudiantes sin borrar el historial
 - Remover educadores sin borrar el historial
 
@@ -28,7 +29,7 @@
 
 - Ver los grupos donde estás asignado
 - Ver la lista de estudiantes de tus grupos
-- (Próximamente) Tomar asistencia de tus grupos
+- Registrar asistencias de los grupos donde estás asignado
 - (Próximamente) Cargar calificaciones
 
 ### Como Estudiante
@@ -163,6 +164,28 @@ Desde la pantalla del grupo: "Gestionar educadores".
 **¿Qué devuelve?**
 
 La asignación creada con el rol definido. Si la asignación había sido removida antes, el sistema la reactiva sin perder historial.
+
+---
+
+### Registrar Asistencias Diarias
+
+**¿Qué es?**
+Permite cargar la asistencia del grupo para una fecha determinada con estados presente, ausente, tardanza o justificado.
+
+**¿Quién puede usarlo?**
+Administradores de escuela y educadores asignados al grupo.
+
+**¿Qué valida el sistema?**
+
+- Que el usuario tenga acceso al grupo
+- Que el grupo esté activo
+- Que solo se informen estudiantes activos del grupo
+- Que una edición sobre un registro existente solo se haga el mismo día
+- Que una edición del mismo día incluya observación si cambia el estado previo
+
+**¿Qué devuelve?**
+
+Un resumen con cantidad de asistencias procesadas, creadas y actualizadas.
 
 ---
 

@@ -132,7 +132,7 @@ Copiar y completar el siguiente template por cada endpoint:
 }
 ```
 
-```
+````
 
 ## Consideraciones para Swagger/OpenAPI
 
@@ -149,4 +149,128 @@ Cuando se incorpore Swagger/OpenAPI:
 - [ ] Request y response con ejemplos
 - [ ] Códigos de estado definidos
 - [ ] Paginación y filtros si aplica
+
+---
+
+## Endpoints Documentados
+
+### Obtener Nómina de Asistencia por Grupo y Fecha
+
+- **Método**: `GET`
+- **URL**: `/api/v1/grupos/:grupoId/asistencias`
+- **Auth**: `JWT`
+- **Roles**: `ADMIN_ESCUELA`, `EDUCADOR`
+- **Descripción**: Devuelve la nómina activa del grupo para una fecha y, si existe, el estado de asistencia ya registrado para cada estudiante.
+
+#### Path Params
+
+| Param   | Tipo          | Requerido | Descripción |
+| ------- | ------------- | --------- | ----------- |
+| grupoId | string (cuid) | Sí        | ID del grupo |
+
+#### Query Params
+
+| Param | Tipo   | Requerido | Default | Descripción |
+| ----- | ------ | --------- | ------- | ----------- |
+| fecha | string | Sí        | -       | Fecha en formato `YYYY-MM-DD` |
+
+#### Respuestas
+
+**200 OK**
+
+```json
+{
+  "grupoId": "ckr0000000000000000000101",
+  "fecha": "2026-03-29",
+  "estudiantes": [
+    {
+      "id": "ckr0000000000000000000104",
+      "nombre": "Ana",
+      "apellido": "Alvarez",
+      "email": "ana@amauta.test",
+      "asistencia": {
+        "estado": "PRESENTE",
+        "observaciones": null,
+        "updatedAt": "2026-03-29T12:30:00.000Z"
+      }
+    },
+    {
+      "id": "ckr0000000000000000000105",
+      "nombre": "Bruno",
+      "apellido": "Benitez",
+      "email": "bruno@amauta.test",
+      "asistencia": null
+    }
+  ]
+}
+````
+
+**403 Forbidden**
+
+```json
+{
+  "message": "No tienes permiso para operar sobre este grupo"
+}
+```
+
+### Registrar Asistencias por Grupo y Fecha
+
+- **Método**: `PUT`
+- **URL**: `/api/v1/grupos/:grupoId/asistencias`
+- **Auth**: `JWT`
+- **Roles**: `ADMIN_ESCUELA`, `EDUCADOR`
+- **Descripción**: Registra o actualiza en bloque las asistencias de un grupo para una fecha. La edición de un registro existente solo se permite el mismo día y exige observación cuando cambia el valor previo.
+
+#### Path Params
+
+| Param   | Tipo          | Requerido | Descripción  |
+| ------- | ------------- | --------- | ------------ |
+| grupoId | string (cuid) | Sí        | ID del grupo |
+
+#### Body
+
+```json
+{
+  "fecha": "2026-03-29",
+  "asistencias": [
+    {
+      "estudianteId": "ckr0000000000000000000104",
+      "estado": "PRESENTE",
+      "observaciones": "Llegó luego de la revisión inicial"
+    },
+    {
+      "estudianteId": "ckr0000000000000000000105",
+      "estado": "TARDANZA"
+    }
+  ]
+}
+```
+
+#### Respuestas
+
+**200 OK**
+
+```json
+{
+  "resultado": {
+    "grupoId": "ckr0000000000000000000101",
+    "fecha": "2026-03-29",
+    "procesadas": 2,
+    "creadas": 1,
+    "actualizadas": 1
+  },
+  "message": "Asistencias registradas exitosamente"
+}
+```
+
+**400 Bad Request**
+
+```json
+{
+  "message": "Debes indicar una observación para editar una asistencia del mismo día"
+}
+```
+
+```
+
 ```
