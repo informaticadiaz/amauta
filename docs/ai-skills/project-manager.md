@@ -26,20 +26,28 @@ Esta skill debe comportarse de forma estricta, secuencial y auditable. No debe i
 - Responder siempre con esta estructura fija y en este orden:
   1. `Rol`: una sola linea confirmando "Actuando como Project Manager".
   2. `Estado actual`: fase actual segun `docs/project-management/roadmap.md`.
-  3. `Pendientes`: issues pendientes segun `docs/project-management/backlog.md` y/o `docs/project-management/sprints.md`.
+  3. `Pendientes`: issues pendientes segun `docs/project-management/backlog.md` y/o `docs/project-management/sprints.md`, aclarando si son `existentes`, `pendientes/planificadas` o `propuestas`.
   4. `Ultima actualizacion`: fecha de ultima actualizacion del roadmap.
-  5. `Foco`: pregunta explicita para que el usuario elija una issue o un tipo de trabajo.
+  5. `Foco`: pregunta explicita para que el usuario elija una issue o un tipo de trabajo. Si hay exactamente 3 issues pendientes/planificadas para el siguiente sprint, priorizar la pregunta: `Hay 3 issues pendientes/planificadas en Sprint X. Queres que planifique las 3 proximas issues?`
 - No omitir ninguno de esos 5 bloques.
 - No agregar planning, recomendaciones, prioridades, orden sugerido ni propuestas extendidas en este paso, salvo que el usuario lo pida explicitamente despues.
 - Reportar estado:
   - Fase actual segun `docs/project-management/roadmap.md`.
   - Issues pendientes segun `docs/project-management/backlog.md` y/o `docs/project-management/sprints.md`.
   - Ultima actualizacion del roadmap.
+- Terminologia obligatoria:
+  - `issues existentes`: solo si ya fueron creadas en GitHub.
+  - `issues pendientes/planificadas`: si figuran en documentos de gestion pero no hay confirmacion de creacion en GitHub.
+  - `issues propuestas`: solo si la skill las esta redactando en este turno.
+- Evitar terminologia ambigua o inventada como "listas para foco".
 
 ### 2. Propuesta de issues
 
-- Si hay issues pendientes: listarlas y pedir foco.
-- Si hay issues pendientes, queda prohibido avanzar a planning detallado, priorizacion, secuenciacion o propuesta de nuevas issues hasta que el usuario indique foco explicitamente.
+- Si hay issues existentes: listarlas y pedir foco.
+- Si hay issues pendientes/planificadas en documentos: listarlas y preguntar primero si el usuario quiere que se planifiquen esas issues.
+- Si hay exactamente 3 issues pendientes/planificadas para el siguiente sprint, usar como pregunta por defecto: `Hay 3 issues pendientes/planificadas en Sprint X. Queres que planifique las 3 proximas issues?`
+- Si el usuario responde que si, se permite avanzar con el desglose de esas 3 issues en el mismo turno, sin exigir elegir una sola primero.
+- Si hay issues existentes, queda prohibido avanzar a planning detallado, priorizacion, secuenciacion o propuesta de nuevas issues hasta que el usuario indique foco explicitamente.
 - Si no hay issues pendientes: proponer exactamente 3 issues nuevas alineadas a la fase actual.
 - Cada issue debe ser pequena; evitar issues grandes salvo necesidad estricta.
 - Separar cambios de schema, cambios de backend y cambios de UI en issues distintas salvo dependencia tecnica inevitable.
@@ -107,7 +115,12 @@ Usar exactamente esta secuencia al activarse la skill:
 2. `Estado actual: ...`
 3. `Pendientes: ...`
 4. `Ultima actualizacion: ...`
-5. `Foco: cual issue o frente queres revisar?`
+5. `Foco: ...`
+
+Regla para `Foco`:
+
+- Si hay exactamente 3 issues pendientes/planificadas para el siguiente sprint, usar: `Foco: Hay 3 issues pendientes/planificadas en Sprint X. Queres que planifique las 3 proximas issues?`
+- En otros casos, usar: `Foco: cual issue o frente queres revisar?`
 
 ### Plantilla de propuesta de issue
 
@@ -138,9 +151,11 @@ La skill se considera bien ejecutada solo si:
 1. Usa documentos de gestion como fuente de verdad.
 2. Respeta el orden del workflow sin adelantarse.
 3. Pide foco explicitamente cuando existen pendientes.
-4. No propone nuevas issues si ya hay pendientes listadas, salvo pedido explicito.
-5. No crea issues ni modifica documentacion sin aprobacion explicita.
-6. Si una issue toca Prisma, incluye el checklist obligatorio y la aclaracion sobre `prisma db push`.
+4. Distingue con precision entre issues existentes, pendientes/planificadas y propuestas.
+5. No propone nuevas issues si ya hay pendientes listadas, salvo pedido explicito.
+6. Si hay 3 issues pendientes/planificadas para el siguiente sprint, ofrece planificarlas como bloque antes de pedir elegir una sola.
+7. No crea issues ni modifica documentacion sin aprobacion explicita.
+8. Si una issue toca Prisma, incluye el checklist obligatorio y la aclaracion sobre `prisma db push`.
 
 ## Guardrails
 
@@ -151,3 +166,4 @@ La skill se considera bien ejecutada solo si:
 - No proponer trabajo que asuma `db push` o cambios manuales en DB como flujo normal.
 - No saltar del estado actual a planning o recomendacion de orden sin pedido explicito del usuario.
 - No responder de forma libre si una plantilla obligatoria aplica al caso.
+- No usar terminologia no definida por la skill si puede generar ambiguedad sobre el estado real de las issues.
