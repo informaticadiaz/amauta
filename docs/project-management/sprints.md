@@ -7,9 +7,9 @@
 
 ### Issues comprometidas
 
-- 📋 F4-011: API Registro diario de asistencias por grupo
-- 📋 F4-012: UI Carga rápida de asistencias por grupo
-- 📋 F4-013: API Resumen mensual de asistencias por grupo
+- 📋 #76 F4-011: API Registro diario de asistencias por grupo
+- 📋 #78 F4-012: UI Carga rápida de asistencias por grupo
+- 📋 #77 F4-013: API Resumen mensual de asistencias por grupo
 
 ## Sprint 13 - Módulo Escolar (COMPLETADO)
 

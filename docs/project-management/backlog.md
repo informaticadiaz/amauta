@@ -32,13 +32,13 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 **Objetivo**: Iniciar el bloque de asistencias con carga diaria operativa y resumen básico por grupo.
 **Referencia**: `docs/project-management/roadmap.md` → Fase 4
 
-### Issues propuestas para Sprint 14
+### Issues comprometidas (Sprint 14)
 
-| Issue  | Título                                       | Estado   |
-| ------ | -------------------------------------------- | -------- |
-| F4-011 | API Registro diario de asistencias por grupo | 📋 Ready |
-| F4-012 | UI Carga rápida de asistencias por grupo     | 📋 Ready |
-| F4-013 | API Resumen mensual de asistencias por grupo | 📋 Ready |
+| Issue | Título                                               | Estado   |
+| ----- | ---------------------------------------------------- | -------- |
+| #76   | F4-011: API Registro diario de asistencias por grupo | 📋 Ready |
+| #78   | F4-012: UI Carga rápida de asistencias por grupo     | 📋 Ready |
+| #77   | F4-013: API Resumen mensual de asistencias por grupo | 📋 Ready |
 
 ## Sprint 13 - Módulo Escolar (COMPLETADO)
 

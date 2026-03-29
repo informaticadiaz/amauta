@@ -25,7 +25,7 @@ gh issue list --limit 100
 
 **Criterios de selección:**
 
-- Priorizar issues etiquetados como `must-have`
+- Priorizar issues etiquetados con prioridad operativa alta como `p0-critical` o `p1-high`
 - Seguir el orden de dependencias (ej: primero infraestructura, luego features)
 - Trabajar en issues del sprint actual
 - Considerar estimación de puntos para planning
@@ -378,6 +378,116 @@ Si el issue cambió Prisma, además verificar:
 
 ## Comandos Útiles de GitHub CLI
 
+## Taxonomía de Labels
+
+Para evitar duplicados, filtros rotos y nomenclaturas inconsistentes, las issues de Amauta deben usar una taxonomía acotada y predecible.
+
+### Categorías oficiales
+
+#### 1. Tipo de issue
+
+Usar exactamente una:
+
+- `feature`: nueva funcionalidad
+- `bug`: defecto o regresión
+- `tech-debt`: deuda técnica, refactor o mejora interna
+- `docs`: documentación
+- `question`: consulta o aclaración
+
+#### 2. Área afectada
+
+Usar una o más según corresponda:
+
+- `backend`: API, servicios, validaciones o lógica de negocio
+- `frontend`: UI, UX, páginas, componentes o hooks
+- `database`: Prisma, migraciones, modelos o consultas SQL
+- `infrastructure`: CI/CD, Docker, deployment, Dokploy o configuración operativa
+- `testing`: cobertura, suites de test, QA o diagnósticos de calidad
+
+#### 3. Fase del roadmap
+
+Usar exactamente una cuando la issue pertenezca a una fase planificada:
+
+- `phase-0`
+- `phase-1`
+- `phase-2`
+- `phase-3`
+- `phase-4`
+- `phase-5`
+
+#### 4. Prioridad operativa
+
+Usar exactamente una cuando haga falta priorización explícita:
+
+- `p0-critical`
+- `p1-high`
+- `p2-medium`
+- `p3-low`
+
+#### 5. Estado o soporte
+
+Usar solo si aplica:
+
+- `blocked`
+- `help-wanted`
+- `good-first-issue`
+
+### Reglas de uso
+
+- No usar labels duplicadas con el mismo significado.
+- No mezclar dos sistemas de prioridad en la misma issue.
+- Para sprints, preferir `milestones` antes que labels de sprint.
+- Si una issue corresponde al roadmap, debe tener label de fase.
+- Si una issue toca Prisma o la base de datos, agregar `database` ademas del tipo y la fase.
+
+### Labels a mantener
+
+- `feature`
+- `bug`
+- `tech-debt`
+- `docs`
+- `question`
+- `backend`
+- `frontend`
+- `database`
+- `infrastructure`
+- `testing`
+- `phase-0`
+- `phase-1`
+- `phase-2`
+- `phase-3`
+- `phase-4`
+- `phase-5`
+- `p0-critical`
+- `p1-high`
+- `p2-medium`
+- `p3-low`
+- `blocked`
+- `help-wanted`
+- `good-first-issue`
+
+### Labels a deprecar o consolidar
+
+- `documentation` → usar `docs`
+- `good first issue` → usar `good-first-issue`
+- `help wanted` → usar `help-wanted`
+- `must-have` y `should-have` no deben ser el sistema principal de prioridad en GitHub; conservarlos solo si todavia se necesitan para backlog historico o transicion
+
+### Convención recomendada para issues nuevas
+
+Una issue nueva normalmente deberia incluir:
+
+1. una label de tipo
+2. una o mas labels de area
+3. una label de fase
+4. opcionalmente una label de prioridad
+
+Ejemplos:
+
+- `feature`, `backend`, `phase-4`
+- `feature`, `frontend`, `phase-4`, `p2-medium`
+- `tech-debt`, `testing`, `backend`, `phase-4`
+
 ### Listar issues por estado
 
 ```bash
@@ -388,7 +498,7 @@ gh issue list --state closed
 ### Filtrar por etiquetas
 
 ```bash
-gh issue list --label "must-have"
+gh issue list --label "p1-high"
 gh issue list --label "phase-0"
 gh issue list --label "backend"
 ```

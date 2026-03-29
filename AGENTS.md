@@ -319,7 +319,7 @@ El roadmap define:
 
 2. CREAR ISSUES
    └── Desglosar la fase en issues específicos (gh issue create)
-   └── Usar labels: phase-1, phase-2, etc.
+   └── Usar labels según la taxonomía documentada en `WORKFLOW.md`
    └── Referenciar sección del roadmap en cada issue
 
 3. IMPLEMENTAR
@@ -633,6 +633,7 @@ gh issue list --limit 50
 # Ver issues por label/fase
 gh issue list --label "phase-0"
 gh issue list --label "phase-1"
+gh issue list --label "phase-4"
 
 # Ver issues cerrados recientemente
 gh issue list --state closed --limit 10
