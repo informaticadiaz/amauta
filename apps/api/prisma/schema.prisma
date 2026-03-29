@@ -418,7 +418,8 @@ model PeriodoAcademico {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  grupos Grupo[]
+  grupos         Grupo[]
+  calificaciones Calificacion[]
 
   @@index([institucionId])
   @@index([activo])
@@ -580,19 +581,20 @@ model Calificacion {
   estudianteId String
   estudiante   Usuario @relation(fields: [estudianteId], references: [id])
 
-  materia String
-  periodo String // "1er trimestre", "Parcial 1", etc
+  periodoAcademicoId String
+  periodoAcademico   PeriodoAcademico @relation(fields: [periodoAcademicoId], references: [id])
 
-  nota       Float
-  notaMaxima Float @default(10)
+  materia String
+  nota    Float
 
   observaciones String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([grupoId])
-  @@index([estudianteId])
+  @@unique([grupoId, estudianteId, periodoAcademicoId, materia])
+  @@index([grupoId, periodoAcademicoId])
+  @@index([estudianteId, periodoAcademicoId])
   @@map("calificaciones")
 }
 

@@ -426,7 +426,8 @@ model PeriodoAcademico {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  grupos Grupo[]
+  grupos         Grupo[]
+  calificaciones Calificacion[]
 
   @@index([institucionId])
   @@index([activo])
@@ -451,6 +452,39 @@ model EscalaCalificacion {
   updatedAt DateTime @updatedAt
 
   @@map("escalas_calificacion")
+}
+```
+
+### Calificacion
+
+> La `notaMaxima` se obtiene desde `EscalaCalificacion` de la institución (no se repite por registro).
+> Un único registro por combinación grupo+estudiante+periodo+materia (unique constraint).
+
+```prisma
+model Calificacion {
+  id String @id @default(cuid())
+
+  grupoId String
+  grupo   Grupo  @relation(fields: [grupoId], references: [id])
+
+  estudianteId String
+  estudiante   Usuario @relation(fields: [estudianteId], references: [id])
+
+  periodoAcademicoId String
+  periodoAcademico   PeriodoAcademico @relation(fields: [periodoAcademicoId], references: [id])
+
+  materia String
+  nota    Float
+
+  observaciones String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([grupoId, estudianteId, periodoAcademicoId, materia])
+  @@index([grupoId, periodoAcademicoId])
+  @@index([estudianteId, periodoAcademicoId])
+  @@map("calificaciones")
 }
 ```
 

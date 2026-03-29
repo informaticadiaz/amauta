@@ -24,7 +24,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ### Fase Actual: Fase 4 - Módulo Escolar 🚧 EN PROGRESO
 
-**Progreso**: Sprint 14 en ejecución 🚧
+**Progreso**: Sprint 15 en ejecución 🚧 (1/3 completados)
 
 #### Completado en Fase 4:
 
@@ -78,9 +78,16 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Solo considera estudiantes activos del grupo al momento de la consulta
   - Tests unitarios de controller y service + documentación de limitaciones iniciales
 
+- ✅ **F4-014**: Prisma Calificaciones por periodo académico e institución
+  - Modelo `Calificacion` alineado con `PeriodoAcademico` (FK real vs campo libre)
+  - Eliminados campos `periodo String` y `notaMaxima Float` (redundante con `EscalaCalificacion`)
+  - Unique constraint `[grupoId, estudianteId, periodoAcademicoId, materia]`
+  - Índices compuestos para consultas por grupo+periodo y estudiante+periodo
+  - Migración versionada `20260329000100_calificaciones_periodo_academico`
+
 #### Próximos pasos:
 
-- Cerrar Sprint 14 y priorizar el siguiente bloque de Fase 4
+- Continuar Sprint 15: F4-015 (API Calificaciones) y F4-016 (UI Calificaciones)
 
 #### Issues de infraestructura completados:
 
