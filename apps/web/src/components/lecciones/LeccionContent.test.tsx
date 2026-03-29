@@ -59,6 +59,22 @@ describe('LeccionContent', () => {
       expect(iframe?.src).toContain('youtube');
     });
 
+    it('debería inferir YouTube cuando provider no viene informado', () => {
+      const contenido = {
+        videoUrl: 'https://youtu.be/IBm4QyDO50o?si=xjeeIsR9j4WW4k_X',
+      };
+      render(
+        <LeccionContent
+          tipo="VIDEO"
+          contenido={contenido}
+          titulo="Video sin provider"
+        />
+      );
+      const iframe = document.querySelector('iframe');
+      expect(iframe).toBeInTheDocument();
+      expect(iframe?.src).toContain('youtube.com/embed/IBm4QyDO50o');
+    });
+
     it('debería renderizar iframe para videos de Vimeo', () => {
       const contenido = {
         videoUrl: 'https://vimeo.com/123456',

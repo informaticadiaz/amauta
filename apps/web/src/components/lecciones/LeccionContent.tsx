@@ -24,6 +24,25 @@ interface Props {
   titulo: string;
 }
 
+function inferVideoProvider(
+  videoUrl: string,
+  provider?: ContenidoVideo['provider']
+): ContenidoVideo['provider'] {
+  if (provider) {
+    return provider;
+  }
+
+  if (/youtube\.com|youtu\.be/.test(videoUrl)) {
+    return 'youtube';
+  }
+
+  if (/vimeo\.com/.test(videoUrl)) {
+    return 'vimeo';
+  }
+
+  return 'local';
+}
+
 function getYouTubeId(url: string): string | null {
   const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
   return match?.[1] ?? null;
@@ -45,7 +64,9 @@ function VideoPlayer({ contenido }: { contenido: ContenidoVideo }) {
     );
   }
 
-  if (provider === 'youtube') {
+  const resolvedProvider = inferVideoProvider(videoUrl, provider);
+
+  if (resolvedProvider === 'youtube') {
     const videoId = getYouTubeId(videoUrl);
     const embedUrl = videoId
       ? `https://www.youtube.com/embed/${videoId}`
@@ -64,7 +85,7 @@ function VideoPlayer({ contenido }: { contenido: ContenidoVideo }) {
     );
   }
 
-  if (provider === 'vimeo') {
+  if (resolvedProvider === 'vimeo') {
     const videoId = getVimeoId(videoUrl);
     const embedUrl = videoId
       ? `https://player.vimeo.com/video/${videoId}`
