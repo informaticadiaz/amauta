@@ -1,0 +1,118 @@
+# 01 — Análisis de las Skills para Automatización
+
+> Antes de diseñar el loop, hay que entender exactamente qué hacen las skills
+> actuales y dónde están los puntos de fricción para la autonomía.
+
+---
+
+## Análisis de `project-manager`
+
+Ubicación: `docs/ai-skills/project-manager.md`
+
+### Lo que hace en modo interactivo
+
+1. Al activarse con `/project-manager`, reporta estado en 5 bloques fijos
+2. Pregunta al usuario qué issue o frente revisar (la pregunta de "foco")
+3. Con confirmación del usuario: desglosa el issue con título, objetivo, alcance, checklist
+4. Pide aprobación antes de crear el issue en GitHub
+5. Pide aprobación antes de modificar documentación
+6. Solo commitea/pushea con aprobación explícita
+
+### Los puntos de fricción para autonomía
+
+| Punto                      | Descripción                                      | Impacto                                                   |
+| -------------------------- | ------------------------------------------------ | --------------------------------------------------------- |
+| **Pregunta de foco**       | Siempre espera que el usuario elija qué trabajar | Bloquea el loop — el skill se detiene esperando respuesta |
+| **Aprobación para GitHub** | No crea issues sin confirmación                  | El loop no puede planificar issues nuevos                 |
+| **Aprobación para docs**   | No modifica backlog/roadmap sin confirmación     | El loop no puede actualizar el progreso                   |
+| **Aprobación para commit** | No commitea sin confirmación                     | El loop no puede registrar el trabajo del project-manager |
+
+### Lo que SÍ puede hacer en modo autónomo sin cambios
+
+- Leer `roadmap.md`, `backlog.md`, `sprints.md` (lectura, no escritura)
+- Consultar `gh issue list` para ver el estado real
+- Determinar cuál es el próximo issue según el orden del roadmap
+- Verificar dependencias entre issues
+
+### Conclusión
+
+`project-manager` no puede usarse directamente en el loop. Necesitamos una variante `project-manager-autonomo` que:
+
+- No haga la pregunta de foco (decide solo)
+- No necesite aprobación para seleccionar el próximo issue (no crea issues, solo elige de los existentes)
+- Llame `RemoteTrigger` directamente con el issue seleccionado
+
+---
+
+## Análisis de `complete-issue`
+
+Ubicación: `docs/ai-skills/complete-issue.md`
+
+### Lo que hace en modo interactivo
+
+11 pasos: verificar estado → leer issue → cargar contexto → crear plan → escribir tests → verificar RED → implementar → verificar GREEN → documentar → commit → actualizar CLAUDE.md → cerrar issue.
+
+### Los puntos de fricción para autonomía
+
+| Punto                          | Descripción                                                                                          | Impacto                                                    |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| **Confirmación en PASO 0**     | Cuando no se especifica número de issue, presenta candidato y pregunta "¿Trabajamos con este?"       | Bloquea si no se pasa el número explícitamente             |
+| **Divergencias entre fuentes** | Si detecta inconsistencias entre GitHub/roadmap/CLAUDE.md, "propone correcciones antes de continuar" | Puede bloquearse si el estado no está perfectamente limpio |
+
+### Lo que YA es autónomo (sin cambios)
+
+La mayoría del workflow de `complete-issue` ya es autónomo:
+
+- TDD completo (Modos A y B) sin intervención
+- Generación de `ai-context` y `human-context` automática
+- Commit con formato estándar
+- Cierre del issue con comentario descriptivo
+- Actualización de CLAUDE.md
+
+### Un bug detectado en el skill
+
+El template de commit en `complete-issue` incluye:
+
+```
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+Co-Authored-By: Claude <noreply@anthropic.com>
+```
+
+El `CLAUDE.md` del proyecto prohíbe explícitamente agregar atribución de IA a los commits. Esto es inconsistente y debe corregirse en el skill antes de usarlo en modo autónomo.
+
+### Conclusión
+
+`complete-issue` funciona casi sin cambios en modo autónomo. Solo hay que:
+
+1. Pasar siempre el número de issue explícitamente (elimina la confirmación del PASO 0)
+2. Agregar la instrucción de disparar `project-manager-autonomo` al terminar
+3. Corregir el template de commit (remover atribución de IA)
+
+---
+
+## Mapa de adaptaciones necesarias
+
+```
+SKILL ACTUAL                    ADAPTACIÓN REQUERIDA
+─────────────────────────────────────────────────────────
+project-manager                 → project-manager-autonomo (skill nuevo)
+  - pregunta de foco               - decide solo basado en roadmap
+  - approval gates                 - no crea issues, solo elige existentes
+  - no llama RemoteTrigger         - llama RemoteTrigger al final
+
+complete-issue                  → complete-issue (mismo skill, instrucción adicional)
+  - confirmación PASO 0            - pasar número explícito: problema resuelto
+  - no llama RemoteTrigger         - agregar en prompt: "al terminar, dispará project-manager-autonomo"
+  - bug: atribución IA en commit   - corregir en el skill (issue a crear)
+```
+
+---
+
+## Issues a crear antes de implementar el loop
+
+Antes de poner el loop en marcha, hay dos cosas que deben resolverse en el proyecto:
+
+1. **Crear `project-manager-autonomo`** como skill nuevo en `docs/ai-skills/`
+2. **Corregir el template de commit** en `complete-issue` para respetar la regla de no atribución de IA
+
+Ver [03-skill-autonomo.md](03-skill-autonomo.md) para el diseño del skill nuevo.
