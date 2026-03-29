@@ -14,7 +14,7 @@
 **Fase 1**: ✅ Completada (16/16 issues completados)
 **Fase 2**: ✅ Completada (8/8 issues completados)
 **Fase 3**: ✅ Completada (Sprint 8-10 completados)
-**Fase 4**: 🚧 En ejecución (Sprint 12 ✅, Sprint 13 ✅, Sprint 14 ✅, Sprint 15 📋)
+**Fase 4**: 🚧 En ejecución (Sprint 12 ✅, Sprint 13 ✅, Sprint 14 ✅, Sprint 15 🚧 2/3)
 
 ## Cómo usar este documento
 
@@ -27,18 +27,18 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
-## Sprint 15 - Módulo Escolar (PLANIFICADO)
+## Sprint 15 - Módulo Escolar (EN PROGRESO)
 
 **Objetivo**: Iniciar el bloque de calificaciones con consistencia de modelo, endpoints operativos y pantalla de carga por grupo/período.
 **Referencia**: `docs/project-management/roadmap.md` → Fase 4
 
 ### Issues comprometidas (Sprint 15)
 
-| Issue | Título                                                            | Estado   |
-| ----- | ----------------------------------------------------------------- | -------- |
-| #79   | F4-014: Prisma Calificaciones por periodo académico e institución | 📋 To Do |
-| #80   | F4-015: API Carga y listado de calificaciones por periodo         | 📋 To Do |
-| #81   | F4-016: UI Carga rápida de calificaciones por grupo y periodo     | 📋 To Do |
+| Issue | Título                                                            | Estado         |
+| ----- | ----------------------------------------------------------------- | -------------- |
+| #79   | F4-014: Prisma Calificaciones por periodo académico e institución | ✅ Done        |
+| #80   | F4-015: API Carga y listado de calificaciones por periodo         | ✅ Done        |
+| #81   | F4-016: UI Carga rápida de calificaciones por grupo y periodo     | 🚧 In Progress |
 
 ---
 

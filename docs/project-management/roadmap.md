@@ -1338,15 +1338,15 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 
 **Progreso Sprint 14**: 3/3 issues completados ✅
 
-### Sprint 15 📋 Planificado
+### Sprint 15 🚧 En progreso
 
 | Issue | Título                                                            | Estado         |
 | ----- | ----------------------------------------------------------------- | -------------- |
-| #79   | F4-014: Prisma Calificaciones por periodo académico e institución | 📋 Planificado |
-| #80   | F4-015: API Carga y listado de calificaciones por periodo         | 📋 Planificado |
-| #81   | F4-016: UI Carga rápida de calificaciones por grupo y periodo     | 📋 Planificado |
+| #79   | F4-014: Prisma Calificaciones por periodo académico e institución | ✅ Completado  |
+| #80   | F4-015: API Carga y listado de calificaciones por periodo         | ✅ Completado  |
+| #81   | F4-016: UI Carga rápida de calificaciones por grupo y periodo     | 🚧 En progreso |
 
-**Progreso Sprint 15**: 0/3 issues completados
+**Progreso Sprint 15**: 2/3 issues completados
 
 ### Objetivos
 
