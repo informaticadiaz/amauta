@@ -47,6 +47,7 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 | Asignación de estudiantes y educadores a grupos (API + UI) | ✅ Funcional (API + UI) | Sprint 13 |
 | Listado de usuarios por institución (API)                  | ✅ Funcional (API)      | Sprint 13 |
 | Registro diario de asistencias por grupo                   | ✅ Funcional (API + UI) | Sprint 14 |
+| Resumen mensual de asistencias por grupo                   | ✅ Funcional (API)      | Sprint 14 |
 | Módulo Escolar (calificaciones, comunicados y reportes)    | 🚧 En desarrollo        | Fase 4    |
 
 ## Roles del Sistema
@@ -117,6 +118,15 @@ Ver [seed/etapa-1-usuarios.md](seed/etapa-1-usuarios.md) para lista completa.
 - Flujo: seleccionar grupo y fecha, marcar estado por estudiante y guardar solo cambios pendientes
 - Estados disponibles: `PRESENTE`, `AUSENTE`, `TARDANZA`, `JUSTIFICADO`
 - Regla visible en UI: si se modifica una asistencia ya existente, se exige observación antes de guardar
+
+## Resumen Mensual de Asistencias
+
+- Endpoint principal: `GET /api/v1/grupos/:grupoId/asistencias/resumen-mensual?mes=MM&anio=YYYY`
+- Roles habilitados: `ADMIN_ESCUELA` y `EDUCADOR` asignado al grupo
+- Alcance: resume únicamente la nómina activa del grupo para el mes consultado
+- Métricas por estudiante: `presentes`, `ausencias`, `tardanzas`, `justificados`, `totalRegistros`, `porcentajeAsistencia`
+- Métricas del grupo: total de registros y distribución por estado
+- Limitación inicial: no reemplaza reportes históricos ni exportaciones
 
 ## Arquitectura Simplificada
 

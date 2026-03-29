@@ -39,16 +39,19 @@ Permite a administradores escolares crear, editar y desactivar grupos dentro de 
 
 Base: `/api/v1`
 
-| Método | Ruta                                    | Auth | Roles          | Descripción                          |
-| ------ | --------------------------------------- | ---- | -------------- | ------------------------------------ |
-| POST   | `/instituciones/:institucionId/grupos`  | Sí   | ADMIN_ESCUELA+ | Crear grupo                          |
-| GET    | `/instituciones/:institucionId/grupos`  | Sí   | ADMIN_ESCUELA+ | Listar con filtros (activo, periodo) |
-| GET    | `/grupos/:id`                           | Sí   | ADMIN_ESCUELA+ | Obtener grupo por ID                 |
-| PATCH  | `/grupos/:id`                           | Sí   | ADMIN_ESCUELA+ | Actualizar grupo                     |
-| DELETE | `/grupos/:id`                           | Sí   | ADMIN_ESCUELA+ | Desactivar grupo (soft delete)       |
-| POST   | `/grupos/:id/estudiantes`               | Sí   | ADMIN_ESCUELA+ | Asignar estudiantes de forma masiva  |
-| GET    | `/grupos/:id/estudiantes`               | Sí   | ADMIN_ESCUELA+ | Listar estudiantes del grupo         |
-| DELETE | `/grupos/:id/estudiantes/:estudianteId` | Sí   | ADMIN_ESCUELA+ | Remover estudiante (soft delete)     |
+| Método | Ruta                                      | Auth | Roles          | Descripción                          |
+| ------ | ----------------------------------------- | ---- | -------------- | ------------------------------------ |
+| POST   | `/instituciones/:institucionId/grupos`    | Sí   | ADMIN_ESCUELA+ | Crear grupo                          |
+| GET    | `/instituciones/:institucionId/grupos`    | Sí   | ADMIN_ESCUELA+ | Listar con filtros (activo, periodo) |
+| GET    | `/grupos/:id`                             | Sí   | ADMIN_ESCUELA+ | Obtener grupo por ID                 |
+| PATCH  | `/grupos/:id`                             | Sí   | ADMIN_ESCUELA+ | Actualizar grupo                     |
+| DELETE | `/grupos/:id`                             | Sí   | ADMIN_ESCUELA+ | Desactivar grupo (soft delete)       |
+| GET    | `/grupos/:id/asistencias`                 | Sí   | ADMIN/EDUCADOR | Obtener nómina diaria por fecha      |
+| PUT    | `/grupos/:id/asistencias`                 | Sí   | ADMIN/EDUCADOR | Registrar asistencias del día        |
+| GET    | `/grupos/:id/asistencias/resumen-mensual` | Sí   | ADMIN/EDUCADOR | Obtener resumen mensual del grupo    |
+| POST   | `/grupos/:id/estudiantes`                 | Sí   | ADMIN_ESCUELA+ | Asignar estudiantes de forma masiva  |
+| GET    | `/grupos/:id/estudiantes`                 | Sí   | ADMIN_ESCUELA+ | Listar estudiantes del grupo         |
+| DELETE | `/grupos/:id/estudiantes/:estudianteId`   | Sí   | ADMIN_ESCUELA+ | Remover estudiante (soft delete)     |
 
 ---
 
@@ -83,6 +86,8 @@ model Grupo {
 7. **Duplicados**: si una asignación sigue activa, se reporta como duplicado.
 8. **Reactivación**: una asignación inactiva puede reactivarse sin perder historial.
 9. **Auditoría**: `GrupoEstudiante` guarda fecha de asignación, usuario asignador y datos de remoción lógica.
+10. **Asistencias mensuales**: el resumen mensual solo consolida estudiantes activos del grupo y reutiliza la validación de acceso de asistencias diarias.
+11. **Porcentaje de asistencia**: en la versión inicial se calcula como `(presentes + justificados) / totalRegistros * 100`.
 
 ---
 

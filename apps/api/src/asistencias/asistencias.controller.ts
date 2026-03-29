@@ -13,8 +13,10 @@ import {
   AsistenciasService,
   type NominaAsistenciaResponse,
   type RegistroAsistenciasResponse,
+  type ResumenMensualAsistenciaResponse,
 } from './asistencias.service';
 import type { QueryAsistenciasDto } from './dto/query-asistencias.dto';
+import type { QueryResumenMensualDto } from './dto/query-resumen-mensual.dto';
 import type { RegistrarAsistenciasDto } from './dto/registrar-asistencias.dto';
 
 interface RegistroAsistenciasWrapper {
@@ -37,6 +39,20 @@ export class AsistenciasController {
     @CurrentUser() user: RequestUser
   ): Promise<NominaAsistenciaResponse> {
     return this.asistenciasService.obtenerNominaDelDia(grupoId, query, user.id);
+  }
+
+  @Get('grupos/:grupoId/asistencias/resumen-mensual')
+  @Roles('ADMIN_ESCUELA', 'EDUCADOR')
+  async obtenerResumenMensual(
+    @Param('grupoId') grupoId: string,
+    @Query() query: QueryResumenMensualDto,
+    @CurrentUser() user: RequestUser
+  ): Promise<ResumenMensualAsistenciaResponse> {
+    return this.asistenciasService.obtenerResumenMensual(
+      grupoId,
+      query,
+      user.id
+    );
   }
 
   @Put('grupos/:grupoId/asistencias')

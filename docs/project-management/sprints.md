@@ -1,15 +1,15 @@
 # Gestión de Sprints - Amauta
 
-## Sprint Actual: Sprint 14 - Módulo Escolar (PLANIFICADO)
+## Sprint Actual: Sprint 14 - Módulo Escolar (COMPLETADO)
 
 **Fase**: Fase 4 - Módulo Escolar
-**Objetivo**: Iniciar el bloque operativo de asistencias con base backend y primera UI de carga rápida.
+**Objetivo**: Iniciar el bloque operativo de asistencias con base backend, UI de carga rápida y resumen mensual.
 
 ### Issues comprometidas
 
-- 📋 #76 F4-011: API Registro diario de asistencias por grupo
-- 📋 #78 F4-012: UI Carga rápida de asistencias por grupo
-- 📋 #77 F4-013: API Resumen mensual de asistencias por grupo
+- ✅ #76 F4-011: API Registro diario de asistencias por grupo
+- ✅ #78 F4-012: UI Carga rápida de asistencias por grupo
+- ✅ #77 F4-013: API Resumen mensual de asistencias por grupo
 
 ## Sprint 13 - Módulo Escolar (COMPLETADO)
 

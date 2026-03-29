@@ -70,10 +70,17 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Proxies Next.js `GET/PUT /api/grupos/:id/asistencias` y `GET /api/educadores/me/grupos`
   - Grilla por estudiante con estados rápidos, observación y cambios pendientes
   - Tests de UI, navegación y proxies frontend
+- ✅ **F4-013**: API Resumen mensual de asistencias por grupo
+  - Endpoint `GET /grupos/:grupoId/asistencias/resumen-mensual?mes&anio`
+  - Resumen por estudiante con presentes, ausencias, tardanzas, justificados y porcentaje de asistencia mensual
+  - Resumen agregado del grupo con total de registros y distribución por estado
+  - Permisos para `ADMIN_ESCUELA` y educadores asignados al grupo
+  - Solo considera estudiantes activos del grupo al momento de la consulta
+  - Tests unitarios de controller y service + documentación de limitaciones iniciales
 
 #### Próximos pasos:
 
-- Implementar F4-013: API Resumen mensual de asistencias por grupo
+- Cerrar Sprint 14 y priorizar el siguiente bloque de Fase 4
 
 #### Issues de infraestructura completados:
 

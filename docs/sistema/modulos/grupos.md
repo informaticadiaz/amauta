@@ -22,6 +22,7 @@
 - Ver el listado de estudiantes por grupo
 - Ver el listado de educadores por grupo
 - Registrar asistencias diarias por grupo y fecha
+- Consultar un resumen mensual de asistencias por grupo
 - Remover estudiantes sin borrar el historial
 - Remover educadores sin borrar el historial
 
@@ -30,6 +31,7 @@
 - Ver los grupos donde estás asignado
 - Ver la lista de estudiantes de tus grupos
 - Registrar asistencias de los grupos donde estás asignado
+- Consultar el resumen mensual de asistencia de tus grupos asignados
 - (Próximamente) Cargar calificaciones
 
 ### Como Estudiante
@@ -186,6 +188,34 @@ Administradores de escuela y educadores asignados al grupo.
 **¿Qué devuelve?**
 
 Un resumen con cantidad de asistencias procesadas, creadas y actualizadas.
+
+---
+
+### Consultar Resumen Mensual de Asistencias
+
+**¿Qué es?**
+Permite consultar un agregado mensual por grupo con métricas por estudiante y un consolidado general del grupo.
+
+**¿Quién puede usarlo?**
+Administradores de escuela y educadores asignados al grupo.
+
+**¿Qué valida el sistema?**
+
+- Que el usuario tenga acceso al grupo
+- Que el grupo exista
+- Que el mes y el año sean válidos
+- Que el resumen solo considere estudiantes activos del grupo al momento de la consulta
+
+**¿Qué devuelve?**
+
+- Totales por estudiante: presentes, ausencias, tardanzas, justificados, total de registros y porcentaje de asistencia mensual
+- Totales del grupo: cantidad total de registros y distribución por estado
+
+**Limitaciones de esta versión**
+
+- No exporta archivos ni genera reportes avanzados
+- No mezcla estudiantes removidos con la nómina activa actual
+- El porcentaje de asistencia inicial considera `PRESENTE` y `JUSTIFICADO` sobre el total de registros del mes
 
 ---
 

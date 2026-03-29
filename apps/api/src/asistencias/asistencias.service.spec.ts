@@ -75,6 +75,11 @@ describe('AsistenciasService', () => {
     perfil: { institucion: 'Escuela Belgrano' },
   };
 
+  const unassignedEducator = {
+    rol: 'EDUCADOR',
+    perfil: { institucion: 'Escuela Belgrano' },
+  };
+
   const grupo = {
     id: GRUPO_ID,
     institucionId: 'inst-1',
@@ -156,6 +161,146 @@ describe('AsistenciasService', () => {
           }),
         ],
       });
+    });
+  });
+
+  describe('obtenerResumenMensual', () => {
+    it('debería resumir las asistencias del mes por estudiante y por grupo', async () => {
+      prisma.grupo.findUnique.mockResolvedValue(grupo);
+      prisma.usuario.findUnique.mockResolvedValue(adminUser);
+      prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
+      prisma.grupoEstudiante.findMany.mockResolvedValue(roster);
+      prisma.asistencia.findMany.mockResolvedValue([
+        {
+          estudianteId: ESTUDIANTE_ID,
+          estado: 'PRESENTE',
+        },
+        {
+          estudianteId: ESTUDIANTE_ID,
+          estado: 'AUSENTE',
+        },
+        {
+          estudianteId: ESTUDIANTE_2_ID,
+          estado: 'PRESENTE',
+        },
+        {
+          estudianteId: ESTUDIANTE_2_ID,
+          estado: 'TARDANZA',
+        },
+        {
+          estudianteId: ESTUDIANTE_2_ID,
+          estado: 'JUSTIFICADO',
+        },
+      ]);
+
+      const result = await service.obtenerResumenMensual(
+        GRUPO_ID,
+        { mes: 3, anio: 2026 },
+        ADMIN_ID
+      );
+
+      expect(result).toEqual({
+        grupoId: GRUPO_ID,
+        mes: 3,
+        anio: 2026,
+        estudiantes: [
+          {
+            estudianteId: ESTUDIANTE_ID,
+            nombre: 'Ana',
+            apellido: 'Alvarez',
+            email: 'ana@amauta.test',
+            presentes: 1,
+            ausencias: 1,
+            tardanzas: 0,
+            justificados: 0,
+            totalRegistros: 2,
+            porcentajeAsistencia: 50,
+          },
+          {
+            estudianteId: ESTUDIANTE_2_ID,
+            nombre: 'Bruno',
+            apellido: 'Benitez',
+            email: 'bruno@amauta.test',
+            presentes: 1,
+            ausencias: 0,
+            tardanzas: 1,
+            justificados: 1,
+            totalRegistros: 3,
+            porcentajeAsistencia: 67,
+          },
+        ],
+        resumenGrupo: {
+          totalRegistros: 5,
+          presentes: 2,
+          ausencias: 1,
+          tardanzas: 1,
+          justificados: 1,
+        },
+      });
+      expect(prisma.asistencia.findMany).toHaveBeenCalledWith({
+        where: {
+          grupoId: GRUPO_ID,
+          fecha: {
+            gte: new Date('2026-03-01T00:00:00.000Z'),
+            lt: new Date('2026-04-01T00:00:00.000Z'),
+          },
+          estudianteId: {
+            in: [ESTUDIANTE_ID, ESTUDIANTE_2_ID],
+          },
+        },
+        select: {
+          estudianteId: true,
+          estado: true,
+        },
+      });
+    });
+
+    it('debería rechazar el acceso cuando el educador no está asignado al grupo', async () => {
+      prisma.grupo.findUnique.mockResolvedValue(grupo);
+      prisma.usuario.findUnique.mockResolvedValue(unassignedEducator);
+      prisma.grupoEducador.findUnique.mockResolvedValue(null);
+
+      await expect(
+        service.obtenerResumenMensual(
+          GRUPO_ID,
+          { mes: 3, anio: 2026 },
+          EDUCADOR_ID
+        )
+      ).rejects.toThrow(ForbiddenException);
+    });
+
+    it('debería devolver la nómina activa con métricas en cero cuando no hay asistencias del mes', async () => {
+      prisma.grupo.findUnique.mockResolvedValue(grupo);
+      prisma.usuario.findUnique.mockResolvedValue(adminUser);
+      prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
+      prisma.grupoEstudiante.findMany.mockResolvedValue(roster);
+      prisma.asistencia.findMany.mockResolvedValue([]);
+
+      const result = await service.obtenerResumenMensual(
+        GRUPO_ID,
+        { mes: 3, anio: 2026 },
+        ADMIN_ID
+      );
+
+      expect(result.resumenGrupo).toEqual({
+        totalRegistros: 0,
+        presentes: 0,
+        ausencias: 0,
+        tardanzas: 0,
+        justificados: 0,
+      });
+      expect(result.estudiantes).toEqual([
+        expect.objectContaining({
+          estudianteId: ESTUDIANTE_ID,
+          totalRegistros: 0,
+          porcentajeAsistencia: 0,
+        }),
+        expect.objectContaining({
+          estudianteId: ESTUDIANTE_2_ID,
+          totalRegistros: 0,
+          porcentajeAsistencia: 0,
+        }),
+      ]);
     });
   });
 

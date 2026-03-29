@@ -9,6 +9,7 @@ describe('AsistenciasController', () => {
 
   const mockAsistenciasService = {
     obtenerNominaDelDia: jest.fn(),
+    obtenerResumenMensual: jest.fn(),
     registrarAsistenciasDelDia: jest.fn(),
   };
 
@@ -51,6 +52,39 @@ describe('AsistenciasController', () => {
       expect(mockAsistenciasService.obtenerNominaDelDia).toHaveBeenCalledWith(
         'grupo-1',
         { fecha: '2026-03-29' },
+        mockAdminUser.id
+      );
+    });
+  });
+
+  describe('GET /grupos/:grupoId/asistencias/resumen-mensual', () => {
+    it('debería devolver el resumen mensual del grupo', async () => {
+      const response = {
+        grupoId: 'grupo-1',
+        mes: 3,
+        anio: 2026,
+        estudiantes: [],
+        resumenGrupo: {
+          totalRegistros: 0,
+          presentes: 0,
+          ausencias: 0,
+          tardanzas: 0,
+          justificados: 0,
+        },
+      };
+
+      mockAsistenciasService.obtenerResumenMensual.mockResolvedValue(response);
+
+      const result = await controller.obtenerResumenMensual(
+        'grupo-1',
+        { mes: 3, anio: 2026 },
+        mockAdminUser
+      );
+
+      expect(result).toEqual(response);
+      expect(mockAsistenciasService.obtenerResumenMensual).toHaveBeenCalledWith(
+        'grupo-1',
+        { mes: 3, anio: 2026 },
         mockAdminUser.id
       );
     });

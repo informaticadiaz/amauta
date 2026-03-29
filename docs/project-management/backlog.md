@@ -14,7 +14,7 @@
 **Fase 1**: ✅ Completada (16/16 issues completados)
 **Fase 2**: ✅ Completada (8/8 issues completados)
 **Fase 3**: ✅ Completada (Sprint 8-10 completados)
-**Fase 4**: 🚧 En ejecución (Sprint 12 ✅, Sprint 13 ✅, Sprint 14 📋)
+**Fase 4**: 🚧 En ejecución (Sprint 12 ✅, Sprint 13 ✅, Sprint 14 ✅)
 
 ## Cómo usar este documento
 
@@ -27,18 +27,18 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
-## Sprint 14 - Módulo Escolar (PLANIFICADO)
+## Sprint 14 - Módulo Escolar (COMPLETADO)
 
 **Objetivo**: Iniciar el bloque de asistencias con carga diaria operativa y resumen básico por grupo.
 **Referencia**: `docs/project-management/roadmap.md` → Fase 4
 
 ### Issues comprometidas (Sprint 14)
 
-| Issue | Título                                               | Estado   |
-| ----- | ---------------------------------------------------- | -------- |
-| #76   | F4-011: API Registro diario de asistencias por grupo | 📋 Ready |
-| #78   | F4-012: UI Carga rápida de asistencias por grupo     | 📋 Ready |
-| #77   | F4-013: API Resumen mensual de asistencias por grupo | 📋 Ready |
+| Issue | Título                                               | Estado  |
+| ----- | ---------------------------------------------------- | ------- |
+| #76   | F4-011: API Registro diario de asistencias por grupo | ✅ Done |
+| #78   | F4-012: UI Carga rápida de asistencias por grupo     | ✅ Done |
+| #77   | F4-013: API Resumen mensual de asistencias por grupo | ✅ Done |
 
 ## Sprint 13 - Módulo Escolar (COMPLETADO)
 

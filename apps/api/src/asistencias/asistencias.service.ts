@@ -14,6 +14,10 @@ import {
   registrarAsistenciasSchema,
   type RegistrarAsistenciasDto,
 } from './dto/registrar-asistencias.dto';
+import {
+  queryResumenMensualSchema,
+  type QueryResumenMensualDto,
+} from './dto/query-resumen-mensual.dto';
 
 interface GrupoAcceso {
   id: string;
@@ -45,6 +49,35 @@ export interface RegistroAsistenciasResponse {
   procesadas: number;
   creadas: number;
   actualizadas: number;
+}
+
+interface ResumenEstudianteMensual {
+  estudianteId: string;
+  nombre: string;
+  apellido: string;
+  email: string;
+  presentes: number;
+  ausencias: number;
+  tardanzas: number;
+  justificados: number;
+  totalRegistros: number;
+  porcentajeAsistencia: number;
+}
+
+interface ResumenGrupoMensual {
+  totalRegistros: number;
+  presentes: number;
+  ausencias: number;
+  tardanzas: number;
+  justificados: number;
+}
+
+export interface ResumenMensualAsistenciaResponse {
+  grupoId: string;
+  mes: number;
+  anio: number;
+  estudiantes: ResumenEstudianteMensual[];
+  resumenGrupo: ResumenGrupoMensual;
 }
 
 @Injectable()
@@ -229,6 +262,119 @@ export class AsistenciasService {
     };
   }
 
+  async obtenerResumenMensual(
+    grupoId: string,
+    query: QueryResumenMensualDto,
+    usuarioId: string
+  ): Promise<ResumenMensualAsistenciaResponse> {
+    const result = queryResumenMensualSchema.safeParse(query);
+    if (!result.success) {
+      throw new BadRequestException(
+        result.error.issues[0]?.message ?? 'Parámetros inválidos'
+      );
+    }
+
+    const grupo = await this.validarAccesoAGrupo(grupoId, usuarioId);
+    const estudiantesActivos = await this.obtenerEstudiantesActivos(grupo.id);
+    const estudiantesIds = estudiantesActivos.map(
+      (registro) => registro.estudiante.id
+    );
+    const rango = this.obtenerRangoMensual(result.data.mes, result.data.anio);
+
+    const asistencias =
+      estudiantesIds.length === 0
+        ? []
+        : await this.prisma.asistencia.findMany({
+            where: {
+              grupoId: grupo.id,
+              fecha: {
+                gte: rango.desde,
+                lt: rango.hasta,
+              },
+              estudianteId: {
+                in: estudiantesIds,
+              },
+            },
+            select: {
+              estudianteId: true,
+              estado: true,
+            },
+          });
+
+    const resumenGrupo: ResumenGrupoMensual = {
+      totalRegistros: 0,
+      presentes: 0,
+      ausencias: 0,
+      tardanzas: 0,
+      justificados: 0,
+    };
+
+    const resumenPorEstudiante = new Map<
+      string,
+      Omit<ResumenEstudianteMensual, 'nombre' | 'apellido' | 'email'>
+    >();
+
+    for (const asistencia of asistencias) {
+      const contador = this.mapearEstadoAContador(asistencia.estado);
+
+      resumenGrupo.totalRegistros += 1;
+      resumenGrupo[contador] += 1;
+
+      const actual = resumenPorEstudiante.get(asistencia.estudianteId) ?? {
+        estudianteId: asistencia.estudianteId,
+        presentes: 0,
+        ausencias: 0,
+        tardanzas: 0,
+        justificados: 0,
+        totalRegistros: 0,
+        porcentajeAsistencia: 0,
+      };
+
+      actual.totalRegistros += 1;
+      actual[contador] += 1;
+
+      resumenPorEstudiante.set(asistencia.estudianteId, actual);
+    }
+
+    return {
+      grupoId: grupo.id,
+      mes: result.data.mes,
+      anio: result.data.anio,
+      estudiantes: estudiantesActivos.map((registro) => {
+        const resumen = resumenPorEstudiante.get(registro.estudiante.id) ?? {
+          estudianteId: registro.estudiante.id,
+          presentes: 0,
+          ausencias: 0,
+          tardanzas: 0,
+          justificados: 0,
+          totalRegistros: 0,
+          porcentajeAsistencia: 0,
+        };
+
+        return {
+          estudianteId: registro.estudiante.id,
+          nombre: registro.estudiante.nombre,
+          apellido: registro.estudiante.apellido,
+          email: registro.estudiante.email,
+          presentes: resumen.presentes,
+          ausencias: resumen.ausencias,
+          tardanzas: resumen.tardanzas,
+          justificados: resumen.justificados,
+          totalRegistros: resumen.totalRegistros,
+          porcentajeAsistencia:
+            resumen.totalRegistros === 0
+              ? 0
+              : Math.round(
+                  ((resumen.presentes + resumen.justificados) /
+                    resumen.totalRegistros) *
+                    100
+                ),
+        };
+      }),
+      resumenGrupo,
+    };
+  }
+
   private async validarAccesoAGrupo(
     grupoId: string,
     usuarioId: string
@@ -350,5 +496,30 @@ export class AsistenciasService {
   ): string | null {
     const normalized = observaciones?.trim();
     return normalized ? normalized : null;
+  }
+
+  private obtenerRangoMensual(
+    mes: number,
+    anio: number
+  ): { desde: Date; hasta: Date } {
+    return {
+      desde: new Date(Date.UTC(anio, mes - 1, 1)),
+      hasta: new Date(Date.UTC(anio, mes, 1)),
+    };
+  }
+
+  private mapearEstadoAContador(
+    estado: 'PRESENTE' | 'AUSENTE' | 'TARDANZA' | 'JUSTIFICADO'
+  ): keyof ResumenGrupoMensual {
+    switch (estado) {
+      case 'PRESENTE':
+        return 'presentes';
+      case 'AUSENTE':
+        return 'ausencias';
+      case 'TARDANZA':
+        return 'tardanzas';
+      case 'JUSTIFICADO':
+        return 'justificados';
+    }
   }
 }
