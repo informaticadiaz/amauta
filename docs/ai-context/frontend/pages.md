@@ -19,6 +19,17 @@ apps/web/src/app/
 ├── dashboard/                    # Área privada
 │   ├── layout.tsx               # Layout con sidebar
 │   ├── page.tsx                 # /dashboard
+│   ├── asistencias/
+│   │   └── page.tsx             # /dashboard/asistencias
+│   ├── grupos/
+│   │   ├── page.tsx             # /dashboard/grupos
+│   │   ├── nuevo/page.tsx       # /dashboard/grupos/nuevo
+│   │   └── [id]/
+│   │       ├── editar/page.tsx  # /dashboard/grupos/[id]/editar
+│   │       ├── estudiantes/
+│   │       │   └── page.tsx     # /dashboard/grupos/[id]/estudiantes
+│   │       └── educadores/
+│   │           └── page.tsx     # /dashboard/grupos/[id]/educadores
 │   └── cursos/
 │       ├── page.tsx             # /dashboard/cursos (mis cursos)
 │       ├── nuevo/page.tsx       # /dashboard/cursos/nuevo
@@ -45,6 +56,13 @@ apps/web/src/app/
     ├── auth/
     ├── cursos/
     ├── lecciones/
+    ├── educadores/me/grupos/
+    ├── grupos/[id]/asistencias/
+    ├── grupos/[id]/estudiantes/
+    ├── grupos/[id]/educadores/
+    ├── instituciones/[id]/estudiantes/
+    ├── instituciones/[id]/educadores/
+    ├── mi-institucion/
     └── upload/
 ```
 
@@ -98,6 +116,31 @@ export default async function Layout({ children }: { children: React.ReactNode }
 ---
 
 ## Patrones de Página
+
+### Página protegida orientada a rol
+
+```typescript
+// app/dashboard/asistencias/page.tsx
+
+import { redirect } from 'next/navigation';
+import { auth } from '@/lib/auth';
+import { AsistenciaRapidaSection } from '@/components/asistencias/AsistenciaRapidaSection';
+
+export default async function AsistenciasPage() {
+  const session = await auth();
+
+  if (!session) {
+    redirect('/login');
+  }
+
+  const rol = session.user?.rol;
+  if (!['ADMIN_ESCUELA', 'EDUCADOR'].includes(rol || '')) {
+    redirect('/dashboard');
+  }
+
+  return <AsistenciaRapidaSection />;
+}
+```
 
 ### Página Pública con Datos
 
@@ -205,6 +248,27 @@ export default async function NuevoCursoPage() {
   );
 }
 ```
+
+### Páginas administrativas de grupos
+
+- `/dashboard/grupos` muestra el listado filtrable de grupos.
+- `/dashboard/grupos/[id]/estudiantes` carga la gestión de asignaciones de estudiantes.
+- `/dashboard/grupos/[id]/educadores` carga la gestión de asignaciones de educadores.
+- Estas páginas resuelven primero la institución del usuario o el grupo actual y luego delegan la interacción a client components.
+
+---
+
+## Rutas relevantes de Fase 4
+
+| Ruta                                 | Rol principal           | Descripción                                    |
+| ------------------------------------ | ----------------------- | ---------------------------------------------- |
+| `/dashboard/grupos`                  | ADMIN_ESCUELA           | Gestión base de grupos                         |
+| `/dashboard/grupos/[id]/estudiantes` | ADMIN_ESCUELA           | Asignación y remoción de estudiantes           |
+| `/dashboard/grupos/[id]/educadores`  | ADMIN_ESCUELA           | Asignación y remoción de educadores            |
+| `/dashboard/asistencias`             | ADMIN_ESCUELA, EDUCADOR | Carga rápida de asistencias                    |
+| `/api/mi-institucion`                | ADMIN_ESCUELA           | Proxy para resolver la institución del usuario |
+| `/api/educadores/me/grupos`          | EDUCADOR                | Proxy para grupos del educador                 |
+| `/api/grupos/[id]/asistencias`       | ADMIN_ESCUELA, EDUCADOR | Proxy GET/PUT de asistencias                   |
 
 ### Página con Parámetro Dinámico
 

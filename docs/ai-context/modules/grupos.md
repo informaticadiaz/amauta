@@ -52,6 +52,10 @@ Base: `/api/v1`
 | POST   | `/grupos/:id/estudiantes`                 | Sí   | ADMIN_ESCUELA+ | Asignar estudiantes de forma masiva  |
 | GET    | `/grupos/:id/estudiantes`                 | Sí   | ADMIN_ESCUELA+ | Listar estudiantes del grupo         |
 | DELETE | `/grupos/:id/estudiantes/:estudianteId`   | Sí   | ADMIN_ESCUELA+ | Remover estudiante (soft delete)     |
+| POST   | `/grupos/:id/educadores`                  | Sí   | ADMIN_ESCUELA+ | Asignar un educador al grupo         |
+| GET    | `/grupos/:id/educadores`                  | Sí   | ADMIN_ESCUELA+ | Listar educadores asignados          |
+| DELETE | `/grupos/:id/educadores/:educadorId`      | Sí   | ADMIN_ESCUELA+ | Remover educador (soft delete)       |
+| GET    | `/educadores/me/grupos`                   | Sí   | EDUCADOR       | Listar grupos del educador actual    |
 
 ---
 
@@ -86,8 +90,11 @@ model Grupo {
 7. **Duplicados**: si una asignación sigue activa, se reporta como duplicado.
 8. **Reactivación**: una asignación inactiva puede reactivarse sin perder historial.
 9. **Auditoría**: `GrupoEstudiante` guarda fecha de asignación, usuario asignador y datos de remoción lógica.
-10. **Asistencias mensuales**: el resumen mensual solo consolida estudiantes activos del grupo y reutiliza la validación de acceso de asistencias diarias.
-11. **Porcentaje de asistencia**: en la versión inicial se calcula como `(presentes + justificados) / totalRegistros * 100`.
+10. **Educadores**: el educador asignado debe tener rol `EDUCADOR` y pertenecer a la misma institución del grupo.
+11. **Rol del educador**: la asignación exige `rol` `TITULAR` o `SUPLENTE`.
+12. **Mis grupos**: `/educadores/me/grupos` solo devuelve grupos con asignación activa para el usuario autenticado.
+13. **Asistencias mensuales**: el resumen mensual solo consolida estudiantes activos del grupo y reutiliza la validación de acceso de asistencias diarias.
+14. **Porcentaje de asistencia**: en la versión inicial se calcula como `(presentes + justificados) / totalRegistros * 100`.
 
 ---
 
@@ -97,28 +104,43 @@ model Grupo {
 
 ### Proxies Next.js
 
-| Ruta                  | Métodos            | Descripción                                     |
-| --------------------- | ------------------ | ----------------------------------------------- |
-| `/api/grupos`         | GET, POST          | Lista y crea grupos (requiere `institucionId`)  |
-| `/api/grupos/[id]`    | GET, PATCH, DELETE | Opera sobre un grupo específico                 |
-| `/api/mi-institucion` | GET                | Retorna `{ institucionId, nombre, periodos[] }` |
+| Ruta                                          | Métodos            | Descripción                                      |
+| --------------------------------------------- | ------------------ | ------------------------------------------------ |
+| `/api/grupos`                                 | GET, POST          | Lista y crea grupos (requiere `institucionId`)   |
+| `/api/grupos/[id]`                            | GET, PATCH, DELETE | Opera sobre un grupo específico                  |
+| `/api/grupos/[id]/estudiantes`                | GET, POST          | Lista y asigna estudiantes al grupo              |
+| `/api/grupos/[id]/estudiantes/[estudianteId]` | DELETE             | Remueve estudiante asignado                      |
+| `/api/grupos/[id]/educadores`                 | GET, POST          | Lista y asigna educadores al grupo               |
+| `/api/grupos/[id]/educadores/[educadorId]`    | DELETE             | Remueve educador asignado                        |
+| `/api/instituciones/[id]/estudiantes`         | GET                | Selector paginado de estudiantes por institución |
+| `/api/instituciones/[id]/educadores`          | GET                | Selector paginado de educadores por institución  |
+| `/api/educadores/me/grupos`                   | GET                | Lista de grupos visibles para el educador actual |
+| `/api/mi-institucion`                         | GET                | Retorna `{ institucionId, nombre, periodos[] }`  |
 
 ### Componentes
 
-| Archivo                                              | Descripción                                           |
-| ---------------------------------------------------- | ----------------------------------------------------- |
-| `apps/web/src/components/grupos/GruposList.tsx`      | Lista con filtros estado/período, loading/error/vacío |
-| `apps/web/src/components/grupos/GrupoForm.tsx`       | Formulario crear/editar                               |
-| `apps/web/src/components/grupos/GruposList.test.tsx` | 9 tests                                               |
-| `apps/web/src/components/grupos/GrupoForm.test.tsx`  | 10 tests                                              |
+| Archivo                                                      | Descripción                                           |
+| ------------------------------------------------------------ | ----------------------------------------------------- |
+| `apps/web/src/components/grupos/GruposList.tsx`              | Lista con filtros estado/período, loading/error/vacío |
+| `apps/web/src/components/grupos/GrupoForm.tsx`               | Formulario crear/editar                               |
+| `apps/web/src/components/grupos/GrupoEstudiantesSection.tsx` | Gestión de asignaciones de estudiantes                |
+| `apps/web/src/components/grupos/GrupoEducadoresSection.tsx`  | Gestión de asignaciones de educadores                 |
+| `apps/web/src/components/grupos/AsignarEstudiantesModal.tsx` | Alta masiva con preview                               |
+| `apps/web/src/components/grupos/EstudiantesTable.tsx`        | Tabla de estudiantes asignados                        |
+| `apps/web/src/components/grupos/AsignarEducadorForm.tsx`     | Alta de educadores con rol                            |
+| `apps/web/src/components/grupos/EducadoresList.tsx`          | Lista de educadores asignados                         |
+| `apps/web/src/components/grupos/GruposList.test.tsx`         | 9 tests                                               |
+| `apps/web/src/components/grupos/GrupoForm.test.tsx`          | 10 tests                                              |
 
 ### Páginas
 
-| Ruta                            | Descripción                  |
-| ------------------------------- | ---------------------------- |
-| `/dashboard/grupos`             | Listado (solo ADMIN_ESCUELA) |
-| `/dashboard/grupos/nuevo`       | Crear grupo                  |
-| `/dashboard/grupos/[id]/editar` | Editar grupo                 |
+| Ruta                                 | Descripción                   |
+| ------------------------------------ | ----------------------------- |
+| `/dashboard/grupos`                  | Listado (solo ADMIN_ESCUELA)  |
+| `/dashboard/grupos/nuevo`            | Crear grupo                   |
+| `/dashboard/grupos/[id]/editar`      | Editar grupo                  |
+| `/dashboard/grupos/[id]/estudiantes` | Asignar y remover estudiantes |
+| `/dashboard/grupos/[id]/educadores`  | Asignar y remover educadores  |
 
 ### Nuevo endpoint backend (instituciones)
 
@@ -135,3 +157,6 @@ model Grupo {
 3. **Filtros**: `activo` (boolean) y `periodoAcademicoId` (cuid).
 4. **Patrón frontend**: el server component llama `/instituciones/mi-institucion` primero, luego pasa `institucionId` y `periodos` como props al client component.
 5. **educadorId**: en crear es obligatorio (texto UUID). En editar es opcional.
+6. **Asignación masiva**: `POST /grupos/:id/estudiantes` recibe `{ estudiantesIds: string[] }` y devuelve `{ agregados, duplicados, errores }`.
+7. **Asignación de educadores**: `POST /grupos/:id/educadores` recibe `{ educadorId, rol }`.
+8. **Listados paginados**: tanto estudiantes como educadores del grupo usan `page`, `limit` y búsqueda opcional `buscar`.

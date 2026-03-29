@@ -84,10 +84,18 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Unique constraint `[grupoId, estudianteId, periodoAcademicoId, materia]`
   - Índices compuestos para consultas por grupo+periodo y estudiante+periodo
   - Migración versionada `20260329000100_calificaciones_periodo_academico`
+- ✅ **F4-015**: API Carga y listado de calificaciones por periodo
+  - Módulo `calificaciones` con service, controller y DTOs Zod
+  - `GET /grupos/:grupoId/calificaciones?periodoAcademicoId=&materia=` — nómina con notas (null si no existe)
+  - `PUT /grupos/:grupoId/calificaciones` — upsert masivo validando escala y nómina activa
+  - Validación: nota dentro del rango de `EscalaCalificacion` de la institución
+  - Validación: período académico perteneciente a la misma institución del grupo
+  - Permisos: ADMIN_ESCUELA (por institución) y EDUCADOR (por asignación activa al grupo)
+  - 8 tests unitarios (86.88% statements)
 
 #### Próximos pasos:
 
-- Continuar Sprint 15: F4-015 (API Calificaciones) y F4-016 (UI Calificaciones)
+- Continuar Sprint 15: F4-016 (UI Calificaciones)
 
 #### Issues de infraestructura completados:
 

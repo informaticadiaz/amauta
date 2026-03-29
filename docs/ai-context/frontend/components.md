@@ -31,6 +31,20 @@ apps/web/src/components/
 │   ├── CursoCard.tsx
 │   └── ImageUploader.tsx
 │
+├── grupos/                  # Gestión administrativa escolar
+│   ├── GruposList.tsx
+│   ├── GrupoForm.tsx
+│   ├── GrupoEstudiantesSection.tsx
+│   ├── GrupoEducadoresSection.tsx
+│   ├── AsignarEstudiantesModal.tsx
+│   ├── EstudiantesTable.tsx
+│   ├── AsignarEducadorForm.tsx
+│   └── EducadoresList.tsx
+│
+├── asistencias/             # Registro diario de asistencias
+│   ├── AsistenciaRapidaSection.tsx
+│   └── AsistenciaRapidaSection.test.tsx
+│
 ├── lecciones/               # Gestión de lecciones
 │   ├── LeccionForm.tsx
 │   └── LeccionesList.tsx
@@ -208,6 +222,39 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
 ## Componentes de Formulario
 
+### AsistenciaRapidaSection (extracto)
+
+```typescript
+'use client';
+
+export function AsistenciaRapidaSection() {
+  const { isLoading, isAdminEscuela, isEducador } = useAuthorization();
+  const [selectedGrupoId, setSelectedGrupoId] = useState('');
+  const [fecha, setFecha] = useState(getTodayISO);
+
+  useEffect(() => {
+    // Admin usa /api/mi-institucion + /api/grupos
+    // Educador usa /api/educadores/me/grupos
+  }, [isAdminEscuela, isEducador, isLoading]);
+
+  async function handleSubmit() {
+    await fetch(`/api/grupos/${selectedGrupoId}/asistencias`, {
+      method: 'PUT',
+      body: JSON.stringify({ fecha, asistencias: pendingChanges }),
+    });
+  }
+}
+```
+
+### Componentes de asignación de grupos
+
+- `GrupoEstudiantesSection.tsx` orquesta la pantalla de estudiantes del grupo.
+- `AsignarEstudiantesModal.tsx` permite buscar estudiantes de la institución y previsualizar `agregados`, `duplicados` y `errores`.
+- `EstudiantesTable.tsx` muestra las asignaciones actuales y sus acciones de remoción.
+- `GrupoEducadoresSection.tsx` orquesta la pantalla de educadores del grupo.
+- `AsignarEducadorForm.tsx` asigna un educador con rol `TITULAR` o `SUPLENTE`.
+- `EducadoresList.tsx` lista las asignaciones vigentes y permite removerlas.
+
 ### CursoForm (extracto)
 
 ```typescript
@@ -264,6 +311,21 @@ export function CursoForm({ curso, categorias, onSuccess }: Props) {
   );
 }
 ```
+
+---
+
+## Componentes relevantes de Fase 4
+
+| Componente                    | Tipo   | Propósito                                           |
+| ----------------------------- | ------ | --------------------------------------------------- |
+| `Sidebar.tsx`                 | Client | Expone accesos a `Grupos` y `Asistencias` según rol |
+| `GruposList.tsx`              | Client | Lista y filtra grupos                               |
+| `GrupoForm.tsx`               | Client | Crea o edita grupos                                 |
+| `GrupoEstudiantesSection.tsx` | Client | Gestiona estudiantes asignados a un grupo           |
+| `GrupoEducadoresSection.tsx`  | Client | Gestiona educadores asignados a un grupo            |
+| `AsignarEstudiantesModal.tsx` | Client | Alta masiva de estudiantes con preview              |
+| `AsignarEducadorForm.tsx`     | Client | Alta de educadores con rol                          |
+| `AsistenciaRapidaSection.tsx` | Client | Carga rápida de asistencias por grupo y fecha       |
 
 ### ImageUploader
 
