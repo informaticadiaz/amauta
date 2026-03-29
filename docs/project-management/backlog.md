@@ -1,6 +1,6 @@
 # Product Backlog - Amauta
 
-**Última actualización**: 2026-03-28
+**Última actualización**: 2026-03-29
 **Product Owner**: [Por definir]
 
 ## 🟢 Estado de Producción
@@ -14,7 +14,7 @@
 **Fase 1**: ✅ Completada (16/16 issues completados)
 **Fase 2**: ✅ Completada (8/8 issues completados)
 **Fase 3**: ✅ Completada (Sprint 8-10 completados)
-**Fase 4**: 🚧 En ejecución (Sprint 12 ✅, Sprint 13 ✅)
+**Fase 4**: 🚧 En ejecución (Sprint 12 ✅, Sprint 13 ✅, Sprint 14 📋)
 
 ## Cómo usar este documento
 
@@ -26,6 +26,19 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 4. **Estado** (Backlog, Ready, In Progress, Done)
 
 ---
+
+## Sprint 14 - Módulo Escolar (PLANIFICADO)
+
+**Objetivo**: Iniciar el bloque de asistencias con carga diaria operativa y resumen básico por grupo.
+**Referencia**: `docs/project-management/roadmap.md` → Fase 4
+
+### Issues propuestas para Sprint 14
+
+| Issue  | Título                                       | Estado   |
+| ------ | -------------------------------------------- | -------- |
+| F4-011 | API Registro diario de asistencias por grupo | 📋 Ready |
+| F4-012 | UI Carga rápida de asistencias por grupo     | 📋 Ready |
+| F4-013 | API Resumen mensual de asistencias por grupo | 📋 Ready |
 
 ## Sprint 13 - Módulo Escolar (COMPLETADO)
 
@@ -344,7 +357,7 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 ### Backlog Health
 
 - **Done**: Fases 0, 1, 2, 3 completadas + Sprints 12 y 13 de Fase 4
-- **Ready for Development**: definir Sprint 14 / siguiente bloque de Fase 4
+- **Ready for Development**: Sprint 14 definido con foco en asistencias
 - **Needs Refinement**: 0 items
 - **Research Done**: 1 item (NAP #21 - investigación completada)
 - **Blocked**: 0 items
@@ -378,8 +391,8 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 ### Para Fase 4
 
-1. Definir el alcance y las issues del Sprint 14 para continuar Fase 4
-2. Actualizar el roadmap detallado de Fase 4 con el siguiente bloque priorizado
+1. Crear en GitHub las issues del Sprint 14 para continuar Fase 4
+2. Ejecutar Sprint 14 con foco en asistencias antes de avanzar a calificaciones y comunicados
 
 ---
 
@@ -390,5 +403,5 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 - Las prioridades pueden ajustarse según feedback de usuarios
 - Nuevas historias pueden agregarse en cualquier momento
 
-**Última revisión**: 28/03/2026
-**Próxima revisión**: Inicio de Sprint 14
+**Última revisión**: 29/03/2026
+**Próxima revisión**: Cierre de Sprint 14

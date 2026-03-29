@@ -1,15 +1,37 @@
 # Gestión de Sprints - Amauta
 
-## Sprint Actual: Sprint 12 - Módulo Escolar (INICIO)
+## Sprint Actual: Sprint 14 - Módulo Escolar (PLANIFICADO)
+
+**Fase**: Fase 4 - Módulo Escolar
+**Objetivo**: Iniciar el bloque operativo de asistencias con base backend y primera UI de carga rápida.
+
+### Issues comprometidas
+
+- 📋 F4-011: API Registro diario de asistencias por grupo
+- 📋 F4-012: UI Carga rápida de asistencias por grupo
+- 📋 F4-013: API Resumen mensual de asistencias por grupo
+
+## Sprint 13 - Módulo Escolar (COMPLETADO)
+
+**Fase**: Fase 4 - Módulo Escolar
+**Objetivo**: Resolver asignaciones de estudiantes y educadores para habilitar la operación de grupos.
+
+### Issues comprometidas
+
+- ✅ #72 F4-007: API Asignación masiva de estudiantes a grupos
+- ✅ #73 F4-008: API Asignación de educadores a grupos
+- ✅ #74 F4-009: UI Asignación de estudiantes y educadores
+
+## Sprint 12 - Módulo Escolar Base (COMPLETADO)
 
 **Fase**: Fase 4 - Módulo Escolar
 **Objetivo**: Iniciar ejecución con configuración institucional y gestión de grupos.
 
 ### Issues comprometidas
 
-- 📋 #67 F4-004: API Periodos Académicos + Escala de Calificación (Institución)
-- 📋 #68 F4-005: API Gestión de Grupos/Clases (CRUD + estados)
-- 📋 #69 F4-006: UI Gestión de Grupos/Clases (Listado + Form)
+- ✅ #67 F4-004: API Periodos Académicos + Escala de Calificación (Institución)
+- ✅ #68 F4-005: API Gestión de Grupos/Clases (CRUD + estados)
+- ✅ #69 F4-006: UI Gestión de Grupos/Clases (Listado + Form)
 
 ## Sprint 11 - Preparación Fase 4 (COMPLETADO)
 
@@ -30,10 +52,10 @@
 
 ### Último Sprint Completado ✅
 
-**Sprint 10 - Evaluaciones (Fase 3)**
+**Sprint 13 - Módulo Escolar (Fase 4)**
 
 - Estado: ✅ Completado
-- Referencia: `docs/project-management/roadmap.md` → Fase 3
+- Referencia: `docs/project-management/roadmap.md` → Fase 4
 
 ---
 

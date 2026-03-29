@@ -1,6 +1,6 @@
 # Roadmap - Amauta
 
-**Última actualización**: 2026-03-26
+**Última actualización**: 2026-03-29
 
 ## Visión General
 
@@ -1325,6 +1325,18 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 | #72   | F4-007: API Asignación masiva de estudiantes a grupos | ✅ Completado |
 | #73   | F4-008: API Asignación de educadores a grupos         | ✅ Completado |
 | #74   | F4-009: UI Asignación de estudiantes y educadores     | ✅ Completado |
+
+**Progreso Sprint 13**: 3/3 issues completados ✅
+
+### Sprint 14 📋 Planificado
+
+| Issue  | Título                                       | Estado         |
+| ------ | -------------------------------------------- | -------------- |
+| F4-011 | API Registro diario de asistencias por grupo | 📋 Planificado |
+| F4-012 | UI Carga rápida de asistencias por grupo     | 📋 Planificado |
+| F4-013 | API Resumen mensual de asistencias por grupo | 📋 Planificado |
+
+**Progreso Sprint 14**: 0/3 issues iniciadas
 
 ### Objetivos
 
@@ -2921,5 +2933,5 @@ Revisar roadmap cada 3 sprints (6 semanas) para ajustar prioridades.
 
 ---
 
-**Última actualización**: 2026-03-18
-**Próxima revisión**: Inicio de Fase 4
+**Última actualización**: 2026-03-29
+**Próxima revisión**: Cierre de Sprint 14
