@@ -1,7 +1,7 @@
 import { SignJWT } from 'jose';
-import { getToken } from 'next-auth/jwt';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import { auth } from './auth';
 
 const AUTH_SECRET = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET;
 
@@ -25,18 +25,20 @@ async function createBackendAuthToken(
 }
 
 export async function getAuthenticatedBackendToken(
-  request: NextRequest
+  _request: NextRequest
 ): Promise<string | null> {
-  const token = await getToken({
-    req: request,
-    secret: AUTH_SECRET,
-  });
+  const session = await auth();
 
-  if (!token) {
+  if (!session?.user) {
     return null;
   }
 
-  return createBackendAuthToken(token);
+  return createBackendAuthToken({
+    id: session.user.id,
+    sub: session.user.id,
+    email: session.user.email ?? '',
+    rol: session.user.rol,
+  });
 }
 
 export async function getAuthenticatedBackendHeaders(
