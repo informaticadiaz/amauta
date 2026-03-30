@@ -1,10 +1,10 @@
 ---
 name: project-manager-automata
 description:
-  Orquestador autónomo del agentic loop. Determina el próximo issue a ejecutar
-  según el roadmap y escribe next-prompt.md para disparar complete-issue-automata. Solo trabaja
-  con issues existentes en GitHub. No crea issues, no modifica documentación de planificación,
-  no hace preguntas. Su único output es next-prompt.md o STOP documentado.
+  Orquestador autónomo del agentic loop. Lee el roadmap, crea issues si no hay
+  disponibles, y delega a complete-issue-automata. Opera sin supervisión humana.
+  El roadmap es la fuente de aprobación implícita — lo que está en el roadmap
+  está aprobado para ser creado y ejecutado.
 ---
 
 # Project Manager Automata
@@ -12,28 +12,26 @@ description:
 ## Propósito
 
 Orquestador del agentic loop de desarrollo. Opera sin supervisión humana.
-Responsabilidad única: determinar el próximo issue válido y disparar la sesión
-de `complete-issue-automata` correspondiente.
+Responsabilidades:
 
-No es una versión mejorada de `project-manager` — es un rol distinto. El
-`project-manager` interactivo planifica y aprueba con el usuario. Este skill
-solo selecciona y delega, dentro de lo que ya fue aprobado.
+1. **Si no hay issues abiertas**: leer roadmap → crear issues del próximo sprint → disparar `complete-issue-automata`
+2. **Si hay issues abiertas**: determinar cuál sigue según el roadmap → disparar `complete-issue-automata`
+
+El roadmap es la fuente de verdad y la aprobación implícita. No necesita confirmación humana para crear issues que están definidas en él.
 
 ---
 
 ## Lo que NUNCA hace
 
-- Crear issues en GitHub
 - Modificar `roadmap.md`, `backlog.md` ni `sprints.md`
 - Pedir confirmación al usuario (no hay usuario presente)
 - Implementar código o tests
 - Cerrar issues
+- Crear issues que NO estén definidas en el roadmap
 
 ---
 
 ## Activación
-
-Este skill se activa de dos formas:
 
 **Inicio manual del loop:**
 
@@ -58,7 +56,7 @@ El parámetro `[loop_count=X/N]` es obligatorio. Sin él, asumir `[loop_count=0/
 
 ### PASO 1 — Leer estado del proyecto
 
-Ejecutar los tres comandos y leer los dos archivos:
+Ejecutar los comandos y leer los archivos:
 
 ```bash
 # Issues abiertos en la fase actual
@@ -74,8 +72,8 @@ gh issue list --label "phase-4" --state closed --limit 5 \
 
 Leer:
 
-- `docs/project-management/roadmap.md` → sección Fase 4, orden y dependencias
-- `CLAUDE.md` → sección "Próximos pasos" y "Completado en Fase 4"
+- `docs/project-management/roadmap.md` → sección Fase actual, orden y dependencias
+- `CLAUDE.md` → sección "Próximos pasos" y "Completado en Fase actual"
 
 ---
 
@@ -94,22 +92,7 @@ Leer:
 
 Evaluar en orden. Si alguna se cumple → ir al **Formato de STOP**, no disparar.
 
-**Condición 1 — Sin issues disponibles:**
-
-```
-¿Hay issues OPEN con label phase-4 en GitHub?
-NO → STOP: "Loop completado. No hay más issues disponibles en Fase 4."
-```
-
-**Condición 2 — Dependencias sin resolver:**
-
-```
-¿El issue candidato tiene dependencias abiertas en GitHub?
-SÍ → buscar el siguiente candidato sin dependencias
-     Si no hay ninguno → STOP: "Todos los candidatos tienen dependencias pendientes."
-```
-
-**Condición 3 — Límite de sesiones:**
+**Condición 1 — Límite de sesiones:**
 
 ```
 Leer X y N de [loop_count=X/N]
@@ -117,7 +100,14 @@ Leer X y N de [loop_count=X/N]
 SÍ → STOP: "Límite de sesiones alcanzado ([X]/[N])."
 ```
 
-**Condición 4 — Contexto de sesión elevado:**
+**Condición 2 — Fase completada:**
+
+```
+¿No hay issues OPEN en la fase actual Y el roadmap no define issues pendientes para esta fase?
+SÍ → STOP: "Fase completada. No hay más trabajo definido en el roadmap."
+```
+
+**Condición 3 — Contexto de sesión elevado:**
 
 ```
 Heurística: ¿se leyeron más de 15 archivos o se ejecutaron más de 20 comandos?
@@ -126,14 +116,50 @@ SÍ → STOP: "Contexto de sesión elevado. Reiniciar el loop manualmente."
 
 ---
 
-### PASO 4 — Determinar el próximo issue
+### PASO 4 — Determinar situación y actuar
+
+#### Situación A — Hay issues abiertas
 
 1. Tomar los issues OPEN con label `phase-4`
-2. Ordenarlos según el orden en `roadmap.md` (sección Fase 4 → "Próximos pasos")
+2. Ordenarlos según el orden en `roadmap.md`
 3. Aplicar criterios de selección:
    - Priorizar issues con label `must-have`
    - Descartar issues con dependencias abiertas
    - Tomar el primero válido
+4. Ir al **PASO 5**
+
+#### Situación B — No hay issues abiertas
+
+1. Leer `roadmap.md` → sección de la fase actual → "Próximos pasos"
+2. Identificar los próximos issues NO creados en GitHub (máximo 3)
+3. Para cada issue, crear con `gh issue create`:
+
+```bash
+gh issue create \
+  --title "F4-0XX: [título según roadmap]" \
+  --body "$(cat <<'EOF'
+## Objetivo
+[objetivo del issue según roadmap]
+
+## Alcance
+[frontend/backend/database según roadmap]
+
+## Checklist
+- [ ] [tarea 1]
+- [ ] [tarea 2]
+
+## Labels sugeridos
+phase-4, [tipo]
+
+## Dependencias
+[issues de las que depende, si aplica]
+EOF
+)" \
+  --label "phase-4"
+```
+
+4. Tomar el primero de los issues creados como candidato
+5. Ir al **PASO 5**
 
 ---
 
@@ -144,6 +170,8 @@ Escribir en `docs/ai-skills/automata-dev/loop-status.md` antes de disparar:
 ```
 ## [fecha] — Sesión [loop_count]
 - Tipo: project-manager-automata
+- Situación: [A: issues existentes / B: issues creadas]
+- Issues creadas: #[N], #[N+1] (solo si Situación B)
 - Acción: seleccionó issue #[N] — [título del issue]
 - Próxima sesión: complete-issue-automata #[N] [loop_count=[X+1]/[N_max]]
 ```
@@ -152,7 +180,7 @@ Escribir en `docs/ai-skills/automata-dev/loop-status.md` antes de disparar:
 
 ### PASO 6 — Escribir next-prompt.md
 
-Incrementar X en 1 y escribir el siguiente contenido en `docs/ai-skills/automata-dev/next-prompt.md`:
+Incrementar X en 1 y escribir en `docs/ai-skills/automata-dev/next-prompt.md`:
 
 ```
 Ejecutá el issue #[N] de forma autónoma siguiendo el workflow completo de complete-issue-automata.
@@ -182,7 +210,7 @@ MODO: completamente autónomo. No esperar confirmación del usuario en ningún p
 Si hay ambigüedad que podría resultar en trabajo incorrecto → STOP y registrar.
 ```
 
-Luego hacer commit de `loop-status.md` y `next-prompt.md` para que el runner los detecte.
+Luego hacer commit de `loop-status.md` y `next-prompt.md`.
 
 ---
 
@@ -207,8 +235,9 @@ Cuando el loop debe detenerse, NO escribir `next-prompt.md`.
 
 ## Guardrails
 
-- No crear issues bajo ninguna circunstancia
+- Solo crear issues que estén definidas en el roadmap — nunca inventar trabajo
 - No modificar `roadmap.md`, `backlog.md` ni `sprints.md`
 - Si hay ambigüedad sobre cuál es el próximo issue → STOP antes de asumir
 - Propagar `loop_count` correctamente: recibir `[X/N]`, disparar `[X+1/N]`
 - El `loop_count` nunca retrocede
+- Máximo 3 issues creadas por sesión en Situación B
