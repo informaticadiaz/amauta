@@ -108,7 +108,7 @@ Comparar con la cantidad de issues marcados como `✅` en la sección "Completad
 
 ### PASO 3 — Generar reporte
 
-Crear `docs/logs/audit-report-[fecha].md` con este formato:
+Crear `docs/ai-skills/automata-dev/audit-report-[fecha].md` con este formato:
 
 ```markdown
 # Reporte de Auditoría — [fecha]
@@ -138,13 +138,13 @@ STOP: [razón]. Acción requerida: [qué debe hacer el humano].
 
 ### PASO 4 — Actualizar loop-status
 
-Agregar entrada en `docs/logs/loop-status.md`:
+Agregar entrada en `docs/ai-skills/automata-dev/loop-status.md`:
 
 ```
 ## [fecha] — Auditoría (loop_count=[X/N])
 - Issues auditados: #[N-2], #[N-1], #[N]
 - Resultado: APROBADO / BLOQUEADO
-- Reporte: docs/logs/audit-report-[fecha].md
+- Reporte: docs/ai-skills/automata-dev/audit-report-[fecha].md
 ```
 
 ---

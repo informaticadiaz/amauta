@@ -294,9 +294,7 @@ AL TERMINAR:
   Si loop_count >= N_max → NO escribir next-prompt.md → STOP con resumen.
 ```
 
-> ⚠️ **Pendiente**: actualizar `complete-issue-automata.md` y `project-manager-automata.md`
-> para reemplazar las referencias a `RemoteTrigger` por escritura en `next-prompt.md`.
-> Hacerlo antes de ejecutar la Etapa 2.
+> ✅ `complete-issue-automata.md` y `project-manager-automata.md` actualizados — sin referencias a `RemoteTrigger`.
 
 ---
 
