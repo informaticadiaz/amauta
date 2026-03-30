@@ -168,17 +168,143 @@ El prompt de handoff de cada una es suficiente para que la otra arranque sin con
 > Esta es la etapa central. El primer handoff real entre sesiones.
 > project-manager-automata elige el issue → complete-issue lo ejecuta → para.
 
+### Decisión de diseño: mecanismo de disparo
+
+Durante la implementación se descubrió que el mecanismo de disparo original (`RemoteTrigger` de Claude Code) no es viable porque:
+
+1. Es una dependencia dura de Claude — no funciona con otras IAs
+2. Requiere infraestructura CCR (entorno registrado en claude.ai) que no siempre está disponible
+
+**El mecanismo de handoff agnóstico** reemplaza `RemoteTrigger` por escritura en archivo:
+
+```
+Sesión termina → escribe docs/ai-skills/automata-dev/next-prompt.md
+Trigger externo lee el archivo → arranca la próxima sesión con su contenido
+```
+
+El loop sigue siendo autónomo en lo que importa: la IA decide qué hacer y genera todo el contexto para continuar. El trigger externo es intercambiable.
+
+---
+
+### Alternativas de trigger (elegir una antes de ejecutar)
+
+#### Opción A — Script de loop local ✅ implementación inicial elegida
+
+Un script que corre en tu máquina mientras el loop está activo.
+
+- ✅ Agnóstico: cambiás `claude` por `aider`, `gemini-cli`, etc.
+- ✅ Sin infraestructura externa
+- ✅ Simple de auditar — podés ver qué se ejecutó
+- ❌ Requiere que la máquina esté encendida y el script corriendo
+
+**Decisión**: se implementa la Opción A como punto de partida. Las opciones B y C quedan documentadas para cuando se necesite autonomía 24/7 sin intervención local.
+
+**Requisito de portabilidad**: el script y los skills deben funcionar tanto en Linux como en Windows. Cada skill que genere el `next-prompt.md` debe detectar el sistema operativo y adaptar el comando de ejecución.
+
+##### Linux / macOS
+
+```bash
+#!/bin/bash
+# loop-runner.sh
+NEXT_PROMPT="docs/ai-skills/automata-dev/next-prompt.md"
+
+while [[ -f "$NEXT_PROMPT" ]]; do
+  PROMPT=$(cat "$NEXT_PROMPT")
+  rm "$NEXT_PROMPT"
+  echo "$PROMPT" | claude --print --dangerously-skip-permissions
+done
+
+echo "Loop terminado."
+```
+
+##### Windows (PowerShell)
+
+```powershell
+# loop-runner.ps1
+$NextPrompt = "docs/ai-skills/automata-dev/next-prompt.md"
+
+while (Test-Path $NextPrompt) {
+  $Prompt = Get-Content $NextPrompt -Raw
+  Remove-Item $NextPrompt
+  $Prompt | claude --print --dangerously-skip-permissions
+}
+
+Write-Host "Loop terminado."
+```
+
+##### Detección de entorno en los skills
+
+Cuando un skill genera `next-prompt.md`, debe incluir en el log qué comando usar para levantar la próxima sesión según el OS detectado:
+
+```
+# En loop-status.md, el skill registra:
+- OS detectado: Linux / Windows
+- Comando para continuar manualmente si el runner no está activo:
+  Linux:   echo "$(cat next-prompt.md)" | claude --print
+  Windows: Get-Content next-prompt.md | claude --print
+```
+
+#### Opción B — GitHub Actions
+
+Un workflow que se dispara cuando se commitea `next-prompt.md`:
+
+```yaml
+on:
+  push:
+    paths:
+      - 'docs/ai-skills/automata-dev/next-prompt.md'
+jobs:
+  loop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cat docs/ai-skills/automata-dev/next-prompt.md | claude --print
+```
+
+- ✅ Autónomo 24/7, no depende de tu máquina
+- ❌ Requiere exponer API key en GitHub Secrets
+- ❌ Más complejo de debuggear
+
+#### Opción C — Cron en el VPS
+
+Un cron en `diazignacio.ar` que verifica `next-prompt.md` cada N minutos:
+
+```bash
+*/5 * * * * cd /path/repo && [[ -f next-prompt.md ]] && cat next-prompt.md | claude --print
+```
+
+- ✅ Autónomo 24/7
+- ✅ Ya tenés el VPS configurado
+- ❌ Requiere instalar CLI de IA en el VPS
+
+---
+
+### Cambio en los skills
+
+Los skills `complete-issue-automata` y `project-manager-automata` reemplazan
+la instrucción `RemoteTrigger` por:
+
+```
+AL TERMINAR:
+  Escribir el prompt de la próxima sesión en:
+  docs/ai-skills/automata-dev/next-prompt.md
+
+  El trigger externo configurado levantará ese archivo y arrancará la sesión.
+
+  Si loop_count >= N_max → NO escribir next-prompt.md → STOP con resumen.
+```
+
+> ⚠️ **Pendiente**: actualizar `complete-issue-automata.md` y `project-manager-automata.md`
+> para reemplazar las referencias a `RemoteTrigger` por escritura en `next-prompt.md`.
+> Hacerlo antes de ejecutar la Etapa 2.
+
+---
+
 ### Configuración
 
 - Límite: 1 issue (`loop_count=0/1`)
-- El complete-issue detecta `loop_count=1/1` y NO dispara la siguiente sesión
+- La sesión 2 detecta `loop_count=1/1` y NO escribe `next-prompt.md`
 - 2 sesiones en total: project-manager → complete-issue
-
-### Cómo iniciar
-
-```
-/project-manager-automata [loop_count=0/1]
-```
 
 ### Qué esperar
 
@@ -187,14 +313,17 @@ Sesión 1: project-manager-automata
   → lee estado del proyecto
   → elige issue #N según roadmap
   → escribe en loop-status.md
-  → dispara: complete-issue #N [loop_count=1/1]
+  → escribe next-prompt.md con contexto de complete-issue #N [loop_count=1/1]
+  → cierra
 
-Sesión 2: complete-issue #N
+Trigger externo detecta next-prompt.md → arranca Sesión 2
+
+Sesión 2: complete-issue-automata #N
   → ejecuta TDD + implementación + docs
   → cierra issue en GitHub
   → actualiza CLAUDE.md
   → commit + push
-  → detecta loop_count=1/1 → NO dispara → STOP con resumen
+  → detecta loop_count=1/1 → NO escribe next-prompt.md → STOP con resumen
 ```
 
 ### Verificar después de que termine
@@ -211,21 +340,27 @@ git show --stat HEAD
 npm run test -w @amauta/api
 
 # Log actualizado
-cat docs/logs/loop-status.md
+cat docs/ai-skills/automata-dev/loop-status.md
 
 # Documentación generada
 ls docs/human-context/ | tail -5
+
+# next-prompt.md NO debe existir (loop terminó)
+[[ ! -f docs/ai-skills/automata-dev/next-prompt.md ]] && echo "OK" || echo "LOOP NO TERMINÓ"
 ```
 
 ### Criterio de salida de Etapa 2
 
+- [ ] Trigger externo elegido y configurado (A, B o C)
+- [ ] Skills actualizados: sin referencias a RemoteTrigger
 - [ ] El issue correcto fue elegido por project-manager-automata
-- [ ] El handoff ocurrió (la sesión 2 arrancó con el contexto correcto)
+- [ ] next-prompt.md fue escrito y levantado por el trigger
 - [ ] El issue está cerrado en GitHub
 - [ ] El commit tiene formato correcto
 - [ ] Los tests siguen en verde
 - [ ] loop-status.md refleja lo que pasó
 - [ ] La sesión 2 paró sola al detectar `loop_count=1/1`
+- [ ] next-prompt.md no existe al final
 
 **Si esto funciona, el núcleo del sistema está validado.**
 
@@ -362,25 +497,26 @@ y tomó la decisión correcta (CONTINUAR o STOP con reporte).
 
 ## Referencia rápida
 
-| Etapa | Comando de inicio                                                          |
-| ----- | -------------------------------------------------------------------------- |
-| 0     | Tareas manuales + commit                                                   |
-| 1     | `/project-manager-automata [loop_count=0/1]` + "no ejecutes RemoteTrigger" |
-| 2     | `/project-manager-automata [loop_count=0/1]`                               |
-| 3     | `/project-manager-automata [loop_count=0/2]`                               |
-| 4     | Pruebas 4a/4b/4c → `/project-manager-automata [loop_count=0/5]`            |
-| 5     | `/project-manager-automata [loop_count=0/6]`                               |
+| Etapa | Cómo iniciar                                                                |
+| ----- | --------------------------------------------------------------------------- |
+| 0     | Tareas manuales + commit                                                    |
+| 1     | `/project-manager-automata [loop_count=0/1]` + "no escribas next-prompt.md" |
+| 2     | Configurar trigger → `/project-manager-automata [loop_count=0/1]`           |
+| 3     | `/project-manager-automata [loop_count=0/2]`                                |
+| 4     | Pruebas 4a/4b/4c → `/project-manager-automata [loop_count=0/5]`             |
+| 5     | `/project-manager-automata [loop_count=0/6]`                                |
 
 ## Archivos del sistema
 
-| Archivo                                                   | Propósito                        |
-| --------------------------------------------------------- | -------------------------------- |
-| `docs/ai-skills/automata-dev/project-manager-automata.md` | Skill orquestador del loop       |
-| `docs/ai-skills/automata-dev/complete-issue-automata.md`  | Skill ejecutora del loop         |
-| `docs/ai-skills/automata-dev/loop-auditor.md`             | Skill de auditoría               |
-| `docs/ai-skills/automata-dev/README.md`                   | Contexto del sistema             |
-| `docs/ai-skills/automata-dev/loop-status.md`              | Estado actual del loop           |
-| `docs/ai-skills/automata-dev/audit-report-[fecha].md`     | Reportes de auditoría (Etapa 5+) |
+| Archivo                                                   | Propósito                             |
+| --------------------------------------------------------- | ------------------------------------- |
+| `docs/ai-skills/automata-dev/project-manager-automata.md` | Skill orquestador del loop            |
+| `docs/ai-skills/automata-dev/complete-issue-automata.md`  | Skill ejecutora del loop              |
+| `docs/ai-skills/automata-dev/loop-auditor.md`             | Skill de auditoría                    |
+| `docs/ai-skills/automata-dev/README.md`                   | Contexto del sistema                  |
+| `docs/ai-skills/automata-dev/loop-status.md`              | Estado actual del loop                |
+| `docs/ai-skills/automata-dev/next-prompt.md`              | Prompt de la próxima sesión (handoff) |
+| `docs/ai-skills/automata-dev/audit-report-[fecha].md`     | Reportes de auditoría (Etapa 5+)      |
 
 ## Cuándo escalar a producción
 
