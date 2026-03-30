@@ -2,8 +2,8 @@
 name: loop-auditor
 description: Auditoría periódica del agentic loop. Verifica suite completa de tests,
   compilación TypeScript, documentación de IA actualizada y coherencia de CLAUDE.md
-  con GitHub. Interviene cada 3 issues completados. Output: CONTINUAR (dispara
-  project-manager-autonomo) o STOP con reporte en docs/logs/.
+  con GitHub. Interviene cada 3 issues completados. Output: CONTINUAR (escribe
+  next-prompt.md para project-manager-automata) o STOP con reporte en automata-dev/.
 ---
 
 # Loop Auditor
@@ -153,22 +153,24 @@ Agregar entrada en `docs/logs/loop-status.md`:
 
 **Si TODAS las verificaciones pasaron (APROBADO):**
 
-Llamar RemoteTrigger con:
+Escribir `docs/ai-skills/automata-dev/next-prompt.md`:
 
 ```
-/project-manager-autonomo [loop_count=[X]/[N_max]]
+/project-manager-automata [loop_count=[X]/[N_max]]
 
 Contexto: venís de una auditoría aprobada.
 Issues auditados: #[N-2], #[N-1], #[N] — todos en verde.
-Reporte: docs/logs/audit-report-[fecha].md
+Reporte: docs/ai-skills/automata-dev/audit-report-[fecha].md
 ```
+
+Commitear `loop-status.md`, `next-prompt.md` y el reporte de auditoría.
 
 **Si ALGUNA verificación falló (BLOQUEADO):**
 
-NO llamar RemoteTrigger.
+NO escribir `next-prompt.md`.
 Escribir en `loop-status.md` la parada (ver formato arriba).
 Terminar con:
-`"Auditoría BLOQUEADA. El loop se detuvo. Ver docs/logs/audit-report-[fecha].md"`
+`"Auditoría BLOQUEADA. El loop se detuvo. Ver docs/ai-skills/automata-dev/audit-report-[fecha].md"`
 
 ---
 

@@ -2,9 +2,9 @@
 name: project-manager-automata
 description:
   Orquestador autónomo del agentic loop. Determina el próximo issue a ejecutar
-  según el roadmap y dispara complete-issue-automata via RemoteTrigger. Solo trabaja con issues
-  existentes en GitHub. No crea issues, no modifica documentación de planificación,
-  no hace preguntas. Su único output es RemoteTrigger o STOP documentado.
+  según el roadmap y escribe next-prompt.md para disparar complete-issue-automata. Solo trabaja
+  con issues existentes en GitHub. No crea issues, no modifica documentación de planificación,
+  no hace preguntas. Su único output es next-prompt.md o STOP documentado.
 ---
 
 # Project Manager Automata
@@ -150,11 +150,9 @@ Escribir en `docs/ai-skills/automata-dev/loop-status.md` antes de disparar:
 
 ---
 
-### PASO 6 — Disparar complete-issue-automata
+### PASO 6 — Escribir next-prompt.md
 
-Incrementar X en 1 y llamar RemoteTrigger con el siguiente prompt:
-
----
+Incrementar X en 1 y escribir el siguiente contenido en `docs/ai-skills/automata-dev/next-prompt.md`:
 
 ```
 Ejecutá el issue #[N] de forma autónoma siguiendo el workflow completo de complete-issue-automata.
@@ -170,11 +168,11 @@ CONTEXTO DEL LOOP:
 AL TERMINAR (solo si todas las condiciones son verdaderas):
   Condiciones: tests pasan + TypeScript compila + issue cerrado en GitHub + commit hecho
   1. Actualizar docs/ai-skills/automata-dev/loop-status.md con resultado de la sesión
-  2. Llamar RemoteTrigger con este prompt:
+  2. Escribir docs/ai-skills/automata-dev/next-prompt.md con el prompt para project-manager-automata:
      "/project-manager-automata [loop_count=[X+1]/[N_max]]
       Contexto: completó issue #[N] — [título]. Commit: [hash]."
 
-NO LLAMAR RemoteTrigger si:
+NO ESCRIBIR next-prompt.md si:
 - Tests fallaron → STOP, registrar en loop-status.md, no cerrar el issue
 - TypeScript no compila → STOP, registrar
 - Issue no pudo cerrarse en GitHub → STOP, registrar
@@ -184,11 +182,13 @@ MODO: completamente autónomo. No esperar confirmación del usuario en ningún p
 Si hay ambigüedad que podría resultar en trabajo incorrecto → STOP y registrar.
 ```
 
+Luego hacer commit de `loop-status.md` y `next-prompt.md` para que el runner los detecte.
+
 ---
 
 ## Formato de STOP
 
-Cuando el loop debe detenerse, NO llamar RemoteTrigger.
+Cuando el loop debe detenerse, NO escribir `next-prompt.md`.
 
 1. Escribir en `docs/ai-skills/automata-dev/loop-status.md`:
 

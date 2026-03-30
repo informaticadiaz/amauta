@@ -400,7 +400,7 @@ npm run test -w @amauta/web -- --testPathPattern="[Componente]"
 
 - Investigar si es un bug en la implementación
 - Corregir el bug (nunca el test)
-- Si la implementación no se puede corregir de forma segura → STOP, registrar en `docs/ai-skills/automata-dev/loop-status.md`, no disparar RemoteTrigger
+- Si la implementación no se puede corregir de forma segura → STOP, registrar en `docs/ai-skills/automata-dev/loop-status.md`, no escribir next-prompt.md
 
 ---
 
@@ -483,7 +483,7 @@ npx tsc --noEmit -p apps/web/tsconfig.json
 2. Ejecutar tests de nuevo para confirmar que siguen en verde
 3. Continuar al siguiente paso
 
-> Si TypeScript no compila → STOP, registrar en `docs/ai-skills/automata-dev/loop-status.md`, no disparar RemoteTrigger.
+> Si TypeScript no compila → STOP, registrar en `docs/ai-skills/automata-dev/loop-status.md`, no escribir next-prompt.md.
 
 ---
 
@@ -625,7 +625,7 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 
 ---
 
-### PASO 12 — Actualizar loop-status.md y disparar RemoteTrigger
+### PASO 12 — Actualizar loop-status.md y escribir next-prompt.md
 
 > Este paso solo aplica cuando el skill opera dentro del agentic loop (loop_count presente).
 
@@ -640,7 +640,7 @@ Escribir en `docs/ai-skills/automata-dev/loop-status.md`:
 - Próxima sesión: project-manager-automata [loop_count=[X+1]/[N_max]]
 ```
 
-**Condiciones para disparar RemoteTrigger** (TODAS deben ser verdaderas):
+**Condiciones para escribir next-prompt.md** (TODAS deben ser verdaderas):
 
 - ✅ Tests pasan
 - ✅ TypeScript compila
@@ -648,7 +648,7 @@ Escribir en `docs/ai-skills/automata-dev/loop-status.md`:
 - ✅ Commit hecho
 - ✅ `loop_count` actual < `N_max`
 
-Si todas las condiciones son verdaderas, llamar RemoteTrigger con:
+Si todas las condiciones son verdaderas, escribir `docs/ai-skills/automata-dev/next-prompt.md`:
 
 ```
 /project-manager-automata [loop_count=[X+1]/[N_max]]
@@ -656,7 +656,9 @@ Si todas las condiciones son verdaderas, llamar RemoteTrigger con:
 Contexto: completó issue #[N] — [título]. Commit: [hash].
 ```
 
-**NO llamar RemoteTrigger si:**
+Luego commitear `loop-status.md` y `next-prompt.md` para que el runner los detecte.
+
+**NO escribir next-prompt.md si:**
 
 - Tests fallaron → STOP
 - TypeScript no compila → STOP
@@ -688,7 +690,7 @@ En cualquier STOP: registrar razón en `docs/ai-skills/automata-dev/loop-status.
 - [ ] CLAUDE.md refleja el nuevo progreso (si aplica)
 - [ ] Issue cerrado con comentario descriptivo
 - [ ] `docs/ai-skills/automata-dev/loop-status.md` actualizado
-- [ ] RemoteTrigger disparado (si condiciones cumplen) o STOP documentado
+- [ ] `docs/ai-skills/automata-dev/next-prompt.md` escrito y commiteado (si condiciones cumplen) o STOP documentado
 
 ---
 
