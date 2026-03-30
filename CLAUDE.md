@@ -22,9 +22,9 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 4 - Módulo Escolar 🚧 EN PROGRESO
+### Fase Actual: Fase 4 - Módulo Escolar ✅ COMPLETADA
 
-**Progreso**: Sprint 15 en ejecución 🚧 (2/3 completados)
+**Progreso**: Sprint 15 completado ✅ (3/3 completados) — Fase 4 completa
 
 #### Completado en Fase 4:
 
@@ -92,10 +92,18 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Validación: período académico perteneciente a la misma institución del grupo
   - Permisos: ADMIN_ESCUELA (por institución) y EDUCADOR (por asignación activa al grupo)
   - 8 tests unitarios (86.88% statements)
+- ✅ **F4-016**: UI Carga rápida de calificaciones por grupo y periodo
+  - Componente `CalificacionesRapidasSection` con selectores de grupo, período académico y materia
+  - Grilla editable de notas y observaciones; guarda solo los cambios pendientes
+  - Exportación de resumen descargable en CSV
+  - Página `/dashboard/calificaciones` (ADMIN_ESCUELA y EDUCADOR)
+  - Proxies Next.js: `GET/PUT /api/grupos/:id/calificaciones` y `GET /api/instituciones/:id/periodos`
+  - "Calificaciones" en el sidebar para ADMIN_ESCUELA y EDUCADOR
+  - 5 tests frontend (2 suites, 5/5 pasando)
 
 #### Próximos pasos:
 
-- Continuar Sprint 15: F4-016 (UI Calificaciones)
+- Sprint 15 completado ✅ — Fase 4 completada
 
 #### Issues de infraestructura completados:
 
