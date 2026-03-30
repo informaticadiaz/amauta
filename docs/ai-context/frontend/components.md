@@ -45,6 +45,10 @@ apps/web/src/components/
 │   ├── AsistenciaRapidaSection.tsx
 │   └── AsistenciaRapidaSection.test.tsx
 │
+├── calificaciones/          # Carga rápida de calificaciones
+│   ├── CalificacionesRapidasSection.tsx
+│   └── CalificacionesRapidasSection.test.tsx
+│
 ├── lecciones/               # Gestión de lecciones
 │   ├── LeccionForm.tsx
 │   └── LeccionesList.tsx
@@ -316,16 +320,17 @@ export function CursoForm({ curso, categorias, onSuccess }: Props) {
 
 ## Componentes relevantes de Fase 4
 
-| Componente                    | Tipo   | Propósito                                           |
-| ----------------------------- | ------ | --------------------------------------------------- |
-| `Sidebar.tsx`                 | Client | Expone accesos a `Grupos` y `Asistencias` según rol |
-| `GruposList.tsx`              | Client | Lista y filtra grupos                               |
-| `GrupoForm.tsx`               | Client | Crea o edita grupos                                 |
-| `GrupoEstudiantesSection.tsx` | Client | Gestiona estudiantes asignados a un grupo           |
-| `GrupoEducadoresSection.tsx`  | Client | Gestiona educadores asignados a un grupo            |
-| `AsignarEstudiantesModal.tsx` | Client | Alta masiva de estudiantes con preview              |
-| `AsignarEducadorForm.tsx`     | Client | Alta de educadores con rol                          |
-| `AsistenciaRapidaSection.tsx` | Client | Carga rápida de asistencias por grupo y fecha       |
+| Componente                         | Tipo   | Propósito                                                   |
+| ---------------------------------- | ------ | ----------------------------------------------------------- |
+| `Sidebar.tsx`                      | Client | Expone accesos a `Grupos` y `Asistencias` según rol         |
+| `GruposList.tsx`                   | Client | Lista y filtra grupos                                       |
+| `GrupoForm.tsx`                    | Client | Crea o edita grupos                                         |
+| `GrupoEstudiantesSection.tsx`      | Client | Gestiona estudiantes asignados a un grupo                   |
+| `GrupoEducadoresSection.tsx`       | Client | Gestiona educadores asignados a un grupo                    |
+| `AsignarEstudiantesModal.tsx`      | Client | Alta masiva de estudiantes con preview                      |
+| `AsignarEducadorForm.tsx`          | Client | Alta de educadores con rol                                  |
+| `AsistenciaRapidaSection.tsx`      | Client | Carga rápida de asistencias por grupo y fecha               |
+| `CalificacionesRapidasSection.tsx` | Client | Carga rápida de calificaciones por grupo, período y materia |
 
 ### ImageUploader
 

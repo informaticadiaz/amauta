@@ -21,6 +21,8 @@ apps/web/src/app/
 │   ├── page.tsx                 # /dashboard
 │   ├── asistencias/
 │   │   └── page.tsx             # /dashboard/asistencias
+│   ├── calificaciones/
+│   │   └── page.tsx             # /dashboard/calificaciones
 │   ├── grupos/
 │   │   ├── page.tsx             # /dashboard/grupos
 │   │   ├── nuevo/page.tsx       # /dashboard/grupos/nuevo
@@ -58,10 +60,12 @@ apps/web/src/app/
     ├── lecciones/
     ├── educadores/me/grupos/
     ├── grupos/[id]/asistencias/
+    ├── grupos/[id]/calificaciones/
     ├── grupos/[id]/estudiantes/
     ├── grupos/[id]/educadores/
     ├── instituciones/[id]/estudiantes/
     ├── instituciones/[id]/educadores/
+    ├── instituciones/[id]/periodos/
     ├── mi-institucion/
     └── upload/
 ```
@@ -266,6 +270,7 @@ export default async function NuevoCursoPage() {
 | `/dashboard/grupos/[id]/estudiantes` | ADMIN_ESCUELA           | Asignación y remoción de estudiantes           |
 | `/dashboard/grupos/[id]/educadores`  | ADMIN_ESCUELA           | Asignación y remoción de educadores            |
 | `/dashboard/asistencias`             | ADMIN_ESCUELA, EDUCADOR | Carga rápida de asistencias                    |
+| `/dashboard/calificaciones`          | ADMIN_ESCUELA, EDUCADOR | Carga rápida de calificaciones por materia     |
 | `/api/mi-institucion`                | ADMIN_ESCUELA           | Proxy para resolver la institución del usuario |
 | `/api/educadores/me/grupos`          | EDUCADOR                | Proxy para grupos del educador                 |
 | `/api/grupos/[id]/asistencias`       | ADMIN_ESCUELA, EDUCADOR | Proxy GET/PUT de asistencias                   |
