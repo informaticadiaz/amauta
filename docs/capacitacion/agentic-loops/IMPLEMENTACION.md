@@ -42,7 +42,7 @@ Si algo falla → resolver antes de continuar.
 
 ### 0.2 Crear el archivo de log del loop
 
-La carpeta `docs/logs/` ya existe. Crear `docs/logs/loop-status.md`:
+Crear `docs/ai-skills/automata-dev/loop-status.md` (dentro de la carpeta de la skill, autocontenido):
 
 ```
 # Loop Status
@@ -58,50 +58,34 @@ _vacío_
 
 ---
 
-### 0.3 Corregir el bug en `complete-issue`
+### 0.3 Crear las skills autónomas dentro de `automata-dev/`
 
-Abrir `docs/ai-skills/complete-issue.md` y eliminar las líneas 625-627:
+Las skills del agentic loop viven en `docs/ai-skills/automata-dev/` y son copias
+independientes de las skills globales. No tocar `docs/ai-skills/complete-issue.md`.
 
-```
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+Crear:
 
-Co-Authored-By: Claude <noreply@anthropic.com>
-```
-
-El template de commit correcto (lo que debe quedar después de `Resuelve: #[número]`) es solo el cierre del heredoc:
-
-```
-EOF
-)"
-```
-
-Sin las líneas de atribución arriba. El template completo correcto queda así:
-
-```
-git commit -m "$(cat <<'EOF'
-[tipo]: [descripción corta en español, máx 72 chars]
-
-- [cambio 1]
-- [cambio 2]
-- Tests: [qué se cubre con los tests]
-
-Resuelve: #[número]
-EOF
-)"
-```
+- `docs/ai-skills/automata-dev/complete-issue-automata.md` — copia de `complete-issue`
+  con el template de commit sin atribución de IA y con PASO 12 de handoff al loop
+- `docs/ai-skills/automata-dev/project-manager-automata.md` — copia de `project-manager-automata`
+  con referencias actualizadas a `complete-issue-automata` y `loop-status.md`
 
 ---
 
 ### 0.4 Verificar los skills autónomos
 
-Los skills ya están creados en `docs/ai-skills/automata-dev/`.
-
 ```bash
 ls docs/ai-skills/automata-dev/
-# Debe mostrar: README.md  loop-auditor.md  project-manager-autonomo.md
+# Debe mostrar:
+# README.md
+# loop-auditor.md
+# loop-status.md
+# complete-issue-automata.md
+# project-manager-automata.md
+# project-manager-automata.md
 ```
 
-Leer `docs/ai-skills/automata-dev/project-manager-autonomo.md` para familiarizarse
+Leer `docs/ai-skills/automata-dev/project-manager-automata.md` para familiarizarse
 con el workflow antes de ejecutarlo.
 
 ---
@@ -110,16 +94,12 @@ con el workflow antes de ejecutarlo.
 
 ```bash
 git add docs/ai-skills/automata-dev/
-git add docs/ai-skills/complete-issue.md
-git add docs/logs/loop-status.md
 git add docs/capacitacion/agentic-loops/
 
 git commit -m "$(cat <<'EOF'
 feat: infraestructura del agentic loop autónomo
 
-- docs/ai-skills/automata-dev/: skills project-manager-autonomo y loop-auditor
-- fix complete-issue: remover atribución IA del template de commit
-- docs/logs/loop-status.md: log de estado del loop
+- docs/ai-skills/automata-dev/: complete-issue-automata, project-manager-automata, loop-status.md
 - docs/capacitacion/agentic-loops/: documentación conceptual y práctica
 EOF
 )"
@@ -137,12 +117,12 @@ git push
 > Probar cada skill por separado antes de encadenarlas.
 > El RemoteTrigger NO se ejecuta en esta etapa — solo se verifica el output.
 
-### 1.1 Probar project-manager-autonomo
+### 1.1 Probar project-manager-automata
 
 Iniciar una sesión con este prompt:
 
 ```
-/project-manager-autonomo [loop_count=0/1]
+/project-manager-automata [loop_count=0/1]
 
 IMPORTANTE: No ejecutes el RemoteTrigger. Solo mostrá el prompt completo
 que habrías disparado y el contenido que escribirías en loop-status.md.
@@ -157,7 +137,7 @@ Verificar el output:
 
 ### 1.2 Probar complete-issue en modo dry-run
 
-Con el número de issue que project-manager-autonomo habría elegido:
+Con el número de issue que project-manager-automata habría elegido:
 
 ```
 Ejecutá el issue #[N] de forma autónoma siguiendo complete-issue.
@@ -186,7 +166,7 @@ El prompt de handoff de cada una es suficiente para que la otra arranque sin con
 ## ETAPA 2 — Loop mínimo autónomo ⭐
 
 > Esta es la etapa central. El primer handoff real entre sesiones.
-> project-manager-autonomo elige el issue → complete-issue lo ejecuta → para.
+> project-manager-automata elige el issue → complete-issue lo ejecuta → para.
 
 ### Configuración
 
@@ -197,13 +177,13 @@ El prompt de handoff de cada una es suficiente para que la otra arranque sin con
 ### Cómo iniciar
 
 ```
-/project-manager-autonomo [loop_count=0/1]
+/project-manager-automata [loop_count=0/1]
 ```
 
 ### Qué esperar
 
 ```
-Sesión 1: project-manager-autonomo
+Sesión 1: project-manager-automata
   → lee estado del proyecto
   → elige issue #N según roadmap
   → escribe en loop-status.md
@@ -239,7 +219,7 @@ ls docs/human-context/ | tail -5
 
 ### Criterio de salida de Etapa 2
 
-- [ ] El issue correcto fue elegido por project-manager-autonomo
+- [ ] El issue correcto fue elegido por project-manager-automata
 - [ ] El handoff ocurrió (la sesión 2 arrancó con el contexto correcto)
 - [ ] El issue está cerrado en GitHub
 - [ ] El commit tiene formato correcto
@@ -261,15 +241,15 @@ ls docs/human-context/ | tail -5
 ### Cómo iniciar
 
 ```
-/project-manager-autonomo [loop_count=0/2]
+/project-manager-automata [loop_count=0/2]
 ```
 
 ### Qué esperar
 
 ```
-Sesión 1: project-manager-autonomo [0/2] → elige #N   → dispara complete-issue [1/2]
+Sesión 1: project-manager-automata [0/2] → elige #N   → dispara complete-issue [1/2]
 Sesión 2: complete-issue #N        [1/2] → completa   → dispara project-manager [1/2]
-Sesión 3: project-manager-autonomo [1/2] → elige #N+1 → dispara complete-issue [2/2]
+Sesión 3: project-manager-automata [1/2] → elige #N+1 → dispara complete-issue [2/2]
 Sesión 4: complete-issue #N+1      [2/2] → completa   → detecta límite → STOP
 ```
 
@@ -296,7 +276,7 @@ Sesión 4: complete-issue #N+1      [2/2] → completa   → detecta límite →
 Teniendo más de 2 issues disponibles, iniciar con límite bajo:
 
 ```
-/project-manager-autonomo [loop_count=0/2]
+/project-manager-automata [loop_count=0/2]
 ```
 
 Verificar que para después de 2 issues aunque haya más disponibles.
@@ -312,7 +292,7 @@ gh issue list --label "phase-4" --state open
 Si hay 0, iniciar:
 
 ```
-/project-manager-autonomo [loop_count=0/5]
+/project-manager-automata [loop_count=0/5]
 ```
 
 Verificar que para inmediatamente con: "Loop completado. No hay más issues disponibles."
@@ -323,7 +303,7 @@ Verificar que para inmediatamente con: "Loop completado. No hay más issues disp
 2. Iniciar el loop:
 
 ```
-/project-manager-autonomo [loop_count=0/1]
+/project-manager-automata [loop_count=0/1]
 ```
 
 3. Verificar que complete-issue detecta el fallo y NO cierra el issue ni dispara project-manager
@@ -334,7 +314,7 @@ Verificar que para inmediatamente con: "Loop completado. No hay más issues disp
 Una vez que las 3 pruebas pasaron:
 
 ```
-/project-manager-autonomo [loop_count=0/5]
+/project-manager-automata [loop_count=0/5]
 ```
 
 **Criterio de salida de Etapa 4**: Los 3 guardrails funcionan. El loop corre 5 issues sin intervención.
@@ -362,13 +342,13 @@ la lógica de auditoría. Agregar esta instrucción al prompt que dispara projec
 AL TERMINAR, antes de disparar la siguiente sesión:
 - Calcular: ¿(loop_count_actual - 1) % 3 == 0?
   SÍ → disparar loop-auditor con: "[loop_count=X/N] [issues=#N-2,#N-1,#N]"
-  NO → disparar project-manager-autonomo directamente
+  NO → disparar project-manager-automata directamente
 ```
 
 ### 5.3 Primer uso con auditoría
 
 ```
-/project-manager-autonomo [loop_count=0/6]
+/project-manager-automata [loop_count=0/6]
 ```
 
 La auditoría se disparará después del issue 3 (`loop_count=3`).
@@ -385,21 +365,22 @@ y tomó la decisión correcta (CONTINUAR o STOP con reporte).
 | Etapa | Comando de inicio                                                          |
 | ----- | -------------------------------------------------------------------------- |
 | 0     | Tareas manuales + commit                                                   |
-| 1     | `/project-manager-autonomo [loop_count=0/1]` + "no ejecutes RemoteTrigger" |
-| 2     | `/project-manager-autonomo [loop_count=0/1]`                               |
-| 3     | `/project-manager-autonomo [loop_count=0/2]`                               |
-| 4     | Pruebas 4a/4b/4c → `/project-manager-autonomo [loop_count=0/5]`            |
-| 5     | `/project-manager-autonomo [loop_count=0/6]`                               |
+| 1     | `/project-manager-automata [loop_count=0/1]` + "no ejecutes RemoteTrigger" |
+| 2     | `/project-manager-automata [loop_count=0/1]`                               |
+| 3     | `/project-manager-automata [loop_count=0/2]`                               |
+| 4     | Pruebas 4a/4b/4c → `/project-manager-automata [loop_count=0/5]`            |
+| 5     | `/project-manager-automata [loop_count=0/6]`                               |
 
 ## Archivos del sistema
 
 | Archivo                                                   | Propósito                        |
 | --------------------------------------------------------- | -------------------------------- |
-| `docs/ai-skills/automata-dev/project-manager-autonomo.md` | Skill orquestador                |
+| `docs/ai-skills/automata-dev/project-manager-automata.md` | Skill orquestador del loop       |
+| `docs/ai-skills/automata-dev/complete-issue-automata.md`  | Skill ejecutora del loop         |
 | `docs/ai-skills/automata-dev/loop-auditor.md`             | Skill de auditoría               |
 | `docs/ai-skills/automata-dev/README.md`                   | Contexto del sistema             |
-| `docs/logs/loop-status.md`                                | Estado actual del loop           |
-| `docs/logs/audit-report-[fecha].md`                       | Reportes de auditoría (Etapa 5+) |
+| `docs/ai-skills/automata-dev/loop-status.md`              | Estado actual del loop           |
+| `docs/ai-skills/automata-dev/audit-report-[fecha].md`     | Reportes de auditoría (Etapa 5+) |
 
 ## Cuándo escalar a producción
 
