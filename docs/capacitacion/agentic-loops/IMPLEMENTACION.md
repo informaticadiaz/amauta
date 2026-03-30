@@ -13,9 +13,9 @@
 Marcar cada ítem al completarlo.
 
 ```
-[ ] ETAPA 0 — Preparación del entorno
-[ ] ETAPA 1 — Verificación manual de las skills
-[ ] ETAPA 2 — Loop mínimo autónomo ⭐ PRIORIDAD
+[x] ETAPA 0 — Preparación del entorno          ✅ 2026-03-29
+[x] ETAPA 1 — Verificación manual de las skills ✅ 2026-03-29
+[x] ETAPA 2 — Loop mínimo autónomo ⭐ PRIORIDAD ✅ 2026-03-29
 [ ] ETAPA 3 — Loop bidireccional (2 issues)
 [ ] ETAPA 4 — Guardrails completos
 [ ] ETAPA 5 — Tercera skill: auditoría
@@ -349,16 +349,18 @@ ls docs/human-context/ | tail -5
 
 ### Criterio de salida de Etapa 2
 
-- [ ] Trigger externo elegido y configurado (A, B o C)
-- [ ] Skills actualizados: sin referencias a RemoteTrigger
-- [ ] El issue correcto fue elegido por project-manager-automata
-- [ ] next-prompt.md fue escrito y levantado por el trigger
-- [ ] El issue está cerrado en GitHub
-- [ ] El commit tiene formato correcto
-- [ ] Los tests siguen en verde
-- [ ] loop-status.md refleja lo que pasó
-- [ ] La sesión 2 paró sola al detectar `loop_count=1/1`
-- [ ] next-prompt.md no existe al final
+- [x] Trigger externo elegido y configurado (Opción A — loop-runner.sh)
+- [x] Skills actualizados: sin referencias a RemoteTrigger
+- [x] El issue correcto fue elegido por project-manager-automata (#81 F4-016)
+- [x] next-prompt.md fue escrito y levantado por el trigger
+- [x] El issue está cerrado en GitHub
+- [x] El commit tiene formato correcto (sin atribución de IA)
+- [x] Los tests siguen en verde (5/5)
+- [x] loop-status.md refleja lo que pasó
+- [x] La sesión 2 paró sola al detectar `loop_count=1/1`
+- [x] next-prompt.md no existe al final
+
+> ✅ Validado empíricamente el 2026-03-29. Dos sesiones encadenadas sin intervención humana.
 
 **Si esto funciona, el núcleo del sistema está validado.**
 
