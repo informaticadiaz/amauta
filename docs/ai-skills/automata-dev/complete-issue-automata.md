@@ -23,6 +23,12 @@ Ejecutá el issue #[número] de forma autónoma siguiendo el workflow completo d
 | `número`     | Número del issue GitHub | `42`    |
 | `loop_count` | Contador del loop       | `[1/3]` |
 
+Semántica de `loop_count`:
+
+- `X` = cantidad de issues ya completados exitosamente antes de iniciar esta sesión
+- `N` = cantidad máxima de issues a completar
+- `complete-issue-automata` recibe `[X/N]`, ejecuta un issue y, si termina bien, dispara la siguiente sesión con `[X+1/N]`
+
 ---
 
 ## Proceso Autónomo (Ejecutar en Orden Estricto)
@@ -34,12 +40,15 @@ Antes de cualquier otra acción, verificar el estado actual del desarrollo consu
 #### Fuente 1 — GitHub (estado real de cada issue)
 
 ```bash
+# Determinar primero la label de la fase actual leyendo roadmap.md y CLAUDE.md.
+# Ejemplo actual del proyecto: phase-4
+
 # Issues abiertos de la fase actual, ordenados por número
-gh issue list --label "phase-1" --state open --limit 20 --json number,title,labels \
+gh issue list --label "[phase-label]" --state open --limit 20 --json number,title,labels \
   | jq -r '.[] | "#\(.number) \(.title) [\(.labels | map(.name) | join(", "))]"'
 
 # Issues cerrados recientes (para detectar completados no registrados)
-gh issue list --label "phase-1" --state closed --limit 10 --json number,title \
+gh issue list --label "[phase-label]" --state closed --limit 10 --json number,title \
   | jq -r '.[] | "#\(.number) \(.title)"'
 ```
 
@@ -646,7 +655,7 @@ Escribir en `docs/ai-skills/automata-dev/loop-status.md`:
 - ✅ TypeScript compila
 - ✅ Issue cerrado en GitHub
 - ✅ Commit hecho
-- ✅ `loop_count` actual < `N_max`
+- ✅ `X + 1 <= N_max`
 
 Si todas las condiciones son verdaderas, escribir `docs/ai-skills/automata-dev/next-prompt.md`:
 
@@ -663,7 +672,7 @@ Luego commitear `loop-status.md` y `next-prompt.md` para que el runner los detec
 - Tests fallaron → STOP
 - TypeScript no compila → STOP
 - Issue no pudo cerrarse → STOP
-- `loop_count` >= `N_max` → STOP con resumen del loop completo
+- `X + 1 > N_max` → STOP con resumen del loop completo
 
 En cualquier STOP: registrar razón en `docs/ai-skills/automata-dev/loop-status.md`.
 

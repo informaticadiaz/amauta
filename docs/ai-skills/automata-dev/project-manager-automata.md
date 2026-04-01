@@ -50,6 +50,13 @@ Commit: [hash]
 
 El parámetro `[loop_count=X/N]` es obligatorio. Sin él, asumir `[loop_count=0/3]`.
 
+Semántica de `loop_count`:
+
+- `X` = cantidad de issues completados exitosamente en el loop
+- `N` = cantidad máxima de issues a completar
+- `project-manager-automata` no incrementa `X`; selecciona el próximo issue con el contador actual
+- `complete-issue-automata` incrementa `X` solo después de cerrar el issue con éxito
+
 ---
 
 ## Workflow
@@ -59,13 +66,16 @@ El parámetro `[loop_count=X/N]` es obligatorio. Sin él, asumir `[loop_count=0/
 Ejecutar los comandos y leer los archivos:
 
 ```bash
+# Determinar primero la label de la fase actual leyendo roadmap.md y CLAUDE.md.
+# Ejemplo actual del proyecto: phase-4
+
 # Issues abiertos en la fase actual
-gh issue list --label "phase-4" --state open --limit 20 \
+gh issue list --label "[phase-label]" --state open --limit 20 \
   --json number,title,labels \
   | jq -r '.[] | "#\(.number) \(.title) [\(.labels | map(.name) | join(", "))]"'
 
 # Issues cerrados recientes (detectar progreso real)
-gh issue list --label "phase-4" --state closed --limit 5 \
+gh issue list --label "[phase-label]" --state closed --limit 5 \
   --json number,title \
   | jq -r '.[] | "#\(.number) \(.title)"'
 ```
@@ -120,7 +130,7 @@ SÍ → STOP: "Contexto de sesión elevado. Reiniciar el loop manualmente."
 
 #### Situación A — Hay issues abiertas
 
-1. Tomar los issues OPEN con label `phase-4`
+1. Tomar los issues OPEN con label `[phase-label]`
 2. Ordenarlos según el orden en `roadmap.md`
 3. Aplicar criterios de selección:
    - Priorizar issues con label `must-have`
@@ -149,13 +159,13 @@ gh issue create \
 - [ ] [tarea 2]
 
 ## Labels sugeridos
-phase-4, [tipo]
+[phase-label], [tipo]
 
 ## Dependencias
 [issues de las que depende, si aplica]
 EOF
 )" \
-  --label "phase-4"
+  --label "[phase-label]"
 ```
 
 4. Tomar el primero de los issues creados como candidato
@@ -173,23 +183,23 @@ Escribir en `docs/ai-skills/automata-dev/loop-status.md` antes de disparar:
 - Situación: [A: issues existentes / B: issues creadas]
 - Issues creadas: #[N], #[N+1] (solo si Situación B)
 - Acción: seleccionó issue #[N] — [título del issue]
-- Próxima sesión: complete-issue-automata #[N] [loop_count=[X+1]/[N_max]]
+- Próxima sesión: complete-issue-automata #[N] [loop_count=[X]/[N_max]]
 ```
 
 ---
 
 ### PASO 6 — Escribir next-prompt.md
 
-Incrementar X en 1 y escribir en `docs/ai-skills/automata-dev/next-prompt.md`:
+Escribir en `docs/ai-skills/automata-dev/next-prompt.md` sin incrementar `X`:
 
 ```
 Ejecutá el issue #[N] de forma autónoma siguiendo el workflow completo de complete-issue-automata.
 
 CONTEXTO DEL LOOP:
-- Fase: Fase 4
+- Fase: [fase actual]
 - Issue: #[N] — [título completo del issue]
 - Labels: [labels del issue]
-- Loop count: [X+1]/[N_max]
+- Loop count: [X]/[N_max]
 - Issue anterior completado: #[N-1] — [título] (si aplica)
 - Orden verificado en roadmap.md: este es el próximo issue válido
 

@@ -12,38 +12,49 @@
 set -euo pipefail
 
 NEXT_PROMPT="docs/ai-skills/automata-dev/next-prompt.md"
+CLAIMED_PROMPT="${NEXT_PROMPT}.running"
 AI_CMD="${AI_CMD:-claude}"
 SESSION=0
+POLL_INTERVAL_SECONDS="${POLL_INTERVAL_SECONDS:-2}"
 
 echo "=== Loop runner iniciado ==="
 echo "CLI: $AI_CMD"
 echo "Esperando: $NEXT_PROMPT"
 echo ""
 
-while [[ -f "$NEXT_PROMPT" ]]; do
+while true; do
+  if [[ ! -f "$NEXT_PROMPT" ]]; then
+    sleep "$POLL_INTERVAL_SECONDS"
+    continue
+  fi
+
+  if ! mv "$NEXT_PROMPT" "$CLAIMED_PROMPT" 2>/dev/null; then
+    sleep 1
+    continue
+  fi
+
   SESSION=$((SESSION + 1))
   echo "--- Sesión $SESSION — $(date '+%Y-%m-%d %H:%M:%S') ---"
 
-  PROMPT=$(cat "$NEXT_PROMPT")
-  rm "$NEXT_PROMPT"
+  PROMPT=$(cat "$CLAIMED_PROMPT")
 
   echo "Prompt recibido. Iniciando sesión con $AI_CMD..."
   echo ""
 
-  if ! echo "$PROMPT" | "$AI_CMD" --print --dangerously-skip-permissions; then
+  if ! printf '%s\n' "$PROMPT" | "$AI_CMD" --print --dangerously-skip-permissions; then
+    mv "$CLAIMED_PROMPT" "$NEXT_PROMPT"
     echo ""
     echo "ERROR: $AI_CMD terminó con error en la sesión $SESSION."
+    echo "El prompt fue restaurado en $NEXT_PROMPT para reintentar."
     echo "Revisar docs/ai-skills/automata-dev/loop-status.md para detalles."
     exit 1
   fi
 
+  rm -f "$CLAIMED_PROMPT"
+
   echo ""
   echo "Sesión $SESSION completada."
 
-  # Pausa breve para evitar condiciones de carrera con el commit
-  sleep 2
+  # Pausa breve para evitar releer un prompt recién escrito en medio de otro proceso.
+  sleep "$POLL_INTERVAL_SECONDS"
 done
-
-echo ""
-echo "=== Loop terminado. No hay next-prompt.md. ==="
-echo "Ver docs/ai-skills/automata-dev/loop-status.md para el estado final."
