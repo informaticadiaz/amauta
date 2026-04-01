@@ -18,7 +18,7 @@
 /project-manager-automata [loop_count=0/3]
 ```
 
-Listo. El loop elige el próximo issue, lo implementa y para solo después de 3 issues.
+Listo. El loop elige el próximo issue válido o crea el siguiente desde el roadmap si hace falta, lo implementa y para solo después de 3 issues.
 
 ---
 

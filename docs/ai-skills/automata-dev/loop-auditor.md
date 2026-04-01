@@ -29,7 +29,7 @@ No ejecuta trabajo de desarrollo. Solo verifica y decide si el loop puede contin
 
 ## Cuándo se activa
 
-Disparado por `complete-issue` cuando `(loop_count - 1) % 3 == 0`.
+Disparado por `complete-issue-automata` cuando `loop_count % 3 == 0`.
 
 Ejemplos con `N_max=9`:
 
@@ -53,7 +53,10 @@ Leer del prompt de entrada cuáles son los issues del bloque.
 Verificar con GitHub:
 
 ```bash
-gh issue list --state closed --label "phase-4" --limit 3 \
+# Determinar primero la label de la fase actual leyendo roadmap.md y CLAUDE.md.
+# Ejemplo actual del proyecto: phase-4
+
+gh issue list --state closed --label "[phase-label]" --limit 3 \
   --json number,title \
   | jq -r '.[] | "#\(.number) \(.title)"'
 ```
@@ -97,10 +100,10 @@ Para cada issue del bloque, verificar según sus labels:
 
 ```bash
 # Issues cerrados en GitHub
-gh issue list --state closed --label "phase-4" --json number | jq length
+gh issue list --state closed --label "[phase-label]" --json number | jq length
 ```
 
-Comparar con la cantidad de issues marcados como `✅` en la sección "Completado en Fase 4" de `CLAUDE.md`.
+Comparar con la cantidad de issues marcados como `✅` en la sección "Completado en la fase actual" de `CLAUDE.md`.
 
 **Criterio de falla**: diferencia mayor a 2.
 

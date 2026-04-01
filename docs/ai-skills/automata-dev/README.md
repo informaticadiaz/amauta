@@ -19,7 +19,7 @@ El loop funciona así:
         ▼
 project-manager-automata
   → lee estado: GitHub + roadmap.md + CLAUDE.md
-  → elige el próximo issue válido
+  → elige el próximo issue válido o crea issues definidas en el roadmap si faltan
   → escribe next-prompt.md con contexto de complete-issue-automata
         │
         ▼ (runner detecta next-prompt.md y arranca nueva sesión)
@@ -34,7 +34,7 @@ project-manager-automata  (nueva iteración)
         │
         ▼
 [Loop se detiene solo]
-  → sin issues disponibles
+  → no hay más trabajo definido en roadmap/GitHub para continuar
   → límite de sesiones alcanzado
   → tests fallaron
   → contexto de sesión elevado
@@ -69,7 +69,9 @@ Ver `IMPLEMENTACION.md` → Etapa 2 para las opciones de runner disponibles.
 | `next-prompt.md` | Prompt de la próxima sesión (handoff entre sesiones) |
 
 `next-prompt.md` existe solo mientras hay una sesión pendiente de ejecutar.
-Si no existe, el loop terminó o está esperando inicio manual.
+Si no existe, no hay una sesión lista para consumir en este instante. Según el runner
+activo, eso puede significar que el loop terminó, que quedó en STOP o que el runner
+está simplemente esperando el próximo handoff.
 
 ---
 
@@ -86,7 +88,7 @@ Si no existe, el loop terminó o está esperando inicio manual.
 
 Todos los skills de esta carpeta deben respetar:
 
-1. **Solo issues existentes** — nunca crear issues en GitHub
+1. **Solo trabajo definido en el roadmap** — nunca inventar trabajo fuera del roadmap
 2. **Solo lectura de docs de planificación** — nunca modificar roadmap.md, backlog.md ni sprints.md
 3. **Sin preguntas al usuario** — el loop opera sin intervención humana
 4. **STOP documentado** — cuando no pueden continuar, escriben en `loop-status.md` y terminan limpiamente

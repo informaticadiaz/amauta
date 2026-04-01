@@ -475,7 +475,7 @@ la lógica de auditoría. Agregar esta instrucción al prompt que dispara projec
 
 ```
 AL TERMINAR, antes de disparar la siguiente sesión:
-- Calcular: ¿(loop_count_actual - 1) % 3 == 0?
+- Calcular: ¿loop_count_actual % 3 == 0?
   SÍ → disparar loop-auditor con: "[loop_count=X/N] [issues=#N-2,#N-1,#N]"
   NO → disparar project-manager-automata directamente
 ```
