@@ -83,6 +83,8 @@ Contrato operativo:
 3. El orden correcto es: actualizar `loop-status.md` → commitear → escribir `next-prompt.md`.
 4. El runner puede consumir `next-prompt.md` apenas aparece, por lo que nunca se debe asumir
    que seguirá existiendo durante o después de un commit.
+5. En modo runner, la continuación manual de la siguiente sesión es solo un fallback. El mensaje normal
+   debe indicar que el runner debería continuar automáticamente.
 
 ---
 

@@ -220,6 +220,12 @@ MODO: completamente autónomo. No esperar confirmación del usuario en ningún p
 Si hay ambigüedad que podría resultar en trabajo incorrecto → STOP y registrar.
 ```
 
+Mensaje de salida esperado para esta sesión:
+
+- Si hay runner activo: indicar que `next-prompt.md` fue escrito y que el runner debería iniciar la siguiente sesión automáticamente.
+- Solo si NO hay runner activo: mencionar la continuidad manual como fallback.
+- No presentar la ejecución manual de `/complete-issue-automata` como paso principal cuando el loop está en modo runner.
+
 Orden obligatorio para evitar carreras con el runner:
 
 1. Actualizar `docs/ai-skills/automata-dev/loop-status.md`

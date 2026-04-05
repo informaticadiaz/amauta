@@ -49,6 +49,10 @@ gh issue list --state open --limit 10
 Si `next-prompt.md` existe, hay una sesión pendiente de la última ejecución.
 En ese caso el runner la retoma sola — no hace falta hacer nada.
 
+Si una sesión de IA muestra un mensaje del tipo "ejecutar manualmente la siguiente skill",
+tomarlo solo como fallback. En el flujo normal con runner activo, la siguiente sesión debería
+arrancar sola al detectar `next-prompt.md`.
+
 ---
 
 ## Cambiar el CLI de IA
