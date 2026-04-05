@@ -2,8 +2,8 @@
 
 ## Estado actual
 
-- Estado: COMPLETADO
-- Última ejecución: 2026-03-29
+- Estado: DETENIDO — Fase 4 completada
+- Última ejecución: 2026-04-05
 - Último issue completado: #81 — F4-016: UI Carga rápida de calificaciones por grupo y periodo
 
 ## Historial
@@ -41,3 +41,10 @@
   - docs/ai-context/frontend/pages.md
   - CLAUDE.md (Fase 4 marcada como completada)
 - STOP: loop_count=1/1 — límite alcanzado. Fase 4 completada.
+
+## Loop detenido — 2026-04-05
+
+- Razón: Fase 4 completada. Todos los issues de Fase 4 están cerrados en GitHub (Sprint 11-15 completados). CLAUDE.md confirma "Sprint 15 completado ✅ — Fase 4 completada". No hay issues OPEN en phase-4. El roadmap no define sprints adicionales para Fase 4 (scope: Sprint 11-15).
+- Último issue completado: #81 — F4-016: UI Carga rápida de calificaciones por grupo y periodo
+- Próximo pendiente: Iniciar Fase 5 (Comunidad y Colaboración) — requiere decisión humana sobre la transición de fase
+- Acción para reiniciar: Definir si avanzar a Fase 5. Luego ejecutar `/project-manager-automata [loop_count=0/N]` con label `phase-5`.
