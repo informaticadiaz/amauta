@@ -24,7 +24,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ### Fase Actual: Fase 5 - Comunidad y Colaboración 🚧 En Progreso
 
-**Progreso**: Preparación 2/3 issues completados
+**Progreso**: Preparación 3/3 issues completados ✅ — Sprint 16 puede comenzar
 
 #### Completado en Fase 5:
 
@@ -34,10 +34,17 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Grafo de dependencias: F5-004 → F5-005 → F5-006 / F5-007 → F5-008 (F5-006 y F5-007 en paralelo)
   - Orden verificado: correcto; F5-009 puede ir en paralelo con F5-006 y F5-007
   - Documentado en `docs/project-management/roadmap.md` → Sección "Matriz de Dependencias UI/Backend — Fase 5"
+- ✅ **F5-003**: Diseño funcional de flujos de foros, reportes y mensajes — planning
+  - Ciclo de vida de ForoPost (PUBLICADO → CERRADO → ELIMINADO, soft delete, transiciones por rol)
+  - Flujo de solución: solo PREGUNTA, una por post, toggle si cambia, notificación al autor
+  - Moderación directa por EDUCADOR (su curso) y ADMIN_ESCUELA (toda la institución)
+  - Sin modelo Reporte formal en Fase 5 — moderación directa es suficiente para comunidades pequeñas
+  - Mensajes directos: fuera del alcance de Fase 5 (Fase 6+)
+  - Documentado en `docs/project-management/fase-5-diseno-funcional-foros.md`
 
 #### Próximos pasos:
 
-- 📋 **F5-003**: Diseño funcional de flujos de foros, reportes y mensajes — planning
+- 📋 **F5-004**: Prisma base de comunidad — modelos `ForoPost`, `ForoRespuesta`, `ReaccionForo`, `Notificacion`
 
 **Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 5"
 

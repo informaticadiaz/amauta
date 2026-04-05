@@ -2083,9 +2083,9 @@ const permisos = {
 | ------ | -------------------------------------------------------- | ------------- | --------- |
 | F5-001 | Refinar historias y criterios de aceptación de comunidad | ✅ Completado | must-have |
 | F5-002 | Matriz de dependencias UI/Backend para foros y comunidad | ✅ Completado | must-have |
-| F5-003 | Diseño funcional de flujos de foros, reportes y mensajes | 📋 Pendiente  | must-have |
+| F5-003 | Diseño funcional de flujos de foros, reportes y mensajes | ✅ Completado | must-have |
 
-**Progreso preparación**: 2/3 issues completados
+**Progreso preparación**: 3/3 issues completados ✅
 
 ### Matriz de Dependencias UI/Backend — Fase 5
 
@@ -2290,6 +2290,161 @@ Crear espacios vibrantes de interacción, colaboración y aprendizaje social ent
 | Soft delete de respuesta que es solución activa            | Se desmarca como solución antes de eliminar; el post vuelve a estado "no resuelto"   |
 | Notificación a usuario con cuenta desactivada              | No se envía; se omite silenciosamente                                                |
 | ANUNCIO creado por estudiante                              | 403 Forbidden — solo EDUCADOR y ADMIN_ESCUELA pueden crear ANUNCIO                   |
+
+---
+
+### Flujos Funcionales — Fase 5
+
+> Artefacto generado en F5-003. Fuente de verdad para la lógica de estados, transiciones y permisos durante la implementación.
+
+---
+
+#### Flujo 1 — Ciclo de vida de un ForoPost
+
+```
+Estado inicial: cerrado=false, eliminado=false
+                          │
+                          ▼
+                     [ACTIVO]
+               ┌──────────┴──────────┐
+               │                     │
+   [autor OR educador               [educador OR
+    del curso cierra]               ADMIN_ESCUELA
+               │                    elimina]
+               ▼                     │
+           [CERRADO]                 ▼
+          cerrado=true          [ELIMINADO]
+               │                eliminado=true
+               │              (soft delete — contenido
+   [educador puede             reemplazado por
+    reabrir — solo             "[contenido eliminado]")
+    EDUCADOR/ADMIN_ESCUELA]
+               │
+               ▼
+           [ACTIVO]
+          cerrado=false
+```
+
+**Reglas de la transición:**
+
+| Transición                 | Quién puede ejecutarla                                               |
+| -------------------------- | -------------------------------------------------------------------- |
+| Activo → Cerrado           | Autor del post OR EDUCADOR del curso OR ADMIN_ESCUELA                |
+| Cerrado → Activo (reabrir) | Solo EDUCADOR del curso OR ADMIN_ESCUELA                             |
+| Activo/Cerrado → Eliminado | Autor del post (solo su post) OR EDUCADOR del curso OR ADMIN_ESCUELA |
+
+**Estado derivado "Resuelto"** (solo para tipo PREGUNTA):
+
+- Un post de tipo PREGUNTA se considera "resuelto" cuando al menos una `ForoRespuesta` tiene `esSolucion=true`.
+- No hay campo `resuelto` en el modelo — es derivado en tiempo de consulta.
+- Badge "Resuelto" visible en el listado y en el detalle del post.
+
+---
+
+#### Flujo 2 — Respuesta marcada como solución
+
+```
+ForoRespuesta (esSolucion=false)
+          │
+          │ [EDUCADOR del curso OR autor del ForoPost]
+          │ POST /foros/respuestas/:id/solucion
+          ▼
+ForoRespuesta (esSolucion=true)
+          │
+          │ ──► ForoPost muestra badge "Resuelto"
+          │ ──► Notificación a autor de la respuesta (tipo: SOLUCION_MARCADA)
+          │
+          │ [Se marca otra respuesta como solución]
+          ▼
+Respuesta anterior: esSolucion=false
+Nueva respuesta: esSolucion=true   ← toggle automático
+          │
+          │ [Respuesta solución es soft-deleted]
+          ▼
+ForoRespuesta: eliminado=true, esSolucion=false
+ForoPost: vuelve a estado "no resuelto" (ninguna respuesta con esSolucion=true)
+```
+
+**Reglas:**
+
+- Solo puede existir una `ForoRespuesta` con `esSolucion=true` por `ForoPost`.
+- El toggle se realiza en una sola transacción: desmarcar la anterior + marcar la nueva.
+- El endpoint es idempotente: marcar la misma respuesta que ya es solución no genera error ni duplicado.
+- El educador puede marcar solución en posts que él mismo creó.
+
+---
+
+#### Flujo 3 — Reporte de contenido inapropiado
+
+```
+Usuario autenticado detecta contenido inapropiado
+          │
+          │ POST /moderacion/reportes
+          │ { tipoContenido: 'POST'|'RESPUESTA', contenidoId, motivo, descripcion? }
+          ▼
+Reporte (estado=PENDIENTE)
+          │
+          │ [EDUCADOR del curso OR ADMIN_ESCUELA lo abre]
+          ▼
+Reporte (estado=EN_REVISION)
+          │
+    ┌─────┴──────┐
+    │            │
+[Acción       [Reporte
+ tomada]       inválido]
+    │            │
+    ▼            ▼
+RESUELTO     RECHAZADO
+```
+
+**Motivosválidos (`MotivoReporte`):** `SPAM`, `ACOSO`, `CONTENIDO_INAPROPIADO`, `INFORMACION_INCORRECTA`, `OTRO`
+
+**Quién puede reportar:** cualquier usuario autenticado (inscripto o no).
+
+**Quién puede revisar/resolver:**
+
+- EDUCADOR: puede revisar reportes de posts/respuestas en sus propios cursos.
+- ADMIN_ESCUELA: puede revisar reportes de todos los cursos de su institución.
+- SUPER_ADMIN: acceso total.
+
+**Acción al resolver:** el moderador toma la acción manualmente fuera del flujo de reportes (soft delete del contenido si corresponde). El reporte pasa a RESUELTO como confirmación de que fue atendido.
+
+---
+
+#### Flujo 4 — Permisos por rol
+
+| Acción                           | ESTUDIANTE                     | EDUCADOR         | ADMIN_ESCUELA | SUPER_ADMIN  |
+| -------------------------------- | ------------------------------ | ---------------- | ------------- | ------------ |
+| Crear post PREGUNTA/DISCUSION    | ✅ (inscripto activo)          | ✅               | ✅            | ✅           |
+| Crear post ANUNCIO               | ❌                             | ✅ (su curso)    | ✅            | ✅           |
+| Responder a un post abierto      | ✅ (inscripto activo)          | ✅               | ✅            | ✅           |
+| Marcar respuesta como solución   | ✅ (solo en sus propios posts) | ✅ (en su curso) | ✅            | ✅           |
+| Marcar respuesta como "útil"     | ✅ (inscripto, máx. 1x)        | ✅ (máx. 1x)     | ✅ (máx. 1x)  | ✅ (máx. 1x) |
+| Cerrar thread                    | ✅ (solo su post)              | ✅ (en su curso) | ✅            | ✅           |
+| Reabrir thread cerrado           | ❌                             | ✅ (en su curso) | ✅            | ✅           |
+| Eliminar post/respuesta propios  | ✅                             | ✅               | ✅            | ✅           |
+| Eliminar post/respuesta de otros | ❌                             | ✅ (en su curso) | ✅            | ✅           |
+| Reportar contenido               | ✅                             | ✅               | ✅            | ✅           |
+| Revisar y resolver reportes      | ❌                             | ✅ (en su curso) | ✅            | ✅           |
+
+**Nota**: "inscripto activo" = `Inscripcion.estado = 'ACTIVO'` en el curso. Un usuario desinscripto (estado ABANDONADO o COMPLETADO) no puede crear posts ni respuestas nuevas, pero sus contribuciones existentes permanecen visibles.
+
+---
+
+#### Flujo 5 — Notificaciones disparadas por acciones de foro
+
+| Acción que dispara                     | Destinatario          | Tipo de notificación |
+| -------------------------------------- | --------------------- | -------------------- |
+| Alguien responde a un post             | Autor del post        | `NUEVA_RESPUESTA`    |
+| Una respuesta es marcada como solución | Autor de la respuesta | `SOLUCION_MARCADA`   |
+
+**Reglas de deduplicación:**
+
+- Se genera como máximo una notificación `NUEVA_RESPUESTA` por post por usuario notificado. Si el autor del post ya tiene una notificación no leída de ese post, no se genera otra.
+- Si la cuenta del destinatario está desactivada, la notificación no se envía (omitida silenciosamente).
+- Las notificaciones se persisten en DB (`Notificacion`) y son accesibles desde `/notificaciones`.
+
+---
 
 ### Alcance por Sprint (Fase 5)
 
