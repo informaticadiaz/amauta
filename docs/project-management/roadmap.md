@@ -1,6 +1,6 @@
 # Roadmap - Amauta
 
-**Última actualización**: 2026-03-29
+**Última actualización**: 2026-04-05
 
 ## Visión General
 
@@ -1338,15 +1338,15 @@ export function PreguntaConTimer({ pregunta, onTimeout }: Props) {
 
 **Progreso Sprint 14**: 3/3 issues completados ✅
 
-### Sprint 15 🚧 En progreso
+### Sprint 15 ✅ Completado
 
-| Issue | Título                                                            | Estado         |
-| ----- | ----------------------------------------------------------------- | -------------- |
-| #79   | F4-014: Prisma Calificaciones por periodo académico e institución | ✅ Completado  |
-| #80   | F4-015: API Carga y listado de calificaciones por periodo         | ✅ Completado  |
-| #81   | F4-016: UI Carga rápida de calificaciones por grupo y periodo     | 🚧 En progreso |
+| Issue | Título                                                            | Estado        |
+| ----- | ----------------------------------------------------------------- | ------------- |
+| #79   | F4-014: Prisma Calificaciones por periodo académico e institución | ✅ Completado |
+| #80   | F4-015: API Carga y listado de calificaciones por periodo         | ✅ Completado |
+| #81   | F4-016: UI Carga rápida de calificaciones por grupo y periodo     | ✅ Completado |
 
-**Progreso Sprint 15**: 2/3 issues completados
+**Progreso Sprint 15**: 3/3 issues completados ✅
 
 ### Objetivos
 
@@ -2077,6 +2077,36 @@ const permisos = {
 **Duración estimada**: 5-6 semanas
 **Sprint 15-17**
 
+### Preparación de Fase 5 (issues propuestas)
+
+| Issue  | Título                                                   | Estado       | Prioridad |
+| ------ | -------------------------------------------------------- | ------------ | --------- |
+| F5-001 | Refinar historias y criterios de aceptación de comunidad | 📋 Pendiente | must-have |
+| F5-002 | Matriz de dependencias UI/Backend para foros y comunidad | 📋 Pendiente | must-have |
+| F5-003 | Diseño funcional de flujos de foros, reportes y mensajes | 📋 Pendiente | must-have |
+
+**Progreso preparación**: 0/3 issues completados
+
+### Sprint 16 — Foros base
+
+| Issue  | Título                                                     | Estado       | Prioridad |
+| ------ | ---------------------------------------------------------- | ------------ | --------- |
+| F5-004 | Prisma base de comunidad: foros, respuestas y reacciones   | 📋 Pendiente | must-have |
+| F5-005 | API de foros por curso: crear/listar posts y respuestas    | 📋 Pendiente | must-have |
+| F5-006 | UI básica de foro por curso: listado, detalle y nueva pub. | 📋 Pendiente | must-have |
+
+**Progreso Sprint 16**: 0/3 issues completados
+
+### Sprint 17 — Interacción y notificaciones básicas
+
+| Issue  | Título                                                        | Estado       | Prioridad   |
+| ------ | ------------------------------------------------------------- | ------------ | ----------- |
+| F5-007 | API de interacción en foros: marcar solución, útil y filtros  | 📋 Pendiente | must-have   |
+| F5-008 | UI de interacción en foros: solución, útil y filtros visibles | 📋 Pendiente | must-have   |
+| F5-009 | API de notificaciones básicas para actividad en foros         | 📋 Pendiente | should-have |
+
+**Progreso Sprint 17**: 0/3 issues completados
+
 ### Objetivos
 
 Crear espacios vibrantes de interacción, colaboración y aprendizaje social entre estudiantes y educadores, fomentando la construcción de conocimiento colectivo.
@@ -2687,6 +2717,26 @@ export class ModeracionController {
 - Marcado de soluciones
 - Notificaciones básicas
 - Chat directo 1:1
+
+### Secuencia sugerida para el automata
+
+Orden de creación y ejecución recomendado para el primer lote:
+
+1. `F5-001` → alinear alcance y criterios del bloque
+2. `F5-002` → fijar dependencias entre Prisma, API y UI
+3. `F5-003` → cerrar flujos por rol antes de código
+4. `F5-004` → crear la base de datos/versionado del dominio comunidad
+5. `F5-005` → exponer endpoints mínimos de foro por curso
+6. `F5-006` → habilitar experiencia básica de foro en web
+
+Dependencias del primer lote:
+
+- `F5-004` depende de `F5-001`, `F5-002` y `F5-003`
+- `F5-005` depende de `F5-004`
+- `F5-006` depende de `F5-005`
+- `F5-007` depende de `F5-005`
+- `F5-008` depende de `F5-006` y `F5-007`
+- `F5-009` depende de `F5-005`
 
 **Prioridad 2 (Importante)**:
 
