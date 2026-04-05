@@ -2,12 +2,34 @@
 
 ## Estado actual
 
-- Estado: EN PROGRESO — Fase 5 iniciada
+- Estado: EN CURSO — sesión [0/3]. Seleccionado #84 (F5-002) para complete-issue-automata.
 - Última ejecución: 2026-04-05
 - Issues creados: #83, #84, #85 (F5-001, F5-002, F5-003)
-- Próximo: complete-issue-automata #83 [loop_count=0/1]
+- Próximo: complete-issue-automata #84 [loop_count=0/3]
 
 ## Historial
+
+## 2026-04-05 — Sesión [0/3] — project-manager-automata
+
+- Tipo: project-manager-automata
+- Situación: A (issues existentes: #84 F5-002, #85 F5-003)
+- Acción: seleccionó issue #84 — F5-002: Matriz de dependencias UI/Backend para foros y comunidad
+- Orden verificado en roadmap.md: F5-001 ✅ cerrado, F5-002 es el próximo sin dependencias bloqueantes
+- Próxima sesión: complete-issue-automata #84 [loop_count=0/3]
+
+## 2026-04-05 — Sesión [1/1] — complete-issue-automata
+
+- Tipo: complete-issue-automata
+- Issue: #83 — F5-001: Refinar historias y criterios de aceptación de comunidad
+- Modo: planning/documentación (sin código, sin tests)
+- Artefactos entregados:
+  - `docs/project-management/roadmap.md` — sección Fase 5 actualizada con criterios de aceptación (6 bloques), tabla de edge cases (9 casos) y alcance Sprint 16/17
+  - `docs/human-context/issue-83-refinar-historias-comunidad.md` — creado
+- Issue GitHub: CERRADO ✅
+- Commit: PENDIENTE — archivos en stage (`git add` completado, `git commit` requiere aprobación manual)
+  - Archivos: `docs/project-management/roadmap.md`, `docs/human-context/issue-83-refinar-historias-comunidad.md`
+- Resultado: ÉXITO con pendiente menor (commit manual requerido)
+- STOP: loop_count=1/1 — límite alcanzado
 
 ## 2026-04-05 — Sesión [0/1] — project-manager-automata
 
