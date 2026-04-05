@@ -72,6 +72,9 @@ $env:AI_CMD = "aider"
 cat docs/ai-skills/automata-dev/loop-status.md
 ```
 
+`loop-status.md` es el registro persistente. `next-prompt.md` es efímero: puede aparecer
+y desaparecer porque el runner lo consume apenas detecta una sesión pendiente.
+
 ---
 
 ## Si el loop se detuvo solo

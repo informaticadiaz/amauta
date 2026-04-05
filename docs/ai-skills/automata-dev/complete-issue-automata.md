@@ -646,7 +646,7 @@ Escribir en `docs/ai-skills/automata-dev/loop-status.md`:
 - Issue completado: #[N] — [título]
 - Commit: [hash]
 - Tests: [cantidad] pasando
-- Próxima sesión: project-manager-automata [loop_count=[X+1]/[N_max]]
+- Próxima sesión: [project-manager-automata o loop-auditor] [loop_count=[X+1]/[N_max]]
 ```
 
 **Condiciones para escribir next-prompt.md** (TODAS deben ser verdaderas):
@@ -657,22 +657,53 @@ Escribir en `docs/ai-skills/automata-dev/loop-status.md`:
 - ✅ Commit hecho
 - ✅ `X + 1 <= N_max`
 
-Si todas las condiciones son verdaderas, escribir `docs/ai-skills/automata-dev/next-prompt.md`:
+Si todas las condiciones son verdaderas, primero calcular:
+
+- `completed_count = X + 1`
+
+Regla simple:
+
+- Si `completed_count` es `3`, `6`, `9`, etc. → la próxima sesión es `loop-auditor`
+- Si no → la próxima sesión es `project-manager-automata`
+
+Ejemplos:
+
+- completaste el issue 1 del loop → sigue `project-manager-automata`
+- completaste el issue 2 del loop → sigue `project-manager-automata`
+- completaste el issue 3 del loop → sigue `loop-auditor`
+
+Si la próxima sesión es `project-manager-automata`, escribir `docs/ai-skills/automata-dev/next-prompt.md`:
 
 ```
-/project-manager-automata [loop_count=[X+1]/[N_max]]
+/project-manager-automata [loop_count=[completed_count]/[N_max]]
 
 Contexto: completó issue #[N] — [título]. Commit: [hash].
 ```
 
-Luego commitear `loop-status.md` y `next-prompt.md` para que el runner los detecte.
+Si la próxima sesión es `loop-auditor`, escribir `docs/ai-skills/automata-dev/next-prompt.md`:
+
+```
+/loop-auditor [loop_count=[completed_count]/[N_max]] [issues=#N-2,#N-1,#N]
+
+Contexto: se completó un bloque de 3 issues.
+Issue recién completado: #[N] — [título]. Commit: [hash].
+```
+
+Orden obligatorio para evitar carreras con el runner:
+
+1. Actualizar `docs/ai-skills/automata-dev/loop-status.md`
+2. Hacer commit de `loop-status.md`
+3. Escribir `docs/ai-skills/automata-dev/next-prompt.md`
+
+`next-prompt.md` es un archivo efímero de coordinación. No commitearlo. El runner lo
+puede consumir apenas aparece.
 
 **NO escribir next-prompt.md si:**
 
 - Tests fallaron → STOP
 - TypeScript no compila → STOP
 - Issue no pudo cerrarse → STOP
-- `X + 1 > N_max` → STOP con resumen del loop completo
+- `completed_count > N_max` → STOP con resumen del loop completo
 
 En cualquier STOP: registrar razón en `docs/ai-skills/automata-dev/loop-status.md`.
 
@@ -699,7 +730,7 @@ En cualquier STOP: registrar razón en `docs/ai-skills/automata-dev/loop-status.
 - [ ] CLAUDE.md refleja el nuevo progreso (si aplica)
 - [ ] Issue cerrado con comentario descriptivo
 - [ ] `docs/ai-skills/automata-dev/loop-status.md` actualizado
-- [ ] `docs/ai-skills/automata-dev/next-prompt.md` escrito y commiteado (si condiciones cumplen) o STOP documentado
+- [ ] `docs/ai-skills/automata-dev/next-prompt.md` escrito al final y sin commit (si condiciones cumplen) o STOP documentado
 
 ---
 

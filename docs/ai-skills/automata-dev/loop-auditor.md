@@ -166,7 +166,14 @@ Issues auditados: #[N-2], #[N-1], #[N] — todos en verde.
 Reporte: docs/ai-skills/automata-dev/audit-report-[fecha].md
 ```
 
-Commitear `loop-status.md`, `next-prompt.md` y el reporte de auditoría.
+Orden obligatorio para evitar carreras con el runner:
+
+1. Generar el reporte de auditoría
+2. Actualizar `docs/ai-skills/automata-dev/loop-status.md`
+3. Hacer commit del reporte y de `loop-status.md`
+4. Escribir `docs/ai-skills/automata-dev/next-prompt.md`
+
+`next-prompt.md` es un archivo efímero de coordinación. No commitearlo.
 
 **Si ALGUNA verificación falló (BLOQUEADO):**
 

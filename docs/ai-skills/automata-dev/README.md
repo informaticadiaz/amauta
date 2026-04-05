@@ -26,10 +26,13 @@ project-manager-automata
 complete-issue-automata #N
   → ejecuta TDD + implementación + docs
   → cierra el issue
-  → escribe next-prompt.md con contexto de project-manager-automata
+  → decide la siguiente sesión:
+      - si el contador terminado es 3, 6, 9, ... → loop-auditor
+      - si no → project-manager-automata
+  → escribe next-prompt.md con ese handoff
         │
         ▼ (runner detecta next-prompt.md y arranca nueva sesión)
-project-manager-automata  (nueva iteración)
+project-manager-automata o loop-auditor
   → repite hasta condición de parada
         │
         ▼
@@ -63,15 +66,23 @@ Ver `IMPLEMENTACION.md` → Etapa 2 para las opciones de runner disponibles.
 
 ## Archivos de estado
 
-| Archivo          | Propósito                                            |
-| ---------------- | ---------------------------------------------------- |
-| `loop-status.md` | Log de sesiones — fuente de verdad del loop          |
-| `next-prompt.md` | Prompt de la próxima sesión (handoff entre sesiones) |
+| Archivo          | Propósito                                     |
+| ---------------- | --------------------------------------------- |
+| `loop-status.md` | Log de sesiones — fuente de verdad del loop   |
+| `next-prompt.md` | Prompt efímero de la próxima sesión (handoff) |
 
 `next-prompt.md` existe solo mientras hay una sesión pendiente de ejecutar.
 Si no existe, no hay una sesión lista para consumir en este instante. Según el runner
 activo, eso puede significar que el loop terminó, que quedó en STOP o que el runner
 está simplemente esperando el próximo handoff.
+
+Contrato operativo:
+
+1. `loop-status.md` es persistente y sí forma parte del historial Git.
+2. `next-prompt.md` es efímero y no debe commitearse.
+3. El orden correcto es: actualizar `loop-status.md` → commitear → escribir `next-prompt.md`.
+4. El runner puede consumir `next-prompt.md` apenas aparece, por lo que nunca se debe asumir
+   que seguirá existiendo durante o después de un commit.
 
 ---
 

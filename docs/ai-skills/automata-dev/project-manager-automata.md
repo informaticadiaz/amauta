@@ -220,7 +220,13 @@ MODO: completamente autónomo. No esperar confirmación del usuario en ningún p
 Si hay ambigüedad que podría resultar en trabajo incorrecto → STOP y registrar.
 ```
 
-Luego hacer commit de `loop-status.md` y `next-prompt.md`.
+Orden obligatorio para evitar carreras con el runner:
+
+1. Actualizar `docs/ai-skills/automata-dev/loop-status.md`
+2. Hacer commit de `loop-status.md`
+3. Escribir `docs/ai-skills/automata-dev/next-prompt.md`
+
+`next-prompt.md` es un archivo efímero de coordinación. No commitearlo.
 
 ---
 
