@@ -1,6 +1,6 @@
 # Roadmap - Amauta
 
-**Última actualización**: 2026-04-05 (F5-001 completado)
+**Última actualización**: 2026-04-05 (F5-002 completado)
 
 ## Visión General
 
@@ -2082,10 +2082,108 @@ const permisos = {
 | Issue  | Título                                                   | Estado        | Prioridad |
 | ------ | -------------------------------------------------------- | ------------- | --------- |
 | F5-001 | Refinar historias y criterios de aceptación de comunidad | ✅ Completado | must-have |
-| F5-002 | Matriz de dependencias UI/Backend para foros y comunidad | 📋 Pendiente  | must-have |
+| F5-002 | Matriz de dependencias UI/Backend para foros y comunidad | ✅ Completado | must-have |
 | F5-003 | Diseño funcional de flujos de foros, reportes y mensajes | 📋 Pendiente  | must-have |
 
-**Progreso preparación**: 1/3 issues completados
+**Progreso preparación**: 2/3 issues completados
+
+### Matriz de Dependencias UI/Backend — Fase 5
+
+> Artefacto generado en F5-002. Fuente de verdad para el orden de implementación.
+
+#### Modelos Prisma necesarios
+
+| Modelo          | Descripción                                   | Issue  | Modelos existentes requeridos          |
+| --------------- | --------------------------------------------- | ------ | -------------------------------------- |
+| `ForoPost`      | Post/pregunta/anuncio en el foro de un curso  | F5-004 | `Curso`, `Usuario`                     |
+| `ForoRespuesta` | Respuesta a un post (threading de un nivel)   | F5-004 | `ForoPost`, `Usuario`                  |
+| `ReaccionForo`  | Registro idempotente de "útil" por usuario    | F5-004 | `ForoRespuesta`, `Usuario`             |
+| `Notificacion`  | Notificación persistida en DB para un usuario | F5-004 | `Usuario`, `ForoPost`, `ForoRespuesta` |
+
+**Campos clave de ForoPost:**
+`id`, `cursoId`, `autorId`, `tipo` (TipoPost: PREGUNTA/DISCUSION/ANUNCIO), `titulo`, `contenido`, `etiquetas String[]`, `esDestacado`, `cerrado`, `vistas`, `eliminado` (soft delete), `createdAt`, `updatedAt`
+
+**Campos clave de ForoRespuesta:**
+`id`, `postId`, `autorId`, `parentId?` (threading — respuesta a respuesta, un nivel), `contenido`, `esSolucion`, `eliminado` (soft delete), `createdAt`, `updatedAt`
+
+**Campos clave de ReaccionForo:**
+`id`, `respuestaId`, `usuarioId`, `createdAt` — Unique constraint: `[respuestaId, usuarioId]`
+
+**Campos clave de Notificacion:**
+`id`, `usuarioId`, `tipo` (TipoNotificacion: NUEVA_RESPUESTA/SOLUCION_MARCADA), `leida`, `postId?`, `respuestaId?`, `createdAt`
+
+**Enums nuevos requeridos:**
+`TipoPost` (PREGUNTA, DISCUSION, ANUNCIO) y `TipoNotificacion` (NUEVA_RESPUESTA, SOLUCION_MARCADA)
+
+---
+
+#### Dependencias de Endpoints API
+
+| Issue  | Endpoint                                   | Método | Modelos Prisma usados                               | Depende de |
+| ------ | ------------------------------------------ | ------ | --------------------------------------------------- | ---------- |
+| F5-005 | `/cursos/:id/foros`                        | GET    | `ForoPost`, `ForoRespuesta` (count)                 | F5-004     |
+| F5-005 | `/cursos/:id/foros`                        | POST   | `ForoPost`, `Inscripcion`                           | F5-004     |
+| F5-005 | `/cursos/:id/foros/:postId`                | GET    | `ForoPost`, `ForoRespuesta`, `ReaccionForo` (count) | F5-004     |
+| F5-005 | `/cursos/:id/foros/:postId/respuestas`     | POST   | `ForoRespuesta`, `Notificacion`                     | F5-004     |
+| F5-005 | `/cursos/:id/foros/:postId`                | DELETE | `ForoPost` (soft delete)                            | F5-004     |
+| F5-005 | `/cursos/:id/foros/:postId/respuestas/:id` | DELETE | `ForoRespuesta` (soft delete)                       | F5-004     |
+| F5-005 | `/cursos/:id/foros/:postId/cerrar`         | POST   | `ForoPost`                                          | F5-004     |
+| F5-007 | `/foros/respuestas/:id/solucion`           | POST   | `ForoRespuesta`, `ForoPost`, `Notificacion`         | F5-005     |
+| F5-007 | `/foros/respuestas/:id/util`               | POST   | `ReaccionForo`                                      | F5-005     |
+| F5-009 | `/notificaciones`                          | GET    | `Notificacion`                                      | F5-004     |
+| F5-009 | `/notificaciones/:id/leida`                | PATCH  | `Notificacion`                                      | F5-004     |
+
+**Permisos críticos (verificados en service, no en controller):**
+
+- Crear ANUNCIO → solo EDUCADOR del curso o ADMIN_ESCUELA de la institución
+- Crear post/respuesta → requiere inscripción activa en el curso (o ser EDUCADOR/ADMIN)
+- Eliminar/cerrar → solo autor del post, EDUCADOR del curso o ADMIN_ESCUELA
+- Marcar solución → solo EDUCADOR del curso o autor del post original
+- Marcar útil → usuario inscripto; idempotente por unique constraint de `ReaccionForo`
+
+---
+
+#### Dependencias de Componentes UI
+
+| Issue  | Componente / Página                                             | Endpoints requeridos                                  | Depende de     |
+| ------ | --------------------------------------------------------------- | ----------------------------------------------------- | -------------- |
+| F5-006 | `/cursos/[id]/foro` (página listado)                            | `GET /cursos/:id/foros`                               | F5-005         |
+| F5-006 | `/cursos/[id]/foro/[postId]` (página detalle)                   | `GET /cursos/:id/foros/:postId`                       | F5-005         |
+| F5-006 | `NuevoPostForm`                                                 | `POST /cursos/:id/foros`                              | F5-005         |
+| F5-006 | `RespuestaForm`                                                 | `POST /cursos/:id/foros/:postId/respuestas`           | F5-005         |
+| F5-006 | Botón eliminar / cerrar thread                                  | `DELETE /foros/:postId`, `POST /foros/:postId/cerrar` | F5-005         |
+| F5-008 | `MarcarSolucionBtn`                                             | `POST /foros/respuestas/:id/solucion`                 | F5-007         |
+| F5-008 | `MarcarUtilBtn`                                                 | `POST /foros/respuestas/:id/util`                     | F5-007         |
+| F5-008 | Filtros activos en listado (`tipo`, `etiqueta`, `sinResponder`) | `GET /cursos/:id/foros?tipo=&etiqueta=&sinResponder=` | F5-005, F5-007 |
+
+---
+
+#### Grafo de Dependencias
+
+```
+F5-004 (Prisma: ForoPost, ForoRespuesta, ReaccionForo, Notificacion)
+  └── F5-005 (API base: CRUD posts, respuestas, soft-delete, cerrar thread)
+        ├── F5-006 (UI base: listado, detalle, nueva publicación, respuesta)
+        ├── F5-007 (API interacción: toggle solución, idempotencia útil, filtros)
+        │     └── F5-008 (UI interacción: botones acción, indicadores, filtros visibles)
+        │           (también depende de F5-006 — reutiliza componentes de layout)
+        └── F5-009 (API notificaciones: NUEVA_RESPUESTA, SOLUCION_MARCADA)
+```
+
+#### Verificación del Orden de Implementación
+
+| Orden propuesto          | ¿Correcto? | Justificación                                                            |
+| ------------------------ | ---------- | ------------------------------------------------------------------------ |
+| F5-004 → F5-005          | ✅         | API no puede existir sin los modelos Prisma                              |
+| F5-005 → F5-006          | ✅         | UI necesita endpoints de lectura y escritura de posts/respuestas         |
+| F5-005 → F5-007          | ✅         | API de interacción opera sobre posts/respuestas ya existentes            |
+| F5-006 + F5-007 → F5-008 | ✅         | UI de interacción reutiliza layout de F5-006 y llama endpoints de F5-007 |
+| F5-005 → F5-009          | ✅         | Notificaciones se disparan como efecto en el service de foros            |
+
+**F5-006 y F5-007 pueden desarrollarse en paralelo** (ambos dependen solo de F5-005).
+**F5-009 puede ir en paralelo con F5-006 y F5-007** (depende solo de F5-005 para los eventos).
+
+---
 
 ### Sprint 16 — Foros base
 

@@ -22,7 +22,28 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 4 - Módulo Escolar ✅ COMPLETADA
+### Fase Actual: Fase 5 - Comunidad y Colaboración 🚧 En Progreso
+
+**Progreso**: Preparación 2/3 issues completados
+
+#### Completado en Fase 5:
+
+- ✅ **F5-001**: Refinar historias y criterios de aceptación de comunidad — planning
+- ✅ **F5-002**: Matriz de dependencias UI/Backend para foros y comunidad
+  - Modelos Prisma a crear: `ForoPost`, `ForoRespuesta`, `ReaccionForo`, `Notificacion`
+  - Grafo de dependencias: F5-004 → F5-005 → F5-006 / F5-007 → F5-008 (F5-006 y F5-007 en paralelo)
+  - Orden verificado: correcto; F5-009 puede ir en paralelo con F5-006 y F5-007
+  - Documentado en `docs/project-management/roadmap.md` → Sección "Matriz de Dependencias UI/Backend — Fase 5"
+
+#### Próximos pasos:
+
+- 📋 **F5-003**: Diseño funcional de flujos de foros, reportes y mensajes — planning
+
+**Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 5"
+
+---
+
+### Fase Anterior: Fase 4 - Módulo Escolar ✅ COMPLETADA
 
 **Progreso**: Sprint 15 completado ✅ (3/3 completados) — Fase 4 completa
 
@@ -298,8 +319,8 @@ El roadmap define:
 | 1    | MVP Cursos        | ✅ Completado  | `roadmap.md` → Fase 1 |
 | 2    | Offline-First PWA | ✅ Completado  | `roadmap.md` → Fase 2 |
 | 3    | Evaluaciones      | ✅ Completado  | `roadmap.md` → Fase 3 |
-| 4    | Módulo Escolar    | 🚧 En Progreso | `roadmap.md` → Fase 4 |
-| 5    | Comunidad         | 📋 Pendiente   | `roadmap.md` → Fase 5 |
+| 4    | Módulo Escolar    | ✅ Completado  | `roadmap.md` → Fase 4 |
+| 5    | Comunidad         | 🚧 En Progreso | `roadmap.md` → Fase 5 |
 | 6-10 | Avanzadas         | 📋 Futuro      | `roadmap.md`          |
 
 ---
@@ -606,7 +627,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 4 en progreso (Sprint 12, Sprint 13 y Sprint 14 completados; Sprint 15 en curso)
+- **Fase actual**: Fase 5 en progreso (Preparación: F5-001 y F5-002 completados; F5-003 pendiente)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**
