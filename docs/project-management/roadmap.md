@@ -1,6 +1,6 @@
 # Roadmap - Amauta
 
-**Última actualización**: 2026-04-05
+**Última actualización**: 2026-04-05 (F5-001 completado)
 
 ## Visión General
 
@@ -2079,13 +2079,13 @@ const permisos = {
 
 ### Preparación de Fase 5 (issues propuestas)
 
-| Issue  | Título                                                   | Estado       | Prioridad |
-| ------ | -------------------------------------------------------- | ------------ | --------- |
-| F5-001 | Refinar historias y criterios de aceptación de comunidad | 📋 Pendiente | must-have |
-| F5-002 | Matriz de dependencias UI/Backend para foros y comunidad | 📋 Pendiente | must-have |
-| F5-003 | Diseño funcional de flujos de foros, reportes y mensajes | 📋 Pendiente | must-have |
+| Issue  | Título                                                   | Estado        | Prioridad |
+| ------ | -------------------------------------------------------- | ------------- | --------- |
+| F5-001 | Refinar historias y criterios de aceptación de comunidad | ✅ Completado | must-have |
+| F5-002 | Matriz de dependencias UI/Backend para foros y comunidad | 📋 Pendiente  | must-have |
+| F5-003 | Diseño funcional de flujos de foros, reportes y mensajes | 📋 Pendiente  | must-have |
 
-**Progreso preparación**: 0/3 issues completados
+**Progreso preparación**: 1/3 issues completados
 
 ### Sprint 16 — Foros base
 
@@ -2133,6 +2133,106 @@ Crear espacios vibrantes de interacción, colaboración y aprendizaje social ent
 - Puedo crear anuncios importantes en foros
 - Puedo gestionar reportes de contenido inapropiado
 - Puedo ver estadísticas de participación en foros
+
+### Historias clave y criterios de aceptación (Fase 5)
+
+#### 1) Participación en foros de discusión (Estudiante / Educador)
+
+- Un estudiante inscripto en un curso puede crear un post de tipo PREGUNTA o DISCUSION en el foro del curso.
+- Solo el educador del curso puede crear posts de tipo ANUNCIO.
+- Un estudiante NO inscripto en el curso no puede crear posts ni respuestas en ese foro.
+- El listado de posts muestra título, autor, tipo, cantidad de respuestas, vistas y si está resuelto.
+- Un post con tipo PREGUNTA muestra badge "Resuelto" cuando tiene al menos una respuesta marcada como solución.
+
+#### 2) Respuestas y threading (Estudiante / Educador)
+
+- Cualquier usuario inscripto puede responder a un post existente.
+- Se permite responder a una respuesta (threading de un solo nivel — respuesta a respuesta).
+- Un post cerrado por el educador no acepta nuevas respuestas.
+- El autor de un post o el educador del curso pueden cerrar el thread.
+
+#### 3) Marcar solución y útil (Estudiante / Educador)
+
+- Solo el educador del curso o el autor del post puede marcar una respuesta como solución.
+- Solo puede existir una respuesta marcada como solución por post.
+- Marcar solución en otra respuesta desplaza la anterior (toggle).
+- Cualquier usuario inscripto puede marcar una respuesta como "útil" (máximo una vez por usuario).
+- El contador de "útil" es visible en la respuesta.
+
+#### 4) Moderación de foros (Educador / Admin Escuela)
+
+- El educador puede eliminar (soft delete) cualquier post o respuesta en su curso.
+- El educador puede cerrar un thread abierto.
+- Un post eliminado muestra placeholder "[contenido eliminado]" para no romper el threading.
+- El ADMIN_ESCUELA puede moderar foros de todos los cursos de su institución.
+
+#### 5) Filtros del foro (todos los roles)
+
+- El listado de posts puede filtrarse por: tipo (PREGUNTA/DISCUSION/ANUNCIO), etiqueta y "sin responder".
+- El filtro "sin responder" muestra solo posts de tipo PREGUNTA sin ninguna respuesta.
+- La paginación usa 20 posts por página.
+
+#### 6) Notificaciones básicas (Estudiante / Educador)
+
+- El autor de un post recibe una notificación cuando alguien responde su post.
+- El autor de una respuesta recibe notificación cuando su respuesta es marcada como solución.
+- El educador recibe notificación de preguntas sin responder en sus cursos (máximo una por post, no spam).
+- Las notificaciones se persisten en DB y son accesibles desde el panel del usuario.
+
+### Edge cases y reglas de negocio
+
+| Caso                                                       | Comportamiento esperado                                                              |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Estudiante no inscripto intenta crear post                 | 403 Forbidden — no puede acceder al foro del curso                                   |
+| Usuario desinscripto después de haber creado posts         | Sus posts permanecen pero no puede crear nuevos ni responder                         |
+| Educador marca solución en su propio post                  | Permitido — el educador puede marcar solución en posts que él mismo creó             |
+| Post con solución marcada intenta marcarse de nuevo        | El endpoint es idempotente — no crea duplicado; si es otra respuesta, cambia el flag |
+| Usuario marca "útil" una segunda vez en la misma respuesta | 409 Conflict — ya fue marcado como útil por ese usuario                              |
+| Post cerrado recibe intento de respuesta                   | 400 Bad Request — el post está cerrado                                               |
+| Soft delete de respuesta que es solución activa            | Se desmarca como solución antes de eliminar; el post vuelve a estado "no resuelto"   |
+| Notificación a usuario con cuenta desactivada              | No se envía; se omite silenciosamente                                                |
+| ANUNCIO creado por estudiante                              | 403 Forbidden — solo EDUCADOR y ADMIN_ESCUELA pueden crear ANUNCIO                   |
+
+### Alcance por Sprint (Fase 5)
+
+#### Sprint 16 — Foros base (must-have)
+
+**Objetivo**: Foro funcional de lectura, escritura y respuesta por curso.
+
+**Criterios de salida del sprint:**
+
+- Un estudiante inscripto puede crear un post PREGUNTA/DISCUSION y ver el listado de posts del curso.
+- Cualquier inscripto puede responder a un post.
+- El listado de posts aplica filtros básicos: tipo y sin responder.
+- El educador puede cerrar un thread y eliminar posts/respuestas.
+- Tests unitarios del service de foros con >80% statements.
+
+**Issues del sprint:**
+
+| Issue  | Título                                                  | Criterios clave                                                           |
+| ------ | ------------------------------------------------------- | ------------------------------------------------------------------------- |
+| F5-004 | Prisma base: foros, respuestas y reacciones             | Modelos `ForoPost`, `ForoRespuesta`, `ReaccionForo`; índices y relaciones |
+| F5-005 | API foros por curso: crear/listar posts y respuestas    | CRUD posts/respuestas, permiso por inscripción, filtros tipo/sinResponder |
+| F5-006 | UI básica de foro: listado, detalle y nueva publicación | Página `/cursos/[id]/foro`, formulario de post, hilo de respuestas        |
+
+#### Sprint 17 — Interacción y notificaciones básicas (must-have + should-have)
+
+**Objetivo**: Interacción enriquecida (solución, útil) y notificaciones persistidas.
+
+**Criterios de salida del sprint:**
+
+- El educador y el autor del post pueden marcar una respuesta como solución.
+- Cualquier inscripto puede marcar una respuesta como útil (una vez).
+- El sistema persiste notificaciones para nueva respuesta y solución marcada.
+- Tests unitarios del service de notificaciones con >80% statements.
+
+**Issues del sprint:**
+
+| Issue  | Título                                                | Criterios clave                                                          |
+| ------ | ----------------------------------------------------- | ------------------------------------------------------------------------ |
+| F5-007 | API de interacción: marcar solución, útil y filtros   | Toggle solución, idempotencia de útil, filtro por etiqueta               |
+| F5-008 | UI de interacción: solución, útil y filtros visibles  | Botones de acción, indicadores visuales de estado, filtros en pantalla   |
+| F5-009 | API de notificaciones básicas para actividad en foros | Persistencia de notificaciones, tipos NUEVA_RESPUESTA y SOLUCION_MARCADA |
 
 ### Funcionalidades Técnicas
 
