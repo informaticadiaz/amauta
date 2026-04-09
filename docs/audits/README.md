@@ -7,9 +7,19 @@
 
 ## Índice de Auditorías
 
-| Issue | Título | Fecha | Veredicto |
-| ----- | ------ | ----- | --------- |
-| —     | —      | —     | —         |
+| Issue | Título                                          | Fecha      | Veredicto                     |
+| ----- | ----------------------------------------------- | ---------- | ----------------------------- |
+| #10   | T-014: Expandir CI con lint, type-check y build | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
+| #9    | T-013: Configurar Prisma                        | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
+| #8    | T-012: Configurar PostgreSQL                    | 2026-04-09 | ✅ APROBADO                   |
+| #7    | T-011: Configurar variables de entorno          | 2026-04-09 | ✅ APROBADO                   |
+| #6    | T-010: Configurar ESLint y Prettier             | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
+| #5    | T-009: Configurar TypeScript                    | 2026-04-09 | ✅ APROBADO                   |
+| #4    | T-008: Inicializar estructura de monorepo       | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
+| #3    | T-005: Configurar GitHub Actions para CI        | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
+| #2    | T-002: Definir licencia del proyecto            | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
+| #1    | T-001: Configurar .gitignore                    | 2026-04-09 | ✅ APROBADO                   |
+| —     | —                                               | —          | —                             |
 
 ---
 
