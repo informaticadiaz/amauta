@@ -9,6 +9,9 @@
 
 | Issue | Título                                          | Fecha      | Veredicto                     |
 | ----- | ----------------------------------------------- | ---------- | ----------------------------- |
+| #17   | T-016: Documentar API endpoints (preparación)   | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
+| #16   | T-015: Crear diagramas de arquitectura          | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
+| #15   | T-014: Crear seed data                          | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
 | #14   | T-007: Configurar pre-commit hooks              | 2026-04-09 | ✅ APROBADO                   |
 | #13   | T-006: Configurar tests en CI                   | 2026-04-09 | ❌ RECHAZADO                  |
 | #12   | T-004: Crear Contributing Guidelines            | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
