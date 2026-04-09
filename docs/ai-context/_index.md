@@ -53,14 +53,20 @@ Lee docs/ai-context/_patterns.md y docs/ai-context/modules/cursos.md
 
 ### Módulos Backend
 
-| Módulo        | Archivo                                                  | Descripción                      |
-| ------------- | -------------------------------------------------------- | -------------------------------- |
-| Auth          | [`modules/auth.md`](./modules/auth.md)                   | Autenticación con NextAuth.js v5 |
-| Cursos        | [`modules/cursos.md`](./modules/cursos.md)               | CRUD de cursos                   |
-| Lecciones     | [`modules/lecciones.md`](./modules/lecciones.md)         | Gestión de lecciones             |
-| Inscripciones | [`modules/inscripciones.md`](./modules/inscripciones.md) | Sistema de inscripción           |
-| Uploads       | [`modules/uploads.md`](./modules/uploads.md)             | Subida de archivos               |
-| Categorías    | [`modules/categorias.md`](./modules/categorias.md)       | Categorías de cursos             |
+| Módulo         | Archivo                                                    | Descripción                          |
+| -------------- | ---------------------------------------------------------- | ------------------------------------ |
+| Auth           | [`modules/auth.md`](./modules/auth.md)                     | Autenticación con NextAuth.js v5     |
+| Cursos         | [`modules/cursos.md`](./modules/cursos.md)                 | CRUD de cursos                       |
+| Lecciones      | [`modules/lecciones.md`](./modules/lecciones.md)           | Gestión de lecciones                 |
+| Inscripciones  | [`modules/inscripciones.md`](./modules/inscripciones.md)   | Sistema de inscripción               |
+| Progreso       | [`modules/progreso.md`](./modules/progreso.md)             | Tracking de lecciones completadas    |
+| Uploads        | [`modules/uploads.md`](./modules/uploads.md)               | Subida de archivos                   |
+| Categorías     | [`modules/categorias.md`](./modules/categorias.md)         | Categorías de cursos                 |
+| Evaluaciones   | [`modules/evaluaciones.md`](./modules/evaluaciones.md)     | Sistema de evaluaciones y preguntas  |
+| Instituciones  | [`modules/instituciones.md`](./modules/instituciones.md)   | Gestión de instituciones educativas  |
+| Grupos         | [`modules/grupos.md`](./modules/grupos.md)                 | Grupos/clases por institución        |
+| Asistencias    | [`modules/asistencias.md`](./modules/asistencias.md)       | Registro diario de asistencias       |
+| Calificaciones | [`modules/calificaciones.md`](./modules/calificaciones.md) | Calificaciones por periodo y materia |
 
 ### Frontend
 
@@ -80,12 +86,13 @@ Lee docs/ai-context/_patterns.md y docs/ai-context/modules/cursos.md
 
 ## Skills Disponibles
 
-| Skill          | Archivo                                                                        | Uso                                         |
-| -------------- | ------------------------------------------------------------------------------ | ------------------------------------------- |
-| Prisma & DB    | [`../ai-skills/prisma-db-management.md`](../ai-skills/prisma-db-management.md) | Migraciones, verificar DB, resolver errores |
-| CRUD Generator | [`../ai-skills/crud-generator.md`](../ai-skills/crud-generator.md)             | Generar módulo completo backend + frontend  |
-| API Endpoint   | [`../ai-skills/api-endpoint.md`](../ai-skills/api-endpoint.md)                 | Agregar endpoint a módulo existente         |
-| React Form     | [`../ai-skills/react-form.md`](../ai-skills/react-form.md)                     | Crear formulario siguiendo patrones         |
+| Skill             | Archivo                                                                        | Uso                                         |
+| ----------------- | ------------------------------------------------------------------------------ | ------------------------------------------- |
+| Prisma & DB       | [`../ai-skills/prisma-db-management.md`](../ai-skills/prisma-db-management.md) | Migraciones, verificar DB, resolver errores |
+| CRUD Generator    | [`../ai-skills/crud-generator.md`](../ai-skills/crud-generator.md)             | Generar módulo completo backend + frontend  |
+| API Endpoint      | [`../ai-skills/api-endpoint.md`](../ai-skills/api-endpoint.md)                 | Agregar endpoint a módulo existente         |
+| React Form        | [`../ai-skills/react-form.md`](../ai-skills/react-form.md)                     | Crear formulario siguiendo patrones         |
+| Context Validator | [`../ai-skills/ai-context-validator.md`](../ai-skills/ai-context-validator.md) | Verificar que ai-context está sincronizado  |
 
 ---
 

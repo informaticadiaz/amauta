@@ -948,3 +948,4 @@ enum Prioridad {
 | **PWA Mobile Design**     | `docs/ai-skills/pwa-mobile-design.md`     | Diseñar/auditar PWA orientada a mobile: manifest, SW, IndexedDB, sync, UI táctil       |
 | **Feature Audit**         | `docs/ai-skills/feature-audit.md`         | Auditar que las features implementadas funcionan y cumplen sus criterios de aceptación |
 | **Functional Docs**       | `docs/ai-skills/functional-docs.md`       | Generar documentación funcional de módulos para usuarios finales (no técnica)          |
+| **AI Context Validator**  | `docs/ai-skills/ai-context-validator.md`  | Verificar que docs/ai-context está sincronizado con el código real                     |

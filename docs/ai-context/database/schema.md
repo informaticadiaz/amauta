@@ -72,7 +72,26 @@ model Usuario {
   calificaciones   Calificacion[]
   comunicados      Comunicado[]
   gruposCreados    Grupo[]
-  gruposEstudiante GrupoEstudiante[]
+
+  // Grupos - Estudiantes
+  gruposEstudiante            GrupoEstudiante[] @relation("GrupoEstudianteUsuario")
+  asignacionesGrupoRealizadas GrupoEstudiante[] @relation("GrupoEstudianteAsignadoPor")
+  remocionesGrupoRealizadas   GrupoEstudiante[] @relation("GrupoEstudianteRemovidoPor")
+
+  // Grupos - Educadores
+  gruposEducador                 GrupoEducador[] @relation("GrupoEducadorUsuario")
+  asignacionesEducadorRealizadas GrupoEducador[] @relation("GrupoEducadorAsignadoPor")
+  remocionesEducadorRealizadas   GrupoEducador[] @relation("GrupoEducadorRemovidoPor")
+
+  // Evaluaciones
+  evaluacionesCreadas Evaluacion[] @relation("Evaluador")
+  intentosEvaluacion  IntentoEvaluacion[]
+
+  // Comunidad y foros
+  postsForo       ForoPost[]      @relation("AutorForoPost")
+  respuestasForo  ForoRespuesta[] @relation("AutorForoRespuesta")
+  reaccionesForo  ReaccionForo[]  @relation("ReaccionForoUsuario")
+  notificaciones  Notificacion[]  @relation("NotificacionUsuario")
 
   @@index([email])
   @@index([rol])
@@ -84,6 +103,35 @@ enum Rol {
   EDUCADOR
   ADMIN_ESCUELA
   SUPER_ADMIN
+}
+```
+
+### Perfil
+
+```prisma
+model Perfil {
+  id        String  @id @default(cuid())
+  usuarioId String  @unique
+  usuario   Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  bio         String?
+  telefono    String?
+  pais        String?
+  ciudad      String?
+  institucion String?
+
+  // Para estudiantes
+  matricula String?
+  grado     String?
+
+  // Para educadores
+  especialidad String[]
+  experiencia  Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("perfiles")
 }
 ```
 
@@ -115,6 +163,8 @@ model Curso {
 
   lecciones     Leccion[]
   inscripciones Inscripcion[]
+  evaluaciones  Evaluacion[]
+  foroPosts     ForoPost[]
 
   @@index([educadorId])
   @@index([categoriaId])
@@ -173,6 +223,29 @@ enum TipoLeccion {
   QUIZ
   INTERACTIVO
   DESCARGABLE
+}
+```
+
+### Recurso
+
+```prisma
+model Recurso {
+  id     String @id @default(cuid())
+  nombre String
+  tipo   String // video/pdf/image/audio
+  url    String
+  tamano Int?   // bytes
+
+  leccionId String
+  leccion   Leccion @relation(fields: [leccionId], references: [id], onDelete: Cascade)
+
+  disponibleOffline Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([leccionId])
+  @@map("recursos")
 }
 ```
 
@@ -407,6 +480,7 @@ model Grupo {
   updatedAt DateTime @updatedAt
 
   estudiantes    GrupoEstudiante[]
+  educadores     GrupoEducador[]
   asistencias    Asistencia[]
   calificaciones Calificacion[]
 
@@ -414,6 +488,73 @@ model Grupo {
   @@index([educadorId])
   @@index([periodoAcademicoId])
   @@map("grupos")
+}
+```
+
+### GrupoEstudiante
+
+```prisma
+model GrupoEstudiante {
+  grupoId String
+  grupo   Grupo  @relation(fields: [grupoId], references: [id])
+
+  estudianteId String
+  estudiante   Usuario @relation("GrupoEstudianteUsuario", fields: [estudianteId], references: [id])
+
+  asignadoPorId String?
+  asignadoPor   Usuario? @relation("GrupoEstudianteAsignadoPor", fields: [asignadoPorId], references: [id])
+
+  removidoPorId String?
+  removidoPor   Usuario? @relation("GrupoEstudianteRemovidoPor", fields: [removidoPorId], references: [id])
+
+  inscritoEn DateTime @default(now())
+  activo     Boolean  @default(true)
+  removidoEn DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@id([grupoId, estudianteId])
+  @@index([grupoId, activo])
+  @@index([estudianteId, activo])
+  @@map("grupos_estudiantes")
+}
+```
+
+### GrupoEducador
+
+```prisma
+model GrupoEducador {
+  grupoId String
+  grupo   Grupo  @relation(fields: [grupoId], references: [id])
+
+  educadorId String
+  educador   Usuario @relation("GrupoEducadorUsuario", fields: [educadorId], references: [id])
+
+  rol RolGrupoEducador
+
+  asignadoPorId String?
+  asignadoPor   Usuario? @relation("GrupoEducadorAsignadoPor", fields: [asignadoPorId], references: [id])
+
+  removidoPorId String?
+  removidoPor   Usuario? @relation("GrupoEducadorRemovidoPor", fields: [removidoPorId], references: [id])
+
+  asignadoEn DateTime @default(now())
+  activo     Boolean  @default(true)
+  removidoEn DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@id([grupoId, educadorId])
+  @@index([grupoId, activo])
+  @@index([educadorId, activo])
+  @@map("grupos_educadores")
+}
+
+enum RolGrupoEducador {
+  TITULAR
+  SUPLENTE
 }
 ```
 
@@ -493,6 +634,84 @@ model Calificacion {
   @@index([grupoId, periodoAcademicoId])
   @@index([estudianteId, periodoAcademicoId])
   @@map("calificaciones")
+}
+```
+
+### Asistencia
+
+```prisma
+model Asistencia {
+  id String @id @default(cuid())
+
+  grupoId String
+  grupo   Grupo  @relation(fields: [grupoId], references: [id])
+
+  estudianteId String
+  estudiante   Usuario @relation(fields: [estudianteId], references: [id])
+
+  fecha  DateTime
+  estado EstadoAsistencia
+
+  observaciones String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([grupoId, estudianteId, fecha])
+  @@index([grupoId, fecha])
+  @@index([estudianteId])
+  @@map("asistencias")
+}
+
+enum EstadoAsistencia {
+  PRESENTE
+  AUSENTE
+  TARDANZA
+  JUSTIFICADO
+}
+```
+
+### Comunicado
+
+```prisma
+model Comunicado {
+  id String @id @default(cuid())
+
+  institucionId String
+  institucion   Institucion @relation(fields: [institucionId], references: [id])
+
+  autorId String
+  autor   Usuario @relation(fields: [autorId], references: [id])
+
+  titulo    String
+  contenido String
+
+  tipo      TipoComunicado
+  prioridad Prioridad      @default(NORMAL)
+
+  publicadoEn DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([institucionId])
+  @@index([tipo])
+  @@map("comunicados")
+}
+
+enum TipoComunicado {
+  GENERAL
+  ACADEMICO
+  ADMINISTRATIVO
+  EVENTO
+  URGENTE
+}
+
+enum Prioridad {
+  BAJA
+  NORMAL
+  ALTA
+  URGENTE
 }
 ```
 
@@ -697,31 +916,6 @@ enum TipoInstitucion {
   COLEGIO
   UNIVERSIDAD
   CENTRO_FORMACION
-}
-
-// Estados de asistencia
-enum EstadoAsistencia {
-  PRESENTE
-  AUSENTE
-  TARDANZA
-  JUSTIFICADO
-}
-
-// Tipos de comunicado
-enum TipoComunicado {
-  GENERAL
-  ACADEMICO
-  ADMINISTRATIVO
-  EVENTO
-  URGENTE
-}
-
-// Prioridades
-enum Prioridad {
-  BAJA
-  NORMAL
-  ALTA
-  URGENTE
 }
 
 // Tipos de publicación en foro
