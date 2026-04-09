@@ -949,3 +949,4 @@ enum Prioridad {
 | **Feature Audit**         | `docs/ai-skills/feature-audit.md`         | Auditar que las features implementadas funcionan y cumplen sus criterios de aceptación |
 | **Functional Docs**       | `docs/ai-skills/functional-docs.md`       | Generar documentación funcional de módulos para usuarios finales (no técnica)          |
 | **AI Context Validator**  | `docs/ai-skills/ai-context-validator.md`  | Verificar que docs/ai-context está sincronizado con el código real                     |
+| **Issue Inspector**       | `docs/ai-skills/issue-inspector.md`       | Auditar issue: verifica requisitos, tests, y funcionalidad en producción               |
