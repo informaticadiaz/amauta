@@ -9,6 +9,10 @@
 
 | Issue | Título                                          | Fecha      | Veredicto                     |
 | ----- | ----------------------------------------------- | ---------- | ----------------------------- |
+| #14   | T-007: Configurar pre-commit hooks              | 2026-04-09 | ✅ APROBADO                   |
+| #13   | T-006: Configurar tests en CI                   | 2026-04-09 | ❌ RECHAZADO                  |
+| #12   | T-004: Crear Contributing Guidelines            | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
+| #11   | T-003: Crear Code of Conduct                    | 2026-04-09 | ❌ RECHAZADO                  |
 | #10   | T-014: Expandir CI con lint, type-check y build | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
 | #9    | T-013: Configurar Prisma                        | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
 | #8    | T-012: Configurar PostgreSQL                    | 2026-04-09 | ✅ APROBADO                   |
