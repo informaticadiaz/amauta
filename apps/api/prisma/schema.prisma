@@ -49,6 +49,12 @@ model Usuario {
   evaluacionesCreadas Evaluacion[] @relation("Evaluador")
   intentosEvaluacion  IntentoEvaluacion[]
 
+  // Comunidad y foros
+  postsForo       ForoPost[]      @relation("AutorForoPost")
+  respuestasForo  ForoRespuesta[] @relation("AutorForoRespuesta")
+  reaccionesForo  ReaccionForo[]  @relation("ReaccionForoUsuario")
+  notificaciones  Notificacion[]  @relation("NotificacionUsuario")
+
   @@index([email])
   @@index([rol])
   @@map("usuarios")
@@ -133,6 +139,7 @@ model Curso {
   lecciones     Leccion[]
   inscripciones Inscripcion[]
   evaluaciones  Evaluacion[]
+  foroPosts     ForoPost[]
 
   @@index([educadorId])
   @@index([categoriaId])
@@ -639,4 +646,136 @@ enum Prioridad {
   NORMAL
   ALTA
   URGENTE
+}
+
+// ==================================
+// COMUNIDAD Y FOROS
+// ==================================
+
+/// Tipo de publicación en el foro
+enum TipoForoPost {
+  PREGUNTA
+  DISCUSION
+  ANUNCIO
+}
+
+/// Estado de una publicación en el foro
+enum EstadoForoPost {
+  PUBLICADO
+  CERRADO
+  ELIMINADO
+}
+
+/// Tipo de notificación del sistema
+enum TipoNotificacion {
+  NUEVA_RESPUESTA
+  SOLUCION_MARCADA
+  PREGUNTA_SIN_RESPONDER
+}
+
+/// Publicación en el foro de un curso
+model ForoPost {
+  id       String @id @default(cuid())
+
+  cursoId String
+  curso   Curso  @relation(fields: [cursoId], references: [id], onDelete: Cascade)
+
+  autorId String
+  autor   Usuario @relation("AutorForoPost", fields: [autorId], references: [id])
+
+  tipo      TipoForoPost
+  titulo    String
+  contenido String
+  estado    EstadoForoPost @default(PUBLICADO)
+  etiquetas String[]
+  vistas    Int            @default(0)
+  eliminado Boolean        @default(false)
+
+  creadoEn     DateTime @default(now())
+  actualizadoEn DateTime @updatedAt
+
+  respuestas ForoRespuesta[]
+  notificaciones Notificacion[] @relation("NotificacionPost")
+
+  @@index([cursoId])
+  @@index([autorId])
+  @@index([estado])
+  @@index([tipo])
+  @@map("foro_posts")
+}
+
+/// Respuesta a una publicación del foro
+model ForoRespuesta {
+  id String @id @default(cuid())
+
+  postId String
+  post   ForoPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  autorId String
+  autor   Usuario @relation("AutorForoRespuesta", fields: [autorId], references: [id])
+
+  contenido String
+
+  // Threading de un nivel
+  respuestaParentId String?
+  respuestaParent   ForoRespuesta?  @relation("RespuestasHijas", fields: [respuestaParentId], references: [id])
+  respuestasHijas   ForoRespuesta[] @relation("RespuestasHijas")
+
+  esSolucion Boolean @default(false)
+  eliminado  Boolean @default(false)
+
+  creadoEn     DateTime @default(now())
+  actualizadoEn DateTime @updatedAt
+
+  reacciones     ReaccionForo[]
+  notificaciones Notificacion[] @relation("NotificacionRespuesta")
+
+  @@index([postId])
+  @@index([autorId])
+  @@index([respuestaParentId])
+  @@map("foro_respuestas")
+}
+
+/// Reacción "útil" en una respuesta del foro
+model ReaccionForo {
+  id String @id @default(cuid())
+
+  respuestaId String
+  respuesta   ForoRespuesta @relation(fields: [respuestaId], references: [id], onDelete: Cascade)
+
+  usuarioId String
+  usuario   Usuario @relation("ReaccionForoUsuario", fields: [usuarioId], references: [id])
+
+  creadoEn DateTime @default(now())
+
+  @@unique([respuestaId, usuarioId])
+  @@index([respuestaId])
+  @@index([usuarioId])
+  @@map("reacciones_foro")
+}
+
+/// Notificación del sistema para un usuario
+model Notificacion {
+  id String @id @default(cuid())
+
+  usuarioId String
+  usuario   Usuario @relation("NotificacionUsuario", fields: [usuarioId], references: [id])
+
+  tipo TipoNotificacion
+
+  // Referencias opcionales al contenido relacionado
+  postId String?
+  post   ForoPost? @relation("NotificacionPost", fields: [postId], references: [id], onDelete: Cascade)
+
+  respuestaId String?
+  respuesta   ForoRespuesta? @relation("NotificacionRespuesta", fields: [respuestaId], references: [id], onDelete: Cascade)
+
+  leida Boolean @default(false)
+
+  creadoEn DateTime @default(now())
+
+  @@index([usuarioId])
+  @@index([leida])
+  @@index([tipo])
+  @@map("notificaciones")
 }

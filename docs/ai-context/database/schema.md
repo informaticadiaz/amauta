@@ -15,7 +15,13 @@ Usuario (1) ──────< Curso (educador)
     │                   │           │
     │                   │           └──────< Progreso >── Usuario
     │                   │
-    │                   └──────< Inscripcion >── Usuario
+    │                   ├──────< Inscripcion >── Usuario
+    │                   │
+    │                   └──────< ForoPost >── Usuario (autor)
+    │                               │
+    │                               └──────< ForoRespuesta >── Usuario (autor)
+    │                                           │
+    │                                           └──────< ReaccionForo >── Usuario
     │
     └──────< Evaluacion >── Curso
                     │
@@ -23,7 +29,9 @@ Usuario (1) ──────< Curso (educador)
                     │
                     └──────< IntentoEvaluacion >── Usuario
     │
-    └──────< Perfil (1:1)
+    ├──────< Perfil (1:1)
+    │
+    └──────< Notificacion
 
 Categoria (1) ──────< Curso
 
@@ -490,6 +498,147 @@ model Calificacion {
 
 ---
 
+## Comunidad y Foros
+
+### ForoPost
+
+```prisma
+model ForoPost {
+  id       String @id @default(cuid())
+
+  cursoId String
+  curso   Curso  @relation(fields: [cursoId], references: [id], onDelete: Cascade)
+
+  autorId String
+  autor   Usuario @relation("AutorForoPost", fields: [autorId], references: [id])
+
+  tipo      TipoForoPost
+  titulo    String
+  contenido String
+  estado    EstadoForoPost @default(PUBLICADO)
+  etiquetas String[]
+  vistas    Int            @default(0)
+  eliminado Boolean        @default(false)
+
+  creadoEn     DateTime @default(now())
+  actualizadoEn DateTime @updatedAt
+
+  respuestas ForoRespuesta[]
+  notificaciones Notificacion[] @relation("NotificacionPost")
+
+  @@index([cursoId])
+  @@index([autorId])
+  @@index([estado])
+  @@index([tipo])
+  @@map("foro_posts")
+}
+
+enum TipoForoPost {
+  PREGUNTA    // Post de tipo pregunta, puede tener solución marcada
+  DISCUSION   // Discusión abierta sin solución
+  ANUNCIO     // Solo educador/admin puede crear
+}
+
+enum EstadoForoPost {
+  PUBLICADO   // Post activo, acepta respuestas
+  CERRADO     // Visible pero no acepta respuestas
+  ELIMINADO   // Soft delete
+}
+```
+
+### ForoRespuesta
+
+```prisma
+model ForoRespuesta {
+  id String @id @default(cuid())
+
+  postId String
+  post   ForoPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  autorId String
+  autor   Usuario @relation("AutorForoRespuesta", fields: [autorId], references: [id])
+
+  contenido String
+
+  // Threading de un nivel
+  respuestaParentId String?
+  respuestaParent   ForoRespuesta?  @relation("RespuestasHijas", fields: [respuestaParentId], references: [id])
+  respuestasHijas   ForoRespuesta[] @relation("RespuestasHijas")
+
+  esSolucion Boolean @default(false)  // Solo una por post de tipo PREGUNTA
+  eliminado  Boolean @default(false)
+
+  creadoEn     DateTime @default(now())
+  actualizadoEn DateTime @updatedAt
+
+  reacciones     ReaccionForo[]
+  notificaciones Notificacion[] @relation("NotificacionRespuesta")
+
+  @@index([postId])
+  @@index([autorId])
+  @@index([respuestaParentId])
+  @@map("foro_respuestas")
+}
+```
+
+### ReaccionForo
+
+```prisma
+model ReaccionForo {
+  id String @id @default(cuid())
+
+  respuestaId String
+  respuesta   ForoRespuesta @relation(fields: [respuestaId], references: [id], onDelete: Cascade)
+
+  usuarioId String
+  usuario   Usuario @relation("ReaccionForoUsuario", fields: [usuarioId], references: [id])
+
+  creadoEn DateTime @default(now())
+
+  @@unique([respuestaId, usuarioId])  // Un usuario solo puede reaccionar una vez
+  @@index([respuestaId])
+  @@index([usuarioId])
+  @@map("reacciones_foro")
+}
+```
+
+### Notificacion
+
+```prisma
+model Notificacion {
+  id String @id @default(cuid())
+
+  usuarioId String
+  usuario   Usuario @relation("NotificacionUsuario", fields: [usuarioId], references: [id])
+
+  tipo TipoNotificacion
+
+  // Referencias opcionales al contenido relacionado
+  postId String?
+  post   ForoPost? @relation("NotificacionPost", fields: [postId], references: [id], onDelete: Cascade)
+
+  respuestaId String?
+  respuesta   ForoRespuesta? @relation("NotificacionRespuesta", fields: [respuestaId], references: [id], onDelete: Cascade)
+
+  leida Boolean @default(false)
+
+  creadoEn DateTime @default(now())
+
+  @@index([usuarioId])
+  @@index([leida])
+  @@index([tipo])
+  @@map("notificaciones")
+}
+
+enum TipoNotificacion {
+  NUEVA_RESPUESTA         // Alguien respondió a tu post
+  SOLUCION_MARCADA        // Tu respuesta fue marcada como solución
+  PREGUNTA_SIN_RESPONDER  // Post PREGUNTA sin respuesta (futuro)
+}
+```
+
+---
+
 ## Enums Completos
 
 ```prisma
@@ -573,6 +722,27 @@ enum Prioridad {
   NORMAL
   ALTA
   URGENTE
+}
+
+// Tipos de publicación en foro
+enum TipoForoPost {
+  PREGUNTA
+  DISCUSION
+  ANUNCIO
+}
+
+// Estados de publicación en foro
+enum EstadoForoPost {
+  PUBLICADO
+  CERRADO
+  ELIMINADO
+}
+
+// Tipos de notificación
+enum TipoNotificacion {
+  NUEVA_RESPUESTA
+  SOLUCION_MARCADA
+  PREGUNTA_SIN_RESPONDER
 }
 ```
 
