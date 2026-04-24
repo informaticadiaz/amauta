@@ -24,6 +24,8 @@ Base path: rutas anidadas bajo `cursos/:id/foros` y acciones globales sobre resp
   - Crea una respuesta en el hilo.
   - Si responde a otra respuesta, solo se permite un nivel de anidación.
   - Si responde un usuario distinto al autor del post, se crea `Notificacion` de tipo `NUEVA_RESPUESTA`.
+  - No duplica una `NUEVA_RESPUESTA` no leída para el mismo `postId` y destinatario.
+  - No notifica a cuentas desactivadas.
   - La respuesta creada devuelve `esSolucion`, contador `esUtil` y `marcoUtil`.
 
 - `POST /foros/respuestas/:id/solucion`
@@ -31,6 +33,7 @@ Base path: rutas anidadas bajo `cursos/:id/foros` y acciones globales sobre resp
   - Solo puede hacerlo el autor del post, el educador del curso, `ADMIN_ESCUELA` de la misma institución o `SUPER_ADMIN`.
   - Solo puede existir una solución por post; marcar otra desplaza la anterior.
   - Repetir el marcado sobre la misma respuesta es idempotente.
+  - Si la solución pertenece a otra persona activa, se crea `Notificacion` de tipo `SOLUCION_MARCADA`.
 
 - `POST /foros/respuestas/:id/util`
   - Registra la reacción "útil" para una respuesta.

@@ -14,11 +14,14 @@ import {
 } from '@nestjs/common';
 import { ForosService } from './foros.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { NotificacionesService } from '../notificaciones/notificaciones.service';
 
 describe('ForosService', () => {
   let service: ForosService;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let prisma: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let notificacionesService: any;
 
   const createMockPrisma = () => ({
     usuario: { findUnique: jest.fn() },
@@ -40,7 +43,6 @@ describe('ForosService', () => {
     reaccionForo: {
       create: jest.fn(),
     },
-    notificacion: { create: jest.fn() },
     $transaction: jest.fn(),
   });
 
@@ -90,10 +92,21 @@ describe('ForosService', () => {
     prisma = createMockPrisma();
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ForosService, { provide: PrismaService, useValue: prisma }],
+      providers: [
+        ForosService,
+        { provide: PrismaService, useValue: prisma },
+        {
+          provide: NotificacionesService,
+          useValue: {
+            crearNotificacionNuevaRespuesta: jest.fn(),
+            crearNotificacionSolucionMarcada: jest.fn(),
+          },
+        },
+      ],
     }).compile();
 
     service = module.get<ForosService>(ForosService);
+    notificacionesService = module.get(NotificacionesService);
     jest.resetAllMocks();
     prisma.$transaction.mockImplementation(async (input: unknown) => {
       if (typeof input === 'function') {
@@ -291,10 +304,6 @@ describe('ForosService', () => {
           apellido: 'Alvarez',
         },
       });
-      prisma.notificacion.create.mockResolvedValue({
-        id: 'notif-1',
-      });
-
       const result = await service.responderPost(
         CURSO_ID,
         POST_ID,
@@ -304,14 +313,17 @@ describe('ForosService', () => {
 
       expect(result.id).toBe(RESPUESTA_ID);
       expect(prisma.$transaction).toHaveBeenCalledTimes(1);
-      expect(prisma.notificacion.create).toHaveBeenCalledWith({
-        data: {
-          usuarioId: OTRO_ESTUDIANTE_ID,
-          tipo: 'NUEVA_RESPUESTA',
+      expect(
+        notificacionesService.crearNotificacionNuevaRespuesta
+      ).toHaveBeenCalledWith(
+        {
+          actorId: ESTUDIANTE_ID,
+          destinatarioId: OTRO_ESTUDIANTE_ID,
           postId: POST_ID,
           respuestaId: RESPUESTA_ID,
         },
-      });
+        expect.any(Object)
+      );
     });
   });
 
@@ -498,6 +510,17 @@ describe('ForosService', () => {
           where: { id: RESPUESTA_ID },
           data: { esSolucion: true },
         })
+      );
+      expect(
+        notificacionesService.crearNotificacionSolucionMarcada
+      ).toHaveBeenCalledWith(
+        {
+          actorId: ESTUDIANTE_ID,
+          destinatarioId: OTRO_ESTUDIANTE_ID,
+          postId: POST_ID,
+          respuestaId: RESPUESTA_ID,
+        },
+        expect.any(Object)
       );
       expect(result).toEqual(
         expect.objectContaining({

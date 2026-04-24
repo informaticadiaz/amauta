@@ -16,6 +16,8 @@ import {
   type CreateForoRespuestaDto,
 } from './dto/create-foro-respuesta.dto';
 import { queryForosSchema, type QueryForosDto } from './dto/query-foros.dto';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports -- NestJS requires runtime import for DI
+import { NotificacionesService } from '../notificaciones/notificaciones.service';
 
 const CONTENIDO_ELIMINADO = '[contenido eliminado]';
 
@@ -84,7 +86,10 @@ export interface ForoPostDetalleResponse extends ForoPostListItem {
 
 @Injectable()
 export class ForosService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly notificacionesService: NotificacionesService
+  ) {}
 
   async listarPosts(
     cursoId: string,
@@ -328,16 +333,15 @@ export class ForosService {
         },
       });
 
-      if (post.autorId !== usuarioId) {
-        await tx.notificacion.create({
-          data: {
-            usuarioId: post.autorId,
-            tipo: 'NUEVA_RESPUESTA',
-            postId: post.id,
-            respuestaId: created.id,
-          },
-        });
-      }
+      await this.notificacionesService.crearNotificacionNuevaRespuesta(
+        {
+          actorId: usuarioId,
+          destinatarioId: post.autorId,
+          postId: post.id,
+          respuestaId: created.id,
+        },
+        tx
+      );
 
       return created;
     });
@@ -429,6 +433,16 @@ export class ForosService {
         where: { id: respuestaId },
         data: { esSolucion: true },
       });
+
+      await this.notificacionesService.crearNotificacionSolucionMarcada(
+        {
+          actorId: usuarioId,
+          destinatarioId: respuesta.autorId,
+          postId: respuesta.post.id,
+          respuestaId,
+        },
+        tx
+      );
     });
 
     return this.obtenerRespuestaDetalle(respuestaId, usuarioId);

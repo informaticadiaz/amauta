@@ -22,9 +22,9 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 5 - Comunidad y Colaboración 🚧 En Progreso
+### Fase Actual: Fase 5 - Comunidad y Colaboración ✅ Completada
 
-**Progreso**: Sprint 17 en progreso 🚧 — 8/9 issues completados
+**Progreso**: Sprint 17 completado ✅ — 9/9 issues completados
 
 #### Completado en Fase 5:
 
@@ -73,10 +73,11 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Badge `Resuelto` para preguntas resueltas y resaltado visual de la respuesta solución
   - Proxies Next.js para `POST /foros/respuestas/:id/solucion` y `POST /foros/respuestas/:id/util`
   - 6 tests frontend/proxies nuevos pasando
-
-#### Próximos pasos:
-
-- 📋 **F5-009**: API de notificaciones básicas para actividad en foros
+- ✅ **F5-009**: API de notificaciones básicas para actividad en foros
+  - Nuevo módulo NestJS `notificaciones` con endpoints `GET /notificaciones` y `PATCH /notificaciones/:id/leida`
+  - Integración con `foros` para persistir `NUEVA_RESPUESTA` y `SOLUCION_MARCADA`
+  - Reglas anti-spam: sin auto-notificación, sin duplicar `NUEVA_RESPUESTA` no leída por `postId`, omite destinatarios desactivados
+  - 20 tests backend relevantes pasando (`foros` + `notificaciones`)
 
 **Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 5"
 
@@ -666,7 +667,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 5 en progreso (Preparación: F5-001 y F5-002 completados; F5-003 pendiente)
+- **Fase actual**: Fase 5 completada (Sprint 17 cerrado; siguiente planificación pendiente para Fase 6)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**

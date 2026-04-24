@@ -24,6 +24,7 @@ import { GruposModule } from './grupos/grupos.module';
 import { AsistenciasModule } from './asistencias/asistencias.module';
 import { CalificacionesModule } from './calificaciones/calificaciones.module';
 import { ForosModule } from './foros/foros.module';
+import { NotificacionesModule } from './notificaciones/notificaciones.module';
 import { JwtAuthGuard, RolesGuard } from './common/guards';
 
 @Module({
@@ -51,6 +52,7 @@ import { JwtAuthGuard, RolesGuard } from './common/guards';
     GruposModule,
     AsistenciasModule,
     CalificacionesModule,
+    NotificacionesModule,
     ForosModule,
   ],
   controllers: [AppController],
