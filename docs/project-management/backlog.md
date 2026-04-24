@@ -63,14 +63,15 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 **Objetivo**: Agregar interacción visible y notificaciones básicas sobre actividad en foros.
 **Referencia**: `docs/project-management/roadmap.md` → Fase 5
+**Milestone GitHub**: `Sprint 17 - Comunidad y Colaboración`
 
 ### Issues comprometidas (Sprint 17)
 
-| Issue  | Título                                                        | Estado  |
-| ------ | ------------------------------------------------------------- | ------- |
-| F5-007 | API de interacción en foros: marcar solución, útil y filtros  | Backlog |
-| F5-008 | UI de interacción en foros: solución, útil y filtros visibles | Backlog |
-| F5-009 | API de notificaciones básicas para actividad en foros         | Backlog |
+| Issue        | Título                                                        | Estado  |
+| ------------ | ------------------------------------------------------------- | ------- |
+| #90 / F5-007 | API de interacción en foros: marcar solución, útil y filtros  | Backlog |
+| #91 / F5-008 | UI de interacción en foros: solución, útil y filtros visibles | Backlog |
+| #92 / F5-009 | API de notificaciones básicas para actividad en foros         | Backlog |
 
 ---
 

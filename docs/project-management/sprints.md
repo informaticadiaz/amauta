@@ -1,15 +1,27 @@
 # Gestión de Sprints - Amauta
 
-## Sprint Actual: Sprint 15 - Módulo Escolar (PLANIFICADO)
+## Sprint Actual: Sprint 17 - Comunidad y Colaboración (PLANIFICADO)
+
+**Fase**: Fase 5 - Comunidad y Colaboración
+**Objetivo**: Agregar interacción visible y notificaciones básicas sobre actividad en foros.
+**Milestone GitHub**: `Sprint 17 - Comunidad y Colaboración`
+
+### Issues comprometidas
+
+- 📋 #90 F5-007: API de interacción en foros: marcar solución, útil y filtros
+- 📋 #91 F5-008: UI de interacción en foros: solución, útil y filtros visibles
+- 📋 #92 F5-009: API de notificaciones básicas para actividad en foros
+
+## Sprint 15 - Módulo Escolar (COMPLETADO)
 
 **Fase**: Fase 4 - Módulo Escolar
 **Objetivo**: Iniciar el bloque de calificaciones con ajuste de modelo, API operativa y UI de carga rápida por grupo y periodo.
 
 ### Issues comprometidas
 
-- 📋 #79 F4-014: Prisma Calificaciones por periodo académico e institución
-- 📋 #80 F4-015: API Carga y listado de calificaciones por periodo
-- 📋 #81 F4-016: UI Carga rápida de calificaciones por grupo y periodo
+- ✅ #79 F4-014: Prisma Calificaciones por periodo académico e institución
+- ✅ #80 F4-015: API Carga y listado de calificaciones por periodo
+- ✅ #81 F4-016: UI Carga rápida de calificaciones por grupo y periodo
 
 ## Sprint 14 - Módulo Escolar (COMPLETADO)
 
@@ -63,7 +75,7 @@
 
 ### Último Sprint Completado ✅
 
-**Sprint 14 - Módulo Escolar (Fase 4)**
+**Sprint 15 - Módulo Escolar (Fase 4)**
 
 - Estado: ✅ Completado
 - Referencia: `docs/project-management/roadmap.md` → Fase 4

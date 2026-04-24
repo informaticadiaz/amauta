@@ -1,6 +1,6 @@
 # Roadmap - Amauta
 
-**Última actualización**: 2026-04-05 (F5-002 completado)
+**Última actualización**: 2026-04-24 (Sprint 17 creado con issues #90, #91 y #92)
 
 ## Visión General
 
@@ -2197,13 +2197,14 @@ F5-004 (Prisma: ForoPost, ForoRespuesta, ReaccionForo, Notificacion)
 
 ### Sprint 17 — Interacción y notificaciones básicas
 
-| Issue  | Título                                                        | Estado       | Prioridad   |
-| ------ | ------------------------------------------------------------- | ------------ | ----------- |
-| F5-007 | API de interacción en foros: marcar solución, útil y filtros  | 📋 Pendiente | must-have   |
-| F5-008 | UI de interacción en foros: solución, útil y filtros visibles | 📋 Pendiente | must-have   |
-| F5-009 | API de notificaciones básicas para actividad en foros         | 📋 Pendiente | should-have |
+| Issue        | Título                                                        | Estado       | Prioridad   |
+| ------------ | ------------------------------------------------------------- | ------------ | ----------- |
+| #90 / F5-007 | API de interacción en foros: marcar solución, útil y filtros  | 📋 Pendiente | must-have   |
+| #91 / F5-008 | UI de interacción en foros: solución, útil y filtros visibles | 📋 Pendiente | must-have   |
+| #92 / F5-009 | API de notificaciones básicas para actividad en foros         | 📋 Pendiente | should-have |
 
 **Progreso Sprint 17**: 0/3 issues completados
+**Milestone GitHub**: `Sprint 17 - Comunidad y Colaboración`
 
 ### Objetivos
 
