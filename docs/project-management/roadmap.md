@@ -2191,9 +2191,9 @@ F5-004 (Prisma: ForoPost, ForoRespuesta, ReaccionForo, Notificacion)
 | ------ | ---------------------------------------------------------- | ------------- | --------- |
 | F5-004 | Prisma base de comunidad: foros, respuestas y reacciones   | ✅ Completado | must-have |
 | F5-005 | API de foros por curso: crear/listar posts y respuestas    | ✅ Completado | must-have |
-| F5-006 | UI básica de foro por curso: listado, detalle y nueva pub. | 📋 Pendiente  | must-have |
+| F5-006 | UI básica de foro por curso: listado, detalle y nueva pub. | ✅ Completado | must-have |
 
-**Progreso Sprint 16**: 2/3 issues completados
+**Progreso Sprint 16**: 3/3 issues completados ✅
 
 ### Sprint 17 — Interacción y notificaciones básicas
 

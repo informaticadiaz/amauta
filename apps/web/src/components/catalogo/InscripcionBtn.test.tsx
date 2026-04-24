@@ -53,4 +53,29 @@ describe('InscripcionBtn offline', () => {
 
     expect(screen.getByText(/ya estás inscripto/i)).toBeInTheDocument();
   });
+
+  it('debería mostrar el enlace al foro cuando el usuario ya está inscripto', async () => {
+    mockFetch.mockReset();
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        inscrito: true,
+        inscripcion: { estado: 'ACTIVO' },
+      }),
+    });
+
+    render(
+      <InscripcionBtn
+        cursoId="curso-1"
+        cursoTitulo="Curso"
+        totalLecciones={3}
+        duracion={60}
+        cursoSlug="matematica-1"
+      />
+    );
+
+    expect(
+      await screen.findByRole('link', { name: /ir al foro del curso/i })
+    ).toHaveAttribute('href', '/cursos/matematica-1/foro');
+  });
 });

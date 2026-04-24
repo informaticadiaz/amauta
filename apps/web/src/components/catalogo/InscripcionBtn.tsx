@@ -274,6 +274,14 @@ export function InscripcionBtn({
             >
               Ver de nuevo
             </Link>
+            {cursoSlug && (
+              <Link
+                href={`/cursos/${cursoSlug}/foro`}
+                className="block w-full rounded-lg border border-[var(--border)] px-6 py-3 text-center text-sm font-medium text-[var(--foreground)] transition-colors hover:bg-[var(--border)] hover:no-underline"
+              >
+                Ir al foro del curso
+              </Link>
+            )}
             {!estaCompletado && (
               <button
                 onClick={() => setShowConfirm(true)}

@@ -44,7 +44,12 @@ apps/web/src/app/
 │
 ├── cursos/                       # Catálogo público
 │   ├── page.tsx                 # /cursos
-│   └── [slug]/page.tsx          # /cursos/[slug]
+│   └── [slug]/
+│       ├── page.tsx             # /cursos/[slug]
+│       └── foro/
+│           ├── page.tsx         # /cursos/[slug]/foro
+│           └── [postId]/
+│               └── page.tsx     # /cursos/[slug]/foro/[postId]
 │
 ├── offline/                      # Experiencia offline
 │   └── cursos/
@@ -57,6 +62,12 @@ apps/web/src/app/
 └── api/                          # API Routes (proxy al backend)
     ├── auth/
     ├── cursos/
+    │   └── [id]/foros/
+    │       ├── route.ts
+    │       └── [postId]/
+    │           ├── route.ts
+    │           ├── cerrar/route.ts
+    │           └── respuestas/route.ts
     ├── lecciones/
     ├── educadores/me/grupos/
     ├── grupos/[id]/asistencias/
@@ -210,6 +221,50 @@ export default async function CursosPage({
   );
 }
 ```
+
+### Página protegida para foro por curso
+
+```typescript
+// app/cursos/[slug]/foro/page.tsx
+
+import { redirect, notFound } from 'next/navigation';
+import { auth } from '@/lib/auth';
+import { api } from '@/lib/api';
+import { ForoListado } from '@/components/foros/ForoListado';
+
+export default async function CursoForoPage() {
+  const session = await auth();
+
+  if (!session?.user) {
+    redirect('/login?callbackUrl=/cursos/[slug]/foro');
+  }
+
+  const curso = await api.get('/cursos/slug/[slug]');
+  if (!curso) {
+    notFound();
+  }
+
+  return (
+    <ForoListado
+      cursoId={curso.id}
+      cursoSlug={curso.slug}
+      currentUserId={session.user.id}
+      currentUserRol={session.user.rol}
+    />
+  );
+}
+```
+
+### Proxies de foros
+
+- `GET/POST /api/cursos/[id]/foros`
+  - Reenvía filtros `tipo`, `etiqueta`, `sinResponder`, `page`, `limit`.
+- `GET/DELETE /api/cursos/[id]/foros/[postId]`
+  - Obtiene detalle del thread o aplica soft delete vía backend.
+- `POST /api/cursos/[id]/foros/[postId]/respuestas`
+  - Crea respuestas raíz o respuestas anidadas de un nivel.
+- `POST /api/cursos/[id]/foros/[postId]/cerrar`
+  - Cierra el thread en backend.
 
 ### Página Protegida con Formulario
 

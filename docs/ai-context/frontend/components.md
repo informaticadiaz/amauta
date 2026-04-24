@@ -49,6 +49,14 @@ apps/web/src/components/
 │   ├── CalificacionesRapidasSection.tsx
 │   └── CalificacionesRapidasSection.test.tsx
 │
+├── foros/                   # Comunidad por curso
+│   ├── ForoListado.tsx
+│   ├── ForoDetalle.tsx
+│   ├── ForoPostCard.tsx
+│   ├── NuevoPostForm.tsx
+│   ├── RespuestaForm.tsx
+│   └── types.ts
+│
 ├── lecciones/               # Gestión de lecciones
 │   ├── LeccionForm.tsx
 │   └── LeccionesList.tsx
@@ -167,6 +175,43 @@ export function Component() {
   );
 }
 ```
+
+---
+
+## Componentes de Foros
+
+### `ForoListado`
+
+- Client Component para `/cursos/[slug]/foro`.
+- Carga posts desde `GET /api/cursos/[id]/foros`.
+- Incluye `NuevoPostForm` y refresca el listado luego de crear un post.
+- Muestra estados `loading`, `error` y `empty`.
+
+### `NuevoPostForm`
+
+- Valida con Zod en cliente usando `safeParse`.
+- Envía `POST /api/cursos/[id]/foros`.
+- Normaliza etiquetas separadas por coma antes de enviar.
+- Solo ofrece opción `ANUNCIO` a `EDUCADOR`, `ADMIN_ESCUELA` y `SUPER_ADMIN`.
+
+### `ForoDetalle`
+
+- Client Component para `/cursos/[slug]/foro/[postId]`.
+- Carga el thread desde `GET /api/cursos/[id]/foros/[postId]`.
+- Renderiza respuestas con un nivel de indentación para replies.
+- Usa `RespuestaForm` para responder al post o a una respuesta existente.
+- Expone acciones `Cerrar thread` y `Eliminar thread` solo para autor, educador del curso, `ADMIN_ESCUELA` o `SUPER_ADMIN`.
+
+### `RespuestaForm`
+
+- Valida `contenido` y `respuestaParentId` con Zod.
+- Reutilizable para respuesta raíz y respuesta inline a otra respuesta.
+- Deshabilitable cuando el thread está cerrado.
+
+### `InscripcionBtn`
+
+- Cuando el usuario ya tiene acceso al curso y existe `cursoSlug`, muestra el enlace
+  `Ir al foro del curso` hacia `/cursos/[slug]/foro`.
 
 ---
 

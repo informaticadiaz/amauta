@@ -15,7 +15,7 @@
 **Fase 2**: ✅ Completada (8/8 issues completados)
 **Fase 3**: ✅ Completada (Sprint 8-10 completados)
 **Fase 4**: ✅ Completada
-**Fase 5**: 🚧 En progreso (5 issues completados, 1 abierto)
+**Fase 5**: 🚧 En progreso (6 issues completados, 0 abiertos)
 
 ## Cómo usar este documento
 
@@ -57,7 +57,7 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 | F5-003 | Diseño funcional de flujos de foros, reportes y mensajes   | ✅ Done |
 | F5-004 | Prisma base de comunidad: foros, respuestas y reacciones   | ✅ Done |
 | F5-005 | API de foros por curso: crear/listar posts y respuestas    | ✅ Done |
-| F5-006 | UI básica de foro por curso: listado, detalle y nueva pub. | Backlog |
+| F5-006 | UI básica de foro por curso: listado, detalle y nueva pub. | ✅ Done |
 
 ## Sprint 17 - Comunidad y Colaboración (PLANIFICADO)
 
