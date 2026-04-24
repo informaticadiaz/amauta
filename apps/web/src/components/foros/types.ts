@@ -24,6 +24,7 @@ export interface ForoPostListItem {
   actualizadoEn: string;
   autor: ForoAutor;
   responseCount: number;
+  resuelto?: boolean;
 }
 
 export interface ForoRespuestaItem {
@@ -31,6 +32,8 @@ export interface ForoRespuestaItem {
   contenido: string;
   eliminado: boolean;
   esSolucion: boolean;
+  esUtil: number;
+  marcoUtil: boolean;
   respuestaParentId: string | null;
   creadoEn: string;
   actualizadoEn: string;

@@ -24,7 +24,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ### Fase Actual: Fase 5 - Comunidad y Colaboración 🚧 En Progreso
 
-**Progreso**: Sprint 17 en progreso 🚧 — 7/9 issues completados
+**Progreso**: Sprint 17 en progreso 🚧 — 8/9 issues completados
 
 #### Completado en Fase 5:
 
@@ -65,10 +65,18 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Conflicto `409` al marcar "útil" dos veces sobre la misma respuesta
   - Respuestas del hilo y acciones devuelven `esSolucion`, contador `esUtil` y flag `marcoUtil`
   - 19 tests del módulo `foros` pasando
+- ✅ **F5-008**: UI de interacción en foros: solución, útil y filtros visibles
+  - Listado del foro con filtros visibles por `tipo`, `etiqueta` y `sinResponder`
+  - Chips de filtros activos y acción para limpiar filtros sin recarga manual
+  - Detalle del hilo con acción visible para marcar solución respetando permisos del backend
+  - Acción visible para marcar respuestas como útiles con contador e inhabilitación tras usarla
+  - Badge `Resuelto` para preguntas resueltas y resaltado visual de la respuesta solución
+  - Proxies Next.js para `POST /foros/respuestas/:id/solucion` y `POST /foros/respuestas/:id/util`
+  - 6 tests frontend/proxies nuevos pasando
 
 #### Próximos pasos:
 
-- 📋 **F5-008**: UI de interacción en foros: solución, útil y filtros visibles
+- 📋 **F5-009**: API de notificaciones básicas para actividad en foros
 
 **Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 5"
 

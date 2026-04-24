@@ -169,4 +169,133 @@ describe('ForoListado', () => {
       await screen.findByRole('heading', { name: /compartamos resúmenes/i })
     ).toBeInTheDocument();
   });
+
+  it('debería aplicar filtros visibles y reflejar los filtros activos en el listado', async () => {
+    const user = userEvent.setup();
+
+    (global.fetch as jest.Mock)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          posts: [
+            {
+              id: 'post-1',
+              tipo: 'DISCUSION',
+              titulo: 'Debate inicial',
+              contenido: 'Abrimos el foro para intercambiar ideas.',
+              etiquetas: ['inicio'],
+              estado: 'PUBLICADO',
+              eliminado: false,
+              creadoEn: '2026-04-24T12:00:00.000Z',
+              actualizadoEn: '2026-04-24T12:00:00.000Z',
+              autor: {
+                id: 'user-1',
+                nombre: 'Ana',
+                apellido: 'Pérez',
+              },
+              responseCount: 2,
+            },
+          ],
+          total: 1,
+          page: 1,
+          limit: 20,
+          totalPages: 1,
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          posts: [
+            {
+              id: 'post-2',
+              tipo: 'PREGUNTA',
+              titulo: '¿Entra el capítulo 4?',
+              contenido: 'Quiero confirmar el contenido evaluado.',
+              etiquetas: ['examen'],
+              estado: 'PUBLICADO',
+              eliminado: false,
+              resuelto: true,
+              creadoEn: '2026-04-24T13:00:00.000Z',
+              actualizadoEn: '2026-04-24T13:00:00.000Z',
+              autor: {
+                id: 'user-2',
+                nombre: 'Luis',
+                apellido: 'Gómez',
+              },
+              responseCount: 1,
+            },
+          ],
+          total: 1,
+          page: 1,
+          limit: 20,
+          totalPages: 1,
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          posts: [
+            {
+              id: 'post-1',
+              tipo: 'DISCUSION',
+              titulo: 'Debate inicial',
+              contenido: 'Abrimos el foro para intercambiar ideas.',
+              etiquetas: ['inicio'],
+              estado: 'PUBLICADO',
+              eliminado: false,
+              creadoEn: '2026-04-24T12:00:00.000Z',
+              actualizadoEn: '2026-04-24T12:00:00.000Z',
+              autor: {
+                id: 'user-1',
+                nombre: 'Ana',
+                apellido: 'Pérez',
+              },
+              responseCount: 2,
+            },
+          ],
+          total: 1,
+          page: 1,
+          limit: 20,
+          totalPages: 1,
+        }),
+      });
+
+    render(
+      <ForoListado
+        cursoId="curso-1"
+        cursoSlug="matematica-1"
+        currentUserId="user-1"
+        currentUserRol="ESTUDIANTE"
+      />
+    );
+
+    expect(
+      await screen.findByRole('heading', { name: /debate inicial/i })
+    ).toBeInTheDocument();
+
+    await user.selectOptions(screen.getByLabelText(/filtrar por tipo/i), [
+      'PREGUNTA',
+    ]);
+    await user.type(screen.getByLabelText(/filtrar por etiqueta/i), 'examen');
+    await user.click(screen.getByLabelText(/solo sin responder/i));
+    await user.click(screen.getByRole('button', { name: /aplicar filtros/i }));
+
+    await waitFor(() => {
+      expect(global.fetch).toHaveBeenCalledWith(
+        '/api/cursos/curso-1/foros?tipo=PREGUNTA&etiqueta=examen&sinResponder=true'
+      );
+    });
+
+    expect(await screen.findByText(/filtros activos/i)).toBeInTheDocument();
+    expect(screen.getByText(/tipo: pregunta/i)).toBeInTheDocument();
+    expect(screen.getByText(/etiqueta: examen/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/sin responder/i)).toHaveLength(2);
+    expect(screen.getByText(/resuelto/i)).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /limpiar filtros/i }));
+
+    await waitFor(() => {
+      expect(global.fetch).toHaveBeenCalledWith('/api/cursos/curso-1/foros');
+    });
+  });
 });

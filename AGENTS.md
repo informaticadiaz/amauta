@@ -24,7 +24,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ### Fase Actual: Fase 5 - Comunidad y Colaboración 🚧 EN PROGRESO
 
-**Progreso**: Sprint 17 en progreso 🚧 — 7/9 issues completados
+**Progreso**: Sprint 17 en progreso 🚧 — 8/9 issues completados
 
 #### Completado en Fase 5:
 
@@ -41,10 +41,17 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Conflicto `409` al marcar "útil" dos veces sobre la misma respuesta
   - Respuestas del hilo y acciones devuelven `esSolucion`, contador `esUtil` y flag `marcoUtil`
   - 19 tests del módulo `foros` pasando
+- ✅ **F5-008**: UI de interacción en foros: solución, útil y filtros visibles
+  - Filtros visibles en el listado por `tipo`, `etiqueta` y `sinResponder`, con estado activo y limpieza rápida
+  - Detalle del hilo con acción visible para marcar solución según permisos del backend
+  - Acción visible para marcar respuestas como útiles, con contador e inhabilitación al repetir
+  - Badge `Resuelto` en preguntas resueltas y resaltado visual de la respuesta solución
+  - Proxies Next.js para `POST /foros/respuestas/:id/solucion` y `POST /foros/respuestas/:id/util`
+  - 6 tests frontend/proxies nuevos pasando
 
 #### Próximo issue abierto
 
-- 📋 **F5-008**: UI de interacción en foros: solución, útil y filtros visibles
+- 📋 **F5-009**: API de notificaciones básicas para actividad en foros
 
 #### Sprint 8 (Evaluaciones) ✅ Completado
 
@@ -732,7 +739,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 5 en progreso (Sprint 17 en progreso; próximo issue: F5-008)
+- **Fase actual**: Fase 5 en progreso (Sprint 17 en progreso; próximo issue: F5-009)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**

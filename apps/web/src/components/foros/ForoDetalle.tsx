@@ -19,8 +19,17 @@ interface DetallePostResponse {
   message?: string;
 }
 
+interface InteraccionRespuestaResponse {
+  respuesta?: ForoRespuestaItem;
+  message?: string;
+}
+
 function fullName(autor: { nombre: string; apellido: string }) {
   return `${autor.nombre} ${autor.apellido}`;
+}
+
+function formatUtilCount(count: number) {
+  return `${count} ${count === 1 ? 'útil' : 'útiles'}`;
 }
 
 export function ForoDetalle({
@@ -128,6 +137,45 @@ export function ForoDetalle({
     await loadPost();
   }
 
+  async function handleMarkSolution(respuestaId: string) {
+    setError(null);
+    setSuccess(null);
+
+    const response = await fetch(
+      `/api/foros/respuestas/${respuestaId}/solucion`,
+      {
+        method: 'POST',
+      }
+    );
+    const data = (await response.json()) as InteraccionRespuestaResponse;
+
+    if (!response.ok) {
+      setError(data.message || 'No se pudo marcar la respuesta como solución');
+      return;
+    }
+
+    setSuccess(data.message || 'Respuesta marcada como solución');
+    await loadPost();
+  }
+
+  async function handleMarkUtil(respuestaId: string) {
+    setError(null);
+    setSuccess(null);
+
+    const response = await fetch(`/api/foros/respuestas/${respuestaId}/util`, {
+      method: 'POST',
+    });
+    const data = (await response.json()) as InteraccionRespuestaResponse;
+
+    if (!response.ok) {
+      setError(data.message || 'No se pudo marcar la respuesta como útil');
+      return;
+    }
+
+    setSuccess(data.message || 'Respuesta marcada como útil');
+    await loadPost();
+  }
+
   if (loading) {
     return (
       <div className="rounded-2xl border border-[var(--border)] bg-white p-6 text-sm text-[var(--muted)]">
@@ -158,6 +206,9 @@ export function ForoDetalle({
     currentUserRol === 'ADMIN_ESCUELA' ||
     currentUserRol === 'SUPER_ADMIN';
   const canReply = post.estado === 'PUBLICADO' && !post.eliminado;
+  const postResuelto =
+    post.tipo === 'PREGUNTA' &&
+    post.respuestas.some((respuesta) => respuesta.esSolucion);
 
   return (
     <section className="grid gap-6">
@@ -185,9 +236,14 @@ export function ForoDetalle({
                 ? 'Discusión'
                 : 'Anuncio'}
           </span>
-          {post.estado === 'CERRADO' && (
+          {postResuelto && (
             <span className="rounded-full bg-emerald-100 px-3 py-1 text-emerald-700">
               Resuelto
+            </span>
+          )}
+          {post.estado === 'CERRADO' && !postResuelto && (
+            <span className="rounded-full bg-slate-200 px-3 py-1 text-slate-700">
+              Cerrado
             </span>
           )}
         </div>
@@ -242,10 +298,22 @@ export function ForoDetalle({
             return (
               <article
                 key={respuesta.id}
-                className={`rounded-2xl border border-[var(--border)] bg-white p-5 shadow-sm ${
-                  respuesta.respuestaParentId ? 'ml-6' : ''
-                }`}
+                className={`rounded-2xl border bg-white p-5 shadow-sm ${
+                  respuesta.esSolucion
+                    ? 'border-emerald-200 bg-emerald-50/60'
+                    : 'border-[var(--border)]'
+                } ${respuesta.respuestaParentId ? 'ml-6' : ''}`}
               >
+                <div className="mb-3 flex flex-wrap items-center gap-2">
+                  {respuesta.esSolucion && (
+                    <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700">
+                      Solución
+                    </span>
+                  )}
+                  <span className="text-xs font-medium text-[var(--muted)]">
+                    {formatUtilCount(respuesta.esUtil)}
+                  </span>
+                </div>
                 {parent && (
                   <p className="mb-2 text-xs font-medium text-[var(--muted)]">
                     Respuesta a {fullName(parent.autor)}
@@ -258,14 +326,39 @@ export function ForoDetalle({
                   <span className="text-sm text-[var(--muted)]">
                     {fullName(respuesta.autor)}
                   </span>
-                  {canReply && !respuesta.respuestaParentId && (
+                  <div className="flex flex-wrap items-center gap-3">
+                    {post.tipo === 'PREGUNTA' &&
+                      !respuesta.esSolucion &&
+                      !respuesta.respuestaParentId &&
+                      (post.autor.id === currentUserId ||
+                        currentUserId === courseEducadorId ||
+                        currentUserRol === 'ADMIN_ESCUELA' ||
+                        currentUserRol === 'SUPER_ADMIN') && (
+                        <button
+                          onClick={() => void handleMarkSolution(respuesta.id)}
+                          className="text-sm font-medium text-emerald-700 hover:underline"
+                        >
+                          Marcar como solución
+                        </button>
+                      )}
                     <button
-                      onClick={() => setReplyParent(respuesta)}
-                      className="text-sm font-medium text-primary hover:underline"
+                      onClick={() => void handleMarkUtil(respuesta.id)}
+                      disabled={respuesta.marcoUtil}
+                      className="text-sm font-medium text-primary hover:underline disabled:cursor-not-allowed disabled:text-[var(--muted)]"
                     >
-                      Responder a {fullName(respuesta.autor)}
+                      {respuesta.marcoUtil
+                        ? 'Te resultó útil'
+                        : 'Marcar como útil'}
                     </button>
-                  )}
+                    {canReply && !respuesta.respuestaParentId && (
+                      <button
+                        onClick={() => setReplyParent(respuesta)}
+                        className="text-sm font-medium text-primary hover:underline"
+                      >
+                        Responder a {fullName(respuesta.autor)}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </article>
             );

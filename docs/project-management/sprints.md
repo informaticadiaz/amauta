@@ -1,6 +1,6 @@
 # Gestión de Sprints - Amauta
 
-## Sprint Actual: Sprint 17 - Comunidad y Colaboración (PLANIFICADO)
+## Sprint Actual: Sprint 17 - Comunidad y Colaboración (EN PROGRESO)
 
 **Fase**: Fase 5 - Comunidad y Colaboración
 **Objetivo**: Agregar interacción visible y notificaciones básicas sobre actividad en foros.
@@ -8,8 +8,8 @@
 
 ### Issues comprometidas
 
-- 📋 #90 F5-007: API de interacción en foros: marcar solución, útil y filtros
-- 📋 #91 F5-008: UI de interacción en foros: solución, útil y filtros visibles
+- ✅ #90 F5-007: API de interacción en foros: marcar solución, útil y filtros
+- ✅ #91 F5-008: UI de interacción en foros: solución, útil y filtros visibles
 - 📋 #92 F5-009: API de notificaciones básicas para actividad en foros
 
 ## Sprint 15 - Módulo Escolar (COMPLETADO)
