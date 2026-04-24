@@ -24,7 +24,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ### Fase Actual: Fase 5 - Comunidad y Colaboración 🚧 En Progreso
 
-**Progreso**: Sprint 16 completado ✅ — 6/9 issues completados
+**Progreso**: Sprint 17 en progreso 🚧 — 7/9 issues completados
 
 #### Completado en Fase 5:
 
@@ -58,10 +58,17 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Proxies Next.js para listar, crear, responder, cerrar y eliminar posts del foro
   - Enlace `Ir al foro del curso` visible desde el detalle del curso para usuarios con acceso
   - 11 tests frontend/proxies pasando; cobertura focalizada de foros: 81.7% statements
+- ✅ **F5-007**: API de interacción en foros: marcar solución, útil y filtros
+  - Endpoints `POST /foros/respuestas/:id/solucion` y `POST /foros/respuestas/:id/util`
+  - Permisos para marcar solución: autor del post, educador del curso, `ADMIN_ESCUELA` de la misma institución o `SUPER_ADMIN`
+  - Unicidad de solución por post con desplazamiento de la anterior e idempotencia sobre la misma respuesta
+  - Conflicto `409` al marcar "útil" dos veces sobre la misma respuesta
+  - Respuestas del hilo y acciones devuelven `esSolucion`, contador `esUtil` y flag `marcoUtil`
+  - 19 tests del módulo `foros` pasando
 
 #### Próximos pasos:
 
-- 📋 **F5-007**: API de interacción en foros: marcar solución, útil y filtros
+- 📋 **F5-008**: UI de interacción en foros: solución, útil y filtros visibles
 
 **Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 5"
 

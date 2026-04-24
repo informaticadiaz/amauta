@@ -24,7 +24,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ### Fase Actual: Fase 5 - Comunidad y Colaboración 🚧 EN PROGRESO
 
-**Progreso**: Sprint 16 completado ✅ — 6/9 issues completados
+**Progreso**: Sprint 17 en progreso 🚧 — 7/9 issues completados
 
 #### Completado en Fase 5:
 
@@ -34,10 +34,17 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 - ✅ **F5-004**: Prisma base de comunidad: foros, respuestas y reacciones
 - ✅ **F5-005**: API de foros por curso: crear/listar posts y respuestas
 - ✅ **F5-006**: UI básica de foro por curso: listado, detalle y nueva publicación
+- ✅ **F5-007**: API de interacción en foros: marcar solución, útil y filtros
+  - Endpoints `POST /foros/respuestas/:id/solucion` y `POST /foros/respuestas/:id/util`
+  - Permisos para marcar solución: autor del post, educador del curso, `ADMIN_ESCUELA` de la misma institución o `SUPER_ADMIN`
+  - Unicidad de solución por post con desplazamiento de la anterior e idempotencia sobre la misma respuesta
+  - Conflicto `409` al marcar "útil" dos veces sobre la misma respuesta
+  - Respuestas del hilo y acciones devuelven `esSolucion`, contador `esUtil` y flag `marcoUtil`
+  - 19 tests del módulo `foros` pasando
 
 #### Próximo issue abierto
 
-- 📋 **F5-007**: API de interacción en foros: marcar solución, útil y filtros
+- 📋 **F5-008**: UI de interacción en foros: solución, útil y filtros visibles
 
 #### Sprint 8 (Evaluaciones) ✅ Completado
 
@@ -139,6 +146,30 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Proxies Next.js `GET/PUT /api/grupos/:id/asistencias` y `GET /api/educadores/me/grupos`
   - Grilla por estudiante con estados rápidos, observación y cambios pendientes
   - Tests de UI, navegación y proxies frontend
+- ✅ **F4-013**: API Resumen mensual de asistencias por grupo
+  - Endpoint `GET /grupos/:grupoId/asistencias/resumen-mensual?mes&anio`
+  - Resumen por estudiante con contadores por estado y porcentaje mensual
+  - Resumen agregado del grupo con distribución de estados
+  - Permisos para `ADMIN_ESCUELA` y educadores asignados al grupo
+- ✅ **F4-014**: Prisma Calificaciones por periodo académico e institución
+  - Modelo `Calificacion` alineado a `PeriodoAcademico` y `EscalaCalificacion`
+  - Constraint única por grupo, estudiante, período académico y materia
+  - Índices compuestos para consultas por grupo/período y estudiante/período
+  - Migración versionada `20260329000100_calificaciones_periodo_academico`
+- ✅ **F4-015**: API Carga y listado de calificaciones por periodo
+  - Endpoints `GET/PUT /grupos/:grupoId/calificaciones`
+  - Validación de escala de calificación institucional y período académico
+  - Permisos para `ADMIN_ESCUELA` y `EDUCADOR` asignado
+  - Tests unitarios del módulo `calificaciones`
+- ✅ **F4-016**: UI Carga rápida de calificaciones por grupo y periodo
+  - Página `/dashboard/calificaciones` para `ADMIN_ESCUELA` y `EDUCADOR`
+  - Grilla editable de notas y observaciones por grupo, período y materia
+  - Exportación CSV del resumen cargado
+  - Proxies Next.js para calificaciones y períodos académicos
+
+### Fase Anterior: Fase 4 - Módulo Escolar ✅ COMPLETADA
+
+**Progreso**: Sprint 15 completado ✅ (3/3 completados) — Fase 4 completa
 
 #### Preparación Fase 3 - Evaluaciones (completada)
 
@@ -701,7 +732,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 5 en progreso (Sprint 16 completado; próximo issue: F5-007)
+- **Fase actual**: Fase 5 en progreso (Sprint 17 en progreso; próximo issue: F5-008)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**

@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -69,6 +70,8 @@ export interface ForoRespuestaItem {
   contenido: string;
   eliminado: boolean;
   esSolucion: boolean;
+  esUtil: number;
+  marcoUtil: boolean;
   respuestaParentId: string | null;
   creadoEn: Date;
   actualizadoEn: Date;
@@ -217,6 +220,19 @@ export class ForosService {
                 apellido: true,
               },
             },
+            _count: {
+              select: {
+                reacciones: true,
+              },
+            },
+            reacciones: {
+              where: {
+                usuarioId,
+              },
+              select: {
+                usuarioId: true,
+              },
+            },
           },
         },
       },
@@ -231,16 +247,7 @@ export class ForosService {
     return {
       ...mapped,
       respuestas: post.respuestas.map((respuesta) => ({
-        id: respuesta.id,
-        contenido: respuesta.eliminado
-          ? CONTENIDO_ELIMINADO
-          : respuesta.contenido,
-        eliminado: respuesta.eliminado,
-        esSolucion: respuesta.esSolucion,
-        respuestaParentId: respuesta.respuestaParentId ?? null,
-        creadoEn: respuesta.creadoEn,
-        actualizadoEn: respuesta.actualizadoEn,
-        autor: respuesta.autor,
+        ...this.mapRespuesta(respuesta),
       })),
     };
   }
@@ -340,11 +347,138 @@ export class ForosService {
       contenido: respuesta.contenido,
       eliminado: respuesta.eliminado,
       esSolucion: respuesta.esSolucion,
+      esUtil: 0,
+      marcoUtil: false,
       respuestaParentId: respuesta.respuestaParentId ?? null,
       creadoEn: respuesta.creadoEn,
       actualizadoEn: respuesta.actualizadoEn,
       autor: respuesta.autor,
     };
+  }
+
+  async marcarRespuestaComoSolucion(
+    respuestaId: string,
+    usuarioId: string
+  ): Promise<ForoRespuestaItem> {
+    const respuesta = await this.prisma.foroRespuesta.findUnique({
+      where: { id: respuestaId },
+      include: {
+        post: {
+          select: {
+            id: true,
+            autorId: true,
+            cursoId: true,
+            curso: {
+              select: {
+                id: true,
+                educadorId: true,
+                educador: {
+                  select: {
+                    perfil: {
+                      select: {
+                        institucion: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!respuesta || respuesta.eliminado) {
+      throw new NotFoundException('Respuesta no encontrada');
+    }
+
+    const user = await this.obtenerUsuarioAcceso(usuarioId);
+    const canMarkSolution =
+      respuesta.post.autorId === usuarioId ||
+      this.esModerador(user, respuesta.post.curso);
+
+    if (!canMarkSolution) {
+      throw new ForbiddenException(
+        'No tienes permiso para marcar esta respuesta como solución'
+      );
+    }
+
+    if (respuesta.esSolucion) {
+      return this.obtenerRespuestaDetalle(respuestaId, usuarioId);
+    }
+
+    await this.prisma.$transaction(async (tx) => {
+      const respuestaActual = await tx.foroRespuesta.findFirst({
+        where: {
+          postId: respuesta.postId,
+          esSolucion: true,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      if (respuestaActual && respuestaActual.id !== respuestaId) {
+        await tx.foroRespuesta.update({
+          where: { id: respuestaActual.id },
+          data: { esSolucion: false },
+        });
+      }
+
+      await tx.foroRespuesta.update({
+        where: { id: respuestaId },
+        data: { esSolucion: true },
+      });
+    });
+
+    return this.obtenerRespuestaDetalle(respuestaId, usuarioId);
+  }
+
+  async marcarRespuestaComoUtil(
+    respuestaId: string,
+    usuarioId: string
+  ): Promise<ForoRespuestaItem> {
+    const respuesta = await this.prisma.foroRespuesta.findUnique({
+      where: { id: respuestaId },
+      include: {
+        post: {
+          select: {
+            id: true,
+            cursoId: true,
+          },
+        },
+      },
+    });
+
+    if (!respuesta || respuesta.eliminado) {
+      throw new NotFoundException('Respuesta no encontrada');
+    }
+
+    await this.validarParticipacionEnCurso(respuesta.post.cursoId, usuarioId, {
+      requireEnrollmentForNonModerators: true,
+    });
+
+    try {
+      await this.prisma.reaccionForo.create({
+        data: {
+          respuestaId,
+          usuarioId,
+        },
+      });
+    } catch (error: unknown) {
+      if (
+        typeof error === 'object' &&
+        error !== null &&
+        'code' in error &&
+        error.code === 'P2002'
+      ) {
+        throw new ConflictException('Ya marcaste esta respuesta como útil');
+      }
+
+      throw error;
+    }
+
+    return this.obtenerRespuestaDetalle(respuestaId, usuarioId);
   }
 
   async eliminarPost(
@@ -642,6 +776,75 @@ export class ForosService {
     return Array.from(
       new Set(etiquetas.map((etiqueta) => etiqueta.trim()).filter(Boolean))
     );
+  }
+
+  private async obtenerRespuestaDetalle(
+    respuestaId: string,
+    usuarioId: string
+  ): Promise<ForoRespuestaItem> {
+    const respuesta = await this.prisma.foroRespuesta.findUnique({
+      where: { id: respuestaId },
+      include: {
+        autor: {
+          select: {
+            id: true,
+            nombre: true,
+            apellido: true,
+          },
+        },
+        _count: {
+          select: {
+            reacciones: true,
+          },
+        },
+        reacciones: {
+          where: {
+            usuarioId,
+          },
+          select: {
+            usuarioId: true,
+          },
+        },
+      },
+    });
+
+    if (!respuesta) {
+      throw new NotFoundException('Respuesta no encontrada');
+    }
+
+    return this.mapRespuesta(respuesta);
+  }
+
+  private mapRespuesta(respuesta: {
+    id: string;
+    contenido: string;
+    eliminado: boolean;
+    esSolucion: boolean;
+    respuestaParentId: string | null;
+    creadoEn: Date;
+    actualizadoEn: Date;
+    autor: AutorResumen;
+    _count?: {
+      reacciones: number;
+    };
+    reacciones?: Array<{
+      usuarioId: string;
+    }>;
+  }): ForoRespuestaItem {
+    return {
+      id: respuesta.id,
+      contenido: respuesta.eliminado
+        ? CONTENIDO_ELIMINADO
+        : respuesta.contenido,
+      eliminado: respuesta.eliminado,
+      esSolucion: respuesta.esSolucion,
+      esUtil: respuesta._count?.reacciones ?? 0,
+      marcoUtil: (respuesta.reacciones?.length ?? 0) > 0,
+      respuestaParentId: respuesta.respuestaParentId ?? null,
+      creadoEn: respuesta.creadoEn,
+      actualizadoEn: respuesta.actualizadoEn,
+      autor: respuesta.autor,
+    };
   }
 
   private mapPost(post: {

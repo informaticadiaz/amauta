@@ -2,7 +2,7 @@
 
 ## Contrato público
 
-Base path: rutas anidadas bajo `cursos/:id/foros`.
+Base path: rutas anidadas bajo `cursos/:id/foros` y acciones globales sobre respuestas en `foros/respuestas/:id/*`.
 
 ### Endpoints
 
@@ -18,11 +18,24 @@ Base path: rutas anidadas bajo `cursos/:id/foros`.
 - `GET /cursos/:id/foros/:postId`
   - Devuelve detalle del post y su hilo de respuestas.
   - Si el post fue eliminado, el contenido visible se reemplaza por `[contenido eliminado]`.
+  - Cada respuesta expone `esSolucion`, contador `esUtil` y `marcoUtil` para el usuario actual.
 
 - `POST /cursos/:id/foros/:postId/respuestas`
   - Crea una respuesta en el hilo.
   - Si responde a otra respuesta, solo se permite un nivel de anidación.
   - Si responde un usuario distinto al autor del post, se crea `Notificacion` de tipo `NUEVA_RESPUESTA`.
+  - La respuesta creada devuelve `esSolucion`, contador `esUtil` y `marcoUtil`.
+
+- `POST /foros/respuestas/:id/solucion`
+  - Marca una respuesta como solución.
+  - Solo puede hacerlo el autor del post, el educador del curso, `ADMIN_ESCUELA` de la misma institución o `SUPER_ADMIN`.
+  - Solo puede existir una solución por post; marcar otra desplaza la anterior.
+  - Repetir el marcado sobre la misma respuesta es idempotente.
+
+- `POST /foros/respuestas/:id/util`
+  - Registra la reacción "útil" para una respuesta.
+  - Requiere acceso válido al foro del curso.
+  - Si el mismo usuario intenta marcarla otra vez, responde `409 Conflict`.
 
 - `DELETE /cursos/:id/foros/:postId`
   - Soft delete de post.

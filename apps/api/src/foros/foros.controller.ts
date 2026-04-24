@@ -111,6 +111,40 @@ export class ForosController {
     };
   }
 
+  @Post('foros/respuestas/:respuestaId/solucion')
+  @Roles('ESTUDIANTE', 'EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN')
+  async marcarRespuestaComoSolucion(
+    @Param('respuestaId') respuestaId: string,
+    @CurrentUser() user: RequestUser
+  ): Promise<ForoRespuestaWrapper> {
+    const respuesta = await this.forosService.marcarRespuestaComoSolucion(
+      respuestaId,
+      user.id
+    );
+
+    return {
+      respuesta,
+      message: 'Respuesta marcada como solución exitosamente',
+    };
+  }
+
+  @Post('foros/respuestas/:respuestaId/util')
+  @Roles('ESTUDIANTE', 'EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN')
+  async marcarRespuestaComoUtil(
+    @Param('respuestaId') respuestaId: string,
+    @CurrentUser() user: RequestUser
+  ): Promise<ForoRespuestaWrapper> {
+    const respuesta = await this.forosService.marcarRespuestaComoUtil(
+      respuestaId,
+      user.id
+    );
+
+    return {
+      respuesta,
+      message: 'Respuesta marcada como útil exitosamente',
+    };
+  }
+
   @Delete('cursos/:id/foros/:postId')
   @Roles('ESTUDIANTE', 'EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN')
   @HttpCode(HttpStatus.NO_CONTENT)

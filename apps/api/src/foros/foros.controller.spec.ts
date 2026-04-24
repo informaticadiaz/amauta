@@ -12,6 +12,8 @@ describe('ForosController', () => {
     crearPost: jest.fn(),
     obtenerDetallePost: jest.fn(),
     responderPost: jest.fn(),
+    marcarRespuestaComoSolucion: jest.fn(),
+    marcarRespuestaComoUtil: jest.fn(),
     eliminarPost: jest.fn(),
     eliminarRespuesta: jest.fn(),
     cerrarPost: jest.fn(),
@@ -101,6 +103,54 @@ describe('ForosController', () => {
       'curso-1',
       'post-1',
       dto,
+      mockUser.id
+    );
+  });
+
+  it('debería marcar una respuesta como solución y devolver mensaje de éxito', async () => {
+    const respuesta = {
+      id: 'respuesta-1',
+      esSolucion: true,
+      esUtil: 2,
+      marcoUtil: false,
+    };
+    mockForosService.marcarRespuestaComoSolucion.mockResolvedValue(respuesta);
+
+    const result = await controller.marcarRespuestaComoSolucion(
+      'respuesta-1',
+      mockUser
+    );
+
+    expect(result).toEqual({
+      respuesta,
+      message: 'Respuesta marcada como solución exitosamente',
+    });
+    expect(mockForosService.marcarRespuestaComoSolucion).toHaveBeenCalledWith(
+      'respuesta-1',
+      mockUser.id
+    );
+  });
+
+  it('debería marcar una respuesta como útil y devolver mensaje de éxito', async () => {
+    const respuesta = {
+      id: 'respuesta-1',
+      esSolucion: false,
+      esUtil: 4,
+      marcoUtil: true,
+    };
+    mockForosService.marcarRespuestaComoUtil.mockResolvedValue(respuesta);
+
+    const result = await controller.marcarRespuestaComoUtil(
+      'respuesta-1',
+      mockUser
+    );
+
+    expect(result).toEqual({
+      respuesta,
+      message: 'Respuesta marcada como útil exitosamente',
+    });
+    expect(mockForosService.marcarRespuestaComoUtil).toHaveBeenCalledWith(
+      'respuesta-1',
       mockUser.id
     );
   });

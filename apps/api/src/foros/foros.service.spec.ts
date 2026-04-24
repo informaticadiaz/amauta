@@ -7,7 +7,11 @@ jest.mock('@prisma/client', () => ({
 
 import type { TestingModule } from '@nestjs/testing';
 import { Test } from '@nestjs/testing';
-import { BadRequestException, ForbiddenException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { ForosService } from './foros.service';
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -29,8 +33,12 @@ describe('ForosService', () => {
     },
     foroRespuesta: {
       findUnique: jest.fn(),
+      findFirst: jest.fn(),
       create: jest.fn(),
       update: jest.fn(),
+    },
+    reaccionForo: {
+      create: jest.fn(),
     },
     notificacion: { create: jest.fn() },
     $transaction: jest.fn(),
@@ -432,6 +440,225 @@ describe('ForosService', () => {
           eliminado: true,
         },
       });
+    });
+  });
+
+  describe('marcarRespuestaComoSolucion', () => {
+    it('debería desplazar la solución anterior y marcar la nueva respuesta', async () => {
+      prisma.foroRespuesta.findUnique
+        .mockResolvedValueOnce({
+          id: RESPUESTA_ID,
+          autorId: OTRO_ESTUDIANTE_ID,
+          eliminado: false,
+          esSolucion: false,
+          postId: POST_ID,
+          post: {
+            id: POST_ID,
+            autorId: ESTUDIANTE_ID,
+            cursoId: CURSO_ID,
+            curso,
+          },
+        })
+        .mockResolvedValueOnce({
+          id: RESPUESTA_ID,
+          contenido: 'Esta respuesta resuelve la duda',
+          eliminado: false,
+          esSolucion: true,
+          respuestaParentId: null,
+          creadoEn: new Date(),
+          actualizadoEn: new Date(),
+          autor: {
+            id: OTRO_ESTUDIANTE_ID,
+            nombre: 'Luis',
+            apellido: 'Lopez',
+          },
+          _count: {
+            reacciones: 2,
+          },
+          reacciones: [],
+        });
+      prisma.usuario.findUnique.mockResolvedValue(estudiante);
+      prisma.foroRespuesta.findFirst = jest.fn().mockResolvedValue({
+        id: 'ckr0000000000000000001099',
+      });
+      prisma.foroRespuesta.update.mockResolvedValue({ id: RESPUESTA_ID });
+
+      const result = await service.marcarRespuestaComoSolucion(
+        RESPUESTA_ID,
+        ESTUDIANTE_ID
+      );
+
+      expect(prisma.foroRespuesta.update).toHaveBeenNthCalledWith(1, {
+        where: { id: 'ckr0000000000000000001099' },
+        data: { esSolucion: false },
+      });
+      expect(prisma.foroRespuesta.update).toHaveBeenNthCalledWith(
+        2,
+        expect.objectContaining({
+          where: { id: RESPUESTA_ID },
+          data: { esSolucion: true },
+        })
+      );
+      expect(result).toEqual(
+        expect.objectContaining({
+          id: RESPUESTA_ID,
+          esSolucion: true,
+          esUtil: 2,
+          marcoUtil: false,
+        })
+      );
+    });
+
+    it('debería ser idempotente si la respuesta ya está marcada como solución', async () => {
+      prisma.foroRespuesta.findUnique
+        .mockResolvedValueOnce({
+          id: RESPUESTA_ID,
+          autorId: OTRO_ESTUDIANTE_ID,
+          eliminado: false,
+          esSolucion: true,
+          postId: POST_ID,
+          post: {
+            id: POST_ID,
+            autorId: ESTUDIANTE_ID,
+            cursoId: CURSO_ID,
+            curso,
+          },
+        })
+        .mockResolvedValueOnce({
+          id: RESPUESTA_ID,
+          contenido: 'Respuesta ya aceptada',
+          eliminado: false,
+          esSolucion: true,
+          respuestaParentId: null,
+          creadoEn: new Date(),
+          actualizadoEn: new Date(),
+          autor: {
+            id: OTRO_ESTUDIANTE_ID,
+            nombre: 'Luis',
+            apellido: 'Lopez',
+          },
+          _count: {
+            reacciones: 1,
+          },
+          reacciones: [],
+        });
+      prisma.usuario.findUnique.mockResolvedValue(estudiante);
+
+      const result = await service.marcarRespuestaComoSolucion(
+        RESPUESTA_ID,
+        ESTUDIANTE_ID
+      );
+
+      expect(prisma.$transaction).not.toHaveBeenCalled();
+      expect(prisma.foroRespuesta.update).not.toHaveBeenCalled();
+      expect(result).toEqual(
+        expect.objectContaining({
+          id: RESPUESTA_ID,
+          esSolucion: true,
+          esUtil: 1,
+        })
+      );
+    });
+
+    it('debería rechazar el marcado de solución para un usuario sin permisos', async () => {
+      prisma.foroRespuesta.findUnique.mockResolvedValue({
+        id: RESPUESTA_ID,
+        autorId: OTRO_ESTUDIANTE_ID,
+        eliminado: false,
+        esSolucion: false,
+        postId: POST_ID,
+        post: {
+          id: POST_ID,
+          autorId: ESTUDIANTE_ID,
+          cursoId: CURSO_ID,
+          curso,
+        },
+      });
+      prisma.usuario.findUnique.mockResolvedValue(otroEstudiante);
+
+      await expect(
+        service.marcarRespuestaComoSolucion(RESPUESTA_ID, OTRO_ESTUDIANTE_ID)
+      ).rejects.toThrow(ForbiddenException);
+    });
+  });
+
+  describe('marcarRespuestaComoUtil', () => {
+    it('debería registrar la reacción útil una sola vez por usuario', async () => {
+      prisma.usuario.findUnique.mockResolvedValue(estudiante);
+      prisma.curso.findUnique.mockResolvedValue(curso);
+      prisma.inscripcion.findUnique.mockResolvedValue({ estado: 'ACTIVO' });
+      prisma.foroRespuesta.findUnique.mockResolvedValue({
+        id: RESPUESTA_ID,
+        autorId: OTRO_ESTUDIANTE_ID,
+        contenido: 'Respuesta clara',
+        eliminado: false,
+        esSolucion: false,
+        respuestaParentId: null,
+        creadoEn: new Date(),
+        actualizadoEn: new Date(),
+        postId: POST_ID,
+        post: {
+          id: POST_ID,
+          cursoId: CURSO_ID,
+        },
+        autor: {
+          id: OTRO_ESTUDIANTE_ID,
+          nombre: 'Luis',
+          apellido: 'Lopez',
+        },
+        _count: {
+          reacciones: 3,
+        },
+        reacciones: [{ usuarioId: ESTUDIANTE_ID }],
+      });
+      prisma.reaccionForo = {
+        create: jest.fn(),
+      };
+      prisma.reaccionForo.create.mockResolvedValue({ id: 'reaccion-1' });
+
+      const result = await service.marcarRespuestaComoUtil(
+        RESPUESTA_ID,
+        ESTUDIANTE_ID
+      );
+
+      expect(prisma.reaccionForo.create).toHaveBeenCalledWith({
+        data: {
+          respuestaId: RESPUESTA_ID,
+          usuarioId: ESTUDIANTE_ID,
+        },
+      });
+      expect(result).toEqual(
+        expect.objectContaining({
+          id: RESPUESTA_ID,
+          esUtil: 3,
+          marcoUtil: true,
+        })
+      );
+    });
+
+    it('debería rechazar un segundo marcado útil sobre la misma respuesta', async () => {
+      prisma.usuario.findUnique.mockResolvedValue(estudiante);
+      prisma.curso.findUnique.mockResolvedValue(curso);
+      prisma.inscripcion.findUnique.mockResolvedValue({ estado: 'ACTIVO' });
+      prisma.foroRespuesta.findUnique.mockResolvedValue({
+        id: RESPUESTA_ID,
+        postId: POST_ID,
+        eliminado: false,
+        post: {
+          id: POST_ID,
+          cursoId: CURSO_ID,
+        },
+      });
+      prisma.reaccionForo = {
+        create: jest.fn(),
+      };
+      prisma.reaccionForo.create.mockRejectedValue({
+        code: 'P2002',
+      });
+
+      await expect(
+        service.marcarRespuestaComoUtil(RESPUESTA_ID, ESTUDIANTE_ID)
+      ).rejects.toThrow(ConflictException);
     });
   });
 });
