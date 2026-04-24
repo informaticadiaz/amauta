@@ -24,7 +24,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ### Fase Actual: Fase 5 - Comunidad y Colaboración 🚧 En Progreso
 
-**Progreso**: Sprint 16 en progreso — 4/9 issues completados
+**Progreso**: Sprint 16 en progreso — 5/9 issues completados
 
 #### Completado en Fase 5:
 
@@ -46,10 +46,16 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - 4 modelos nuevos con relaciones y índices
   - Migración `20260409000100_comunidad_foros_base`
   - Documentado en `docs/ai-context/database/schema.md`
+- ✅ **F5-005**: API de foros por curso: crear/listar posts y respuestas
+  - Nuevo módulo NestJS `foros` con controller, service y DTOs Zod
+  - Endpoints base para listar, crear, responder, cerrar y soft-delete de posts/respuestas
+  - Reglas de acceso por inscripción activa, educador del curso y admin de la misma institución
+  - Notificación `NUEVA_RESPUESTA` al autor del post al recibir respuestas de terceros
+  - Documentado en `docs/ai-context/modules/foros.md`
 
 #### Próximos pasos:
 
-- 📋 **F5-005**: API de foros por curso: crear/listar posts y respuestas
+- 📋 **F5-006**: UI básica de foro por curso: listado, detalle y nueva publicación
 
 **Documento guía**: `docs/project-management/roadmap.md` → Sección "Fase 5"
 

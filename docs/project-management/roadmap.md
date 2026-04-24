@@ -2187,13 +2187,13 @@ F5-004 (Prisma: ForoPost, ForoRespuesta, ReaccionForo, Notificacion)
 
 ### Sprint 16 — Foros base
 
-| Issue  | Título                                                     | Estado       | Prioridad |
-| ------ | ---------------------------------------------------------- | ------------ | --------- |
-| F5-004 | Prisma base de comunidad: foros, respuestas y reacciones   | 📋 Pendiente | must-have |
-| F5-005 | API de foros por curso: crear/listar posts y respuestas    | 📋 Pendiente | must-have |
-| F5-006 | UI básica de foro por curso: listado, detalle y nueva pub. | 📋 Pendiente | must-have |
+| Issue  | Título                                                     | Estado        | Prioridad |
+| ------ | ---------------------------------------------------------- | ------------- | --------- |
+| F5-004 | Prisma base de comunidad: foros, respuestas y reacciones   | ✅ Completado | must-have |
+| F5-005 | API de foros por curso: crear/listar posts y respuestas    | ✅ Completado | must-have |
+| F5-006 | UI básica de foro por curso: listado, detalle y nueva pub. | 📋 Pendiente  | must-have |
 
-**Progreso Sprint 16**: 0/3 issues completados
+**Progreso Sprint 16**: 2/3 issues completados
 
 ### Sprint 17 — Interacción y notificaciones básicas
 

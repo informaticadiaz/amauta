@@ -1,6 +1,6 @@
 # Product Backlog - Amauta
 
-**Última actualización**: 2026-04-05
+**Última actualización**: 2026-04-24
 **Product Owner**: [Por definir]
 
 ## 🟢 Estado de Producción
@@ -15,7 +15,7 @@
 **Fase 2**: ✅ Completada (8/8 issues completados)
 **Fase 3**: ✅ Completada (Sprint 8-10 completados)
 **Fase 4**: ✅ Completada
-**Fase 5**: 📋 Pendiente (primer lote de issues definido)
+**Fase 5**: 🚧 En progreso (5 issues completados, 1 abierto)
 
 ## Cómo usar este documento
 
@@ -43,21 +43,21 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
-## Sprint 16 - Comunidad y Colaboración (PLANIFICADO)
+## Sprint 16 - Comunidad y Colaboración (EN PROGRESO)
 
 **Objetivo**: Preparar la fase y construir la base mínima del foro por curso para habilitar discusión asincrónica.
 **Referencia**: `docs/project-management/roadmap.md` → Fase 5
 
 ### Issues comprometidas (Sprint 16)
 
-| Issue  | Título                                                     | Estado   |
-| ------ | ---------------------------------------------------------- | -------- |
-| F5-001 | Refinar historias y criterios de aceptación de comunidad   | 📋 Ready |
-| F5-002 | Matriz de dependencias UI/Backend para foros y comunidad   | 📋 Ready |
-| F5-003 | Diseño funcional de flujos de foros, reportes y mensajes   | 📋 Ready |
-| F5-004 | Prisma base de comunidad: foros, respuestas y reacciones   | Backlog  |
-| F5-005 | API de foros por curso: crear/listar posts y respuestas    | Backlog  |
-| F5-006 | UI básica de foro por curso: listado, detalle y nueva pub. | Backlog  |
+| Issue  | Título                                                     | Estado  |
+| ------ | ---------------------------------------------------------- | ------- |
+| F5-001 | Refinar historias y criterios de aceptación de comunidad   | ✅ Done |
+| F5-002 | Matriz de dependencias UI/Backend para foros y comunidad   | ✅ Done |
+| F5-003 | Diseño funcional de flujos de foros, reportes y mensajes   | ✅ Done |
+| F5-004 | Prisma base de comunidad: foros, respuestas y reacciones   | ✅ Done |
+| F5-005 | API de foros por curso: crear/listar posts y respuestas    | ✅ Done |
+| F5-006 | UI básica de foro por curso: listado, detalle y nueva pub. | Backlog |
 
 ## Sprint 17 - Comunidad y Colaboración (PLANIFICADO)
 
