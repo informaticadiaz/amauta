@@ -22,9 +22,22 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 4 - Módulo Escolar 🚧 EN PROGRESO
+### Fase Actual: Fase 5 - Comunidad y Colaboración 🚧 EN PROGRESO
 
-**Progreso**: Sprint 14 en ejecución 🚧
+**Progreso**: Sprint 16 completado ✅ — 6/9 issues completados
+
+#### Completado en Fase 5:
+
+- ✅ **F5-001**: Refinar historias y criterios de aceptación de comunidad — planning
+- ✅ **F5-002**: Matriz de dependencias UI/Backend para foros y comunidad
+- ✅ **F5-003**: Diseño funcional de flujos de foros, reportes y mensajes — planning
+- ✅ **F5-004**: Prisma base de comunidad: foros, respuestas y reacciones
+- ✅ **F5-005**: API de foros por curso: crear/listar posts y respuestas
+- ✅ **F5-006**: UI básica de foro por curso: listado, detalle y nueva publicación
+
+#### Próximo issue abierto
+
+- 📋 **F5-007**: API de interacción en foros: marcar solución, útil y filtros
 
 #### Sprint 8 (Evaluaciones) ✅ Completado
 
@@ -375,8 +388,8 @@ El roadmap define:
 | 1    | MVP Cursos        | ✅ Completado  | `roadmap.md` → Fase 1 |
 | 2    | Offline-First PWA | ✅ Completado  | `roadmap.md` → Fase 2 |
 | 3    | Evaluaciones      | ✅ Completado  | `roadmap.md` → Fase 3 |
-| 4    | Módulo Escolar    | 🚧 En Progreso | `roadmap.md` → Fase 4 |
-| 5    | Comunidad         | 📋 Pendiente   | `roadmap.md` → Fase 5 |
+| 4    | Módulo Escolar    | ✅ Completado  | `roadmap.md` → Fase 4 |
+| 5    | Comunidad         | 🚧 En Progreso | `roadmap.md` → Fase 5 |
 | 6-10 | Avanzadas         | 📋 Futuro      | `roadmap.md`          |
 
 ---
@@ -688,7 +701,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 4 en progreso (Sprint 12 y Sprint 13 completados)
+- **Fase actual**: Fase 5 en progreso (Sprint 16 completado; próximo issue: F5-007)
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**
