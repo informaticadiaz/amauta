@@ -33,7 +33,33 @@ Ejecuta el issue #15 de forma autónoma siguiendo el workflow completo
 
 ## Proceso Autónomo (Ejecutar en Orden Estricto)
 
-### PASO 0 — Verificar Estado del Proyecto (SIEMPRE al iniciar)
+### PASO 0 — Preflight de sincronización del repo (SIEMPRE antes de auditar o codear)
+
+Antes de leer issues, roadmap, documentación o tocar código, verificar que el checkout local esté alineado con `origin/master`.
+
+```bash
+git fetch origin
+git rev-list --left-right --count HEAD...origin/master
+```
+
+Interpretación obligatoria:
+
+- `0 0` → local alineado, se puede continuar
+- `0 N` → local atrasado; **hacer pull antes de seguir**
+- `N 0` → hay commits locales no publicados; revisar antes de seguir
+- `N M` → rama divergida; **STOP**, no seguir hasta resolver
+
+Si el repo local está detrás de `origin/master`:
+
+```bash
+git pull --ff-only origin master
+```
+
+**Regla absoluta**: Nunca auditar roadmap / issues / documentación con un checkout potencialmente desactualizado.
+
+---
+
+### PASO 1 — Verificar Estado del Proyecto (SIEMPRE al iniciar)
 
 Antes de cualquier otra acción, verificar el estado actual del desarrollo consultando **tres fuentes** y comparándolas.
 
@@ -110,7 +136,7 @@ Si se especificó un número:
 
 ---
 
-### PASO 1 — Leer el Issue
+### PASO 2 — Leer el Issue
 
 ```bash
 gh issue view [número] --json title,body,labels
@@ -147,7 +173,7 @@ Luego de leer el issue, clasificarlo en uno de estos dos modos:
 
 ---
 
-### PASO 2 — Cargar Contexto Obligatorio
+### PASO 3 — Cargar Contexto Obligatorio
 
 Leer los archivos correspondientes **antes de escribir una sola línea de código o test**:
 
@@ -186,7 +212,7 @@ LEER: docs/ai-skills/amauta-high-value-tests.md     (criterio obligatorio para d
 
 ---
 
-### PASO 3 — Crear Plan de Trabajo
+### PASO 4 — Crear Plan de Trabajo
 
 Crear un todo list antes de empezar. La estructura varía según el modo determinado en PASO 1:
 
@@ -219,7 +245,7 @@ Crear un todo list antes de empezar. La estructura varía según el modo determi
 
 ---
 
-### PASO 4 — Escribir Tests
+### PASO 5 — Escribir Tests
 
 > **Modo A**: Escribir tests ANTES de implementar. Deben fallar (RED).
 > **Modo B**: Escribir tests DESPUÉS de leer la implementación. Deben pasar (GREEN).
@@ -396,7 +422,7 @@ describe('[Componente]', () => {
 
 ---
 
-### PASO 5 — Verificar Estado de los Tests
+### PASO 6 — Verificar Estado de los Tests
 
 ```bash
 # Backend
@@ -416,7 +442,7 @@ npm run test -w @amauta/web -- --testPathPattern="[Componente]"
 
 ---
 
-### PASO 6 — Implementar el Código (GREEN)
+### PASO 7 — Implementar el Código (GREEN)
 
 Escribir el código mínimo necesario para que los tests pasen. Seguir los patrones del proyecto:
 
@@ -448,7 +474,7 @@ await this.prisma.[modulo].update({
 
 ---
 
-### PASO 7 — Verificar que los Tests Pasan (GREEN) y Refactorizar
+### PASO 8 — Verificar que los Tests Pasan (GREEN) y Refactorizar
 
 ```bash
 # Verificar que pasan
@@ -475,7 +501,7 @@ Antes de cerrar el issue, verificar:
 
 ---
 
-### PASO 7.5 — Verificar Tipos de TypeScript (CRÍTICO)
+### PASO 8.5 — Verificar Tipos de TypeScript (CRÍTICO)
 
 > **Por qué este paso**: `next dev` y `nest start:dev` no verifican tipos completamente.
 > El build de producción (`next build`) sí lo hace y **fallará** si hay errores de tipo.
@@ -508,7 +534,7 @@ npx tsc --noEmit -p apps/web/tsconfig.json
 
 ---
 
-### PASO 8 — Generar Documentación (OBLIGATORIO)
+### PASO 9 — Generar Documentación (OBLIGATORIO)
 
 > ⛔ **Ningún issue puede cerrarse sin estos dos artefactos actualizados. Sin excepción.**
 
@@ -602,7 +628,7 @@ Es el artefacto que permite a un humano entender qué funcionalidad se implement
 
 ---
 
-### PASO 9 — Hacer Commit
+### PASO 10 — Hacer Commit
 
 Incluir **siempre** los archivos de test junto con la implementación:
 
@@ -621,17 +647,13 @@ git commit -m "$(cat <<'EOF'
 - Tests: [qué se cubre con los tests]
 
 Resuelve: #[número]
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>
 EOF
 )"
 ```
 
 ---
 
-### PASO 10 — Actualizar CLAUDE.md (si aplica)
+### PASO 11 — Actualizar CLAUDE.md (si aplica)
 
 Si el issue es un hito de Fase 1 (F1-0XX):
 
@@ -640,7 +662,7 @@ Si el issue es un hito de Fase 1 (F1-0XX):
 
 ---
 
-### PASO 11 — Cerrar el Issue
+### PASO 12 — Cerrar el Issue
 
 ```bash
 gh issue close [número] --comment "✅ Implementación completada con TDD.
@@ -670,6 +692,8 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 > ⛔ **Ningún issue puede cerrarse sin tests pasando. Sin excepción.**
 
 - [ ] Modo de trabajo determinado (A: TDD completo / B: tests pendientes)
+- [ ] Preflight ejecutado: `git fetch origin` + comparación `HEAD...origin/master`
+- [ ] Si el repo estaba behind, se sincronizó con `git pull --ff-only origin master`
 - [ ] **Modo A**: Tests escritos ANTES del código, confirmados en RED
 - [ ] **Modo B**: Implementación leída antes de escribir tests
 - [ ] Tests pasan en GREEN (confirmado con ejecución real)
