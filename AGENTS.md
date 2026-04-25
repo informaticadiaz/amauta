@@ -421,15 +421,15 @@ El roadmap define:
 
 ### Fases del Roadmap (Resumen)
 
-| Fase | Nombre            | Estado         | Documento             |
-| ---- | ----------------- | -------------- | --------------------- |
-| 0    | Fundamentos       | ✅ Completado  | `fase-0-tareas.md`    |
-| 1    | MVP Cursos        | ✅ Completado  | `roadmap.md` → Fase 1 |
-| 2    | Offline-First PWA | ✅ Completado  | `roadmap.md` → Fase 2 |
-| 3    | Evaluaciones      | ✅ Completado  | `roadmap.md` → Fase 3 |
-| 4    | Módulo Escolar    | ✅ Completado  | `roadmap.md` → Fase 4 |
-| 5    | Comunidad         | 🚧 En Progreso | `roadmap.md` → Fase 5 |
-| 6-10 | Avanzadas         | 📋 Futuro      | `roadmap.md`          |
+| Fase | Nombre            | Estado        | Documento             |
+| ---- | ----------------- | ------------- | --------------------- |
+| 0    | Fundamentos       | ✅ Completado | `fase-0-tareas.md`    |
+| 1    | MVP Cursos        | ✅ Completado | `roadmap.md` → Fase 1 |
+| 2    | Offline-First PWA | ✅ Completado | `roadmap.md` → Fase 2 |
+| 3    | Evaluaciones      | ✅ Completado | `roadmap.md` → Fase 3 |
+| 4    | Módulo Escolar    | ✅ Completado | `roadmap.md` → Fase 4 |
+| 5    | Comunidad         | ✅ Completada | `roadmap.md` → Fase 5 |
+| 6-10 | Avanzadas         | 📋 Futuro     | `roadmap.md`          |
 
 ---
 
