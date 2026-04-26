@@ -160,24 +160,26 @@ jobs:
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
 
     steps:
-      - name: Trigger Dokploy webhook
+      - name: Trigger Dokploy deploy
         run: |
           echo "🚀 Disparando deploy en Dokploy..."
 
-          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "${{ secrets.DOKPLOY_WEBHOOK_URL }}" \
-            -H "Content-Type: application/json" \
-            -H "x-github-event: push" \
-            -d '{"ref":"refs/heads/master","repository":{"name":"amauta","full_name":"informaticadiaz/amauta"}}')
+          install -m 600 /dev/null /tmp/deploy_key
+          echo "${{ secrets.VPS_DEPLOY_SSH_KEY }}" > /tmp/deploy_key
 
-          HTTP_STATUS=$(echo "$RESPONSE" | tail -1)
-          BODY=$(echo "$RESPONSE" | head -1)
+          RESPONSE=$(ssh -i /tmp/deploy_key \
+            -o StrictHostKeyChecking=no \
+            -o BatchMode=yes \
+            root@72.60.144.210 2>/dev/null)
 
-          echo "HTTP $HTTP_STATUS: $BODY"
+          rm -f /tmp/deploy_key
 
-          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 400 ]; then
+          echo "Respuesta: $RESPONSE"
+
+          if echo "$RESPONSE" | grep -q "deployed successfully"; then
             echo "✅ Deploy disparado correctamente"
           else
-            echo "❌ Error al disparar el deploy"
+            echo "❌ Error al disparar el deploy: $RESPONSE"
             exit 1
           fi
 
