@@ -126,6 +126,11 @@ describe('AsistenciaRapidaSection', () => {
       ],
     };
 
+    // Make the mock stateful: GET returns the current server state (initial until a
+    // successful PUT occurs, then updated). This avoids races when the component
+    // triggers extra GETs (for example after changing the fecha input) before the
+    // test issues the PUT.
+    let saved = false;
     const fetchMock = jest.fn(async (input, init) => {
       const url = typeof input === 'string' ? input : input?.url;
       if (url?.includes('/api/educadores/me/grupos')) {
@@ -142,7 +147,9 @@ describe('AsistenciaRapidaSection', () => {
       }
 
       if (url?.includes('/api/grupos/grupo-1/asistencias')) {
+        // PUT -> simulate saving and flip server-side state
         if (init?.method === 'PUT') {
+          saved = true;
           return {
             ok: true,
             json: async () => ({
@@ -157,9 +164,8 @@ describe('AsistenciaRapidaSection', () => {
           };
         }
 
-        // GET - return initial then updated depending on a counter
-        fetchMock.callCount = (fetchMock.callCount || 0) + 1;
-        if (fetchMock.callCount === 1) {
+        // GET -> return current server state depending on whether we've 'saved'
+        if (!saved) {
           return { ok: true, json: async () => initialNomina };
         }
         return { ok: true, json: async () => updatedNomina };
