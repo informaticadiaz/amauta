@@ -1,6 +1,6 @@
 # Product Backlog - Amauta
 
-**Última actualización**: 2026-04-24
+**Última actualización**: 2026-04-25
 **Product Owner**: [Por definir]
 
 ## 🟢 Estado de Producción
@@ -15,7 +15,8 @@
 **Fase 2**: ✅ Completada (8/8 issues completados)
 **Fase 3**: ✅ Completada (Sprint 8-10 completados)
 **Fase 4**: ✅ Completada
-**Fase 5**: 🚧 En progreso (6 issues completados, 0 abiertos)
+**Fase 5**: ✅ Completada (9/9 issues completadas)
+**Fase 6**: 📋 Planificada (Sprint 18 creado con 3 issues)
 
 ## Cómo usar este documento
 
@@ -43,7 +44,7 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 
 ---
 
-## Sprint 16 - Comunidad y Colaboración (EN PROGRESO)
+## Sprint 16 - Comunidad y Colaboración (COMPLETADO)
 
 **Objetivo**: Preparar la fase y construir la base mínima del foro por curso para habilitar discusión asincrónica.
 **Referencia**: `docs/project-management/roadmap.md` → Fase 5
@@ -59,7 +60,7 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 | F5-005 | API de foros por curso: crear/listar posts y respuestas    | ✅ Done |
 | F5-006 | UI básica de foro por curso: listado, detalle y nueva pub. | ✅ Done |
 
-## Sprint 17 - Comunidad y Colaboración (PLANIFICADO)
+## Sprint 17 - Comunidad y Colaboración (COMPLETADO)
 
 **Objetivo**: Agregar interacción visible y notificaciones básicas sobre actividad en foros.
 **Referencia**: `docs/project-management/roadmap.md` → Fase 5
@@ -71,7 +72,23 @@ Este backlog contiene todas las historias de usuario, épicas y tareas priorizad
 | ------------ | ------------------------------------------------------------- | -------- |
 | #90 / F5-007 | API de interacción en foros: marcar solución, útil y filtros  | ✅ Hecho |
 | #91 / F5-008 | UI de interacción en foros: solución, útil y filtros visibles | ✅ Hecho |
-| #92 / F5-009 | API de notificaciones básicas para actividad en foros         | Backlog  |
+| #92 / F5-009 | API de notificaciones básicas para actividad en foros         | ✅ Hecho |
+
+---
+
+## Sprint 18 - Búsqueda y Recomendaciones (PLANIFICADO)
+
+**Objetivo**: Iniciar Fase 6 con definición funcional, API básica de búsqueda y UI inicial de catálogo.
+**Referencia**: `docs/project-management/roadmap.md` → Fase 6
+**Milestone GitHub**: `Sprint 18 - Búsqueda y Recomendaciones`
+
+### Issues comprometidas (Sprint 18)
+
+| Issue        | Título                                                             | Estado   |
+| ------------ | ------------------------------------------------------------------ | -------- |
+| #93 / F6-001 | Diseño funcional de búsqueda y descubrimiento de cursos            | 📋 To Do |
+| #94 / F6-002 | API de búsqueda básica de cursos con full-text y filtros iniciales | 📋 To Do |
+| #95 / F6-003 | UI de búsqueda y filtros de catálogo de cursos                     | 📋 To Do |
 
 ---
 
@@ -437,10 +454,11 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 
 ## Próximos Pasos
 
-### Para Fase 4
+### Para Fase 6
 
-1. Crear en GitHub las issues del Sprint 14 para continuar Fase 4
-2. Ejecutar Sprint 14 con foco en asistencias antes de avanzar a calificaciones y comunicados
+1. Ejecutar Sprint 18 respetando la secuencia F6-001 → F6-002 → F6-003
+2. No mezclar recomendaciones ni personalización hasta cerrar la búsqueda básica
+3. Refinar Sprint 19 una vez validado el contrato funcional y técnico de búsqueda
 
 ---
 
@@ -451,5 +469,5 @@ Cuando se encuentre un bug, agregarlo aquí con este formato:
 - Las prioridades pueden ajustarse según feedback de usuarios
 - Nuevas historias pueden agregarse en cualquier momento
 
-**Última revisión**: 29/03/2026
-**Próxima revisión**: Cierre de Sprint 14
+**Última revisión**: 25/04/2026
+**Próxima revisión**: Cierre de Sprint 18

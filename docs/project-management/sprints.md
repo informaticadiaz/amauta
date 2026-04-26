@@ -1,6 +1,18 @@
 # Gestión de Sprints - Amauta
 
-## Sprint Actual: Sprint 17 - Comunidad y Colaboración (EN PROGRESO)
+## Sprint Actual: Sprint 18 - Búsqueda y Recomendaciones (PLANIFICADO)
+
+**Fase**: Fase 6 - Búsqueda y Recomendaciones
+**Objetivo**: Iniciar Fase 6 con definición funcional, API básica de búsqueda y UI inicial de catálogo.
+**Milestone GitHub**: `Sprint 18 - Búsqueda y Recomendaciones`
+
+### Issues comprometidas
+
+- 📋 #93 F6-001: Diseño funcional de búsqueda y descubrimiento de cursos
+- 📋 #94 F6-002: API de búsqueda básica de cursos con full-text y filtros iniciales
+- 📋 #95 F6-003: UI de búsqueda y filtros de catálogo de cursos
+
+## Sprint 17 - Comunidad y Colaboración (COMPLETADO)
 
 **Fase**: Fase 5 - Comunidad y Colaboración
 **Objetivo**: Agregar interacción visible y notificaciones básicas sobre actividad en foros.
@@ -10,7 +22,7 @@
 
 - ✅ #90 F5-007: API de interacción en foros: marcar solución, útil y filtros
 - ✅ #91 F5-008: UI de interacción en foros: solución, útil y filtros visibles
-- 📋 #92 F5-009: API de notificaciones básicas para actividad en foros
+- ✅ #92 F5-009: API de notificaciones básicas para actividad en foros
 
 ## Sprint 15 - Módulo Escolar (COMPLETADO)
 
@@ -75,10 +87,10 @@
 
 ### Último Sprint Completado ✅
 
-**Sprint 15 - Módulo Escolar (Fase 4)**
+**Sprint 17 - Comunidad y Colaboración (Fase 5)**
 
 - Estado: ✅ Completado
-- Referencia: `docs/project-management/roadmap.md` → Fase 4
+- Referencia: `docs/project-management/roadmap.md` → Fase 5
 
 ---
 

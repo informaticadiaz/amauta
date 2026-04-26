@@ -1,6 +1,6 @@
 # Roadmap - Amauta
 
-**Última actualización**: 2026-04-24 (Sprint 17 completado; #90, #91 y #92 cerrados)
+**Última actualización**: 2026-04-25 (Sprint 18 planificado; #93, #94 y #95 creados)
 
 ## Visión General
 
@@ -3177,6 +3177,17 @@ function sanitizarContenidoForo(html: string): string {
 **Duración estimada**: 4-5 semanas
 **Sprint 18-20**
 
+### Sprint 18 — Búsqueda básica y filtros iniciales
+
+| Issue        | Título                                                             | Estado         | Prioridad |
+| ------------ | ------------------------------------------------------------------ | -------------- | --------- |
+| #93 / F6-001 | Diseño funcional de búsqueda y descubrimiento de cursos            | 📋 Planificado | must-have |
+| #94 / F6-002 | API de búsqueda básica de cursos con full-text y filtros iniciales | 📋 Planificado | must-have |
+| #95 / F6-003 | UI de búsqueda y filtros de catálogo de cursos                     | 📋 Planificado | must-have |
+
+**Progreso Sprint 18**: 0/3 issues completados 📋
+**Milestone GitHub**: `Sprint 18 - Búsqueda y Recomendaciones`
+
 ### Objetivos
 
 Mejorar descubrimiento de contenido.
@@ -3347,5 +3358,5 @@ Revisar roadmap cada 3 sprints (6 semanas) para ajustar prioridades.
 
 ---
 
-**Última actualización**: 2026-03-29
-**Próxima revisión**: Cierre de Sprint 14
+**Última actualización**: 2026-04-25
+**Próxima revisión**: Cierre de Sprint 18
