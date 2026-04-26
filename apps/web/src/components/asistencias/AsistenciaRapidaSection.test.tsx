@@ -83,78 +83,92 @@ describe('AsistenciaRapidaSection', () => {
       isEducador: true,
     });
 
-    (global.fetch as jest.Mock)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          grupos: [{ id: 'grupo-1', nombre: '3ro A', rol: 'TITULAR' }],
-          total: 1,
-          page: 1,
-          limit: 10,
-          totalPages: 1,
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          grupoId: 'grupo-1',
-          fecha: '2026-03-29',
-          estudiantes: [
-            {
-              id: 'cm8estudiante000000000000001',
-              nombre: 'Ana',
-              apellido: 'Pérez',
-              email: 'ana@test.com',
-              asistencia: null,
-            },
-            {
-              id: 'cm8estudiante000000000000002',
-              nombre: 'Luis',
-              apellido: 'Gómez',
-              email: 'luis@test.com',
-              asistencia: null,
-            },
-          ],
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          resultado: {
-            grupoId: 'grupo-1',
-            fecha: '2026-03-29',
-            procesadas: 1,
-            creadas: 1,
-            actualizadas: 0,
-          },
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          grupoId: 'grupo-1',
-          fecha: '2026-03-29',
-          estudiantes: [
-            {
-              id: 'cm8estudiante000000000000001',
-              nombre: 'Ana',
-              apellido: 'Pérez',
-              email: 'ana@test.com',
-              asistencia: {
-                estado: 'AUSENTE',
-                observaciones: null,
+    // Implement fetch mock based on URL + method to avoid fragile call-order
+    const initialNomina = {
+      grupoId: 'grupo-1',
+      fecha: '2026-03-29',
+      estudiantes: [
+        {
+          id: 'cm8estudiante000000000000001',
+          nombre: 'Ana',
+          apellido: 'Pérez',
+          email: 'ana@test.com',
+          asistencia: null,
+        },
+        {
+          id: 'cm8estudiante000000000000002',
+          nombre: 'Luis',
+          apellido: 'Gómez',
+          email: 'luis@test.com',
+          asistencia: null,
+        },
+      ],
+    };
+
+    const updatedNomina = {
+      grupoId: 'grupo-1',
+      fecha: '2026-03-29',
+      estudiantes: [
+        {
+          id: 'cm8estudiante000000000000001',
+          nombre: 'Ana',
+          apellido: 'Pérez',
+          email: 'ana@test.com',
+          asistencia: { estado: 'AUSENTE', observaciones: null },
+        },
+        {
+          id: 'cm8estudiante000000000000002',
+          nombre: 'Luis',
+          apellido: 'Gómez',
+          email: 'luis@test.com',
+          asistencia: null,
+        },
+      ],
+    };
+
+    const fetchMock = jest.fn(async (input, init) => {
+      const url = typeof input === 'string' ? input : input?.url;
+      if (url?.includes('/api/educadores/me/grupos')) {
+        return {
+          ok: true,
+          json: async () => ({
+            grupos: [{ id: 'grupo-1', nombre: '3ro A', rol: 'TITULAR' }],
+            total: 1,
+            page: 1,
+            limit: 10,
+            totalPages: 1,
+          }),
+        };
+      }
+
+      if (url?.includes('/api/grupos/grupo-1/asistencias')) {
+        if (init?.method === 'PUT') {
+          return {
+            ok: true,
+            json: async () => ({
+              resultado: {
+                grupoId: 'grupo-1',
+                fecha: '2026-03-29',
+                procesadas: 1,
+                creadas: 1,
+                actualizadas: 0,
               },
-            },
-            {
-              id: 'cm8estudiante000000000000002',
-              nombre: 'Luis',
-              apellido: 'Gómez',
-              email: 'luis@test.com',
-              asistencia: null,
-            },
-          ],
-        }),
-      });
+            }),
+          };
+        }
+
+        // GET - return initial then updated depending on a counter
+        fetchMock.callCount = (fetchMock.callCount || 0) + 1;
+        if (fetchMock.callCount === 1) {
+          return { ok: true, json: async () => initialNomina };
+        }
+        return { ok: true, json: async () => updatedNomina };
+      }
+
+      return { ok: false, json: async () => ({ message: 'not found' }) };
+    });
+
+    (global.fetch as jest.Mock) = fetchMock as unknown as jest.Mock;
 
     render(<AsistenciaRapidaSection />);
 
@@ -200,36 +214,43 @@ describe('AsistenciaRapidaSection', () => {
       isEducador: true,
     });
 
-    (global.fetch as jest.Mock)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          grupos: [{ id: 'grupo-1', nombre: '3ro A', rol: 'TITULAR' }],
-          total: 1,
-          page: 1,
-          limit: 10,
-          totalPages: 1,
-        }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          grupoId: 'grupo-1',
-          fecha: '2026-03-29',
-          estudiantes: [
-            {
-              id: 'cm8estudiante000000000000001',
-              nombre: 'Ana',
-              apellido: 'Pérez',
-              email: 'ana@test.com',
-              asistencia: {
-                estado: 'PRESENTE',
-                observaciones: null,
+    // Similar URL-based mock for the third test
+    const fetchMock2 = jest.fn(async (input, init) => {
+      const url = typeof input === 'string' ? input : input?.url;
+      if (url?.includes('/api/educadores/me/grupos')) {
+        return {
+          ok: true,
+          json: async () => ({
+            grupos: [{ id: 'grupo-1', nombre: '3ro A', rol: 'TITULAR' }],
+            total: 1,
+            page: 1,
+            limit: 10,
+            totalPages: 1,
+          }),
+        };
+      }
+      if (url?.includes('/api/grupos/grupo-1/asistencias')) {
+        return {
+          ok: true,
+          json: async () => ({
+            grupoId: 'grupo-1',
+            fecha: '2026-03-29',
+            estudiantes: [
+              {
+                id: 'cm8estudiante000000000000001',
+                nombre: 'Ana',
+                apellido: 'Pérez',
+                email: 'ana@test.com',
+                asistencia: { estado: 'PRESENTE', observaciones: null },
               },
-            },
-          ],
-        }),
-      });
+            ],
+          }),
+        };
+      }
+      return { ok: false, json: async () => ({ message: 'not found' }) };
+    });
+
+    (global.fetch as jest.Mock) = fetchMock2 as unknown as jest.Mock;
 
     render(<AsistenciaRapidaSection />);
 
