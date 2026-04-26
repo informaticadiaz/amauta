@@ -11,17 +11,10 @@ const { useAuthorization } = jest.requireMock('@/hooks/useAuthorization') as {
 };
 
 describe('AsistenciaRapidaSection', () => {
-  beforeAll(() => {
-    // Fix system date for tests that depend on today's date to make them deterministic
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2026-03-29T00:00:00Z'));
-  });
-
-  afterAll(() => {
-    jest.useRealTimers();
-  });
-  // Increase default timeout for these UI tests which can be a bit slow in CI
-  jest.setTimeout(20000);
+  // NOTE: avoid using fake timers globally because userEvent and async
+  // helpers can break when timers are mocked. Tests that depend on a
+  // specific fecha will explicitly set the date input to a deterministic
+  // value instead of mocking Date.
   beforeEach(() => {
     global.fetch = jest.fn();
   });
@@ -166,12 +159,17 @@ describe('AsistenciaRapidaSection', () => {
     render(<AsistenciaRapidaSection />);
 
     await screen.findByText('Ana Pérez');
+    // Ensure the fecha used by the component is deterministic for the test
+    const fechaInput = screen.getByLabelText(/fecha/i) as HTMLInputElement;
+    await user.clear(fechaInput);
+    await user.type(fechaInput, '2026-03-29');
+
     await user.click(screen.getByRole('button', { name: /ausente-ana/i }));
     await user.click(
       screen.getByRole('button', { name: /guardar asistencias/i })
     );
 
-    const expectedFecha = new Date().toISOString().slice(0, 10);
+    const expectedFecha = '2026-03-29';
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
         '/api/grupos/grupo-1/asistencias',
@@ -236,6 +234,11 @@ describe('AsistenciaRapidaSection', () => {
     render(<AsistenciaRapidaSection />);
 
     await screen.findByText('Ana Pérez');
+    // make fecha deterministic so the component treats the edit as same-day
+    const fechaInput = screen.getByLabelText(/fecha/i) as HTMLInputElement;
+    await user.clear(fechaInput);
+    await user.type(fechaInput, '2026-03-29');
+
     await user.click(screen.getByRole('button', { name: /ausente-ana/i }));
     await user.click(
       screen.getByRole('button', { name: /guardar asistencias/i })
