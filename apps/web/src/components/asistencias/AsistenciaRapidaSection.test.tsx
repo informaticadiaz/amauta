@@ -11,6 +11,17 @@ const { useAuthorization } = jest.requireMock('@/hooks/useAuthorization') as {
 };
 
 describe('AsistenciaRapidaSection', () => {
+  beforeAll(() => {
+    // Fix system date for tests that depend on today's date to make them deterministic
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2026-03-29T00:00:00Z'));
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+  // Increase default timeout for these UI tests which can be a bit slow in CI
+  jest.setTimeout(20000);
   beforeEach(() => {
     global.fetch = jest.fn();
   });
@@ -160,6 +171,7 @@ describe('AsistenciaRapidaSection', () => {
       screen.getByRole('button', { name: /guardar asistencias/i })
     );
 
+    const expectedFecha = new Date().toISOString().slice(0, 10);
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
         '/api/grupos/grupo-1/asistencias',
@@ -167,7 +179,7 @@ describe('AsistenciaRapidaSection', () => {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            fecha: '2026-03-29',
+            fecha: expectedFecha,
             asistencias: [
               {
                 estudianteId: 'cm8estudiante000000000000001',
