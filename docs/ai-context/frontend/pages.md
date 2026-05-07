@@ -160,64 +160,32 @@ export default async function AsistenciasPage() {
 ### Página Pública con Datos
 
 ```typescript
-// app/cursos/page.tsx
+// app/cursos/page.tsx (F6-003 — búsqueda y filtros implementados)
+//
+// Query params soportados: page, buscar, categoriaId, nivel
+// Llama a GET /api/v1/cursos?estado=PUBLICADO&limit=12&...
+// Categorías cacheadas 1h (revalidate: 3600)
+// Layout: BuscadorCursos arriba + FiltrosCursos lateral + CatalogoCursos grid
 
 import { CatalogoCursos } from '@/components/catalogo/CatalogoCursos';
+import { BuscadorCursos } from '@/components/catalogo/BuscadorCursos';
+import { FiltrosCursos } from '@/components/catalogo/FiltrosCursos';
 
-const API_URL = process.env.API_URL || 'http://localhost:3001';
-
-interface SearchParams {
-  page?: string;
-  buscar?: string;
-  categoriaId?: string;
-  nivel?: string;
-}
-
-async function getCursos(params: SearchParams) {
-  const searchParams = new URLSearchParams();
-  if (params.page) searchParams.set('page', params.page);
-  if (params.buscar) searchParams.set('buscar', params.buscar);
-  if (params.categoriaId) searchParams.set('categoriaId', params.categoriaId);
-  if (params.nivel) searchParams.set('nivel', params.nivel);
-
-  const res = await fetch(
-    `${API_URL}/api/v1/cursos?${searchParams.toString()}`,
-    { cache: 'no-store' }
-  );
-
-  if (!res.ok) throw new Error('Error al cargar cursos');
-  return res.json();
-}
-
-async function getCategorias() {
-  const res = await fetch(`${API_URL}/api/v1/categorias`, {
-    next: { revalidate: 3600 },
-  });
-  if (!res.ok) return { categorias: [] };
-  return res.json();
-}
-
-export default async function CursosPage({
-  searchParams,
-}: {
-  searchParams: Promise<SearchParams>;
-}) {
-  const params = await searchParams;
-  const [cursosData, categoriasData] = await Promise.all([
-    getCursos(params),
+export default async function CursosPage({ searchParams }) {
+  const resolvedParams = await searchParams;
+  const [categorias, cursosData] = await Promise.all([
     getCategorias(),
+    getCursos(resolvedParams),
   ]);
 
   return (
-    <CatalogoCursos
-      cursos={cursosData.cursos}
-      categorias={categoriasData.categorias}
-      pagination={{
-        page: cursosData.page,
-        totalPages: cursosData.totalPages,
-        total: cursosData.total,
-      }}
-    />
+    <div>
+      <BuscadorCursos />
+      <div className="grid lg:grid-cols-[250px_1fr]">
+        <FiltrosCursos categorias={categorias} />
+        <CatalogoCursos cursosData={cursosData} />
+      </div>
+    </div>
   );
 }
 ```

@@ -521,6 +521,40 @@ export function PaginacionCursos({ page, totalPages }: Props) {
 }
 ```
 
+### BuscadorCursos
+
+- Client Component para `/cursos`.
+- Input con debounce de 500ms — actualiza query param `buscar` en la URL.
+- Resetea `page` a 1 al buscar.
+- Muestra botón de limpiar cuando hay texto activo.
+- Muestra indicador "Buscando: X" cuando `searchParams.get('buscar')` tiene valor.
+
+### FiltrosCursos
+
+- Client Component para `/cursos`.
+- Props: `categorias: { id, nombre, slug }[]`.
+- Filtros disponibles: `categoriaId` (de la lista de categorías) y `nivel` (PRINCIPIANTE/INTERMEDIO/AVANZADO).
+- Toggle: click en filtro activo lo elimina, click en otro lo activa.
+- Muestra chips de filtros activos con botón ×.
+- Botón "Limpiar" elimina todos los filtros y resetea `page`.
+- Resetea `page` a 1 al cambiar cualquier filtro.
+
+### CatalogoCursos
+
+- Server Component para `/cursos`.
+- Props: `cursosData: { cursos, total, page, limit, totalPages }`.
+- Estado vacío: muestra mensaje "No se encontraron cursos" con call to action.
+- Con cursos: muestra contador "Mostrando N de X cursos" y grid 3 columnas.
+- Paginación: `<PaginacionCursos>` aparece solo cuando `totalPages > 1`.
+
+### PaginacionCursos
+
+- Client Component con lógica de ellipsis (delta = 2 páginas alrededor de la actual).
+- Props: `currentPage: number`, `totalPages: number`.
+- Siempre muestra primera y última página.
+- Mantiene todos los query params existentes (buscar, categoriaId, nivel) al cambiar de página.
+- Botones anterior/siguiente deshabilitados en los extremos.
+
 ---
 
 ## Componentes de Auth

@@ -3179,13 +3179,13 @@ function sanitizarContenidoForo(html: string): string {
 
 ### Sprint 18 — Búsqueda básica y filtros iniciales
 
-| Issue        | Título                                                             | Estado         | Prioridad |
-| ------------ | ------------------------------------------------------------------ | -------------- | --------- |
-| #93 / F6-001 | Diseño funcional de búsqueda y descubrimiento de cursos            | ✅ Completado  | must-have |
-| #94 / F6-002 | API de búsqueda básica de cursos con full-text y filtros iniciales | ✅ Completado  | must-have |
-| #95 / F6-003 | UI de búsqueda y filtros de catálogo de cursos                     | 📋 Planificado | must-have |
+| Issue        | Título                                                             | Estado        | Prioridad |
+| ------------ | ------------------------------------------------------------------ | ------------- | --------- |
+| #93 / F6-001 | Diseño funcional de búsqueda y descubrimiento de cursos            | ✅ Completado | must-have |
+| #94 / F6-002 | API de búsqueda básica de cursos con full-text y filtros iniciales | ✅ Completado | must-have |
+| #95 / F6-003 | UI de búsqueda y filtros de catálogo de cursos                     | ✅ Completado | must-have |
 
-**Progreso Sprint 18**: 2/3 issues completados 🚧
+**Progreso Sprint 18**: 3/3 issues completados ✅
 **Milestone GitHub**: `Sprint 18 - Búsqueda y Recomendaciones`
 
 #### Definición funcional cerrada en F6-001
