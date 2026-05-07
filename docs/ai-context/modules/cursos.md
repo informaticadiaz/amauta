@@ -57,16 +57,17 @@ El módulo de cursos permite a educadores crear, editar y publicar cursos. Los e
 
 Base: `/api/v1/cursos`
 
-| Método | Ruta            | Auth | Roles     | Descripción                      |
-| ------ | --------------- | ---- | --------- | -------------------------------- |
-| GET    | `/`             | No   | Público   | Listar cursos publicados         |
-| GET    | `/mis-cursos`   | Sí   | EDUCADOR+ | Mis cursos como educador         |
-| GET    | `/slug/:slug`   | No   | Público   | Obtener por slug (con lecciones) |
-| GET    | `/:id`          | No   | Público   | Obtener por ID                   |
-| POST   | `/`             | Sí   | EDUCADOR+ | Crear curso                      |
-| PATCH  | `/:id`          | Sí   | EDUCADOR+ | Actualizar curso                 |
-| PATCH  | `/:id/publicar` | Sí   | EDUCADOR+ | Publicar/Despublicar             |
-| DELETE | `/:id`          | Sí   | EDUCADOR+ | Eliminar (archivar)              |
+| Método | Ruta            | Auth | Roles     | Descripción                                   |
+| ------ | --------------- | ---- | --------- | --------------------------------------------- |
+| GET    | `/`             | No   | Público   | Listar cursos publicados                      |
+| GET    | `/buscar`       | No   | Público   | Buscar cursos con relevancia, filtros y sorts |
+| GET    | `/mis-cursos`   | Sí   | EDUCADOR+ | Mis cursos como educador                      |
+| GET    | `/slug/:slug`   | No   | Público   | Obtener por slug (con lecciones)              |
+| GET    | `/:id`          | No   | Público   | Obtener por ID                                |
+| POST   | `/`             | Sí   | EDUCADOR+ | Crear curso                                   |
+| PATCH  | `/:id`          | Sí   | EDUCADOR+ | Actualizar curso                              |
+| PATCH  | `/:id/publicar` | Sí   | EDUCADOR+ | Publicar/Despublicar                          |
+| DELETE | `/:id`          | Sí   | EDUCADOR+ | Eliminar (archivar)                           |
 
 ### Query Parameters (GET /)
 
@@ -79,6 +80,26 @@ Base: `/api/v1/cursos`
 | `buscar`      | string        | -         | Búsqueda en título/descripción     |
 | `ordenarPor`  | enum          | createdAt | createdAt, titulo, publicadoEn     |
 | `orden`       | enum          | desc      | asc, desc                          |
+
+### Query Parameters (GET /buscar)
+
+| Param         | Tipo          | Default                                            | Descripción                                                 |
+| ------------- | ------------- | -------------------------------------------------- | ----------------------------------------------------------- |
+| `page`        | number        | 1                                                  | Página                                                      |
+| `limit`       | number        | 10                                                 | Resultados por página (max 100)                             |
+| `buscar`      | string        | -                                                  | Texto libre (busca en título y descripción)                 |
+| `categoriaId` | string (cuid) | -                                                  | Filtrar por categoría                                       |
+| `nivel`       | enum          | -                                                  | PRINCIPIANTE, INTERMEDIO, AVANZADO                          |
+| `duracion`    | enum          | -                                                  | `corta` (<60 min), `media` (60-180 min), `larga` (>180 min) |
+| `idioma`      | string        | -                                                  | Código de idioma (`es`, `en`, etc.)                         |
+| `ordenarPor`  | enum          | relevancia (con buscar) / publicadoEn (sin buscar) | relevancia, publicadoEn, titulo                             |
+| `orden`       | enum          | desc                                               | asc, desc                                                   |
+
+**Reglas importantes:**
+
+- Siempre devuelve solo cursos `PUBLICADO` — no configurable
+- Con `buscar` sin `ordenarPor`: los cursos donde coincide el título van primero, luego los de descripción
+- Sin `buscar`: ordenado por `publicadoEn desc` por defecto
 
 ---
 

@@ -21,6 +21,7 @@ import { CursosService, type CursoConEducador } from './cursos.service';
 import type { CreateCursoDto } from './dto/create-curso.dto';
 import type { UpdateCursoDto, PublicarCursoDto } from './dto/update-curso.dto';
 import type { QueryCursosDto } from './dto/query-cursos.dto';
+import type { BusquedaCursosDto } from './dto/busqueda-cursos.dto';
 import { Public, CurrentUser, Roles } from '../common/decorators';
 import type { RequestUser } from '../common/guards';
 
@@ -73,6 +74,22 @@ export class CursosController {
     @Query() query: QueryCursosDto
   ): Promise<ListaCursosResponse> {
     return this.cursosService.listarMisCursos(user.id, query);
+  }
+
+  /**
+   * Buscar cursos del catálogo público
+   *
+   * GET /api/v1/cursos/buscar
+   *
+   * Query params: buscar, categoriaId, nivel, duracion (corta|media|larga),
+   *               idioma, page, limit, ordenarPor (relevancia|publicadoEn|titulo), orden
+   */
+  @Public()
+  @Get('buscar')
+  async buscar(
+    @Query() query: BusquedaCursosDto
+  ): Promise<ListaCursosResponse> {
+    return this.cursosService.buscarCursos(query);
   }
 
   /**

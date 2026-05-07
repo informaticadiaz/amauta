@@ -7,6 +7,7 @@
  * - [x] Solo propietario puede modificar sus cursos
  * - [x] Paginación funcionando (limit, offset)
  * - [x] Filtro por categoría y estado
+ * - [x] buscarCursos: solo PUBLICADO, relevancia, filtros duracion e idioma
  */
 
 // Mock @prisma/client ANTES de cualquier import que lo use
@@ -575,6 +576,115 @@ describe('CursosService', () => {
 
       await expect(service.eliminar(CURSO_ID, EDUCADOR_ID)).rejects.toThrow(
         ForbiddenException
+      );
+    });
+  });
+
+  describe('buscarCursos', () => {
+    const cursoPublicado = (
+      titulo: string,
+      descripcion: string,
+      extra: object = {}
+    ) => ({
+      ...mockCurso,
+      estado: 'PUBLICADO',
+      titulo,
+      descripcion,
+      publicadoEn: new Date('2024-01-01'),
+      ...extra,
+    });
+
+    it('sin buscar: devuelve cursos PUBLICADO paginados ordenados por publicadoEn desc', async () => {
+      prisma.curso.findMany.mockResolvedValue([
+        cursoPublicado('Python', 'Aprende Python'),
+      ]);
+      prisma.curso.count.mockResolvedValue(1);
+
+      const result = await service.buscarCursos({ page: 1, limit: 10 });
+
+      expect(result.cursos).toHaveLength(1);
+      expect(result.total).toBe(1);
+      expect(prisma.curso.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({ estado: 'PUBLICADO' }),
+          orderBy: { publicadoEn: 'desc' },
+        })
+      );
+    });
+
+    it('con buscar sin ordenarPor: cursos con coincidencia en título van primero', async () => {
+      const tituloMatch = cursoPublicado(
+        'Python para todos',
+        'Aprende este lenguaje'
+      );
+      const descMatch = cursoPublicado(
+        'Programación básica',
+        'Aprende Python de cero',
+        { publicadoEn: new Date('2024-06-01') }
+      );
+      // Prisma devuelve descMatch primero (más reciente), el servicio debe re-ordenar
+      prisma.curso.findMany.mockResolvedValue([descMatch, tituloMatch]);
+
+      const result = await service.buscarCursos({
+        page: 1,
+        limit: 10,
+        buscar: 'Python',
+      });
+
+      expect(result.cursos[0].titulo).toBe('Python para todos');
+      expect(result.cursos[1].titulo).toBe('Programación básica');
+      expect(result.total).toBe(2);
+    });
+
+    it('filtro duracion=corta: incluye where duracion < 60 en la query', async () => {
+      prisma.curso.findMany.mockResolvedValue([]);
+      prisma.curso.count.mockResolvedValue(0);
+
+      await service.buscarCursos({ page: 1, limit: 10, duracion: 'corta' });
+
+      expect(prisma.curso.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({ duracion: { lt: 60 } }),
+        })
+      );
+    });
+
+    it('siempre filtra por estado PUBLICADO', async () => {
+      prisma.curso.findMany.mockResolvedValue([]);
+      prisma.curso.count.mockResolvedValue(0);
+
+      await service.buscarCursos({ page: 1, limit: 10 });
+
+      const call = prisma.curso.findMany.mock.calls[0][0] as {
+        where: Record<string, unknown>;
+      };
+      expect(call.where.estado).toBe('PUBLICADO');
+    });
+
+    it('sin resultados: devuelve lista vacía sin lanzar error', async () => {
+      // Relevance path: no count, total = allMatches.length
+      prisma.curso.findMany.mockResolvedValue([]);
+
+      const result = await service.buscarCursos({
+        page: 1,
+        limit: 10,
+        buscar: 'termino-que-no-existe-xyz',
+      });
+
+      expect(result.cursos).toHaveLength(0);
+      expect(result.total).toBe(0);
+    });
+
+    it('filtro idioma: incluye idioma en la query', async () => {
+      prisma.curso.findMany.mockResolvedValue([]);
+      prisma.curso.count.mockResolvedValue(0);
+
+      await service.buscarCursos({ page: 1, limit: 10, idioma: 'en' });
+
+      expect(prisma.curso.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({ idioma: 'en' }),
+        })
       );
     });
   });

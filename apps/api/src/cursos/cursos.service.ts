@@ -20,7 +20,11 @@ import {
   type PublicarCursoDto,
 } from './dto/update-curso.dto';
 import { queryCursosSchema, type QueryCursosDto } from './dto/query-cursos.dto';
-import type { EstadoCurso, Nivel } from '@prisma/client';
+import {
+  busquedaCursosSchema,
+  type BusquedaCursosDto,
+} from './dto/busqueda-cursos.dto';
+import type { EstadoCurso, Nivel, Prisma } from '@prisma/client';
 
 export interface CursoConEducador {
   id: string;
@@ -596,6 +600,120 @@ export class CursosService {
     });
 
     return curso;
+  }
+
+  /**
+   * Busca cursos del catálogo público con filtros, paginación y ordenamiento por relevancia.
+   * Siempre devuelve solo cursos PUBLICADO.
+   */
+  async buscarCursos(rawDto: BusquedaCursosDto): Promise<ListaCursosResult> {
+    const validation = busquedaCursosSchema.safeParse(rawDto);
+    if (!validation.success) {
+      const message =
+        validation.error.issues[0]?.message ?? 'Parámetros inválidos';
+      throw new BadRequestException(message);
+    }
+
+    const {
+      page,
+      limit,
+      buscar,
+      categoriaId,
+      nivel,
+      duracion,
+      idioma,
+      ordenarPor,
+      orden,
+    } = validation.data;
+
+    const skip = (page - 1) * limit;
+
+    const baseWhere: Prisma.CursoWhereInput = {
+      estado: 'PUBLICADO' as EstadoCurso,
+    };
+
+    if (categoriaId) baseWhere.categoriaId = categoriaId;
+    if (nivel) baseWhere.nivel = nivel as Nivel;
+    if (idioma) baseWhere.idioma = idioma;
+
+    if (duracion === 'corta') baseWhere.duracion = { lt: 60 };
+    else if (duracion === 'media') baseWhere.duracion = { gte: 60, lte: 180 };
+    else if (duracion === 'larga') baseWhere.duracion = { gt: 180 };
+
+    const includeStandard: Prisma.CursoInclude = {
+      educador: {
+        select: { id: true, nombre: true, apellido: true, avatar: true },
+      },
+      categoria: { select: { id: true, nombre: true, slug: true } },
+      _count: { select: { lecciones: true, inscripciones: true } },
+    };
+
+    // Determinar ordenamiento efectivo
+    const efectivoOrdenarPor =
+      ordenarPor ?? (buscar ? 'relevancia' : 'publicadoEn');
+    const useRelevance = !!buscar && efectivoOrdenarPor === 'relevancia';
+
+    if (useRelevance) {
+      // Obtener todos los resultados para ordenar por relevancia en memoria
+      const allMatches = await this.prisma.curso.findMany({
+        where: {
+          ...baseWhere,
+          OR: [
+            { titulo: { contains: buscar, mode: 'insensitive' } },
+            { descripcion: { contains: buscar, mode: 'insensitive' } },
+          ],
+        },
+        orderBy: { publicadoEn: 'desc' },
+        include: includeStandard,
+      });
+
+      const buscarLower = buscar.toLowerCase();
+      allMatches.sort((a, b) => {
+        const aInTitle = a.titulo.toLowerCase().includes(buscarLower) ? 0 : 1;
+        const bInTitle = b.titulo.toLowerCase().includes(buscarLower) ? 0 : 1;
+        return aInTitle - bInTitle;
+      });
+
+      const total = allMatches.length;
+      const cursos = allMatches.slice(skip, skip + limit);
+      return {
+        cursos,
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      };
+    }
+
+    // Path simple: ordenamiento por campo + filtro OR opcional
+    const where: Prisma.CursoWhereInput = buscar
+      ? {
+          ...baseWhere,
+          OR: [
+            { titulo: { contains: buscar, mode: 'insensitive' } },
+            { descripcion: { contains: buscar, mode: 'insensitive' } },
+          ],
+        }
+      : baseWhere;
+
+    const orderByField =
+      efectivoOrdenarPor === 'relevancia' ? 'publicadoEn' : efectivoOrdenarPor;
+    const orderBy: Prisma.CursoOrderByWithRelationInput = {
+      [orderByField]: orden,
+    };
+
+    const [cursos, total] = await Promise.all([
+      this.prisma.curso.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy,
+        include: includeStandard,
+      }),
+      this.prisma.curso.count({ where }),
+    ]);
+
+    return { cursos, total, page, limit, totalPages: Math.ceil(total / limit) };
   }
 
   /**
