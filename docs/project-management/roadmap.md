@@ -3182,10 +3182,10 @@ function sanitizarContenidoForo(html: string): string {
 | Issue        | Título                                                             | Estado         | Prioridad |
 | ------------ | ------------------------------------------------------------------ | -------------- | --------- |
 | #93 / F6-001 | Diseño funcional de búsqueda y descubrimiento de cursos            | ✅ Completado  | must-have |
-| #94 / F6-002 | API de búsqueda básica de cursos con full-text y filtros iniciales | 📋 Planificado | must-have |
+| #94 / F6-002 | API de búsqueda básica de cursos con full-text y filtros iniciales | ✅ Completado  | must-have |
 | #95 / F6-003 | UI de búsqueda y filtros de catálogo de cursos                     | 📋 Planificado | must-have |
 
-**Progreso Sprint 18**: 1/3 issues completados 🚧
+**Progreso Sprint 18**: 2/3 issues completados 🚧
 **Milestone GitHub**: `Sprint 18 - Búsqueda y Recomendaciones`
 
 #### Definición funcional cerrada en F6-001
