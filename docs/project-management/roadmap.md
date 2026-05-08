@@ -2072,6 +2072,40 @@ const permisos = {
 
 ---
 
+## Fase 4b: Módulo Escolar — Completar gaps
+
+**Duración estimada**: 1-2 semanas
+**Sprint 20** (retroactivo — gaps de Fase 4 detectados en 2026-05-07)
+
+### Contexto
+
+Al revisar el roadmap general se detectó que Fase 4 implementó toda la perspectiva del admin/educador pero dejó sin implementar la perspectiva del estudiante y el módulo de comunicados. Estos features estaban definidos en las historias de usuario y criterios de aceptación de F4-003 pero nunca se crearon como issues de implementación.
+
+### Sprint 20 — Completar Fase 4
+
+| Issue          | Título                                                    | Estado     | Prioridad |
+| -------------- | --------------------------------------------------------- | ---------- | --------- |
+| #101 / F4b-001 | Vista del estudiante — mis calificaciones y mi asistencia | 🔄 Abierto | must-have |
+| #102 / F4b-002 | Boletín académico descargable por periodo                 | 🔄 Abierto | must-have |
+| #103 / F4b-003 | Comunicados institucionales — API y UI completa           | 🔄 Abierto | must-have |
+| #104 / F4b-004 | Reportes de asistencia y rendimiento académico (admin)    | 🔄 Abierto | must-have |
+
+**Progreso Sprint 20**: 0/4 issues completados
+
+#### Dependencias
+
+```
+F4b-001 (endpoints /me/calificaciones y /me/asistencias)
+  └── F4b-002 (boletín: agrega datos de calificaciones + asistencia)
+
+F4b-003 (comunicados) — independiente
+F4b-004 (reportes admin) — independiente
+```
+
+F4b-001 y F4b-002 son secuenciales. F4b-003 y F4b-004 pueden ir en paralelo con cualquiera.
+
+---
+
 ## Fase 5: Comunidad y Colaboración
 
 **Duración estimada**: 5-6 semanas

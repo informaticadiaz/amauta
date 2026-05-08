@@ -11,18 +11,31 @@ _"No concebimos la educación como un producto, sino como un derecho social."_
 
 ## Estado Actual
 
-**Fase 7 — Multimedia y Contenido Rico** · Sprint 19 · 1/4 completados
+**Fase 4b — Módulo Escolar (completar gaps)** · Sprint 20 · 0/4 completados
 
-| Issue         | Descripción                                   | Estado |
-| ------------- | --------------------------------------------- | ------ |
-| #97 / F7-001  | Diseño funcional de multimedia                | ✅     |
-| #98 / F7-002  | Editor de texto rico para lecciones TEXTO     | 🔄     |
-| #99 / F7-003  | Upload y reproducción de video y audio        | 🔄     |
-| #100 / F7-004 | Contenido interactivo H5P (embed URL externa) | 🔄     |
+| Issue          | Descripción                                          | Estado |
+| -------------- | ---------------------------------------------------- | ------ |
+| #101 / F4b-001 | Vista del estudiante — mis calificaciones/asistencia | 🔄     |
+| #102 / F4b-002 | Boletín académico descargable por periodo            | 🔄     |
+| #103 / F4b-003 | Comunicados institucionales — API y UI               | 🔄     |
+| #104 / F4b-004 | Reportes de asistencia y rendimiento (admin)         | 🔄     |
 
-Lecciones tipo `TEXTO`, `VIDEO` e `INTERACTIVO`. H5P como embed externo (sin self-hosting).
-Diseño funcional en `docs/project-management/fase-7-diseno-funcional-multimedia.md`.
-Editor: TipTap. Storage: MinIO (self-hosted en VPS). Audio: tipo VIDEO por mimeType. Sin migración de schema.
+Gaps detectados: estudiante no podía ver sus propias notas/asistencia. Comunicados en schema pero sin módulo. Sin boletín ni reportes admin.
+**Fase 7 pausada** hasta completar Fase 4b.
+
+### Historial de Fases
+
+| Fase | Nombre                      | Estado          |
+| ---- | --------------------------- | --------------- |
+| 0    | Fundamentos                 | ✅              |
+| 1    | MVP Cursos                  | ✅              |
+| 2    | Offline-First PWA           | ✅              |
+| 3    | Evaluaciones                | ✅              |
+| 4    | Módulo Escolar              | ✅ (admin/educ) |
+| 4b   | Módulo Escolar — gaps       | 🔄 En curso     |
+| 5    | Comunidad y Colaboración    | ✅              |
+| 6    | Búsqueda y Recomendaciones  | ✅              |
+| 7    | Multimedia y Contenido Rico | ⏸ Pausada       |
 
 ### Historial de Fases
 
