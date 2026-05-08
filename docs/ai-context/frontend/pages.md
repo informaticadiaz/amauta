@@ -25,6 +25,8 @@ apps/web/src/app/
 │   │   └── page.tsx             # /dashboard/calificaciones (ADMIN_ESCUELA, EDUCADOR)
 │   ├── mi-asistencia/
 │   │   └── page.tsx             # /dashboard/mi-asistencia (ESTUDIANTE)
+│   ├── mi-boletin/
+│   │   └── page.tsx             # /dashboard/mi-boletin (ESTUDIANTE) — boletín con impresión PDF
 │   ├── mis-notas/
 │   │   └── page.tsx             # /dashboard/mis-notas (ESTUDIANTE)
 │   ├── grupos/
