@@ -14,10 +14,11 @@
 
 ### Video y audio (lecciones VIDEO)
 
-- **Storage**: Cloudflare R2 (sin costos de egress, API S3-compatible)
+- **Storage**: MinIO self-hosted en el VPS (sin servicios de terceros), API S3-compatible
 - **Audio**: usa el mismo tipo `VIDEO`, se diferencia por `mimeType` en `contenido`
-- **Transcodificación**: NO en esta fase — archivos servidos directamente desde R2
+- **Transcodificación**: NO en esta fase — archivos servidos directamente desde MinIO
 - **Límites**: video hasta 500 MB (MP4/WebM), audio hasta 100 MB (MP3/OGG/WAV)
+- **Pre-requisito F7-003**: MinIO deployado en Dokploy antes de implementar
 
 ### Contenido interactivo (lecciones INTERACTIVO)
 

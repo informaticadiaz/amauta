@@ -8,17 +8,17 @@
 
 ## Resumen de Decisiones
 
-| Tema                               | Decisión                      | Justificación                                               |
-| ---------------------------------- | ----------------------------- | ----------------------------------------------------------- |
-| Editor WYSIWYG                     | **TipTap**                    | Mejor DX en React, MIT, extensible, mantenimiento activo    |
-| Formato de almacenamiento de texto | **HTML**                      | TipTap lo genera nativamente; más fácil de renderizar       |
-| Storage video/audio                | **Cloudflare R2**             | Sin costos de egress, API S3-compatible, CDN integrable     |
-| Transcodificación                  | **No en Fase 7**              | Archivos servidos directamente; HLS se evalúa en Fase 8     |
-| Player video                       | **HTML5 nativo + estilos**    | Suficiente para MVP; sin dependencias extra                 |
-| Player audio                       | **HTML5 nativo + estilos**    | Suficiente para MVP                                         |
-| Audio en schema                    | **Tipo VIDEO** (por mimeType) | No requiere migración; se diferencia por `mimeType`         |
-| H5P                                | **Embed externo via iframe**  | Sin self-hosting; el educador provee la URL de H5P.org/Lumi |
-| Migración de schema                | **NO requerida**              | `contenido Json` ya existe y es suficientemente flexible    |
+| Tema                               | Decisión                       | Justificación                                               |
+| ---------------------------------- | ------------------------------ | ----------------------------------------------------------- |
+| Editor WYSIWYG                     | **TipTap**                     | Mejor DX en React, MIT, extensible, mantenimiento activo    |
+| Formato de almacenamiento de texto | **HTML**                       | TipTap lo genera nativamente; más fácil de renderizar       |
+| Storage video/audio                | **MinIO (self-hosted en VPS)** | Sin dependencias externas, S3-compatible, gratuito          |
+| Transcodificación                  | **No en Fase 7**               | Archivos servidos directamente; HLS se evalúa en Fase 8     |
+| Player video                       | **HTML5 nativo + estilos**     | Suficiente para MVP; sin dependencias extra                 |
+| Player audio                       | **HTML5 nativo + estilos**     | Suficiente para MVP                                         |
+| Audio en schema                    | **Tipo VIDEO** (por mimeType)  | No requiere migración; se diferencia por `mimeType`         |
+| H5P                                | **Embed externo via iframe**   | Sin self-hosting; el educador provee la URL de H5P.org/Lumi |
+| Migración de schema                | **NO requerida**               | `contenido Json` ya existe y es suficientemente flexible    |
 
 ---
 
@@ -115,19 +115,30 @@ Verificar en el service que no hay validación que rechace el formato `{html, fo
 
 ## 2. Upload y Reproducción de Video y Audio (F7-003)
 
-### Decisión: Cloudflare R2
+### Decisión: MinIO (self-hosted en VPS)
 
-**Provider**: Cloudflare R2 (S3-compatible)
+**Provider**: [MinIO](https://min.io/) — servidor de object storage S3-compatible, deployado como contenedor Docker en el mismo VPS via Dokploy.
 
-**Justificación frente a alternativas**:
+**Constraint del proyecto**: no se usan servicios de terceros. Todo corre en el VPS propio.
 
-- **R2 vs AWS S3**: R2 tiene **egress gratuito** (S3 cobra por bajada). Para una plataforma educativa con video, el egress es el mayor costo. R2 elimina ese costo.
-- **R2 vs Bunny.net**: Bunny tiene mejor streaming HLS nativo, pero en Fase 7 no hacemos transcodificación. R2 es suficiente para servir el archivo directamente. Bunny se evaluará en Fase 8 si se necesita HLS.
-- **R2 es S3-compatible**: usar `@aws-sdk/client-s3` — si se cambia de provider en Fase 8, solo cambia la configuración.
+**Justificación**:
+
+- API 100% S3-compatible: el backend usa `@aws-sdk/client-s3` apuntando al endpoint de MinIO. Si en el futuro se migra a otro provider S3-compatible, solo cambia la configuración.
+- Gratuito y open source — sin costos de egress ni suscripciones.
+- Deployado en Dokploy como servicio Docker adicional, mismo VPS.
+- Archivos servidos directamente desde MinIO vía URL pública (bucket con política de lectura pública).
+
+**Deployment en Dokploy**:
+
+- Imagen: `minio/minio:latest`
+- Puerto interno API: `9000`
+- Puerto interno consola: `9001`
+- Exponer vía Nginx reverse proxy: `https://media.amauta.diazignacio.ar` (o subpath)
+- Comando: `server /data --console-address ":9001"`
 
 ### Alcance de Fase 7 (sin transcodificación)
 
-El video se sube como MP4/WebM y se sirve directamente desde R2. No hay HLS, no hay thumbnails automáticos. El navegador lo reproduce nativamente con `<video>`.
+El video se sube como MP4/WebM y se sirve directamente desde MinIO. No hay HLS, no hay thumbnails automáticos. El navegador lo reproduce nativamente con `<video>`.
 
 **Transcodificación HLS**: se evalúa en Fase 8 si la experiencia de reproducción lo requiere.
 
@@ -178,13 +189,15 @@ interface ContenidoMedia {
 ### Variables de entorno requeridas
 
 ```env
-# Cloudflare R2
-CLOUDFLARE_R2_ACCOUNT_ID=
-CLOUDFLARE_R2_ACCESS_KEY_ID=
-CLOUDFLARE_R2_SECRET_ACCESS_KEY=
-CLOUDFLARE_R2_BUCKET_NAME=amauta-media
-CLOUDFLARE_R2_PUBLIC_URL=https://pub-xxxxx.r2.dev
+# MinIO (self-hosted en VPS)
+MINIO_ENDPOINT=http://minio:9000          # URL interna Docker (API a MinIO)
+MINIO_ACCESS_KEY=                          # Configurado en Dokploy
+MINIO_SECRET_KEY=                          # Configurado en Dokploy
+MINIO_BUCKET=amauta-media
+MINIO_PUBLIC_URL=https://media.amauta.diazignacio.ar  # URL pública vía Nginx
 ```
+
+> **Nota de deployment**: MinIO debe estar deployado en Dokploy ANTES de ejecutar F7-003. El bucket `amauta-media` debe crearse con política de lectura pública para que las URLs funcionen sin autenticación en el frontend.
 
 ### Nuevo endpoint de upload
 
@@ -210,9 +223,10 @@ Response 201:
 ### Implementación backend
 
 - Nueva clase `MediaUploadsService` (no modificar el `UploadsService` de imágenes)
-- Usa `@aws-sdk/client-s3` + `PutObjectCommand`
+- Usa `@aws-sdk/client-s3` con `endpoint: MINIO_ENDPOINT` y `forcePathStyle: true` (requerido para MinIO)
+- `PutObjectCommand` para subir, `DeleteObjectCommand` para eliminar
 - Validación de MIME type antes de subir
-- URL pública construida con `CLOUDFLARE_R2_PUBLIC_URL + "/" + storageKey`
+- URL pública construida con `MINIO_PUBLIC_URL + "/" + MINIO_BUCKET + "/" + storageKey`
 
 ### Flujo del educador
 
@@ -319,7 +333,7 @@ Accedé directamente: [h5pUrl]
 ```
 F7-001 (este documento) — FUENTE DE VERDAD
   ├── F7-002: Editor TipTap para TEXTO — sin dependencias adicionales
-  ├── F7-003: Upload R2 para VIDEO/audio — requiere variables de entorno R2 configuradas
+  ├── F7-003: Upload MinIO para VIDEO/audio — requiere MinIO deployado en Dokploy y vars de entorno configuradas
   └── F7-004: H5P iframe para INTERACTIVO — sin dependencias adicionales
 ```
 
@@ -361,7 +375,7 @@ No se crea un módulo nuevo. Se extiende el módulo existente con:
 npm install @tiptap/react @tiptap/starter-kit @tiptap/extension-link dompurify @types/dompurify -w @amauta/web
 ```
 
-### F7-003 (Cloudflare R2)
+### F7-003 (MinIO)
 
 ```bash
 # Backend

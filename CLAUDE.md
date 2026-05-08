@@ -22,7 +22,7 @@ _"No concebimos la educación como un producto, sino como un derecho social."_
 
 Lecciones tipo `TEXTO`, `VIDEO` e `INTERACTIVO`. H5P como embed externo (sin self-hosting).
 Diseño funcional en `docs/project-management/fase-7-diseno-funcional-multimedia.md`.
-Editor: TipTap. Storage: Cloudflare R2. Audio: tipo VIDEO por mimeType. Sin migración de schema.
+Editor: TipTap. Storage: MinIO (self-hosted en VPS). Audio: tipo VIDEO por mimeType. Sin migración de schema.
 
 ### Historial de Fases
 
