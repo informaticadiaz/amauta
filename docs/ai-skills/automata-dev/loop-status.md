@@ -2,12 +2,23 @@
 
 ## Estado actual
 
-- Estado: EN CURSO — sesión [2/4] Fase 4b. Completado #102 F4b-002. Próximo: project-manager-automata [loop_count=2/4]
+- Estado: EN CURSO — sesión [3/4] Fase 4b. Completado #103 F4b-003. Próximo: project-manager-automata [loop_count=3/4]
 - Última ejecución: 2026-05-08
-- Último issue completado: #102 — F4b-002: Boletín académico descargable por periodo
-- Próximo: project-manager-automata [loop_count=2/4]
+- Último issue completado: #103 — F4b-003: Comunicados institucionales — API y UI completa
+- Próximo: project-manager-automata [loop_count=3/4]
 
 ## Historial
+
+## 2026-05-08 — Sesión [2/4] — complete-issue-automata (Fase 4b)
+
+- Tipo: complete-issue-automata
+- Issue completado: #103 — F4b-003: Comunicados institucionales — API y UI completa
+- Modo: A (TDD completo — implementación no existía)
+- Tests: 11/11 GREEN (ComunicadosService: crear, listar, obtener, actualizar, archivar)
+- TypeScript: compila sin errores (backend y frontend)
+- Issue GitHub: CERRADO ✅
+- Commit: 5d3f8ad ✅
+- Próxima sesión: project-manager-automata [loop_count=3/4]
 
 ## 2026-05-08 — Sesión [1/4] — complete-issue-automata (Fase 4b)
 

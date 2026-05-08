@@ -11,13 +11,13 @@ _"No concebimos la educación como un producto, sino como un derecho social."_
 
 ## Estado Actual
 
-**Fase 4b — Módulo Escolar (completar gaps)** · Sprint 20 · 2/4 completados
+**Fase 4b — Módulo Escolar (completar gaps)** · Sprint 20 · 3/4 completados
 
 | Issue          | Descripción                                          | Estado |
 | -------------- | ---------------------------------------------------- | ------ |
 | #101 / F4b-001 | Vista del estudiante — mis calificaciones/asistencia | ✅     |
 | #102 / F4b-002 | Boletín académico descargable por periodo            | ✅     |
-| #103 / F4b-003 | Comunicados institucionales — API y UI               | 🔄     |
+| #103 / F4b-003 | Comunicados institucionales — API y UI               | ✅     |
 | #104 / F4b-004 | Reportes de asistencia y rendimiento (admin)         | 🔄     |
 
 Gaps detectados: estudiante no podía ver sus propias notas/asistencia. Comunicados en schema pero sin módulo. Sin boletín ni reportes admin.
