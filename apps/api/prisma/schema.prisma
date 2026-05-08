@@ -622,6 +622,7 @@ model Comunicado {
   prioridad Prioridad      @default(NORMAL)
 
   publicadoEn DateTime @default(now())
+  archivado   Boolean  @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

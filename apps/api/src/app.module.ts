@@ -26,6 +26,7 @@ import { CalificacionesModule } from './calificaciones/calificaciones.module';
 import { BoletinModule } from './boletin/boletin.module';
 import { ForosModule } from './foros/foros.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
+import { ComunicadosModule } from './comunicados/comunicados.module';
 import { JwtAuthGuard, RolesGuard } from './common/guards';
 
 @Module({
@@ -56,6 +57,7 @@ import { JwtAuthGuard, RolesGuard } from './common/guards';
     BoletinModule,
     NotificacionesModule,
     ForosModule,
+    ComunicadosModule,
   ],
   controllers: [AppController],
   providers: [

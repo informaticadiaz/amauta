@@ -370,6 +370,19 @@ Rutas sin el layout de dashboard:
 
 Requiere autenticación. Layout con sidebar.
 
+#### `/dashboard/comunicados` — Listado de comunicados
+
+- Acceso: todos los roles
+- Datos: `GET /api/me/comunicados` (filtra por institución del usuario automáticamente)
+- Filtros: tipo, prioridad
+- Muestra badges de tipo y prioridad por comunicado
+
+#### `/dashboard/comunicados/nuevo` — Crear comunicado
+
+- Acceso: ADMIN_ESCUELA, EDUCADOR
+- Submit: `POST /api/me/comunicados`
+- Redirige a `/dashboard/comunicados` al crear
+
 ---
 
 ## Metadata
