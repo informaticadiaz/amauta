@@ -2106,6 +2106,177 @@ F4b-001 y F4b-002 son secuenciales. F4b-003 y F4b-004 pueden ir en paralelo con 
 
 ---
 
+## Fase 4c: Módulo Escolar — Administración Avanzada
+
+**Duración estimada**: 6-8 semanas
+**Sprint 21-23**
+
+### Contexto
+
+Fase 4 y 4b completaron el ciclo operativo básico (grupos, asistencias, calificaciones, comunicados, boletín, reportes). Fase 4c profundiza la administración escolar con funcionalidades que dependen del modelo de datos base ya estable: materias como catálogo, matrícula formal, historial académico, horarios, cierre de ciclo lectivo, alertas y el rol de tutor/padre.
+
+El issue más crítico de esta fase es F4c-001 (catálogo de materias) porque es una migración de modelo de datos del cual dependen múltiples features posteriores.
+
+### Sprint 21 — Fundamentos del modelo
+
+| Issue   | Título                                                             | Estado       | Prioridad |
+| ------- | ------------------------------------------------------------------ | ------------ | --------- |
+| F4c-001 | Catálogo de materias por institución y migración de calificaciones | ⏳ Pendiente | must-have |
+| F4c-002 | Matrícula formal: inscripción del estudiante a la institución      | ⏳ Pendiente | must-have |
+| F4c-003 | Historial académico del estudiante (trayectoria entre períodos)    | ⏳ Pendiente | must-have |
+
+**Progreso Sprint 21**: 0/3 issues completados
+
+#### Dependencias
+
+```
+F4c-001 (catálogo de materias — migración de modelo)
+  ├── F4c-003 (historial académico: requiere materia como entidad)
+  └── Sprint 22 completo (horarios y cierre de ciclo usan materias)
+
+F4c-002 (matrícula) — independiente de F4c-001
+```
+
+#### Detalle de issues
+
+**F4c-001 — Catálogo de materias**
+
+- Entidad `Materia`: id, nombre, descripción, institucionId, activo
+- Migración de `Calificacion.materia: String` → `Calificacion.materiaId: String` (FK)
+- Script de migración: crear materias a partir de los strings únicos existentes, reasignar FK
+- CRUD de materias (ADMIN_ESCUELA)
+- Asignación de materias a grupos (qué materias se dictan en cada grupo)
+- Actualizar endpoints de calificaciones para recibir `materiaId` en lugar de string
+
+**F4c-002 — Matrícula formal**
+
+- Entidad `Matricula`: estudianteId, institucionId, periodoAcademicoId, estado (ACTIVA/BAJA/EGRESADO), fechaInscripcion, observaciones
+- Proceso de alta: el admin matricula a un estudiante en la institución para un período
+- Proceso de baja/egreso con motivo
+- Vista de padrón institucional: listado de matriculados por período con estados
+- Validación: solo estudiantes matriculados pueden ser asignados a grupos
+
+**F4c-003 — Historial académico**
+
+- Endpoint `GET /me/historial` → todas las calificaciones del estudiante agrupadas por período y materia
+- Endpoint `GET /instituciones/:id/estudiantes/:estudianteId/historial` → vista admin del legajo
+- Promedio general acumulado, evolución por materia entre períodos
+- Registro de estado de promoción por período (PROMOVIDO / REPITENTE / EGRESADO)
+
+---
+
+### Sprint 22 — Operativa escolar
+
+| Issue   | Título                                                 | Estado       | Prioridad   |
+| ------- | ------------------------------------------------------ | ------------ | ----------- |
+| F4c-004 | Horarios semanales por grupo                           | ⏳ Pendiente | must-have   |
+| F4c-005 | Cierre de ciclo lectivo y promoción masiva             | ⏳ Pendiente | must-have   |
+| F4c-006 | Alertas automáticas: asistencia baja y notas en riesgo | ⏳ Pendiente | should-have |
+
+**Progreso Sprint 22**: 0/3 issues completados
+
+#### Dependencias
+
+```
+F4c-001 (catálogo de materias)
+  └── F4c-004 (horarios: franjas horarias tienen materia asignada)
+  └── F4c-005 (cierre de ciclo genera estado por materia)
+
+F4c-006 (alertas) — independiente, usa datos existentes de asistencias y calificaciones
+```
+
+#### Detalle de issues
+
+**F4c-004 — Horarios semanales**
+
+- Entidad `FranjaHoraria`: grupoId, materiaId, educadorId, diaSemana (LUN-VIE), horaInicio, horaFin, activo
+- CRUD de horario por grupo (ADMIN_ESCUELA)
+- Vista semanal del grupo (tabla día × hora)
+- Vista del educador: mis clases de la semana
+- Vista del estudiante: mi horario semanal
+
+**F4c-005 — Cierre de ciclo lectivo**
+
+- Acción de cierre de período: genera `EstadoPromocion` por estudiante × grupo
+- Reglas configurables por institución: % asistencia mínima + nota de aprobación (ya en escala)
+- Promoción masiva con preview: lista de alumnos con estado calculado (PROMOVIDO / EN_RIESGO / REPITENTE)
+- El admin puede sobrescribir el estado calculado con justificación
+- Al confirmar: el período queda CERRADO (no acepta más registros de asistencia/calificaciones)
+- Generación de acta de cierre (PDF descargable)
+
+**F4c-006 — Alertas automáticas**
+
+- Umbral configurable por institución: % asistencia mínima (ej. 75%), nota mínima de alerta (ej. 4/10)
+- Job periódico (o cálculo on-demand) que detecta estudiantes en riesgo
+- Notificación interna al EDUCADOR y ADMIN cuando un estudiante cae bajo el umbral
+- Panel de alertas activas en el dashboard del admin/educador
+- Las alertas se resuelven automáticamente cuando el estudiante recupera el umbral
+
+---
+
+### Sprint 23 — Actores externos y cierre
+
+| Issue   | Título                                            | Estado       | Prioridad    |
+| ------- | ------------------------------------------------- | ------------ | ------------ |
+| F4c-007 | Rol tutor/padre: acceso al seguimiento de su hijo | ⏳ Pendiente | should-have  |
+| F4c-008 | Justificación formal de ausencias                 | ⏳ Pendiente | should-have  |
+| F4c-009 | Calendario institucional                          | ⏳ Pendiente | nice-to-have |
+
+**Progreso Sprint 23**: 0/3 issues completados
+
+#### Dependencias
+
+```
+F4c-002 (matrícula) — F4c-007 depende de tener la relación estudiante ↔ institución formalizada
+F4c-007 (rol tutor) — F4c-008 puede aprovechar el flujo de notificación a tutores
+F4c-009 (calendario) — independiente
+```
+
+#### Detalle de issues
+
+**F4c-007 — Rol tutor/padre**
+
+- Nuevo rol: `TUTOR` en el enum `Rol`
+- Entidad `TutorEstudiante`: tutorId, estudianteId, relacion (PADRE, MADRE, TUTOR_LEGAL, OTRO), activo
+- Un tutor puede estar vinculado a múltiples estudiantes
+- Acceso de solo lectura al boletín, asistencias, calificaciones y comunicados del estudiante vinculado
+- El ADMIN_ESCUELA gestiona los vínculos tutor ↔ estudiante
+- Notificaciones al tutor cuando se publican comunicados URGENTES
+
+**F4c-008 — Justificación de ausencias**
+
+- Entidad `JustificacionAusencia`: asistenciaId, solicitanteId (TUTOR o el propio ESTUDIANTE), motivo, archivos adjuntos (urls), estado (PENDIENTE/APROBADA/RECHAZADA), revisadaPor, fechaRevision
+- Flujo: tutor/estudiante solicita → educador/admin revisa → si aprueba, el estado de la asistencia cambia a JUSTIFICADO
+- Notificación al solicitante con el resultado
+
+**F4c-009 — Calendario institucional**
+
+- Vista de calendario mensual/semanal en el dashboard
+- Los comunicados de tipo EVENTO exponen `fechaEvento` (campo nuevo opcional)
+- El admin puede marcar fechas como feriados o días no laborables (afecta cálculo de asistencia)
+- El estudiante y educador ven los eventos institucionales en el calendario
+
+---
+
+### Grafo de dependencias completo (Fase 4c)
+
+```
+F4c-001 (Materias — migración)
+  ├── F4c-003 (Historial académico)
+  ├── F4c-004 (Horarios)
+  └── F4c-005 (Cierre de ciclo)
+
+F4c-002 (Matrícula)
+  └── F4c-007 (Tutor/padre)
+
+F4c-006 (Alertas) — independiente
+F4c-007 (Tutor)
+  └── F4c-008 (Justificación ausencias)
+F4c-009 (Calendario) — independiente
+```
+
+---
+
 ## Fase 5: Comunidad y Colaboración
 
 **Duración estimada**: 5-6 semanas

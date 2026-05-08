@@ -11,31 +11,37 @@ _"No concebimos la educación como un producto, sino como un derecho social."_
 
 ## Estado Actual
 
-**Fase 4b — Módulo Escolar (completar gaps)** · Sprint 20 · 4/4 completados ✅
+**Fase 4c — Módulo Escolar (administración avanzada)** · Sprint 21-23 · 0/9 pendiente
 
-| Issue          | Descripción                                          | Estado |
-| -------------- | ---------------------------------------------------- | ------ |
-| #101 / F4b-001 | Vista del estudiante — mis calificaciones/asistencia | ✅     |
-| #102 / F4b-002 | Boletín académico descargable por periodo            | ✅     |
-| #103 / F4b-003 | Comunicados institucionales — API y UI               | ✅     |
-| #104 / F4b-004 | Reportes de asistencia y rendimiento (admin)         | ✅     |
+| Issue   | Descripción                                                     | Estado       |
+| ------- | --------------------------------------------------------------- | ------------ |
+| F4c-001 | Catálogo de materias y migración de calificaciones              | ⏳ Pendiente |
+| F4c-002 | Matrícula formal: inscripción del estudiante a la institución   | ⏳ Pendiente |
+| F4c-003 | Historial académico del estudiante (trayectoria entre períodos) | ⏳ Pendiente |
+| F4c-004 | Horarios semanales por grupo                                    | ⏳ Pendiente |
+| F4c-005 | Cierre de ciclo lectivo y promoción masiva                      | ⏳ Pendiente |
+| F4c-006 | Alertas automáticas: asistencia baja y notas en riesgo          | ⏳ Pendiente |
+| F4c-007 | Rol tutor/padre: acceso al seguimiento de su hijo               | ⏳ Pendiente |
+| F4c-008 | Justificación formal de ausencias                               | ⏳ Pendiente |
+| F4c-009 | Calendario institucional                                        | ⏳ Pendiente |
 
-Fase 4b completada. Gaps resueltos: vista estudiante, boletín, comunicados, reportes admin.
-**Próximo**: Retomar Fase 7 (Multimedia y Contenido Rico) o continuar con otras fases pendientes.
+**F4c-001 debe ir primero** — es una migración de modelo de datos (materias como catálogo) de la que dependen F4c-003, F4c-004 y F4c-005.
+**Fase 7 en curso en paralelo** (Multimedia y Contenido Rico — #98, #99, #100 abiertos).
 
 ### Historial de Fases
 
-| Fase | Nombre                      | Estado          |
-| ---- | --------------------------- | --------------- |
-| 0    | Fundamentos                 | ✅              |
-| 1    | MVP Cursos                  | ✅              |
-| 2    | Offline-First PWA           | ✅              |
-| 3    | Evaluaciones                | ✅              |
-| 4    | Módulo Escolar              | ✅ (admin/educ) |
-| 4b   | Módulo Escolar — gaps       | ✅              |
-| 5    | Comunidad y Colaboración    | ✅              |
-| 6    | Búsqueda y Recomendaciones  | ✅              |
-| 7    | Multimedia y Contenido Rico | ⏸ Pausada       |
+| Fase | Nombre                                   | Estado          |
+| ---- | ---------------------------------------- | --------------- |
+| 0    | Fundamentos                              | ✅              |
+| 1    | MVP Cursos                               | ✅              |
+| 2    | Offline-First PWA                        | ✅              |
+| 3    | Evaluaciones                             | ✅              |
+| 4    | Módulo Escolar                           | ✅ (admin/educ) |
+| 4b   | Módulo Escolar — gaps                    | ✅              |
+| 4c   | Módulo Escolar — administración avanzada | ⏳ Planificada  |
+| 5    | Comunidad y Colaboración                 | ✅              |
+| 6    | Búsqueda y Recomendaciones               | ✅              |
+| 7    | Multimedia y Contenido Rico              | 🔄 En curso     |
 
 ---
 
