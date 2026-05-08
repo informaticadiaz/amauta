@@ -11,28 +11,30 @@ _"No concebimos la educación como un producto, sino como un derecho social."_
 
 ## Estado Actual
 
-**Fase 6 — Búsqueda y Recomendaciones** · Sprint 18 · 3/3 completados ✅
+**Fase 7 — Multimedia y Contenido Rico** · Sprint 19 · 0/4 completados
 
-| Issue        | Descripción                                  | Estado |
-| ------------ | -------------------------------------------- | ------ |
-| #93 / F6-001 | Diseño funcional de búsqueda                 | ✅     |
-| #94 / F6-002 | API de búsqueda básica (full-text + filtros) | ✅     |
-| #95 / F6-003 | UI de búsqueda y filtros de catálogo         | ✅     |
+| Issue         | Descripción                                   | Estado |
+| ------------- | --------------------------------------------- | ------ |
+| #97 / F7-001  | Diseño funcional de multimedia                | 🔄     |
+| #98 / F7-002  | Editor de texto rico para lecciones TEXTO     | 🔄     |
+| #99 / F7-003  | Upload y reproducción de video y audio        | 🔄     |
+| #100 / F7-004 | Contenido interactivo H5P (embed URL externa) | 🔄     |
 
-Búsqueda sobre `titulo` y `descripcion`. Filtros: categoría, nivel, duración, idioma.
-Diseño funcional en `docs/project-management/fase-6-diseno-funcional-busqueda.md`.
+Lecciones tipo `TEXTO`, `VIDEO` e `INTERACTIVO`. H5P como embed externo (sin self-hosting).
+Storage provider y librería WYSIWYG a definir en F7-001.
 
 ### Historial de Fases
 
-| Fase | Nombre                     | Estado      |
-| ---- | -------------------------- | ----------- |
-| 0    | Fundamentos                | ✅          |
-| 1    | MVP Cursos                 | ✅          |
-| 2    | Offline-First PWA          | ✅          |
-| 3    | Evaluaciones               | ✅          |
-| 4    | Módulo Escolar             | ✅          |
-| 5    | Comunidad y Colaboración   | ✅          |
-| 6    | Búsqueda y Recomendaciones | 🔄 En curso |
+| Fase | Nombre                      | Estado      |
+| ---- | --------------------------- | ----------- |
+| 0    | Fundamentos                 | ✅          |
+| 1    | MVP Cursos                  | ✅          |
+| 2    | Offline-First PWA           | ✅          |
+| 3    | Evaluaciones                | ✅          |
+| 4    | Módulo Escolar              | ✅          |
+| 5    | Comunidad y Colaboración    | ✅          |
+| 6    | Búsqueda y Recomendaciones  | ✅          |
+| 7    | Multimedia y Contenido Rico | 🔄 En curso |
 
 ---
 

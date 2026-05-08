@@ -3221,26 +3221,48 @@ Mejorar descubrimiento de contenido.
 ## Fase 7: Multimedia y Contenido Rico
 
 **Duración estimada**: 4-6 semanas
-**Sprint 21-23**
+**Sprint 19**
+
+### Sprint 19 — Multimedia y contenido rico
+
+| Issue         | Título                                                | Estado     | Prioridad |
+| ------------- | ----------------------------------------------------- | ---------- | --------- |
+| #97 / F7-001  | Diseño funcional de multimedia y contenido rico       | 🔄 Abierto | must-have |
+| #98 / F7-002  | Editor de texto rico para lecciones TEXTO             | 🔄 Abierto | must-have |
+| #99 / F7-003  | Upload y reproducción de video y audio para lecciones | 🔄 Abierto | must-have |
+| #100 / F7-004 | Contenido interactivo H5P (embed desde URL externa)   | 🔄 Abierto | must-have |
+
+**Progreso Sprint 19**: 0/4 issues completados
+
+**Milestone GitHub**: `Sprint 19 - Multimedia y Contenido Rico`
+
+#### Dependencias
+
+```
+F7-001 (Diseño funcional)
+  ├── F7-002 (Editor WYSIWYG)
+  ├── F7-003 (Video/Audio upload y player)
+  └── F7-004 (H5P embed)
+```
+
+F7-002, F7-003 y F7-004 pueden desarrollarse en paralelo una vez cerrado F7-001.
 
 ### Objetivos
 
-Expandir tipos de contenido soportados.
+Expandir tipos de contenido soportados para lecciones.
 
 ### Funcionalidades
 
-- Upload y streaming de video optimizado
-- Editor de texto rico (Markdown/WYSIWYG)
-- Contenido interactivo (H5P)
-- Infografías y presentaciones
-- Podcasts/audio
-- Live streaming (futuro)
+- Editor de texto rico (Markdown/WYSIWYG) para lecciones TEXTO
+- Upload y reproducción de video y audio para lecciones VIDEO
+- Contenido interactivo H5P (embed desde URL externa) para lecciones INTERACTIVO
+- Live streaming (futuro — Fase 8+)
 
 ### Tecnología
 
-- Transcodificación de video
-- CDN para multimedia
-- H5P o similar para interactivos
+- WYSIWYG: TipTap / Quill / react-md-editor (a definir en F7-001)
+- Storage: Cloudflare R2 / AWS S3 / Bunny.net (a definir en F7-001)
+- H5P: embed externo con iframe sandbox (no self-hosting)
 
 ---
 
