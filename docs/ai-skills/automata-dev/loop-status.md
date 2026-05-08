@@ -2,12 +2,23 @@
 
 ## Estado actual
 
-- Estado: EN CURSO — sesión [1/4] Fase 4b. Completado #101 F4b-001. Próximo: project-manager-automata [loop_count=1/4]
-- Última ejecución: 2026-05-07
-- Último issue completado: #101 — F4b-001: Vista del estudiante — mis calificaciones y mi asistencia
-- Próximo: project-manager-automata [loop_count=1/4]
+- Estado: EN CURSO — sesión [2/4] Fase 4b. Completado #102 F4b-002. Próximo: project-manager-automata [loop_count=2/4]
+- Última ejecución: 2026-05-08
+- Último issue completado: #102 — F4b-002: Boletín académico descargable por periodo
+- Próximo: project-manager-automata [loop_count=2/4]
 
 ## Historial
+
+## 2026-05-08 — Sesión [1/4] — complete-issue-automata (Fase 4b)
+
+- Tipo: complete-issue-automata
+- Issue completado: #102 — F4b-002: Boletín académico descargable por periodo
+- Modo: A (TDD completo — implementación no existía)
+- Tests: 6/6 GREEN (BoletinService: happy path, permisos, not found)
+- TypeScript: compila sin errores (backend y frontend)
+- Issue GitHub: CERRADO ✅
+- Commit: d8edc9f ✅
+- Próxima sesión: project-manager-automata [loop_count=2/4]
 
 ## 2026-05-07 — Sesión [0/4] — complete-issue-automata (Fase 4b)
 
