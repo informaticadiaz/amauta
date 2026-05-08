@@ -259,4 +259,54 @@ describe('CalificacionesService', () => {
       ).rejects.toThrow(BadRequestException);
     });
   });
+
+  describe('getMisCalificaciones', () => {
+    const calMock = [
+      {
+        materia: 'Matemáticas',
+        nota: 8.5,
+        observaciones: null,
+        updatedAt: new Date('2026-03-01'),
+        grupo: { nombre: '3°A' },
+        periodoAcademico: { id: PERIODO_ID, nombre: '1er Bimestre' },
+      },
+    ];
+
+    it('debería devolver las calificaciones del estudiante autenticado', async () => {
+      prisma.calificacion.findMany.mockResolvedValue(calMock);
+
+      const result = await service.getMisCalificaciones(ESTUDIANTE_1_ID);
+
+      expect(result.calificaciones).toHaveLength(1);
+      expect(result.calificaciones[0].materia).toBe('Matemáticas');
+      expect(prisma.calificacion.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({ estudianteId: ESTUDIANTE_1_ID }),
+        })
+      );
+    });
+
+    it('debería filtrar por periodoAcademicoId cuando se provee', async () => {
+      prisma.calificacion.findMany.mockResolvedValue(calMock);
+
+      await service.getMisCalificaciones(ESTUDIANTE_1_ID, PERIODO_ID);
+
+      expect(prisma.calificacion.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({
+            estudianteId: ESTUDIANTE_1_ID,
+            periodoAcademicoId: PERIODO_ID,
+          }),
+        })
+      );
+    });
+
+    it('debería devolver lista vacía si el estudiante no tiene calificaciones', async () => {
+      prisma.calificacion.findMany.mockResolvedValue([]);
+
+      const result = await service.getMisCalificaciones(ESTUDIANTE_1_ID);
+
+      expect(result.calificaciones).toHaveLength(0);
+    });
+  });
 });

@@ -484,4 +484,63 @@ describe('AsistenciasService', () => {
       ).rejects.toThrow(BadRequestException);
     });
   });
+
+  describe('getMisAsistencias', () => {
+    const asistenciasMock = [
+      {
+        fecha: new Date('2026-03-01'),
+        estado: 'PRESENTE' as const,
+        observaciones: null,
+        grupo: { nombre: '3°A' },
+      },
+      {
+        fecha: new Date('2026-03-02'),
+        estado: 'AUSENTE' as const,
+        observaciones: null,
+        grupo: { nombre: '3°A' },
+      },
+      {
+        fecha: new Date('2026-03-03'),
+        estado: 'JUSTIFICADO' as const,
+        observaciones: 'Certificado médico',
+        grupo: { nombre: '3°A' },
+      },
+    ];
+
+    it('debería devolver las asistencias del estudiante autenticado', async () => {
+      prisma.asistencia.findMany.mockResolvedValue(asistenciasMock);
+
+      const result = await service.getMisAsistencias(ESTUDIANTE_ID);
+
+      expect(result.asistencias).toHaveLength(3);
+      expect(prisma.asistencia.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({ estudianteId: ESTUDIANTE_ID }),
+        })
+      );
+    });
+
+    it('debería calcular el porcentaje contando PRESENTE y JUSTIFICADO como asistencia', async () => {
+      prisma.asistencia.findMany.mockResolvedValue(asistenciasMock);
+
+      const result = await service.getMisAsistencias(ESTUDIANTE_ID);
+
+      // 3 registros: 1 PRESENTE + 1 AUSENTE + 1 JUSTIFICADO → (1+1)/3 = 67%
+      expect(result.resumen.porcentaje).toBe(67);
+      expect(result.resumen.presente).toBe(1);
+      expect(result.resumen.ausente).toBe(1);
+      expect(result.resumen.justificado).toBe(1);
+      expect(result.resumen.total).toBe(3);
+    });
+
+    it('debería devolver porcentaje 0 cuando no hay registros', async () => {
+      prisma.asistencia.findMany.mockResolvedValue([]);
+
+      const result = await service.getMisAsistencias(ESTUDIANTE_ID);
+
+      expect(result.asistencias).toHaveLength(0);
+      expect(result.resumen.porcentaje).toBe(0);
+      expect(result.resumen.total).toBe(0);
+    });
+  });
 });

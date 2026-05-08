@@ -13,6 +13,7 @@ import {
   CalificacionesService,
   type CargaCalificacionesResponse,
   type ListaCalificacionesResponse,
+  type MisCalificacionesResponse,
 } from './calificaciones.service';
 import type { QueryCalificacionesDto } from './dto/query-calificaciones.dto';
 import type { CargarCalificacionesDto } from './dto/cargar-calificaciones.dto';
@@ -28,6 +29,18 @@ export class CalificacionesController {
     @Inject(CalificacionesService)
     private readonly calificacionesService: CalificacionesService
   ) {}
+
+  @Get('me/calificaciones')
+  @Roles('ESTUDIANTE')
+  async getMisCalificaciones(
+    @Query('periodoAcademicoId') periodoAcademicoId: string | undefined,
+    @CurrentUser() user: RequestUser
+  ): Promise<MisCalificacionesResponse> {
+    return this.calificacionesService.getMisCalificaciones(
+      user.id,
+      periodoAcademicoId
+    );
+  }
 
   @Get('grupos/:grupoId/calificaciones')
   @Roles('ADMIN_ESCUELA', 'EDUCADOR')

@@ -12,6 +12,7 @@ Permite tomar asistencia por grupo y fecha, editar registros del mismo día con 
 
 | Acción                              | ESTUDIANTE | EDUCADOR | ADMIN_ESCUELA | SUPER_ADMIN |
 | ----------------------------------- | ---------- | -------- | ------------- | ----------- |
+| Ver mis propias asistencias         | ✅         | ❌       | ❌            | ❌          |
 | Ver nómina diaria del grupo         | ❌         | ✅       | ✅            | ❌          |
 | Registrar/editar asistencia del día | ❌         | ✅       | ✅            | ❌          |
 | Ver resumen mensual del grupo       | ❌         | ✅       | ✅            | ❌          |

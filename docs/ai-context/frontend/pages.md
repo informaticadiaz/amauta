@@ -20,9 +20,13 @@ apps/web/src/app/
 │   ├── layout.tsx               # Layout con sidebar
 │   ├── page.tsx                 # /dashboard
 │   ├── asistencias/
-│   │   └── page.tsx             # /dashboard/asistencias
+│   │   └── page.tsx             # /dashboard/asistencias (ADMIN_ESCUELA, EDUCADOR)
 │   ├── calificaciones/
-│   │   └── page.tsx             # /dashboard/calificaciones
+│   │   └── page.tsx             # /dashboard/calificaciones (ADMIN_ESCUELA, EDUCADOR)
+│   ├── mi-asistencia/
+│   │   └── page.tsx             # /dashboard/mi-asistencia (ESTUDIANTE)
+│   ├── mis-notas/
+│   │   └── page.tsx             # /dashboard/mis-notas (ESTUDIANTE)
 │   ├── grupos/
 │   │   ├── page.tsx             # /dashboard/grupos
 │   │   ├── nuevo/page.tsx       # /dashboard/grupos/nuevo

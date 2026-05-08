@@ -38,6 +38,19 @@ export interface ListaCalificacionesResponse {
   estudiantes: EstudianteCalificacion[];
 }
 
+interface CalificacionEstudiante {
+  materia: string;
+  nota: number;
+  observaciones: string | null;
+  updatedAt: Date;
+  grupo: { nombre: string };
+  periodoAcademico: { id: string; nombre: string };
+}
+
+export interface MisCalificacionesResponse {
+  calificaciones: CalificacionEstudiante[];
+}
+
 export interface CargaCalificacionesResponse {
   grupoId: string;
   periodoAcademicoId: string;
@@ -195,6 +208,29 @@ export class CalificacionesService {
       materia,
       procesadas: calificaciones.length,
     };
+  }
+
+  async getMisCalificaciones(
+    usuarioId: string,
+    periodoAcademicoId?: string
+  ): Promise<MisCalificacionesResponse> {
+    const calificaciones = await this.prisma.calificacion.findMany({
+      where: {
+        estudianteId: usuarioId,
+        ...(periodoAcademicoId ? { periodoAcademicoId } : {}),
+      },
+      select: {
+        materia: true,
+        nota: true,
+        observaciones: true,
+        updatedAt: true,
+        grupo: { select: { nombre: true } },
+        periodoAcademico: { select: { id: true, nombre: true } },
+      },
+      orderBy: [{ periodoAcademicoId: 'asc' }, { materia: 'asc' }],
+    });
+
+    return { calificaciones };
   }
 
   private async validarAccesoAGrupo(

@@ -80,6 +80,27 @@ export interface ResumenMensualAsistenciaResponse {
   resumenGrupo: ResumenGrupoMensual;
 }
 
+interface AsistenciaEstudiante {
+  fecha: Date;
+  estado: 'PRESENTE' | 'AUSENTE' | 'TARDANZA' | 'JUSTIFICADO';
+  observaciones: string | null;
+  grupo: { nombre: string };
+}
+
+interface ResumenAsistenciaPersonal {
+  total: number;
+  presente: number;
+  ausente: number;
+  tardanza: number;
+  justificado: number;
+  porcentaje: number;
+}
+
+export interface MisAsistenciasResponse {
+  asistencias: AsistenciaEstudiante[];
+  resumen: ResumenAsistenciaPersonal;
+}
+
 @Injectable()
 export class AsistenciasService {
   constructor(private readonly prisma: PrismaService) {}
@@ -372,6 +393,48 @@ export class AsistenciasService {
         };
       }),
       resumenGrupo,
+    };
+  }
+
+  async getMisAsistencias(
+    usuarioId: string,
+    mes?: number,
+    anio?: number
+  ): Promise<MisAsistenciasResponse> {
+    const where: {
+      estudianteId: string;
+      fecha?: { gte: Date; lt: Date };
+    } = { estudianteId: usuarioId };
+
+    if (mes !== undefined && anio !== undefined) {
+      const rango = this.obtenerRangoMensual(mes, anio);
+      where.fecha = { gte: rango.desde, lt: rango.hasta };
+    }
+
+    const asistencias = await this.prisma.asistencia.findMany({
+      where,
+      select: {
+        fecha: true,
+        estado: true,
+        observaciones: true,
+        grupo: { select: { nombre: true } },
+      },
+      orderBy: { fecha: 'desc' },
+    });
+
+    const total = asistencias.length;
+    const presente = asistencias.filter((a) => a.estado === 'PRESENTE').length;
+    const ausente = asistencias.filter((a) => a.estado === 'AUSENTE').length;
+    const tardanza = asistencias.filter((a) => a.estado === 'TARDANZA').length;
+    const justificado = asistencias.filter(
+      (a) => a.estado === 'JUSTIFICADO'
+    ).length;
+    const porcentaje =
+      total === 0 ? 0 : Math.round(((presente + justificado) / total) * 100);
+
+    return {
+      asistencias,
+      resumen: { total, presente, ausente, tardanza, justificado, porcentaje },
     };
   }
 

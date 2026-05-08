@@ -7,10 +7,11 @@
 
 ## Endpoints
 
-| Método | Ruta                            | Roles                   | Descripción                              |
-| ------ | ------------------------------- | ----------------------- | ---------------------------------------- |
-| GET    | /grupos/:grupoId/calificaciones | ADMIN_ESCUELA, EDUCADOR | Nómina del grupo con nota por estudiante |
-| PUT    | /grupos/:grupoId/calificaciones | ADMIN_ESCUELA, EDUCADOR | Carga masiva (upsert) de calificaciones  |
+| Método | Ruta                            | Roles                   | Descripción                                         |
+| ------ | ------------------------------- | ----------------------- | --------------------------------------------------- |
+| GET    | /me/calificaciones              | ESTUDIANTE              | Calificaciones propias, opcionalmente por periodoId |
+| GET    | /grupos/:grupoId/calificaciones | ADMIN_ESCUELA, EDUCADOR | Nómina del grupo con nota por estudiante            |
+| PUT    | /grupos/:grupoId/calificaciones | ADMIN_ESCUELA, EDUCADOR | Carga masiva (upsert) de calificaciones             |
 
 ---
 

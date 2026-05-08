@@ -14,6 +14,7 @@ import {
   type NominaAsistenciaResponse,
   type RegistroAsistenciasResponse,
   type ResumenMensualAsistenciaResponse,
+  type MisAsistenciasResponse,
 } from './asistencias.service';
 import type { QueryAsistenciasDto } from './dto/query-asistencias.dto';
 import type { QueryResumenMensualDto } from './dto/query-resumen-mensual.dto';
@@ -30,6 +31,20 @@ export class AsistenciasController {
     @Inject(AsistenciasService)
     private readonly asistenciasService: AsistenciasService
   ) {}
+
+  @Get('me/asistencias')
+  @Roles('ESTUDIANTE')
+  async getMisAsistencias(
+    @Query('mes') mes: string | undefined,
+    @Query('anio') anio: string | undefined,
+    @CurrentUser() user: RequestUser
+  ): Promise<MisAsistenciasResponse> {
+    return this.asistenciasService.getMisAsistencias(
+      user.id,
+      mes !== undefined ? parseInt(mes, 10) : undefined,
+      anio !== undefined ? parseInt(anio, 10) : undefined
+    );
+  }
 
   @Get('grupos/:grupoId/asistencias')
   @Roles('ADMIN_ESCUELA', 'EDUCADOR')
