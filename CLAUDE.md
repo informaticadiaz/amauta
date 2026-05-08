@@ -37,19 +37,6 @@ Gaps detectados: estudiante no podía ver sus propias notas/asistencia. Comunica
 | 6    | Búsqueda y Recomendaciones  | ✅              |
 | 7    | Multimedia y Contenido Rico | ⏸ Pausada       |
 
-### Historial de Fases
-
-| Fase | Nombre                      | Estado      |
-| ---- | --------------------------- | ----------- |
-| 0    | Fundamentos                 | ✅          |
-| 1    | MVP Cursos                  | ✅          |
-| 2    | Offline-First PWA           | ✅          |
-| 3    | Evaluaciones                | ✅          |
-| 4    | Módulo Escolar              | ✅          |
-| 5    | Comunidad y Colaboración    | ✅          |
-| 6    | Búsqueda y Recomendaciones  | ✅          |
-| 7    | Multimedia y Contenido Rico | 🔄 En curso |
-
 ---
 
 ## Reglas de Oro
