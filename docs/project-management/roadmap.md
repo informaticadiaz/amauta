@@ -3225,14 +3225,14 @@ Mejorar descubrimiento de contenido.
 
 ### Sprint 19 — Multimedia y contenido rico
 
-| Issue         | Título                                                | Estado     | Prioridad |
-| ------------- | ----------------------------------------------------- | ---------- | --------- |
-| #97 / F7-001  | Diseño funcional de multimedia y contenido rico       | 🔄 Abierto | must-have |
-| #98 / F7-002  | Editor de texto rico para lecciones TEXTO             | 🔄 Abierto | must-have |
-| #99 / F7-003  | Upload y reproducción de video y audio para lecciones | 🔄 Abierto | must-have |
-| #100 / F7-004 | Contenido interactivo H5P (embed desde URL externa)   | 🔄 Abierto | must-have |
+| Issue         | Título                                                | Estado        | Prioridad |
+| ------------- | ----------------------------------------------------- | ------------- | --------- |
+| #97 / F7-001  | Diseño funcional de multimedia y contenido rico       | ✅ Completado | must-have |
+| #98 / F7-002  | Editor de texto rico para lecciones TEXTO             | 🔄 Abierto    | must-have |
+| #99 / F7-003  | Upload y reproducción de video y audio para lecciones | 🔄 Abierto    | must-have |
+| #100 / F7-004 | Contenido interactivo H5P (embed desde URL externa)   | 🔄 Abierto    | must-have |
 
-**Progreso Sprint 19**: 0/4 issues completados
+**Progreso Sprint 19**: 1/4 issues completados
 
 **Milestone GitHub**: `Sprint 19 - Multimedia y Contenido Rico`
 

@@ -11,17 +11,18 @@ _"No concebimos la educación como un producto, sino como un derecho social."_
 
 ## Estado Actual
 
-**Fase 7 — Multimedia y Contenido Rico** · Sprint 19 · 0/4 completados
+**Fase 7 — Multimedia y Contenido Rico** · Sprint 19 · 1/4 completados
 
 | Issue         | Descripción                                   | Estado |
 | ------------- | --------------------------------------------- | ------ |
-| #97 / F7-001  | Diseño funcional de multimedia                | 🔄     |
+| #97 / F7-001  | Diseño funcional de multimedia                | ✅     |
 | #98 / F7-002  | Editor de texto rico para lecciones TEXTO     | 🔄     |
 | #99 / F7-003  | Upload y reproducción de video y audio        | 🔄     |
 | #100 / F7-004 | Contenido interactivo H5P (embed URL externa) | 🔄     |
 
 Lecciones tipo `TEXTO`, `VIDEO` e `INTERACTIVO`. H5P como embed externo (sin self-hosting).
-Storage provider y librería WYSIWYG a definir en F7-001.
+Diseño funcional en `docs/project-management/fase-7-diseno-funcional-multimedia.md`.
+Editor: TipTap. Storage: Cloudflare R2. Audio: tipo VIDEO por mimeType. Sin migración de schema.
 
 ### Historial de Fases
 
