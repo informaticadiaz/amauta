@@ -29,6 +29,14 @@ import {
   queryGrupoEducadoresSchema,
   type QueryGrupoEducadoresDto,
 } from './dto/query-grupo-educadores.dto';
+import {
+  queryReporteAsistenciaSchema,
+  type QueryReporteAsistenciaDto,
+} from './dto/query-reporte-asistencia.dto';
+import {
+  queryReporteRendimientoSchema,
+  type QueryReporteRendimientoDto,
+} from './dto/query-reporte-rendimiento.dto';
 import type { Grupo } from '@prisma/client';
 
 export type GrupoResponse = Grupo;
@@ -106,6 +114,36 @@ export interface ListaMisGruposEducadorResponse {
   page: number;
   limit: number;
   totalPages: number;
+}
+
+export interface ResumenAsistenciaEstudiante {
+  estudiante: { nombre: string; apellido: string };
+  presente: number;
+  ausente: number;
+  tardanza: number;
+  justificado: number;
+  porcentajeAsistencia: number;
+}
+
+export interface ReporteAsistenciaResponse {
+  grupo: { nombre: string };
+  periodo: { nombre: string } | null;
+  totalClases: number;
+  resumenPorEstudiante: ResumenAsistenciaEstudiante[];
+  promedioGrupo: number;
+}
+
+export interface ResumenRendimientoEstudiante {
+  estudiante: { nombre: string; apellido: string };
+  promedioCalificaciones: number;
+  calificaciones: { materia: string; nota: number }[];
+}
+
+export interface ReporteRendimientoResponse {
+  grupo: { nombre: string };
+  periodo: { nombre: string } | null;
+  resumenPorEstudiante: ResumenRendimientoEstudiante[];
+  promedioGrupo: number;
 }
 
 @Injectable()
@@ -891,5 +929,285 @@ export class GruposService {
       limit,
       totalPages: Math.ceil(total / limit),
     };
+  }
+
+  private async validarAccesoReporte(
+    grupoId: string,
+    usuarioId: string
+  ): Promise<{
+    id: string;
+    nombre: string;
+    institucionId: string;
+    periodoAcademico: { id: string; nombre: string } | null;
+  }> {
+    const grupo = await this.prisma.grupo.findUnique({
+      where: { id: grupoId },
+      select: {
+        id: true,
+        nombre: true,
+        institucionId: true,
+        activo: true,
+        periodoAcademico: { select: { id: true, nombre: true } },
+      },
+    });
+
+    if (!grupo) {
+      throw new NotFoundException('Grupo no encontrado');
+    }
+
+    const usuario = await this.prisma.usuario.findUnique({
+      where: { id: usuarioId },
+      select: { rol: true, perfil: { select: { institucion: true } } },
+    });
+
+    if (!usuario) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    if (usuario.rol === 'SUPER_ADMIN') {
+      return grupo;
+    }
+
+    if (usuario.rol === 'ADMIN_ESCUELA') {
+      const institucionNombre = usuario.perfil?.institucion;
+      if (!institucionNombre) {
+        throw new BadRequestException('Usuario sin institución asociada');
+      }
+
+      const institucion = await this.prisma.institucion.findFirst({
+        where: { nombre: institucionNombre },
+        select: { id: true },
+      });
+
+      if (!institucion) {
+        throw new NotFoundException('Institución no encontrada');
+      }
+
+      if (institucion.id !== grupo.institucionId) {
+        throw new ForbiddenException('No tienes acceso a este grupo');
+      }
+
+      return grupo;
+    }
+
+    if (usuario.rol === 'EDUCADOR') {
+      const asignacion = await this.prisma.grupoEducador.findUnique({
+        where: { grupoId_educadorId: { grupoId, educadorId: usuarioId } },
+        select: { activo: true },
+      });
+
+      if (!asignacion?.activo) {
+        throw new ForbiddenException('No tienes acceso a este grupo');
+      }
+
+      return grupo;
+    }
+
+    throw new ForbiddenException('No tienes permiso para ver reportes');
+  }
+
+  async reporteAsistencia(
+    grupoId: string,
+    query: QueryReporteAsistenciaDto,
+    usuarioId: string
+  ): Promise<ReporteAsistenciaResponse> {
+    const result = queryReporteAsistenciaSchema.safeParse(query);
+    if (!result.success) {
+      throw new BadRequestException(
+        result.error.issues[0]?.message ?? 'Parámetros inválidos'
+      );
+    }
+
+    const grupo = await this.validarAccesoReporte(grupoId, usuarioId);
+    const { periodoId, desde, hasta } = result.data;
+
+    let periodoNombre: string | null = grupo.periodoAcademico?.nombre ?? null;
+    let fechaDesde: Date | undefined;
+    let fechaHasta: Date | undefined;
+
+    if (periodoId) {
+      const periodo = await this.prisma.periodoAcademico.findUnique({
+        where: { id: periodoId },
+        select: { nombre: true, fechaInicio: true, fechaFin: true },
+      });
+      if (!periodo) {
+        throw new NotFoundException('Periodo académico no encontrado');
+      }
+      periodoNombre = periodo.nombre;
+      fechaDesde = periodo.fechaInicio;
+      fechaHasta = periodo.fechaFin;
+    }
+
+    if (desde) fechaDesde = new Date(desde);
+    if (hasta) fechaHasta = new Date(hasta);
+
+    const [grupoEstudiantes, asistencias] = await Promise.all([
+      this.prisma.grupoEstudiante.findMany({
+        where: { grupoId, activo: true },
+        select: {
+          estudiante: { select: { id: true, nombre: true, apellido: true } },
+        },
+      }),
+      this.prisma.asistencia.findMany({
+        where: {
+          grupoId,
+          ...(fechaDesde || fechaHasta
+            ? {
+                fecha: {
+                  ...(fechaDesde ? { gte: fechaDesde } : {}),
+                  ...(fechaHasta ? { lte: fechaHasta } : {}),
+                },
+              }
+            : {}),
+        },
+        select: { estudianteId: true, estado: true, fecha: true },
+      }),
+    ]);
+
+    const fechasUnicas = new Set(
+      asistencias.map((a) => a.fecha.toISOString().split('T')[0])
+    );
+    const totalClases = fechasUnicas.size;
+
+    const resumenPorEstudiante = grupoEstudiantes.map(({ estudiante }) => {
+      const asis = asistencias.filter((a) => a.estudianteId === estudiante.id);
+      const presente = asis.filter((a) => a.estado === 'PRESENTE').length;
+      const ausente = asis.filter((a) => a.estado === 'AUSENTE').length;
+      const tardanza = asis.filter((a) => a.estado === 'TARDANZA').length;
+      const justificado = asis.filter((a) => a.estado === 'JUSTIFICADO').length;
+      const porcentajeAsistencia =
+        totalClases > 0 ? Math.round((presente / totalClases) * 100) : 0;
+
+      return {
+        estudiante: {
+          nombre: estudiante.nombre,
+          apellido: estudiante.apellido,
+        },
+        presente,
+        ausente,
+        tardanza,
+        justificado,
+        porcentajeAsistencia,
+      };
+    });
+
+    const promedioGrupo =
+      resumenPorEstudiante.length > 0
+        ? Math.round(
+            resumenPorEstudiante.reduce(
+              (acc, e) => acc + e.porcentajeAsistencia,
+              0
+            ) / resumenPorEstudiante.length
+          )
+        : 0;
+
+    return {
+      grupo: { nombre: grupo.nombre },
+      periodo: periodoNombre ? { nombre: periodoNombre } : null,
+      totalClases,
+      resumenPorEstudiante,
+      promedioGrupo,
+    };
+  }
+
+  async reporteRendimiento(
+    grupoId: string,
+    query: QueryReporteRendimientoDto,
+    usuarioId: string
+  ): Promise<ReporteRendimientoResponse> {
+    const result = queryReporteRendimientoSchema.safeParse(query);
+    if (!result.success) {
+      throw new BadRequestException(
+        result.error.issues[0]?.message ?? 'Parámetros inválidos'
+      );
+    }
+
+    const grupo = await this.validarAccesoReporte(grupoId, usuarioId);
+    const { periodoId } = result.data;
+
+    const [grupoEstudiantes, calificaciones, periodoInfo] = await Promise.all([
+      this.prisma.grupoEstudiante.findMany({
+        where: { grupoId, activo: true },
+        select: {
+          estudiante: { select: { id: true, nombre: true, apellido: true } },
+        },
+      }),
+      this.prisma.calificacion.findMany({
+        where: {
+          grupoId,
+          ...(periodoId ? { periodoAcademicoId: periodoId } : {}),
+        },
+        select: { estudianteId: true, materia: true, nota: true },
+      }),
+      periodoId
+        ? this.prisma.periodoAcademico.findUnique({
+            where: { id: periodoId },
+            select: { nombre: true },
+          })
+        : Promise.resolve(null),
+    ]);
+
+    const resumenPorEstudiante = grupoEstudiantes.map(({ estudiante }) => {
+      const califs = calificaciones.filter(
+        (c) => c.estudianteId === estudiante.id
+      );
+      const promedioCalificaciones =
+        califs.length > 0
+          ? Math.round(
+              (califs.reduce((acc, c) => acc + c.nota, 0) / califs.length) * 100
+            ) / 100
+          : 0;
+
+      return {
+        estudiante: {
+          nombre: estudiante.nombre,
+          apellido: estudiante.apellido,
+        },
+        promedioCalificaciones,
+        calificaciones: califs.map((c) => ({
+          materia: c.materia,
+          nota: c.nota,
+        })),
+      };
+    });
+
+    const promedioGrupo =
+      resumenPorEstudiante.length > 0
+        ? Math.round(
+            (resumenPorEstudiante.reduce(
+              (acc, e) => acc + e.promedioCalificaciones,
+              0
+            ) /
+              resumenPorEstudiante.length) *
+              100
+          ) / 100
+        : 0;
+
+    const periodoNombre =
+      periodoInfo?.nombre ?? grupo.periodoAcademico?.nombre ?? null;
+
+    return {
+      grupo: { nombre: grupo.nombre },
+      periodo: periodoNombre ? { nombre: periodoNombre } : null,
+      resumenPorEstudiante,
+      promedioGrupo,
+    };
+  }
+
+  async reporteAsistenciaCsv(
+    grupoId: string,
+    query: QueryReporteAsistenciaDto,
+    usuarioId: string
+  ): Promise<string> {
+    const reporte = await this.reporteAsistencia(grupoId, query, usuarioId);
+
+    const header =
+      'Estudiante,Presente,Ausente,Tardanza,Justificado,%Asistencia';
+    const rows = reporte.resumenPorEstudiante.map(
+      (e) =>
+        `${e.estudiante.nombre} ${e.estudiante.apellido},${e.presente},${e.ausente},${e.tardanza},${e.justificado},${e.porcentajeAsistencia}`
+    );
+
+    return [header, ...rows].join('\n');
   }
 }

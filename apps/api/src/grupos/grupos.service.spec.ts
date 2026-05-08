@@ -11,10 +11,13 @@
  * - [x] Detección de duplicados
  * - [x] Listado de estudiantes de un grupo
  * - [x] Remoción de estudiantes de un grupo
- * - [ ] Asignación de educadores a grupos (F4-008)
- * - [ ] Listado de educadores de un grupo
- * - [ ] Remoción de educadores de un grupo
- * - [ ] Listado de grupos del educador actual
+ * - [x] Asignación de educadores a grupos (F4-008)
+ * - [x] Listado de educadores de un grupo
+ * - [x] Remoción de educadores de un grupo
+ * - [x] Listado de grupos del educador actual
+ * - [x] Reporte de asistencia por grupo (F4b-004)
+ * - [x] Reporte de rendimiento por grupo (F4b-004)
+ * - [x] Exportación CSV de asistencia (F4b-004)
  */
 
 jest.mock('@prisma/client', () => ({
@@ -67,6 +70,12 @@ describe('GruposService', () => {
       create: jest.fn(),
       update: jest.fn(),
       count: jest.fn(),
+    },
+    asistencia: {
+      findMany: jest.fn(),
+    },
+    calificacion: {
+      findMany: jest.fn(),
     },
     $transaction: jest.fn(),
   };
@@ -844,6 +853,215 @@ describe('GruposService', () => {
       await expect(
         service.listarMisGruposComoEducador({ page: 1, limit: 10 }, 'admin-1')
       ).rejects.toThrow(BadRequestException);
+    });
+  });
+
+  // =========================================
+  // Tests de Reportes (F4b-004)
+  // =========================================
+
+  const grupoConPeriodo = {
+    id: cuidGrupo,
+    nombre: '1A',
+    institucionId: 'inst-1',
+    activo: true,
+    periodoAcademico: { id: cuidPeriodo, nombre: '2026 - 1er Trimestre' },
+  };
+
+  const estudiantesMockReporte = [
+    {
+      estudiante: {
+        id: cuidEstudiante1,
+        nombre: 'Juan',
+        apellido: 'Pérez',
+      },
+    },
+    {
+      estudiante: {
+        id: cuidEstudiante2,
+        nombre: 'María',
+        apellido: 'García',
+      },
+    },
+  ];
+
+  const asistenciasMock = [
+    {
+      estudianteId: cuidEstudiante1,
+      estado: 'PRESENTE',
+      fecha: new Date('2026-04-01'),
+    },
+    {
+      estudianteId: cuidEstudiante1,
+      estado: 'AUSENTE',
+      fecha: new Date('2026-04-02'),
+    },
+    {
+      estudianteId: cuidEstudiante2,
+      estado: 'PRESENTE',
+      fecha: new Date('2026-04-01'),
+    },
+    {
+      estudianteId: cuidEstudiante2,
+      estado: 'PRESENTE',
+      fecha: new Date('2026-04-02'),
+    },
+  ];
+
+  const calificacionesMock = [
+    { estudianteId: cuidEstudiante1, materia: 'Matemáticas', nota: 8 },
+    { estudianteId: cuidEstudiante1, materia: 'Lengua', nota: 7 },
+    { estudianteId: cuidEstudiante2, materia: 'Matemáticas', nota: 9 },
+    { estudianteId: cuidEstudiante2, materia: 'Lengua', nota: 10 },
+  ];
+
+  describe('reporteAsistencia', () => {
+    it('debería retornar métricas de asistencia por estudiante para ADMIN_ESCUELA', async () => {
+      prisma.grupo.findUnique.mockResolvedValueOnce(grupoConPeriodo);
+      prisma.usuario.findUnique.mockResolvedValueOnce(adminUser);
+      prisma.institucion.findFirst.mockResolvedValueOnce({ id: 'inst-1' });
+      prisma.grupoEstudiante.findMany.mockResolvedValueOnce(
+        estudiantesMockReporte
+      );
+      prisma.asistencia.findMany.mockResolvedValueOnce(asistenciasMock);
+
+      const result = await service.reporteAsistencia(cuidGrupo, {}, 'admin-1');
+
+      expect(result.grupo.nombre).toBe('1A');
+      expect(result.totalClases).toBe(2);
+      expect(result.resumenPorEstudiante).toHaveLength(2);
+
+      const est1 = result.resumenPorEstudiante.find(
+        (e) => e.estudiante.nombre === 'Juan'
+      );
+      expect(est1).toMatchObject({
+        presente: 1,
+        ausente: 1,
+        tardanza: 0,
+        justificado: 0,
+        porcentajeAsistencia: 50,
+      });
+
+      const est2 = result.resumenPorEstudiante.find(
+        (e) => e.estudiante.nombre === 'María'
+      );
+      expect(est2).toMatchObject({
+        presente: 2,
+        ausente: 0,
+        porcentajeAsistencia: 100,
+      });
+
+      expect(result.promedioGrupo).toBe(75);
+    });
+
+    it('debería permitir acceso a EDUCADOR asignado al grupo', async () => {
+      prisma.grupo.findUnique.mockResolvedValueOnce(grupoConPeriodo);
+      prisma.usuario.findUnique.mockResolvedValueOnce({
+        rol: 'EDUCADOR',
+        perfil: { institucion: 'Escuela Belgrano' },
+      });
+      prisma.grupoEducador.findUnique.mockResolvedValueOnce({ activo: true });
+      prisma.grupoEstudiante.findMany.mockResolvedValueOnce([]);
+      prisma.asistencia.findMany.mockResolvedValueOnce([]);
+
+      const result = await service.reporteAsistencia(
+        cuidGrupo,
+        {},
+        cuidEducador2
+      );
+
+      expect(result.totalClases).toBe(0);
+      expect(result.resumenPorEstudiante).toHaveLength(0);
+    });
+
+    it('debería lanzar ForbiddenException si EDUCADOR no está asignado al grupo', async () => {
+      prisma.grupo.findUnique.mockResolvedValueOnce(grupoConPeriodo);
+      prisma.usuario.findUnique.mockResolvedValueOnce({
+        rol: 'EDUCADOR',
+        perfil: { institucion: 'Escuela Belgrano' },
+      });
+      prisma.grupoEducador.findUnique.mockResolvedValueOnce(null);
+
+      await expect(
+        service.reporteAsistencia(cuidGrupo, {}, cuidEducador2)
+      ).rejects.toThrow('No tienes acceso a este grupo');
+    });
+
+    it('debería lanzar NotFoundException si el grupo no existe', async () => {
+      prisma.grupo.findUnique.mockResolvedValueOnce(null);
+
+      await expect(
+        service.reporteAsistencia('grupo-404', {}, 'admin-1')
+      ).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('reporteRendimiento', () => {
+    it('debería retornar promedios de calificaciones por estudiante', async () => {
+      prisma.grupo.findUnique.mockResolvedValueOnce(grupoConPeriodo);
+      prisma.usuario.findUnique.mockResolvedValueOnce(adminUser);
+      prisma.institucion.findFirst.mockResolvedValueOnce({ id: 'inst-1' });
+      prisma.grupoEstudiante.findMany.mockResolvedValueOnce(
+        estudiantesMockReporte
+      );
+      prisma.calificacion.findMany.mockResolvedValueOnce(calificacionesMock);
+
+      const result = await service.reporteRendimiento(cuidGrupo, {}, 'admin-1');
+
+      expect(result.grupo.nombre).toBe('1A');
+      expect(result.resumenPorEstudiante).toHaveLength(2);
+
+      const est1 = result.resumenPorEstudiante.find(
+        (e) => e.estudiante.nombre === 'Juan'
+      );
+      expect(est1?.promedioCalificaciones).toBe(7.5);
+      expect(est1?.calificaciones).toHaveLength(2);
+
+      const est2 = result.resumenPorEstudiante.find(
+        (e) => e.estudiante.nombre === 'María'
+      );
+      expect(est2?.promedioCalificaciones).toBe(9.5);
+
+      expect(result.promedioGrupo).toBe(8.5);
+    });
+
+    it('debería retornar promedio 0 para estudiantes sin calificaciones', async () => {
+      prisma.grupo.findUnique.mockResolvedValueOnce(grupoConPeriodo);
+      prisma.usuario.findUnique.mockResolvedValueOnce(adminUser);
+      prisma.institucion.findFirst.mockResolvedValueOnce({ id: 'inst-1' });
+      prisma.grupoEstudiante.findMany.mockResolvedValueOnce(
+        estudiantesMockReporte
+      );
+      prisma.calificacion.findMany.mockResolvedValueOnce([]);
+
+      const result = await service.reporteRendimiento(cuidGrupo, {}, 'admin-1');
+
+      expect(result.promedioGrupo).toBe(0);
+      expect(
+        result.resumenPorEstudiante.every((e) => e.promedioCalificaciones === 0)
+      ).toBe(true);
+    });
+  });
+
+  describe('reporteAsistenciaCsv', () => {
+    it('debería generar CSV con headers y filas de datos', async () => {
+      prisma.grupo.findUnique.mockResolvedValueOnce(grupoConPeriodo);
+      prisma.usuario.findUnique.mockResolvedValueOnce(adminUser);
+      prisma.institucion.findFirst.mockResolvedValueOnce({ id: 'inst-1' });
+      prisma.grupoEstudiante.findMany.mockResolvedValueOnce(
+        estudiantesMockReporte
+      );
+      prisma.asistencia.findMany.mockResolvedValueOnce(asistenciasMock);
+
+      const csv = await service.reporteAsistenciaCsv(cuidGrupo, {}, 'admin-1');
+
+      const lines = csv.split('\n');
+      expect(lines[0]).toBe(
+        'Estudiante,Presente,Ausente,Tardanza,Justificado,%Asistencia'
+      );
+      expect(lines).toHaveLength(3); // header + 2 students
+      expect(lines[1]).toContain('Juan Pérez');
+      expect(lines[2]).toContain('María García');
     });
   });
 });

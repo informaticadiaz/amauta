@@ -14,7 +14,9 @@ import {
   Post,
   Query,
   Inject,
+  Res,
 } from '@nestjs/common';
+import type { FastifyReply } from 'fastify';
 import { Roles, CurrentUser } from '../common/decorators';
 import type { RequestUser } from '../common/guards';
 import {
@@ -29,6 +31,8 @@ import type { AsignarEstudiantesGrupoDto } from './dto/asignar-estudiantes.dto';
 import type { QueryGrupoEstudiantesDto } from './dto/query-grupo-estudiantes.dto';
 import type { AsignarEducadorGrupoDto } from './dto/asignar-educador.dto';
 import type { QueryGrupoEducadoresDto } from './dto/query-grupo-educadores.dto';
+import type { QueryReporteAsistenciaDto } from './dto/query-reporte-asistencia.dto';
+import type { QueryReporteRendimientoDto } from './dto/query-reporte-rendimiento.dto';
 
 interface GrupoWrapper {
   grupo: GrupoResponse;
@@ -201,5 +205,45 @@ export class GruposController {
     Awaited<ReturnType<GruposService['listarMisGruposComoEducador']>>
   > {
     return this.gruposService.listarMisGruposComoEducador(query, user.id);
+  }
+
+  @Get('grupos/:id/reportes/asistencia/csv')
+  @Roles('ADMIN_ESCUELA', 'EDUCADOR')
+  async reporteAsistenciaCsv(
+    @Param('id') grupoId: string,
+    @Query() query: QueryReporteAsistenciaDto,
+    @CurrentUser() user: RequestUser,
+    @Res() res: FastifyReply
+  ): Promise<void> {
+    const csv = await this.gruposService.reporteAsistenciaCsv(
+      grupoId,
+      query,
+      user.id
+    );
+    const filename = `reporte-asistencia-${grupoId}.csv`;
+    void res
+      .header('Content-Type', 'text/csv; charset=utf-8')
+      .header('Content-Disposition', `attachment; filename="${filename}"`)
+      .send(csv);
+  }
+
+  @Get('grupos/:id/reportes/asistencia')
+  @Roles('ADMIN_ESCUELA', 'EDUCADOR')
+  async reporteAsistencia(
+    @Param('id') grupoId: string,
+    @Query() query: QueryReporteAsistenciaDto,
+    @CurrentUser() user: RequestUser
+  ): Promise<Awaited<ReturnType<GruposService['reporteAsistencia']>>> {
+    return this.gruposService.reporteAsistencia(grupoId, query, user.id);
+  }
+
+  @Get('grupos/:id/reportes/rendimiento')
+  @Roles('ADMIN_ESCUELA', 'EDUCADOR')
+  async reporteRendimiento(
+    @Param('id') grupoId: string,
+    @Query() query: QueryReporteRendimientoDto,
+    @CurrentUser() user: RequestUser
+  ): Promise<Awaited<ReturnType<GruposService['reporteRendimiento']>>> {
+    return this.gruposService.reporteRendimiento(grupoId, query, user.id);
   }
 }

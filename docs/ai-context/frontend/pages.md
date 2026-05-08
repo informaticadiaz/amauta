@@ -21,6 +21,8 @@ apps/web/src/app/
 │   ├── page.tsx                 # /dashboard
 │   ├── asistencias/
 │   │   └── page.tsx             # /dashboard/asistencias (ADMIN_ESCUELA, EDUCADOR)
+│   ├── reportes/
+│   │   └── page.tsx             # /dashboard/reportes (ADMIN_ESCUELA, EDUCADOR) — tabs asistencia/rendimiento + CSV
 │   ├── calificaciones/
 │   │   └── page.tsx             # /dashboard/calificaciones (ADMIN_ESCUELA, EDUCADOR)
 │   ├── mi-asistencia/
@@ -77,6 +79,9 @@ apps/web/src/app/
     ├── lecciones/
     ├── educadores/me/grupos/
     ├── grupos/[id]/asistencias/
+    ├── grupos/[id]/reportes/asistencia/
+    ├── grupos/[id]/reportes/asistencia/csv/
+    ├── grupos/[id]/reportes/rendimiento/
     ├── grupos/[id]/calificaciones/
     ├── grupos/[id]/estudiantes/
     ├── grupos/[id]/educadores/

@@ -98,6 +98,11 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       show: isAdminEscuela || isEducador,
     },
     {
+      href: '/dashboard/reportes',
+      label: 'Reportes',
+      show: isAdminEscuela || isEducador,
+    },
+    {
       href: '/dashboard/crear-curso',
       label: 'Crear curso',
       show: canManageCourses,

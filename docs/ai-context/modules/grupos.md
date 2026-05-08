@@ -56,6 +56,9 @@ Base: `/api/v1`
 | GET    | `/grupos/:id/educadores`                  | Sí   | ADMIN_ESCUELA+ | Listar educadores asignados          |
 | DELETE | `/grupos/:id/educadores/:educadorId`      | Sí   | ADMIN_ESCUELA+ | Remover educador (soft delete)       |
 | GET    | `/educadores/me/grupos`                   | Sí   | EDUCADOR       | Listar grupos del educador actual    |
+| GET    | `/grupos/:id/reportes/asistencia`         | Sí   | ADMIN/EDUCADOR | Reporte de asistencia por grupo      |
+| GET    | `/grupos/:id/reportes/rendimiento`        | Sí   | ADMIN/EDUCADOR | Reporte de rendimiento por grupo     |
+| GET    | `/grupos/:id/reportes/asistencia/csv`     | Sí   | ADMIN/EDUCADOR | Exportar CSV de asistencia           |
 
 ---
 
@@ -95,6 +98,8 @@ model Grupo {
 12. **Mis grupos**: `/educadores/me/grupos` solo devuelve grupos con asignación activa para el usuario autenticado.
 13. **Asistencias mensuales**: el resumen mensual solo consolida estudiantes activos del grupo y reutiliza la validación de acceso de asistencias diarias.
 14. **Porcentaje de asistencia**: en la versión inicial se calcula como `(presentes + justificados) / totalRegistros * 100`.
+15. **Reportes**: EDUCADOR solo puede ver reportes de grupos en los que está asignado (via `GrupoEducador` activo). ADMIN_ESCUELA puede ver todos los grupos de su institución. `porcentajeAsistencia = Math.round(presente / totalClases * 100)`.
+16. **CSV de asistencia**: generado como string en el backend, sin dependencias externas. Formato: `Estudiante,Presente,Ausente,Tardanza,Justificado,%Asistencia`.
 
 ---
 
