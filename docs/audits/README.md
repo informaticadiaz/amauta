@@ -9,6 +9,8 @@
 
 | Issue | Título                                          | Fecha      | Veredicto                     |
 | ----- | ----------------------------------------------- | ---------- | ----------------------------- |
+| #20   | T-019: Configurar Next.js en Frontend           | 2026-05-12 | ⚠️ APROBADO CON OBSERVACIONES |
+| #19   | T-018: Implementar servidor HTTP básico         | 2026-04-17 | ❌ RECHAZADO                  |
 | #18   | T-017: Configurar deployment en VPS con Dokploy | 2026-04-17 | ⚠️ APROBADO CON OBSERVACIONES |
 | #17   | T-016: Documentar API endpoints (preparación)   | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
 | #16   | T-015: Crear diagramas de arquitectura          | 2026-04-09 | ⚠️ APROBADO CON OBSERVACIONES |
