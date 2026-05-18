@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agentic Loops — Mapa Visual</title>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg-soft: #111729;
+    --panel: #161d33;
+    --panel-2: #1c2540;
+    --border: #243056;
+    --text: #e6ecff;
+    --muted: #8a96b8;
+    --accent: #7c5cff;
+    --accent-2: #00d4ff;
+    --good: #2ee6a6;
+    --warn: #ffb454;
+    --danger: #ff5c7a;
+    --code-bg: #0c1325;
+    --shadow: 0 10px 30px rgba(0,0,0,0.35);
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(124,92,255,0.18), transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, rgba(0,212,255,0.12), transparent 60%),
+      var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Scroll progress */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    z-index: 9999;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 12px rgba(124,92,255,0.6);
+  }
+
+  /* Top nav */
+  nav.top {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    background: rgba(10,14,26,0.72);
+    border-bottom: 1px solid var(--border);
+  }
+  nav.top .inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  nav.top .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  nav.top .brand .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(124,92,255,0.6); }
+    50% { box-shadow: 0 0 0 8px rgba(124,92,255,0); }
+  }
+  nav.top ul {
+    display: flex;
+    gap: 4px;
+    margin: 0; padding: 0;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+  nav.top a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  nav.top a:hover, nav.top a.active {
+    color: var(--text);
+    background: var(--panel);
+  }
+
+  main { max-width: 1200px; margin: 0 auto; padding: 0 24px 80px; }
+
+  section { padding: 80px 0 40px; scroll-margin-top: 70px; }
+
+  h1, h2, h3, h4 { color: var(--text); line-height: 1.25; }
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    margin: 0 0 16px;
+    background: linear-gradient(135deg, #fff 0%, #b6c2ff 50%, #7c5cff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin: 0 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  h2 .num {
+    display: inline-flex;
+    width: 44px; height: 44px;
+    align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #0a0e1a;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    box-shadow: 0 4px 14px rgba(124,92,255,0.35);
+  }
+  h3 { font-size: 1.2rem; margin: 24px 0 8px; }
+  p { color: var(--text); }
+  .lead { color: var(--muted); font-size: 1.05rem; max-width: 760px; margin: 0 0 24px; }
+
+  /* Hero */
+  .hero {
+    padding: 80px 0 40px;
+    text-align: center;
+  }
+  .hero .eyebrow {
+    display: inline-block;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--accent-2);
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    background: rgba(0,212,255,0.06);
+  }
+  .hero p.sub {
+    color: var(--muted);
+    max-width: 720px;
+    margin: 0 auto 32px;
+    font-size: 1.15rem;
+  }
+  .hero .stats {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .hero .stat {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 22px;
+    min-width: 140px;
+  }
+  .hero .stat strong {
+    display: block;
+    font-size: 1.6rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+    font-weight: 800;
+  }
+  .hero .stat span { color: var(--muted); font-size: 0.85rem; }
+
+  /* Cards grid */
+  .grid { display: grid; gap: 16px; }
+  .grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(124,92,255,0.5);
+    box-shadow: var(--shadow);
+  }
+  .card .icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    background: linear-gradient(135deg, rgba(124,92,255,0.15), rgba(0,212,255,0.15));
+    border: 1px solid var(--border);
+    font-size: 1.3rem;
+    margin-bottom: 14px;
+  }
+  .card h4 { margin: 0 0 6px; font-size: 1.1rem; }
+  .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+  /* Code blocks */
+  pre, code {
+    font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    overflow-x: auto;
+    font-size: 13px;
+    color: #d6dffb;
+    line-height: 1.55;
+  }
+  code:not(pre code) {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2px 7px;
+    font-size: 0.88em;
+    color: var(--accent-2);
+  }
+  pre .c-cmt { color: #6f7aa3; }
+  pre .c-kw  { color: #c6a4ff; }
+  pre .c-str { color: #9ce5b3; }
+  pre .c-num { color: #ffb454; }
+
+  /* Two-column comparison */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 720px) { .compare { grid-template-columns: 1fr; } }
+  .compare > div {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  .compare h4 { margin-top: 0; }
+  .compare .no h4 { color: var(--danger); }
+  .compare .yes h4 { color: var(--good); }
+  .compare ul { margin: 8px 0 0; padding-left: 18px; color: var(--muted); }
+  .compare li { margin-bottom: 6px; }
+
+  /* Animated diagram (sessions handoff) */
+  .diagram-wrap {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin: 20px 0;
+  }
+  .session-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .session {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    min-width: 180px;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .session.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(124,92,255,0.18), 0 8px 22px rgba(124,92,255,0.25);
+    transform: translateY(-2px);
+  }
+  .session .role { font-size: 11px; color: var(--accent-2); letter-spacing: 1.2px; text-transform: uppercase; }
+  .session .name { font-weight: 700; margin-top: 4px; }
+  .session .task { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .arrow {
+    color: var(--muted);
+    font-size: 1.6rem;
+    user-select: none;
+  }
+  .arrow.live { color: var(--accent-2); animation: blink 1s infinite; }
+  @keyframes blink { 50% { opacity: 0.3; } }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+    margin: 16px 0 16px;
+    flex-wrap: wrap;
+  }
+  .tab {
+    padding: 10px 16px;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 14px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn 0.35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Timeline (fases) */
+  .timeline { position: relative; padding-left: 32px; margin: 24px 0; }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 12px; top: 6px; bottom: 6px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent-2));
+    border-radius: 2px;
+  }
+  .phase {
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 14px;
+    transition: all 0.2s;
+  }
+  .phase:hover { border-color: rgba(124,92,255,0.5); }
+  .phase::before {
+    content: "";
+    position: absolute;
+    left: -25px; top: 22px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 10px rgba(124,92,255,0.4);
+  }
+  .phase.done::before { background: var(--good); border-color: var(--good); box-shadow: 0 0 10px rgba(46,230,166,0.5); }
+  .phase header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .phase h4 { margin: 0; font-size: 1.05rem; }
+  .badge {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .badge.done { background: rgba(46,230,166,0.12); color: var(--good); border-color: rgba(46,230,166,0.35); }
+  .badge.todo { background: rgba(255,180,84,0.12); color: var(--warn); border-color: rgba(255,180,84,0.35); }
+  .phase p { margin: 4px 0 0; color: var(--muted); font-size: 0.95rem; }
+
+  /* Decision tree */
+  .tree { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .tree .node {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+    min-width: 240px;
+    text-align: center;
+    position: relative;
+  }
+  .tree .node.decision { border-color: var(--accent); color: var(--text); }
+  .tree .node.stop { border-color: var(--danger); color: var(--danger); }
+  .tree .node.go { border-color: var(--good); color: var(--good); }
+  .tree .branch {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .tree .branch > div { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .tree .label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Persist table */
+  table.persist {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--panel);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  table.persist th, table.persist td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.93rem;
+  }
+  table.persist th { background: var(--panel-2); color: var(--muted); font-weight: 600; font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase; }
+  table.persist tr:last-child td { border-bottom: none; }
+  table.persist .no-icon { color: var(--danger); margin-right: 6px; }
+  table.persist .yes-icon { color: var(--good); margin-right: 6px; }
+
+  /* Guardrails grid */
+  .guard {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    border-left: 3px solid var(--accent);
+    transition: all 0.2s;
+  }
+  .guard:hover { transform: translateY(-2px); border-left-color: var(--accent-2); }
+  .guard .num {
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .guard h4 { margin: 4px 0 8px; font-size: 1.05rem; }
+  .guard p { margin: 0; color: var(--muted); font-size: 0.93rem; }
+
+  /* Quiz / interactive */
+  .quiz {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .quiz h4 { margin: 0 0 12px; }
+  .quiz .question { color: var(--text); margin-bottom: 16px; font-weight: 500; }
+  .quiz .options { display: grid; gap: 10px; }
+  .quiz .option {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .quiz .option:hover { border-color: rgba(124,92,255,0.5); }
+  .quiz .option.correct { border-color: var(--good); background: rgba(46,230,166,0.08); }
+  .quiz .option.wrong { border-color: var(--danger); background: rgba(255,92,122,0.08); }
+  .quiz .explanation {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: var(--code-bg);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 0.92rem;
+    display: none;
+  }
+  .quiz .explanation.show { display: block; animation: fadeIn 0.3s ease; }
+
+  /* Callout */
+  .callout {
+    background: rgba(255,180,84,0.06);
+    border: 1px solid rgba(255,180,84,0.3);
+    border-left: 3px solid var(--warn);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 18px 0;
+  }
+  .callout strong { color: var(--warn); }
+  .callout.info {
+    background: rgba(0,212,255,0.05);
+    border-color: rgba(0,212,255,0.3);
+    border-left-color: var(--accent-2);
+  }
+  .callout.info strong { color: var(--accent-2); }
+
+  /* Footer */
+  footer {
+    max-width: 1200px;
+    margin: 40px auto 0;
+    padding: 30px 24px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  footer a { color: var(--accent-2); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* Reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .small { font-size: 0.85rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav class="top">
+  <div class="inner">
+    <div class="brand">
+      <span class="dot"></span>
+      Agentic Loops · Mapa Visual
+    </div>
+    <ul>
+      <li><a href="#intro">Intro</a></li>
+      <li><a href="#concepto">Concepto</a></li>
+      <li><a href="#trigger">Trigger</a></li>
+      <li><a href="#handoff">Handoff</a></li>
+      <li><a href="#parada">Parada</a></li>
+      <li><a href="#guardrails">Guardrails</a></li>
+      <li><a href="#fases">Fases</a></li>
+      <li><a href="#amauta">Amauta</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+  <section id="intro" class="hero">
+    <div class="eyebrow">Capacitación · Automatización con Claude Code</div>
+    <h1>Agentic Loops</h1>
+    <p class="sub">
+      Cómo encadenar sesiones de IA para que el código se construya solo —
+      de forma autónoma, segura y controlada.
+    </p>
+    <div class="stats">
+      <div class="stat"><strong>2</strong><span>módulos: conceptual + práctico</span></div>
+      <div class="stat"><strong>5</strong><span>guardrails profesionales</span></div>
+      <div class="stat"><strong>6</strong><span>fases incrementales</span></div>
+      <div class="stat"><strong>3</strong><span>skills coordinadas</span></div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: CONCEPTO -->
+  <section id="concepto" class="reveal">
+    <h2><span class="num">1</span>¿Qué es un agentic loop?</h2>
+    <p class="lead">
+      Un sistema donde una sesión de IA termina y <strong>dispara automáticamente la siguiente</strong>,
+      formando un ciclo autónomo de trabajo sin intervención humana.
+    </p>
+
+    <div class="diagram-wrap">
+      <div class="session-flow" id="sessionFlow">
+        <div class="session" data-step="0">
+          <div class="role">Supervisor</div>
+          <div class="name">project-manager</div>
+          <div class="task">Decide qué issue sigue</div>
+        </div>
+        <div class="arrow" data-step="0">→</div>
+        <div class="session" data-step="1">
+          <div class="role">Operario</div>
+          <div class="name">complete-issue #N</div>
+          <div class="task">TDD + commit + cierre</div>
+        </div>
+        <div class="arrow" data-step="1">↺</div>
+        <div class="session" data-step="2">
+          <div class="role">Supervisor</div>
+          <div class="name">project-manager</div>
+          <div class="task">¿Más issues? Decide</div>
+        </div>
+      </div>
+      <p class="small" style="text-align:center; margin-top: 14px;">
+        El supervisor no ejecuta. El operario no decide. Ninguno te necesita entre turno y turno.
+      </p>
+    </div>
+
+    <h3>Cuándo tiene sentido</h3>
+    <div class="compare">
+      <div class="yes">
+        <h4>✓ Buen caso de uso</h4>
+        <ul>
+          <li>Tareas predecibles y bien definidas (issues con checklist)</li>
+          <li>Estado verificable externamente (GitHub, archivos, tests)</li>
+          <li>Errores recuperables — no afectan producción crítica</li>
+          <li>Tenés guardrails para detectar cuando algo sale mal</li>
+        </ul>
+      </div>
+      <div class="no">
+        <h4>✗ Mal caso de uso</h4>
+        <ul>
+          <li>Tareas que requieren decisiones ambiguas frecuentes</li>
+          <li>El costo de un error es muy alto</li>
+          <li>No hay tests automatizados que validen el trabajo</li>
+          <li>Cambios de producto que necesitan UX humano</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Cron job vs agentic loop</h3>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="icon">⏰</div>
+        <h4>Cron job</h4>
+        <p>Ejecuta algo <em>a una hora fija</em>. Paralelo, sin dependencias entre tareas.</p>
+        <pre style="margin-top:12px;"><span class="c-cmt"># Lunes 9am: tarea A, B, C en paralelo</span>
+0 9 * * 1  run-task-A
+0 9 * * 1  run-task-B
+0 9 * * 1  run-task-C</pre>
+      </div>
+      <div class="card">
+        <div class="icon">🔁</div>
+        <h4>Agentic loop</h4>
+        <p>Ejecuta algo <em>cuando el paso anterior terminó bien</em>. Secuencial, con estado.</p>
+        <pre style="margin-top:12px;"><span class="c-cmt"># tarea A → B (depende de A) → C (depende de B)</span>
+A() <span class="c-kw">&&</span> B() <span class="c-kw">&&</span> C()
+<span class="c-cmt"># El loop respeta el ORDEN LÓGICO del trabajo</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: REMOTE TRIGGER -->
+  <section id="trigger" class="reveal">
+    <h2><span class="num">2</span>El motor: RemoteTrigger</h2>
+    <p class="lead">
+      El tool de Claude Code que permite <strong>disparar una nueva sesión desde dentro de una sesión existente</strong>.
+      Es el mecanismo técnico que hace posibles los agentic loops.
+    </p>
+
+    <div class="tabs" data-tabs="trigger">
+      <div class="tab active" data-tab="t1">Cómo funciona</div>
+      <div class="tab" data-tab="t2">El prompt es todo</div>
+      <div class="tab" data-tab="t3">vs /schedule</div>
+    </div>
+
+    <div class="tab-panel active" data-panel="t1">
+      <p>Cuando Claude llama a <code>RemoteTrigger</code>:</p>
+      <ol>
+        <li>Claude Code <strong>registra el trigger</strong> con el prompt indicado</li>
+        <li>La sesión actual continúa hasta terminar normalmente</li>
+        <li>Una vez finalizada, el sistema <strong>lanza una nueva sesión independiente</strong></li>
+        <li>La nueva sesión <strong>no</strong> tiene acceso al historial de la anterior</li>
+      </ol>
+      <pre><span class="c-kw">RemoteTrigger</span>(
+  prompt: <span class="c-str">"Ejecutá el issue #43 siguiendo complete-issue.
+            Contexto: venís de completar el #42.
+            [loop_count=2/5]"</span>
+)</pre>
+    </div>
+
+    <div class="tab-panel" data-panel="t2">
+      <p>Como las sesiones no comparten contexto, el prompt es el único canal directo.</p>
+      <div class="compare">
+        <div class="no">
+          <h4>✗ Prompt pobre</h4>
+          <pre style="margin-top:8px;">"ejecuta el siguiente issue"</pre>
+          <p class="small" style="margin-top:8px;">La sesión nueva no sabe qué hacer ni de dónde viene.</p>
+        </div>
+        <div class="yes">
+          <h4>✓ Prompt rico</h4>
+          <pre style="margin-top:8px;">"Ejecutá #43 autónomo.
+Venís de completar #42 (F4-016).
+Fase 4, Sprint 15.
+Verificá condiciones de
+parada antes de iniciar."</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="t3">
+      <table class="persist">
+        <thead>
+          <tr><th></th><th>RemoteTrigger</th><th>/schedule</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Cuándo dispara</strong></td>
+            <td>Cuando la sesión termina</td>
+            <td>En un horario fijo (cron)</td>
+          </tr>
+          <tr>
+            <td><strong>Dependencia</strong></td>
+            <td>Depende del resultado anterior</td>
+            <td>Independiente</td>
+          </tr>
+          <tr>
+            <td><strong>Caso de uso</strong></td>
+            <td>Pipelines secuenciales con estado</td>
+            <td>Tareas periódicas sin dependencias</td>
+          </tr>
+          <tr>
+            <td><strong>Ejemplo</strong></td>
+            <td>issue #42 → #43 → #44</td>
+            <td>Revisar estado cada lunes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout info">
+      <strong>Nota práctica:</strong> En Amauta la implementación final reemplazó <code>RemoteTrigger</code>
+      por un mecanismo agnóstico: la sesión escribe <code>next-prompt.md</code> y un script local
+      (<code>loop-runner.sh</code>) levanta la siguiente. Esto independiza el loop de Claude Code específicamente.
+    </div>
+  </section>
+
+  <!-- SECCIÓN: HANDOFF -->
+  <section id="handoff" class="reveal">
+    <h2><span class="num">3</span>El patrón de handoff</h2>
+    <p class="lead">
+      El traspaso de responsabilidad entre sesiones. Como el contexto de conversación
+      <strong>no persiste</strong>, todo lo necesario debe vivir afuera.
+    </p>
+
+    <h3>Qué persiste — qué no</h3>
+    <table class="persist">
+      <thead>
+        <tr><th><span class="no-icon">✗</span>NO persiste</th><th><span class="yes-icon">✓</span>SÍ persiste</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Historial del chat</td><td>Archivos en disco</td></tr>
+        <tr><td>Variables en memoria</td><td>Commits en Git</td></tr>
+        <tr><td>Resultados de tools previos</td><td>Issues en GitHub</td></tr>
+        <tr><td>Decisiones tomadas en sesión</td><td>Documentación actualizada</td></tr>
+        <tr><td>Errores que ocurrieron</td><td>CLAUDE.md y archivos de estado</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Los tres canales de estado</h3>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="icon">🐙</div>
+        <h4>GitHub</h4>
+        <p>El más confiable. Un issue abierto/cerrado es verdad objetiva verificable con <code>gh issue view</code>.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📄</div>
+        <h4>Archivos</h4>
+        <p><code>CLAUDE.md</code>, <code>roadmap.md</code>, <code>loop-status.md</code> actúan como memoria compartida.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📜</div>
+        <h4>Commits</h4>
+        <p>El historial de Git es la bitácora. <code>git log --oneline -5</code> te dice qué hizo la sesión anterior.</p>
+      </div>
+    </div>
+
+    <h3>Anti-patrón: el handoff frágil</h3>
+    <div class="compare">
+      <div class="no">
+        <h4>✗ MAL</h4>
+        <ul>
+          <li>"continúa desde donde estabas"</li>
+          <li>"recordás lo que hablamos antes?"</li>
+          <li>"el issue que dijiste que ibas a hacer"</li>
+        </ul>
+        <p class="small">Ese contexto murió con la sesión anterior. La nueva es una pizarra en blanco.</p>
+      </div>
+      <div class="yes">
+        <h4>✓ BIEN</h4>
+        <ul>
+          <li>"ejecutá #82 (F4-017) verificando que #81 está cerrado"</li>
+          <li>"leé CLAUDE.md y determiná el siguiente issue"</li>
+          <li>"el roadmap dice que el siguiente es F4-017"</li>
+        </ul>
+        <p class="small">Cada instrucción es verificable desde estado externo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: CONDICIONES DE PARADA -->
+  <section id="parada" class="reveal">
+    <h2><span class="num">4</span>Condiciones de parada</h2>
+    <p class="lead">
+      Un loop sin condiciones de parada es un loop infinito.
+      No son opcionales — son la diferencia entre automatización profesional y caos.
+    </p>
+
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="icon" style="background: rgba(46,230,166,0.15);">💼</div>
+        <h4>Negocio</h4>
+        <p>¿Hay issues abiertos en el sprint actual? Si no, stop limpio y resumen.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="background: rgba(255,180,84,0.15);">⚡</div>
+        <h4>Recursos</h4>
+        <p>¿Contexto &gt; 85%? ¿Quota mensual &gt; 95%? No disparar nueva sesión.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="background: rgba(255,92,122,0.15);">🚨</div>
+        <h4>Error</h4>
+        <p>¿Tests fallaron? ¿Compilación rota? ¿Issue ya completado dos veces? STOP con alerta.</p>
+      </div>
+    </div>
+
+    <h3>Árbol de decisión del loop</h3>
+    <div class="diagram-wrap">
+      <div class="tree">
+        <div class="node">📥 Inicio sesión (project-manager)</div>
+        <div class="arrow">↓</div>
+        <div class="node decision">¿Hay issues abiertos?</div>
+        <div class="branch">
+          <div>
+            <div class="label">NO</div>
+            <div class="node stop">STOP · Resumen</div>
+          </div>
+          <div>
+            <div class="label">SÍ</div>
+            <div class="node decision">¿Contexto &lt; 80%?</div>
+            <div class="branch">
+              <div>
+                <div class="label">NO</div>
+                <div class="node stop">STOP · Reiniciar manual</div>
+              </div>
+              <div>
+                <div class="label">SÍ</div>
+                <div class="node decision">¿Dependencias resueltas?</div>
+                <div class="branch">
+                  <div>
+                    <div class="label">NO</div>
+                    <div class="node stop">STOP</div>
+                  </div>
+                  <div>
+                    <div class="label">SÍ</div>
+                    <div class="node go">→ RemoteTrigger #N</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Counter de sesiones:</strong> mecanismo simple y efectivo.
+      Pasá <code>[loop_count=3/10]</code> en el prompt. Cuando llega al límite → stop, sin importar
+      si hay más issues. Es el guardrail de último recurso.
+    </div>
+  </section>
+
+  <!-- SECCIÓN: GUARDRAILS -->
+  <section id="guardrails" class="reveal">
+    <h2><span class="num">5</span>Los 5 guardrails profesionales</h2>
+    <p class="lead">
+      Los mecanismos que convierten un loop experimental en automatización de producción.
+    </p>
+
+    <div class="grid cols-2">
+      <div class="guard">
+        <div class="num">Guardrail 01</div>
+        <h4>Quota de contexto de sesión</h4>
+        <p>Si la sesión leyó &gt;15 archivos, ejecutó &gt;20 comandos o tiene &gt;30 turnos → no disparar. La calidad del razonamiento degrada con contexto saturado.</p>
+      </div>
+      <div class="guard">
+        <div class="num">Guardrail 02</div>
+        <h4>Límite de sesiones por loop</h4>
+        <p>Counter en el prompt: <code>[loop_count=X/N]</code>. Recomendado: 3 para testing, 5-8 estable, 10 máximo. Evita vaciar la quota mensual en una noche.</p>
+      </div>
+      <div class="guard">
+        <div class="num">Guardrail 03</div>
+        <h4>Detección de loop sin progreso</h4>
+        <p>¿El último issue cerrado es el mismo que el que va a ejecutarse? → loop detectado, STOP. Anti-bug crítico contra ciclos vacíos.</p>
+      </div>
+      <div class="guard">
+        <div class="num">Guardrail 04</div>
+        <h4>Log de auditoría</h4>
+        <p><code>loop-status.md</code> con timestamp, sesión, issue, resultado, razón de parada. Sin esto no podés saber por qué el loop terminó.</p>
+      </div>
+      <div class="guard">
+        <div class="num">Guardrail 05</div>
+        <h4>Tercera skill: auditoría</h4>
+        <p>Cada N issues, una sesión revisa tests completos, tipos TypeScript y coherencia arquitectónica. Interviene <em>entre</em> ciclos, no en cada uno.</p>
+      </div>
+      <div class="guard">
+        <div class="num">Checklist</div>
+        <h4>Antes de habilitar autónomo</h4>
+        <p>✓ Counter definido · ✓ Stop por "sin issues" · ✓ Heurística contexto · ✓ Log auditoría · ✓ Detección sin progreso · ✓ Arranque manual documentado.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: FASES -->
+  <section id="fases" class="reveal">
+    <h2><span class="num">6</span>Implementación por fases</h2>
+    <p class="lead">
+      Activar el loop completo desde el día 1 es la forma más rápida de descubrir problemas caros.
+      Lo más simple que puede funcionar, antes de agregar más.
+    </p>
+
+    <div class="timeline">
+      <div class="phase done">
+        <header>
+          <h4>Fase 0 · Verificación manual</h4>
+          <span class="badge done">✓ Completada · 2026-03-29</span>
+        </header>
+        <p>Ejecutar <code>project-manager</code> y <code>complete-issue</code> manualmente. 3 issues distintos sin sorpresas. Sin esto, automatizar es ciego.</p>
+      </div>
+      <div class="phase done">
+        <header>
+          <h4>Fase 1 · Loop mínimo (1 issue, 2 sesiones)</h4>
+          <span class="badge done">✓ Completada · 2026-03-29</span>
+        </header>
+        <p>Probar el handoff: project-manager → complete-issue → STOP. El primer handoff real entre sesiones independientes.</p>
+      </div>
+      <div class="phase done">
+        <header>
+          <h4>Fase 2 · Loop bidireccional (2 issues, 4 sesiones)</h4>
+          <span class="badge done">✓ Completada · 2026-03-29</span>
+        </header>
+        <p>Ciclo completo de ida y vuelta. PM → CI → PM → CI → STOP. Counter se propaga: 0/2 → 1/2 → 1/2 → 2/2.</p>
+      </div>
+      <div class="phase">
+        <header>
+          <h4>Fase 3 · Loop con guardrails activos (5-8 issues)</h4>
+          <span class="badge todo">⏳ Pendiente</span>
+        </header>
+        <p>Todos los guardrails activos. Pruebas: parada natural, parada por counter, log fiel.</p>
+      </div>
+      <div class="phase">
+        <header>
+          <h4>Fase 4 · Tercera skill (auditoría periódica)</h4>
+          <span class="badge todo">⏳ Pendiente</span>
+        </header>
+        <p>Cada 3 issues, una sesión de auditor revisa tests + tipos + documentación. Si encuentra problemas → STOP.</p>
+      </div>
+      <div class="phase">
+        <header>
+          <h4>Fase 5 · Modo producción</h4>
+          <span class="badge todo">⏳ Pendiente</span>
+        </header>
+        <p>Sin supervisión, notifica cuando para, output auditable. Requiere 10+ issues exitosos y guardrails probados en todas las condiciones.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Regla de oro:</strong> No avances a la siguiente fase hasta que la anterior funcione sin sorpresas.
+      Una sorpresa en Fase 1 cuesta 2 sesiones perdidas. La misma sorpresa en Fase 5 puede ser 50.
+    </div>
+  </section>
+
+  <!-- SECCIÓN: AMAUTA -->
+  <section id="amauta" class="reveal">
+    <h2><span class="num">7</span>El caso Amauta</h2>
+    <p class="lead">
+      La implementación real del loop en este proyecto vive en <code>docs/ai-skills/automata-dev/</code>.
+    </p>
+
+    <h3>Arquitectura concreta</h3>
+    <div class="diagram-wrap">
+      <pre style="margin: 0;">┌─────────────────────────────────────────────────────────┐
+│                   LOOP AUTÓNOMO AMAUTA                  │
+│                                                         │
+│  ┌────────────────────────┐  ┌──────────────────────┐   │
+│  │ project-manager-       │─▶│ complete-issue-       │   │
+│  │ automata               │  │ automata #N           │   │
+│  │ (decide qué sigue)     │◀─│ (TDD + docs + commit) │   │
+│  └────────────────────────┘  └──────────────────────┘   │
+│            │                                            │
+│       ¿Más issues?                                      │
+│       NO → STOP                                         │
+│                                                         │
+│  Mecanismo de handoff: <span style="color:#00d4ff">next-prompt.md</span> + loop-runner   │
+│                                                         │
+│  Guardrails:                                            │
+│  • Quota sesión &gt; 85%   → no iniciar                   │
+│  • Quota mensual &gt; 95%  → no iniciar                   │
+│  • Sin issues abiertos  → stop limpio                   │
+│  • Counter loop_count   → stop al llegar al límite      │
+└─────────────────────────────────────────────────────────┘</pre>
+    </div>
+
+    <h3>Archivos del sistema</h3>
+    <table class="persist">
+      <thead><tr><th>Archivo</th><th>Propósito</th></tr></thead>
+      <tbody>
+        <tr><td><code>project-manager-automata.md</code></td><td>Skill orquestador del loop</td></tr>
+        <tr><td><code>complete-issue-automata.md</code></td><td>Skill ejecutora del loop</td></tr>
+        <tr><td><code>loop-auditor.md</code></td><td>Skill de auditoría (Fase 5)</td></tr>
+        <tr><td><code>loop-status.md</code></td><td>Estado actual del loop</td></tr>
+        <tr><td><code>next-prompt.md</code></td><td>Prompt de la próxima sesión (handoff)</td></tr>
+        <tr><td><code>loop-runner.sh / .ps1</code></td><td>Trigger externo (Linux / Windows)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>El loop-runner agnóstico (Opción A elegida)</h3>
+    <div class="tabs" data-tabs="runner">
+      <div class="tab active" data-tab="r1">Linux / macOS</div>
+      <div class="tab" data-tab="r2">Windows PowerShell</div>
+    </div>
+    <div class="tab-panel active" data-panel="r1">
+<pre><span class="c-cmt">#!/bin/bash</span>
+<span class="c-cmt"># loop-runner.sh</span>
+NEXT_PROMPT=<span class="c-str">"docs/ai-skills/automata-dev/next-prompt.md"</span>
+
+<span class="c-kw">while</span> [[ -f <span class="c-str">"$NEXT_PROMPT"</span> ]]; <span class="c-kw">do</span>
+  PROMPT=$(<span class="c-kw">cat</span> <span class="c-str">"$NEXT_PROMPT"</span>)
+  <span class="c-kw">rm</span> <span class="c-str">"$NEXT_PROMPT"</span>
+  <span class="c-kw">echo</span> <span class="c-str">"$PROMPT"</span> | claude --print --dangerously-skip-permissions
+<span class="c-kw">done</span>
+
+<span class="c-kw">echo</span> <span class="c-str">"Loop terminado."</span></pre>
+    </div>
+    <div class="tab-panel" data-panel="r2">
+<pre><span class="c-cmt"># loop-runner.ps1</span>
+<span class="c-kw">$NextPrompt</span> = <span class="c-str">"docs/ai-skills/automata-dev/next-prompt.md"</span>
+
+<span class="c-kw">while</span> (Test-Path <span class="c-kw">$NextPrompt</span>) {
+  <span class="c-kw">$Prompt</span> = Get-Content <span class="c-kw">$NextPrompt</span> -Raw
+  Remove-Item <span class="c-kw">$NextPrompt</span>
+  <span class="c-kw">$Prompt</span> | claude --print --dangerously-skip-permissions
+}
+
+Write-Host <span class="c-str">"Loop terminado."</span></pre>
+    </div>
+
+    <h3>Validación empírica</h3>
+    <div class="callout info">
+      <strong>2026-03-29:</strong> Dos sesiones encadenadas sin intervención humana.
+      Issue #81 (F4-016) ejecutado completo. <code>next-prompt.md</code> levantado por el runner,
+      issue cerrado, tests en verde (5/5), commit sin atribución de IA, log actualizado.
+      <strong>El núcleo del sistema está validado.</strong>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: QUIZ INTERACTIVO -->
+  <section id="quiz" class="reveal">
+    <h2><span class="num">?</span>Mini-quiz</h2>
+    <p class="lead">Probate. La respuesta correcta tiene fundamento conceptual, no es elección al azar.</p>
+
+    <div class="quiz" data-quiz="q1">
+      <h4>Pregunta 1</h4>
+      <div class="question">Una sesión nueva arranca después de un RemoteTrigger. ¿Qué le pasaría si le dijeras: "continuá desde donde estabas"?</div>
+      <div class="options">
+        <div class="option" data-correct="false">Continuaría sin problema, las sesiones comparten contexto</div>
+        <div class="option" data-correct="true">No tendría idea — el contexto de la sesión previa no persiste</div>
+        <div class="option" data-correct="false">Leería el historial automáticamente</div>
+      </div>
+      <div class="explanation">
+        <strong>Correcto.</strong> Entre sesión y sesión solo persiste el <em>estado externo</em>:
+        archivos, commits, issues. El historial de chat muere. Por eso el prompt de handoff
+        debe ser <strong>autocontenido</strong>.
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz="q2">
+      <h4>Pregunta 2</h4>
+      <div class="question">¿Cuál de estos NO es un guardrail recomendado?</div>
+      <div class="options">
+        <div class="option" data-correct="false">Counter de sesiones <code>[loop_count=X/N]</code></div>
+        <div class="option" data-correct="false">Heurística de contexto saturado</div>
+        <div class="option" data-correct="true">Reintentar automáticamente cuando los tests fallan</div>
+        <div class="option" data-correct="false">Detección de loop sin progreso (mismo issue dos veces)</div>
+      </div>
+      <div class="explanation">
+        <strong>Correcto.</strong> Reintentar tests fallidos automáticamente esconde problemas reales
+        y consume quota. El patrón correcto es <em>STOP, no cerrar el issue, reportar el problema</em>.
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz="q3">
+      <h4>Pregunta 3</h4>
+      <div class="question">¿En qué fase recién deberías probar que el loop bidireccional funciona (4 sesiones)?</div>
+      <div class="options">
+        <div class="option" data-correct="false">Fase 0 — verificación manual</div>
+        <div class="option" data-correct="false">Fase 1 — loop mínimo (1 issue)</div>
+        <div class="option" data-correct="true">Fase 2 — loop bidireccional (2 issues)</div>
+        <div class="option" data-correct="false">Fase 5 — modo producción</div>
+      </div>
+      <div class="explanation">
+        <strong>Correcto.</strong> Fase 2 es exactamente eso: PM → CI → PM → CI → STOP.
+        Verifica que el counter se propaga y que la segunda sesión de project-manager
+        puede determinar el estado sin ver el historial de la primera.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Material basado en <a href="README.md">docs/automata/capacitacion/agentic-loops/</a>
+  · Implementación viva en <code>docs/ai-skills/automata-dev/</code>
+</footer>
+
+<script>
+  // Scroll progress bar
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    progress.style.width = pct + '%';
+  });
+
+  // Active nav link
+  const navLinks = document.querySelectorAll('nav.top a');
+  const sections = document.querySelectorAll('section[id]');
+  const setActive = () => {
+    const y = window.scrollY + 100;
+    let current = sections[0].id;
+    sections.forEach(s => { if (s.offsetTop <= y) current = s.id; });
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  };
+  window.addEventListener('scroll', setActive);
+  setActive();
+
+  // Tabs
+  document.querySelectorAll('[data-tabs]').forEach(group => {
+    const groupName = group.dataset.tabs;
+    group.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        group.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const target = tab.dataset.tab;
+        document.querySelectorAll(`[data-panel]`).forEach(p => {
+          if (group.parentElement.contains(p)) p.classList.remove('active');
+        });
+        const panel = group.parentElement.querySelector(`[data-panel="${target}"]`);
+        if (panel) panel.classList.add('active');
+      });
+    });
+  });
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Animated session flow
+  const flow = document.getElementById('sessionFlow');
+  if (flow) {
+    const sessions = flow.querySelectorAll('.session');
+    const arrows = flow.querySelectorAll('.arrow');
+    let step = 0;
+    setInterval(() => {
+      sessions.forEach(s => s.classList.remove('active'));
+      arrows.forEach(a => a.classList.remove('live'));
+      sessions[step].classList.add('active');
+      if (arrows[step]) arrows[step].classList.add('live');
+      step = (step + 1) % sessions.length;
+    }, 1600);
+  }
+
+  // Quiz
+  document.querySelectorAll('.quiz').forEach(q => {
+    const options = q.querySelectorAll('.option');
+    const explanation = q.querySelector('.explanation');
+    options.forEach(opt => {
+      opt.addEventListener('click', () => {
+        if (q.dataset.answered === 'true') return;
+        const correct = opt.dataset.correct === 'true';
+        opt.classList.add(correct ? 'correct' : 'wrong');
+        if (!correct) {
+          options.forEach(o => { if (o.dataset.correct === 'true') o.classList.add('correct'); });
+        }
+        explanation.classList.add('show');
+        q.dataset.answered = 'true';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
