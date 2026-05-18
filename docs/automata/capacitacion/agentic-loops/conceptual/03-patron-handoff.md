@@ -51,7 +51,7 @@ git log --oneline -5
 
 ### Paso 1: La sesión A actualiza el estado externo
 
-Antes de llamar `RemoteTrigger`, la sesión A debe haber dejado el estado externo coherente:
+Antes de escribir `next-prompt.md`, la sesión A debe haber dejado el estado externo coherente:
 
 - Issue cerrado en GitHub
 - `CLAUDE.md` actualizado con el progreso
@@ -113,7 +113,7 @@ SESIÓN A (complete-issue #81)
 ├── 5. Verifica condición de parada
 │      ¿Hay más issues? SÍ
 ├── 6. Construye prompt de handoff
-└── 7. Llama RemoteTrigger(prompt)
+└── 7. Escribe next-prompt.md (prompt)
          │
          ▼
 SESIÓN B (project-manager-autonomo)
@@ -125,7 +125,7 @@ SESIÓN B (project-manager-autonomo)
 ├── 6. Verifica condiciones de parada
 │      ¿Quota ok? ¿Issues disponibles? SÍ
 ├── 7. Construye prompt de handoff
-└── 8. Llama RemoteTrigger(prompt="/complete-issue #82 autónomo")
+└── 8. Escribe next-prompt.md (prompt="/complete-issue #82 autónomo")
          │
          ▼
 SESIÓN C (complete-issue #82)

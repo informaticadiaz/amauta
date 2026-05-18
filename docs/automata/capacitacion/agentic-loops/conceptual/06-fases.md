@@ -49,7 +49,7 @@ El principio es siempre el mismo: **lo más simple que puede funcionar**, antes 
         Sesión A (project-manager-autonomo)
         - Lee estado
         - Elige el próximo issue (#N)
-        - Llama RemoteTrigger("complete-issue #N autónomo [loop_count=1/1]")
+        - Escribe next-prompt.md ("complete-issue #N autónomo [loop_count=1/1]")
                 │
                 ▼
         Sesión B (complete-issue #N)

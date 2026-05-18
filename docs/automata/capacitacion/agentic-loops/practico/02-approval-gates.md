@@ -77,7 +77,7 @@ La documentación de planificación la actualiza el humano o el `complete-issue`
 ### Regla 3: No hace preguntas, decide y actúa
 
 ```
-✅ HACE: evalúa estado → elige issue → verifica condiciones → dispara RemoteTrigger
+✅ HACE: evalúa estado → elige issue → verifica condiciones → escribe next-prompt.md (handoff)
 ❌ NO HACE: "¿Querés que ejecutemos el #82?" (el loop no tiene a nadie a quien preguntarle)
 ```
 
@@ -114,7 +114,7 @@ El `project-manager-autonomo` cumple este contrato:
 4. Verifica condiciones de parada
 5. Construye el prompt de handoff
 
-**Salida**: `RemoteTrigger` con el issue a ejecutar, O bien STOP con log
+**Salida**: `next-prompt.md` con el issue a ejecutar, O bien STOP con log
 
 **Lo que nunca hace**: crear issues, modificar roadmap/backlog/sprints, pedir confirmación
 

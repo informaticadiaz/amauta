@@ -453,6 +453,21 @@
     letter-spacing: 1.5px;
     text-transform: uppercase;
   }
+  .guard .status {
+    display: inline-flex;
+    margin-left: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+    vertical-align: middle;
+  }
+  .guard .status.ok { color: var(--good); border-color: rgba(46,230,166,0.35); background: rgba(46,230,166,0.08); }
+  .guard .status.partial { color: var(--warn); border-color: rgba(255,180,84,0.35); background: rgba(255,180,84,0.08); }
+  .guard .status.todo { color: var(--danger); border-color: rgba(255,92,122,0.35); background: rgba(255,92,122,0.08); }
   .guard h4 { margin: 4px 0 8px; font-size: 1.05rem; }
   .guard p { margin: 0; color: var(--muted); font-size: 0.93rem; }
 
@@ -540,7 +555,7 @@
     <ul>
       <li><a href="#intro">Intro</a></li>
       <li><a href="#concepto">Concepto</a></li>
-      <li><a href="#trigger">Trigger</a></li>
+      <li><a href="#runner">Runner</a></li>
       <li><a href="#handoff">Handoff</a></li>
       <li><a href="#parada">Parada</a></li>
       <li><a href="#guardrails">Guardrails</a></li>
@@ -644,33 +659,34 @@ A() <span class="c-kw">&&</span> B() <span class="c-kw">&&</span> C()
     </div>
   </section>
 
-  <!-- SECCIÓN: REMOTE TRIGGER -->
-  <section id="trigger" class="reveal">
-    <h2><span class="num">2</span>El motor: RemoteTrigger</h2>
+  <!-- SECCIÓN: RUNNER -->
+  <section id="runner" class="reveal">
+    <h2><span class="num">2</span>El motor: next-prompt.md + loop-runner</h2>
     <p class="lead">
-      El tool de Claude Code que permite <strong>disparar una nueva sesión desde dentro de una sesión existente</strong>.
-      Es el mecanismo técnico que hace posibles los agentic loops.
+      El loop se dispara de forma <strong>agnóstica</strong>: la sesión escribe <code>next-prompt.md</code> y un runner externo
+      (<code>loop-runner.sh</code>/<code>.ps1</code>) arranca la próxima sesión cuando detecta ese archivo.
     </p>
 
-    <div class="tabs" data-tabs="trigger">
+    <div class="tabs" data-tabs="runner">
       <div class="tab active" data-tab="t1">Cómo funciona</div>
       <div class="tab" data-tab="t2">El prompt es todo</div>
       <div class="tab" data-tab="t3">vs /schedule</div>
     </div>
 
     <div class="tab-panel active" data-panel="t1">
-      <p>Cuando Claude llama a <code>RemoteTrigger</code>:</p>
+      <p>Cómo se encadena una sesión con la siguiente:</p>
       <ol>
-        <li>Claude Code <strong>registra el trigger</strong> con el prompt indicado</li>
-        <li>La sesión actual continúa hasta terminar normalmente</li>
-        <li>Una vez finalizada, el sistema <strong>lanza una nueva sesión independiente</strong></li>
+        <li>La sesión actual <strong>decide el próximo paso</strong> (ej. próximo issue)</li>
+        <li>Actualiza estado externo (GitHub/archivos) y <strong>escribe</strong> <code>next-prompt.md</code></li>
+        <li>El runner detecta <code>next-prompt.md</code> y <strong>lanza una nueva sesión independiente</strong></li>
         <li>La nueva sesión <strong>no</strong> tiene acceso al historial de la anterior</li>
       </ol>
-      <pre><span class="c-kw">RemoteTrigger</span>(
-  prompt: <span class="c-str">"Ejecutá el issue #43 siguiendo complete-issue.
-            Contexto: venís de completar el #42.
-            [loop_count=2/5]"</span>
-)</pre>
+      <pre><span class="c-cmt"># handoff: escribir el prompt de inicio</span>
+<span class="c-kw">cat</span> &gt; <span class="c-str">docs/ai-skills/automata-dev/next-prompt.md</span> &lt;&lt; 'EOF'
+<span class="c-str">Ejecutá el issue #43 siguiendo complete-issue-automata.</span>
+<span class="c-str">Contexto: venís de completar el #42.</span>
+<span class="c-str">[loop_count=2/5]</span>
+EOF</pre>
     </div>
 
     <div class="tab-panel" data-panel="t2">
@@ -695,12 +711,12 @@ parada antes de iniciar."</pre>
     <div class="tab-panel" data-panel="t3">
       <table class="persist">
         <thead>
-          <tr><th></th><th>RemoteTrigger</th><th>/schedule</th></tr>
+          <tr><th></th><th>Runner</th><th>/schedule</th></tr>
         </thead>
         <tbody>
           <tr>
             <td><strong>Cuándo dispara</strong></td>
-            <td>Cuando la sesión termina</td>
+            <td>Cuando aparece <code>next-prompt.md</code></td>
             <td>En un horario fijo (cron)</td>
           </tr>
           <tr>
@@ -723,9 +739,8 @@ parada antes de iniciar."</pre>
     </div>
 
     <div class="callout info">
-      <strong>Nota práctica:</strong> En Amauta la implementación final reemplazó <code>RemoteTrigger</code>
-      por un mecanismo agnóstico: la sesión escribe <code>next-prompt.md</code> y un script local
-      (<code>loop-runner.sh</code>) levanta la siguiente. Esto independiza el loop de Claude Code específicamente.
+      <strong>Nota práctica:</strong> En Amauta el motor del loop es <code>next-prompt.md</code> + <code>loop-runner</code>.
+      Esto hace al automatismo portable: podés correrlo con bash, PowerShell, cron o CI.
     </div>
   </section>
 
@@ -848,7 +863,7 @@ parada antes de iniciar."</pre>
                   </div>
                   <div>
                     <div class="label">SÍ</div>
-                    <div class="node go">→ RemoteTrigger #N</div>
+                    <div class="node go">→ runner (sesión #N)</div>
                   </div>
                 </div>
               </div>
@@ -874,27 +889,27 @@ parada antes de iniciar."</pre>
 
     <div class="grid cols-2">
       <div class="guard">
-        <div class="num">Guardrail 01</div>
+        <div class="num">Guardrail 01 <span class="status todo">No implementado</span></div>
         <h4>Quota de contexto de sesión</h4>
         <p>Si la sesión leyó &gt;15 archivos, ejecutó &gt;20 comandos o tiene &gt;30 turnos → no disparar. La calidad del razonamiento degrada con contexto saturado.</p>
       </div>
       <div class="guard">
-        <div class="num">Guardrail 02</div>
+        <div class="num">Guardrail 02 <span class="status ok">Implementado</span></div>
         <h4>Límite de sesiones por loop</h4>
         <p>Counter en el prompt: <code>[loop_count=X/N]</code>. Recomendado: 3 para testing, 5-8 estable, 10 máximo. Evita vaciar la quota mensual en una noche.</p>
       </div>
       <div class="guard">
-        <div class="num">Guardrail 03</div>
+        <div class="num">Guardrail 03 <span class="status todo">No implementado</span></div>
         <h4>Detección de loop sin progreso</h4>
         <p>¿El último issue cerrado es el mismo que el que va a ejecutarse? → loop detectado, STOP. Anti-bug crítico contra ciclos vacíos.</p>
       </div>
       <div class="guard">
-        <div class="num">Guardrail 04</div>
+        <div class="num">Guardrail 04 <span class="status ok">Implementado</span></div>
         <h4>Log de auditoría</h4>
         <p><code>loop-status.md</code> con timestamp, sesión, issue, resultado, razón de parada. Sin esto no podés saber por qué el loop terminó.</p>
       </div>
       <div class="guard">
-        <div class="num">Guardrail 05</div>
+        <div class="num">Guardrail 05 <span class="status partial">Parcial</span></div>
         <h4>Tercera skill: auditoría</h4>
         <p>Cada N issues, una sesión revisa tests completos, tipos TypeScript y coherencia arquitectónica. Interviene <em>entre</em> ciclos, no en cada uno.</p>
       </div>
@@ -1056,7 +1071,7 @@ Write-Host <span class="c-str">"Loop terminado."</span></pre>
 
     <div class="quiz" data-quiz="q1">
       <h4>Pregunta 1</h4>
-      <div class="question">Una sesión nueva arranca después de un RemoteTrigger. ¿Qué le pasaría si le dijeras: "continuá desde donde estabas"?</div>
+      <div class="question">Una sesión nueva arranca después de un handoff (next-prompt.md consumido por el runner). ¿Qué le pasaría si le dijeras: "continuá desde donde estabas"?</div>
       <div class="options">
         <div class="option" data-correct="false">Continuaría sin problema, las sesiones comparten contexto</div>
         <div class="option" data-correct="true">No tendría idea — el contexto de la sesión previa no persiste</div>

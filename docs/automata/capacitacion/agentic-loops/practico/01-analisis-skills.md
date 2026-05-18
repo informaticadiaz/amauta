@@ -40,7 +40,7 @@ Ubicación: `docs/ai-skills/project-manager.md`
 
 - No haga la pregunta de foco (decide solo)
 - No necesite aprobación para seleccionar el próximo issue (no crea issues, solo elige de los existentes)
-- Llame `RemoteTrigger` directamente con el issue seleccionado
+- Escriba `next-prompt.md` directamente con el issue seleccionado (handoff)
 
 ---
 
@@ -98,11 +98,11 @@ SKILL ACTUAL                    ADAPTACIÓN REQUERIDA
 project-manager                 → project-manager-autonomo (skill nuevo)
   - pregunta de foco               - decide solo basado en roadmap
   - approval gates                 - no crea issues, solo elige existentes
-  - no llama RemoteTrigger         - llama RemoteTrigger al final
+  - no escribe next-prompt.md      - escribe next-prompt.md al final
 
 complete-issue                  → complete-issue (mismo skill, instrucción adicional)
   - confirmación PASO 0            - pasar número explícito: problema resuelto
-  - no llama RemoteTrigger         - agregar en prompt: "al terminar, dispará project-manager-autonomo"
+  - no escribe next-prompt.md      - agregar en prompt: "al terminar, escribí next-prompt.md para project-manager-autonomo"
   - bug: atribución IA en commit   - corregir en el skill (issue a crear)
 ```
 

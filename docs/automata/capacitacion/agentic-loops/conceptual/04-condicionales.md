@@ -50,14 +50,14 @@ Algo salió mal y continuar podría empeorar las cosas.
 
 ## Dónde viven las condiciones
 
-Las condiciones son **lógica del prompt**, no código. Están escritas en el skill como instrucciones explícitas que Claude debe evaluar antes de llamar `RemoteTrigger`.
+Las condiciones son **lógica del prompt**, no código. Están escritas en el skill como instrucciones explícitas que la sesión debe evaluar antes de escribir `next-prompt.md`.
 
 ### En el skill project-manager-autonomo:
 
 ```markdown
 ## Condiciones de parada (evaluar ANTES de disparar la siguiente sesión)
 
-Antes de llamar RemoteTrigger, verificar en orden:
+Antes de escribir `next-prompt.md`, verificar en orden:
 
 1. ¿Hay issues abiertos con label phase-4 en GitHub?
    - NO → no disparar. Generar resumen de lo completado en el loop. Terminar.
@@ -68,7 +68,7 @@ Antes de llamar RemoteTrigger, verificar en orden:
 3. ¿El contexto de esta sesión supera el 80%?
    - SÍ → no disparar. Terminar con un resumen y nota: "Loop pausado por límite de contexto".
 
-Solo si las tres verificaciones son positivas → llamar RemoteTrigger.
+Solo si las tres verificaciones son positivas → escribir `next-prompt.md`.
 ```
 
 ### En el skill complete-issue (modo autónomo):
@@ -110,7 +110,7 @@ INICIO DE SESIÓN (project-manager-autonomo)
 ├── ¿Quota de contexto ok (< 80%)?
 │   NO → STOP: "Loop pausado por límite de contexto. Reiniciar manualmente."
 │
-└── TODO OK → RemoteTrigger("/complete-issue #N autónomo")
+└── TODO OK → escribe next-prompt.md ("/complete-issue #N autónomo")
                       │
                       ▼
          SESIÓN (complete-issue #N)
@@ -127,7 +127,7 @@ INICIO DE SESIÓN (project-manager-autonomo)
          ├── Actualizar CLAUDE.md
          ├── Commit + push
          │
-         └── RemoteTrigger("/project-manager-autonomo") → vuelve al inicio
+         └── escribe next-prompt.md ("/project-manager-autonomo") → vuelve al inicio
 ```
 
 ---
@@ -158,7 +158,7 @@ Las bifurcaciones permiten que el loop sea **adaptativo**, no solo mecánico.
 Un mecanismo simple pero efectivo es pasar un **contador de sesiones** en el prompt:
 
 ```
-RemoteTrigger(prompt="/complete-issue #N autónomo [loop_count=3/10]")
+escribe next-prompt.md ("/complete-issue #N autónomo [loop_count=3/10]")
 ```
 
 La sesión que recibe este prompt sabe que es la sesión 3 de un máximo de 10. Si el contador llega al límite → stop, sin importar si hay más issues.

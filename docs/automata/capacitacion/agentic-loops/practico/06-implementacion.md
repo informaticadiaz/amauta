@@ -147,7 +147,7 @@ Verificar:
 - [ ] Identifica el próximo issue según el roadmap
 - [ ] Genera el prompt de handoff correctamente (con contexto completo)
 - [ ] Actualiza `docs/logs/loop-status.md`
-- [ ] **NO ejecutar el RemoteTrigger — solo revisar el output**
+- [ ] **NO ejecutar el runner — solo revisar el output (next-prompt.md)**
 
 ### F0-2: Probar complete-issue en modo autónomo
 
@@ -156,7 +156,7 @@ Ejecutar con el issue que `project-manager-autonomo` habría elegido:
 ```
 Ejecutá el issue #[N] de forma autónoma siguiendo el workflow completo de complete-issue.
 Modo: completamente autónomo.
-Al terminar: NO disparar RemoteTrigger, solo mostrar qué habrías disparado.
+Al terminar: NO escribir next-prompt.md, solo mostrar qué habrías escrito.
 ```
 
 Verificar:
@@ -278,13 +278,13 @@ Iniciar con `[loop_count=0/6]` para que la auditoría se dispare una vez (en la 
 
 ## Resumen de comandos para iniciar cada fase
 
-| Fase   | Comando de inicio                                                        |
-| ------ | ------------------------------------------------------------------------ |
-| Fase 0 | Manual: `/project-manager-autonomo [loop_count=0/1]` (sin RemoteTrigger) |
-| Fase 1 | `/project-manager-autonomo [loop_count=0/1]`                             |
-| Fase 2 | `/project-manager-autonomo [loop_count=0/2]`                             |
-| Fase 3 | `/project-manager-autonomo [loop_count=0/5]`                             |
-| Fase 4 | `/project-manager-autonomo [loop_count=0/6]`                             |
+| Fase   | Comando de inicio                                                 |
+| ------ | ----------------------------------------------------------------- |
+| Fase 0 | Manual: `/project-manager-autonomo [loop_count=0/1]` (sin runner) |
+| Fase 1 | `/project-manager-autonomo [loop_count=0/1]`                      |
+| Fase 2 | `/project-manager-autonomo [loop_count=0/2]`                      |
+| Fase 3 | `/project-manager-autonomo [loop_count=0/5]`                      |
+| Fase 4 | `/project-manager-autonomo [loop_count=0/6]`                      |
 
 ---
 

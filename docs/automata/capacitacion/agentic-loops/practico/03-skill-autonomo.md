@@ -8,7 +8,7 @@
 
 ## Principio de diseño
 
-`project-manager-autonomo` es un skill de **orquestación pura**. No ejecuta trabajo de desarrollo — elige qué ejecutar a continuación y delega. Su único output es un `RemoteTrigger` o un STOP documentado.
+`project-manager-autonomo` es un skill de **orquestación pura**. No ejecuta trabajo de desarrollo — elige qué ejecutar a continuación y delega. Su único output es escribir `next-prompt.md` (handoff) o un STOP documentado.
 
 Es la mitad "supervisor" del loop. Solo toma decisiones, nunca implementa.
 
@@ -22,7 +22,7 @@ Es la mitad "supervisor" del loop. Solo toma decisiones, nunca implementa.
 | Pregunta de foco            | SÍ, obligatoria                | NO, decide solo                         |
 | Crea issues                 | Con aprobación                 | NUNCA                                   |
 | Modifica docs planificación | Con aprobación                 | NUNCA                                   |
-| Llama RemoteTrigger         | NO                             | SÍ, es el output principal              |
+| Escribe next-prompt.md      | NO                             | SÍ, es el output principal              |
 | Para el loop                | No aplica                      | SÍ, cuando las condiciones lo requieren |
 | Actualiza CLAUDE.md         | Con aprobación                 | NUNCA (lo hace complete-issue)          |
 
@@ -41,7 +41,7 @@ description:
   Orquestador autónomo del loop de desarrollo. Determina el próximo issue
   a ejecutar según el roadmap y dispara complete-issue. Solo trabaja con issues
   existentes en GitHub. No crea issues, no modifica documentación de planificación,
-  no hace preguntas. Su único output es RemoteTrigger o STOP documentado.
+  no hace preguntas. Su único output es escribir next-prompt.md o STOP documentado.
 ---
 
 # Project Manager Autónomo
@@ -134,13 +134,12 @@ Antes de disparar, registrar en `docs/logs/loop-status.md`:
 - Próximo: complete-issue #[N]
 ```
 
-### PASO 6 — Disparar la siguiente sesión
+### PASO 6 — Handoff: preparar la siguiente sesión
 
-Incrementar el counter y construir el prompt:
+Incrementar el counter y **escribir el prompt de inicio** en `docs/ai-skills/automata-dev/next-prompt.md` (el runner lo va a consumir):
 
 ```
-RemoteTrigger(
-  prompt: "Ejecutá el issue #[N] de forma autónoma siguiendo el workflow completo de complete-issue.
+Ejecutá el issue #[N] de forma autónoma siguiendo el workflow completo de complete-issue.
 
 Contexto del loop:
 - Venís del project-manager-autonomo
@@ -149,21 +148,20 @@ Contexto del loop:
 - Issue anterior completado: #[N-1] (si aplica)
 
 Al terminar el issue (tests pasando, issue cerrado, commit hecho):
-1. Actualizá docs/logs/loop-status.md con el resultado
-2. Disparar RemoteTrigger con: '/project-manager-autonomo [loop_count=[X+1]/[N_max]]'
+1. Actualizá docs/ai-skills/automata-dev/loop-status.md con el resultado
+2. Escribí next-prompt.md con: '/project-manager-autonomo [loop_count=[X+1]/[N_max]]'
 
-Condiciones de parada para no disparar project-manager:
+Condiciones de parada para NO escribir next-prompt.md:
 - Si los tests no pasaron → STOP, registrar problema en loop-status.md
 - Si TypeScript no compila → STOP
 - Si el issue no pudo cerrarse → STOP
 
-Modo: completamente autónomo. No esperar confirmación del usuario."
-)
+Modo: completamente autónomo. No esperar confirmación del usuario.
 ```
 
 ## Formato de STOP
 
-Cuando el loop debe detenerse, NO llamar RemoteTrigger. En cambio:
+Cuando el loop debe detenerse, NO escribir next-prompt.md. En cambio:
 
 1. Escribir en `docs/logs/loop-status.md`:
 
@@ -185,7 +183,7 @@ Cuando el loop debe detenerse, NO llamar RemoteTrigger. En cambio:
 - No modificar roadmap.md, backlog.md ni sprints.md
 - No usar terminología de estado que no esté verificada en GitHub
 - Si hay ambigüedad sobre cuál es el próximo issue → preferir STOP sobre asumir
-- El loop_count debe propagarse correctamente en cada RemoteTrigger
+- El loop_count debe propagarse correctamente en cada next-prompt.md
 
 ```
 
@@ -211,7 +209,7 @@ Antes de usar el skill en un loop real, verificar manualmente:
 2. Verificar que elige el issue correcto según el roadmap
 3. Verificar que el prompt de handoff generado tiene toda la información necesaria
 4. Verificar que crea/actualiza correctamente `docs/logs/loop-status.md`
-5. **No ejecutar el RemoteTrigger en esta prueba** — solo verificar el output
+5. **No ejecutar el runner en esta prueba** — solo verificar el output (next-prompt.md)
 
 ---
 

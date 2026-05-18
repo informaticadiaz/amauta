@@ -13,6 +13,23 @@ Los guardrails son los mecanismos que convierten un loop experimental en **autom
 
 ---
 
+## Estado actual (Amauta) — 2026-05-18
+
+En esta capacitación los guardrails se presentan como “lo profesional”. **Pero hoy no están todos implementados como automatismos**.
+
+- ✅ **Implementado/en uso**:
+  - Guardrail 2 (`loop_count=X/N`) — se usa en los prompts/skills del loop.
+  - Guardrail 4 (log) — existe como `docs/ai-skills/automata-dev/loop-status.md` y se actualiza/usa en el flujo (y ante fallas del runner).
+- 🟡 **Existe, pero es procedimental (no forzado por el runner)**:
+  - Guardrail 5 (auditoría) — existe la skill `loop-auditor`, pero su ejecución depende del handoff/prompt (no de un “gate” automático del runner).
+- ❌ **No implementado (pendiente)**:
+  - Guardrail 1 (quota de contexto por heurística) — no hay chequeo estandarizado que bloquee el handoff.
+  - Guardrail 3 (loop sin progreso) — no hay detección automática por issue repetido.
+
+> Nota: el runner (`loop-runner.ps1/.sh`) hoy es agnóstico: ejecuta cuando aparece `next-prompt.md`. Los guardrails viven (o deberían vivir) en skills/prompt + log.
+
+---
+
 ## Guardrail 1: Control de quota de contexto de sesión
 
 ### El problema
@@ -28,11 +45,11 @@ Evaluar el nivel de contexto **antes** de construir el prompt de handoff:
 ```markdown
 ## Guardrail de contexto (incluir en todos los skills autónomos)
 
-Antes de llamar RemoteTrigger:
+Antes de escribir `next-prompt.md`:
 
 - Si el contexto de esta sesión parece muy cargado (muchos archivos leídos,
   muchos tools ejecutados, conversación larga) → no disparar nueva sesión.
-- En su lugar: escribir en `docs/logs/loop-status.md` el estado actual
+- En su lugar: escribir en `docs/ai-skills/automata-dev/loop-status.md` el estado actual
   y terminar con el mensaje: "Loop pausado: contexto elevado. Reiniciar manualmente."
 ```
 
@@ -77,11 +94,11 @@ Incluir en el prompt: [loop_count=X/N] para tracking.
 Pasar el counter en el prompt y que cada sesión lo incremente:
 
 ```
-Sesión 1: RemoteTrigger("...complete-issue #81... [loop_count=1/5]")
-Sesión 2: RemoteTrigger("...project-manager... [loop_count=2/5]")
-Sesión 3: RemoteTrigger("...complete-issue #82... [loop_count=3/5]")
+Sesión 1: escribe next-prompt.md ("...complete-issue #81... [loop_count=1/5]")
+Sesión 2: escribe next-prompt.md ("...project-manager... [loop_count=2/5]")
+Sesión 3: escribe next-prompt.md ("...complete-issue #82... [loop_count=3/5]")
 ...
-Sesión 5: RemoteTrigger() → NO. [loop_count=5/5] → STOP
+Sesión 5: escribir next-prompt.md → NO. [loop_count=5/5] → STOP
 ```
 
 ---
@@ -125,7 +142,7 @@ Cuando el loop termina (por cualquier razón), necesitás saber:
 ```markdown
 ## Guardrail de log (incluir al final de cada sesión)
 
-Antes de terminar, actualizar `docs/logs/loop-status.md` con:
+Antes de terminar, actualizar `docs/ai-skills/automata-dev/loop-status.md` con:
 
 - Timestamp (usar fecha real, no relativa)
 - Número de sesión en el loop
@@ -190,7 +207,7 @@ Antes de poner el loop en modo autónomo completo, verificar:
 - [ ] Límite de sesiones por ejecución definido (recomendado: 3 para testing inicial)
 - [ ] Condición de parada por "no hay más issues" implementada
 - [ ] Heurística de contexto elevado incluida en el prompt
-- [ ] Log de auditoría (`docs/logs/loop-status.md`) configurado
+- [ ] Log de auditoría (`docs/ai-skills/automata-dev/loop-status.md`) configurado
 - [ ] Detección de loop sin progreso implementada
 - [ ] Proceso de arranque manual documentado (cómo iniciar el loop, cómo reiniciar si se pausó)
 

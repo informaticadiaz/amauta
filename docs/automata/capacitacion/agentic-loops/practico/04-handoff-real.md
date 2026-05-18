@@ -1,13 +1,13 @@
 # 04 — El Handoff Real entre Skills
 
 > Los prompts concretos que conectan `project-manager-autonomo` con `complete-issue`
-> y viceversa. Estos son los textos reales que van en los `RemoteTrigger`.
+> y viceversa. Estos son los textos reales que van en `next-prompt.md`.
 
 ---
 
 ## El handoff A → B: project-manager-autonomo dispara complete-issue
 
-Este es el prompt que `project-manager-autonomo` pasa al `RemoteTrigger` para iniciar `complete-issue`.
+Este es el prompt que `project-manager-autonomo` escribe en `next-prompt.md` para iniciar `complete-issue`.
 
 ### Estructura del prompt
 
@@ -41,7 +41,7 @@ ESTADO VERIFICADO:
 INSTRUCCIÓN AL TERMINAR:
 Cuando el issue esté cerrado, los tests pasen y el commit esté hecho:
 1. Actualizá docs/logs/loop-status.md con el resultado de esta sesión
-2. Disparar: RemoteTrigger("/project-manager-autonomo [loop_count=[X+1]/[N_max]]")
+2. Escribir next-prompt.md: "/project-manager-autonomo [loop_count=[X+1]/[N_max]]"
 
 CONDICIONES PARA NO DISPARAR:
 - Tests fallaron → STOP. Registrar en loop-status.md. No cerrar el issue.
@@ -57,7 +57,7 @@ Excepción: si detectás una ambigüedad que podría resultar en trabajo incorre
 
 ## El handoff B → A: complete-issue dispara project-manager-autonomo
 
-Este es el prompt que `complete-issue` pasa al `RemoteTrigger` al finalizar exitosamente.
+Este es el prompt que `complete-issue` escribe en `next-prompt.md` al finalizar exitosamente.
 
 ### Cuándo se dispara
 

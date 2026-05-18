@@ -183,10 +183,10 @@ Crear `docs/logs/audit-report-[fecha].md` con el formato estándar.
 ### PASO 4 — Decisión
 
 Si TODAS las verificaciones pasaron:
-→ RemoteTrigger("/project-manager-autonomo [loop_count=[X]/[N_max]] [post-audit]")
+→ escribir next-prompt.md ("/project-manager-autonomo [loop_count=[X]/[N_max]] [post-audit]")
 
 Si ALGUNA verificación falló:
-→ NO llamar RemoteTrigger
+→ NO escribir next-prompt.md
 → Terminar con: "Auditoría BLOQUEADA. Ver docs/logs/audit-report-[fecha].md"
 → Actualizar docs/logs/loop-status.md con la parada
 

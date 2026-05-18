@@ -27,7 +27,7 @@ correctamente en modo manual).
 Leer el módulo conceptual completo antes de avanzar aquí.
 El módulo práctico asume comprensión de los conceptos de:
 
-- RemoteTrigger y handoff entre sesiones
+- Runner (next-prompt.md + loop-runner) y handoff entre sesiones
 - Condiciones de parada
 - Guardrails
 

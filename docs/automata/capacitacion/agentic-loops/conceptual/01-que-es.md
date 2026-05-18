@@ -86,7 +86,8 @@ Todo agentic loop profesional tiene tres partes:
 
 ### 1. El disparador (trigger)
 
-El mecanismo que inicia una nueva sesión desde dentro de una sesión. En Claude Code: `RemoteTrigger`.
+El mecanismo que dispara la próxima sesión **sin depender del historial del chat**.
+En Amauta es agnóstico: la sesión escribe `next-prompt.md` y un runner externo (`loop-runner`) arranca la siguiente.
 
 ### 2. La lógica de handoff
 
@@ -100,4 +101,4 @@ Cuándo el loop debe detenerse. Sin esto, tenés un bucle infinito que consume q
 
 ## Siguiente paso
 
-[02-remote-trigger.md](02-remote-trigger.md) — Cómo funciona el tool que dispara nuevas sesiones.
+[02-runner.md](02-runner.md) — El motor real del loop: `next-prompt.md` + `loop-runner`.

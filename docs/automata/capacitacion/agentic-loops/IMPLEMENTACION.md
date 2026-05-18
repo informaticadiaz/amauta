@@ -115,7 +115,7 @@ git push
 ## ETAPA 1 — Verificación manual de las skills
 
 > Probar cada skill por separado antes de encadenarlas.
-> El RemoteTrigger NO se ejecuta en esta etapa — solo se verifica el output.
+> El runner NO se ejecuta en esta etapa — solo se verifica el output (handoff en `next-prompt.md`).
 
 ### 1.1 Probar project-manager-automata
 
@@ -124,8 +124,8 @@ Iniciar una sesión con este prompt:
 ```
 /project-manager-automata [loop_count=0/1]
 
-IMPORTANTE: No ejecutes el RemoteTrigger. Solo mostrá el prompt completo
-que habrías disparado y el contenido que escribirías en loop-status.md.
+IMPORTANTE: No ejecutes el runner. Solo mostrá el prompt completo
+que escribirías en next-prompt.md y el contenido que escribirías en loop-status.md.
 ```
 
 Verificar el output:
@@ -142,7 +142,7 @@ Con el número de issue que project-manager-automata habría elegido:
 ```
 Ejecutá el issue #[N] de forma autónoma siguiendo complete-issue.
 Modo: completamente autónomo.
-Al terminar: NO disparar RemoteTrigger. Solo mostrar el prompt que habrías disparado.
+Al terminar: NO escribir next-prompt.md. Solo mostrar el contenido que habrías escrito.
 ```
 
 Verificar el output:
@@ -170,12 +170,12 @@ El prompt de handoff de cada una es suficiente para que la otra arranque sin con
 
 ### Decisión de diseño: mecanismo de disparo
 
-Durante la implementación se descubrió que el mecanismo de disparo original (`RemoteTrigger` de Claude Code) no es viable porque:
+Durante la implementación se descubrió que un mecanismo de disparo **acoplado a una herramienta específica** no es viable porque:
 
-1. Es una dependencia dura de Claude — no funciona con otras IAs
-2. Requiere infraestructura CCR (entorno registrado en claude.ai) que no siempre está disponible
+1. No funciona con otras IAs/CLIs (dependencia dura del proveedor)
+2. Puede requerir infraestructura/entorno que no siempre está disponible
 
-**El mecanismo de handoff agnóstico** reemplaza `RemoteTrigger` por escritura en archivo:
+**El mecanismo de handoff agnóstico** usa escritura en archivo:
 
 ```
 Sesión termina → escribe docs/ai-skills/automata-dev/next-prompt.md
@@ -282,19 +282,19 @@ Un cron en `diazignacio.ar` que verifica `next-prompt.md` cada N minutos:
 ### Cambio en los skills
 
 Los skills `complete-issue-automata` y `project-manager-automata` reemplazan
-la instrucción `RemoteTrigger` por:
+la instrucción de “disparo” por:
 
 ```
 AL TERMINAR:
   Escribir el prompt de la próxima sesión en:
   docs/ai-skills/automata-dev/next-prompt.md
 
-  El trigger externo configurado levantará ese archivo y arrancará la sesión.
+  El runner configurado levantará ese archivo y arrancará la sesión.
 
   Si loop_count >= N_max → NO escribir next-prompt.md → STOP con resumen.
 ```
 
-> ✅ `complete-issue-automata.md` y `project-manager-automata.md` actualizados — sin referencias a `RemoteTrigger`.
+> ✅ `complete-issue-automata.md` y `project-manager-automata.md` actualizados — sin referencias a mecanismos acoplados.
 
 ---
 
