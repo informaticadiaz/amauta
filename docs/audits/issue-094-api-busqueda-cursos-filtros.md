@@ -4,7 +4,7 @@
 **Inspector:** Codex (automatizado)  
 **Issue:** #94 — F6-002: API de búsqueda básica de cursos con full-text y filtros iniciales  
 **Estado del issue:** CERRADO (closedAt: 2026-05-07)  
-**Veredicto:** ⚠️ APROBADO CON OBSERVACIONES
+**Veredicto:** ❌ RECHAZADO
 
 ---
 
@@ -12,7 +12,7 @@
 
 El issue #94 implementa el endpoint público `GET /api/v1/cursos/buscar` con búsqueda por texto en `titulo`/`descripcion`, filtros (categoría, nivel, duración, idioma), paginación y opciones de orden. Los tests del módulo `cursos` pasan y el endpoint responde correctamente en producción.
 
-Observación principal: la ejecución de cobertura devuelve 0% (parece un problema de configuración de Jest), por lo que **no se puede verificar** el umbral de cobertura desde la herramienta tal como está hoy.
+Motivo del rechazo: con cobertura ya medible, **el módulo `cursos` NO alcanza 100%** (queda ~86% statements / ~68% branches).
 
 ---
 
@@ -59,7 +59,7 @@ Notas de implementación relevantes:
 **Comando ejecutado:**
 
 ```bash
-npx jest --config apps/api/jest.config.js --testPathPatterns=cursos --coverage --collectCoverageFrom='apps/api/src/cursos/**/*.ts'
+npx jest --config apps/api/jest.config.js --testPathPatterns=cursos --coverage --collectCoverageFrom='cursos/**/*.ts'
 ```
 
 **Resultados:**
@@ -67,12 +67,14 @@ npx jest --config apps/api/jest.config.js --testPathPatterns=cursos --coverage -
 - Suites: 2 passed / 2 total
 - Tests: 51 passed / 51 total
 
-**Cobertura (estado actual):**
+**Cobertura (módulo `cursos`):**
 
-- Reporte de cobertura mostrado por Jest: **0% en todas las métricas**.
-- Interpretación: la configuración actual parece no estar recolectando archivos para cobertura (ej.: patrón `collectCoverageFrom` en `apps/api/jest.config.js` usa `**/*.(t|j)s`, que no matchea como glob estándar).
-
-**Estado de criterio “>80%”:** ❌ _No verificable con la herramienta en su estado actual_ (recomendación: corregir configuración y re-ejecutar).
+| Métrica    |  Valor | Estado (req. 100%) |
+| ---------- | -----: | :----------------: |
+| Statements | 85.88% |         ❌         |
+| Branches   | 67.59% |         ❌         |
+| Functions  |  90.9% |         ❌         |
+| Lines      | 87.42% |         ❌         |
 
 ---
 
@@ -101,13 +103,13 @@ npx jest --config apps/api/jest.config.js --testPathPatterns=cursos --coverage -
 | 5   | Ordenamiento inicial             | default: `relevancia` con `buscar`, si no `publicadoEn`                                       | ✅     |
 | 6   | Consulta vacía / sin resultados  | `buscar` opcional; `buscar=` invalida (400); sin término devuelve catálogo publicado paginado | ✅     |
 | 7   | Tests                            | 51 tests pasando                                                                              | ✅     |
-| 8   | Cobertura >80%                   | Reporte de cobertura 0% (config)                                                              | ⚠️     |
+| 8   | Cobertura 100%                   | Cobertura real del módulo `cursos` (ver sección Tests)                                        | ❌     |
 
 ---
 
 ## Hallazgos
 
-1. **Cobertura no medible (sale 0%)** aun con `--coverage`: probablemente por patrón inválido en `collectCoverageFrom` de `apps/api/jest.config.js`.
+1. **Cobertura < 100%** en `cursos.controller.ts` y `cursos.service.ts` (branches ~68%).
 
 ---
 

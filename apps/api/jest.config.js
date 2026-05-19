@@ -9,7 +9,7 @@ module.exports = {
     '^.+\\.(t|j)s$': useTsJest ? 'ts-jest' : ['@swc/jest'],
   },
   collectCoverageFrom: [
-    '**/*.(t|j)s',
+    '**/*.{ts,js}',
     '!**/index.ts',
     '!**/main.ts',
     '!**/*.module.ts',

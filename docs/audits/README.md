@@ -9,7 +9,7 @@
 
 | Issue | Título                                          | Fecha      | Veredicto                     |
 | ----- | ----------------------------------------------- | ---------- | ----------------------------- |
-| #94   | F6-002: API búsqueda cursos + filtros iniciales | 2026-05-19 | ⚠️ APROBADO CON OBSERVACIONES |
+| #94   | F6-002: API búsqueda cursos + filtros iniciales | 2026-05-19 | ❌ RECHAZADO                  |
 | #20   | T-019: Configurar Next.js en Frontend           | 2026-05-12 | ⚠️ APROBADO CON OBSERVACIONES |
 | #19   | T-018: Implementar servidor HTTP básico         | 2026-04-17 | ❌ RECHAZADO                  |
 | #18   | T-017: Configurar deployment en VPS con Dokploy | 2026-04-17 | ⚠️ APROBADO CON OBSERVACIONES |
