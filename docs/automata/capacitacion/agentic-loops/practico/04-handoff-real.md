@@ -40,7 +40,7 @@ ESTADO VERIFICADO:
 
 INSTRUCCIÓN AL TERMINAR:
 Cuando el issue esté cerrado, los tests pasen y el commit esté hecho:
-1. Actualizá docs/logs/loop-status.md con el resultado de esta sesión
+1. Actualizá `docs/ai-skills/automata-dev/loop-status.md` con el resultado de esta sesión
 2. Escribir next-prompt.md: "/project-manager-automata [loop_count=[X+1]/[N_max]]"
 
 CONDICIONES PARA NO DISPARAR:
@@ -148,7 +148,7 @@ Cada sesión es responsable de:
 
 ## El log como fuente de verdad del loop
 
-`docs/logs/loop-status.md` es el único lugar donde el estado del loop persiste de forma legible. Cada sesión debe actualizarlo al inicio y al final.
+`docs/ai-skills/automata-dev/loop-status.md` es el único lugar donde el estado del loop persiste de forma legible. Cada sesión debe actualizarlo al inicio y al final.
 
 ### Al inicio de cada sesión
 
