@@ -60,7 +60,6 @@ Ver `IMPLEMENTACION.md` → Etapa 2 para las opciones de runner disponibles.
 | `project-manager-automata.md` | Orquestador: decide qué ejecutar         | Al inicio del loop y después de cada issue completado |
 | `complete-issue-automata.md`  | Ejecutor: implementa el issue con TDD    | Disparado por project-manager-automata                |
 | `loop-auditor.md`             | Auditor: verifica integridad del sistema | Cada 3 issues (Etapa 5 del plan de implementación)    |
-| `project-manager-autonomo.md` | Versión original (interactiva)           | Uso manual, no forma parte del loop autónomo          |
 
 ---
 

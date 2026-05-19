@@ -1,13 +1,13 @@
 # 04 — El Handoff Real entre Skills
 
-> Los prompts concretos que conectan `project-manager-autonomo` con `complete-issue`
+> Los prompts concretos que conectan `project-manager-automata` con `complete-issue`
 > y viceversa. Estos son los textos reales que van en `next-prompt.md`.
 
 ---
 
-## El handoff A → B: project-manager-autonomo dispara complete-issue
+## El handoff A → B: project-manager-automata dispara complete-issue
 
-Este es el prompt que `project-manager-autonomo` escribe en `next-prompt.md` para iniciar `complete-issue`.
+Este es el prompt que `project-manager-automata` escribe en `next-prompt.md` para iniciar `complete-issue`.
 
 ### Estructura del prompt
 
@@ -41,7 +41,7 @@ ESTADO VERIFICADO:
 INSTRUCCIÓN AL TERMINAR:
 Cuando el issue esté cerrado, los tests pasen y el commit esté hecho:
 1. Actualizá docs/logs/loop-status.md con el resultado de esta sesión
-2. Escribir next-prompt.md: "/project-manager-autonomo [loop_count=[X+1]/[N_max]]"
+2. Escribir next-prompt.md: "/project-manager-automata [loop_count=[X+1]/[N_max]]"
 
 CONDICIONES PARA NO DISPARAR:
 - Tests fallaron → STOP. Registrar en loop-status.md. No cerrar el issue.
@@ -55,7 +55,7 @@ Excepción: si detectás una ambigüedad que podría resultar en trabajo incorre
 
 ---
 
-## El handoff B → A: complete-issue dispara project-manager-autonomo
+## El handoff B → A: complete-issue dispara project-manager-automata
 
 Este es el prompt que `complete-issue` escribe en `next-prompt.md` al finalizar exitosamente.
 
@@ -73,7 +73,7 @@ Solo cuando **todas** estas condiciones son verdaderas:
 ### El prompt completo
 
 ```
-/project-manager-autonomo
+/project-manager-automata
 
 CONTEXTO DEL LOOP:
 - Venís de completar el issue #[N] — [título]
@@ -105,13 +105,13 @@ Comparar estos dos prompts de retorno:
 **Prompt pobre** (la sesión A no sabe nada):
 
 ```
-/project-manager-autonomo [loop_count=3/5]
+/project-manager-automata [loop_count=3/5]
 ```
 
 **Prompt rico** (la sesión A tiene contexto útil):
 
 ```
-/project-manager-autonomo
+/project-manager-automata
 
 CONTEXTO DEL LOOP:
 - Venís de completar el issue #81 — UI Calificaciones
@@ -155,7 +155,7 @@ Cada sesión es responsable de:
 ```markdown
 ## Sesión [N] iniciada — [fecha]
 
-- Tipo: project-manager-autonomo / complete-issue
+- Tipo: project-manager-automata / complete-issue
 - loop_count: [X/N]
 - Recibido de: [sesión anterior]
 ```
@@ -167,7 +167,7 @@ Cada sesión es responsable de:
 
 - Resultado: ✅ Issue #[N] completado
 - Commit: [hash]
-- Próxima sesión: project-manager-autonomo [loop_count=[X+1]/N]
+- Próxima sesión: project-manager-automata [loop_count=[X+1]/N]
 ```
 
 ### Al final de cada sesión (parada)

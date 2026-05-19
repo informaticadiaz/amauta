@@ -2,7 +2,7 @@
 
 ## Por qué una tercera skill
 
-El loop de dos skills (`project-manager-autonomo` → `complete-issue`) ejecuta issues de forma autónoma. Funciona bien para issues individuales bien definidos. Pero cuando se ejecutan 5-10 issues consecutivos sin supervisión, pueden acumularse problemas que ningún issue individual detecta:
+El loop de dos skills (`project-manager-automata` → `complete-issue`) ejecuta issues de forma autónoma. Funciona bien para issues individuales bien definidos. Pero cuando se ejecutan 5-10 issues consecutivos sin supervisión, pueden acumularse problemas que ningún issue individual detecta:
 
 - **Deuda técnica acumulada**: cada issue pasa sus propios tests, pero ¿pasa la suite completa?
 - **Incoherencia arquitectónica**: un módulo nuevo no rompe nada por sí solo, pero después de 3 módulos nuevos, puede haber duplicación de lógica
@@ -23,7 +23,7 @@ issue #N completado → issue #N+1 completado → issue #N+2 completado
                                               AUDITORÍA antes de continuar
                                                          │
                                                  ¿Todo bien?
-                                                 SÍ → project-manager-autonomo
+                                                 SÍ → project-manager-automata
                                                  NO → STOP con reporte
 ```
 
@@ -183,7 +183,7 @@ Crear `docs/logs/audit-report-[fecha].md` con el formato estándar.
 ### PASO 4 — Decisión
 
 Si TODAS las verificaciones pasaron:
-→ escribir next-prompt.md ("/project-manager-autonomo [loop_count=[X]/[N_max]] [post-audit]")
+→ escribir next-prompt.md ("/project-manager-automata [loop_count=[X]/[N_max]] [post-audit]")
 
 Si ALGUNA verificación falló:
 → NO escribir next-prompt.md
@@ -205,21 +205,21 @@ Si ALGUNA verificación falló:
 Con la tercera skill, el loop completo queda:
 
 ```
-project-manager-autonomo
+project-manager-automata
         │
         ▼ (cada issue)
 complete-issue #N
         │
    ¿N % 3 == 0?
-   ├── NO → project-manager-autonomo
+   ├── NO → project-manager-automata
    └── SÍ → loop-auditor
                   │
              ¿Audit ok?
-             ├── SÍ → project-manager-autonomo
+             ├── SÍ → project-manager-automata
              └── NO → STOP + reporte
 ```
 
-La modificación en `complete-issue` (modo autónomo) es mínima: verificar si `loop_count % 3 == 0` y en ese caso disparar `loop-auditor` en lugar de `project-manager-autonomo`.
+La modificación en `complete-issue` (modo autónomo) es mínima: verificar si `loop_count % 3 == 0` y en ese caso disparar `loop-auditor` en lugar de `project-manager-automata`.
 
 ---
 

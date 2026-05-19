@@ -36,11 +36,11 @@ Ubicación: `docs/ai-skills/project-manager.md`
 
 ### Conclusión
 
-`project-manager` no puede usarse directamente en el loop. Necesitamos una variante `project-manager-autonomo` que:
+`project-manager` no puede usarse directamente en el loop. Necesitamos una variante `project-manager-automata` que:
 
-- No haga la pregunta de foco (decide solo)
-- No necesite aprobación para seleccionar el próximo issue (no crea issues, solo elige de los existentes)
-- Escriba `next-prompt.md` directamente con el issue seleccionado (handoff)
+- No espere aprobación humana en cada ciclo — la aprobación se traslada al roadmap: lo que está en el roadmap está aprobado
+- Pueda crear issues definidos en el roadmap cuando no haya issues abiertos
+- Pueda escribir `next-prompt.md` para que el runner dispare la siguiente sesión
 
 ---
 
@@ -85,8 +85,10 @@ El `CLAUDE.md` del proyecto prohíbe explícitamente agregar atribución de IA a
 `complete-issue` funciona casi sin cambios en modo autónomo. Solo hay que:
 
 1. Pasar siempre el número de issue explícitamente (elimina la confirmación del PASO 0)
-2. Agregar la instrucción de disparar `project-manager-autonomo` al terminar
+2. Agregar la instrucción de escribir `next-prompt.md` con la siguiente invocación de `project-manager-automata` al terminar
 3. Corregir el template de commit (remover atribución de IA)
+
+La variante resultante es `complete-issue-automata`, que vive en `docs/ai-skills/automata-dev/` junto con el orquestador.
 
 ---
 
@@ -95,24 +97,24 @@ El `CLAUDE.md` del proyecto prohíbe explícitamente agregar atribución de IA a
 ```
 SKILL ACTUAL                    ADAPTACIÓN REQUERIDA
 ─────────────────────────────────────────────────────────
-project-manager                 → project-manager-autonomo (skill nuevo)
+project-manager                 → project-manager-automata (skill nuevo)
   - pregunta de foco               - decide solo basado en roadmap
-  - approval gates                 - no crea issues, solo elige existentes
-  - no escribe next-prompt.md      - escribe next-prompt.md al final
+  - approval gate por acción       - aprobación trasladada al roadmap
+  - sin handoff                    - escribe next-prompt.md para el runner
 
-complete-issue                  → complete-issue (mismo skill, instrucción adicional)
+complete-issue                  → complete-issue-automata (skill adaptado)
   - confirmación PASO 0            - pasar número explícito: problema resuelto
-  - no escribe next-prompt.md      - agregar en prompt: "al terminar, escribí next-prompt.md para project-manager-autonomo"
-  - bug: atribución IA en commit   - corregir en el skill (issue a crear)
+  - sin handoff                    - escribe next-prompt.md con /project-manager-automata
+  - bug: atribución IA en commit   - corregir en la versión autónoma
 ```
 
 ---
 
-## Issues a crear antes de implementar el loop
+## Pasos antes de implementar el loop
 
-Antes de poner el loop en marcha, hay dos cosas que deben resolverse en el proyecto:
+Antes de poner el loop en marcha, hay dos cosas que deben existir en el proyecto:
 
-1. **Crear `project-manager-autonomo`** como skill nuevo en `docs/ai-skills/`
-2. **Corregir el template de commit** en `complete-issue` para respetar la regla de no atribución de IA
+1. **Las skills del loop** en `docs/ai-skills/automata-dev/` (`project-manager-automata`, `complete-issue-automata`, `loop-auditor`)
+2. **El template de commit corregido** en la versión autónoma para respetar la regla de no atribución de IA
 
-Ver [03-skill-autonomo.md](03-skill-autonomo.md) para el diseño del skill nuevo.
+Ver [03-skill-automata.md](03-skill-automata.md) para el diseño del orquestador.

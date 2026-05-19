@@ -75,7 +75,7 @@ El prompt debe ser autocontenido — la sesión B no puede preguntarle nada a la
 **Ejemplo concreto:**
 
 ```
-/project-manager-autonomo
+/project-manager-automata
 
 Contexto: La sesión anterior completó el issue #81 (F4-016 UI Calificaciones).
 El loop continúa. Revisá el estado actual del proyecto y determiná el siguiente issue.
@@ -116,7 +116,7 @@ SESIÓN A (complete-issue #81)
 └── 7. Escribe next-prompt.md (prompt)
          │
          ▼
-SESIÓN B (project-manager-autonomo)
+SESIÓN B (project-manager-automata)
 ├── 1. Lee estado de GitHub (issues abiertos/cerrados)
 ├── 2. Lee CLAUDE.md (progreso documentado)
 ├── 3. Lee roadmap.md (orden definido)

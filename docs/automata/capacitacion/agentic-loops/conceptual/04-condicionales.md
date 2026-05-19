@@ -52,7 +52,7 @@ Algo salió mal y continuar podría empeorar las cosas.
 
 Las condiciones son **lógica del prompt**, no código. Están escritas en el skill como instrucciones explícitas que la sesión debe evaluar antes de escribir `next-prompt.md`.
 
-### En el skill project-manager-autonomo:
+### En el skill project-manager-automata:
 
 ```markdown
 ## Condiciones de parada (evaluar ANTES de disparar la siguiente sesión)
@@ -85,7 +85,7 @@ Solo si las tres verificaciones son positivas → escribir `next-prompt.md`.
 3. ¿TypeScript compila sin errores?
    - NO → no disparar. Stop.
 
-Solo si todo está en verde → disparar project-manager-autonomo.
+Solo si todo está en verde → disparar project-manager-automata.
 ```
 
 ---
@@ -93,7 +93,7 @@ Solo si todo está en verde → disparar project-manager-autonomo.
 ## El árbol de decisión completo del loop
 
 ```
-INICIO DE SESIÓN (project-manager-autonomo)
+INICIO DE SESIÓN (project-manager-automata)
 │
 ├── Leer estado: GitHub + CLAUDE.md + roadmap.md
 │
@@ -127,7 +127,7 @@ INICIO DE SESIÓN (project-manager-autonomo)
          ├── Actualizar CLAUDE.md
          ├── Commit + push
          │
-         └── escribe next-prompt.md ("/project-manager-autonomo") → vuelve al inicio
+         └── escribe next-prompt.md ("/project-manager-automata") → vuelve al inicio
 ```
 
 ---

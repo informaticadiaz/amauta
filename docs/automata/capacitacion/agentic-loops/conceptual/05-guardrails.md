@@ -77,7 +77,7 @@ Un loop que ejecuta 10 issues completos (cada uno con TDD, refactor, documentaci
 Definir un límite de sesiones por ejecución del loop. No es exactamente "quota mensual" medida en tokens, sino un límite operativo:
 
 ```markdown
-## Límite de sesiones por loop (incluir en project-manager-autonomo)
+## Límite de sesiones por loop (incluir en project-manager-automata)
 
 El loop tiene un máximo de [N] issues por ejecución autónoma.
 
@@ -114,7 +114,7 @@ Un loop puede estar ejecutándose pero sin avanzar: el mismo issue se "completa"
 Verificar que cada sesión de `complete-issue` realmente cerró un issue **diferente** al de la sesión anterior:
 
 ```markdown
-## Verificación de progreso (en project-manager-autonomo)
+## Verificación de progreso (en project-manager-automata)
 
 Al iniciar, verificar:
 

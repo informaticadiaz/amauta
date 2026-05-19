@@ -8,7 +8,7 @@
 
 Este módulo cubre el diseño e implementación de **agentic loops**: sistemas donde una sesión de IA termina y dispara automáticamente la siguiente, formando un ciclo autónomo de trabajo.
 
-El caso concreto de este proyecto es el loop `project-manager → complete-issue → project-manager`, que permite que el sistema planifique y ejecute issues de GitHub de forma continua sin intervención humana.
+El caso concreto de este proyecto es el loop `project-manager-automata → complete-issue-automata → project-manager-automata`, con auditoría periódica vía `loop-auditor`. El sistema planifica y ejecuta issues de GitHub de forma continua sin intervención humana.
 
 ---
 
@@ -31,10 +31,17 @@ El caso concreto de este proyecto es el loop `project-manager → complete-issue
 | ---------------------------------------------------------------- | -------------------------------------------------------------------- |
 | [practico/01-analisis-skills.md](practico/01-analisis-skills.md) | Análisis de `project-manager` y `complete-issue` para automatización |
 | [practico/02-approval-gates.md](practico/02-approval-gates.md)   | El problema de los approval gates y cómo resolverlo                  |
-| [practico/03-skill-autonomo.md](practico/03-skill-autonomo.md)   | Diseño del skill `project-manager-autonomo`                          |
+| [practico/03-skill-automata.md](practico/03-skill-automata.md)   | Diseño del skill `project-manager-automata`                          |
 | [practico/04-handoff-real.md](practico/04-handoff-real.md)       | Implementación del handoff entre las dos skills reales               |
-| [practico/05-tercera-skill.md](practico/05-tercera-skill.md)     | La tercera skill: auditoría de arquitectura y tests                  |
+| [practico/05-tercera-skill.md](practico/05-tercera-skill.md)     | La tercera skill (`loop-auditor`): auditoría de arquitectura y tests |
 | [practico/06-implementacion.md](practico/06-implementacion.md)   | Guía de implementación paso a paso                                   |
+
+### Material operativo y de presentación
+
+| Archivo                                | Qué es                                                                          |
+| -------------------------------------- | ------------------------------------------------------------------------------- |
+| [IMPLEMENTACION.md](IMPLEMENTACION.md) | Guía operacional con etapas 0→5 y estado de avance. Documento de ejecución real |
+| [presentacion.html](presentacion.html) | Presentación visual interactiva del módulo (abrir en navegador)                 |
 
 ---
 
@@ -49,24 +56,34 @@ El caso concreto de este proyecto es el loop `project-manager → complete-issue
 ## El flujo objetivo
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                   LOOP AUTÓNOMO                      │
-│                                                      │
-│  ┌──────────────┐     ┌─────────────────────────┐   │
-│  │  project-    │────▶│    complete-issue #N     │   │
-│  │  manager     │     │    (TDD + docs + commit) │   │
-│  │  (decide qué │◀────│                          │   │
-│  │   sigue)     │     └─────────────────────────┘   │
-│  └──────────────┘                                    │
-│         │                                            │
-│    ¿Más issues?                                      │
-│    NO → STOP                                         │
-│                                                      │
-│  Guardrails:                                         │
-│  • Quota sesión > 85% → no iniciar                  │
-│  • Quota mensual > 95% → no iniciar                 │
-│  • Sin issues abiertos → stop limpio                │
-└─────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│                       LOOP AUTÓNOMO                           │
+│                                                               │
+│  ┌──────────────────┐      ┌─────────────────────────────┐   │
+│  │ project-manager- │─────▶│  complete-issue-automata #N  │   │
+│  │ automata         │      │  (TDD + docs + commit)       │   │
+│  │ (decide qué      │◀─────│                              │   │
+│  │  sigue)          │      └─────────────────────────────┘   │
+│  └──────────────────┘                  │                      │
+│         ▲                              │                      │
+│         │                  ¿loop_count % 3 == 0?              │
+│         │                              │                      │
+│         │                              ▼                      │
+│         │                  ┌───────────────────┐              │
+│         └──────────────────│   loop-auditor    │              │
+│                            │  (verifica todo)  │              │
+│                            └───────────────────┘              │
+│                                                               │
+│  Handoff: cada skill escribe `next-prompt.md` que un runner   │
+│  externo detecta para arrancar la siguiente sesión.           │
+│                                                               │
+│  Guardrails:                                                  │
+│  • loop_count >= N_max         → STOP                         │
+│  • Sin issues abiertos ni      → STOP                         │
+│    roadmap pendiente                                          │
+│  • Contexto de sesión elevado  → STOP                         │
+│  • Tests fallaron              → STOP, no cerrar issue        │
+└──────────────────────────────────────────────────────────────┘
 ```
 
 ---

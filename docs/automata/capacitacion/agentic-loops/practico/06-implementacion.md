@@ -1,7 +1,10 @@
-# 06 — Guía de Implementación: De Fase 0 a Fase 3
+# 06 — Guía de Implementación: De Fase 0 a Fase 4
 
-> Instrucciones concretas para implementar el loop en el proyecto Amauta.
+> Instrucciones concretas para poner el loop en marcha en el proyecto Amauta.
 > Seguir en orden. No saltar fases.
+>
+> Esta guía es la versión pedagógica. La versión operativa con estado de avance
+> marcado está en [../IMPLEMENTACION.md](../IMPLEMENTACION.md).
 
 ---
 
@@ -26,13 +29,16 @@ Si algo falla aquí, no avanzar. Resolver primero.
 
 ---
 
-## Tarea 1: Crear el archivo de log
+## Tarea 1: Verificar el archivo de log
+
+El log del loop ya existe en `docs/ai-skills/automata-dev/loop-status.md`.
+Verificar que está presente:
 
 ```bash
-mkdir -p docs/logs
+ls docs/ai-skills/automata-dev/loop-status.md
 ```
 
-Crear `docs/logs/loop-status.md`:
+Si no existe, crearlo con esta estructura mínima:
 
 ```markdown
 # Loop Status
@@ -49,114 +55,61 @@ _vacío_
 
 ---
 
-## Tarea 2: Corregir el template de commit en `complete-issue`
+## Tarea 2: Verificar que los skills del loop existen
 
-El skill `docs/ai-skills/complete-issue.md` tiene un bug: incluye atribución de IA en el template de commit, lo que viola la regla del proyecto.
-
-**Buscar y eliminar estas líneas del template de commit:**
-
-```
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>
-```
-
-El template correcto del commit queda:
+Los tres skills viven en `docs/ai-skills/automata-dev/`:
 
 ```bash
-git commit -m "$(cat <<'EOF'
-[tipo]: [descripción corta en español, máx 72 chars]
-
-- [cambio 1]
-- [cambio 2]
-- Tests: [qué se cubre con los tests]
-
-Resuelve: #[número]
-EOF
-)"
+ls docs/ai-skills/automata-dev/project-manager-automata.md
+ls docs/ai-skills/automata-dev/complete-issue-automata.md
+ls docs/ai-skills/automata-dev/loop-auditor.md
 ```
+
+Si alguno falta, revisar el commit donde se introdujo `automata-dev/` antes de avanzar.
 
 ---
 
-## Tarea 3: Crear el skill `project-manager-autonomo`
+## Tarea 3: Configurar el runner
 
-Copiar el contenido del skill diseñado en [03-skill-autonomo.md](03-skill-autonomo.md) a:
+El loop necesita un proceso externo (runner) que detecte cuando se escribe
+`docs/ai-skills/automata-dev/next-prompt.md` y arranque una nueva sesión de
+Claude Code con ese prompt.
 
-```
-docs/ai-skills/project-manager-autonomo.md
-```
+Hay dos runners de ejemplo en `docs/ai-skills/automata-dev/`:
 
-El archivo debe comenzar con el frontmatter:
+- `loop-runner.sh` (Linux/macOS)
+- `loop-runner.ps1` (Windows)
 
-```markdown
----
-name: project-manager-autonomo
-description: Orquestador autónomo del agentic loop...
----
-```
+Ambos hacen lo mismo: vigilan el archivo `next-prompt.md`, y cuando aparece o
+cambia, lanzan `claude code` con su contenido.
 
 ---
 
-## Tarea 4: Crear el skill `loop-auditor`
+## FASE 0: Verificación manual de las skills
 
-Copiar el contenido del skill de [05-tercera-skill.md](05-tercera-skill.md) a:
+Ejecutar las skills manualmente antes de encadenarlas. Objetivo: confirmar que
+cada una funciona bien sin loop.
 
-```
-docs/ai-skills/loop-auditor.md
-```
-
----
-
-## Tarea 5: Commitear los cambios de infraestructura
-
-```bash
-git add docs/ai-skills/project-manager-autonomo.md
-git add docs/ai-skills/loop-auditor.md
-git add docs/ai-skills/complete-issue.md      # con el fix del template
-git add docs/logs/loop-status.md
-git add docs/capacitacion/agentic-loops/
-
-git commit -m "$(cat <<'EOF'
-feat: agregar infraestructura de agentic loop autónomo
-
-- skill project-manager-autonomo: orquestador sin approval gates
-- skill loop-auditor: auditoría periódica de integridad
-- fix complete-issue: remover atribución IA del template de commit
-- docs/capacitacion/agentic-loops/: módulo conceptual y práctico
-- docs/logs/loop-status.md: log de auditoría del loop
-EOF
-)"
-git push
-```
-
----
-
-## FASE 0: Verificación manual (hacer antes de automatizar)
-
-Ejecutar manualmente las dos skills en issues reales. El objetivo es confirmar que funcionan bien antes de encadenarlas.
-
-### F0-1: Probar project-manager-autonomo manualmente
+### F0-1: Probar `project-manager-automata` manualmente
 
 ```
-/project-manager-autonomo [loop_count=0/1]
+/project-manager-automata [loop_count=0/1]
 ```
 
 Verificar:
 
 - [ ] Reporta correctamente el estado del proyecto
 - [ ] Identifica el próximo issue según el roadmap
-- [ ] Genera el prompt de handoff correctamente (con contexto completo)
-- [ ] Actualiza `docs/logs/loop-status.md`
-- [ ] **NO ejecutar el runner — solo revisar el output (next-prompt.md)**
+- [ ] Genera el `next-prompt.md` con contexto completo
+- [ ] Actualiza `loop-status.md`
+- [ ] **Eliminar `next-prompt.md` después de leerlo, para que el runner no arranque**
 
-### F0-2: Probar complete-issue en modo autónomo
+### F0-2: Probar `complete-issue-automata` manualmente
 
-Ejecutar con el issue que `project-manager-autonomo` habría elegido:
+Ejecutar con el issue que `project-manager-automata` habría elegido:
 
 ```
-Ejecutá el issue #[N] de forma autónoma siguiendo el workflow completo de complete-issue.
-Modo: completamente autónomo.
-Al terminar: NO escribir next-prompt.md, solo mostrar qué habrías escrito.
+/complete-issue-automata #[N]
 ```
 
 Verificar:
@@ -166,13 +119,14 @@ Verificar:
 - [ ] TypeScript compila
 - [ ] Issue cerrado en GitHub
 - [ ] CLAUDE.md actualizado
-- [ ] Commit hecho (con el formato correcto, sin atribución de IA)
+- [ ] Commit hecho (sin atribución de IA)
 - [ ] `human-context/` y `ai-context/` generados
-- [ ] El prompt de retorno que habría disparado es correcto
+- [ ] El `next-prompt.md` que escribe es correcto
 
 ### Criterio de salida de Fase 0
 
-Ambas skills funcionan correctamente en modo manual. El output de cada una es predecible y correcto.
+Ambas skills funcionan correctamente en modo manual. El output de cada una es
+predecible y correcto.
 
 ---
 
@@ -180,11 +134,14 @@ Ambas skills funcionan correctamente en modo manual. El output de cada una es pr
 
 ### Cómo iniciarlo
 
+Con el runner corriendo:
+
 ```
-/project-manager-autonomo [loop_count=0/1]
+/project-manager-automata [loop_count=0/1]
 ```
 
-El `[loop_count=0/1]` le dice al skill que el límite es 1 issue. Después de que `complete-issue` termine, el loop_count llega a 1/1 y para solo.
+`[loop_count=0/1]` le dice al skill que el límite es 1 issue. Después de que
+`complete-issue-automata` termine, el loop_count llega a 1/1 y para solo.
 
 ### Qué monitorear
 
@@ -198,7 +155,7 @@ gh issue view [N] --json state | jq '.state'    # debe ser "CLOSED"
 git log --oneline -1
 
 # El log fue actualizado?
-cat docs/logs/loop-status.md
+cat docs/ai-skills/automata-dev/loop-status.md
 
 # Los tests siguen en verde?
 npm run test --workspace=@amauta/api
@@ -206,7 +163,8 @@ npm run test --workspace=@amauta/api
 
 ### Criterio de salida de Fase 1
 
-El loop completó 1 issue sin intervención. El estado del proyecto es coherente. El log refleja lo que pasó.
+El loop completó 1 issue sin intervención. El estado del proyecto es coherente.
+El log refleja lo que pasó.
 
 ---
 
@@ -215,18 +173,19 @@ El loop completó 1 issue sin intervención. El estado del proyecto es coherente
 ### Cómo iniciarlo
 
 ```
-/project-manager-autonomo [loop_count=0/2]
+/project-manager-automata [loop_count=0/2]
 ```
 
 ### Qué verificar adicionalmente respecto a Fase 1
 
-- [ ] El segundo `project-manager-autonomo` pudo determinar el estado correctamente (sin confusión por la sesión anterior)
+- [ ] La segunda invocación de `project-manager-automata` pudo determinar el estado correctamente (sin confusión por la sesión anterior)
 - [ ] Los issues elegidos son los dos correctos según el roadmap
 - [ ] El counter se propagó: 0/2 → 1/2 → 2/2 → STOP
 
 ### Criterio de salida de Fase 2
 
-El loop bidireccional completo funciona. La información viaja correctamente entre las 4 sesiones.
+El loop bidireccional completo funciona. La información viaja correctamente
+entre las 4 sesiones.
 
 ---
 
@@ -235,67 +194,76 @@ El loop bidireccional completo funciona. La información viaja correctamente ent
 ### Cómo iniciarlo
 
 ```
-/project-manager-autonomo [loop_count=0/5]
+/project-manager-automata [loop_count=0/5]
 ```
 
 ### Pruebas de guardrails a ejecutar
 
 #### Prueba 3a: Parada por límite de sesiones
 
-Iniciar con `[loop_count=0/2]` teniendo 5 issues disponibles. Verificar que para después de 2 issues, no continúa.
+Iniciar con `[loop_count=0/2]` teniendo 5 issues disponibles. Verificar que para
+después de 2 issues, no continúa.
 
-#### Prueba 3b: Parada por ausencia de issues
+#### Prueba 3b: Parada por ausencia de issues y de roadmap
 
-Cerrar todos los issues abiertos manualmente, luego iniciar el loop. Verificar que para limpiamente con el mensaje correcto.
+Cerrar todos los issues abiertos manualmente, y modificar localmente el roadmap
+para que no haya "Próximos pasos" definidos. Iniciar el loop. Verificar que
+para limpiamente con el mensaje correcto.
 
-#### Prueba 3c: Parada por tests fallidos (simulada)
+#### Prueba 3c: Parada por tests fallidos
 
-Introducir un test que falla en el código antes de iniciar. Iniciar el loop. Verificar que `complete-issue` detecta el fallo y NO cierra el issue ni dispara `project-manager`.
+Introducir un test que falla en el código antes de iniciar. Iniciar el loop.
+Verificar que `complete-issue-automata` detecta el fallo y NO cierra el issue
+ni escribe `next-prompt.md`.
 
 **Revertir el test fallido después de la prueba.**
 
 ### Criterio de salida de Fase 3
 
-Los tres guardrails funcionan correctamente. El loop para en las condiciones esperadas.
+Los tres guardrails funcionan correctamente. El loop para en las condiciones
+esperadas.
 
 ---
 
-## FASE 4: Incorporar loop-auditor (cuando Fase 3 sea estable)
+## FASE 4: Incorporar `loop-auditor`
 
-Modificar el prompt de handoff de `complete-issue → project-manager` para incluir la lógica de auditoría:
+Modificar el prompt de handoff de `complete-issue-automata → project-manager-automata`
+para incluir la lógica de auditoría:
 
 ```
 Al terminar:
 1. Si loop_count % 3 == 0 → disparar loop-auditor
-2. Si loop_count % 3 != 0 → disparar project-manager-autonomo directamente
+2. Si loop_count % 3 != 0 → disparar project-manager-automata directamente
 ```
 
 ### Primer uso
 
-Iniciar con `[loop_count=0/6]` para que la auditoría se dispare una vez (en la sesión 3).
+Iniciar con `[loop_count=0/6]` para que la auditoría se dispare una vez (en la
+sesión 3).
 
 ---
 
 ## Resumen de comandos para iniciar cada fase
 
-| Fase   | Comando de inicio                                                 |
-| ------ | ----------------------------------------------------------------- |
-| Fase 0 | Manual: `/project-manager-autonomo [loop_count=0/1]` (sin runner) |
-| Fase 1 | `/project-manager-autonomo [loop_count=0/1]`                      |
-| Fase 2 | `/project-manager-autonomo [loop_count=0/2]`                      |
-| Fase 3 | `/project-manager-autonomo [loop_count=0/5]`                      |
-| Fase 4 | `/project-manager-autonomo [loop_count=0/6]`                      |
+| Fase   | Comando de inicio                                                           |
+| ------ | --------------------------------------------------------------------------- |
+| Fase 0 | Manual: `/project-manager-automata [loop_count=0/1]` (eliminar next-prompt) |
+| Fase 1 | `/project-manager-automata [loop_count=0/1]`                                |
+| Fase 2 | `/project-manager-automata [loop_count=0/2]`                                |
+| Fase 3 | `/project-manager-automata [loop_count=0/5]`                                |
+| Fase 4 | `/project-manager-automata [loop_count=0/6]`                                |
 
 ---
 
-## Cuándo escalar a producción (Fase 5)
+## Cuándo escalar a producción
 
 Estás listo cuando:
 
 - [ ] Fase 0-4 completadas exitosamente
-- [ ] Al menos 10 issues ejecutados por el loop con 0 issues de calidad
+- [ ] Al menos 5 issues ejecutados por el loop con calidad verificada
 - [ ] Los 3 guardrails probados y funcionando
-- [ ] La auditoría intervino al menos 1 vez y detectó/ignoró correctamente
+- [ ] La auditoría intervino al menos 1 vez y tomó la decisión correcta
 - [ ] El equipo revisó el output del loop y confía en él
 
-En Fase 5 podés aumentar el límite a 8-10 issues y correr el loop con menos supervisión.
+En modo "producción" podés aumentar el límite a 8-10 issues y correr el loop
+con menos supervisión activa.

@@ -128,16 +128,6 @@ cada 3 issues → loop-auditor
 
 ---
 
-### `project-manager-autonomo`
-
-**Rol:** Versión simplificada del orchestrador. **NO crea issues** — solo selecciona y delega.
-
-**Diferencia clave con `automata`:** responsabilidad única. Solo selecciona y delega. Más limpio en diseño pero sin el mecanismo de creación de issues ni el loop-auditor integrado.
-
-**Estado:** versión anterior. El sistema usa `project-manager-automata` como versión principal.
-
----
-
 ### `complete-issue-automata`
 
 **Rol:** Ejecutor. Implementa un issue de GitHub de principio a fin.

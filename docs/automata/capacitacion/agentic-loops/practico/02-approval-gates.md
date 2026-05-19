@@ -34,36 +34,39 @@ Si un loop autónomo crea issues erróneos o modifica el roadmap incorrectamente
 
 ---
 
-## La solución: separar responsabilidades
+## La solución: trasladar la aprobación al roadmap
 
-La clave está en entender **qué parte** de `project-manager` necesita autonomía y cuál no.
+La clave está en entender que la aprobación humana **no tiene que ocurrir en cada acción** — puede haber ocurrido antes, al definir el roadmap.
 
 ```
 project-manager hace DOS cosas distintas:
 │
-├── A. Planificar (crear issues nuevos, proponer trabajo)
+├── A. Planificar trabajo nuevo (proponer ideas no definidas)
 │      → Requiere supervisión humana SIEMPRE
 │      → Esta parte NUNCA entra en el loop autónomo
 │
-└── B. Seleccionar (elegir cuál issue existente ejecutar a continuación)
-       → Completamente determinista (sigue el roadmap)
+└── B. Materializar el roadmap (crear/seleccionar issues definidos en él)
+       → El roadmap ya fue aprobado: actuar sobre él no requiere nueva aprobación
        → Esta parte ES la que entra en el loop autónomo
 ```
 
-El `project-manager-autonomo` solo hace B. Nunca A.
+El `project-manager-automata` solo hace B. Nunca A.
+
+El roadmap funciona como **contrato firmado**: lo que está adentro está aprobado para ejecutarse.
 
 ---
 
 ## Las tres reglas del modo autónomo
 
-### Regla 1: Solo trabaja con issues existentes en GitHub
+### Regla 1: Solo materializa lo que ya está en el roadmap
 
 ```
 ✅ PUEDE: gh issue list → elegir el primero según roadmap
-❌ NO PUEDE: gh issue create → crear issues nuevos
+✅ PUEDE: gh issue create → solo para issues definidos en el roadmap
+❌ NO PUEDE: gh issue create → para trabajo no contemplado en el roadmap
 ```
 
-Los issues nuevos los crea el humano. El loop solo ejecuta lo que ya fue aprobado.
+Si el roadmap no lo define, el loop no puede inventarlo. La aprobación humana del trabajo nuevo ocurre al editar el roadmap, no durante el loop.
 
 ### Regla 2: No modifica documentación de planificación
 
@@ -72,16 +75,16 @@ Los issues nuevos los crea el humano. El loop solo ejecuta lo que ya fue aprobad
 ❌ NO PUEDE: modificar roadmap.md, backlog.md, sprints.md
 ```
 
-La documentación de planificación la actualiza el humano o el `complete-issue` (que actualiza CLAUDE.md, ai-context y human-context, no los docs de gestión).
+La documentación de planificación la actualiza el humano. El loop la consume, no la altera. `complete-issue-automata` puede actualizar `CLAUDE.md`, `ai-context` y `human-context` (documentación operativa), pero no los documentos de gestión.
 
 ### Regla 3: No hace preguntas, decide y actúa
 
 ```
-✅ HACE: evalúa estado → elige issue → verifica condiciones → escribe next-prompt.md (handoff)
+✅ HACE: evalúa estado → elige/crea issue → verifica condiciones → escribe next-prompt.md
 ❌ NO HACE: "¿Querés que ejecutemos el #82?" (el loop no tiene a nadie a quien preguntarle)
 ```
 
-Si no puede decidir solo (dependencias no resueltas, estado inconsistente), para el loop y lo registra en el log.
+Si no puede decidir solo (dependencias no resueltas, estado inconsistente, ambigüedad), para el loop y lo registra en el log.
 
 ---
 
@@ -102,7 +105,7 @@ La regla general: **si la incertidumbre implica riesgo de ejecutar el issue inco
 
 ## El contrato del skill autónomo
 
-El `project-manager-autonomo` cumple este contrato:
+El `project-manager-automata` cumple este contrato:
 
 **Entrada**: Estado actual del proyecto (GitHub + roadmap + CLAUDE.md)
 
@@ -110,16 +113,17 @@ El `project-manager-autonomo` cumple este contrato:
 
 1. Lee las tres fuentes
 2. Resuelve inconsistencias seguras (CLAUDE.md desactualizado)
-3. Determina el próximo issue según roadmap
-4. Verifica condiciones de parada
-5. Construye el prompt de handoff
+3. Determina situación: hay issues abiertos (A) o hay que materializar el roadmap (B)
+4. Si B: crea los próximos issues definidos en el roadmap (máximo 3 por sesión)
+5. Verifica condiciones de parada
+6. Escribe `next-prompt.md` para el runner
 
 **Salida**: `next-prompt.md` con el issue a ejecutar, O bien STOP con log
 
-**Lo que nunca hace**: crear issues, modificar roadmap/backlog/sprints, pedir confirmación
+**Lo que nunca hace**: inventar trabajo fuera del roadmap, modificar roadmap/backlog/sprints, pedir confirmación
 
 ---
 
 ## Siguiente paso
 
-[03-skill-autonomo.md](03-skill-autonomo.md) — El diseño completo del skill `project-manager-autonomo`.
+[03-skill-automata.md](03-skill-automata.md) — El diseño completo del skill `project-manager-automata`.

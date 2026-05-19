@@ -43,10 +43,10 @@ El principio es siempre el mismo: **lo más simple que puede funcionar**, antes 
 **Flujo**:
 
 ```
-[Vos] → /project-manager-autonomo [modo: elegir 1 issue y disparar complete-issue]
+[Vos] → /project-manager-automata [modo: elegir 1 issue y disparar complete-issue]
                 │
                 ▼
-        Sesión A (project-manager-autonomo)
+        Sesión A (project-manager-automata)
         - Lee estado
         - Elige el próximo issue (#N)
         - Escribe next-prompt.md ("complete-issue #N autónomo [loop_count=1/1]")
@@ -84,13 +84,13 @@ El principio es siempre el mismo: **lo más simple que puede funcionar**, antes 
 **Flujo**:
 
 ```
-[Vos] → /project-manager-autonomo [loop_count=0/2]
+[Vos] → /project-manager-automata [loop_count=0/2]
     │
     ▼ (elige issue #N, dispara)
 complete-issue #N [loop_count=1/2]
     │
     ▼ (completa, dispara)
-project-manager-autonomo [loop_count=1/2]
+project-manager-automata [loop_count=1/2]
     │
     ▼ (elige issue #N+1, dispara)
 complete-issue #N+1 [loop_count=2/2]
