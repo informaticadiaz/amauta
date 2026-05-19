@@ -59,7 +59,16 @@ apps/web/src/components/
 │
 ├── lecciones/               # Gestión de lecciones
 │   ├── LeccionForm.tsx
-│   └── LeccionesList.tsx
+│   ├── LeccionesList.tsx
+│   ├── LeccionContent.tsx
+│   ├── LeccionSidebar.tsx
+│   ├── LeccionNavigation.tsx
+│   ├── MobileSidebarSheet.tsx
+│   ├── RichTextEditor.tsx           # Editor TipTap para TEXTO (F7-002)
+│   ├── RichTextEditor.module.css
+│   ├── RichTextContent.tsx          # Renderiza HTML sanitizado (F7-002)
+│   ├── RichTextEditor.test.tsx
+│   └── LeccionesManager.tsx
 │
 ├── catalogo/                # Catálogo público
 │   ├── CatalogoCursos.tsx

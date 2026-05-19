@@ -5,6 +5,7 @@
  */
 
 import { inferVideoProvider } from '@/lib/offline/video-cache';
+import { RichTextContent } from './RichTextContent';
 
 interface ContenidoTexto {
   html?: string;
@@ -112,13 +113,7 @@ function VideoPlayer({ contenido }: { contenido: ContenidoVideo }) {
   );
 }
 
-function TextoContent({
-  contenido,
-  titulo,
-}: {
-  contenido: ContenidoTexto;
-  titulo: string;
-}) {
+function TextoContent({ contenido }: { contenido: ContenidoTexto }) {
   if (!contenido.html && !contenido.markdown) {
     return (
       <div className="flex h-32 items-center justify-center rounded-lg bg-[var(--overlay)] text-[var(--muted)]">
@@ -129,10 +124,9 @@ function TextoContent({
 
   if (contenido.html) {
     return (
-      <div
+      <RichTextContent
+        html={contenido.html}
         className="prose prose-lg max-w-none text-[var(--foreground)] [&_a]:text-primary [&_h1]:text-[var(--foreground)] [&_h2]:text-[var(--foreground)] [&_h3]:text-[var(--foreground)]"
-        dangerouslySetInnerHTML={{ __html: contenido.html }}
-        aria-label={titulo}
       />
     );
   }
@@ -154,9 +148,7 @@ export function LeccionContent({ tipo, contenido, titulo }: Props) {
 
       {tipo === 'VIDEO' && <VideoPlayer contenido={contenido} />}
 
-      {tipo === 'TEXTO' && (
-        <TextoContent contenido={contenido} titulo={titulo} />
-      )}
+      {tipo === 'TEXTO' && <TextoContent contenido={contenido} />}
 
       {tipo !== 'VIDEO' && tipo !== 'TEXTO' && (
         <div className="flex h-48 flex-col items-center justify-center gap-4 rounded-lg border border-[var(--border)] bg-[var(--overlay)] text-center">

@@ -8,9 +8,15 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { RichTextEditor } from './RichTextEditor';
 import styles from './LeccionForm.module.css';
 
 type TipoLeccion = 'TEXTO' | 'VIDEO' | 'QUIZ' | 'INTERACTIVO' | 'DESCARGABLE';
+
+interface ContenidoTexto {
+  html: string;
+  format: 'html';
+}
 
 interface Leccion {
   id: string;
@@ -18,10 +24,7 @@ interface Leccion {
   descripcion: string | null;
   tipo: TipoLeccion;
   duracion: number | null;
-  contenido: {
-    texto?: string;
-    videoUrl?: string;
-  };
+  contenido: ContenidoTexto | { videoUrl?: string } | Record<string, unknown>;
   publicada: boolean;
 }
 
@@ -68,12 +71,18 @@ export function LeccionForm({ cursoId, leccion, onSuccess }: LeccionFormProps) {
   const [duracion, setDuracion] = useState<string>(
     leccion?.duracion?.toString() || ''
   );
-  const [contenidoTexto, setContenidoTexto] = useState(
-    leccion?.contenido?.texto || ''
+  const [contenidoTexto, setContenidoTexto] = useState<ContenidoTexto>(
+    (leccion?.tipo === 'TEXTO' && (leccion.contenido as ContenidoTexto)) || {
+      html: '',
+      format: 'html',
+    }
   );
-  const [videoUrl, setVideoUrl] = useState(leccion?.contenido?.videoUrl || '');
+  const [videoUrl, setVideoUrl] = useState(
+    leccion?.tipo === 'VIDEO'
+      ? (leccion.contenido as { videoUrl?: string })?.videoUrl || ''
+      : ''
+  );
   const [publicada, setPublicada] = useState(leccion?.publicada || false);
-  const [activeTab, setActiveTab] = useState<'editor' | 'preview'>('editor');
 
   const isEditing = !!leccion;
   const embedUrl = videoUrl ? getVideoEmbedUrl(videoUrl) : null;
@@ -90,7 +99,7 @@ export function LeccionForm({ cursoId, leccion, onSuccess }: LeccionFormProps) {
       return;
     }
 
-    if (tipo === 'TEXTO' && !contenidoTexto) {
+    if (tipo === 'TEXTO' && !contenidoTexto.html) {
       setError('El contenido de texto es requerido');
       setLoading(false);
       return;
@@ -102,11 +111,11 @@ export function LeccionForm({ cursoId, leccion, onSuccess }: LeccionFormProps) {
       return;
     }
 
-    const contenido: { texto?: string; videoUrl?: string } = {};
-    if (tipo === 'TEXTO' || contenidoTexto) {
-      contenido.texto = contenidoTexto;
-    }
-    if (tipo === 'VIDEO' || videoUrl) {
+    const contenido: Record<string, unknown> = {};
+    if (tipo === 'TEXTO') {
+      contenido.html = contenidoTexto.html;
+      contenido.format = 'html';
+    } else if (tipo === 'VIDEO' && videoUrl) {
       contenido.videoUrl = videoUrl;
     }
 
@@ -285,61 +294,17 @@ export function LeccionForm({ cursoId, leccion, onSuccess }: LeccionFormProps) {
         </div>
       )}
 
-      {(tipo === 'TEXTO' || contenidoTexto) && (
+      {tipo === 'TEXTO' && (
         <div className={styles.field}>
           <label className={styles.label}>
             Contenido
-            {tipo === 'TEXTO' && <span className={styles.required}>*</span>}
+            <span className={styles.required}>*</span>
           </label>
-          <div className={styles.contentEditor}>
-            <div className={styles.editorTabs}>
-              <button
-                type="button"
-                onClick={() => setActiveTab('editor')}
-                className={`${styles.editorTab} ${
-                  activeTab === 'editor' ? styles.editorTabActive : ''
-                }`}
-              >
-                Editor
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab('preview')}
-                className={`${styles.editorTab} ${
-                  activeTab === 'preview' ? styles.editorTabActive : ''
-                }`}
-              >
-                Vista previa
-              </button>
-            </div>
-            {activeTab === 'editor' ? (
-              <textarea
-                value={contenidoTexto}
-                onChange={(e) => setContenidoTexto(e.target.value)}
-                disabled={loading}
-                placeholder="Escribe el contenido de la lección usando Markdown..."
-                className={styles.textarea}
-              />
-            ) : (
-              <div
-                className={styles.preview}
-                dangerouslySetInnerHTML={{
-                  __html: contenidoTexto
-                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-                    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-                    .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
-                    .replace(/\*(.*)\*/gim, '<em>$1</em>')
-                    .replace(/`(.*?)`/gim, '<code>$1</code>')
-                    .replace(/\n/gim, '<br />'),
-                }}
-              />
-            )}
-          </div>
-          <p className={styles.hint}>
-            Usa Markdown para formatear: **negrita**, *cursiva*, # títulos,
-            `código`
-          </p>
+          <RichTextEditor
+            value={contenidoTexto}
+            onChange={setContenidoTexto}
+            disabled={loading}
+          />
         </div>
       )}
 
