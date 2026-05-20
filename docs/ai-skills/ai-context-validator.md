@@ -1,69 +1,103 @@
 # Skill: AI Context Validator
 
-> Verifica que la documentación en `docs/ai-context/` está sincronizada con el código real.
-> Detecta archivos faltantes, endpoints inexistentes, modelos desactualizados y documentación obsoleta.
->
-> **Alcance**: Toda la carpeta `docs/ai-context/` o un módulo específico.
->
-> **Propósito**: Evitar que la IA genere código basado en documentación desactualizada.
+> **Audita** la sincronización entre `docs/ai-context/` y el código real del repo.
+> **Solo auditoría**: detecta desviaciones, las reporta, y opcionalmente corrige documentación o abre issues.
+> **No edita código de aplicación**. Si el desajuste requiere código, esta skill abre un issue y termina su trabajo ahí.
 
 ---
 
-## Uso
+## 1. Modo activo (contrato)
 
-```
-Valida el contexto de IA
-Valida el contexto del módulo cursos
-Valida docs/ai-context
-```
+Mientras esta skill esté vigente, cada prompt del usuario se interpreta dentro del modelo de comportamiento definido abajo. La skill funciona como un **autómata de 6 situaciones** con transiciones controladas. En cada situación hay un conjunto cerrado de jugadas disponibles; el modelo elige entre ellas pero no inventa nuevas.
 
-**Ejemplos:**
+### Vigencia
 
-```
-Valida que docs/ai-context está sincronizado con el código
-Valida el contexto del módulo inscripciones
-Valida solo el schema de base de datos
-Valida los hooks del frontend
-```
+Empieza al invocar la skill. Termina cuando:
+
+- El usuario dice "salir / cerrar / fin de validación"
+- El usuario invoca explícitamente otra skill
+- Se llega a la situación terminal vía la jugada "cerrar"
 
 ---
 
-## Parámetros
+## 2. Modelo de comportamiento (6 situaciones)
 
-| Parámetro | Descripción                                                                   | Ejemplo         |
-| --------- | ----------------------------------------------------------------------------- | --------------- |
-| `scope`   | Qué validar: `all`, `modules`, `frontend`, `database`, o un módulo específico | `módulo cursos` |
+```
+        ┌──────────────┐
+        │  S0          │  invocación
+        │  recibir     │
+        │  scope       │
+        └──────┬───────┘
+               │
+               ▼
+        ┌──────────────┐
+        │  S1          │  validar contra el código
+        │  ejecutar    │  generar informe
+        │  auditoría   │
+        └──────┬───────┘
+               │
+               ▼
+        ┌──────────────┐◄────────────────┐
+        │  S2          │                 │
+        │  informe     │                 │
+        │  presentado  │                 │
+        └──┬─┬─┬─┬──┬──┘                 │
+           │ │ │ │  │                    │
+     ┌─────┘ │ │ │  └─────┐              │
+     ▼       ▼ ▼ ▼        ▼              │
+  ┌─────┐ ┌────┐ ┌────┐ ┌─────┐          │
+  │ S3  │ │ S4 │ │ S5 │ │ S1  │          │
+  │ doc │ │iss.│ │drill│ │ re- │          │
+  │ fix │ │    │ │down │ │val. │          │
+  └──┬──┘ └─┬──┘ └─┬──┘ └─────┘          │
+     │      │      │                      │
+     └──────┴──────┴──────────────────────┘
+                  (regreso a S2)
+```
+
+| ID  | Nombre               | Propósito                                                            |
+| --- | -------------------- | -------------------------------------------------------------------- |
+| S0  | Recepción de scope   | Determinar qué validar (all / módulo / frontend / database)          |
+| S1  | Ejecutando auditoría | Correr la comparación doc↔código y producir informe                  |
+| S2  | Informe presentado   | Mostrar resultados, ofrecer jugadas, esperar decisión                |
+| S3  | Corrección de doc    | Aplicar fixes a `docs/ai-context/**` para alinear con código real    |
+| S4  | Apertura de issue    | Crear issue con `gh` para problemas que requieren cambio de código   |
+| S5  | Drill-down           | Profundizar en un hallazgo específico (mostrar archivos, root cause) |
+
+> **Trazabilidad obligatoria**: cada respuesta del modelo durante el contrato empieza con `[S{n}]` indicando la situación actual. Cuando hay transición: `[S{n} → S{m}] motivo`.
 
 ---
 
-## Proceso de Validación (Ejecutar en Orden)
+## 3. S0 — Recepción de scope
 
-### PASO 0 — Determinar Scope
+**Entrada:** invocación de la skill.
 
-Si el scope es **todo** (`all` o sin especificar):
+**Acción:**
 
-- Validar todos los módulos en `docs/ai-context/modules/`
-- Validar todos los archivos de frontend en `docs/ai-context/frontend/`
-- Validar `docs/ai-context/database/schema.md`
-- Validar `docs/ai-context/_index.md`
+1. Leer el argumento del usuario (si lo dio): `all`, nombre de módulo, `frontend`, `database`.
+2. Si no especificó: preguntar **una vez**:
 
-Si el scope es un **módulo específico**:
+   > "¿Qué scope validamos? Opciones: `all` (todo), `frontend`, `database`, o el nombre de un módulo (ej: `cursos`)."
 
-- Validar solo `docs/ai-context/modules/{modulo}.md`
+3. Cuando hay scope: anunciar transición y pasar a S1.
 
-Si el scope es **frontend**:
+**Salida:** `scope` (string).
 
-- Validar `docs/ai-context/frontend/pages.md`
-- Validar `docs/ai-context/frontend/components.md`
-- Validar `docs/ai-context/frontend/hooks.md`
+**Transición única:** `[S0 → S1]` con el scope elegido.
 
-Si el scope es **database**:
-
-- Validar `docs/ai-context/database/schema.md`
+**Interactividad permitida:** sí, pregunta única por el scope si falta.
 
 ---
 
-### PASO 1 — Validar Índice (`_index.md`)
+## 4. S1 — Ejecutando auditoría
+
+**Entrada:** scope desde S0 (o desde S2 vía jugada "re-validar").
+
+**Acción:** ejecutar el procedimiento de validación de abajo, sin interrupciones, y al terminar generar un informe. Esta situación **no acepta input intermedio del usuario**; si el usuario habla mientras está en S1, responder `[S1] auditando, te respondo cuando termine`.
+
+### Procedimiento de validación
+
+#### 4.1 — Validar `_index.md`
 
 ```
 LEER: docs/ai-context/_index.md
@@ -71,417 +105,331 @@ LEER: docs/ai-context/_index.md
 
 Para cada archivo listado en las tablas del índice:
 
-```bash
-# Verificar que cada archivo referenciado existe
-ls docs/ai-context/modules/{archivo}.md
-ls docs/ai-context/frontend/{archivo}.md
-ls docs/ai-context/database/{archivo}.md
+- Verificar que existe el archivo referenciado (`modules/*.md`, `frontend/*.md`, `database/*.md`).
+- Verificar que no haya archivos en esas carpetas que **no** estén listados (huérfanos).
+
+#### 4.2 — Validar módulos backend
+
+Para cada `docs/ai-context/modules/{modulo}.md` dentro del scope:
+
+1. **Archivos del módulo**: extraer la tabla y verificar que cada archivo declarado existe en `apps/api/src/{modulo}/`.
+2. **Endpoints**: extraer la tabla "Endpoints API" y leer `apps/api/src/{modulo}/{modulo}.controller.ts`. Comparar:
+   - método HTTP (`@Get`, `@Post`, `@Patch`, `@Delete`)
+   - ruta
+   - decoradores `@Roles(...)` / `@Public()`
+3. **Modelo Prisma**: comparar el bloque Prisma documentado con `apps/api/prisma/schema.prisma`:
+   - nombre del modelo, campos, tipos, relaciones, enums.
+
+Clasificar cada desviación como:
+
+- 🔴 **Crítico**: doc afirma algo que el código no respalda (endpoint fantasma, campo inexistente, modelo inexistente, tipo incorrecto).
+- 🟡 **Advertencia**: código tiene algo que la doc no menciona (endpoint sin documentar, campo nuevo).
+- 🟢 **Info**: archivos en código sin doc (módulos enteros sin contexto), o archivos de doc no listados en el índice.
+
+#### 4.3 — Validar frontend
+
+Si scope incluye frontend:
+
+- `frontend/pages.md`: verificar cada ruta documentada contra `apps/web/src/app/{ruta}/page.tsx`.
+- `frontend/components.md`: verificar componentes en `apps/web/src/components/**` y comparar props documentadas con la interfaz real.
+- `frontend/hooks.md`: verificar hooks en `apps/web/src/hooks/**` y firma.
+
+#### 4.4 — Validar `database/schema.md`
+
+Si scope incluye database:
+
+- Comparar cada modelo documentado con `apps/api/prisma/schema.prisma`.
+- Verificar enums: nombre + lista de valores.
+- Reportar modelos en Prisma sin doc, modelos en doc sin Prisma, campos divergentes.
+
+#### 4.5 — Detectar huérfanos
+
+- Módulos en `apps/api/src/` sin `docs/ai-context/modules/*.md` (excluyendo `common`, `config`, `prisma`, `seed`).
+- Archivos en `docs/ai-context/modules/` sin módulo correspondiente en código.
+
+#### 4.6 — Producir informe
+
+Formato del informe (obligatorio):
+
+```markdown
+# Informe de Validación AI Context
+
+**Fecha:** {YYYY-MM-DD}
+**Scope:** {all | módulo | frontend | database}
+**Estado:** ✅ SINCRONIZADO | ⚠️ DESINCRONIZADO PARCIAL | ❌ DESINCRONIZADO
+
+## Resumen
+
+{2-3 oraciones}
+
+## Hallazgos 🔴 Críticos
+
+| #   | Ubicación | Problema | Tipo de fix          |
+| --- | --------- | -------- | -------------------- |
+| C1  | …         | …        | doc / código / ambos |
+
+## Hallazgos 🟡 Advertencias
+
+| # | Ubicación | Problema | Tipo de fix |
+
+## Hallazgos 🟢 Info
+
+| # | Elemento | Acción sugerida |
+
+## Estadísticas
+
+| Categoría | Total | OK | Problemas |
 ```
 
-**Verificaciones:**
+**Criterios de estado:**
 
-- [ ] Todos los archivos listados en el índice existen
-- [ ] No hay archivos en las carpetas que no estén en el índice (huérfanos)
+| Estado                    | Condición                   |
+| ------------------------- | --------------------------- |
+| ✅ SINCRONIZADO           | 0 críticos, 0 advertencias  |
+| ⚠️ DESINCRONIZADO PARCIAL | 0 críticos, >0 advertencias |
+| ❌ DESINCRONIZADO         | ≥1 crítico                  |
 
-**Señales de problema:**
+**Transición única:** `[S1 → S2]` con el informe como salida.
 
-- ❌ Archivo listado en índice no existe
-- ⚠️ Archivo existe pero no está en el índice
+**Interactividad permitida:** ninguna (silenciosa hasta terminar).
 
 ---
 
-### PASO 2 — Validar Módulos Backend
+## 5. S2 — Informe presentado
 
-Para cada archivo en `docs/ai-context/modules/*.md`:
+**Entrada:** informe generado por S1.
 
-```
-LEER: docs/ai-context/modules/{modulo}.md
-```
-
-#### 2.1 Verificar archivos del módulo
-
-Extraer la tabla "Archivos del Módulo" y verificar que cada archivo existe:
-
-```bash
-# Backend
-ls apps/api/src/{modulo}/{modulo}.module.ts
-ls apps/api/src/{modulo}/{modulo}.controller.ts
-ls apps/api/src/{modulo}/{modulo}.service.ts
-ls apps/api/src/{modulo}/dto/*.dto.ts
-
-# Frontend (si está documentado)
-ls apps/web/src/app/api/{ruta}/route.ts
-ls apps/web/src/app/{ruta}/page.tsx
-ls apps/web/src/components/{modulo}/*.tsx
-```
-
-**Verificaciones:**
-
-- [ ] Todos los archivos backend listados existen
-- [ ] Todos los archivos frontend listados existen
-- [ ] No hay archivos importantes en el módulo que no estén documentados
-
-#### 2.2 Verificar endpoints documentados
-
-Extraer la tabla "Endpoints API" del documento.
+**Acción:** mostrar el informe completo y debajo la **lista de jugadas disponibles**:
 
 ```
-LEER: apps/api/src/{modulo}/{modulo}.controller.ts
+[S2] Jugadas disponibles:
+  J1. Corregir documentación de un hallazgo                → S3
+  J2. Abrir issue de GitHub para un hallazgo               → S4
+  J3. Profundizar en un hallazgo (drill-down)              → S5
+  J4. Re-validar con otro scope                            → S1
+  J5. Cerrar la skill                                       → fin
 ```
 
-Para cada endpoint documentado, verificar que existe en el controller:
+**Esperar input del usuario.**
 
-| Documentado   | Verificar en Controller |
-| ------------- | ----------------------- |
-| `GET /`       | `@Get()` o `@Get('/')`  |
-| `GET /:id`    | `@Get(':id')`           |
-| `POST /`      | `@Post()`               |
-| `PATCH /:id`  | `@Patch(':id')`         |
-| `DELETE /:id` | `@Delete(':id')`        |
+### Mapeo de intención → jugada (tabla cerrada)
 
-**Verificaciones:**
+| Frase del usuario                           | Jugada              |
+| ------------------------------------------- | ------------------- |
+| "arreglá la doc / corregí doc / fix doc N"  | J1                  |
+| "abrí issue / creá issue para N"            | J2                  |
+| "explicá N / profundizá / contame más de N" | J3                  |
+| "re-validá / volvé a validar X"             | J4                  |
+| "cerrá / salir / fin"                       | J5                  |
+| **Cualquier otra cosa**                     | **OUT** (sección 9) |
 
-- [ ] Todos los endpoints documentados existen en el controller
-- [ ] Los métodos HTTP coinciden (GET, POST, PATCH, DELETE)
-- [ ] Las rutas coinciden
-- [ ] Los guards/roles documentados coinciden con los decoradores
-
-**Señales de problema:**
-
-- ❌ Endpoint documentado no existe en el controller
-- ❌ Método HTTP no coincide
-- ⚠️ Endpoint existe en controller pero no está documentado
-- ⚠️ Roles/guards no coinciden
-
-#### 2.3 Verificar modelo Prisma documentado
-
-Extraer el bloque de código Prisma del documento.
-
-```
-LEER: apps/api/prisma/schema.prisma
-```
-
-Comparar:
-
-- Nombre del modelo
-- Campos y tipos
-- Relaciones
-- Enums referenciados
-
-**Verificaciones:**
-
-- [ ] El modelo existe en schema.prisma
-- [ ] Los campos documentados existen
-- [ ] Los tipos de datos coinciden
-- [ ] Las relaciones coinciden
-- [ ] Los enums existen y tienen los valores documentados
-
-**Señales de problema:**
-
-- ❌ Modelo no existe en schema.prisma
-- ❌ Campo documentado no existe
-- ❌ Tipo de dato no coincide
-- ⚠️ Campo existe pero no está documentado
-- ⚠️ Enum tiene valores diferentes
+**Interactividad permitida:** sí. Si la jugada referencia un hallazgo y no se identificó cuál (ej: "arreglá la doc" sin número), preguntar **una vez**: "¿Cuál hallazgo? Opciones: C1, C2, …".
 
 ---
 
-### PASO 3 — Validar Frontend
+## 6. S3 — Corrección de documentación
 
-#### 3.1 Validar páginas (`frontend/pages.md`)
+**Entrada:** hallazgo seleccionado desde S2.
+
+**Acción:**
+
+1. Confirmar que el hallazgo es "fix doc" (no "fix código"). Si es fix código → rechazar y sugerir J2 (abrir issue).
+2. Leer el archivo de doc afectado (`docs/ai-context/**`).
+3. Generar el diff propuesto (qué líneas se borran/agregan).
+4. **Mostrar diff al usuario y pedir OK**:
+
+   ```
+   [S3] Diff propuesto para docs/ai-context/modules/{modulo}.md:
+
+   - {línea vieja}
+   + {línea nueva}
+
+   ¿Aplico? (sí / no / editame {cambio})
+   ```
+
+5. Según respuesta:
+   - **sí** → aplicar con `Edit`, reportar archivo modificado, volver a S2 con el hallazgo marcado ✅ resuelto.
+   - **no** → no tocar nada, volver a S2 con el hallazgo intacto.
+   - **editame …** → ajustar el diff y volver al paso 4.
+
+**Acciones permitidas en S3:**
+
+- ✅ Leer cualquier archivo del repo (para contexto).
+- ✅ `Edit` / `Write` sobre archivos dentro de `docs/ai-context/**`.
+- ❌ Editar cualquier otra cosa. Si el fix requiere tocar `apps/**` → rechazar y derivar a J2.
+
+**Transición:** `[S3 → S2]` (siempre se vuelve a S2 después de un fix, exitoso o rechazado).
+
+**Interactividad permitida:** sí, una pregunta de confirmación del diff por hallazgo.
+
+---
+
+## 7. S4 — Apertura de issue
+
+**Entrada:** hallazgo seleccionado desde S2, generalmente uno cuyo fix requiere código.
+
+**Acción:**
+
+1. Generar título y cuerpo del issue siguiendo esta plantilla:
+
+   ```
+   Título: docs/código desincronizado: {resumen del hallazgo}
+
+   Cuerpo:
+   ## Contexto
+   Detectado por la skill ai-context-validator el {fecha}.
+
+   ## Hallazgo {ID}
+   - Ubicación doc: {archivo:línea}
+   - Ubicación código: {archivo:línea}
+   - Tipo: {endpoint fantasma | modelo divergente | …}
+
+   ## Descripción
+   {detalle del hallazgo del informe}
+
+   ## Resolución sugerida
+   - [ ] {opción A: alinear código a la doc}
+   - [ ] {opción B: alinear doc al código}
+   ```
+
+2. **Mostrar al usuario** título + cuerpo y pedir OK.
+3. Si OK → ejecutar `gh issue create --title "…" --body "…"`.
+4. Reportar URL del issue creado.
+
+**Acciones permitidas en S4:**
+
+- ✅ `gh issue create`
+- ❌ Crear PRs, hacer commits, cualquier modificación de código.
+
+**Transición:** `[S4 → S2]`.
+
+**Interactividad permitida:** sí, confirmación del título/cuerpo antes de crear.
+
+---
+
+## 8. S5 — Drill-down en un hallazgo
+
+**Entrada:** hallazgo seleccionado desde S2.
+
+**Acción:**
+
+1. Leer los archivos involucrados (doc + código real).
+2. Mostrar al usuario:
+   - Fragmento exacto de la doc afectada (con línea).
+   - Fragmento exacto del código contradictorio (con línea).
+   - Explicación de la divergencia.
+   - Por qué es 🔴 / 🟡 / 🟢.
+3. Sugerir qué jugada de S2 sería natural para resolverlo (J1 o J2).
+
+**Acciones permitidas en S5:**
+
+- ✅ `Read`, `Grep`, `Glob` para análisis.
+- ❌ Cualquier escritura.
+
+**Transición:** `[S5 → S2]`.
+
+**Interactividad permitida:** no requiere pregunta; es solo output.
+
+---
+
+## 9. Política de fuera de alcance (OUT)
+
+Cuando un prompt del usuario **no mapea** a ninguna jugada disponible en la situación actual:
 
 ```
-LEER: docs/ai-context/frontend/pages.md
+[S{n}] Eso no está dentro de las jugadas disponibles en esta situación.
+Estoy en {nombre situación}. Jugadas posibles:
+  J1. …
+  J2. …
+  Jn. …
+
+Opciones:
+  a) elegí una de las jugadas listadas
+  b) "salir" para cerrar la skill y operar libremente
+  c) invocá otra skill (ej: si querés implementar código, esta skill
+     no lo hace — necesitarías una skill de implementación)
 ```
 
-Para cada ruta documentada:
+**NO improvisar.** No ejecutar el pedido del usuario aunque parezca razonable. Esperar decisión explícita.
 
-```bash
-ls apps/web/src/app/{ruta}/page.tsx
-ls apps/web/src/app/{ruta}/layout.tsx  # si está documentado
-```
+### Ejemplos de pedidos OUT (no se ejecutan)
 
-**Verificaciones:**
+| Pedido del usuario en S2             | Por qué es OUT                          | Qué hacer                   |
+| ------------------------------------ | --------------------------------------- | --------------------------- |
+| "implementá los endpoints faltantes" | S2 no tiene jugada "implementar código" | responder con plantilla OUT |
+| "commiteá los cambios"               | S2 no tiene jugada "commit"             | responder con plantilla OUT |
+| "borrá el archivo X"                 | S2 no tiene jugada "delete"             | responder con plantilla OUT |
+| "ejecutá los tests"                  | S2 no tiene jugada "test"               | responder con plantilla OUT |
 
-- [ ] Todas las páginas documentadas existen
-- [ ] Los layouts documentados existen
-- [ ] La estructura de carpetas coincide
+---
 
-#### 3.2 Validar componentes (`frontend/components.md`)
+## 10. Lista negra global (redundante con whitelist, explícita por seguridad)
 
-```
-LEER: docs/ai-context/frontend/components.md
-```
+Independientemente de la situación, esta skill **nunca** hace:
 
-Para cada componente documentado:
+- Editar archivos en `apps/**` o `packages/**`.
+- Hacer commits o push.
+- Borrar archivos (ni con `Edit`/`Write` vaciando, ni con bash `rm`).
+- Modificar `package.json`, `tsconfig.json`, `prisma/schema.prisma` u otros archivos de configuración.
+- Invocar otras skills sin pedido explícito del usuario.
+- Ejecutar migraciones de DB, seeds, tests, builds.
 
-```bash
-ls apps/web/src/components/{carpeta}/{Componente}.tsx
-```
+Si el flujo aparenta requerir alguna de estas: detener, reportar, salir del contrato (J5) y dejar al usuario tomar la decisión fuera de la skill.
 
-**Verificaciones:**
+---
 
-- [ ] Todos los componentes documentados existen
-- [ ] Las props documentadas coinciden con la interfaz real
+## 11. Trazabilidad
 
-Para verificar props, leer el archivo del componente y comparar:
-
-```
-LEER: apps/web/src/components/{carpeta}/{Componente}.tsx
-```
-
-Buscar la interfaz de props y comparar con la documentación.
-
-#### 3.3 Validar hooks (`frontend/hooks.md`)
+Toda respuesta del modelo durante el contrato sigue este formato:
 
 ```
-LEER: docs/ai-context/frontend/hooks.md
+[S{n}{ → S{m} opcional}] {contenido}
 ```
 
-Para cada hook documentado:
+Ejemplos:
 
-```bash
-ls apps/web/src/hooks/{useHook}.ts
-# o
-ls apps/web/src/hooks/{useHook}.tsx
+- `[S0] ¿Qué scope validamos?`
+- `[S0 → S1] Validando scope=all…`
+- `[S1 → S2] Auditoría completa. Informe abajo.`
+- `[S2] Jugada elegida: J1 sobre hallazgo C3.`
+- `[S2 → S3] Procesando fix de doc.`
+- `[S3 → S2] Fix aplicado. Volviendo al informe.`
+
+Esto da al usuario visibilidad en todo momento de **dónde está el flujo** y por qué.
+
+---
+
+## 12. Inputs, defaults e invocación
+
+### Invocación
+
+```
+Valida el contexto de IA
+Valida el contexto del módulo cursos
+Valida docs/ai-context
+Valida frontend
+Valida database
 ```
 
-**Verificaciones:**
+### Inputs por situación
 
-- [ ] Todos los hooks documentados existen
-- [ ] La firma (parámetros y retorno) coincide
-
----
-
-### PASO 4 — Validar Schema de Base de Datos
-
-```
-LEER: docs/ai-context/database/schema.md
-LEER: apps/api/prisma/schema.prisma
-```
-
-Para cada modelo documentado en schema.md:
-
-**Verificaciones:**
-
-- [ ] El modelo existe en schema.prisma
-- [ ] Todos los campos documentados existen
-- [ ] Los tipos de datos coinciden
-- [ ] Las relaciones documentadas existen
-- [ ] Los enums documentados existen con sus valores
-
-**Verificación de completitud:**
-
-- [ ] Todos los modelos de schema.prisma están documentados
-- [ ] Todos los enums de schema.prisma están documentados
-
-**Señales de problema:**
-
-- ❌ Modelo documentado no existe
-- ❌ Campo documentado no existe
-- ⚠️ Modelo existe pero no está documentado (falta agregar)
-- ⚠️ Campo nuevo no documentado
+| Situación | Input requerido                | Default si falta | Cómo obtenerlo               |
+| --------- | ------------------------------ | ---------------- | ---------------------------- |
+| S0        | `scope`                        | —                | Preguntar al usuario una vez |
+| S1        | `scope` (de S0)                | —                | Heredado de S0               |
+| S2        | `jugada` + opcional `hallazgo` | —                | Esperar input                |
+| S3        | `hallazgo`                     | —                | Preguntar si falta           |
+| S4        | `hallazgo`                     | —                | Preguntar si falta           |
+| S5        | `hallazgo`                     | —                | Preguntar si falta           |
 
 ---
 
-### PASO 5 — Detectar Documentación Huérfana
-
-Verificar si hay archivos de contexto que documentan módulos que ya no existen:
-
-```bash
-# Listar módulos documentados
-ls docs/ai-context/modules/
-
-# Listar módulos reales
-ls apps/api/src/
-```
-
-Comparar y detectar:
-
-- Módulos documentados que no existen en el código
-- Módulos en el código que no tienen documentación
-
----
-
-### PASO 6 — Generar Informe de Validación
-
-Producir el informe en este formato exacto:
-
----
-
-## 🔍 Informe de Validación de AI Context
-
-**Fecha:** [fecha actual]
-**Scope:** [all / módulo específico / frontend / database]
-**Estado general:** [✅ SINCRONIZADO / ⚠️ DESINCRONIZADO PARCIAL / ❌ DESINCRONIZADO]
-
----
-
-### Resumen Ejecutivo
-
-[2-3 oraciones describiendo el estado general: cuántos archivos validados, cuántos problemas encontrados, riesgo de que la IA genere código incorrecto]
-
----
-
-### Validación del Índice
-
-| Verificación              | Estado | Notas          |
-| ------------------------- | ------ | -------------- |
-| Archivos listados existen | ✅/❌  | [detalles]     |
-| No hay archivos huérfanos | ✅/⚠️  | [lista si hay] |
-
----
-
-### Validación de Módulos Backend
-
-#### Módulo: {nombre}
-
-**Archivo de contexto:** `docs/ai-context/modules/{nombre}.md`
-**Estado:** ✅ SINCRONIZADO / ⚠️ PARCIAL / ❌ DESINCRONIZADO
-
-**Archivos del módulo:**
-| Archivo documentado | ¿Existe? | Notas |
-|---------------------|----------|-------|
-| `apps/api/src/{modulo}/{modulo}.controller.ts` | ✅/❌ | |
-| `apps/api/src/{modulo}/{modulo}.service.ts` | ✅/❌ | |
-
-**Endpoints:**
-| Endpoint documentado | ¿Existe en controller? | ¿Roles coinciden? |
-|---------------------|------------------------|-------------------|
-| `GET /` | ✅/❌ | ✅/❌ |
-| `POST /` | ✅/❌ | ✅/❌ |
-
-**Modelo Prisma:**
-| Campo documentado | ¿Existe? | ¿Tipo correcto? |
-|-------------------|----------|-----------------|
-| `id` | ✅ | ✅ String |
-| `titulo` | ✅ | ✅ String |
-
-**Problemas encontrados:**
-
-- [problema 1]
-- [problema 2]
-
----
-
-[Repetir para cada módulo]
-
----
-
-### Validación de Frontend
-
-#### Páginas
-
-| Ruta documentada | ¿Existe? | Notas |
-| ---------------- | -------- | ----- |
-| `/cursos`        | ✅/❌    |       |
-| `/dashboard`     | ✅/❌    |       |
-
-#### Componentes
-
-| Componente documentado | ¿Existe? | ¿Props coinciden? |
-| ---------------------- | -------- | ----------------- |
-| `CursoCard`            | ✅/❌    | ✅/⚠️/❌          |
-
-#### Hooks
-
-| Hook documentado | ¿Existe? | ¿Firma coincide? |
-| ---------------- | -------- | ---------------- |
-| `useAuth`        | ✅/❌    | ✅/⚠️/❌         |
-
----
-
-### Validación de Schema de Base de Datos
-
-**Modelos documentados:** N
-**Modelos en schema.prisma:** N
-**Coincidencia:** ✅/⚠️/❌
-
-| Modelo  | Documentado | En schema.prisma | Campos coinciden |
-| ------- | ----------- | ---------------- | ---------------- |
-| Usuario | ✅          | ✅               | ✅/⚠️            |
-| Curso   | ✅          | ✅               | ✅/⚠️            |
-
-**Enums:**
-| Enum | Documentado | En schema.prisma | Valores coinciden |
-|------|-------------|------------------|-------------------|
-| Rol | ✅ | ✅ | ✅/⚠️ |
-
----
-
-### Resumen de Problemas
-
-#### 🔴 CRÍTICO — Documentación incorrecta (riesgo de código malo)
-
-| Problema   | Ubicación             | Impacto   | Acción requerida |
-| ---------- | --------------------- | --------- | ---------------- |
-| [problema] | `docs/ai-context/...` | [impacto] | [qué hacer]      |
-
-#### 🟡 ADVERTENCIA — Documentación incompleta
-
-| Problema   | Ubicación             | Impacto   | Acción recomendada |
-| ---------- | --------------------- | --------- | ------------------ |
-| [problema] | `docs/ai-context/...` | [impacto] | [qué hacer]        |
-
-#### 🟢 INFO — Documentación faltante (no crítico)
-
-| Elemento no documentado | Ubicación real | Acción sugerida |
-| ----------------------- | -------------- | --------------- |
-| [elemento]              | `apps/...`     | Agregar a docs  |
-
----
-
-### Estadísticas
-
-| Categoría   | Total | Sincronizados | Problemas |
-| ----------- | ----- | ------------- | --------- |
-| Módulos     | N     | N             | N         |
-| Páginas     | N     | N             | N         |
-| Componentes | N     | N             | N         |
-| Hooks       | N     | N             | N         |
-| Modelos DB  | N     | N             | N         |
-| Enums       | N     | N             | N         |
-
-**Total de verificaciones:** N
-**Pasaron:** N (N%)
-**Fallaron:** N (N%)
-
----
-
-### Recomendaciones
-
-1. **Prioridad Alta:** [acciones críticas]
-2. **Prioridad Media:** [acciones importantes]
-3. **Prioridad Baja:** [mejoras opcionales]
-
----
-
-## Criterios de Estado
-
-| Estado                    | Condición                              |
-| ------------------------- | -------------------------------------- |
-| ✅ SINCRONIZADO           | 100% de verificaciones pasan           |
-| ⚠️ DESINCRONIZADO PARCIAL | >80% pasan, pero hay problemas menores |
-| ❌ DESINCRONIZADO         | <80% pasan o hay problemas críticos    |
-
----
-
-## Notas para la Validación
-
-- **Foco en exactitud**: La documentación de contexto se usa para generar código. Si está mal, el código generado estará mal.
-- **Campos faltantes son críticos**: Si un campo existe en Prisma pero no en la doc, la IA podría no usarlo.
-- **Endpoints fantasma son peligrosos**: Si la doc dice que existe un endpoint que no existe, la IA generará código que falla.
-- **Priorizar modelos Prisma**: Los errores en schema.md son los más peligrosos porque afectan queries.
-- **Verificar enums**: Un enum mal documentado causa errores de validación en runtime.
-
----
-
-## Acciones Post-Validación
-
-Después de ejecutar esta skill:
-
-1. **Si hay problemas críticos**: Actualizar la documentación ANTES de continuar con desarrollo
-2. **Si hay advertencias**: Crear issue para actualizar documentación
-3. **Si todo está sincronizado**: Continuar con confianza
-
-Para actualizar la documentación de un módulo, usar como referencia `docs/ai-context/modules/cursos.md` (es el más completo).
+## 13. Resumen para futuras IA que lean esta skill
+
+- Sos un **autómata acotado**, no un ejecutor libre.
+- Cada respuesta empieza con `[S{n}]`.
+- Solo ejecutás jugadas listadas en la situación actual.
+- Si el prompt no mapea: respondés con la plantilla OUT y esperás.
+- Editás solo `docs/ai-context/**` (en S3). Para todo lo demás abrís issue (S4).
+- Nunca commiteás, nunca push, nunca tocás `apps/**`.
+- Salida del contrato: explícita por J5 o por nueva skill.
