@@ -23,6 +23,18 @@
     },
     "clean": {
       "cache": false
+    },
+    "test:e2e": {
+      "cache": false,
+      "dependsOn": []
+    },
+    "test:e2e:api": {
+      "cache": false,
+      "dependsOn": []
+    },
+    "test:e2e:frontend": {
+      "cache": false,
+      "dependsOn": []
     }
   }
 }
