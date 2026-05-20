@@ -1,0 +1,182 @@
+{
+  "audit": {
+    "fecha": "2026-05-20",
+    "auditor": "QA Engineer (IA)",
+    "modulo": "lecciones",
+    "ruta": "apps/api/src/lecciones/",
+    "estado_general": "APROBADO_CON_OBSERVACIONES",
+    "resumen_ejecutivo": "El módulo Lecciones tiene una implementación sólida con 41 tests pasando (100%) y cobertura de statements del 95.29%. Sin embargo, hay un hallazgo crítico: el endpoint de eliminación usa delete() físico en lugar de soft delete, violando los patrones del proyecto. Funciona correctamente para el usuario pero tiene deuda técnica que debe resolverse.",
+    "tests": {
+      "totales": 41,
+      "pasando": 41,
+      "fallando": 0,
+      "suites": 2,
+      "suites_pasando": 2,
+      "cobertura": {
+        "statements": {
+          "valor": 95.29,
+          "umbral_minimo": 80,
+          "umbral_ideal": 90,
+          "estado": "APROBADO"
+        },
+        "branches": {
+          "valor": 74.41,
+          "umbral_minimo": 70,
+          "umbral_ideal": 85,
+          "estado": "APROBADO_CON_OBSERVACIONES"
+        },
+        "functions": {
+          "valor": 100,
+          "umbral_minimo": 80,
+          "umbral_ideal": 95,
+          "estado": "APROBADO"
+        },
+        "lines": {
+          "valor": 95.18,
+          "umbral_minimo": 80,
+          "umbral_ideal": 90,
+          "estado": "APROBADO"
+        }
+      },
+      "archivos": [
+        {
+          "archivo": "lecciones.controller.spec.ts",
+          "estado": "APROBADO",
+          "cobertura": 100
+        },
+        {
+          "archivo": "lecciones.service.spec.ts",
+          "estado": "APROBADO_CON_OBSERVACIONES",
+          "cobertura": 94.2
+        }
+      ]
+    },
+    "patrones": [
+      {
+        "patron": "safeParse",
+        "estado": "APROBADO",
+        "detalles": "Líneas 120, 206, 267 del service — todos los DTOs usan safeParse"
+      },
+      {
+        "patron": "soft_delete",
+        "estado": "RECHAZADO",
+        "detalles": "HALLAZGO CRÍTICO: línea 242 usa prisma.leccion.delete()",
+        "severidad": "CRÍTICA"
+      },
+      {
+        "patron": "guards_roles",
+        "estado": "APROBADO",
+        "detalles": "@Roles('EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN') en endpoints protegidos"
+      },
+      {
+        "patron": "estructura_respuesta",
+        "estado": "APROBADO",
+        "detalles": "Singular: { leccion, message }, Lista: { lecciones, total }"
+      },
+      {
+        "patron": "validacion_dto",
+        "estado": "APROBADO",
+        "detalles": "Schemas Zod bien estructurados, union types para contenido"
+      }
+    ],
+    "documentacion": [
+      {
+        "documento": "CLAUDE.md",
+        "estado": "APROBADO",
+        "notas": "Fase 1 completada"
+      },
+      {
+        "documento": "docs/ai-context/modules/lecciones.md",
+        "estado": "APROBADO",
+        "notas": "Actualizado"
+      },
+      {
+        "documento": "roadmap.md",
+        "estado": "APROBADO",
+        "notas": "Issues cerrados"
+      }
+    ],
+    "hallazgos": [
+      {
+        "id": "H001",
+        "tipo": "BLOQUEANTE",
+        "severidad": "CRÍTICA",
+        "titulo": "Delete Físico en Endpoint de Eliminación",
+        "descripcion": "El endpoint de eliminación usa delete() físico en lugar de soft delete",
+        "archivo": "apps/api/src/lecciones/lecciones.service.ts:242",
+        "impacto": [
+          "Pérdida de datos históricos",
+          "Rompe la referencia en Progreso (tabla que relaciona estudiantes con lecciones)",
+          "Viola el patrón mandatorio del proyecto (CLAUDE.md línea 197)"
+        ],
+        "solucion": [
+          "Agregar campo estado al modelo Leccion en schema.prisma",
+          "Crear migración Prisma",
+          "Actualizar lecciones.service.ts para usar soft delete",
+          "Actualizar tests en lecciones.service.spec.ts"
+        ]
+      },
+      {
+        "id": "H002",
+        "tipo": "MEJORA",
+        "severidad": "MEDIA",
+        "titulo": "Cobertura de Branches Baja",
+        "descripcion": "Cobertura de branches es 74.41%, debería estar arriba de 85%",
+        "archivo": "apps/api/src/lecciones/dto/",
+        "dtosAfectados": [
+          "create-leccion.dto.ts: 25% branches",
+          "query-lecciones.dto.ts: 0% branches"
+        ],
+        "recomendacion": "Agregar tests para validaciones de edge cases: contenido con tipos inválidos, campos opcionales en diferentes combinaciones, límites de caracteres"
+      }
+    ],
+    "fortalezas": [
+      "Validación robusta: Los schemas Zod tienen refine() para verificar que el contenido coincida con el tipo de lección",
+      "Autorización correcta: Endpoints protegidos verifican propiedad del curso antes de cualquier operación",
+      "Reordenamiento inteligente: Al eliminar una lección, recomputa automáticamente el orden de las siguientes",
+      "Estructura modular: Controller y Service bien separados",
+      "Cobertura statements excelente: 95.29% indica tests muy exhaustivos"
+    ],
+    "recomendaciones_proxima_fase": [
+      "Antes de F7-002 (Editor TipTap): Resolver el soft delete para evitar perder contenido de lecciones",
+      "Considerar: Si se agrega un campo estado, actualizar queries para filtrar archivadas",
+      "Frontend: Verificar que el validador frontend también valida el contenido según tipo (reflex principle)"
+    ],
+    "veredicto": {
+      "estado": "APROBADO_CON_OBSERVACIONES",
+      "descripcion": "El módulo funciona correctamente, pero el delete físico es un riesgo que debe resolverse antes de avanzar a Fase 7",
+      "condiciones_aprobacion": [
+        {
+          "criterio": "Tests pasan",
+          "estado": "APROBADO",
+          "detalle": "41/41 tests passing"
+        },
+        {
+          "criterio": "Cobertura >80%",
+          "estado": "APROBADO",
+          "detalle": "95.29% statements"
+        },
+        {
+          "criterio": "Criterios de aceptación",
+          "estado": "APROBADO",
+          "detalle": "CRUD completo, reordenamiento"
+        },
+        {
+          "criterio": "Patrones respetados",
+          "estado": "APROBADO_CON_OBSERVACIONES",
+          "detalle": "1 violación crítica (soft delete)"
+        },
+        {
+          "criterio": "Documentación",
+          "estado": "APROBADO",
+          "detalle": "Actualizada"
+        },
+        {
+          "criterio": "Smoke test prod",
+          "estado": "APROBADO",
+          "detalle": "Frontend responde (API no testeable)"
+        }
+      ]
+    }
+  }
+}
