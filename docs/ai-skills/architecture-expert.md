@@ -13,6 +13,30 @@
 
 ## Uso
 
+### Modo Interactivo (Recomendado)
+
+```
+Analiza la arquitectura
+```
+
+La skill propone opciones de análisis:
+
+```
+¿Qué te gustaría analizar?
+
+1. Backend completo — NestJS + modules + services + controllers
+2. Frontend completo — Next.js 14 + components + pages + hooks
+3. Módulo específico — Elige un módulo (lecciones, cursos, progreso, etc.)
+4. Acoplamiento entre módulos — Identifica ciclos y dependencias altas
+5. Separación de capas — Verifica controller/service/repository
+6. SOLID principles — Audita cada principio (S, O, L, I, D)
+7. Arquitectura hexagonal — Propone refactor hacia ports & adapters
+```
+
+Tú seleccionas → Skill ejecuta análisis → Genera propuesta en `docs/architecture/proposals/`
+
+### Modo Directo (Si sabes qué quieres)
+
 ```
 Analiza la arquitectura de [scope]
 ```
@@ -22,7 +46,7 @@ Analiza la arquitectura de [scope]
 ```
 Analiza la arquitectura general del backend
 Analiza la arquitectura frontend y propone mejoras
-Propone una estrategia de modularización para [modulo]
+Propone una estrategia de modularización para lecciones
 Revisa el acoplamiento entre módulos
 Analiza separación de responsabilidades en el proyecto
 Diseña una refactorización hacia arquitectura hexagonal
@@ -31,6 +55,26 @@ Diseña una refactorización hacia arquitectura hexagonal
 ---
 
 ## Parámetros
+
+### Modo Interactivo (Sin parámetros)
+
+```
+Analiza la arquitectura
+```
+
+La skill pregunta interactivamente qué analizar:
+
+| Opción       | Descripción                                        | Genera                           |
+| ------------ | -------------------------------------------------- | -------------------------------- |
+| Backend      | Estructura NestJS completa, servicios, controllers | proposal-backend-[fecha].md      |
+| Frontend     | Next.js 14, componentes, páginas, hooks            | proposal-frontend-[fecha].md     |
+| Módulo       | Módulo específico (lecciones, cursos, etc.)        | proposal-modulo-[fecha].md       |
+| Acoplamiento | Imports, ciclos, dependencias altas                | proposal-acoplamiento-[fecha].md |
+| Capas        | Separación controller/service/repository           | proposal-capas-[fecha].md        |
+| SOLID        | Verifica S, O, L, I, D principles                  | proposal-solid-[fecha].md        |
+| Hexagonal    | Refactor hacia ports & adapters                    | proposal-hexagonal-[fecha].md    |
+
+### Modo Directo (Con parámetros)
 
 | Parámetro | Descripción                                                                  | Ejemplo                  |
 | --------- | ---------------------------------------------------------------------------- | ------------------------ |
@@ -425,32 +469,67 @@ apps/web/src/
 
 ## Flujo de Trabajo de la Skill
 
+### Flujo Interactivo (Recomendado)
+
 ```
-1. Usuario invoca: "Analiza la arquitectura de [scope]"
+1. Usuario invoca: "Analiza la arquitectura"
                           ↓
-2. Skill ejecuta 6 pasos análisis (mapear, SOLID, acoplamiento, etc.)
+2. Skill propone 7 opciones de análisis:
+   - Backend completo
+   - Frontend completo
+   - Módulo específico
+   - Acoplamiento entre módulos
+   - Separación de capas
+   - SOLID principles
+   - Arquitectura hexagonal
                           ↓
-3. Skill **GENERA archivo Markdown** con propuesta consolidada
+3. Usuario elige una opción
+                          ↓
+4. Skill ejecuta 6 pasos de análisis para esa opción
+                          ↓
+5. Skill GENERA archivo Markdown con propuesta consolidada
    Ubicación: docs/architecture/proposals/
-   Nombre: proposal-[scope]-[fecha].md
+   Nombre: proposal-[tipo]-[fecha].md
                           ↓
-4. Archivo está listo para:
+6. Archivo está listo para:
    - Revisar manualmente
    - Pasar a /sdd-apply para implementación
    - Compartir con el equipo
    - Guardar como histórico
 ```
 
+### Flujo Directo (Si sabes qué quieres)
+
+```
+1. Usuario invoca: "Analiza la arquitectura de [scope]"
+                          ↓
+2. Skill ejecuta 6 pasos análisis directamente
+                          ↓
+3. Skill GENERA archivo Markdown con propuesta
+                          ↓
+4. Archivo listo para usar
+```
+
 ---
 
 ## Notas para IA
 
+### Comportamiento Interactivo (IMPORTANTE)
+
+- **Si usuario invoca SIN parámetros** (`"Analiza la arquitectura"`): Ofrecer 7 opciones de análisis interactivas y ESPERAR respuesta
+- **Si usuario invoca CON scope** (`"Analiza la arquitectura de [scope]"`): Ejecutar directamente sin preguntar
+
+### Ejecución
+
 - **Responsabilidad principal**: Generar archivo Markdown en la carpeta `docs/architecture/proposals/`
 - **No delegar directamente**: La skill NO invoca `/sdd-apply`. Genera el archivo y el usuario decide qué hacer
 - **Archivo consolidado**: Toda la propuesta debe estar en UN solo archivo Markdown, no dispersa
+- **Crear carpeta si no existe**: La carpeta `docs/architecture/proposals/` debe crearse automáticamente al generar el primer análisis
+
+### Análisis
+
 - **Buscar ciclos**: A→B, B→C, C→A es un problema de arquitectura crítico
 - **Contar imports**: Un servicio con 10+ imports es sospechoso (posible violación de SRP)
 - **Revisar DTOs**: Si hay DTOs esparcidos en múltiples capas, hay fuga de abstracción
 - **Verificar patrones**: SIEMPRE leer `CLAUDE.md` y `docs/ai-context/_patterns.md` antes de proponer cambios
 - **Soft delete es mandatorio**: Cualquier análisis que proponga cambios de eliminación debe mantener soft delete
-- **Crear carpeta si no existe**: La carpeta `docs/architecture/proposals/` debe crearse automáticamente al generar el primer análisis
