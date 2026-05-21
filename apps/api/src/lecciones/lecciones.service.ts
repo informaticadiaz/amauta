@@ -33,6 +33,7 @@ export interface LeccionResponse {
   duracion: number | null;
   contenido: Prisma.JsonValue;
   publicada: boolean;
+  estado: string;
   createdAt: Date;
   updatedAt: Date;
   cursoId: string;
@@ -166,7 +167,14 @@ export class LeccionesService {
       throw new NotFoundException('Curso no encontrado');
     }
 
-    const where: { cursoId: string; publicada?: boolean } = { cursoId };
+    const where: {
+      cursoId: string;
+      publicada?: boolean;
+      estado?: { not: string };
+    } = {
+      cursoId,
+      estado: { not: 'ARCHIVADO' },
+    };
     if (soloPublicadas) {
       where.publicada = true;
     }
@@ -232,27 +240,35 @@ export class LeccionesService {
   }
 
   /**
-   * Elimina una lección
+   * Elimina una lección (soft delete)
    */
   async eliminar(id: string, usuarioId: string): Promise<void> {
     // Verificar propiedad
     const leccion = await this.verificarPropietarioLeccion(id, usuarioId);
 
-    // Eliminar lección
-    await this.prisma.leccion.delete({
+    // Soft delete: marcar como archivada
+    await this.prisma.leccion.update({
       where: { id },
+      data: { estado: 'ARCHIVADO' },
     });
 
-    // Reordenar lecciones restantes
-    await this.prisma.leccion.updateMany({
+    // Reordenar lecciones restantes (solo las activas)
+    const leccionesActivas = await this.prisma.leccion.findMany({
       where: {
         cursoId: leccion.cursoId,
-        orden: { gt: leccion.orden },
+        estado: { not: 'ARCHIVADO' },
       },
-      data: {
-        orden: { decrement: 1 },
-      },
+      orderBy: { orden: 'asc' },
     });
+
+    await this.prisma.$transaction(
+      leccionesActivas.map((l, index) =>
+        this.prisma.leccion.update({
+          where: { id: l.id },
+          data: { orden: index + 1 },
+        })
+      )
+    );
   }
 
   /**

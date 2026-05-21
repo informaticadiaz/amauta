@@ -180,6 +180,7 @@ model Leccion {
   recursos  Recurso[]
 
   publicada Boolean @default(false)
+  estado    String  @default("ACTIVO") // ACTIVO | ARCHIVADO
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -189,6 +190,7 @@ model Leccion {
 
   @@index([cursoId])
   @@index([orden])
+  @@index([estado])
   @@map("lecciones")
 }
 

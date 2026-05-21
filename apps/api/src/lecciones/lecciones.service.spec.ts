@@ -71,6 +71,7 @@ describe('LeccionesService', () => {
     duracion: 15,
     contenido: { texto: 'Contenido de prueba' },
     publicada: false,
+    estado: 'ACTIVO',
     createdAt: new Date(),
     updatedAt: new Date(),
     cursoId: 'curso-123',
@@ -219,6 +220,26 @@ describe('LeccionesService', () => {
       );
     });
 
+    it('debería excluir lecciones archivadas del listado', async () => {
+      prisma.curso.findUnique.mockResolvedValue(mockCurso);
+      prisma.leccion.findMany.mockResolvedValue([
+        { ...mockLeccion, id: 'leccion-1', estado: 'ACTIVO' },
+        { ...mockLeccion, id: 'leccion-2', estado: 'ACTIVO' },
+      ]);
+
+      const result = await service.listarPorCurso('curso-123');
+
+      expect(prisma.leccion.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({
+            estado: { not: 'ARCHIVADO' },
+          }),
+        })
+      );
+      expect(result).toHaveLength(2);
+      expect(result.every((l) => l.estado === 'ACTIVO')).toBe(true);
+    });
+
     it('debería lanzar NotFoundException si el curso no existe', async () => {
       prisma.curso.findUnique.mockResolvedValue(null);
 
@@ -325,41 +346,54 @@ describe('LeccionesService', () => {
   });
 
   describe('eliminar', () => {
-    it('debería eliminar la lección', async () => {
+    it('debería hacer soft delete (marcar como ARCHIVADO)', async () => {
       prisma.leccion.findUnique.mockResolvedValue({
         ...mockLeccion,
         curso: { educadorId: 'educador-123' },
       });
-      prisma.leccion.delete.mockResolvedValue(mockLeccion);
-      prisma.leccion.updateMany.mockResolvedValue({ count: 2 });
+      prisma.leccion.update.mockResolvedValue({
+        ...mockLeccion,
+        estado: 'ARCHIVADO',
+      });
+      prisma.leccion.findMany.mockResolvedValue([]); // Sin lecciones activas para reordenar
+      prisma.$transaction.mockResolvedValue([]);
 
       await service.eliminar('leccion-123', 'educador-123');
 
-      expect(prisma.leccion.delete).toHaveBeenCalledWith({
+      expect(prisma.leccion.update).toHaveBeenCalledWith({
         where: { id: 'leccion-123' },
+        data: { estado: 'ARCHIVADO' },
       });
     });
 
-    it('debería reordenar lecciones restantes después de eliminar', async () => {
+    it('debería reordenar lecciones activas (excluyendo archivadas) después de eliminar', async () => {
+      const leccionesActivas = [
+        { ...mockLeccion, id: 'leccion-2', orden: 1 },
+        { ...mockLeccion, id: 'leccion-3', orden: 2 },
+      ];
+
       prisma.leccion.findUnique.mockResolvedValue({
         ...mockLeccion,
-        orden: 1,
+        orden: 0,
         curso: { educadorId: 'educador-123' },
       });
-      prisma.leccion.delete.mockResolvedValue(mockLeccion);
-      prisma.leccion.updateMany.mockResolvedValue({ count: 2 });
+      prisma.leccion.update.mockResolvedValue({
+        ...mockLeccion,
+        estado: 'ARCHIVADO',
+      });
+      prisma.leccion.findMany.mockResolvedValue(leccionesActivas);
+      prisma.$transaction.mockResolvedValue([]);
 
       await service.eliminar('leccion-123', 'educador-123');
 
-      expect(prisma.leccion.updateMany).toHaveBeenCalledWith({
+      expect(prisma.leccion.findMany).toHaveBeenCalledWith({
         where: {
           cursoId: 'curso-123',
-          orden: { gt: 1 },
+          estado: { not: 'ARCHIVADO' },
         },
-        data: {
-          orden: { decrement: 1 },
-        },
+        orderBy: { orden: 'asc' },
       });
+      expect(prisma.$transaction).toHaveBeenCalled();
     });
 
     it('debería lanzar NotFoundException si la lección no existe', async () => {
