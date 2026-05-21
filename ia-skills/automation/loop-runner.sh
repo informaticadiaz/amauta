@@ -2,8 +2,8 @@
 # loop-runner.sh — Runner del agentic loop (Linux/macOS)
 #
 # Uso:
-#   chmod +x ia-skills/automata-dev/loop-runner.sh
-#   ./ia-skills/automata-dev/loop-runner.sh
+#   chmod +x ia-skills/automation/loop-runner.sh
+#   ./ia-skills/automation/loop-runner.sh
 #
 # Configuración:
 #   AI_CMD: comando del CLI de IA a usar (default: claude)
@@ -11,7 +11,7 @@
 
 set -euo pipefail
 
-NEXT_PROMPT="ia-skills/automata-dev/next-prompt.md"
+NEXT_PROMPT="ia-skills/automation/next-prompt.md"
 CLAIMED_PROMPT="${NEXT_PROMPT}.running"
 AI_CMD="${AI_CMD:-claude}"
 SESSION=0
@@ -54,8 +54,8 @@ while true; do
     elif [[ -f "$NEXT_PROMPT" ]]; then
       :
     else
-      printf '\n## Loop detenido — %s\n- Razón: Falló la sesión del runner y no se pudo restaurar el prompt automáticamente.\n- Acción para reiniciar: Revisar el estado del runner y recrear ia-skills/automata-dev/next-prompt.md si hace falta.\n' \
-        "$(date '+%Y-%m-%d %H:%M:%S')" >> ia-skills/automata-dev/loop-status.md
+      printf '\n## Loop detenido — %s\n- Razón: Falló la sesión del runner y no se pudo restaurar el prompt automáticamente.\n- Acción para reiniciar: Revisar el estado del runner y recrear ia-skills/automation/next-prompt.md si hace falta.\n' \
+        "$(date '+%Y-%m-%d %H:%M:%S')" >> ia-skills/automation/loop-status.md
       rm -f "$RUN_LOG"
       echo "ERROR: $AI_CMD falló y no existe un prompt para restaurar."
       exit 1
@@ -69,12 +69,12 @@ while true; do
       continue
     fi
 
-    printf '\n## Loop detenido — %s\n- Razón: %s terminó con error en la sesión %s.\n- Acción para reiniciar: Revisar ia-skills/automata-dev/loop-status.md y relanzar el runner cuando corresponda.\n' \
-      "$(date '+%Y-%m-%d %H:%M:%S')" "$AI_CMD" "$SESSION" >> ia-skills/automata-dev/loop-status.md
+    printf '\n## Loop detenido — %s\n- Razón: %s terminó con error en la sesión %s.\n- Acción para reiniciar: Revisar ia-skills/automation/loop-status.md y relanzar el runner cuando corresponda.\n' \
+      "$(date '+%Y-%m-%d %H:%M:%S')" "$AI_CMD" "$SESSION" >> ia-skills/automation/loop-status.md
     rm -f "$RUN_LOG"
     echo "ERROR: $AI_CMD terminó con error en la sesión $SESSION."
     echo "El prompt fue restaurado en $NEXT_PROMPT para reintentar."
-    echo "Revisar ia-skills/automata-dev/loop-status.md para detalles."
+    echo "Revisar ia-skills/automation/loop-status.md para detalles."
     exit 1
   fi
   rm -f "$RUN_LOG"

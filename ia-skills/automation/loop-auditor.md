@@ -111,7 +111,7 @@ Comparar con la cantidad de issues marcados como `✅` en la sección "Completad
 
 ### PASO 3 — Generar reporte
 
-Crear `ia-skills/automata-dev/audit-report-[fecha].md` con este formato:
+Crear `ia-skills/automation/audit-report-[fecha].md` con este formato:
 
 ```markdown
 # Reporte de Auditoría — [fecha]
@@ -141,13 +141,13 @@ STOP: [razón]. Acción requerida: [qué debe hacer el humano].
 
 ### PASO 4 — Actualizar loop-status
 
-Agregar entrada en `ia-skills/automata-dev/loop-status.md`:
+Agregar entrada en `ia-skills/automation/loop-status.md`:
 
 ```
 ## [fecha] — Auditoría (loop_count=[X/N])
 - Issues auditados: #[N-2], #[N-1], #[N]
 - Resultado: APROBADO / BLOQUEADO
-- Reporte: ia-skills/automata-dev/audit-report-[fecha].md
+- Reporte: ia-skills/automation/audit-report-[fecha].md
 ```
 
 ---
@@ -156,22 +156,22 @@ Agregar entrada en `ia-skills/automata-dev/loop-status.md`:
 
 **Si TODAS las verificaciones pasaron (APROBADO):**
 
-Escribir `ia-skills/automata-dev/next-prompt.md`:
+Escribir `ia-skills/automation/next-prompt.md`:
 
 ```
 /project-manager-automata [loop_count=[X]/[N_max]]
 
 Contexto: venís de una auditoría aprobada.
 Issues auditados: #[N-2], #[N-1], #[N] — todos en verde.
-Reporte: ia-skills/automata-dev/audit-report-[fecha].md
+Reporte: ia-skills/automation/audit-report-[fecha].md
 ```
 
 Orden obligatorio para evitar carreras con el runner:
 
 1. Generar el reporte de auditoría
-2. Actualizar `ia-skills/automata-dev/loop-status.md`
+2. Actualizar `ia-skills/automation/loop-status.md`
 3. Hacer commit del reporte y de `loop-status.md`
-4. Escribir `ia-skills/automata-dev/next-prompt.md`
+4. Escribir `ia-skills/automation/next-prompt.md`
 
 `next-prompt.md` es un archivo efímero de coordinación. No commitearlo.
 
@@ -180,7 +180,7 @@ Orden obligatorio para evitar carreras con el runner:
 NO escribir `next-prompt.md`.
 Escribir en `loop-status.md` la parada (ver formato arriba).
 Terminar con:
-`"Auditoría BLOQUEADA. El loop se detuvo. Ver ia-skills/automata-dev/audit-report-[fecha].md"`
+`"Auditoría BLOQUEADA. El loop se detuvo. Ver ia-skills/automation/audit-report-[fecha].md"`
 
 ---
 

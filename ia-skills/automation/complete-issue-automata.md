@@ -1,7 +1,8 @@
-# Skill: Complete Issue
+# Skill: Complete Issue (Automata)
 
-> Ejecuta un issue de GitHub de principio a fin de forma autónoma usando TDD:
-> escribe primero los tests de mayor valor, luego implementa el código hasta que pasen, documenta y cierra el issue.
+> Versión autónoma del skill complete-issue, diseñada para operar dentro del agentic loop.
+> Ejecuta un issue de GitHub de principio a fin usando TDD: escribe primero los tests de mayor valor,
+> luego implementa el código hasta que pasen, documenta y cierra el issue.
 >
 > **Requisito fundamental**: Ningún issue de código puede cerrarse sin verificación automatizada suficiente. Mantener TDD, pero evitando tests redundantes, triviales o costosos sin valor real.
 
@@ -10,68 +11,44 @@
 ## Uso
 
 ```
-Ejecuta el issue #[número] de forma autónoma siguiendo el workflow completo
-```
-
-**Ejemplos:**
-
-```
-Ejecuta el issue #42 de forma autónoma siguiendo el workflow completo
-
-Ejecuta el issue #15 de forma autónoma siguiendo el workflow completo
+Ejecutá el issue #[número] de forma autónoma siguiendo el workflow completo de complete-issue.
 ```
 
 ---
 
 ## Parámetros
 
-| Parámetro | Descripción             | Ejemplo |
-| --------- | ----------------------- | ------- |
-| `número`  | Número del issue GitHub | `42`    |
+| Parámetro    | Descripción             | Ejemplo |
+| ------------ | ----------------------- | ------- |
+| `número`     | Número del issue GitHub | `42`    |
+| `loop_count` | Contador del loop       | `[1/3]` |
+
+Semántica de `loop_count`:
+
+- `X` = cantidad de issues ya completados exitosamente antes de iniciar esta sesión
+- `N` = cantidad máxima de issues a completar
+- `complete-issue-automata` recibe `[X/N]`, ejecuta un issue y, si termina bien, dispara la siguiente sesión con `[X+1/N]`
 
 ---
 
 ## Proceso Autónomo (Ejecutar en Orden Estricto)
 
-### PASO 0 — Preflight de sincronización del repo (SIEMPRE antes de auditar o codear)
-
-Antes de leer issues, roadmap, documentación o tocar código, verificar que el checkout local esté alineado con `origin/master`.
-
-```bash
-git fetch origin
-git rev-list --left-right --count HEAD...origin/master
-```
-
-Interpretación obligatoria:
-
-- `0 0` → local alineado, se puede continuar
-- `0 N` → local atrasado; **hacer pull antes de seguir**
-- `N 0` → hay commits locales no publicados; revisar antes de seguir
-- `N M` → rama divergida; **STOP**, no seguir hasta resolver
-
-Si el repo local está detrás de `origin/master`:
-
-```bash
-git pull --ff-only origin master
-```
-
-**Regla absoluta**: Nunca auditar roadmap / issues / documentación con un checkout potencialmente desactualizado.
-
----
-
-### PASO 1 — Verificar Estado del Proyecto (SIEMPRE al iniciar)
+### PASO 0 — Verificar Estado del Proyecto (SIEMPRE al iniciar)
 
 Antes de cualquier otra acción, verificar el estado actual del desarrollo consultando **tres fuentes** y comparándolas.
 
 #### Fuente 1 — GitHub (estado real de cada issue)
 
 ```bash
+# Determinar primero la label de la fase actual leyendo roadmap.md y CLAUDE.md.
+# Ejemplo actual del proyecto: phase-4
+
 # Issues abiertos de la fase actual, ordenados por número
-gh issue list --label "phase-1" --state open --limit 20 --json number,title,labels \
+gh issue list --label "[phase-label]" --state open --limit 20 --json number,title,labels \
   | jq -r '.[] | "#\(.number) \(.title) [\(.labels | map(.name) | join(", "))]"'
 
 # Issues cerrados recientes (para detectar completados no registrados)
-gh issue list --label "phase-1" --state closed --limit 10 --json number,title \
+gh issue list --label "[phase-label]" --state closed --limit 10 --json number,title \
   | jq -r '.[] | "#\(.number) \(.title)"'
 ```
 
@@ -113,8 +90,6 @@ Construir una tabla de verificación:
 | Orden diferente entre roadmap.md y los issues de GitHub                     | roadmap.md       | Seguir el orden del roadmap      |
 | Progreso total diferente (ej: GitHub dice 10 cerrados, CLAUDE.md dice 8/16) | GitHub           | Actualizar contador en CLAUDE.md |
 
-Mostrar las divergencias encontradas al usuario y proponer las correcciones antes de continuar.
-
 #### Determinar el próximo issue a trabajar
 
 Si no se especificó un número de issue:
@@ -125,24 +100,20 @@ Si no se especificó un número de issue:
    - Priorizar issues con label `must-have`
    - Respetar dependencias (no empezar un issue si su dependencia está OPEN)
    - Tomar el primero según el orden del roadmap
-4. Presentar al usuario: _"El próximo issue según el roadmap es #XX — [título] (must-have). ¿Trabajamos con este?"_
-5. Esperar confirmación antes de continuar
 
 Si se especificó un número:
 
 - Verificar que el issue existe y está OPEN en GitHub
 - Verificar que sus dependencias están cerradas
-- Si está cerrado o tiene dependencias pendientes, informar al usuario y sugerir el próximo válido
+- Si está cerrado o tiene dependencias pendientes, registrar en `ia-skills/automation/loop-status.md` y hacer STOP
 
 ---
 
-### PASO 2 — Leer el Issue
+### PASO 1 — Leer el Issue
 
 ```bash
 gh issue view [número] --json title,body,labels
 ```
-
-> **Nota**: No usar `--json ... | jq` en entornos Windows — `jq` puede no estar disponible. Leer el JSON crudo directamente es suficiente.
 
 Extraer y registrar:
 
@@ -173,7 +144,7 @@ Luego de leer el issue, clasificarlo en uno de estos dos modos:
 
 ---
 
-### PASO 3 — Cargar Contexto Obligatorio
+### PASO 2 — Cargar Contexto Obligatorio
 
 Leer los archivos correspondientes **antes de escribir una sola línea de código o test**:
 
@@ -204,7 +175,7 @@ LEER: docs/ai-context/frontend/hooks.md    (si usa auth/roles)
 ```
 LEER: apps/api/src/cursos/cursos.service.spec.ts   (referencia de unit test backend)
 LEER: docs/technical/testing.md                     (guía completa de testing)
-LEER: ia-skills/amauta-high-value-tests.md     (criterio obligatorio para diseñar tests)
+LEER: ia-skills/testing/amauta-high-value-tests.md     (criterio obligatorio para diseñar tests)
 ```
 
 > **Regla absoluta**: Nunca inventar nombres de campos, enums, relaciones o tablas.
@@ -212,7 +183,7 @@ LEER: ia-skills/amauta-high-value-tests.md     (criterio obligatorio para diseñ
 
 ---
 
-### PASO 4 — Crear Plan de Trabajo
+### PASO 3 — Crear Plan de Trabajo
 
 Crear un todo list antes de empezar. La estructura varía según el modo determinado en PASO 1:
 
@@ -245,14 +216,14 @@ Crear un todo list antes de empezar. La estructura varía según el modo determi
 
 ---
 
-### PASO 5 — Escribir Tests
+### PASO 4 — Escribir Tests
 
 > **Modo A**: Escribir tests ANTES de implementar. Deben fallar (RED).
 > **Modo B**: Escribir tests DESPUÉS de leer la implementación. Deben pasar (GREEN).
 
 Antes de definir cualquier test, aplicar obligatoriamente:
 
-`ia-skills/amauta-high-value-tests.md`
+`ia-skills/testing/amauta-high-value-tests.md`
 
 En ambos modos, derivar una **matriz mínima de tests de alto valor**. No convertir el checklist del issue en una lista mecánica de tests.
 
@@ -422,7 +393,7 @@ describe('[Componente]', () => {
 
 ---
 
-### PASO 6 — Verificar Estado de los Tests
+### PASO 5 — Verificar Estado de los Tests
 
 ```bash
 # Backend
@@ -438,11 +409,11 @@ npm run test -w @amauta/web -- --testPathPattern="[Componente]"
 
 - Investigar si es un bug en la implementación
 - Corregir el bug (nunca el test)
-- Si la implementación no se puede corregir de forma segura, documentar el caso y consultar al usuario
+- Si la implementación no se puede corregir de forma segura → STOP, registrar en `ia-skills/automation/loop-status.md`, no escribir next-prompt.md
 
 ---
 
-### PASO 7 — Implementar el Código (GREEN)
+### PASO 6 — Implementar el Código (GREEN)
 
 Escribir el código mínimo necesario para que los tests pasen. Seguir los patrones del proyecto:
 
@@ -474,7 +445,7 @@ await this.prisma.[modulo].update({
 
 ---
 
-### PASO 8 — Verificar que los Tests Pasan (GREEN) y Refactorizar
+### PASO 7 — Verificar que los Tests Pasan (GREEN) y Refactorizar
 
 ```bash
 # Verificar que pasan
@@ -501,7 +472,7 @@ Antes de cerrar el issue, verificar:
 
 ---
 
-### PASO 8.5 — Verificar Tipos de TypeScript (CRÍTICO)
+### PASO 7.5 — Verificar Tipos de TypeScript (CRÍTICO)
 
 > **Por qué este paso**: `next dev` y `nest start:dev` no verifican tipos completamente.
 > El build de producción (`next build`) sí lo hace y **fallará** si hay errores de tipo.
@@ -521,28 +492,17 @@ npx tsc --noEmit -p apps/web/tsconfig.json
 2. Ejecutar tests de nuevo para confirmar que siguen en verde
 3. Continuar al siguiente paso
 
-**Errores comunes que detecta este paso:**
-
-- `Type 'X | undefined' is not assignable to type 'X | null'`
-- `Property 'X' does not exist on type 'Y'`
-- `Cannot find module 'X'`
-- Imports incorrectos o tipos faltantes
-
-> **Nota**: Los errores en archivos `.test.tsx` o `.spec.ts` son aceptables si son de
-> dependencias de testing (`@testing-library`, `jest`, etc.) — estos archivos no se
-> incluyen en el build de producción.
+> Si TypeScript no compila → STOP, registrar en `ia-skills/automation/loop-status.md`, no escribir next-prompt.md.
 
 ---
 
-### PASO 9 — Generar Documentación (OBLIGATORIO)
+### PASO 8 — Generar Documentación (OBLIGATORIO)
 
 > ⛔ **Ningún issue puede cerrarse sin estos dos artefactos actualizados. Sin excepción.**
 
 ---
 
 #### 8.1 — Actualizar `docs/ai-context/` (contexto para la IA)
-
-La IA lee estos archivos antes de codear en issues futuros. Mantenerlos actualizados es crítico para la calidad del desarrollo automatizado.
 
 | Tipo de issue                           | Qué actualizar                                                                       |
 | --------------------------------------- | ------------------------------------------------------------------------------------ |
@@ -566,8 +526,6 @@ También actualizar si aplica:
 
 **SIEMPRE crear este archivo** — uno por issue, sin importar si es backend, frontend o DB.
 
-Es el artefacto que permite a un humano entender qué funcionalidad se implementó, con qué rol probarla y qué esperar. Forma la base de la revisión periódica del sistema.
-
 **Nombre del archivo:** `issue-{número}-{slug}.md` donde el slug es el título del issue en minúsculas con guiones. Ej: `issue-79-calificaciones-periodo-academico.md`
 
 **Formato obligatorio:**
@@ -586,10 +544,6 @@ Es el artefacto que permite a un humano entender qué funcionalidad se implement
 1. [Paso concreto]
 2. [Paso concreto]
 3. [Resultado esperado]
-
-### [Acción secundaria si aplica]
-
-...
 
 ---
 
@@ -619,16 +573,9 @@ Es el artefacto que permite a un humano entender qué funcionalidad se implement
 > Si hay limitaciones conocidas: documentarlas aquí.
 ```
 
-**Reglas de contenido:**
-
-- Lenguaje natural, sin jerga técnica
-- Orientado a probar la funcionalidad, no a describir la implementación
-- Si es API sin UI: describir cómo probar con curl o cliente HTTP, incluir ejemplo de request/response
-- Si es DB/Prisma sin API ni UI: describir el cambio de modelo y su impacto funcional futuro
-
 ---
 
-### PASO 10 — Hacer Commit
+### PASO 9 — Hacer Commit
 
 Incluir **siempre** los archivos de test junto con la implementación:
 
@@ -653,16 +600,16 @@ EOF
 
 ---
 
-### PASO 11 — Actualizar CLAUDE.md (si aplica)
+### PASO 10 — Actualizar CLAUDE.md (si aplica)
 
-Si el issue es un hito de Fase 1 (F1-0XX):
+Si el issue es un hito de Fase 4 (F4-0XX):
 
-- Mover el issue de "Próximos pasos" a "Completado en Fase 1"
-- Actualizar el contador: ej. `10/16` → `11/16`
+- Mover el issue de "Próximos pasos" a "Completado en Fase 4"
+- Actualizar el contador de progreso
 
 ---
 
-### PASO 12 — Cerrar el Issue
+### PASO 11 — Cerrar el Issue
 
 ```bash
 gh issue close [número] --comment "✅ Implementación completada con TDD.
@@ -687,19 +634,92 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 
 ---
 
+### PASO 12 — Actualizar loop-status.md y escribir next-prompt.md
+
+> Este paso solo aplica cuando el skill opera dentro del agentic loop (loop_count presente).
+
+Escribir en `ia-skills/automation/loop-status.md`:
+
+```
+## [fecha] — Sesión [loop_count]
+- Tipo: complete-issue-automata
+- Issue completado: #[N] — [título]
+- Commit: [hash]
+- Tests: [cantidad] pasando
+- Próxima sesión: [project-manager-automata o loop-auditor] [loop_count=[X+1]/[N_max]]
+```
+
+**Condiciones para escribir next-prompt.md** (TODAS deben ser verdaderas):
+
+- ✅ Tests pasan
+- ✅ TypeScript compila
+- ✅ Issue cerrado en GitHub
+- ✅ Commit hecho
+- ✅ `X + 1 <= N_max`
+
+Si todas las condiciones son verdaderas, primero calcular:
+
+- `completed_count = X + 1`
+
+Regla simple:
+
+- Si `completed_count` es `3`, `6`, `9`, etc. → la próxima sesión es `loop-auditor`
+- Si no → la próxima sesión es `project-manager-automata`
+
+Ejemplos:
+
+- completaste el issue 1 del loop → sigue `project-manager-automata`
+- completaste el issue 2 del loop → sigue `project-manager-automata`
+- completaste el issue 3 del loop → sigue `loop-auditor`
+
+Si la próxima sesión es `project-manager-automata`, escribir `ia-skills/automation/next-prompt.md`:
+
+```
+/project-manager-automata [loop_count=[completed_count]/[N_max]]
+
+Contexto: completó issue #[N] — [título]. Commit: [hash].
+```
+
+Si la próxima sesión es `loop-auditor`, escribir `ia-skills/automation/next-prompt.md`:
+
+```
+/loop-auditor [loop_count=[completed_count]/[N_max]] [issues=#N-2,#N-1,#N]
+
+Contexto: se completó un bloque de 3 issues.
+Issue recién completado: #[N] — [título]. Commit: [hash].
+```
+
+Orden obligatorio para evitar carreras con el runner:
+
+1. Actualizar `ia-skills/automation/loop-status.md`
+2. Hacer commit de `loop-status.md`
+3. Escribir `ia-skills/automation/next-prompt.md`
+
+`next-prompt.md` es un archivo efímero de coordinación. No commitearlo. El runner lo
+puede consumir apenas aparece.
+
+**NO escribir next-prompt.md si:**
+
+- Tests fallaron → STOP
+- TypeScript no compila → STOP
+- Issue no pudo cerrarse → STOP
+- `completed_count > N_max` → STOP con resumen del loop completo
+
+En cualquier STOP: registrar razón en `ia-skills/automation/loop-status.md`.
+
+---
+
 ## Checklist Final
 
 > ⛔ **Ningún issue puede cerrarse sin tests pasando. Sin excepción.**
 
 - [ ] Modo de trabajo determinado (A: TDD completo / B: tests pendientes)
-- [ ] Preflight ejecutado: `git fetch origin` + comparación `HEAD...origin/master`
-- [ ] Si el repo estaba behind, se sincronizó con `git pull --ff-only origin master`
 - [ ] **Modo A**: Tests escritos ANTES del código, confirmados en RED
 - [ ] **Modo B**: Implementación leída antes de escribir tests
 - [ ] Tests pasan en GREEN (confirmado con ejecución real)
 - [ ] Cobertura >80% en el módulo nuevo
 - [ ] **TypeScript compila sin errores** (`tsc --noEmit` en backend y frontend)
-- [ ] `ia-skills/amauta-high-value-tests.md` aplicado para decidir alcance y volumen de tests
+- [ ] `ia-skills/testing/amauta-high-value-tests.md` aplicado para decidir alcance y volumen de tests
 - [ ] Los tests cubren el contrato importante sin duplicación innecesaria
 - [ ] Código usa `safeParse` para validación
 - [ ] No hay deletes físicos sin justificación en el issue
@@ -709,6 +729,8 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 - [ ] `docs/human-context/issue-{número}-{slug}.md` creado con formato obligatorio
 - [ ] CLAUDE.md refleja el nuevo progreso (si aplica)
 - [ ] Issue cerrado con comentario descriptivo
+- [ ] `ia-skills/automation/loop-status.md` actualizado
+- [ ] `ia-skills/automation/next-prompt.md` escrito al final y sin commit (si condiciones cumplen) o STOP documentado
 
 ---
 
@@ -717,5 +739,5 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 - **DB en producción**: Verificar `prisma migrate status` antes de ejecutar migraciones. Afectan producción directamente.
 - **Sin contexto de módulo**: Usar `docs/ai-context/modules/cursos.md` y `apps/api/src/cursos/cursos.service.spec.ts` como referencia.
 - **Si un test es imposible de hacer fallar**: El comportamiento que testea ya existe — documentarlo y seguir.
-- **Ante ambigüedad en el issue**: La interpretación más conservadora, documentada en el comentario de cierre.
+- **Ante ambigüedad en el issue**: La interpretación más conservadora. En el loop autónomo → STOP y registrar, no asumir.
 - **TypeScript en dev vs prod**: `next dev` y `nest start:dev` no verifican tipos completos para priorizar velocidad. `next build` sí los verifica y fallará el deployment si hay errores. Siempre ejecutar `tsc --noEmit` antes de commit.

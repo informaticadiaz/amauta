@@ -6,7 +6,7 @@
 
 ```bash
 # Linux/macOS
-./ia-skills/automata-dev/loop-runner.sh
+./ia-skills/automation/loop-runner.sh
 
 # Windows
 .\docs\ai-skills\automata-dev\loop-runner.ps1
@@ -40,7 +40,7 @@ Verificar que el estado es limpio:
 
 ```bash
 # No debe existir (loop anterior terminó bien)
-ls ia-skills/automata-dev/next-prompt.md
+ls ia-skills/automation/next-prompt.md
 
 # Ver qué issues hay disponibles
 gh issue list --state open --limit 10
@@ -61,7 +61,7 @@ Por defecto usa `claude`. Para usar otro:
 
 ```bash
 # Linux/macOS
-AI_CMD=aider ./ia-skills/automata-dev/loop-runner.sh
+AI_CMD=aider ./ia-skills/automation/loop-runner.sh
 
 # Windows
 $env:AI_CMD = "aider"
@@ -73,7 +73,7 @@ $env:AI_CMD = "aider"
 ## Ver qué pasó
 
 ```bash
-cat ia-skills/automata-dev/loop-status.md
+cat ia-skills/automation/loop-status.md
 ```
 
 `loop-status.md` es el registro persistente. `next-prompt.md` es efímero: puede aparecer
