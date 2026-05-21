@@ -153,7 +153,7 @@ Documentar:
 ### PASO 6 — Generar Propuesta Consolidada y Guardarla
 
 1. **Consolidar análisis completo** en un archivo Markdown
-2. **Guardar en carpeta exclusiva**: `docs/ai-skills/architecture-expert/proposals/`
+2. **Guardar en carpeta exclusiva**: `docs/architecture/proposals/`
 3. **Nombre del archivo**: `proposal-[scope]-[fecha].md`
 4. **Contenido**: Estado actual + Hallazgos + Propuesta + Plan
 5. **Resultado**: Archivo listo para delegación a `/sdd-apply` o uso manual
@@ -163,7 +163,7 @@ Documentar:
 ## Estructura de Carpeta para la Skill
 
 ```
-docs/ai-skills/architecture-expert/
+docs/architecture/
 ├── SKILL.md                    (Este archivo — documentación)
 └── proposals/                  (Carpeta de propuestas generadas)
     ├── proposal-backend-2026-05-20.md
@@ -175,7 +175,7 @@ docs/ai-skills/architecture-expert/
 
 ## Plantilla de Propuesta Consolidada
 
-Guardar como: `docs/ai-skills/architecture-expert/proposals/proposal-[scope]-[fecha].md`
+Guardar como: `docs/architecture/proposals/proposal-[scope]-[fecha].md`
 
 ```markdown
 # 🏗️ Propuesta Arquitectónica — [Scope]
@@ -360,7 +360,7 @@ find apps -name "*.ts" -o -name "*.tsx" | xargs wc -l | sort -rn | head -15
 La skill genera un **archivo Markdown consolidado** guardado en:
 
 ```
-docs/ai-skills/architecture-expert/proposals/proposal-[scope]-[fecha].md
+docs/architecture/proposals/proposal-[scope]-[fecha].md
 ```
 
 **Contenido del archivo:**
@@ -431,7 +431,7 @@ apps/web/src/
 2. Skill ejecuta 6 pasos análisis (mapear, SOLID, acoplamiento, etc.)
                           ↓
 3. Skill **GENERA archivo Markdown** con propuesta consolidada
-   Ubicación: docs/ai-skills/architecture-expert/proposals/
+   Ubicación: docs/architecture/proposals/
    Nombre: proposal-[scope]-[fecha].md
                           ↓
 4. Archivo está listo para:
@@ -445,7 +445,7 @@ apps/web/src/
 
 ## Notas para IA
 
-- **Responsabilidad principal**: Generar archivo Markdown en la carpeta `docs/ai-skills/architecture-expert/proposals/`
+- **Responsabilidad principal**: Generar archivo Markdown en la carpeta `docs/architecture/proposals/`
 - **No delegar directamente**: La skill NO invoca `/sdd-apply`. Genera el archivo y el usuario decide qué hacer
 - **Archivo consolidado**: Toda la propuesta debe estar en UN solo archivo Markdown, no dispersa
 - **Buscar ciclos**: A→B, B→C, C→A es un problema de arquitectura crítico
@@ -453,4 +453,4 @@ apps/web/src/
 - **Revisar DTOs**: Si hay DTOs esparcidos en múltiples capas, hay fuga de abstracción
 - **Verificar patrones**: SIEMPRE leer `CLAUDE.md` y `docs/ai-context/_patterns.md` antes de proponer cambios
 - **Soft delete es mandatorio**: Cualquier análisis que proponga cambios de eliminación debe mantener soft delete
-- **Crear carpeta si no existe**: La carpeta `docs/ai-skills/architecture-expert/proposals/` debe crearse automáticamente al generar el primer análisis
+- **Crear carpeta si no existe**: La carpeta `docs/architecture/proposals/` debe crearse automáticamente al generar el primer análisis
