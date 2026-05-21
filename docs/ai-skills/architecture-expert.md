@@ -219,15 +219,29 @@ docs/architecture/
 
 ## Plantilla de Propuesta Consolidada
 
-Guardar como: `docs/architecture/proposals/proposal-[scope]-[fecha].md`
+Cada opción genera un documento específico. Guardar como: `docs/architecture/proposals/proposal-[tipo]-[fecha].md`
+
+### Encabezado Estándar (Todas las Propuestas)
 
 ```markdown
-# 🏗️ Propuesta Arquitectónica — [Scope]
+# 🏗️ Propuesta Arquitectónica — [Tipo de Análisis]
 
-**Fecha:** [2026-05-20]
+**Fecha Análisis:** [2026-05-20]
+**Última Actualización:** [2026-05-20]
 **Auditor:** Architecture Expert
-**Scope:** [backend / frontend / modulo específico / proyecto completo]
 **Stack:** Backend: NestJS + Fastify | Frontend: Next.js 14
+
+---
+
+## 📊 Estado de Análisis e Implementación
+
+| Campo                           | Valor                                             |
+| ------------------------------- | ------------------------------------------------- |
+| **Estado Análisis**             | En Análisis / Completado                          |
+| **Estado Implementación**       | No Iniciado / Implementado Parcial / Implementado |
+| **Última Fecha Implementación** | [YYYY-MM-DD o "sin implementar"]                  |
+| **Responsable Implementación**  | [nombre o "pendiente"]                            |
+| **Urgencia**                    | Baja / Media / Alta / Crítica                     |
 
 ---
 
@@ -375,6 +389,80 @@ modulo-e → modulo-f (BAJO)
 4. **Verificar** — usar `/sdd-verify` para validar cambios
 
 ```
+
+---
+
+## Plantillas Específicas por Tipo de Análisis
+
+Cada opción interactiva genera un documento con estructura y contenido único:
+
+### 1️⃣ Backend Completo (`proposal-backend-[fecha].md`)
+
+**Contenido específico:**
+
+- Estructura NestJS (módulos, servicios, controllers)
+- Dependencias entre módulos
+- Violaciones SOLID en backend
+- Plan de refactorización por módulo
+
+### 2️⃣ Frontend Completo (`proposal-frontend-[fecha].md`)
+
+**Contenido específico:**
+
+- Estructura Next.js 14 (pages, components, hooks)
+- Estado de componentes y composición
+- Separación de capas (presentación/lógica)
+- Plan de mejoras en componentes
+
+### 3️⃣ Módulo Específico (`proposal-modulo-[nombre]-[fecha].md`)
+
+**Contenido específico:**
+
+- Análisis SOLID del módulo
+- DTOs y validaciones
+- Tests y cobertura
+- Comparación con patrón del proyecto
+- Propuesta de mejora local
+
+### 4️⃣ Acoplamiento (`proposal-acoplamiento-[fecha].md`)
+
+**Contenido específico:**
+
+- Grafo de dependencias entre módulos
+- Ciclos detectados (A→B→C→A)
+- Módulos con alto acoplamiento (5+ imports)
+- Propuesta de desacoplamiento
+- Plan de inversión de dependencias
+
+### 5️⃣ Separación de Capas (`proposal-capas-[fecha].md`)
+
+**Contenido específico:**
+
+- Verificación por capa (controller/service/repository)
+- Lógica de negocio mal ubicada
+- DTOs dispersos en múltiples capas
+- Plan de reorganización
+- Validación esperada por capa
+
+### 6️⃣ SOLID Principles (`proposal-solid-[fecha].md`)
+
+**Contenido específico:**
+
+- Análisis detallado de cada principio (S, O, L, I, D)
+- Módulos que violan cada principio
+- Ejemplos de código problemático
+- Refactores propuestos
+- Tabla de cumplimiento por principio
+
+### 7️⃣ Arquitectura Hexagonal (`proposal-hexagonal-[fecha].md`)
+
+**Contenido específico:**
+
+- Diagrama actual vs. hexagonal propuesto
+- Ports & adapters necesarios
+- Boundaries entre capas
+- Plan de refactor a hexagonal
+- Migración de dependencias
 
 ---
 
