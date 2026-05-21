@@ -34,7 +34,9 @@ test.describe('Frontend — Flujo de autenticación', () => {
     await expect(error).toContainText(/inválid/i);
   });
 
-  test('el botón muestra estado de carga durante el login', async ({ page }) => {
+  test('el botón muestra estado de carga durante el login', async ({
+    page,
+  }) => {
     await page.goto('/login');
 
     await page.fill('#email', TEST_USERS.estudiante.email);
