@@ -1,7 +1,7 @@
 # 03 — Diseño del Skill `project-manager-automata`
 
 > Especifica el orquestador del loop autónomo.
-> La implementación real está en `ia-skills/automata-dev/project-manager-automata.md`.
+> La implementación real está en `ia-skills/automation/project-manager-automata.md`.
 > Este documento explica el diseño y las decisiones detrás de la skill.
 
 ---
@@ -58,7 +58,7 @@ La situación B es lo que distingue a `automata` de un orquestador puramente rea
 El contenido vivo del skill está en:
 
 ```
-ia-skills/automata-dev/project-manager-automata.md
+ia-skills/automation/project-manager-automata.md
 ```
 
 Ese archivo es la fuente de verdad. Lo que aparece a continuación es un resumen de las secciones más importantes — leer el archivo original antes de modificarlo.

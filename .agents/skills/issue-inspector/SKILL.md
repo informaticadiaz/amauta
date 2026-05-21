@@ -1,6 +1,6 @@
 ---
 name: issue-inspector
-description: Wrapper skill. La fuente de verdad está en ia-skills/issue-inspector.md.
+description: Wrapper skill. La fuente de verdad está en ia-skills/testing/issue-inspector.md.
 version: 1.1.0
 ---
 
@@ -10,10 +10,10 @@ Esta skill es un wrapper.
 
 Fuente de verdad:
 
-`ia-skills/issue-inspector.md`
+`ia-skills/testing/issue-inspector.md`
 
 ## Instrucción obligatoria
 
-1. Leer `ia-skills/issue-inspector.md`.
+1. Leer `ia-skills/testing/issue-inspector.md`.
 2. Seguir ese documento como workflow principal.
-3. Si hubiera diferencias, prevalece `ia-skills/issue-inspector.md`.
+3. Si hubiera diferencias, prevalece `ia-skills/testing/issue-inspector.md`.

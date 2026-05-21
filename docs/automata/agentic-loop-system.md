@@ -178,7 +178,7 @@ cada 3 issues → loop-auditor
 - Documentación IA actualizada para cada issue del bloque
 - Coherencia CLAUDE.md vs GitHub (tolerancia: diff <= 2)
 
-**Output:** `ia-skills/automata-dev/audit-report-{fecha}.md`
+**Output:** `ia-skills/automation/audit-report-{fecha}.md`
 
 **Decisión:**
 

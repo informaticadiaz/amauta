@@ -69,7 +69,7 @@ _"No concebimos la educación como un producto, sino como un derecho social."_
 - Los comandos de Prisma se ejecutan contra la DB de producción
 - Cualquier `prisma migrate` afecta producción directamente
 - **SIEMPRE verificar** `prisma migrate status` antes de cambios
-- Para migraciones: `ia-skills/prisma-db-management.md`
+- Para migraciones: `ia-skills/development/prisma-db-management.md`
 - CI/CD: la API ejecuta `npx prisma migrate deploy` al iniciar; el healthcheck a `/health` valida el deploy
 
 ---
@@ -120,20 +120,20 @@ Usuarios de prueba (password: `password123`): `superadmin@amauta.test`, `admin1@
 
 #### Backend (API)
 
-| Tarea                      | Leer ANTES                                                             |
-| -------------------------- | ---------------------------------------------------------------------- |
-| Cualquier query Prisma     | `docs/ai-context/database/schema.md` + `apps/api/prisma/schema.prisma` |
-| Crear/modificar endpoint   | `docs/ai-context/_patterns.md` + `docs/ai-context/modules/{modulo}.md` |
-| Crear módulo CRUD          | `ia-skills/crud-generator.md`                                          |
-| Agregar endpoint existente | `ia-skills/api-endpoint.md` + `docs/ai-context/modules/{modulo}.md`    |
+| Tarea                      | Leer ANTES                                                                      |
+| -------------------------- | ------------------------------------------------------------------------------- |
+| Cualquier query Prisma     | `docs/ai-context/database/schema.md` + `apps/api/prisma/schema.prisma`          |
+| Crear/modificar endpoint   | `docs/ai-context/_patterns.md` + `docs/ai-context/modules/{modulo}.md`          |
+| Crear módulo CRUD          | `ia-skills/development/crud-generator.md`                                       |
+| Agregar endpoint existente | `ia-skills/development/api-endpoint.md` + `docs/ai-context/modules/{modulo}.md` |
 
 #### Frontend (Web)
 
-| Tarea               | Leer ANTES                                                           |
-| ------------------- | -------------------------------------------------------------------- |
-| Crear formulario    | `ia-skills/react-form.md` + `docs/ai-context/frontend/components.md` |
-| Crear página        | `docs/ai-context/frontend/pages.md`                                  |
-| Hooks de auth/roles | `docs/ai-context/frontend/hooks.md`                                  |
+| Tarea               | Leer ANTES                                                                       |
+| ------------------- | -------------------------------------------------------------------------------- |
+| Crear formulario    | `ia-skills/development/react-form.md` + `docs/ai-context/frontend/components.md` |
+| Crear página        | `docs/ai-context/frontend/pages.md`                                              |
+| Hooks de auth/roles | `docs/ai-context/frontend/hooks.md`                                              |
 
 #### Módulos documentados
 
@@ -252,19 +252,19 @@ Solo usar estos valores. Verificar en `docs/ai-context/database/schema.md` ante 
 
 ## Skills Disponibles
 
-| Skill                 | Archivo                              | Cuándo usar                            |
-| --------------------- | ------------------------------------ | -------------------------------------- |
-| Prisma & DB           | `ia-skills/prisma-db-management.md`  | Migraciones, errores de DB             |
-| CRUD Generator        | `ia-skills/crud-generator.md`        | Módulo nuevo completo                  |
-| API Endpoint          | `ia-skills/api-endpoint.md`          | Endpoint en módulo existente           |
-| React Form            | `ia-skills/react-form.md`            | Formulario nuevo                       |
-| Complete Issue        | `ia-skills/complete-issue.md`        | Ejecutar issue completo                |
-| Performance Review    | `ia-skills/performance-review.md`    | Informe de performance                 |
-| Security Audit        | `ia-skills/security-audit.md`        | Auditoría OWASP                        |
-| Fix Security Findings | `ia-skills/fix-security-findings.md` | Aplicar fixes de auditoría             |
-| Feature Audit         | `ia-skills/feature-audit.md`         | Verificar criterios de aceptación      |
-| Functional Docs       | `ia-skills/functional-docs.md`       | Documentación funcional no técnica     |
-| AI Context Validator  | `ia-skills/ai-context-validator.md`  | Sincronizar docs/ai-context con código |
-| Issue Inspector       | `ia-skills/issue-inspector.md`       | Auditar issue en producción            |
-| PWA Mobile Design     | `ia-skills/pwa-mobile-design.md`     | Auditar/diseñar PWA mobile             |
-| NotebookLM Cuadernos  | `ia-skills/notebooklm-cuadernos.md`  | Cuadernos de estudio                   |
+| Skill                 | Archivo                                          | Cuándo usar                            |
+| --------------------- | ------------------------------------------------ | -------------------------------------- |
+| Prisma & DB           | `ia-skills/development/prisma-db-management.md`  | Migraciones, errores de DB             |
+| CRUD Generator        | `ia-skills/development/crud-generator.md`        | Módulo nuevo completo                  |
+| API Endpoint          | `ia-skills/development/api-endpoint.md`          | Endpoint en módulo existente           |
+| React Form            | `ia-skills/development/react-form.md`            | Formulario nuevo                       |
+| Complete Issue        | `ia-skills/automation/complete-issue.md`         | Ejecutar issue completo                |
+| Performance Review    | `ia-skills/quality/performance-review.md`        | Informe de performance                 |
+| Security Audit        | `ia-skills/quality/security-audit.md`            | Auditoría OWASP                        |
+| Fix Security Findings | `ia-skills/quality/fix-security-findings.md`     | Aplicar fixes de auditoría             |
+| Feature Audit         | `ia-skills/quality/feature-audit.md`             | Verificar criterios de aceptación      |
+| Functional Docs       | `ia-skills/documentation/functional-docs.md`     | Documentación funcional no técnica     |
+| AI Context Validator  | `ia-skills/quality/ai-context-validator.md`      | Sincronizar docs/ai-context con código |
+| Issue Inspector       | `ia-skills/testing/issue-inspector.md`           | Auditar issue en producción            |
+| PWA Mobile Design     | `ia-skills/specialized/pwa-mobile-design.md`     | Auditar/diseñar PWA mobile             |
+| NotebookLM Cuadernos  | `ia-skills/capacitacion/notebooklm-cuadernos.md` | Cuadernos de estudio                   |

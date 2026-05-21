@@ -91,7 +91,7 @@ Si la diferencia es > 2, hay issues cerrados en GitHub que no están reflejados 
 
 ## El reporte de auditoría
 
-La auditoría genera `ia-skills/automata-dev/audit-report-[fecha].md`:
+La auditoría genera `ia-skills/automation/audit-report-[fecha].md`:
 
 ```markdown
 # Reporte de Auditoría del Loop — [fecha]
@@ -139,7 +139,7 @@ La auditoría genera `ia-skills/automata-dev/audit-report-[fecha].md`:
 
 ## El skill completo
 
-Contenido para `ia-skills/loop-auditor.md`:
+Contenido para `ia-skills/automation/loop-auditor.md`:
 
 ```markdown
 ---
@@ -178,7 +178,7 @@ Ejecutar en orden:
 
 ### PASO 3 — Generar reporte
 
-Crear `ia-skills/automata-dev/audit-report-[fecha].md` con el formato estándar.
+Crear `ia-skills/automation/audit-report-[fecha].md` con el formato estándar.
 
 ### PASO 4 — Decisión
 
@@ -187,8 +187,8 @@ Si TODAS las verificaciones pasaron:
 
 Si ALGUNA verificación falló:
 → NO escribir next-prompt.md
-→ Terminar con: "Auditoría BLOQUEADA. Ver ia-skills/automata-dev/audit-report-[fecha].md"
-→ Actualizar `ia-skills/automata-dev/loop-status.md` con la parada
+→ Terminar con: "Auditoría BLOQUEADA. Ver ia-skills/automation/audit-report-[fecha].md"
+→ Actualizar `ia-skills/automation/loop-status.md` con la parada
 
 ## Guardrails
 

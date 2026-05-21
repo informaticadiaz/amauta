@@ -19,7 +19,7 @@ En esta capacitación los guardrails se presentan como “lo profesional”. **P
 
 - ✅ **Implementado/en uso**:
   - Guardrail 2 (`loop_count=X/N`) — se usa en los prompts/skills del loop.
-  - Guardrail 4 (log) — existe como `ia-skills/automata-dev/loop-status.md` y se actualiza/usa en el flujo (y ante fallas del runner).
+  - Guardrail 4 (log) — existe como `ia-skills/automation/loop-status.md` y se actualiza/usa en el flujo (y ante fallas del runner).
 - 🟡 **Existe, pero es procedimental (no forzado por el runner)**:
   - Guardrail 5 (auditoría) — existe la skill `loop-auditor`, pero su ejecución depende del handoff/prompt (no de un “gate” automático del runner).
 - ❌ **No implementado (pendiente)**:
@@ -49,7 +49,7 @@ Antes de escribir `next-prompt.md`:
 
 - Si el contexto de esta sesión parece muy cargado (muchos archivos leídos,
   muchos tools ejecutados, conversación larga) → no disparar nueva sesión.
-- En su lugar: escribir en `ia-skills/automata-dev/loop-status.md` el estado actual
+- En su lugar: escribir en `ia-skills/automation/loop-status.md` el estado actual
   y terminar con el mensaje: "Loop pausado: contexto elevado. Reiniciar manualmente."
 ```
 
@@ -142,7 +142,7 @@ Cuando el loop termina (por cualquier razón), necesitás saber:
 ```markdown
 ## Guardrail de log (incluir al final de cada sesión)
 
-Antes de terminar, actualizar `ia-skills/automata-dev/loop-status.md` con:
+Antes de terminar, actualizar `ia-skills/automation/loop-status.md` con:
 
 - Timestamp (usar fecha real, no relativa)
 - Número de sesión en el loop
@@ -207,7 +207,7 @@ Antes de poner el loop en modo autónomo completo, verificar:
 - [ ] Límite de sesiones por ejecución definido (recomendado: 3 para testing inicial)
 - [ ] Condición de parada por "no hay más issues" implementada
 - [ ] Heurística de contexto elevado incluida en el prompt
-- [ ] Log de auditoría (`ia-skills/automata-dev/loop-status.md`) configurado
+- [ ] Log de auditoría (`ia-skills/automation/loop-status.md`) configurado
 - [ ] Detección de loop sin progreso implementada
 - [ ] Proceso de arranque manual documentado (cómo iniciar el loop, cómo reiniciar si se pausó)
 

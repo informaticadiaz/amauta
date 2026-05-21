@@ -141,4 +141,4 @@ echo '{
 ## Referencia relacionada
 
 Para el proceso completo de trabajo con Prisma en Amauta:
-`ia-skills/prisma-db-management.md`
+`ia-skills/development/prisma-db-management.md`

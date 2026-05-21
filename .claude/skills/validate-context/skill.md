@@ -4,5 +4,5 @@ description: Use this skill when the user asks to validate that docs/ai-context 
 version: 1.0.0
 ---
 
-LEER INMEDIATAMENTE: ia-skills/ai-context-validator.md
+LEER INMEDIATAMENTE: ia-skills/quality/ai-context-validator.md
 Seguir el proceso definido en ese archivo. No usar ninguna otra instrucción de esta skill.

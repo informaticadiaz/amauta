@@ -31,11 +31,11 @@ Si algo falla aquí, no avanzar. Resolver primero.
 
 ## Tarea 1: Verificar el archivo de log
 
-El log del loop ya existe en `ia-skills/automata-dev/loop-status.md`.
+El log del loop ya existe en `ia-skills/automation/loop-status.md`.
 Verificar que está presente:
 
 ```bash
-ls ia-skills/automata-dev/loop-status.md
+ls ia-skills/automation/loop-status.md
 ```
 
 Si no existe, crearlo con esta estructura mínima:
@@ -57,12 +57,12 @@ _vacío_
 
 ## Tarea 2: Verificar que los skills del loop existen
 
-Los tres skills viven en `ia-skills/automata-dev/`:
+Los tres skills viven en `ia-skills/automation/`:
 
 ```bash
-ls ia-skills/automata-dev/project-manager-automata.md
-ls ia-skills/automata-dev/complete-issue-automata.md
-ls ia-skills/automata-dev/loop-auditor.md
+ls ia-skills/automation/project-manager-automata.md
+ls ia-skills/automation/complete-issue-automata.md
+ls ia-skills/automation/loop-auditor.md
 ```
 
 Si alguno falta, revisar el commit donde se introdujo `automata-dev/` antes de avanzar.
@@ -72,10 +72,10 @@ Si alguno falta, revisar el commit donde se introdujo `automata-dev/` antes de a
 ## Tarea 3: Configurar el runner
 
 El loop necesita un proceso externo (runner) que detecte cuando se escribe
-`ia-skills/automata-dev/next-prompt.md` y arranque una nueva sesión de
+`ia-skills/automation/next-prompt.md` y arranque una nueva sesión de
 Claude Code con ese prompt.
 
-Hay dos runners de ejemplo en `ia-skills/automata-dev/`:
+Hay dos runners de ejemplo en `ia-skills/automation/`:
 
 - `loop-runner.sh` (Linux/macOS)
 - `loop-runner.ps1` (Windows)
@@ -155,7 +155,7 @@ gh issue view [N] --json state | jq '.state'    # debe ser "CLOSED"
 git log --oneline -1
 
 # El log fue actualizado?
-cat ia-skills/automata-dev/loop-status.md
+cat ia-skills/automation/loop-status.md
 
 # Los tests siguen en verde?
 npm run test --workspace=@amauta/api

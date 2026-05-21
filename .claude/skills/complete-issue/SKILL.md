@@ -4,5 +4,5 @@ description: Use this skill when the user asks to execute, complete, or resolve 
 version: 2.0.0
 ---
 
-LEER INMEDIATAMENTE: ia-skills/complete-issue.md
+LEER INMEDIATAMENTE: ia-skills/automation/complete-issue.md
 Seguir el proceso definido en ese archivo. No usar ninguna otra instrucción de esta skill.

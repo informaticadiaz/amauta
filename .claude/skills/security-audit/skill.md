@@ -4,5 +4,5 @@ description: Use this skill when the user asks to run a security audit on the co
 version: 2.0.0
 ---
 
-LEER INMEDIATAMENTE: ia-skills/security-audit.md
+LEER INMEDIATAMENTE: ia-skills/quality/security-audit.md
 Seguir el proceso definido en ese archivo. No usar ninguna otra instrucción de esta skill.

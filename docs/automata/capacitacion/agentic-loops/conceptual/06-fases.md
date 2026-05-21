@@ -63,7 +63,7 @@ El principio es siempre el mismo: **lo más simple que puede funcionar**, antes 
 
 - ¿El issue correcto fue elegido?
 - ¿El handoff (prompt) tenía toda la información necesaria?
-- ¿El log en `ia-skills/automata-dev/loop-status.md` refleja lo que pasó?
+- ¿El log en `ia-skills/automation/loop-status.md` refleja lo que pasó?
 - ¿Hubo algún momento donde la sesión B estaba "perdida" sin saber qué hacer?
 
 **Criterio de salida**: El handoff funciona y la sesión B tiene suficiente contexto para trabajar sin confusión.
@@ -144,7 +144,7 @@ complete-issue #N+1 [loop_count=2/2]
 1. Ejecuta la suite completa de tests (`npm run test -w @amauta/api`)
 2. Verifica tipos TypeScript (`tsc --noEmit`)
 3. Revisa coherencia de documentación (¿CLAUDE.md está actualizado?)
-4. Genera un reporte en `ia-skills/automata-dev/audit-report-[fecha].md`
+4. Genera un reporte en `ia-skills/automation/audit-report-[fecha].md`
 5. Si encuentra problemas → STOP del loop, no continuar hasta resolverlos
 
 **Flujo con la tercera skill**:
