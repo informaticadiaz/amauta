@@ -16,17 +16,19 @@
 ### Modo Automático (Recomendado)
 
 ```
-Ejecuta propuesta: [nombre del archivo o ruta]
+Ejecuta propuesta: [tipo]
 ```
 
 **Ejemplos:**
 
 ```
-Ejecuta propuesta: proposal-backend-2026-05-20.md
-Ejecuta propuesta: proposal-acoplamiento-2026-05-20.md
-Implementa propuesta de SOLID principles
-Resuelve propuesta del módulo lecciones
+Ejecuta propuesta: backend
+Ejecuta propuesta: acoplamiento
+Implementa propuesta de SOLID
+Resuelve propuesta: modulo-lecciones
 ```
+
+Nota: Las propuestas son documentos únicos (proposal-[tipo].md sin fecha) que se actualizan con cada ejecución.
 
 ### Modo Interactivo (Si hay dudas)
 
@@ -46,9 +48,11 @@ La skill pregunta:
 
 | Parámetro  | Descripción                      | Ejemplo                          |
 | ---------- | -------------------------------- | -------------------------------- |
-| `proposal` | Archivo o nombre de propuesta    | `proposal-backend-2026-05-20.md` |
+| `proposal` | Tipo de propuesta (sin fecha)    | `backend` o `acoplamiento`       |
 | `phases`   | Qué fases ejecutar (opcional)    | `1,2` o `solo-critica` o `todas` |
 | `branch`   | Crear rama de feature (opcional) | `true` / `false`                 |
+
+**Nota:** Los archivos de propuesta son documentos únicos: `proposal-[tipo].md`
 
 ---
 
@@ -274,6 +278,13 @@ Selecciona:
 
 ## Notas para IA
 
+### Documento Único (CRÍTICO)
+
+- **SIEMPRE leer** archivo existente: `docs/architecture/proposals/proposal-[tipo].md`
+- **NO crear archivos con fecha**: Usar `proposal-[tipo].md` (sin fecha YYYY-MM-DD)
+- **ACTUALIZAR documento existente**: Modificar estado, agregar histórico de ejecuciones
+- **PRESERVAR contenido anterior**: No eliminar análisis o ejecuciones previas
+
 ### Responsabilidades Principales
 
 - **Validar** que propuesta existe y es Markdown válido
@@ -281,7 +292,7 @@ Selecciona:
 - **Convertir** propuesta → SPEC.md + DESIGN.md + TASKS.md
 - **Delegar** a /sdd-apply (NO ejecutar directamente)
 - **Verificar** resultado con /sdd-verify
-- **Actualizar** propuesta original con estado final
+- **ACTUALIZAR** propuesta con estado final (no crear nueva)
 - **Hacer commit** automático si todo OK
 
 ### Validaciones Obligatorias

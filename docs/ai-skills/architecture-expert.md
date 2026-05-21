@@ -33,7 +33,7 @@ La skill propone opciones de análisis:
 7. Arquitectura hexagonal — Propone refactor hacia ports & adapters
 ```
 
-Tú seleccionas → Skill ejecuta análisis → Genera propuesta en `docs/architecture/proposals/`
+Tú seleccionas → Skill ejecuta análisis → Actualiza propuesta (documento único)
 
 ### Modo Directo (Si sabes qué quieres)
 
@@ -64,15 +64,15 @@ Analiza la arquitectura
 
 La skill pregunta interactivamente qué analizar:
 
-| Opción       | Descripción                                        | Genera                           |
-| ------------ | -------------------------------------------------- | -------------------------------- |
-| Backend      | Estructura NestJS completa, servicios, controllers | proposal-backend-[fecha].md      |
-| Frontend     | Next.js 14, componentes, páginas, hooks            | proposal-frontend-[fecha].md     |
-| Módulo       | Módulo específico (lecciones, cursos, etc.)        | proposal-modulo-[fecha].md       |
-| Acoplamiento | Imports, ciclos, dependencias altas                | proposal-acoplamiento-[fecha].md |
-| Capas        | Separación controller/service/repository           | proposal-capas-[fecha].md        |
-| SOLID        | Verifica S, O, L, I, D principles                  | proposal-solid-[fecha].md        |
-| Hexagonal    | Refactor hacia ports & adapters                    | proposal-hexagonal-[fecha].md    |
+| Opción       | Descripción                                        | Archivo (Único, se Actualiza) |
+| ------------ | -------------------------------------------------- | ----------------------------- |
+| Backend      | Estructura NestJS completa, servicios, controllers | proposal-backend.md           |
+| Frontend     | Next.js 14, componentes, páginas, hooks            | proposal-frontend.md          |
+| Módulo       | Módulo específico (lecciones, cursos, etc.)        | proposal-modulo-[nombre].md   |
+| Acoplamiento | Imports, ciclos, dependencias altas                | proposal-acoplamiento.md      |
+| Capas        | Separación controller/service/repository           | proposal-capas.md             |
+| SOLID        | Verifica S, O, L, I, D principles                  | proposal-solid.md             |
+| Hexagonal    | Refactor hacia ports & adapters                    | proposal-hexagonal.md         |
 
 ### Modo Directo (Con parámetros)
 
@@ -209,10 +209,16 @@ Documentar:
 ```
 docs/architecture/
 ├── SKILL.md                    (Este archivo — documentación)
-└── proposals/                  (Carpeta de propuestas generadas)
-    ├── proposal-backend-2026-05-20.md
-    ├── proposal-lecciones-modulo-2026-05-20.md
-    └── proposal-frontend-2026-05-20.md
+└── proposals/                  (Documentos únicos, se actualizan)
+    ├── proposal-backend.md        (se actualiza con cada análisis)
+    ├── proposal-frontend.md       (se actualiza con cada análisis)
+    ├── proposal-modulo-lecciones.md
+    ├── proposal-acoplamiento.md
+    ├── proposal-capas.md
+    ├── proposal-solid.md
+    └── proposal-hexagonal.md
+
+Nota: Cada propuesta es UN documento que evoluciona en el tiempo.
 ```
 
 ---
@@ -233,19 +239,27 @@ Cada opción genera un documento específico. Guardar como: `docs/architecture/p
 
 ---
 
-## 📊 Estado de Análisis e Implementación
+## 📊 Estado Actual
 
-| Campo                           | Valor                                             |
-| ------------------------------- | ------------------------------------------------- |
-| **Estado Análisis**             | En Análisis / Completado                          |
-| **Estado Implementación**       | No Iniciado / Implementado Parcial / Implementado |
-| **Última Fecha Implementación** | [YYYY-MM-DD o "sin implementar"]                  |
-| **Responsable Implementación**  | [nombre o "pendiente"]                            |
-| **Urgencia**                    | Baja / Media / Alta / Crítica                     |
+| Campo                          | Valor                                             |
+| ------------------------------ | ------------------------------------------------- |
+| **Estado Análisis**            | Completado                                        |
+| **Estado Implementación**      | No Iniciado / Implementado Parcial / Implementado |
+| **Responsable Implementación** | [nombre o "pendiente"]                            |
+| **Urgencia**                   | Baja / Media / Alta / Crítica                     |
 
 ---
 
-## 📊 Estado Actual
+## 📜 Histórico de Análisis
+
+| Fecha      | Hallazgos Clave                   | Cambios Detectados |
+| ---------- | --------------------------------- | ------------------ |
+| 2026-05-21 | Soft delete crítico, acoplamiento | 0 módulos nuevos   |
+| 2026-05-20 | Arquitectura sólida, 21 módulos   | Inicial            |
+
+---
+
+## 📊 Análisis Actual
 
 ### Estructura Identificada
 ```
@@ -562,28 +576,31 @@ apps/web/src/
 ```
 1. Usuario invoca: "Analiza la arquitectura"
                           ↓
-2. Skill propone 7 opciones de análisis:
-   - Backend completo
-   - Frontend completo
-   - Módulo específico
-   - Acoplamiento entre módulos
-   - Separación de capas
-   - SOLID principles
-   - Arquitectura hexagonal
+2. Skill propone 7 opciones de análisis
                           ↓
-3. Usuario elige una opción
+3. Usuario elige una opción (ej: Backend completo)
                           ↓
-4. Skill ejecuta 6 pasos de análisis para esa opción
+4. Skill verifica si proposal-backend.md existe
+   - SI existe → ACTUALIZAR documento existente
+   - NO existe → CREAR documento nuevo
                           ↓
-5. Skill GENERA archivo Markdown con propuesta consolidada
+5. Skill ejecuta 6 pasos de análisis
+                          ↓
+6. Skill ACTUALIZA archivo único
    Ubicación: docs/architecture/proposals/
-   Nombre: proposal-[tipo]-[fecha].md
+   Nombre: proposal-[tipo].md  (sin fecha)
+
+   Estructura actualizada:
+   - Encabezado: Fecha última análisis, estado actual
+   - Histórico: Tabla de análisis anteriores
+   - Análisis Actual: Estado, hallazgos, propuesta
+   - Plan: Fases para implementar
                           ↓
-6. Archivo está listo para:
-   - Revisar manualmente
+7. Documento listo para:
+   - Revisar cambios vs análisis anterior
    - Pasar a /sdd-apply para implementación
-   - Compartir con el equipo
-   - Guardar como histórico
+   - Ver histórico completo
+   - Ejecutar propuesta una o múltiples veces
 ```
 
 ### Flujo Directo (Si sabes qué quieres)
@@ -593,14 +610,22 @@ apps/web/src/
                           ↓
 2. Skill ejecuta 6 pasos análisis directamente
                           ↓
-3. Skill GENERA archivo Markdown con propuesta
+3. Skill ACTUALIZA documento único
+   (o lo crea si no existe)
                           ↓
-4. Archivo listo para usar
+4. Documento listo para usar
 ```
 
 ---
 
 ## Notas para IA
+
+### Documento Único (IMPORTANTE)
+
+- **NUNCA crear archivos nuevos con fecha**: Los documentos son proposal-[tipo].md sin fecha
+- **SIEMPRE actualizar** documento existente si está presente
+- **ACTUALIZAR encabezado**: Fecha última análisis, histórico de hallazgos
+- **PRESERVAR histórico**: No borrar análisis anteriores, agregar a tabla de histórico
 
 ### Comportamiento Interactivo (IMPORTANTE)
 
