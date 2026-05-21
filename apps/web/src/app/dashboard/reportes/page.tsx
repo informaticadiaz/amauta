@@ -139,10 +139,11 @@ export default function ReportesPage() {
     let isActive = true;
 
     async function loadPeriodos() {
+      if (!grupoSeleccionado) return;
       try {
         setPeriodosLoading(true);
         const res = await fetch(
-          `/api/instituciones/${grupoSeleccionado!.institucionId}/periodos`
+          `/api/instituciones/${grupoSeleccionado.institucionId}/periodos`
         );
         if (!res.ok) return;
         const data = (await res.json()) as { periodos: PeriodoItem[] };
