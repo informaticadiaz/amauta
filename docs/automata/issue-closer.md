@@ -41,7 +41,7 @@ Este documento responde a tres preguntas:
 
 ### El paso concreto
 
-El cierre ocurre en un único lugar: `docs/ai-skills/automata-dev/complete-issue-automata.md`, **PASO 11 (líneas 612-633)**:
+El cierre ocurre en un único lugar: `ia-skills/automata-dev/complete-issue-automata.md`, **PASO 11 (líneas 612-633)**:
 
 ```bash
 gh issue close [número] --comment "✅ Implementación completada con TDD.
@@ -219,8 +219,8 @@ Esta restricción es deliberada. Si `issue-closer` pudiera "arreglar lo que falt
 
 ### Archivos que puede modificar
 
-- `docs/ai-skills/automata-dev/loop-status.md`
-- `docs/ai-skills/automata-dev/next-prompt.md`
+- `ia-skills/automata-dev/loop-status.md`
+- `ia-skills/automata-dev/next-prompt.md`
 - Tests E2E nuevos en `apps/web/__tests__/e2e/` (artifact opcional)
 
 ### Archivos que NO puede modificar
@@ -383,7 +383,7 @@ Cada paso es independiente y verificable. No se avanza al siguiente hasta que el
 
 ### Paso 2 — Esqueleto de `issue-closer`
 
-- Crear `docs/ai-skills/automata-dev/issue-closer.md` (versión long-form, paralela a `complete-issue-automata.md`)
+- Crear `ia-skills/automata-dev/issue-closer.md` (versión long-form, paralela a `complete-issue-automata.md`)
 - Crear `.agents/skills/issue-closer/SKILL.md` (wrapper de invocación)
 - En esta primera versión, el skill solo:
   - Lee el issue

@@ -102,7 +102,7 @@ Copia aislada del repositorio git en una rama temporal. Claude puede trabajar en
 Carpeta `docs/ai-context/` con contexto específico por módulo para que Claude entienda el código existente antes de modificarlo.
 
 **ai-skills**
-Carpeta `docs/ai-skills/` con templates y guías para que Claude genere código siguiendo los patrones del proyecto.
+Carpeta `ia-skills/` con templates y guías para que Claude genere código siguiendo los patrones del proyecto.
 
 **complete-issue**
 Skill del proyecto que permite a Claude ejecutar un issue de GitHub de forma autónoma: leer el issue, planificar, implementar, commitear y cerrar.

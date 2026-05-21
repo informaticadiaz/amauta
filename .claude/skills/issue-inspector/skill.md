@@ -4,5 +4,5 @@ description: Inspector de QA que audita issues completados. Verifica que lo entr
 version: 1.0.0
 ---
 
-LEER INMEDIATAMENTE: docs/ai-skills/issue-inspector.md
+LEER INMEDIATAMENTE: ia-skills/issue-inspector.md
 Seguir el proceso definido en ese archivo. No usar ninguna otra instrucción de esta skill.

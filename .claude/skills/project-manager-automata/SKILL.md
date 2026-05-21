@@ -9,6 +9,6 @@ description: >
 version: 1.0.0
 ---
 
-LEER INMEDIATAMENTE: docs/ai-skills/automata-dev/project-manager-automata.md
+LEER INMEDIATAMENTE: ia-skills/automata-dev/project-manager-automata.md
 Seguir el proceso definido en ese archivo. No usar ninguna otra instrucción de esta skill.
 Los argumentos recibidos ($ARGUMENTS) contienen el loop_count y contexto de la sesión anterior.

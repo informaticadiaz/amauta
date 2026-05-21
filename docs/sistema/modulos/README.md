@@ -32,7 +32,7 @@ Documenta todos los módulos implementados
 Actualiza la documentación del módulo de evaluaciones
 ```
 
-Ver `docs/ai-skills/functional-docs.md` para instrucciones completas.
+Ver `ia-skills/functional-docs.md` para instrucciones completas.
 
 ---
 

@@ -807,7 +807,7 @@ Ver `docs/technical/architecture.md` para decisiones técnicas detalladas.
 5. Si cambia `apps/api/prisma/schema.prisma`, debe existir una migración versionada en `apps/api/prisma/migrations/`
 6. `prisma db push` no es un flujo válido para cambios normales del proyecto
 
-**Para migraciones y DB, seguir**: `docs/ai-skills/prisma-db-management.md`
+**Para migraciones y DB, seguir**: `ia-skills/prisma-db-management.md`
 
 ### Política Obligatoria de Prisma (SIN EXCEPCIONES)
 
@@ -913,23 +913,23 @@ await this.prisma.curso.findMany({
 
 #### Backend (API)
 
-| Tarea                               | Leer ANTES de codear                                                     |
-| ----------------------------------- | ------------------------------------------------------------------------ |
-| Crear/modificar endpoint            | `docs/ai-context/_patterns.md` + `docs/ai-context/modules/{modulo}.md`   |
-| Crear módulo CRUD completo          | `docs/ai-skills/crud-generator.md`                                       |
-| Agregar endpoint a módulo existente | `docs/ai-skills/api-endpoint.md` + `docs/ai-context/modules/{modulo}.md` |
-| Modificar schema Prisma             | `docs/ai-context/database/schema.md`                                     |
-| Trabajar con validaciones           | `docs/ai-context/_patterns.md` (sección Zod)                             |
-| **Cualquier query Prisma**          | `docs/ai-context/database/schema.md` + `apps/api/prisma/schema.prisma`   |
+| Tarea                               | Leer ANTES de codear                                                   |
+| ----------------------------------- | ---------------------------------------------------------------------- |
+| Crear/modificar endpoint            | `docs/ai-context/_patterns.md` + `docs/ai-context/modules/{modulo}.md` |
+| Crear módulo CRUD completo          | `ia-skills/crud-generator.md`                                          |
+| Agregar endpoint a módulo existente | `ia-skills/api-endpoint.md` + `docs/ai-context/modules/{modulo}.md`    |
+| Modificar schema Prisma             | `docs/ai-context/database/schema.md`                                   |
+| Trabajar con validaciones           | `docs/ai-context/_patterns.md` (sección Zod)                           |
+| **Cualquier query Prisma**          | `docs/ai-context/database/schema.md` + `apps/api/prisma/schema.prisma` |
 
 #### Frontend (Web)
 
-| Tarea                         | Leer ANTES de codear                                                      |
-| ----------------------------- | ------------------------------------------------------------------------- |
-| Crear formulario              | `docs/ai-skills/react-form.md` + `docs/ai-context/frontend/components.md` |
-| Crear página nueva            | `docs/ai-context/frontend/pages.md`                                       |
-| Usar hooks de auth/roles      | `docs/ai-context/frontend/hooks.md`                                       |
-| Crear componente reutilizable | `docs/ai-context/frontend/components.md`                                  |
+| Tarea                         | Leer ANTES de codear                                                 |
+| ----------------------------- | -------------------------------------------------------------------- |
+| Crear formulario              | `ia-skills/react-form.md` + `docs/ai-context/frontend/components.md` |
+| Crear página nueva            | `docs/ai-context/frontend/pages.md`                                  |
+| Usar hooks de auth/roles      | `docs/ai-context/frontend/hooks.md`                                  |
+| Crear componente reutilizable | `docs/ai-context/frontend/components.md`                             |
 
 #### Reglas Generales
 
@@ -1055,7 +1055,7 @@ enum Prioridad {
 | **Módulos**  | `docs/ai-context/modules/`           | Contexto por módulo backend     |
 | **Frontend** | `docs/ai-context/frontend/`          | Páginas, componentes, hooks     |
 | **Database** | `docs/ai-context/database/schema.md` | Schema Prisma                   |
-| **Skills**   | `docs/ai-skills/`                    | Generadores de código           |
+| **Skills**   | `ia-skills/`                         | Generadores de código           |
 
 ### Módulos Documentados
 
@@ -1069,16 +1069,16 @@ enum Prioridad {
 
 ### Skills Disponibles
 
-| Skill                     | Archivo                                   | Cuándo usar                                                                            |
-| ------------------------- | ----------------------------------------- | -------------------------------------------------------------------------------------- |
-| **Prisma & DB**           | `docs/ai-skills/prisma-db-management.md`  | Migraciones, verificar DB, resolver errores                                            |
-| **CRUD Generator**        | `docs/ai-skills/crud-generator.md`        | Crear módulo nuevo completo                                                            |
-| **API Endpoint**          | `docs/ai-skills/api-endpoint.md`          | Agregar endpoint a módulo existente                                                    |
-| **React Form**            | `docs/ai-skills/react-form.md`            | Crear formulario nuevo                                                                 |
-| **Complete Issue**        | `docs/ai-skills/complete-issue.md`        | Ejecutar un issue completo de forma autónoma                                           |
-| **Performance Review**    | `docs/ai-skills/performance-review.md`    | Analizar performance y generar informe con mejoras                                     |
-| **Security Audit**        | `docs/ai-skills/security-audit.md`        | Auditar vulnerabilidades de seguridad (OWASP Top 10)                                   |
-| **Fix Security Findings** | `docs/ai-skills/fix-security-findings.md` | Aplicar fixes de un informe de auditoría previo (contexto limpio, build verificado)    |
-| **NotebookLM Cuadernos**  | `docs/ai-skills/notebooklm-cuadernos.md`  | Generar cuadernos de estudio genéricos para NotebookLM                                 |
-| **PWA Mobile Design**     | `docs/ai-skills/pwa-mobile-design.md`     | Diseñar/auditar PWA orientada a mobile: manifest, SW, IndexedDB, sync, UI táctil       |
-| **Feature Audit**         | `docs/ai-skills/feature-audit.md`         | Auditar que las features implementadas funcionan y cumplen sus criterios de aceptación |
+| Skill                     | Archivo                              | Cuándo usar                                                                            |
+| ------------------------- | ------------------------------------ | -------------------------------------------------------------------------------------- |
+| **Prisma & DB**           | `ia-skills/prisma-db-management.md`  | Migraciones, verificar DB, resolver errores                                            |
+| **CRUD Generator**        | `ia-skills/crud-generator.md`        | Crear módulo nuevo completo                                                            |
+| **API Endpoint**          | `ia-skills/api-endpoint.md`          | Agregar endpoint a módulo existente                                                    |
+| **React Form**            | `ia-skills/react-form.md`            | Crear formulario nuevo                                                                 |
+| **Complete Issue**        | `ia-skills/complete-issue.md`        | Ejecutar un issue completo de forma autónoma                                           |
+| **Performance Review**    | `ia-skills/performance-review.md`    | Analizar performance y generar informe con mejoras                                     |
+| **Security Audit**        | `ia-skills/security-audit.md`        | Auditar vulnerabilidades de seguridad (OWASP Top 10)                                   |
+| **Fix Security Findings** | `ia-skills/fix-security-findings.md` | Aplicar fixes de un informe de auditoría previo (contexto limpio, build verificado)    |
+| **NotebookLM Cuadernos**  | `ia-skills/notebooklm-cuadernos.md`  | Generar cuadernos de estudio genéricos para NotebookLM                                 |
+| **PWA Mobile Design**     | `ia-skills/pwa-mobile-design.md`     | Diseñar/auditar PWA orientada a mobile: manifest, SW, IndexedDB, sync, UI táctil       |
+| **Feature Audit**         | `ia-skills/feature-audit.md`         | Auditar que las features implementadas funcionan y cumplen sus criterios de aceptación |

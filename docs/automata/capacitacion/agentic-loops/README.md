@@ -47,7 +47,7 @@ El caso concreto de este proyecto es el loop `project-manager-automata → compl
 
 ## Prerequisitos
 
-- Entender cómo funcionan las skills de Claude Code (`docs/ai-skills/`)
+- Entender cómo funcionan las skills de Claude Code (`ia-skills/`)
 - Haber ejecutado al menos una vez `project-manager` y `complete-issue` manualmente
 - Leer `WORKFLOW.md` del proyecto
 

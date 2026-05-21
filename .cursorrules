@@ -17,7 +17,7 @@ Para tareas complejas, cargar contexto desde `docs/ai-context/`:
 - **Módulos backend**: `docs/ai-context/modules/{modulo}.md`
 - **Frontend**: `docs/ai-context/frontend/`
 - **Base de datos**: `docs/ai-context/database/schema.md`
-- **Skills**: `docs/ai-skills/` (CRUD generator, etc.)
+- **Skills**: `ia-skills/` (CRUD generator, etc.)
 
 ## Convenciones
 

@@ -4,5 +4,5 @@ description: Use this skill when the user asks to fix, remediate, or apply fixes
 version: 2.0.0
 ---
 
-LEER INMEDIATAMENTE: docs/ai-skills/fix-security-findings.md
+LEER INMEDIATAMENTE: ia-skills/fix-security-findings.md
 Seguir el proceso definido en ese archivo. No usar ninguna otra instrucción de esta skill.

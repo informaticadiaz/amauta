@@ -66,7 +66,7 @@ Esta skill debe comportarse de forma estricta, secuencial y auditable. No debe i
 Si una issue modifica `apps/api/prisma/schema.prisma` o depende de cambios de base de datos:
 
 - Incluir en el checklist:
-  - revisar `docs/ai-skills/prisma-db-management.md`
+  - revisar `ia-skills/prisma-db-management.md`
   - ejecutar `npx prisma migrate status`
   - crear migracion versionada en `apps/api/prisma/migrations/`
   - revisar el SQL de la migracion

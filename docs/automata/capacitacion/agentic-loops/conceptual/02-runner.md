@@ -63,8 +63,8 @@ El runner:
 
 La implementación real vive en:
 
-- `docs/ai-skills/automata-dev/loop-runner.sh`
-- `docs/ai-skills/automata-dev/loop-runner.ps1`
+- `ia-skills/automata-dev/loop-runner.sh`
+- `ia-skills/automata-dev/loop-runner.ps1`
 
 ---
 

@@ -7,7 +7,7 @@
 
 ## Análisis de `project-manager`
 
-Ubicación: `docs/ai-skills/project-manager.md`
+Ubicación: `ia-skills/project-manager.md`
 
 ### Lo que hace en modo interactivo
 
@@ -46,7 +46,7 @@ Ubicación: `docs/ai-skills/project-manager.md`
 
 ## Análisis de `complete-issue`
 
-Ubicación: `docs/ai-skills/complete-issue.md`
+Ubicación: `ia-skills/complete-issue.md`
 
 ### Lo que hace en modo interactivo
 
@@ -88,7 +88,7 @@ El `CLAUDE.md` del proyecto prohíbe explícitamente agregar atribución de IA a
 2. Agregar la instrucción de escribir `next-prompt.md` con la siguiente invocación de `project-manager-automata` al terminar
 3. Corregir el template de commit (remover atribución de IA)
 
-La variante resultante es `complete-issue-automata`, que vive en `docs/ai-skills/automata-dev/` junto con el orquestador.
+La variante resultante es `complete-issue-automata`, que vive en `ia-skills/automata-dev/` junto con el orquestador.
 
 ---
 
@@ -114,7 +114,7 @@ complete-issue                  → complete-issue-automata (skill adaptado)
 
 Antes de poner el loop en marcha, hay dos cosas que deben existir en el proyecto:
 
-1. **Las skills del loop** en `docs/ai-skills/automata-dev/` (`project-manager-automata`, `complete-issue-automata`, `loop-auditor`)
+1. **Las skills del loop** en `ia-skills/automata-dev/` (`project-manager-automata`, `complete-issue-automata`, `loop-auditor`)
 2. **El template de commit corregido** en la versión autónoma para respetar la regla de no atribución de IA
 
 Ver [03-skill-automata.md](03-skill-automata.md) para el diseño del orquestador.

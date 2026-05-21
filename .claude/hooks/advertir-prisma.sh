@@ -37,7 +37,7 @@ Antes de continuar verificá:
   - ¿El equipo está al tanto?
   - ¿Hay backup disponible?
 
-Ver: docs/ai-skills/prisma-db-management.md
+Ver: ia-skills/prisma-db-management.md
 EOF
   # Solo advertimos, no bloqueamos. El desarrollador decide.
   exit 0

@@ -159,7 +159,7 @@ declare -A ARCHIVOS_PROTEGIDOS=(
   [".env"]="Usar variables de entorno. Editá .env manualmente."
   [".env.production"]="Variables de producción. Editá solo con supervisión."
   [".github/workflows"]="Pipeline de CI/CD. Cambios afectan el deploy automático."
-  ["prisma/schema.prisma"]="Schema de DB. Requiere migración. Ver docs/ai-skills/prisma-db-management.md"
+  ["prisma/schema.prisma"]="Schema de DB. Requiere migración. Ver ia-skills/prisma-db-management.md"
   ["package-lock.json"]="Generado automáticamente. Ejecutá 'npm install' para actualizarlo."
 )
 

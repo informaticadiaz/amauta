@@ -42,7 +42,7 @@ Si algo falla → resolver antes de continuar.
 
 ### 0.2 Crear el archivo de log del loop
 
-Crear `docs/ai-skills/automata-dev/loop-status.md` (dentro de la carpeta de la skill, autocontenido):
+Crear `ia-skills/automata-dev/loop-status.md` (dentro de la carpeta de la skill, autocontenido):
 
 ```
 # Loop Status
@@ -60,14 +60,14 @@ _vacío_
 
 ### 0.3 Crear las skills autónomas dentro de `automata-dev/`
 
-Las skills del agentic loop viven en `docs/ai-skills/automata-dev/` y son copias
-independientes de las skills globales. No tocar `docs/ai-skills/complete-issue.md`.
+Las skills del agentic loop viven en `ia-skills/automata-dev/` y son copias
+independientes de las skills globales. No tocar `ia-skills/complete-issue.md`.
 
 Crear:
 
-- `docs/ai-skills/automata-dev/complete-issue-automata.md` — copia de `complete-issue`
+- `ia-skills/automata-dev/complete-issue-automata.md` — copia de `complete-issue`
   con el template de commit sin atribución de IA y con PASO 12 de handoff al loop
-- `docs/ai-skills/automata-dev/project-manager-automata.md` — copia de `project-manager-automata`
+- `ia-skills/automata-dev/project-manager-automata.md` — copia de `project-manager-automata`
   con referencias actualizadas a `complete-issue-automata` y `loop-status.md`
 
 ---
@@ -75,7 +75,7 @@ Crear:
 ### 0.4 Verificar los skills autónomos
 
 ```bash
-ls docs/ai-skills/automata-dev/
+ls ia-skills/automata-dev/
 # Debe mostrar:
 # README.md
 # loop-auditor.md
@@ -85,7 +85,7 @@ ls docs/ai-skills/automata-dev/
 # project-manager-automata.md
 ```
 
-Leer `docs/ai-skills/automata-dev/project-manager-automata.md` para familiarizarse
+Leer `ia-skills/automata-dev/project-manager-automata.md` para familiarizarse
 con el workflow antes de ejecutarlo.
 
 ---
@@ -93,13 +93,13 @@ con el workflow antes de ejecutarlo.
 ### 0.5 Commitear la preparación
 
 ```bash
-git add docs/ai-skills/automata-dev/
+git add ia-skills/automata-dev/
 git add docs/capacitacion/agentic-loops/
 
 git commit -m "$(cat <<'EOF'
 feat: infraestructura del agentic loop autónomo
 
-- docs/ai-skills/automata-dev/: complete-issue-automata, project-manager-automata, loop-status.md
+- ia-skills/automata-dev/: complete-issue-automata, project-manager-automata, loop-status.md
 - docs/capacitacion/agentic-loops/: documentación conceptual y práctica
 EOF
 )"
@@ -178,7 +178,7 @@ Durante la implementación se descubrió que un mecanismo de disparo **acoplado 
 **El mecanismo de handoff agnóstico** usa escritura en archivo:
 
 ```
-Sesión termina → escribe docs/ai-skills/automata-dev/next-prompt.md
+Sesión termina → escribe ia-skills/automata-dev/next-prompt.md
 Trigger externo lee el archivo → arranca la próxima sesión con su contenido
 ```
 
@@ -206,7 +206,7 @@ Un script que corre en tu máquina mientras el loop está activo.
 ```bash
 #!/bin/bash
 # loop-runner.sh
-NEXT_PROMPT="docs/ai-skills/automata-dev/next-prompt.md"
+NEXT_PROMPT="ia-skills/automata-dev/next-prompt.md"
 
 while [[ -f "$NEXT_PROMPT" ]]; do
   PROMPT=$(cat "$NEXT_PROMPT")
@@ -221,7 +221,7 @@ echo "Loop terminado."
 
 ```powershell
 # loop-runner.ps1
-$NextPrompt = "docs/ai-skills/automata-dev/next-prompt.md"
+$NextPrompt = "ia-skills/automata-dev/next-prompt.md"
 
 while (Test-Path $NextPrompt) {
   $Prompt = Get-Content $NextPrompt -Raw
@@ -252,13 +252,13 @@ Un workflow que se dispara cuando se commitea `next-prompt.md`:
 on:
   push:
     paths:
-      - 'docs/ai-skills/automata-dev/next-prompt.md'
+      - 'ia-skills/automata-dev/next-prompt.md'
 jobs:
   loop:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: cat docs/ai-skills/automata-dev/next-prompt.md | claude --print
+      - run: cat ia-skills/automata-dev/next-prompt.md | claude --print
 ```
 
 - ✅ Autónomo 24/7, no depende de tu máquina
@@ -287,7 +287,7 @@ la instrucción de “disparo” por:
 ```
 AL TERMINAR:
   Escribir el prompt de la próxima sesión en:
-  docs/ai-skills/automata-dev/next-prompt.md
+  ia-skills/automata-dev/next-prompt.md
 
   El runner configurado levantará ese archivo y arrancará la sesión.
 
@@ -338,13 +338,13 @@ git show --stat HEAD
 npm run test -w @amauta/api
 
 # Log actualizado
-cat docs/ai-skills/automata-dev/loop-status.md
+cat ia-skills/automata-dev/loop-status.md
 
 # Documentación generada
 ls docs/human-context/ | tail -5
 
 # next-prompt.md NO debe existir (loop terminó)
-[[ ! -f docs/ai-skills/automata-dev/next-prompt.md ]] && echo "OK" || echo "LOOP NO TERMINÓ"
+[[ ! -f ia-skills/automata-dev/next-prompt.md ]] && echo "OK" || echo "LOOP NO TERMINÓ"
 ```
 
 ### Criterio de salida de Etapa 2
@@ -465,7 +465,7 @@ Una vez que las 3 pruebas pasaron:
 
 ### 5.1 El skill ya existe
 
-El skill `loop-auditor` está en `docs/ai-skills/automata-dev/loop-auditor.md`.
+El skill `loop-auditor` está en `ia-skills/automata-dev/loop-auditor.md`.
 Leerlo antes de continuar.
 
 ### 5.2 Modificar el handoff de complete-issue en modo autónomo
@@ -508,15 +508,15 @@ y tomó la decisión correcta (CONTINUAR o STOP con reporte).
 
 ## Archivos del sistema
 
-| Archivo                                                   | Propósito                             |
-| --------------------------------------------------------- | ------------------------------------- |
-| `docs/ai-skills/automata-dev/project-manager-automata.md` | Skill orquestador del loop            |
-| `docs/ai-skills/automata-dev/complete-issue-automata.md`  | Skill ejecutora del loop              |
-| `docs/ai-skills/automata-dev/loop-auditor.md`             | Skill de auditoría                    |
-| `docs/ai-skills/automata-dev/README.md`                   | Contexto del sistema                  |
-| `docs/ai-skills/automata-dev/loop-status.md`              | Estado actual del loop                |
-| `docs/ai-skills/automata-dev/next-prompt.md`              | Prompt de la próxima sesión (handoff) |
-| `docs/ai-skills/automata-dev/audit-report-[fecha].md`     | Reportes de auditoría (Etapa 5+)      |
+| Archivo                                              | Propósito                             |
+| ---------------------------------------------------- | ------------------------------------- |
+| `ia-skills/automata-dev/project-manager-automata.md` | Skill orquestador del loop            |
+| `ia-skills/automata-dev/complete-issue-automata.md`  | Skill ejecutora del loop              |
+| `ia-skills/automata-dev/loop-auditor.md`             | Skill de auditoría                    |
+| `ia-skills/automata-dev/README.md`                   | Contexto del sistema                  |
+| `ia-skills/automata-dev/loop-status.md`              | Estado actual del loop                |
+| `ia-skills/automata-dev/next-prompt.md`              | Prompt de la próxima sesión (handoff) |
+| `ia-skills/automata-dev/audit-report-[fecha].md`     | Reportes de auditoría (Etapa 5+)      |
 
 ## Cuándo escalar a producción
 

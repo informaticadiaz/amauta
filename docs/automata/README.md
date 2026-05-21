@@ -2,7 +2,7 @@
 
 Documentacion del sistema de desarrollo autonomo de Amauta.
 
-Esta carpeta separa la referencia operativa del sistema actual, los disenos pendientes y el material de capacitacion. La implementacion viva de las skills no esta aca: vive en `docs/ai-skills/automata-dev/`.
+Esta carpeta separa la referencia operativa del sistema actual, los disenos pendientes y el material de capacitacion. La implementacion viva de las skills no esta aca: vive en `ia-skills/automata-dev/`.
 
 ## Orden de lectura
 
@@ -11,8 +11,8 @@ Esta carpeta separa la referencia operativa del sistema actual, los disenos pend
 Leer primero:
 
 1. [`agentic-loop-system.md`](agentic-loop-system.md)
-2. `docs/ai-skills/automata-dev/README.md`
-3. `docs/ai-skills/automata-dev/loop-status.md`
+2. `ia-skills/automata-dev/README.md`
+3. `ia-skills/automata-dev/loop-status.md`
 
 `agentic-loop-system.md` es la referencia principal: describe el loop, sus skills, el runner, los invariantes y los gaps conocidos.
 
@@ -22,7 +22,7 @@ Leer:
 
 1. [`agentic-loop-system.md`](agentic-loop-system.md)
 2. [`issue-closer.md`](issue-closer.md)
-3. `docs/ai-skills/automata-dev/`
+3. `ia-skills/automata-dev/`
 
 `issue-closer.md` es un documento de diseno pendiente. Describe una mejora propuesta para mover el cierre de issues a una skill separada con verificacion E2E antes de cerrar en GitHub.
 
@@ -53,19 +53,19 @@ El material de `capacitacion/` es pedagogico. Puede incluir explicaciones histor
 
 Los archivos que coordinan la ejecucion real estan fuera de esta carpeta:
 
-| Archivo                                                   | Rol                                    |
-| --------------------------------------------------------- | -------------------------------------- |
-| `docs/ai-skills/automata-dev/project-manager-automata.md` | Orquestador del loop                   |
-| `docs/ai-skills/automata-dev/complete-issue-automata.md`  | Ejecutor de issues                     |
-| `docs/ai-skills/automata-dev/loop-auditor.md`             | Auditor periodico                      |
-| `docs/ai-skills/automata-dev/loop-runner.sh`              | Runner Linux/macOS                     |
-| `docs/ai-skills/automata-dev/loop-runner.ps1`             | Runner Windows                         |
-| `docs/ai-skills/automata-dev/loop-status.md`              | Log y estado del loop                  |
-| `docs/ai-skills/automata-dev/next-prompt.md`              | Handoff efimero para la proxima sesion |
+| Archivo                                              | Rol                                    |
+| ---------------------------------------------------- | -------------------------------------- |
+| `ia-skills/automata-dev/project-manager-automata.md` | Orquestador del loop                   |
+| `ia-skills/automata-dev/complete-issue-automata.md`  | Ejecutor de issues                     |
+| `ia-skills/automata-dev/loop-auditor.md`             | Auditor periodico                      |
+| `ia-skills/automata-dev/loop-runner.sh`              | Runner Linux/macOS                     |
+| `ia-skills/automata-dev/loop-runner.ps1`             | Runner Windows                         |
+| `ia-skills/automata-dev/loop-status.md`              | Log y estado del loop                  |
+| `ia-skills/automata-dev/next-prompt.md`              | Handoff efimero para la proxima sesion |
 
 ## Criterio de mantenimiento
 
 - Actualizar `agentic-loop-system.md` cuando cambie la arquitectura o el flujo real.
 - Actualizar `issue-closer.md` mientras la mejora siga en etapa de diseno.
 - Actualizar `capacitacion/` cuando se necesite explicar o ensenar el sistema, no como fuente primaria del estado actual.
-- Usar siempre `docs/ai-skills/automata-dev/loop-status.md` como path del log real del loop.
+- Usar siempre `ia-skills/automata-dev/loop-status.md` como path del log real del loop.

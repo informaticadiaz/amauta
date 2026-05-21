@@ -175,7 +175,7 @@ EOF
 
 ### PASO 5 — Actualizar log
 
-Escribir en `docs/ai-skills/automata-dev/loop-status.md` antes de disparar:
+Escribir en `ia-skills/automata-dev/loop-status.md` antes de disparar:
 
 ```
 ## [fecha] — Sesión [loop_count]
@@ -190,7 +190,7 @@ Escribir en `docs/ai-skills/automata-dev/loop-status.md` antes de disparar:
 
 ### PASO 6 — Escribir next-prompt.md
 
-Escribir en `docs/ai-skills/automata-dev/next-prompt.md` sin incrementar `X`:
+Escribir en `ia-skills/automata-dev/next-prompt.md` sin incrementar `X`:
 
 ```
 Ejecutá el issue #[N] de forma autónoma siguiendo el workflow completo de complete-issue-automata.
@@ -205,8 +205,8 @@ CONTEXTO DEL LOOP:
 
 AL TERMINAR (solo si todas las condiciones son verdaderas):
   Condiciones: tests pasan + TypeScript compila + issue cerrado en GitHub + commit hecho
-  1. Actualizar docs/ai-skills/automata-dev/loop-status.md con resultado de la sesión
-  2. Escribir docs/ai-skills/automata-dev/next-prompt.md con el prompt para project-manager-automata:
+  1. Actualizar ia-skills/automata-dev/loop-status.md con resultado de la sesión
+  2. Escribir ia-skills/automata-dev/next-prompt.md con el prompt para project-manager-automata:
      "/project-manager-automata [loop_count=[X+1]/[N_max]]
       Contexto: completó issue #[N] — [título]. Commit: [hash]."
 
@@ -228,9 +228,9 @@ Mensaje de salida esperado para esta sesión:
 
 Orden obligatorio para evitar carreras con el runner:
 
-1. Actualizar `docs/ai-skills/automata-dev/loop-status.md`
+1. Actualizar `ia-skills/automata-dev/loop-status.md`
 2. Hacer commit de `loop-status.md`
-3. Escribir `docs/ai-skills/automata-dev/next-prompt.md`
+3. Escribir `ia-skills/automata-dev/next-prompt.md`
 
 `next-prompt.md` es un archivo efímero de coordinación. No commitearlo.
 
@@ -240,7 +240,7 @@ Orden obligatorio para evitar carreras con el runner:
 
 Cuando el loop debe detenerse, NO escribir `next-prompt.md`.
 
-1. Escribir en `docs/ai-skills/automata-dev/loop-status.md`:
+1. Escribir en `ia-skills/automata-dev/loop-status.md`:
 
 ```
 ## Loop detenido — [fecha]
@@ -251,7 +251,7 @@ Cuando el loop debe detenerse, NO escribir `next-prompt.md`.
 ```
 
 2. Terminar la sesión con el mensaje:
-   `"Loop detenido: [razón]. Ver docs/ai-skills/automata-dev/loop-status.md para detalles."`
+   `"Loop detenido: [razón]. Ver ia-skills/automata-dev/loop-status.md para detalles."`
 
 ---
 

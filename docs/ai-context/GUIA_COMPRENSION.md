@@ -61,7 +61,7 @@ docs/ai-context/
 ├── MANUAL_USO.md      # 📖 Cómo usar (paso a paso)
 └── GUIA_COMPRENSION.md # 📚 Este documento
 
-docs/ai-skills/        # ⚡ SKILLS - Generadores de código
+ia-skills/        # ⚡ SKILLS - Generadores de código
 ├── crud-generator.md
 ├── api-endpoint.md
 └── react-form.md
@@ -344,7 +344,7 @@ Estas convenciones están documentadas en `_patterns.md` pero es útil entenderl
 
 ### Al Agregar un Skill Nuevo
 
-1. Crear `docs/ai-skills/{skill}.md`
+1. Crear `ia-skills/{skill}.md`
 2. Incluir parámetros, templates, checklist
 3. Agregar al índice `_index.md`
 

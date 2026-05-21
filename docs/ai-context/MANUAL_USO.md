@@ -59,7 +59,7 @@ el número de inscritos y el promedio de progreso.
 Para generación de código, carga el skill:
 
 ```
-Lee docs/ai-skills/crud-generator.md y genera un CRUD para el modelo
+Lee ia-skills/crud-generator.md y genera un CRUD para el modelo
 Evaluacion con campos: titulo (string), puntaje (number), leccionId (relación)
 ```
 
@@ -120,7 +120,7 @@ un nuevo endpoint.
 **En Claude Code:**
 
 ```
-1. Lee docs/ai-skills/crud-generator.md
+1. Lee ia-skills/crud-generator.md
 
 2. Genera un CRUD para Evaluacion con:
    - titulo: string, requerido, min 3, max 200
@@ -160,7 +160,7 @@ un nuevo endpoint.
 **En Claude Code:**
 
 ```
-1. Lee docs/ai-skills/react-form.md
+1. Lee ia-skills/react-form.md
 
 2. Crea un formulario para Evaluacion con:
    - titulo: input text, requerido
@@ -288,5 +288,5 @@ Si agregas un nuevo módulo o patrón:
 
 1. **Nuevo módulo**: Crear `docs/ai-context/modules/{modulo}.md` siguiendo el template de `cursos.md`
 2. **Nuevo patrón**: Agregar a `_patterns.md`
-3. **Nuevo skill**: Crear en `docs/ai-skills/`
+3. **Nuevo skill**: Crear en `ia-skills/`
 4. **Actualizar índice**: Agregar a `_index.md`

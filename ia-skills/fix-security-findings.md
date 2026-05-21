@@ -288,4 +288,4 @@ Informar al usuario:
 - **No ir más allá del fix** — aplicar exactamente lo indicado en el informe. No refactorizar código adyacente.
 - **Regresiones tienen prioridad** — si un fix introduce un error de build, corregirlo antes de avanzar al siguiente.
 - **Los fixes manuales son tan importantes como los automáticos** — documentarlos con instrucciones claras y accionables.
-- **Skill complementario**: este skill es el paso 2 del flujo iniciado por `/security-audit`. Ver `docs/ai-skills/security-audit.md`.
+- **Skill complementario**: este skill es el paso 2 del flujo iniciado por `/security-audit`. Ver `ia-skills/security-audit.md`.
