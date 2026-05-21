@@ -1,0 +1,217 @@
+╔═════════════════════════════════════════════════════════════════════════════╗
+║                                                                             ║
+║                     📊 SDD DASHBOARD — ESTADO ACTUAL                        ║
+║                                                                             ║
+║                  Soft Delete en Lecciones — Fase 1                         ║
+║                  2026-05-20 (Análisis → Implementación)                    ║
+║                                                                             ║
+╚═════════════════════════════════════════════════════════════════════════════╝
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 📋 PROPUESTA (docs/architecture/proposals/)                                ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  📄 proposal-backend.md
+  ├─ Tipo:                  Documento ÚNICO (sin fecha)
+  ├─ Estado Análisis:       ✅ Completado
+  ├─ Estado Implementación: 🔄 EN EJECUCIÓN — Fase 1
+  ├─ Responsable:           Ignacio
+  ├─ Última actualización:  2026-05-20 22:15:25
+  ├─ Ubicación:             docs/architecture/proposals/proposal-backend.md
+  ├─ Commiteable:           ✅ SÍ
+  └─ Propósito:             Documento vivo que evoluciona a medida que avanza
+                            la implementación (No Iniciado → En Ejecución
+                            → Implementado)
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 🔧 ARTEFACTOS SDD (.sdd/proposal-backend/)                                 ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  📄 SPEC.md
+  ├─ Generado por:       backend-sdd-proposal-executor (PASO 3)
+  ├─ Creado:             2026-05-20 22:15:10
+  ├─ Tamaño:             4.5 KB
+  ├─ Contenido:          5 Requirements + 9 Scenarios + Acceptance Criteria
+  ├─ Ubicación:          .sdd/proposal-backend/SPEC.md
+  ├─ Commiteable:        ❌ NO (ephemeral)
+  └─ Propósito:          Source of truth para lo que debe hacerse
+                         (¿QUÉ cambiar?)
+
+  📄 DESIGN.md
+  ├─ Generado por:       backend-sdd-proposal-executor (PASO 4)
+  ├─ Creado:             2026-05-20 22:15:15
+  ├─ Tamaño:             5.4 KB
+  ├─ Contenido:          Architecture + Code snippets + Patterns + DB Impact
+  ├─ Ubicación:          .sdd/proposal-backend/DESIGN.md
+  ├─ Commiteable:        ❌ NO (ephemeral)
+  └─ Propósito:          Decisiones arquitectónicas y cómo implementar
+                         (¿CÓMO cambiar?)
+
+  📄 TASKS.md
+  ├─ Generado por:       backend-sdd-proposal-executor (PASO 5)
+  ├─ Creado:             2026-05-20 22:15:20
+  ├─ Tamaño:             7.4 KB
+  ├─ Contenido:          6 tareas granulares con pasos accionables
+  ├─ Estado:             [x] [x] [x] [x] [x] [x] — 6/6 COMPLETADAS
+  ├─ Ubicación:          .sdd/proposal-backend/TASKS.md
+  ├─ Commiteable:        ❌ NO (ephemeral)
+  └─ Propósito:          Desglose ejecutable para sdd-apply
+                         (¿PASOS para cambiar?)
+
+  ℹ️  Todos los artefactos .sdd/ son EPHEMERAL: se pueden regenerar.
+     Viven en disco local, NO se commitean al repo.
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 📊 PROGRESS (Engram Persistent Memory)                                     ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  💾 apply-progress
+  ├─ Topic Key:       sdd/proposal-backend/apply-progress
+  ├─ Type:            architecture
+  ├─ Guardado en:     Engram (persistent memory)
+  ├─ Tamaño:          ~2 KB
+  ├─ Creado:          2026-05-20 23:15 (durante apply phase)
+  ├─ Contenido:
+  │  ├─ ✅ 6/6 Tasks Completed
+  │  ├─ ✅ Files Changed (3 modified + 1 created)
+  │  ├─ ✅ No Deviations from Design
+  │  ├─ ⚠️  Issues Found (Jest environmental)
+  │  └─ ▶️  Next Steps (sdd-verify, sdd-archive)
+  │
+  └─ Propósito:       Documentar qué se hizo, para que /sdd-verify
+                      sepa desde dónde continuar si se interrumpe
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 💻 CÓDIGO MODIFICADO (apps/api/)                                           ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  📝 apps/api/prisma/schema.prisma
+  ├─ Cambio:           +estado String @default("ACTIVO")
+  ├─ Línea:            ~184 (dentro de model Leccion)
+  ├─ Index:            @@index([estado])
+  ├─ Estado:           ✅ Modificado
+  ├─ Commiteable:      ✅ SÍ
+  └─ Propósito:        Define la nueva columna en base de datos
+
+  📝 apps/api/prisma/migrations/20260520000000_add_leccion_estado/
+  ├─ Archivo:          migration.sql
+  ├─ SQL:              ALTER TABLE "lecciones" ADD COLUMN "estado"...
+  ├─ Estado:           ✅ Creado
+  ├─ Commiteable:      ✅ SÍ
+  └─ Propósito:        SQL real que se ejecuta en la base de datos
+
+  📝 apps/api/src/lecciones/lecciones.service.ts
+  ├─ Cambios:
+  │  ├─ eliminar() — soft delete implementado (línea ~237)
+  │  ├─ listarPorCurso() — filtrado de archivadas (línea ~176)
+  │  └─ LeccionResponse — campo estado agregado
+  ├─ Estado:           ✅ Modificado
+  ├─ Build:            ✅ Compila sin errores
+  ├─ Commiteable:      ✅ SÍ
+  └─ Propósito:        Lógica de negocio implementada
+
+  📝 apps/api/src/lecciones/lecciones.service.spec.ts
+  ├─ Cambios:
+  │  ├─ Tests de soft delete (6 casos nuevos)
+  │  ├─ Test de filtrado en listarPorCurso()
+  │  └─ mockLeccion actualizado con estado
+  ├─ Estado:           ✅ Modificado
+  ├─ Syntax:           ✅ Correcto
+  ├─ Commiteable:      ✅ SÍ
+  └─ Propósito:        Validación de la implementación
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 🔗 GIT REPOSITORY                                                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  📌 Commit e7c12a5
+  ├─ Mensaje:          fix: implementar soft delete para lecciones (Fase 1)
+  ├─ Autor:            Ignacio
+  ├─ Fecha:            2026-05-20 23:05
+  ├─ Branch:           master
+  ├─ Archivos:         4 (3 modified + 1 created)
+  ├─ Líneas:           80 insertions(+), 23 deletions(-)
+  ├─ Hooks:            ✅ ESLint + Prettier passed
+  └─ Propósito:        Persistencia de cambios en control de versiones
+
+  ℹ️  El commit es el punto de verificación final de la implementación.
+     Todos los cambios están versionados y son reversibles.
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 📈 PROGRESS VISUAL                                                         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  ┌─ PROPUESTA INICIADA
+  │  ├─ Análisis: ✅ Completado
+  │  └─ Implementación: 🔄 EN EJECUCIÓN
+  │
+  ├─ SKILL EJECUTADA
+  │  ├─ PASO 1-5: ✅ SPEC/DESIGN/TASKS generados
+  │  └─ PASO 6: ✅ Delegación a /sdd-apply
+  │
+  ├─ IMPLEMENTACIÓN REALIZADA
+  │  ├─ Task 1-6: ✅ 6/6 Completadas
+  │  ├─ Código: ✅ Build OK, TypeScript OK
+  │  ├─ Tests: ✅ Sintaxis correcta, compilables
+  │  └─ Commit: ✅ e7c12a5 creado
+  │
+  └─ PRÓXIMOS PASOS (PENDIENTES)
+     ├─ [ ] /sdd-verify (validar SPEC vs Código)
+     ├─ [ ] /sdd-archive (cerrar y documentar)
+     └─ [ ] Actualizar propuesta: "Implementado Fase 1"
+
+  Estado general: ███████████████████░ (95% Fase 1 completa)
+                  Completado: Implementación ✅
+                  Pendiente:  Verificación + Archive
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 📍 MATRIZ DE UBICACIONES SDD                                               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  Artefacto              │ Ubicación                      │ Persistencia  │ Commiteable
+  ─────────────────────────────────────────────────────────────────────────────────
+  Propuesta              │ docs/architecture/proposals/   │ Permanent    │ ✅ SÍ
+  SPEC.md                │ .sdd/proposal-backend/         │ Ephemeral    │ ❌ NO
+  DESIGN.md              │ .sdd/proposal-backend/         │ Ephemeral    │ ❌ NO
+  TASKS.md               │ .sdd/proposal-backend/         │ Ephemeral    │ ❌ NO
+  apply-progress         │ Engram (topic key)             │ Permanent    │ ❌ NO
+  Código modificado      │ apps/api/src/lecciones/*       │ Permanent    │ ✅ SÍ
+  Migración              │ apps/api/prisma/migrations/    │ Permanent    │ ✅ SÍ
+  Commit Git             │ .git/                          │ Permanent    │ ✅ SÍ
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ ⚡ RESUMEN EJECUTIVO                                                       ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  ✅ Fase 1 Implementada:     Soft delete en lecciones
+  ✅ Artefactos Generados:    SPEC.md, DESIGN.md, TASKS.md
+  ✅ Código Modificado:       4 archivos (schema + service + tests + migration)
+  ✅ Build Status:            Passing ✓
+  ✅ TypeScript:              0 errors ✓
+  ✅ Commit Created:          e7c12a5 ✓
+  ✅ Progress Saved:          Engram topic_key sdd/proposal-backend/apply-progress
+
+  🔄 Próximos:
+     • /sdd-verify   — Validar SPEC vs Implementación
+     • /sdd-archive  — Cerrar Fase 1, desbloquear Fase 2
+     • Fase 2        — Event-Driven Pattern (si continúa)
+
+  ℹ️  El SDD "vivió" en:
+      • Filesystem (.sdd/) para artefactos de trabajo
+      • Engram para progress persistente
+      • Git para código persistente
+      • Propuesta como documento vivo que evoluciona
+
+
+═════════════════════════════════════════════════════════════════════════════
+Última actualización: 2026-05-20 23:30
+Generado por: SDD análisis de ciclo de vida
+═════════════════════════════════════════════════════════════════════════════
