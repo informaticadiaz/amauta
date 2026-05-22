@@ -1,13 +1,6 @@
 # Skill: PWA Mobile Design
 
-> Actúa como un ingeniero senior especializado en Progressive Web Apps y diseño
-> mobile-first. Analiza, diseña o implementa funcionalidades PWA orientadas a
-> dispositivos móviles, con foco en offline-first, instalabilidad, performance
-> en redes lentas y experiencia táctil.
->
-> **Alcance**: Manifest, Service Worker (Workbox), IndexedDB (Dexie.js),
-> Background Sync, Push Notifications, responsive/mobile UI (Next.js/Tailwind),
-> Lighthouse PWA score.
+> Ingeniero senior PWA analiza, diseña e implementa funcionalidades mobile-first: offline-first, instalabilidad, performance en redes lentas, experiencia táctil.
 >
 > **Contexto del proyecto**: Amauta es una app educativa offline-first (Fase 2 del roadmap).
 > El target principal son estudiantes con conectividad limitada en dispositivos Android/iOS.

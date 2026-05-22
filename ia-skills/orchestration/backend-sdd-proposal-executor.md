@@ -1,13 +1,6 @@
 # Skill: Backend SDD Proposal Executor
 
-> Ejecuta propuestas arquitectónicas del backend automáticamente usando Spec-Driven Development (SDD).
-> Lee un archivo de propuesta (ej: proposal-backend-[fecha].md), lo convierte a specs y tareas,
-> y delega a `/sdd-apply` para implementación. Valida cambios con `/sdd-verify` al terminar.
->
-> **Alcance**: Implementación de propuestas de arquitectura, refactorizaciones planificadas,
-> resolución de deuda técnica, desacoplamiento de módulos.
->
-> **Referencia**: `CLAUDE.md`, `docs/architecture/proposals/`, `docs/ai-context/_patterns.md`.
+> Ejecuta propuestas arquitectónicas del backend usando SDD. Lee propuesta, genera specs y tareas, delega a `/sdd-apply`, valida con `/sdd-verify`.
 
 ---
 

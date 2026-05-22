@@ -1,6 +1,6 @@
 # Skill: Amauta High Value Tests
 
-Skill para escribir pocos tests, pero que realmente protejan el comportamiento importante del sistema.
+> Escribe tests de alto valor que protejan comportamiento importante del sistema sin exceso de cobertura innecesaria.
 
 ## Cuándo usarla
 

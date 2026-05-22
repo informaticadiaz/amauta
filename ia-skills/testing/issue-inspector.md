@@ -1,12 +1,6 @@
 # Skill: Issue Inspector
 
-> Inspector de QA automatizado que audita issues completados.
-> Verifica que lo entregado cumple los requisitos del issue y funciona en producción.
-> Genera un documento de auditoría en `docs/audits/`.
->
-> **Ambiente de pruebas:** Producción (https://amauta-api.diazignacio.ar)
->
-> **Salida:** `docs/audits/issue-{N}-{slug}.md`
+> Inspector QA automatizado audita issues completados. Verifica cumplimiento en producción y genera reporte de auditoría.
 
 ---
 

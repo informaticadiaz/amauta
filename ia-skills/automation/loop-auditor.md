@@ -1,12 +1,6 @@
----
-name: loop-auditor
-description: Auditoría periódica del agentic loop. Verifica suite completa de tests,
-  compilación TypeScript, documentación de IA actualizada y coherencia de CLAUDE.md
-  con GitHub. Interviene cada 3 issues completados. Output: CONTINUAR (escribe
-  next-prompt.md para project-manager-automata) o STOP con reporte en automata-dev/.
----
+# Skill: Loop Auditor
 
-# Loop Auditor
+> Auditoría periódica del agentic loop. Verifica integridad del sistema después de cada 3 issues completados.
 
 ## Propósito
 

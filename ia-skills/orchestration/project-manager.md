@@ -1,9 +1,6 @@
----
-name: project-manager
-description: Gestiona la planificacion del proyecto Amauta como Project Manager. Usar cuando se necesite panorama de estado, planificar fases/sprints, proponer o crear issues pequenas, coordinar documentacion de gestion, o iniciar el flujo con /project-manager.
----
+# Skill: Project Manager
 
-# Project Manager
+> Gestiona planificación del proyecto Amauta. Panorama de estado, propuesta de issues, coordinación de documentación, todo con aprobación explícita.
 
 ## Overview
 

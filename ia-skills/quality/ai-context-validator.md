@@ -1,8 +1,6 @@
 # Skill: AI Context Validator
 
-> **Audita** la sincronización entre `docs/ai-context/` y el código real del repo.
-> **Solo auditoría**: detecta desviaciones, las reporta, y opcionalmente corrige documentación o abre issues.
-> **No edita código de aplicación**. Si el desajuste requiere código, esta skill abre un issue y termina su trabajo ahí.
+> Audita sincronización entre `docs/ai-context/` y código real. Detecta desviaciones, reporta, corrige documentación u abre issues. No edita código de aplicación.
 
 ---
 

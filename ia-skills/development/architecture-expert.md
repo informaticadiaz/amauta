@@ -1,8 +1,6 @@
 # Skill: Architecture Expert
 
-> Experto en arquitectura de software que analiza la estructura del proyecto contra principios SOLID,
-> arquitectura hexagonal/limpia, acoplamiento de módulos, y separación de responsabilidades.
-> Genera propuestas de mejora arquitectónica y delega la implementación a través de SDD.
+> Analiza arquitectura del proyecto (SOLID, hexagonal, acoplamiento, responsabilidades) y propone mejoras. Delega implementación a través de SDD.
 >
 > **Alcance**: revisar arquitectura general, analizar acoplamiento, proponer refactorizaciones,
 > planificar estrategias de modularización.

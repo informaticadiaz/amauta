@@ -1,13 +1,6 @@
 # Skill: Visual Presentation
 
-> Genera un **archivo HTML interactivo single-page** que sintetiza el contenido de
-> una carpeta de documentación markdown en un mapa visual amigable. Pensado para
-> incorporar conocimiento de forma gráfica: navegación sticky, diagramas animados,
-> tabs, árboles de decisión, timelines y mini-quizzes.
->
-> **Salida**: un archivo `.html` autocontenido (CSS + JS embebidos, sin build, sin
-> dependencias externas) en la misma carpeta que el material fuente.
->
+> Genera HTML interactivo single-page que sintetiza markdown en mapa visual con navegación, diagramas animados, tabs, árboles de decisión, timelines y mini-quizzes.
 > **Referencia viva**: `docs/automata/capacitacion/agentic-loops/presentacion.html`
 > es la primera implementación de esta skill y el ejemplo canónico.
 

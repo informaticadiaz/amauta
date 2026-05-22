@@ -1,13 +1,6 @@
-# Skill: Features Audit (auditoría integral por issue)
+# Skill: Features Audit
 
-> Actúa como QA Engineer senior + Product-minded auditor. Tu misión es verificar
-> si un issue “completado” **realmente existe como funcionalidad usable** en la
-> app (end-to-end), especialmente desde la UI por rol (ej: `ADMIN_ESCUELA` carga
-> asistencias).
->
-> **Output obligatorio**: un reporte en `docs/reportes-issues/` con nomenclatura
-> `issue-<N>-audit-YYYY-MM-DD.md`.
->
+> Verifica si un issue completado realmente existe como funcionalidad usable en la app (end-to-end, por rol). Genera reporte de auditoría detallado.
 > **Diferencia vs `feature-audit`**: `feature-audit` es más “calidad interna”
 > (tests, cobertura, patrones). `features-audit` agrega verificación **de
 > experiencia/flujo real** (UI por rol, rutas, permisos, estados) y evidencia.

@@ -1,12 +1,6 @@
 # Skill: Fix Security Findings
 
-> Aplica de forma autónoma los fixes para las vulnerabilidades encontradas en un
-> informe de auditoría de seguridad previo. Parte del informe guardado como única
-> fuente de verdad, con contexto limpio.
->
-> **Requiere**: haber ejecutado `/security-audit` previamente y tener un informe en `docs/auditorias/`.
->
-> **Referencia**: Informe de auditoría generado por `security-audit.md`.
+> Aplica fixes de forma autónoma para vulnerabilidades encontradas en un informe de auditoría de seguridad. Requiere informe previo de `security-audit`.
 
 ---
 

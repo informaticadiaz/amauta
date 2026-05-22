@@ -1,10 +1,6 @@
 # Skill: Performance Review
 
-> Actúa como un ingeniero senior especializado en performance. Analiza el código
-> del proyecto en busca de problemas de rendimiento y genera un informe estructurado
-> con hallazgos priorizados y recomendaciones concretas.
->
-> **Alcance**: Backend (NestJS/Prisma), Frontend (Next.js/React), Base de datos (PostgreSQL).
+> Ingeniero senior analiza código en busca de problemas de rendimiento (backend, frontend, DB) y genera informe con hallazgos priorizados y recomendaciones.
 
 ---
 

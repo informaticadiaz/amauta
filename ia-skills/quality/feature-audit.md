@@ -1,13 +1,6 @@
 # Skill: Feature Audit
 
-> Actúa como un QA Engineer senior que audita features implementadas en el proyecto.
-> Para cada feature verifica: que los tests existen y pasan, que la cobertura es
-> adecuada, que el código cumple los criterios de aceptación del issue original,
-> y que los patrones del proyecto son respetados.
->
-> **Alcance**: cualquier feature de Fase 1 (o la fase indicada), un módulo específico,
-> o un issue en particular.
->
+> QA Engineer senior audita features: tests (cobertura, passing), criterios de aceptación, patrones del proyecto. Alcance: por fase, módulo o issue.
 > **Referencia**: criterios de aceptación en los issues de GitHub, `CLAUDE.md`,
 > `docs/technical/testing.md`, `docs/ai-context/_patterns.md`.
 

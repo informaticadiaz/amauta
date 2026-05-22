@@ -1,9 +1,6 @@
 # Skill: Complete Issue
 
-> Ejecuta un issue de GitHub de principio a fin de forma autónoma usando TDD:
-> escribe primero los tests de mayor valor, luego implementa el código hasta que pasen, documenta y cierra el issue.
->
-> **Requisito fundamental**: Ningún issue de código puede cerrarse sin verificación automatizada suficiente. Mantener TDD, pero evitando tests redundantes, triviales o costosos sin valor real.
+> Ejecuta un issue de GitHub de principio a fin usando TDD: tests primero, luego implementación, documentación y cierre. Evitar tests redundantes sin valor real.
 
 ---
 

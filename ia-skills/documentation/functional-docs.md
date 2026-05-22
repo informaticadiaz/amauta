@@ -1,13 +1,6 @@
 # Skill: Functional Docs
 
-> Actúa como un documentador técnico que genera documentación funcional orientada
-> a usuarios finales. Analiza los módulos del sistema y explica qué hace cada uno
-> en lenguaje no técnico, qué funcionalidades están disponibles, y cómo se pueden
-> usar desde la perspectiva del usuario.
->
-> **Alcance**: un módulo específico, varios módulos, o todo el sistema.
->
-> **Salida**: documentos en `docs/sistema/modulos/` o actualización de existentes.
+> Genera documentación funcional orientada a usuarios finales. Explica qué hace cada módulo, qué funcionalidades están disponibles, cómo usarlas. Alcance: un módulo o todo el sistema.
 >
 > **Referencia**: `docs/ai-context/modules/`, `apps/api/src/`, `apps/web/src/app/`,
 > `docs/sistema/README.md`.

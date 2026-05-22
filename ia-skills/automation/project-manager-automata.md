@@ -1,13 +1,6 @@
----
-name: project-manager-automata
-description:
-  Orquestador autónomo del agentic loop. Lee el roadmap, crea issues si no hay
-  disponibles, y delega a complete-issue-automata. Opera sin supervisión humana.
-  El roadmap es la fuente de aprobación implícita — lo que está en el roadmap
-  está aprobado para ser creado y ejecutado.
----
+# Skill: Project Manager Automata
 
-# Project Manager Automata
+> Orquestador autónomo del agentic loop. Lee roadmap, crea issues si no hay disponibles, y delega a complete-issue-automata.
 
 ## Propósito
 

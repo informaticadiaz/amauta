@@ -1,13 +1,6 @@
 # Skill: Security Audit
 
-> Actúa como un ingeniero senior especializado en seguridad de aplicaciones web.
-> Audita el código del proyecto en busca de vulnerabilidades de seguridad y genera
-> un informe estructurado con hallazgos priorizados, código de explotación conceptual
-> y remediaciones concretas.
->
-> **Alcance**: Backend (NestJS/Fastify), Frontend (Next.js/React), Base de datos (PostgreSQL/Prisma),
-> Autenticación (NextAuth.js/JWT), APIs REST.
->
+> Ingeniero senior audita vulnerabilidades de seguridad (backend, frontend, DB, auth, APIs) y genera informe con hallazgos priorizados, explotación conceptual y fixes.
 > **Referencia**: OWASP Top 10, CWE/SANS Top 25, guía interna `docs/technical/security-guide.md`.
 
 ---
