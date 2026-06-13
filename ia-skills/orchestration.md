@@ -37,35 +37,35 @@ Es el menú principal del repositorio de skills.
 Presentá al usuario las 8 categorías disponibles:
 
 ```
-═════════════════════════════════════════════════════════════════
-                    🎯 ORQUESTADOR DE SKILLS
-═════════════════════════════════════════════════════════════════
+╔═════════════════════════════════════════════════════════════════╗
+║                  🎯 ORQUESTADOR DE SKILLS                       ║
+╚═════════════════════════════════════════════════════════════════╝
 
 ¿En qué área deseas trabajar?
 
-  1. development/      → crear/modificar código
-                         (API endpoints, CRUD, formularios, DB, arquitectura)
+  ① 💻 development/      → crear/modificar código
+        (API endpoints, CRUD, formularios, DB, arquitectura)
 
-  2. quality/          → auditorías y revisiones
-                         (seguridad, performance, features, validación)
+  ② ✅ quality/          → auditorías y revisiones
+        (seguridad, performance, features, validación)
 
-  3. testing/          → testing y verificación
-                         (tests de alto valor, auditoría post-deploy)
+  ③ 🧪 testing/          → testing y verificación
+        (tests de alto valor, auditoría post-deploy)
 
-  4. documentation/    → documentación funcional y visual
-                         (docs funcionales, presentaciones visuales)
+  ④ 📚 documentation/    → documentación funcional y visual
+        (docs funcionales, presentaciones visuales)
 
-  5. specialized/      → skills muy específicos
-                         (PWA mobile, offline-first)
+  ⑤ 🚀 specialized/      → skills muy específicos
+        (PWA mobile, offline-first)
 
-  6. capacitacion/     → materiales educativos
-                         (cuadernos de estudio, NotebookLM)
+  ⑥ 🎓 capacitacion/     → materiales educativos
+        (cuadernos de estudio, NotebookLM)
 
-  7. automation/       → ejecución autónoma
-                         (complete-issue, loops, auditoría continua)
+  ⑦ ⚙️  automation/       → ejecución autónoma
+        (complete-issue, loops, auditoría continua)
 
-  8. orchestration/    → orquestación de cambios
-                         (SDD, project-manager, propuestas)
+  ⑧ 🎼 orchestration/    → orquestación de cambios
+        (SDD, project-manager, propuestas)
 
 ─────────────────────────────────────────────────────────────────
 Escribe el número (1-8) o el nombre de la carpeta:
@@ -78,25 +78,25 @@ Escribe el número (1-8) o el nombre de la carpeta:
 Lee el directorio `ia-skills/<categoria>/` y lista todos los archivos `.md`:
 
 ```
-═════════════════════════════════════════════════════════════════
-                   SKILLS EN: development/
-═════════════════════════════════════════════════════════════════
+╔═════════════════════════════════════════════════════════════════╗
+║                💻 SKILLS EN: development/                       ║
+╚═════════════════════════════════════════════════════════════════╝
 
 Escribí un número para ejecutar una skill, o "atrás" para volver:
 
-  1. api-endpoint.md
+  ① 🔌 api-endpoint.md
      → Agrega un nuevo endpoint a un módulo existente
 
-  2. crud-generator.md
+  ② 🏗️  crud-generator.md
      → Genera un módulo CRUD completo (backend + frontend)
 
-  3. react-form.md
+  ③ 📋 react-form.md
      → Crea un formulario React siguiendo patrones del proyecto
 
-  4. prisma-db-management.md
+  ④ 🗄️  prisma-db-management.md
      → Protocolo para Prisma, migraciones y BD en producción
 
-  5. architecture-expert.md
+  ⑤ 🏛️  architecture-expert.md
      → Análisis arquitectónico del backend
 
 ─────────────────────────────────────────────────────────────────
@@ -127,14 +127,14 @@ Leyendo ia-skills/development/crud-generator.md...
 Una vez que termina la skill, preguntá:
 
 ```
-═════════════════════════════════════════════════════════════════
-                    ✅ SKILL COMPLETADA
-═════════════════════════════════════════════════════════════════
+╔═════════════════════════════════════════════════════════════════╗
+║                    ✅ SKILL COMPLETADA                          ║
+╚═════════════════════════════════════════════════════════════════╝
 
 ¿Deseas ejecutar otra skill?
 
-  1. Sí  → volver al menú de categorías
-  2. No  → terminar
+  ① ➕ Sí  → volver al menú de categorías
+  ② 🛑 No  → terminar
 
 Escribe tu respuesta:
 ```
