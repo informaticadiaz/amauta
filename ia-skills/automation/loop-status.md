@@ -2,12 +2,28 @@
 
 ## Estado actual
 
-- Estado: EN CURSO — sesión [0/3] Fase 7. Seleccionado #98 F7-002. Próximo: complete-issue-automata #98 [loop_count=0/3]
-- Última ejecución: 2026-05-08
-- Último issue completado: #104 — F4b-004: Reportes de asistencia y rendimiento académico (admin)
-- Próximo: complete-issue-automata #98 [loop_count=0/3]
+- Estado: DETENIDO — ver "Loop detenido — 2026-06-13"
+- Última ejecución: 2026-06-13
+- Último issue completado: #100 — F7-004: Contenido interactivo H5P (embed desde URL externa)
+- Próximo: requiere planificación de Fase 4c (decisión humana)
 
 ## Historial
+
+## 2026-06-13 — Sesión [1/3] — complete-issue-automata
+
+- Tipo: complete-issue-automata
+- Issue solicitado: #101 — F4b-001: Vista del estudiante — mis calificaciones y mi asistencia
+- Resultado: STOP — el issue #101 ya está CERRADO (completado en sesión 2026-05-07, commit 8721ae1)
+- Verificación adicional: `gh issue list --state open` no devuelve ningún issue abierto en el repo
+- No se escribió next-prompt.md (condiciones de cierre no aplican: no hay issue para cerrar)
+- Acción para reiniciar: Fase 7 está completa (4/4, ver sesión anterior #100). CLAUDE.md indica Fase 4c (F4c-001 a F4c-009) como próxima planificada, pero NO existen issues F4c-XXX en GitHub todavía — GUARDRAIL activado (no inventar issues sin planificación). Requiere ejecutar `/project-manager-automata` para crear los issues de Fase 4c a partir del roadmap, comenzando por F4c-001 (migración de catálogo de materias, bloqueante de F4c-003/004/005)
+
+## Loop detenido — 2026-06-13
+
+- Razón: No hay issues OPEN en el repositorio. Fase 7 (Multimedia y Contenido Rico) completada 4/4 (#97-#100). El issue solicitado (#101) ya estaba cerrado de una sesión previa (Fase 4b, completada 4/4). CLAUDE.md define Fase 4c como próxima fase planificada (F4c-001 a F4c-009) pero sin issues creados en GitHub aún.
+- Último issue completado: #100 — F7-004: Contenido interactivo H5P (embed desde URL externa)
+- Próximo pendiente: Crear issues F4c-001 a F4c-009 en GitHub a partir de roadmap.md (Sprint 21-23), con label `phase-4c`, respetando que F4c-001 debe ir primero (bloqueante de F4c-003/004/005)
+- Acción para reiniciar: Ejecutar `/project-manager-automata [loop_count=0/N]` para planificar y crear las issues de Fase 4c
 
 ## 2026-05-08 — Sesión [0/3] — project-manager-automata (Fase 7)
 
