@@ -7,7 +7,7 @@
 
 import { Injectable, BadRequestException } from '@nestjs/common';
 import type { MultipartFile } from '@fastify/multipart';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { env } from '../config/env';
@@ -81,7 +81,7 @@ export class UploadsService {
   ): Promise<UploadResult> {
     const processed = await this.imageProcessor.processImage(buffer);
 
-    const filename = `${uuidv4()}.webp`;
+    const filename = `${randomUUID()}.webp`;
     const filepath = join(folderPath, filename);
 
     await writeFile(filepath, processed.buffer);
@@ -104,7 +104,7 @@ export class UploadsService {
     subfolder: string
   ): Promise<UploadResult> {
     const ext = this.getExtension(originalFilename);
-    const filename = `${uuidv4()}.${ext}`;
+    const filename = `${randomUUID()}.${ext}`;
     const filepath = join(folderPath, filename);
 
     await writeFile(filepath, buffer);

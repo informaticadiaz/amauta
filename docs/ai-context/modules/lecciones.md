@@ -36,19 +36,20 @@ Las lecciones son el contenido educativo de un curso. Cada curso tiene múltiple
 
 ### Frontend
 
-| Archivo                                                         | Propósito                         |
-| --------------------------------------------------------------- | --------------------------------- |
-| `apps/web/src/app/api/cursos/[id]/lecciones/route.ts`           | Proxy crear lección               |
-| `apps/web/src/app/api/cursos/[id]/lecciones/reordenar/route.ts` | Proxy reordenar                   |
-| `apps/web/src/app/api/lecciones/[id]/route.ts`                  | Proxy actualizar/eliminar         |
-| `apps/web/src/app/dashboard/cursos/[id]/lecciones/page.tsx`     | Lista de lecciones (admin)        |
-| `apps/web/src/app/cursos/[slug]/lecciones/[leccionId]/page.tsx` | Visualizador (estudiante)         |
-| `apps/web/src/components/lecciones/LeccionForm.tsx`             | Formulario                        |
-| `apps/web/src/components/lecciones/LeccionesManager.tsx`        | Gestión drag & drop               |
-| `apps/web/src/components/lecciones/LeccionContent.tsx`          | Renderiza contenido (texto/video) |
-| `apps/web/src/components/lecciones/LeccionSidebar.tsx`          | Sidebar con lista de lecciones    |
-| `apps/web/src/components/lecciones/LeccionNavigation.tsx`       | Botones anterior/siguiente        |
-| `apps/web/src/components/lecciones/MobileSidebarSheet.tsx`      | Drawer de lecciones en móvil      |
+| Archivo                                                         | Propósito                               |
+| --------------------------------------------------------------- | --------------------------------------- |
+| `apps/web/src/app/api/cursos/[id]/lecciones/route.ts`           | Proxy crear lección                     |
+| `apps/web/src/app/api/cursos/[id]/lecciones/reordenar/route.ts` | Proxy reordenar                         |
+| `apps/web/src/app/api/lecciones/[id]/route.ts`                  | Proxy actualizar/eliminar               |
+| `apps/web/src/app/dashboard/cursos/[id]/lecciones/page.tsx`     | Lista de lecciones (admin)              |
+| `apps/web/src/app/cursos/[slug]/lecciones/[leccionId]/page.tsx` | Visualizador (estudiante)               |
+| `apps/web/src/components/lecciones/LeccionForm.tsx`             | Formulario                              |
+| `apps/web/src/components/lecciones/LeccionesManager.tsx`        | Gestión drag & drop                     |
+| `apps/web/src/components/lecciones/LeccionContent.tsx`          | Renderiza contenido (texto/video/audio) |
+| `apps/web/src/components/lecciones/MediaUploader.tsx`           | Subida de video/audio (drag & drop)     |
+| `apps/web/src/components/lecciones/LeccionSidebar.tsx`          | Sidebar con lista de lecciones          |
+| `apps/web/src/components/lecciones/LeccionNavigation.tsx`       | Botones anterior/siguiente              |
+| `apps/web/src/components/lecciones/MobileSidebarSheet.tsx`      | Drawer de lecciones en móvil            |
 
 ---
 
@@ -268,6 +269,23 @@ El campo `contenido` es flexible según el tipo:
   "captions": [{ "lang": "es", "url": "..." }]
 }
 ```
+
+#### Video/audio subido (F7-003, provider "local")
+
+Cuando el educador sube un archivo via `MediaUploader` (`POST /uploads/media`, almacenado en MinIO), se agregan campos opcionales:
+
+```json
+{
+  "videoUrl": "https://media.amauta.test/amauta-media/lecciones/abc123.mp4",
+  "provider": "local",
+  "storageKey": "lecciones/abc123.mp4",
+  "mimeType": "video/mp4",
+  "size": 12345678
+}
+```
+
+- Si `mimeType` empieza con `audio/`, `LeccionContent` renderiza `<audio>` en lugar de `<video>`.
+- `storageKey` se usa para eliminar el archivo de MinIO via `DELETE /uploads/media`.
 
 ### TEXTO
 

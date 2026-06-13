@@ -99,6 +99,13 @@ const envSchema = z.object({
     .default('image/jpeg,image/png,image/gif,image/webp,application/pdf')
     .transform((val) => val.split(',').map((type) => type.trim())),
 
+  // MinIO (storage de video/audio, self-hosted)
+  MINIO_ENDPOINT: z.string().default('http://localhost:9000'),
+  MINIO_ACCESS_KEY: z.string().default(''),
+  MINIO_SECRET_KEY: z.string().default(''),
+  MINIO_BUCKET: z.string().default('amauta-media'),
+  MINIO_PUBLIC_URL: z.string().default('http://localhost:9000'),
+
   // Email SMTP (opcional)
   SMTP_HOST: z.string().optional(),
   SMTP_PORT: z

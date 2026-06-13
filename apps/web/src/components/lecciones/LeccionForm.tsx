@@ -9,6 +9,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { RichTextEditor } from './RichTextEditor';
+import { MediaUploader, type MediaValue } from './MediaUploader';
 import styles from './LeccionForm.module.css';
 
 type TipoLeccion = 'TEXTO' | 'VIDEO' | 'QUIZ' | 'INTERACTIVO' | 'DESCARGABLE';
@@ -24,7 +25,16 @@ interface Leccion {
   descripcion: string | null;
   tipo: TipoLeccion;
   duracion: number | null;
-  contenido: ContenidoTexto | { videoUrl?: string } | Record<string, unknown>;
+  contenido:
+    | ContenidoTexto
+    | {
+        videoUrl?: string;
+        provider?: string;
+        storageKey?: string;
+        mimeType?: string;
+        size?: number;
+      }
+    | Record<string, unknown>;
   publicada: boolean;
 }
 
@@ -82,6 +92,28 @@ export function LeccionForm({ cursoId, leccion, onSuccess }: LeccionFormProps) {
       ? (leccion.contenido as { videoUrl?: string })?.videoUrl || ''
       : ''
   );
+  const contenidoVideo =
+    leccion?.tipo === 'VIDEO'
+      ? (leccion.contenido as {
+          storageKey?: string;
+          mimeType?: string;
+          size?: number;
+          videoUrl?: string;
+        })
+      : null;
+  const [mediaValue, setMediaValue] = useState<MediaValue | null>(
+    contenidoVideo?.storageKey
+      ? {
+          url: contenidoVideo.videoUrl || '',
+          storageKey: contenidoVideo.storageKey,
+          mimeType: contenidoVideo.mimeType || '',
+          size: contenidoVideo.size || 0,
+        }
+      : null
+  );
+  const [videoMode, setVideoMode] = useState<'url' | 'upload'>(
+    contenidoVideo?.storageKey ? 'upload' : 'url'
+  );
   const [publicada, setPublicada] = useState(leccion?.publicada || false);
 
   const isEditing = !!leccion;
@@ -106,7 +138,7 @@ export function LeccionForm({ cursoId, leccion, onSuccess }: LeccionFormProps) {
     }
 
     if (tipo === 'VIDEO' && !videoUrl) {
-      setError('La URL del video es requerida');
+      setError('La URL del video o el archivo subido son requeridos');
       setLoading(false);
       return;
     }
@@ -117,6 +149,12 @@ export function LeccionForm({ cursoId, leccion, onSuccess }: LeccionFormProps) {
       contenido.format = 'html';
     } else if (tipo === 'VIDEO' && videoUrl) {
       contenido.videoUrl = videoUrl;
+      if (videoMode === 'upload' && mediaValue) {
+        contenido.provider = 'local';
+        contenido.storageKey = mediaValue.storageKey;
+        contenido.mimeType = mediaValue.mimeType;
+        contenido.size = mediaValue.size;
+      }
     }
 
     const data = {
@@ -267,29 +305,65 @@ export function LeccionForm({ cursoId, leccion, onSuccess }: LeccionFormProps) {
 
       {(tipo === 'VIDEO' || videoUrl) && (
         <div className={styles.field}>
-          <label htmlFor="videoUrl" className={styles.label}>
-            URL del video
+          <label className={styles.label}>
+            Video
             {tipo === 'VIDEO' && <span className={styles.required}>*</span>}
           </label>
-          <input
-            type="url"
-            id="videoUrl"
-            value={videoUrl}
-            onChange={(e) => setVideoUrl(e.target.value)}
-            disabled={loading}
-            placeholder="https://www.youtube.com/watch?v=..."
-            className={styles.input}
-          />
-          <p className={styles.hint}>Soporta YouTube y Vimeo</p>
-          {embedUrl && (
-            <div className={styles.videoPreview}>
-              <iframe
-                src={embedUrl}
-                title="Vista previa del video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
+          <div className={styles.tipoSelector}>
+            <button
+              type="button"
+              onClick={() => setVideoMode('url')}
+              disabled={loading}
+              className={`${styles.tipoOption} ${
+                videoMode === 'url' ? styles.tipoOptionActive : ''
+              }`}
+            >
+              URL externa
+            </button>
+            <button
+              type="button"
+              onClick={() => setVideoMode('upload')}
+              disabled={loading}
+              className={`${styles.tipoOption} ${
+                videoMode === 'upload' ? styles.tipoOptionActive : ''
+              }`}
+            >
+              Subir archivo
+            </button>
+          </div>
+
+          {videoMode === 'url' ? (
+            <>
+              <input
+                type="url"
+                id="videoUrl"
+                value={videoUrl}
+                onChange={(e) => setVideoUrl(e.target.value)}
+                disabled={loading}
+                placeholder="https://www.youtube.com/watch?v=..."
+                className={styles.input}
               />
-            </div>
+              <p className={styles.hint}>Soporta YouTube y Vimeo</p>
+              {embedUrl && (
+                <div className={styles.videoPreview}>
+                  <iframe
+                    src={embedUrl}
+                    title="Vista previa del video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              )}
+            </>
+          ) : (
+            <MediaUploader
+              value={mediaValue}
+              disabled={loading}
+              onChange={(media) => {
+                setMediaValue(media);
+                setVideoUrl(media?.url || '');
+              }}
+            />
           )}
         </div>
       )}

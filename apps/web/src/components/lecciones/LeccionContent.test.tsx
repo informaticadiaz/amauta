@@ -126,6 +126,23 @@ describe('LeccionContent', () => {
       expect(screen.getByText(/video no disponible/i)).toBeInTheDocument();
     });
 
+    it('debería renderizar elemento audio cuando mimeType es audio/*', () => {
+      const contenido = {
+        videoUrl: 'https://media.amauta.test/amauta-media/lecciones/audio.mp3',
+        provider: 'local',
+        mimeType: 'audio/mpeg',
+      };
+      render(
+        <LeccionContent
+          tipo="VIDEO"
+          contenido={contenido}
+          titulo="Lección de audio"
+        />
+      );
+      expect(document.querySelector('audio')).toBeInTheDocument();
+      expect(document.querySelector('video')).not.toBeInTheDocument();
+    });
+
     it('debería mostrar mensaje offline para videos externos', () => {
       setOnline(false);
 

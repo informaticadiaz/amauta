@@ -15,6 +15,7 @@ interface ContenidoTexto {
 interface ContenidoVideo {
   videoUrl?: string;
   provider?: 'youtube' | 'vimeo' | 'local';
+  mimeType?: string;
 }
 
 type Contenido = ContenidoTexto & ContenidoVideo & Record<string, unknown>;
@@ -38,7 +39,7 @@ function getVimeoId(url: string): string | null {
 }
 
 function VideoPlayer({ contenido }: { contenido: ContenidoVideo }) {
-  const { videoUrl, provider } = contenido;
+  const { videoUrl, provider, mimeType } = contenido;
 
   if (!videoUrl) {
     return (
@@ -99,6 +100,17 @@ function VideoPlayer({ contenido }: { contenido: ContenidoVideo }) {
           allowFullScreen
           className="absolute inset-0 h-full w-full"
         />
+      </div>
+    );
+  }
+
+  // Audio local
+  if (mimeType?.startsWith('audio/')) {
+    return (
+      <div className="w-full overflow-hidden rounded-lg bg-black">
+        <audio src={videoUrl} controls className="w-full">
+          Tu navegador no soporta la reproducción de audio.
+        </audio>
       </div>
     );
   }

@@ -11,12 +11,21 @@ const contenidoTextoSchema = z.object({
 const contenidoVideoSchema = z.object({
   videoUrl: z.string().url('URL de video inválida'),
   duracionSegundos: z.number().int().positive().optional(),
+  // Campos adicionales para media subida (video/audio vía MinIO, F7-003)
+  provider: z.enum(['youtube', 'vimeo', 'local']).optional(),
+  storageKey: z.string().optional(),
+  mimeType: z.string().optional(),
+  size: z.number().int().positive().optional(),
 });
 
 const contenidoMixtoSchema = z.object({
   texto: z.string().optional(),
   videoUrl: z.string().url('URL de video inválida').optional(),
   duracionSegundos: z.number().int().positive().optional(),
+  provider: z.enum(['youtube', 'vimeo', 'local']).optional(),
+  storageKey: z.string().optional(),
+  mimeType: z.string().optional(),
+  size: z.number().int().positive().optional(),
 });
 
 export const createLeccionSchema = z

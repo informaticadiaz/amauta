@@ -185,6 +185,79 @@ describe('LeccionesService', () => {
         service.crear('curso-123', dtoInvalido, 'educador-123')
       ).rejects.toThrow(BadRequestException);
     });
+
+    it('debería crear una lección VIDEO con media subida (storageKey, mimeType y size) sin perder datos', async () => {
+      const dtoVideoSubido = {
+        titulo: 'Lección con video subido',
+        tipo: 'VIDEO' as const,
+        contenido: {
+          videoUrl: 'https://media.amauta.test/amauta-media/lecciones/abc.mp4',
+          provider: 'local',
+          storageKey: 'lecciones/abc.mp4',
+          mimeType: 'video/mp4',
+          size: 1024,
+        },
+        publicada: false,
+      };
+
+      prisma.curso.findUnique.mockResolvedValue(mockCurso);
+      prisma.leccion.findFirst.mockResolvedValue(null);
+      prisma.leccion.create.mockResolvedValue({
+        ...mockLeccion,
+        tipo: 'VIDEO',
+        contenido: dtoVideoSubido.contenido,
+      });
+
+      await service.crear('curso-123', dtoVideoSubido, 'educador-123');
+
+      expect(prisma.leccion.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            contenido: expect.objectContaining({
+              storageKey: 'lecciones/abc.mp4',
+              mimeType: 'video/mp4',
+              size: 1024,
+            }),
+          }),
+        })
+      );
+    });
+
+    it('debería crear una lección VIDEO de audio (mimeType audio/*) con media subida', async () => {
+      const dtoAudioSubido = {
+        titulo: 'Lección con audio subido',
+        tipo: 'VIDEO' as const,
+        contenido: {
+          videoUrl:
+            'https://media.amauta.test/amauta-media/lecciones/audio.mp3',
+          provider: 'local',
+          storageKey: 'lecciones/audio.mp3',
+          mimeType: 'audio/mpeg',
+          size: 2048,
+        },
+        publicada: false,
+      };
+
+      prisma.curso.findUnique.mockResolvedValue(mockCurso);
+      prisma.leccion.findFirst.mockResolvedValue(null);
+      prisma.leccion.create.mockResolvedValue({
+        ...mockLeccion,
+        tipo: 'VIDEO',
+        contenido: dtoAudioSubido.contenido,
+      });
+
+      await service.crear('curso-123', dtoAudioSubido, 'educador-123');
+
+      expect(prisma.leccion.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            contenido: expect.objectContaining({
+              mimeType: 'audio/mpeg',
+            }),
+          }),
+        })
+      );
+    });
   });
 
   describe('listarPorCurso', () => {

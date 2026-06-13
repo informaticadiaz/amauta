@@ -1,19 +1,22 @@
 # Módulo: Uploads
 
-> Sistema de subida de archivos (imágenes).
+> Sistema de subida de archivos (imágenes, video y audio).
 
 ---
 
 ## Descripción Funcional
 
-Permite a educadores subir imágenes para portadas de cursos. Los archivos se almacenan en el servidor y se sirven a través de rutas estáticas.
+Permite a educadores subir imágenes para portadas de cursos (almacenadas localmente en el servidor) y archivos de video/audio para lecciones de tipo `VIDEO` (almacenados en MinIO, S3-compatible).
 
 ### Roles y Permisos
 
-| Acción       | ESTUDIANTE | EDUCADOR | ADMIN_ESCUELA | SUPER_ADMIN |
-| ------------ | ---------- | -------- | ------------- | ----------- |
-| Subir imagen | -          | Sí       | Sí            | Sí          |
-| Ver imagen   | Público    | Público  | Público       | Público     |
+| Acción               | ESTUDIANTE | EDUCADOR | ADMIN_ESCUELA | SUPER_ADMIN |
+| -------------------- | ---------- | -------- | ------------- | ----------- |
+| Subir imagen         | -          | Sí       | Sí            | Sí          |
+| Subir video/audio    | -          | Sí       | Sí            | Sí          |
+| Eliminar video/audio | -          | Sí       | Sí            | Sí          |
+| Ver imagen           | Público    | Público  | Público       | Público     |
+| Ver/reproducir media | Público    | Público  | Público       | Público     |
 
 ---
 
@@ -21,34 +24,42 @@ Permite a educadores subir imágenes para portadas de cursos. Los archivos se al
 
 ### Backend
 
-| Archivo                                      | Propósito          |
-| -------------------------------------------- | ------------------ |
-| `apps/api/src/uploads/uploads.module.ts`     | Módulo NestJS      |
-| `apps/api/src/uploads/uploads.controller.ts` | Endpoint de upload |
-| `apps/api/src/uploads/uploads.service.ts`    | Lógica de guardado |
+| Archivo                                         | Propósito                               |
+| ----------------------------------------------- | --------------------------------------- |
+| `apps/api/src/uploads/uploads.module.ts`        | Módulo NestJS                           |
+| `apps/api/src/uploads/uploads.controller.ts`    | Endpoints de upload                     |
+| `apps/api/src/uploads/uploads.service.ts`       | Lógica de guardado de imágenes          |
+| `apps/api/src/uploads/media-uploads.service.ts` | Lógica de subida de video/audio a MinIO |
+| `apps/api/src/config/env.ts`                    | Variables de entorno (incluye MinIO)    |
 
 ### Frontend
 
-| Archivo                                            | Propósito            |
-| -------------------------------------------------- | -------------------- |
-| `apps/web/src/app/api/upload/route.ts`             | Proxy de upload      |
-| `apps/web/src/app/api/image/[...path]/route.ts`    | Proxy de imágenes    |
-| `apps/web/src/components/cursos/ImageUploader.tsx` | Componente de subida |
+| Archivo                                               | Propósito                           |
+| ----------------------------------------------------- | ----------------------------------- |
+| `apps/web/src/app/api/upload/route.ts`                | Proxy de upload de imágenes         |
+| `apps/web/src/app/api/image/[...path]/route.ts`       | Proxy de imágenes                   |
+| `apps/web/src/app/api/uploads/media/route.ts`         | Proxy de upload/delete de media     |
+| `apps/web/src/components/cursos/ImageUploader.tsx`    | Componente de subida de imágenes    |
+| `apps/web/src/components/lecciones/MediaUploader.tsx` | Componente de subida de video/audio |
 
 ---
 
 ## Endpoints API
 
-| Método | Ruta       | Auth | Roles     | Descripción   |
-| ------ | ---------- | ---- | --------- | ------------- |
-| POST   | `/uploads` | Sí   | EDUCADOR+ | Subir archivo |
+| Método | Ruta             | Auth | Roles     | Descripción               |
+| ------ | ---------------- | ---- | --------- | ------------------------- |
+| POST   | `/uploads`       | Sí   | EDUCADOR+ | Subir imagen              |
+| POST   | `/uploads/media` | Sí   | EDUCADOR+ | Subir video/audio (MinIO) |
+| DELETE | `/uploads/media` | Sí   | EDUCADOR+ | Eliminar video/audio      |
 
-### Request
+> Nota: las rutas `uploads/(.*)` están excluidas del prefijo global `api/v1` (ver `main.ts`).
+
+### Request - `/uploads`
 
 - **Content-Type**: `multipart/form-data`
 - **Campo**: `file` (archivo binario)
 
-### Response
+### Response - `/uploads`
 
 ```json
 {
@@ -59,6 +70,44 @@ Permite a educadores subir imágenes para portadas de cursos. Los archivos se al
   "mimeType": "image/jpeg"
 }
 ```
+
+### Request - `/uploads/media`
+
+- **Content-Type**: `multipart/form-data`
+- **Campo**: `file` (archivo binario)
+- **Tipos permitidos**: `video/mp4`, `video/webm`, `audio/mpeg`, `audio/ogg`, `audio/wav`
+- **Tamaño máximo**: 500MB (video), 100MB (audio)
+
+### Response - `/uploads/media`
+
+```json
+{
+  "url": "https://media.amauta.test/amauta-media/lecciones/abc123.mp4",
+  "storageKey": "lecciones/abc123.mp4",
+  "mimeType": "video/mp4",
+  "size": 12345678
+}
+```
+
+### Request - `DELETE /uploads/media`
+
+```json
+{ "storageKey": "lecciones/abc123.mp4" }
+```
+
+---
+
+## Variables de Entorno MinIO
+
+```bash
+MINIO_ENDPOINT=http://localhost:9000
+MINIO_ACCESS_KEY=
+MINIO_SECRET_KEY=
+MINIO_BUCKET=amauta-media
+MINIO_PUBLIC_URL=http://localhost:9000
+```
+
+`MediaUploadsService` usa `@aws-sdk/client-s3` con `forcePathStyle: true` para compatibilidad con MinIO.
 
 ---
 
@@ -306,14 +355,16 @@ async function bootstrap() {
 ### Módulos que dependen de este
 
 - **Cursos**: Imagen de portada
+- **Lecciones**: Video/audio de tipo VIDEO (F7-003)
 
 ---
 
 ## Notas para IA
 
 1. **Fastify Multipart**: Usar `@fastify/multipart` no multer
-2. **Validación MIME**: Solo permitir tipos de imagen
-3. **Nombres únicos**: Usar UUID para evitar colisiones
-4. **Límite de tamaño**: 5MB por defecto
-5. **Proxy de imágenes**: El frontend proxea imágenes para evitar CORS
+2. **Validación MIME**: Solo permitir tipos de imagen (uploads) o video/mp4, video/webm, audio/mpeg, audio/ogg, audio/wav (uploads/media)
+3. **Nombres únicos**: Usar `crypto.randomUUID()` para evitar colisiones (NO usar el paquete `uuid`, es ESM-only y rompe bajo `@swc/jest`)
+4. **Límite de tamaño**: 5MB por defecto (imágenes), 500MB video / 100MB audio (media)
+5. **Proxy de imágenes/media**: El frontend proxea imágenes y media para evitar CORS
 6. **Cache**: Las imágenes se cachean 1 año (inmutables por UUID)
+7. **MinIO**: `media-uploads.service.ts` usa `@aws-sdk/client-s3` con `forcePathStyle: true`. En specs que importan `../config/env` (directa o transitivamente), mockear con `jest.mock('../config/env', ...)` para evitar `process.exit(1)` por validación de env
