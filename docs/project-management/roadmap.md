@@ -2083,14 +2083,14 @@ Al revisar el roadmap general se detectó que Fase 4 implementó toda la perspec
 
 ### Sprint 20 — Completar Fase 4
 
-| Issue          | Título                                                    | Estado     | Prioridad |
-| -------------- | --------------------------------------------------------- | ---------- | --------- |
-| #101 / F4b-001 | Vista del estudiante — mis calificaciones y mi asistencia | 🔄 Abierto | must-have |
-| #102 / F4b-002 | Boletín académico descargable por periodo                 | 🔄 Abierto | must-have |
-| #103 / F4b-003 | Comunicados institucionales — API y UI completa           | 🔄 Abierto | must-have |
-| #104 / F4b-004 | Reportes de asistencia y rendimiento académico (admin)    | 🔄 Abierto | must-have |
+| Issue          | Título                                                    | Estado        | Prioridad |
+| -------------- | --------------------------------------------------------- | ------------- | --------- |
+| #101 / F4b-001 | Vista del estudiante — mis calificaciones y mi asistencia | ✅ Completado | must-have |
+| #102 / F4b-002 | Boletín académico descargable por periodo                 | ✅ Completado | must-have |
+| #103 / F4b-003 | Comunicados institucionales — API y UI completa           | ✅ Completado | must-have |
+| #104 / F4b-004 | Reportes de asistencia y rendimiento académico (admin)    | ✅ Completado | must-have |
 
-**Progreso Sprint 20**: 0/4 issues completados
+**Progreso Sprint 20**: 4/4 issues completados
 
 #### Dependencias
 
