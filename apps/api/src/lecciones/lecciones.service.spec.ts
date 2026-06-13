@@ -258,6 +258,48 @@ describe('LeccionesService', () => {
         })
       );
     });
+
+    it('debería crear una lección INTERACTIVO con h5pUrl de dominio permitido', async () => {
+      const dtoH5P = {
+        titulo: 'Lección interactiva',
+        tipo: 'INTERACTIVO' as const,
+        contenido: {
+          h5pUrl: 'https://h5p.org/h5p/embed/123456',
+          embedType: 'iframe' as const,
+          title: 'Quiz sobre el sistema solar',
+        },
+        publicada: false,
+      };
+
+      prisma.curso.findUnique.mockResolvedValue(mockCurso);
+      prisma.leccion.findFirst.mockResolvedValue(null);
+      prisma.leccion.create.mockResolvedValue({
+        ...mockLeccion,
+        tipo: 'INTERACTIVO',
+        contenido: dtoH5P.contenido,
+      });
+
+      const result = await service.crear('curso-123', dtoH5P, 'educador-123');
+
+      expect(result.tipo).toBe('INTERACTIVO');
+      expect(prisma.leccion.create).toHaveBeenCalled();
+    });
+
+    it('debería lanzar BadRequestException si el dominio de h5pUrl no está en la whitelist', async () => {
+      const dtoH5PInvalido = {
+        titulo: 'Lección interactiva',
+        tipo: 'INTERACTIVO' as const,
+        contenido: {
+          h5pUrl: 'https://malicious-site.com/embed/123',
+          embedType: 'iframe' as const,
+        },
+        publicada: false,
+      };
+
+      await expect(
+        service.crear('curso-123', dtoH5PInvalido, 'educador-123')
+      ).rejects.toThrow(BadRequestException);
+    });
   });
 
   describe('listarPorCurso', () => {
@@ -390,6 +432,25 @@ describe('LeccionesService', () => {
       await expect(
         service.actualizar('leccion-123', updateLeccionDto, 'educador-123')
       ).rejects.toThrow(ForbiddenException);
+    });
+
+    it('debería lanzar BadRequestException al actualizar contenido H5P con dominio fuera de la whitelist', async () => {
+      prisma.leccion.findUnique.mockResolvedValue({
+        ...mockLeccion,
+        tipo: 'INTERACTIVO',
+        curso: { educadorId: 'educador-123' },
+      });
+
+      const updateH5PInvalido = {
+        contenido: {
+          h5pUrl: 'https://malicious-site.com/embed/123',
+          embedType: 'iframe' as const,
+        },
+      };
+
+      await expect(
+        service.actualizar('leccion-123', updateH5PInvalido, 'educador-123')
+      ).rejects.toThrow(BadRequestException);
     });
 
     it('debería actualizar parcialmente (solo campos proporcionados)', async () => {

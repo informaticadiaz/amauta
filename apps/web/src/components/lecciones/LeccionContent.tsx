@@ -18,7 +18,16 @@ interface ContenidoVideo {
   mimeType?: string;
 }
 
-type Contenido = ContenidoTexto & ContenidoVideo & Record<string, unknown>;
+interface ContenidoH5P {
+  h5pUrl?: string;
+  embedType?: 'iframe';
+  title?: string;
+}
+
+type Contenido = ContenidoTexto &
+  ContenidoVideo &
+  ContenidoH5P &
+  Record<string, unknown>;
 
 type TipoLeccion = 'VIDEO' | 'TEXTO' | 'QUIZ' | 'INTERACTIVO' | 'DESCARGABLE';
 
@@ -151,6 +160,51 @@ function TextoContent({ contenido }: { contenido: ContenidoTexto }) {
   );
 }
 
+function H5PContent({
+  contenido,
+  titulo,
+}: {
+  contenido: ContenidoH5P;
+  titulo: string;
+}) {
+  const { h5pUrl, title } = contenido;
+
+  if (!h5pUrl) {
+    return (
+      <div className="flex h-48 items-center justify-center rounded-lg bg-[var(--overlay)] text-center text-[var(--muted)]">
+        <p>
+          ⚠ El contenido interactivo no pudo cargarse. No hay una URL
+          configurada.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="overflow-hidden rounded-lg">
+      <iframe
+        src={h5pUrl}
+        title={title || titulo}
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+        allow="fullscreen"
+        loading="lazy"
+        style={{ width: '100%', minHeight: '400px', border: 'none' }}
+      />
+      <p className="mt-2 text-sm text-[var(--muted)]">
+        Si el contenido no carga, podés acceder directamente:{' '}
+        <a
+          href={h5pUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline"
+        >
+          {h5pUrl}
+        </a>
+      </p>
+    </div>
+  );
+}
+
 export function LeccionContent({ tipo, contenido, titulo }: Props) {
   return (
     <div className="space-y-6">
@@ -162,7 +216,11 @@ export function LeccionContent({ tipo, contenido, titulo }: Props) {
 
       {tipo === 'TEXTO' && <TextoContent contenido={contenido} />}
 
-      {tipo !== 'VIDEO' && tipo !== 'TEXTO' && (
+      {tipo === 'INTERACTIVO' && (
+        <H5PContent contenido={contenido} titulo={titulo} />
+      )}
+
+      {tipo !== 'VIDEO' && tipo !== 'TEXTO' && tipo !== 'INTERACTIVO' && (
         <div className="flex h-48 flex-col items-center justify-center gap-4 rounded-lg border border-[var(--border)] bg-[var(--overlay)] text-center">
           <svg
             className="h-12 w-12 text-[var(--muted)]"

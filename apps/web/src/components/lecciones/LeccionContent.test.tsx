@@ -170,4 +170,37 @@ describe('LeccionContent', () => {
       expect(screen.getByText(/próximamente/i)).toBeInTheDocument();
     });
   });
+
+  describe('tipo INTERACTIVO', () => {
+    it('debería renderizar un iframe sandboxeado con la URL de H5P', () => {
+      const contenido = {
+        h5pUrl: 'https://h5p.org/h5p/embed/123456',
+        embedType: 'iframe' as const,
+        title: 'Quiz sobre el sistema solar',
+      };
+      render(
+        <LeccionContent
+          tipo="INTERACTIVO"
+          contenido={contenido}
+          titulo="Lección interactiva"
+        />
+      );
+      const iframe = document.querySelector('iframe');
+      expect(iframe).toBeInTheDocument();
+      expect(iframe?.src).toBe(contenido.h5pUrl);
+      expect(iframe?.getAttribute('sandbox')).toContain('allow-scripts');
+    });
+
+    it('debería mostrar un mensaje de fallback cuando no hay h5pUrl', () => {
+      render(
+        <LeccionContent
+          tipo="INTERACTIVO"
+          contenido={{}}
+          titulo="Lección sin contenido"
+        />
+      );
+      expect(screen.getByText(/no pudo cargarse/i)).toBeInTheDocument();
+      expect(document.querySelector('iframe')).not.toBeInTheDocument();
+    });
+  });
 });

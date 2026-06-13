@@ -19,6 +19,23 @@ interface ContenidoTexto {
   format: 'html';
 }
 
+interface ContenidoH5P {
+  h5pUrl: string;
+  embedType: 'iframe';
+  title?: string;
+}
+
+const H5P_ALLOWED_DOMAINS = ['h5p.org', 'www.h5p.org', 'lumi.education'];
+
+function esDominioH5PPermitido(url: string): boolean {
+  try {
+    const { hostname } = new URL(url);
+    return H5P_ALLOWED_DOMAINS.includes(hostname);
+  } catch {
+    return false;
+  }
+}
+
 interface Leccion {
   id: string;
   titulo: string;
@@ -27,6 +44,7 @@ interface Leccion {
   duracion: number | null;
   contenido:
     | ContenidoTexto
+    | ContenidoH5P
     | {
         videoUrl?: string;
         provider?: string;
@@ -47,6 +65,7 @@ interface LeccionFormProps {
 const TIPOS_LECCION = [
   { value: 'TEXTO', label: 'Texto', icon: 'document' },
   { value: 'VIDEO', label: 'Video', icon: 'video' },
+  { value: 'INTERACTIVO', label: 'Interactivo (H5P)', icon: 'puzzle' },
 ] as const;
 
 const MAX_TITULO = 200;
@@ -114,6 +133,16 @@ export function LeccionForm({ cursoId, leccion, onSuccess }: LeccionFormProps) {
   const [videoMode, setVideoMode] = useState<'url' | 'upload'>(
     contenidoVideo?.storageKey ? 'upload' : 'url'
   );
+  const [h5pUrl, setH5pUrl] = useState(
+    leccion?.tipo === 'INTERACTIVO'
+      ? (leccion.contenido as ContenidoH5P)?.h5pUrl || ''
+      : ''
+  );
+  const [h5pTitle, setH5pTitle] = useState(
+    leccion?.tipo === 'INTERACTIVO'
+      ? (leccion.contenido as ContenidoH5P)?.title || ''
+      : ''
+  );
   const [publicada, setPublicada] = useState(leccion?.publicada || false);
 
   const isEditing = !!leccion;
@@ -143,6 +172,21 @@ export function LeccionForm({ cursoId, leccion, onSuccess }: LeccionFormProps) {
       return;
     }
 
+    if (tipo === 'INTERACTIVO') {
+      if (!h5pUrl) {
+        setError('La URL del contenido H5P es requerida');
+        setLoading(false);
+        return;
+      }
+      if (!esDominioH5PPermitido(h5pUrl)) {
+        setError(
+          `El dominio de la URL H5P no está permitido. Dominios válidos: ${H5P_ALLOWED_DOMAINS.join(', ')}`
+        );
+        setLoading(false);
+        return;
+      }
+    }
+
     const contenido: Record<string, unknown> = {};
     if (tipo === 'TEXTO') {
       contenido.html = contenidoTexto.html;
@@ -154,6 +198,12 @@ export function LeccionForm({ cursoId, leccion, onSuccess }: LeccionFormProps) {
         contenido.storageKey = mediaValue.storageKey;
         contenido.mimeType = mediaValue.mimeType;
         contenido.size = mediaValue.size;
+      }
+    } else if (tipo === 'INTERACTIVO') {
+      contenido.h5pUrl = h5pUrl;
+      contenido.embedType = 'iframe';
+      if (h5pTitle) {
+        contenido.title = h5pTitle;
       }
     }
 
@@ -297,6 +347,16 @@ export function LeccionForm({ cursoId, leccion, onSuccess }: LeccionFormProps) {
                   />
                 </svg>
               )}
+              {t.icon === 'puzzle' && (
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M11 4a1 1 0 011 1v1.5a1.5 1.5 0 003 0V6a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-1.5a1.5 1.5 0 000 3H18a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-1.5a1.5 1.5 0 00-3 0V18a1 1 0 01-1 1H9a1 1 0 01-1-1v-2a1 1 0 00-1-1H5.5a1.5 1.5 0 010-3H7a1 1 0 001-1V8a1 1 0 011-1h2V4z"
+                  />
+                </svg>
+              )}
               {t.label}
             </button>
           ))}
@@ -380,6 +440,61 @@ export function LeccionForm({ cursoId, leccion, onSuccess }: LeccionFormProps) {
             disabled={loading}
           />
         </div>
+      )}
+
+      {tipo === 'INTERACTIVO' && (
+        <>
+          <div className={styles.field}>
+            <label htmlFor="h5pUrl" className={styles.label}>
+              URL de embed H5P<span className={styles.required}>*</span>
+            </label>
+            <input
+              type="url"
+              id="h5pUrl"
+              value={h5pUrl}
+              onChange={(e) => setH5pUrl(e.target.value)}
+              disabled={loading}
+              placeholder="https://h5p.org/h5p/embed/123456"
+              className={styles.input}
+            />
+            <p className={styles.hint}>
+              Creá el contenido en H5P.org o Lumi y pegá la URL de embed.
+              Dominios permitidos: {H5P_ALLOWED_DOMAINS.join(', ')}
+            </p>
+            {h5pUrl && !esDominioH5PPermitido(h5pUrl) && (
+              <p className={styles.error}>
+                El dominio de la URL no está permitido.
+              </p>
+            )}
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="h5pTitle" className={styles.label}>
+              Título descriptivo (opcional)
+            </label>
+            <input
+              type="text"
+              id="h5pTitle"
+              value={h5pTitle}
+              onChange={(e) => setH5pTitle(e.target.value)}
+              disabled={loading}
+              placeholder="Ej: Quiz sobre el sistema solar"
+              className={styles.input}
+            />
+          </div>
+
+          {h5pUrl && esDominioH5PPermitido(h5pUrl) && (
+            <div className={styles.videoPreview}>
+              <iframe
+                src={h5pUrl}
+                title={h5pTitle || 'Vista previa del contenido H5P'}
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                allow="fullscreen"
+                loading="lazy"
+              />
+            </div>
+          )}
+        </>
       )}
 
       <div className={styles.row}>

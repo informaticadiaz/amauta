@@ -28,6 +28,29 @@ const contenidoMixtoSchema = z.object({
   size: z.number().int().positive().optional(),
 });
 
+// Dominios permitidos para embeds H5P (F7-004)
+export const H5P_ALLOWED_DOMAINS = ['h5p.org', 'www.h5p.org', 'lumi.education'];
+
+export function esDominioH5PPermitido(url: string): boolean {
+  try {
+    const { hostname } = new URL(url);
+    return H5P_ALLOWED_DOMAINS.includes(hostname);
+  } catch {
+    return false;
+  }
+}
+
+export const contenidoH5PSchema = z.object({
+  h5pUrl: z
+    .string()
+    .url('URL de H5P inválida')
+    .refine(esDominioH5PPermitido, {
+      message: `El dominio de la URL H5P no está permitido. Dominios válidos: ${H5P_ALLOWED_DOMAINS.join(', ')}`,
+    }),
+  embedType: z.literal('iframe'),
+  title: z.string().max(200).optional(),
+});
+
 export const createLeccionSchema = z
   .object({
     titulo: z
@@ -49,6 +72,7 @@ export const createLeccionSchema = z
     contenido: z.union([
       contenidoTextoSchema,
       contenidoVideoSchema,
+      contenidoH5PSchema,
       contenidoMixtoSchema,
       z.record(z.string(), z.unknown()),
     ]),
@@ -61,6 +85,9 @@ export const createLeccionSchema = z
       }
       if (data.tipo === 'VIDEO') {
         return contenidoVideoSchema.safeParse(data.contenido).success;
+      }
+      if (data.tipo === 'INTERACTIVO') {
+        return contenidoH5PSchema.safeParse(data.contenido).success;
       }
       return true;
     },

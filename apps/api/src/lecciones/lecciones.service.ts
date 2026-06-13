@@ -14,6 +14,7 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import {
   createLeccionSchema,
+  contenidoH5PSchema,
   type CreateLeccionDto,
 } from './dto/create-leccion.dto';
 import {
@@ -218,10 +219,24 @@ export class LeccionesService {
     }
 
     // Verificar propiedad
-    await this.verificarPropietarioLeccion(id, usuarioId);
+    const leccionExistente = await this.verificarPropietarioLeccion(
+      id,
+      usuarioId
+    );
 
     const { titulo, descripcion, tipo, duracion, contenido, publicada } =
       result.data;
+
+    // Validar contenido H5P (whitelist de dominios) cuando el tipo es INTERACTIVO
+    const tipoEfectivo = tipo ?? leccionExistente.tipo;
+    if (tipoEfectivo === 'INTERACTIVO' && contenido) {
+      const h5pResult = contenidoH5PSchema.safeParse(contenido);
+      if (!h5pResult.success) {
+        const message =
+          h5pResult.error.issues[0]?.message ?? 'Contenido H5P inválido';
+        throw new BadRequestException(message);
+      }
+    }
 
     // Actualizar lección
     const leccion = await this.prisma.leccion.update({

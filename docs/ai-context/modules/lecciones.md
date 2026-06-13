@@ -296,6 +296,21 @@ Cuando el educador sube un archivo via `MediaUploader` (`POST /uploads/media`, a
 }
 ```
 
+### INTERACTIVO (H5P, F7-004)
+
+```json
+{
+  "h5pUrl": "https://h5p.org/h5p/embed/123456",
+  "embedType": "iframe",
+  "title": "Quiz sobre el sistema solar"
+}
+```
+
+- `h5pUrl` valida que el hostname esté en la whitelist `H5P_ALLOWED_DOMAINS` (`h5p.org`, `www.h5p.org`, `lumi.education`), exportada desde `dto/create-leccion.dto.ts`.
+- La validación se aplica en `crear` (vía `createLeccionSchema`) y en `actualizar` (el service calcula el `tipo` efectivo — `dto.tipo ?? leccion.tipo` — y valida `contenido` contra `contenidoH5PSchema` si es `INTERACTIVO`).
+- El frontend (`LeccionContent`) renderiza un `<iframe>` con `sandbox="allow-scripts allow-same-origin allow-forms allow-popups"` y un link de fallback si `h5pUrl` no carga.
+- `LeccionForm` valida el dominio en el cliente con la misma whitelist antes de enviar.
+
 ### QUIZ
 
 ```json
