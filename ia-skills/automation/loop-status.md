@@ -3,11 +3,20 @@
 ## Estado actual
 
 - Estado: EN CURSO — sesión [0/3] Fase 4c. Seleccionado #107 F4c-001. Próximo: complete-issue-automata #107 [loop_count=0/3]
-- Última ejecución: 2026-06-13
+- Última ejecución: 2026-06-14
 - Último issue completado: #100 — F7-004: Contenido interactivo H5P (embed desde URL externa)
 - Próximo: complete-issue-automata #107 [loop_count=0/3]
 
 ## Historial
+
+## 2026-06-14 — Sesión [0/3] — project-manager-automata
+
+- Tipo: project-manager-automata
+- Situación: A (issues existentes: #107 F4c-001, #108 F4c-002, #109 F4c-003)
+- Issues creadas: N/A
+- Acción: seleccionó issue #107 — F4c-001: Catálogo de materias por institución y migración de calificaciones
+- Orden verificado en roadmap.md: F4c-001 debe ir primero porque bloquea F4c-003, F4c-004 y F4c-005
+- Próxima sesión: complete-issue-automata #107 [loop_count=0/3]
 
 ## 2026-06-13 — Sesión [0/3] — project-manager-automata
 
