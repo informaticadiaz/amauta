@@ -2,12 +2,20 @@
 
 ## Estado actual
 
-- Estado: DETENIDO — ver "Loop detenido — 2026-06-13"
+- Estado: EN CURSO — sesión [0/3] Fase 4c. Seleccionado #107 F4c-001. Próximo: complete-issue-automata #107 [loop_count=0/3]
 - Última ejecución: 2026-06-13
 - Último issue completado: #100 — F7-004: Contenido interactivo H5P (embed desde URL externa)
-- Próximo: requiere planificación de Fase 4c (decisión humana)
+- Próximo: complete-issue-automata #107 [loop_count=0/3]
 
 ## Historial
+
+## 2026-06-13 — Sesión [0/3] — project-manager-automata
+
+- Tipo: project-manager-automata
+- Situación: B (issues creadas — no había issues OPEN ni label phase-4c)
+- Issues creadas: #107 (F4c-001), #108 (F4c-002), #109 (F4c-003) — Sprint 21 de Fase 4c, label `phase-4c` creado
+- Acción: seleccionó issue #107 — F4c-001: Catálogo de materias por institución y migración de calificaciones (bloqueante de F4c-003/004/005, debe ir primero)
+- Próxima sesión: complete-issue-automata #107 [loop_count=0/3]
 
 ## 2026-06-13 — Sesión [1/3] — complete-issue-automata
 
