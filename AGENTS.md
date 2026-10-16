@@ -24,12 +24,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ### Fase Actual: Fase 6 - Búsqueda y Recomendaciones 📋 En curso
 
-**Progreso**: Sprint 18 en curso — 1/3 issues completados
-
-#### Próximos pasos inmediatos:
-
-- 📋 **#94 / F6-002**: API de búsqueda básica de cursos con full-text y filtros iniciales
-- 📋 **#95 / F6-003**: UI de búsqueda y filtros de catálogo de cursos
+**Progreso**: Sprint 18 completado ✅ — 3/3 issues completados
 
 #### Completado en Fase 6:
 
@@ -41,6 +36,8 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
   - Estados de experiencia definidos: catálogo vacío, sin resultados y error
   - Dependencias del Sprint 18 registradas para backend (`#94`) y UI (`#95`)
   - Documentado en `docs/project-management/fase-6-diseno-funcional-busqueda.md`
+- ✅ **#94 / F6-002**: API de búsqueda básica de cursos con full-text y filtros iniciales
+- ✅ **#95 / F6-003**: UI de búsqueda y filtros de catálogo de cursos
 
 #### Fase anterior completada:
 
