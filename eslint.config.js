@@ -1,4 +1,5 @@
 const js = require('@eslint/js');
+const globals = require('globals');
 const tseslint = require('@typescript-eslint/eslint-plugin');
 const tsParser = require('@typescript-eslint/parser');
 const prettierConfig = require('eslint-config-prettier');
@@ -36,11 +37,9 @@ module.exports = [
         },
       },
       globals: {
-        browser: 'readonly',
-        console: 'readonly',
-        module: 'readonly',
-        process: 'readonly',
-        require: 'readonly',
+        ...globals.browser,
+        ...globals.node,
+        React: 'readonly',
       },
     },
     plugins: {
