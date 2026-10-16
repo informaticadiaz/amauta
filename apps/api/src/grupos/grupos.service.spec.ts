@@ -909,10 +909,18 @@ describe('GruposService', () => {
   ];
 
   const calificacionesMock = [
-    { estudianteId: cuidEstudiante1, materia: 'Matemáticas', nota: 8 },
-    { estudianteId: cuidEstudiante1, materia: 'Lengua', nota: 7 },
-    { estudianteId: cuidEstudiante2, materia: 'Matemáticas', nota: 9 },
-    { estudianteId: cuidEstudiante2, materia: 'Lengua', nota: 10 },
+    {
+      estudianteId: cuidEstudiante1,
+      materia: { nombre: 'Matemáticas' },
+      nota: 8,
+    },
+    { estudianteId: cuidEstudiante1, materia: { nombre: 'Lengua' }, nota: 7 },
+    {
+      estudianteId: cuidEstudiante2,
+      materia: { nombre: 'Matemáticas' },
+      nota: 9,
+    },
+    { estudianteId: cuidEstudiante2, materia: { nombre: 'Lengua' }, nota: 10 },
   ];
 
   describe('reporteAsistencia', () => {

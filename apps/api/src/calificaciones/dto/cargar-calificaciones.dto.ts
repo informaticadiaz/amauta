@@ -14,10 +14,7 @@ const calificacionItemSchema = z.object({
 export const cargarCalificacionesSchema = z
   .object({
     periodoAcademicoId: z.string().cuid('ID de período académico inválido'),
-    materia: z
-      .string()
-      .min(1, 'La materia no puede estar vacía')
-      .max(100, 'La materia no puede exceder 100 caracteres'),
+    materiaId: z.string().cuid('ID de materia inválido'),
     calificaciones: z
       .array(calificacionItemSchema)
       .min(1, 'Debes enviar al menos una calificación'),

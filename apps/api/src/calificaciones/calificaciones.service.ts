@@ -34,12 +34,12 @@ interface EstudianteCalificacion {
 export interface ListaCalificacionesResponse {
   grupoId: string;
   periodoAcademicoId: string;
-  materia: string;
+  materia: { id: string; nombre: string };
   estudiantes: EstudianteCalificacion[];
 }
 
 interface CalificacionEstudiante {
-  materia: string;
+  materia: { id: string; nombre: string };
   nota: number;
   observaciones: string | null;
   updatedAt: Date;
@@ -54,7 +54,7 @@ export interface MisCalificacionesResponse {
 export interface CargaCalificacionesResponse {
   grupoId: string;
   periodoAcademicoId: string;
-  materia: string;
+  materia: { id: string; nombre: string };
   procesadas: number;
 }
 
@@ -75,7 +75,7 @@ export class CalificacionesService {
     }
 
     const grupo = await this.validarAccesoAGrupo(grupoId, usuarioId);
-    const { periodoAcademicoId, materia } = result.data;
+    const { periodoAcademicoId, materiaId } = result.data;
 
     const [estudiantesActivos, calificaciones] = await Promise.all([
       this.obtenerEstudiantesActivos(grupo.id),
@@ -83,7 +83,7 @@ export class CalificacionesService {
         where: {
           grupoId: grupo.id,
           periodoAcademicoId,
-          materia,
+          materiaId,
         },
         select: {
           estudianteId: true,
@@ -98,6 +98,7 @@ export class CalificacionesService {
       calificaciones.map((c) => [c.estudianteId, c])
     );
 
+    const materia = await this.obtenerMateriaAsignada(grupo.id, materiaId);
     return {
       grupoId: grupo.id,
       periodoAcademicoId,
@@ -130,7 +131,7 @@ export class CalificacionesService {
     }
 
     const grupo = await this.validarAccesoAGrupo(grupoId, usuarioId);
-    const { periodoAcademicoId, materia, calificaciones } = result.data;
+    const { periodoAcademicoId, materiaId, calificaciones } = result.data;
 
     const [estudiantesActivos, periodo, escala] = await Promise.all([
       this.obtenerEstudiantesActivos(grupo.id),
@@ -154,6 +155,7 @@ export class CalificacionesService {
       );
     }
 
+    const materia = await this.obtenerMateriaAsignada(grupo.id, materiaId);
     const estudiantesActivosIds = new Set(
       estudiantesActivos.map((registro) => registro.estudianteId)
     );
@@ -178,18 +180,18 @@ export class CalificacionesService {
       const observaciones = item.observaciones?.trim() || null;
       return this.prisma.calificacion.upsert({
         where: {
-          grupoId_estudianteId_periodoAcademicoId_materia: {
+          grupoId_estudianteId_periodoAcademicoId_materiaId: {
             grupoId: grupo.id,
             estudianteId: item.estudianteId,
             periodoAcademicoId,
-            materia,
+            materiaId,
           },
         },
         create: {
           grupoId: grupo.id,
           estudianteId: item.estudianteId,
           periodoAcademicoId,
-          materia,
+          materiaId,
           nota: item.nota,
           observaciones,
         },
@@ -220,17 +222,33 @@ export class CalificacionesService {
         ...(periodoAcademicoId ? { periodoAcademicoId } : {}),
       },
       select: {
-        materia: true,
+        materia: { select: { id: true, nombre: true } },
         nota: true,
         observaciones: true,
         updatedAt: true,
         grupo: { select: { nombre: true } },
         periodoAcademico: { select: { id: true, nombre: true } },
       },
-      orderBy: [{ periodoAcademicoId: 'asc' }, { materia: 'asc' }],
+      orderBy: [{ periodoAcademicoId: 'asc' }, { materia: { nombre: 'asc' } }],
     });
 
     return { calificaciones };
+  }
+
+  private async obtenerMateriaAsignada(grupoId: string, materiaId: string) {
+    const asignacion = await this.prisma.grupoMateria.findUnique({
+      where: { grupoId_materiaId: { grupoId, materiaId } },
+      select: {
+        activo: true,
+        materia: { select: { id: true, nombre: true, activo: true } },
+      },
+    });
+    if (!asignacion?.activo || !asignacion.materia.activo) {
+      throw new BadRequestException(
+        'La materia no está asignada y activa en el grupo'
+      );
+    }
+    return asignacion.materia;
   }
 
   private async validarAccesoAGrupo(

@@ -26,6 +26,7 @@ describe('CalificacionesService', () => {
     grupo: { findUnique: jest.fn() },
     grupoEducador: { findUnique: jest.fn() },
     grupoEstudiante: { findMany: jest.fn() },
+    grupoMateria: { findUnique: jest.fn() },
     periodoAcademico: { findUnique: jest.fn() },
     escalaCalificacion: { findUnique: jest.fn() },
     calificacion: {
@@ -110,12 +111,23 @@ describe('CalificacionesService', () => {
   // ─── listarCalificaciones ─────────────────────────────────────────────────
 
   describe('listarCalificaciones', () => {
-    const query = { periodoAcademicoId: PERIODO_ID, materia: 'Matemática' };
+    const query = {
+      periodoAcademicoId: PERIODO_ID,
+      materiaId: 'ckr0000000000000000000008',
+    };
 
     function setupAccesoAdmin() {
       prisma.grupo.findUnique.mockResolvedValue(grupo);
       prisma.usuario.findUnique.mockResolvedValue(adminUser);
       prisma.institucion.findFirst.mockResolvedValue(institucion);
+      prisma.grupoMateria.findUnique.mockResolvedValue({
+        activo: true,
+        materia: {
+          id: 'ckr0000000000000000000008',
+          nombre: 'Matemática',
+          activo: true,
+        },
+      });
     }
 
     it('debería retornar nómina con notas existentes y null para los que no tienen', async () => {
@@ -166,7 +178,7 @@ describe('CalificacionesService', () => {
   describe('cargarCalificaciones', () => {
     const dto = {
       periodoAcademicoId: PERIODO_ID,
-      materia: 'Matemática',
+      materiaId: 'ckr0000000000000000000008',
       calificaciones: [
         { estudianteId: ESTUDIANTE_1_ID, nota: 8, observaciones: null },
         { estudianteId: ESTUDIANTE_2_ID, nota: 7, observaciones: null },
@@ -177,9 +189,25 @@ describe('CalificacionesService', () => {
       prisma.grupo.findUnique.mockResolvedValue(grupo);
       prisma.usuario.findUnique.mockResolvedValue(adminUser);
       prisma.institucion.findFirst.mockResolvedValue(institucion);
+      prisma.grupoMateria.findUnique.mockResolvedValue({
+        activo: true,
+        materia: {
+          id: 'ckr0000000000000000000008',
+          nombre: 'Matemática',
+          activo: true,
+        },
+      });
       prisma.grupoEstudiante.findMany.mockResolvedValue(nomina);
       prisma.periodoAcademico.findUnique.mockResolvedValue(periodo);
       prisma.escalaCalificacion.findUnique.mockResolvedValue(escala);
+      prisma.grupoMateria.findUnique.mockResolvedValue({
+        activo: true,
+        materia: {
+          id: 'ckr0000000000000000000008',
+          nombre: 'Matemática',
+          activo: true,
+        },
+      });
       prisma.$transaction.mockResolvedValue([]);
     }
 
@@ -247,12 +275,28 @@ describe('CalificacionesService', () => {
       prisma.grupo.findUnique.mockResolvedValue(grupo);
       prisma.usuario.findUnique.mockResolvedValue(adminUser);
       prisma.institucion.findFirst.mockResolvedValue(institucion);
+      prisma.grupoMateria.findUnique.mockResolvedValue({
+        activo: true,
+        materia: {
+          id: 'ckr0000000000000000000008',
+          nombre: 'Matemática',
+          activo: true,
+        },
+      });
       prisma.grupoEstudiante.findMany.mockResolvedValue(nomina);
       prisma.periodoAcademico.findUnique.mockResolvedValue({
         id: PERIODO_ID,
         institucionId: 'otra-institucion-id', // institución diferente
       });
       prisma.escalaCalificacion.findUnique.mockResolvedValue(escala);
+      prisma.grupoMateria.findUnique.mockResolvedValue({
+        activo: true,
+        materia: {
+          id: 'ckr0000000000000000000008',
+          nombre: 'Matemática',
+          activo: true,
+        },
+      });
 
       await expect(
         service.cargarCalificaciones(GRUPO_ID, dto, ADMIN_ID)
@@ -263,7 +307,7 @@ describe('CalificacionesService', () => {
   describe('getMisCalificaciones', () => {
     const calMock = [
       {
-        materia: 'Matemáticas',
+        materia: { id: 'ckr0000000000000000000008', nombre: 'Matemáticas' },
         nota: 8.5,
         observaciones: null,
         updatedAt: new Date('2026-03-01'),
@@ -278,7 +322,7 @@ describe('CalificacionesService', () => {
       const result = await service.getMisCalificaciones(ESTUDIANTE_1_ID);
 
       expect(result.calificaciones).toHaveLength(1);
-      expect(result.calificaciones[0].materia).toBe('Matemáticas');
+      expect(result.calificaciones[0].materia.nombre).toBe('Matemáticas');
       expect(prisma.calificacion.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
           where: expect.objectContaining({ estudianteId: ESTUDIANTE_1_ID }),

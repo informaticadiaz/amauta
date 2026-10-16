@@ -23,6 +23,7 @@ import { InstitucionesModule } from './instituciones/instituciones.module';
 import { GruposModule } from './grupos/grupos.module';
 import { AsistenciasModule } from './asistencias/asistencias.module';
 import { CalificacionesModule } from './calificaciones/calificaciones.module';
+import { MateriasModule } from './materias/materias.module';
 import { BoletinModule } from './boletin/boletin.module';
 import { ForosModule } from './foros/foros.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
@@ -54,6 +55,7 @@ import { JwtAuthGuard, RolesGuard } from './common/guards';
     GruposModule,
     AsistenciasModule,
     CalificacionesModule,
+    MateriasModule,
     BoletinModule,
     NotificacionesModule,
     ForosModule,

@@ -81,8 +81,8 @@ describe('BoletinService', () => {
         apellido: 'García',
       });
       prisma.calificacion.findMany.mockResolvedValue([
-        { materia: 'Matemáticas', nota: 8.5, observaciones: null },
-        { materia: 'Lengua', nota: 9.0, observaciones: null },
+        { materia: { nombre: 'Matemáticas' }, nota: 8.5, observaciones: null },
+        { materia: { nombre: 'Lengua' }, nota: 9.0, observaciones: null },
       ]);
       prisma.asistencia.findMany.mockResolvedValue([
         { estado: 'PRESENTE' },

@@ -115,8 +115,12 @@ export class BoletinService {
             grupoId,
             periodoAcademicoId: periodoId,
           },
-          select: { materia: true, nota: true, observaciones: true },
-          orderBy: { materia: 'asc' },
+          select: {
+            materia: { select: { nombre: true } },
+            nota: true,
+            observaciones: true,
+          },
+          orderBy: { materia: { nombre: 'asc' } },
         }),
         this.prisma.asistencia.findMany({
           where: {
@@ -155,7 +159,10 @@ export class BoletinService {
       institucion: grupo.institucion,
       periodo,
       grupo: { nombre: grupo.nombre },
-      calificaciones,
+      calificaciones: calificaciones.map((calificacion) => ({
+        ...calificacion,
+        materia: calificacion.materia.nombre,
+      })),
       asistencia: {
         total,
         presente,

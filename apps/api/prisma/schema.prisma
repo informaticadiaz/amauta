@@ -32,28 +32,28 @@ model Usuario {
   updatedAt DateTime @updatedAt
 
   // Relaciones
-  perfil        Perfil?
-  cursosCreados Curso[]        @relation("Educador")
-  inscripciones Inscripcion[]
-  progresos     Progreso[]
-  asistencias   Asistencia[]
-  calificaciones Calificacion[]
-  comunicados    Comunicado[]
-  gruposCreados  Grupo[]
-  gruposEstudiante           GrupoEstudiante[] @relation("GrupoEstudianteUsuario")
-  asignacionesGrupoRealizadas GrupoEstudiante[] @relation("GrupoEstudianteAsignadoPor")
-  remocionesGrupoRealizadas   GrupoEstudiante[] @relation("GrupoEstudianteRemovidoPor")
-  gruposEducador              GrupoEducador[] @relation("GrupoEducadorUsuario")
-  asignacionesEducadorRealizadas GrupoEducador[] @relation("GrupoEducadorAsignadoPor")
-  remocionesEducadorRealizadas   GrupoEducador[] @relation("GrupoEducadorRemovidoPor")
-  evaluacionesCreadas Evaluacion[] @relation("Evaluador")
-  intentosEvaluacion  IntentoEvaluacion[]
+  perfil                         Perfil?
+  cursosCreados                  Curso[]             @relation("Educador")
+  inscripciones                  Inscripcion[]
+  progresos                      Progreso[]
+  asistencias                    Asistencia[]
+  calificaciones                 Calificacion[]
+  comunicados                    Comunicado[]
+  gruposCreados                  Grupo[]
+  gruposEstudiante               GrupoEstudiante[]   @relation("GrupoEstudianteUsuario")
+  asignacionesGrupoRealizadas    GrupoEstudiante[]   @relation("GrupoEstudianteAsignadoPor")
+  remocionesGrupoRealizadas      GrupoEstudiante[]   @relation("GrupoEstudianteRemovidoPor")
+  gruposEducador                 GrupoEducador[]     @relation("GrupoEducadorUsuario")
+  asignacionesEducadorRealizadas GrupoEducador[]     @relation("GrupoEducadorAsignadoPor")
+  remocionesEducadorRealizadas   GrupoEducador[]     @relation("GrupoEducadorRemovidoPor")
+  evaluacionesCreadas            Evaluacion[]        @relation("Evaluador")
+  intentosEvaluacion             IntentoEvaluacion[]
 
   // Comunidad y foros
-  postsForo       ForoPost[]      @relation("AutorForoPost")
-  respuestasForo  ForoRespuesta[] @relation("AutorForoRespuesta")
-  reaccionesForo  ReaccionForo[]  @relation("ReaccionForoUsuario")
-  notificaciones  Notificacion[]  @relation("NotificacionUsuario")
+  postsForo      ForoPost[]      @relation("AutorForoPost")
+  respuestasForo ForoRespuesta[] @relation("AutorForoRespuesta")
+  reaccionesForo ReaccionForo[]  @relation("ReaccionForoUsuario")
+  notificaciones Notificacion[]  @relation("NotificacionUsuario")
 
   @@index([email])
   @@index([rol])
@@ -113,10 +113,10 @@ model Categoria {
 
 /// Curso educativo
 model Curso {
-  id          String      @id @default(cuid())
+  id          String @id @default(cuid())
   titulo      String
   descripcion String
-  slug        String      @unique
+  slug        String @unique
 
   educadorId String
   educador   Usuario @relation("Educador", fields: [educadorId], references: [id])
@@ -132,8 +132,8 @@ model Curso {
   idioma   String  @default("es")
 
   publicadoEn DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   // Relaciones
   lecciones     Leccion[]
@@ -165,7 +165,7 @@ enum EstadoCurso {
 
 /// Lección dentro de un curso
 model Leccion {
-  id          String      @id @default(cuid())
+  id          String  @id @default(cuid())
   titulo      String
   descripcion String?
   orden       Int
@@ -265,11 +265,11 @@ model Progreso {
   completado Boolean @default(false)
   porcentaje Int     @default(0) // 0-100
 
-  ultimoAcceso DateTime @default(now())
+  ultimoAcceso DateTime  @default(now())
   completadoEn DateTime?
 
   // Para quizzes y evaluaciones
-  intentos     Int   @default(0)
+  intentos     Int    @default(0)
   mejorPuntaje Float?
 
   createdAt DateTime @default(now())
@@ -301,7 +301,7 @@ model Evaluacion {
   puntajeMinimo   Float?
   intentosMaximos Int?
 
-  publicada  Boolean @default(false)
+  publicada   Boolean   @default(false)
   publicadoEn DateTime?
 
   createdAt DateTime @default(now())
@@ -318,14 +318,14 @@ model Evaluacion {
 
 /// Pregunta de una evaluación
 model Pregunta {
-  id          String  @id @default(cuid())
-  enunciado   String
-  tipo        TipoPregunta
-  orden       Int
-  puntaje     Float   @default(1)
+  id        String       @id @default(cuid())
+  enunciado String
+  tipo      TipoPregunta
+  orden     Int
+  puntaje   Float        @default(1)
 
-  opciones    Json?
-  respuesta   Json?
+  opciones  Json?
+  respuesta Json?
 
   evaluacionId String
   evaluacion   Evaluacion @relation(fields: [evaluacionId], references: [id], onDelete: Cascade)
@@ -348,12 +348,12 @@ model IntentoEvaluacion {
   usuarioId String
   usuario   Usuario @relation(fields: [usuarioId], references: [id])
 
-  numero    Int   @default(1)
-  puntaje   Float @default(0)
-  completado Boolean @default(false)
+  numero            Int     @default(1)
+  puntaje           Float   @default(0)
+  completado        Boolean @default(false)
   tiempoEmpleadoSeg Int?
 
-  iniciadoEn  DateTime @default(now())
+  iniciadoEn   DateTime  @default(now())
   completadoEn DateTime?
 
   createdAt DateTime @default(now())
@@ -381,9 +381,9 @@ enum TipoPregunta {
 
 /// Institución educativa
 model Institucion {
-  id   String          @id @default(cuid())
+  id     String          @id @default(cuid())
   nombre String
-  tipo TipoInstitucion
+  tipo   TipoInstitucion
 
   direccion String?
   telefono  String?
@@ -399,6 +399,7 @@ model Institucion {
   comunicados        Comunicado[]
   periodosAcademicos PeriodoAcademico[]
   escalaCalificacion EscalaCalificacion?
+  materias           Materia[]
 
   @@map("instituciones")
 }
@@ -421,8 +422,8 @@ model PeriodoAcademico {
   nombre      String
   fechaInicio DateTime
   fechaFin    DateTime
-  orden       Int @default(1)
-  activo      Boolean @default(true)
+  orden       Int      @default(1)
+  activo      Boolean  @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -439,12 +440,12 @@ model PeriodoAcademico {
 model EscalaCalificacion {
   id String @id @default(cuid())
 
-  institucionId String @unique
+  institucionId String      @unique
   institucion   Institucion @relation(fields: [institucionId], references: [id])
 
-  notaMinima     Float @default(0)
-  notaMaxima     Float @default(10)
-  notaAprobacion Float @default(6)
+  notaMinima     Float   @default(0)
+  notaMaxima     Float   @default(10)
+  notaAprobacion Float   @default(6)
   descripcion    String?
 
   createdAt DateTime @default(now())
@@ -479,6 +480,7 @@ model Grupo {
   educadores     GrupoEducador[]
   asistencias    Asistencia[]
   calificaciones Calificacion[]
+  materias       GrupoMateria[]
 
   @@index([institucionId])
   @@index([educadorId])
@@ -500,8 +502,8 @@ model GrupoEstudiante {
   removidoPorId String?
   removidoPor   Usuario? @relation("GrupoEstudianteRemovidoPor", fields: [removidoPorId], references: [id])
 
-  inscritoEn DateTime @default(now())
-  activo     Boolean  @default(true)
+  inscritoEn DateTime  @default(now())
+  activo     Boolean   @default(true)
   removidoEn DateTime?
 
   createdAt DateTime @default(now())
@@ -535,8 +537,8 @@ model GrupoEducador {
   removidoPorId String?
   removidoPor   Usuario? @relation("GrupoEducadorRemovidoPor", fields: [removidoPorId], references: [id])
 
-  asignadoEn DateTime @default(now())
-  activo     Boolean  @default(true)
+  asignadoEn DateTime  @default(now())
+  activo     Boolean   @default(true)
   removidoEn DateTime?
 
   createdAt DateTime @default(now())
@@ -580,6 +582,38 @@ enum EstadoAsistencia {
   JUSTIFICADO
 }
 
+/// Materia del segmento de educación escolar formal. No se usa para cursos de formación.
+model Materia {
+  id             String         @id @default(cuid())
+  nombre         String
+  descripcion    String?
+  institucionId  String
+  institucion    Institucion    @relation(fields: [institucionId], references: [id])
+  activo         Boolean        @default(true)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  calificaciones Calificacion[]
+  grupos         GrupoMateria[]
+
+  @@unique([institucionId, nombre])
+  @@index([institucionId, activo])
+  @@map("materias")
+}
+
+model GrupoMateria {
+  grupoId   String
+  grupo     Grupo    @relation(fields: [grupoId], references: [id])
+  materiaId String
+  materia   Materia  @relation(fields: [materiaId], references: [id])
+  activo    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([grupoId, materiaId])
+  @@index([materiaId, activo])
+  @@map("grupos_materias")
+}
+
 /// Calificación de un estudiante
 model Calificacion {
   id String @id @default(cuid())
@@ -593,15 +627,16 @@ model Calificacion {
   periodoAcademicoId String
   periodoAcademico   PeriodoAcademico @relation(fields: [periodoAcademicoId], references: [id])
 
-  materia String
-  nota    Float
+  materiaId String
+  materia   Materia @relation(fields: [materiaId], references: [id])
+  nota      Float
 
   observaciones String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([grupoId, estudianteId, periodoAcademicoId, materia])
+  @@unique([grupoId, estudianteId, periodoAcademicoId, materiaId])
   @@index([grupoId, periodoAcademicoId])
   @@index([estudianteId, periodoAcademicoId])
   @@map("calificaciones")
@@ -678,7 +713,7 @@ enum TipoNotificacion {
 
 /// Publicación en el foro de un curso
 model ForoPost {
-  id       String @id @default(cuid())
+  id String @id @default(cuid())
 
   cursoId String
   curso   Curso  @relation(fields: [cursoId], references: [id], onDelete: Cascade)
@@ -694,11 +729,11 @@ model ForoPost {
   vistas    Int            @default(0)
   eliminado Boolean        @default(false)
 
-  creadoEn     DateTime @default(now())
+  creadoEn      DateTime @default(now())
   actualizadoEn DateTime @updatedAt
 
-  respuestas ForoRespuesta[]
-  notificaciones Notificacion[] @relation("NotificacionPost")
+  respuestas     ForoRespuesta[]
+  notificaciones Notificacion[]  @relation("NotificacionPost")
 
   @@index([cursoId])
   @@index([autorId])
@@ -727,7 +762,7 @@ model ForoRespuesta {
   esSolucion Boolean @default(false)
   eliminado  Boolean @default(false)
 
-  creadoEn     DateTime @default(now())
+  creadoEn      DateTime @default(now())
   actualizadoEn DateTime @updatedAt
 
   reacciones     ReaccionForo[]

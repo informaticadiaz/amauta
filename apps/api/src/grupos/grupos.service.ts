@@ -1137,7 +1137,11 @@ export class GruposService {
           grupoId,
           ...(periodoId ? { periodoAcademicoId: periodoId } : {}),
         },
-        select: { estudianteId: true, materia: true, nota: true },
+        select: {
+          estudianteId: true,
+          materia: { select: { nombre: true } },
+          nota: true,
+        },
       }),
       periodoId
         ? this.prisma.periodoAcademico.findUnique({
@@ -1165,7 +1169,7 @@ export class GruposService {
         },
         promedioCalificaciones,
         calificaciones: califs.map((c) => ({
-          materia: c.materia,
+          materia: c.materia.nombre,
           nota: c.nota,
         })),
       };
