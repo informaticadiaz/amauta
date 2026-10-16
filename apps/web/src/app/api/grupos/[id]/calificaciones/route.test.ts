@@ -35,27 +35,27 @@ describe('API /api/grupos/[id]/calificaciones', () => {
     jest.resetAllMocks();
   });
 
-  it('debería reenviar GET con periodoAcademicoId y materia al backend', async () => {
+  it('debería reenviar GET con periodoAcademicoId y materiaId al backend', async () => {
     getAuthenticatedBackendToken.mockResolvedValue('token-demo');
     (global.fetch as jest.Mock).mockResolvedValue({
       status: 200,
       json: async () => ({
         grupoId: 'grupo-1',
         periodoAcademicoId: 'periodo-1',
-        materia: 'Matemática',
+        materiaId: 'materia-1',
         estudiantes: [],
       }),
     });
 
     const response = await GET(
       {
-        url: 'http://localhost/api/grupos/grupo-1/calificaciones?periodoAcademicoId=periodo-1&materia=Matem%C3%A1tica',
+        url: 'http://localhost/api/grupos/grupo-1/calificaciones?periodoAcademicoId=periodo-1&materiaId=materia-1',
       } as never,
       { params: Promise.resolve({ id: 'grupo-1' }) }
     );
 
     expect(global.fetch).toHaveBeenCalledWith(
-      'http://api.test/api/v1/grupos/grupo-1/calificaciones?periodoAcademicoId=periodo-1&materia=Matem%C3%A1tica',
+      'http://api.test/api/v1/grupos/grupo-1/calificaciones?periodoAcademicoId=periodo-1&materiaId=materia-1',
       expect.objectContaining({
         method: 'GET',
         headers: { Authorization: 'Bearer token-demo' },
@@ -79,7 +79,7 @@ describe('API /api/grupos/[id]/calificaciones', () => {
         url: 'http://localhost/api/grupos/grupo-1/calificaciones',
         json: async () => ({
           periodoAcademicoId: 'periodo-1',
-          materia: 'Matemática',
+          materiaId: 'materia-1',
           calificaciones: [
             {
               estudianteId: 'cm8estudiante000000000000001',
@@ -101,7 +101,7 @@ describe('API /api/grupos/[id]/calificaciones', () => {
         },
         body: JSON.stringify({
           periodoAcademicoId: 'periodo-1',
-          materia: 'Matemática',
+          materiaId: 'materia-1',
           calificaciones: [
             {
               estudianteId: 'cm8estudiante000000000000001',

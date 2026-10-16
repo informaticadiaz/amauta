@@ -197,6 +197,12 @@ export function Sidebar() {
       ),
     },
     {
+      href: '/dashboard/materias',
+      label: 'Materias',
+      show: isAdminEscuela,
+      icon: <span aria-hidden="true">M</span>,
+    },
+    {
       href: '/dashboard/calificaciones',
       label: 'Calificaciones',
       show: isAdminEscuela || isEducador,

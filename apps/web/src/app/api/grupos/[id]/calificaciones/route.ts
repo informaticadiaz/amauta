@@ -23,10 +23,10 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const query = new URLSearchParams();
     const periodoAcademicoId = searchParams.get('periodoAcademicoId');
-    const materia = searchParams.get('materia');
+    const materiaId = searchParams.get('materiaId');
 
     if (periodoAcademicoId) query.set('periodoAcademicoId', periodoAcademicoId);
-    if (materia) query.set('materia', materia);
+    if (materiaId) query.set('materiaId', materiaId);
 
     const qs = query.toString();
     const url = `${getApiUrl()}/api/v1/grupos/${id}/calificaciones${qs ? `?${qs}` : ''}`;

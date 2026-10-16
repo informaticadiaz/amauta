@@ -38,10 +38,15 @@ interface EstudianteCalificacion {
   observaciones: string | null;
 }
 
+interface MateriaItem {
+  id: string;
+  nombre: string;
+}
+
 interface NominaCalificacionesResponse {
   grupoId: string;
   periodoAcademicoId: string;
-  materia: string;
+  materia: MateriaItem;
   estudiantes: EstudianteCalificacion[];
 }
 
@@ -86,7 +91,7 @@ function exportarCSV(
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `calificaciones-${nomina.materia}-${nomina.periodoAcademicoId}.csv`;
+  a.download = `calificaciones-${nomina.materia.nombre}-${nomina.periodoAcademicoId}.csv`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -104,8 +109,9 @@ export function CalificacionesRapidasSection() {
   const [periodosLoading, setPeriodosLoading] = useState(false);
   const [selectedPeriodoId, setSelectedPeriodoId] = useState('');
 
-  const [materia, setMateria] = useState('');
-  const [materiaInput, setMateriaInput] = useState('');
+  const [materias, setMaterias] = useState<MateriaItem[]>([]);
+  const [materiasLoading, setMateriasLoading] = useState(false);
+  const [materiaId, setMateriaId] = useState('');
 
   const [nomina, setNomina] = useState<NominaCalificacionesResponse | null>(
     null
@@ -201,8 +207,8 @@ export function CalificacionesRapidasSection() {
   function handleGrupoChange(grupoId: string) {
     setSelectedGrupoId(grupoId);
     setSelectedPeriodoId('');
-    setMateria('');
-    setMateriaInput('');
+    setMateriaId('');
+    setMaterias([]);
     setNomina(null);
     setDraft({});
 
@@ -213,6 +219,31 @@ export function CalificacionesRapidasSection() {
       }
     }
   }
+
+  // Las calificaciones solo usan materias asignadas al grupo seleccionado.
+  useEffect(() => {
+    if (!selectedGrupoId) return;
+    let isActive = true;
+    async function loadMaterias() {
+      try {
+        setMateriasLoading(true);
+        const response = await fetch(`/api/grupos/${selectedGrupoId}/materias`);
+        if (!response.ok) throw new Error('Error al cargar materias del grupo');
+        const data = (await response.json()) as { materias: MateriaItem[] };
+        if (!isActive) return;
+        setMaterias(data.materias);
+        setMateriaId((current) => current || data.materias[0]?.id || '');
+      } catch {
+        if (isActive) setMaterias([]);
+      } finally {
+        if (isActive) setMateriasLoading(false);
+      }
+    }
+    loadMaterias();
+    return () => {
+      isActive = false;
+    };
+  }, [selectedGrupoId]);
 
   // Cargar períodos cuando cambia el institucionId
   useEffect(() => {
@@ -255,9 +286,7 @@ export function CalificacionesRapidasSection() {
 
   // Cargar nómina cuando se ejecuta la búsqueda
   async function handleBuscar() {
-    if (!selectedGrupoId || !selectedPeriodoId || !materiaInput.trim()) return;
-
-    const materiaFinal = materiaInput.trim();
+    if (!selectedGrupoId || !selectedPeriodoId || !materiaId) return;
 
     setNominaLoading(true);
     setNominaError(null);
@@ -269,7 +298,7 @@ export function CalificacionesRapidasSection() {
       const url =
         `/api/grupos/${selectedGrupoId}/calificaciones` +
         `?periodoAcademicoId=${encodeURIComponent(selectedPeriodoId)}` +
-        `&materia=${encodeURIComponent(materiaFinal)}`;
+        `&materiaId=${encodeURIComponent(materiaId)}`;
 
       const response = await fetch(url);
 
@@ -280,7 +309,7 @@ export function CalificacionesRapidasSection() {
 
       const payload = (await response.json()) as NominaCalificacionesResponse;
       setNomina(payload);
-      setMateria(materiaFinal);
+      setMateriaId(payload.materia.id);
     } catch (error) {
       setNominaError(
         error instanceof Error
@@ -345,7 +374,7 @@ export function CalificacionesRapidasSection() {
     if (
       !selectedGrupoId ||
       !selectedPeriodoId ||
-      !materia ||
+      !materiaId ||
       pendingChanges.length === 0
     ) {
       return;
@@ -362,7 +391,7 @@ export function CalificacionesRapidasSection() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             periodoAcademicoId: selectedPeriodoId,
-            materia,
+            materiaId,
             calificaciones: pendingChanges,
           }),
         }
@@ -381,7 +410,7 @@ export function CalificacionesRapidasSection() {
       const refreshRes = await fetch(
         `/api/grupos/${selectedGrupoId}/calificaciones` +
           `?periodoAcademicoId=${encodeURIComponent(selectedPeriodoId)}` +
-          `&materia=${encodeURIComponent(materia)}`
+          `&materiaId=${encodeURIComponent(materiaId)}`
       );
 
       if (!refreshRes.ok) {
@@ -456,19 +485,20 @@ export function CalificacionesRapidasSection() {
 
           <label className="space-y-2 text-sm font-medium text-[var(--foreground)]">
             <span>Materia</span>
-            <input
+            <select
               aria-label="Materia"
-              type="text"
-              value={materiaInput}
-              onChange={(e) => setMateriaInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') handleBuscar();
-              }}
-              placeholder="Ej: Matemática"
-              maxLength={100}
-              disabled={!selectedGrupoId || !selectedPeriodoId}
-              className="w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]"
-            />
+              value={materiaId}
+              onChange={(e) => setMateriaId(e.target.value)}
+              disabled={materiasLoading || materias.length === 0}
+              className="w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)]"
+            >
+              <option value="">Seleccioná una materia</option>
+              {materias.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.nombre}
+                </option>
+              ))}
+            </select>
           </label>
 
           <div className="flex flex-col justify-end">
@@ -479,7 +509,7 @@ export function CalificacionesRapidasSection() {
                 nominaLoading ||
                 !selectedGrupoId ||
                 !selectedPeriodoId ||
-                !materiaInput.trim()
+                !materiaId
               }
               className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60"
             >

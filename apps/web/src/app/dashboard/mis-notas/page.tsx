@@ -5,7 +5,7 @@ import { useAuthorization } from '@/hooks/useAuthorization';
 import { useRouter } from 'next/navigation';
 
 interface Calificacion {
-  materia: string;
+  materia: { id: string; nombre: string };
   nota: number;
   observaciones: string | null;
   updatedAt: string;
@@ -117,11 +117,11 @@ export default function MisNotasPage() {
               <tbody>
                 {cals.map((cal, i) => (
                   <tr
-                    key={`${cal.materia}-${i}`}
+                    key={`${cal.materia.id}-${i}`}
                     className="border-b border-[var(--border)] last:border-0"
                   >
                     <td className="px-4 py-3 text-[var(--foreground)]">
-                      {cal.materia}
+                      {cal.materia.nombre}
                     </td>
                     <td className="px-4 py-3 text-[var(--muted)]">
                       {cal.grupo.nombre}
