@@ -49,6 +49,7 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 
 ### T2 — Mapear el contrato actual de búsqueda
 
+- Estado: completado
 - Spec: S2
 - Ruta: `apps/api/src/cursos`, `apps/web/src/app`, `apps/web/src/components`, documentación y tests de búsqueda
 - Dependencias: T1
@@ -60,10 +61,29 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 - Criterio de cierre: cada comportamiento observable de búsqueda tiene una fuente y un test o una brecha registrada.
 - Verificación: lectura del flujo completo y tests existentes ejecutados sin modificaciones funcionales.
 - Riesgo: item 3 — cambios de nombres o semántica pueden romper consumidores existentes.
+- Evidencia:
+  - Backend: `apps/api/src/cursos/cursos.controller.ts:80-93`, `apps/api/src/cursos/dto/busqueda-cursos.dto.ts:3-16` y `apps/api/src/cursos/cursos.service.ts:609-731`.
+  - Frontend: `apps/web/src/app/cursos/page.tsx:54-105`, `apps/web/src/components/catalogo/BuscadorCursos.tsx`, `FiltrosCursos.tsx`, `PaginacionCursos.tsx` y `CatalogoCursos.tsx`.
+  - Diseño funcional: `docs/project-management/fase-6-diseno-funcional-busqueda.md:43-148`.
+  - Tests: `apps/api/src/cursos/cursos.service.spec.ts:583-701` y suites de `apps/web/src/components/catalogo/__tests__/`.
+- Matriz resumida:
+  - `GET /api/v1/cursos/buscar` → `BusquedaCursosDto` → `buscarCursos` → sin proxy GET dedicado → catálogo y componentes → cobertura parcial del service y componentes.
+  - Parámetros backend: `page`, `limit`, `buscar`, `categoriaId`, `nivel`, `duracion`, `idioma`, `ordenarPor`, `orden`. La UI solo conserva `page`, `buscar`, `categoriaId`, `nivel`, `ordenarPor` y `orden`.
+  - Respuesta: `{ cursos, total, page, limit, totalPages }`; los cursos incluyen relaciones de educador/categoría y contadores según la consulta backend.
+  - Orden: backend define `publicadoEn` sin búsqueda y relevancia con búsqueda; la UI llama `GET /cursos`, cuya semántica de listado general no coincide con ese contrato.
+  - Vacíos y errores: el backend distingue lista vacía válida de error de validación; la página captura errores y los convierte en una lista vacía, mientras el componente muestra un único estado vacío.
+- Brechas registradas:
+  1. La página de catálogo usa `GET /cursos?estado=PUBLICADO` en lugar de `GET /cursos/buscar`.
+  2. `duracion`, `idioma` y el selector de orden exigido por el diseño funcional no están disponibles en la UI.
+  3. La UI no diferencia catálogo sin cursos, búsqueda sin resultados y error de carga.
+  4. No hay test de integración página → API ni test del método `controller.buscar`; la cobertura del service no cubre todos los filtros, límites, desempates, orden explícito ni paginación de relevancia.
+  5. La implementación de relevancia prioriza coincidencias literales en título y pagina en memoria; requiere decisión posterior basada en evidencia, no un cambio dentro de T2.
+- Propuesta de contrato compartido: estabilizar primero el contrato público de `GET /cursos/buscar` y sus estados observables; no extraer tipos ni cambiar nombres hasta completar T3 y resolver la divergencia entre catálogo y endpoint.
 - Commit: pendiente
 
 ### T3 — Auditar búsqueda funcionalmente y establecer baseline
 
+- Estado: bloqueado
 - Spec: S3
 - Ruta: búsqueda backend, proxy/frontend y `apps/e2e`
 - Dependencias: T2
@@ -181,3 +201,15 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 > "quiero que uses este analisis para crear un plan con odd para atender las mejoras que creas conveniente"
 
 El análisis inicial identificó una arquitectura funcional pero con desalineación entre código y documentación, una búsqueda que requiere auditoría funcional y de rendimiento, paquetes compartidos mínimos, uso incierto de Redis y cobertura crítica por reforzar. Este plan prioriza consolidar evidencia y contratos antes de introducir optimizaciones o nuevas dependencias.
+
+### L2
+
+> "2"
+
+Se completó T2 mediante lectura del flujo backend/frontend, documentación funcional y tests existentes. Se registró la matriz del contrato actual y las brechas sin modificar todavía la semántica pública ni el código de producción. La divergencia principal es que el catálogo Next.js consume `GET /cursos` mientras el contrato enriquecido de búsqueda vive en `GET /cursos/buscar`; T3 debe aportar evidencia funcional y baseline antes de decidir una corrección.
+
+La verificación focalizada pasó sin cambios funcionales: API `cursos.service.spec.ts` y `cursos.controller.spec.ts` (51 tests), más las cuatro suites de catálogo web (47 tests). La cobertura existente confirma componentes y servicio, pero no cubre la integración página → API ni los estados de error diferenciados.
+
+### L3
+
+Se inició T3 y se confirmó que existen tests E2E generales, pero ninguno específico de búsqueda (`apps/e2e/tests/api` y `apps/e2e/tests/frontend`). Se autorizó un entorno local aislado, pero Docker Compose no pudo iniciar PostgreSQL porque el daemon Docker no está disponible (`/var/run/docker.sock`). No se usó producción ni se modificó código funcional. El baseline queda bloqueado hasta disponer de un entorno local operativo o staging no productivo.
