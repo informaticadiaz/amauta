@@ -2,31 +2,15 @@
 
 Frontend de Amauta - Aplicación Next.js PWA
 
-## Estado Actual
+## Estado del workspace
 
-✅ **Next.js 14 configurado** (Issue #20 - T-019)
+Este README describe el frontend verificable en `apps/web/src` y no mantiene una fase o sprint propio. Para fase de producto, sprint y estado de funcionalidades consultar [`docs/project-management/roadmap.md`](../../docs/project-management/roadmap.md).
 
-### Completado
-
-- [x] Next.js 14.2 con App Router
-- [x] TypeScript en modo strict
-- [x] Estructura de carpetas App Router
-- [x] Página inicial de Amauta
-- [x] Estilos con CSS Modules y dark mode
-- [x] Output standalone para Docker
-- [x] Dockerfile optimizado para producción
-- [x] Validación de variables de entorno con Zod
-
-### Pendiente
-
-- [ ] Configurar Tailwind CSS
-- [ ] Configurar PWA con Workbox
-- [ ] Configurar Zustand para state management
-- [ ] Integrar con API backend
+La implementación del workspace contiene App Router, autenticación, catálogo y detalle de cursos, lecciones, dashboard, evaluaciones, foros, grupos, asistencias, calificaciones, comunicados, reportes, rutas proxy de API y rutas offline/PWA. Las capacidades detalladas deben considerarse implementadas únicamente cuando exista evidencia funcional en código y verificaciones; este README no convierte una intención del roadmap en un estado completado.
 
 ## Tecnologías
 
-- **Next.js 14.2** con App Router
+- **Next.js** con App Router
 - **React 18**
 - **TypeScript** en modo strict
 - **Zod** para validación de env vars

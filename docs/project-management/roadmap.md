@@ -1,6 +1,17 @@
 # Roadmap - Amauta
 
-**Última actualización**: 2026-04-25 (Sprint 18 en curso; #93 diseñado funcionalmente)
+**Última actualización registrada**: 2026-04-25
+
+> **Fuente canónica de estado**: este documento es la única fuente de verdad para la fase de producto, el sprint y el estado de las funcionalidades. Los documentos de contexto y los README técnicos deben describir únicamente implementación verificada y enlazar aquí para el estado de planificación.
+
+## Estado actual de planificación
+
+- **Última fase con trabajo registrado**: Fase 7 — Multimedia y Contenido Rico, completada según el registro de Sprint 19.
+- **Siguiente trabajo planificado**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprints 21-23.
+- **Sprint activo**: no se declara un sprint activo en este roadmap.
+- **Producción**: las URLs y estados de despliegue se mantienen como referencia histórica/documental; no se usan como evidencia adicional de funcionalidades.
+
+La planificación conserva las fases y sprints históricos en el orden en que fueron documentados; este resumen evita que ese orden histórico se interprete como el estado actual.
 
 ## Visión General
 
@@ -3595,5 +3606,5 @@ Revisar roadmap cada 3 sprints (6 semanas) para ajustar prioridades.
 
 ---
 
-**Última actualización**: 2026-04-25
-**Próxima revisión**: Cierre de Sprint 18
+**Última actualización registrada**: 2026-04-25
+**Próxima revisión**: al iniciar el siguiente sprint planificado, según evidencia disponible.

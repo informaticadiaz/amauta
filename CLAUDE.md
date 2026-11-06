@@ -11,7 +11,11 @@ _"No concebimos la educación como un producto, sino como un derecho social."_
 
 ## Estado Actual
 
-**Fase 4c — Módulo Escolar (administración avanzada)** · Sprint 21-23 · 0/9 pendiente
+> **Fuente canónica de estado**: `docs/project-management/roadmap.md` define la fase de producto, el sprint y el estado de las funcionalidades. Este archivo mantiene reglas y contexto operativo; no duplica el estado del roadmap.
+>
+> Según el roadmap, la última fase con trabajo registrado es Fase 7 (completada) y el siguiente trabajo planificado es Fase 4c, Sprints 21-23. No hay sprint activo declarado.
+
+### Próximo trabajo planificado: Fase 4c
 
 | Issue   | Descripción                                                     | Estado       |
 | ------- | --------------------------------------------------------------- | ------------ |
@@ -26,7 +30,7 @@ _"No concebimos la educación como un producto, sino como un derecho social."_
 | F4c-009 | Calendario institucional                                        | ⏳ Pendiente |
 
 **F4c-001 debe ir primero** — es una migración de modelo de datos (materias como catálogo) de la que dependen F4c-003, F4c-004 y F4c-005.
-**Fase 7 completada** (Multimedia y Contenido Rico — #97, #98, #99 y #100 completados, 4/4).
+**Fase 7 completada** (Multimedia y Contenido Rico — #97, #98, #99 y #100 completados, 4/4), según el registro del roadmap.
 
 ### Historial de Fases
 

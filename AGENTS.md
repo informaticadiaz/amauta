@@ -22,9 +22,15 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 6 - Búsqueda y Recomendaciones 📋 En curso
+> **Fuente canónica**: `docs/project-management/roadmap.md` define la fase de producto, el sprint y el estado de las funcionalidades. Este contexto resume orientación para colaboradores; no reemplaza el roadmap.
 
-**Progreso**: Sprint 18 completado ✅ — 3/3 issues completados
+### Estado según el roadmap
+
+- **Última fase con trabajo registrado**: Fase 7 — Multimedia y Contenido Rico, completada según el Sprint 19 documentado.
+- **Siguiente trabajo planificado**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprints 21-23.
+- **Sprint activo**: no declarado en el roadmap.
+
+La sección histórica de Fase 6 que sigue conserva sus entregables documentados y no implica que sea la fase actual.
 
 #### Completado en Fase 6:
 
@@ -758,7 +764,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 5 completada (Sprint 17 cerrado; siguiente planificación pendiente para Fase 6)
+- **Estado de producto**: consultar `docs/project-management/roadmap.md`; no duplicar aquí la fase o sprint actual.
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**

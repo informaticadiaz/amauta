@@ -1,7 +1,14 @@
 # Project Board - Amauta
 
-**Última actualización**: 2026-01-02
-**Sprint actual**: Sprint 1 - Fase 1 MVP (12.5% Completado)
+**Última actualización del board histórico**: 2026-01-02
+
+> **Fuente canónica de estado**: `roadmap.md` define la fase de producto, el sprint y el estado de las funcionalidades. Este board conserva una vista histórica y no declara un sprint actual distinto del roadmap.
+
+## Estado de planificación
+
+- Última fase con trabajo registrado: Fase 7, completada según el roadmap.
+- Siguiente trabajo planificado: Fase 4c, Sprints 21-23.
+- Sprint activo: no declarado en el roadmap.
 
 ## 🟢 Estado de Producción
 
@@ -10,12 +17,12 @@
 | Frontend    | https://amauta.diazignacio.ar     |
 | Backend API | https://amauta-api.diazignacio.ar |
 
-## Estado de Fases
+## Estado de Fases (referencia histórica; consultar el roadmap)
 
-| Fase | Nombre      | Estado         | Progreso     |
-| ---- | ----------- | -------------- | ------------ |
-| 0    | Fundamentos | ✅ Completada  | 100%         |
-| 1    | MVP Cursos  | 🚧 En progreso | 2/16 (12.5%) |
+| Fase | Nombre      | Estado        | Progreso      |
+| ---- | ----------- | ------------- | ------------- |
+| 0    | Fundamentos | ✅ Completada | 100%          |
+| 1    | MVP Cursos  | ✅ Completada | según roadmap |
 
 ## Vista del Board (Kanban)
 
@@ -64,7 +71,7 @@ Ready: F1-003, F1-004 | Done: F1-001, F1-002
 
 ---
 
-## Sprint 1 - Fase 1 MVP (En Progreso)
+## Sprint 1 - Fase 1 MVP (registro histórico)
 
 ### Objetivo del Sprint
 
@@ -374,7 +381,7 @@ Un item está "Done" cuando:
 
 ---
 
-## Próximos Pasos
+## Próximos Pasos (registro histórico; no representa el plan actual)
 
 ### Para completar Sprint 0
 

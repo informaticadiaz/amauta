@@ -2,32 +2,24 @@
 
 Backend de Amauta - API REST con NestJS + Fastify
 
-## Estado Actual
+## Estado del workspace
 
-**Fase 0 - Fundamentos completados**
+Este README describe el backend verificable en `apps/api/src` y no mantiene una fase o sprint propio. Para fase de producto, sprint y estado de funcionalidades consultar [`docs/project-management/roadmap.md`](../../docs/project-management/roadmap.md).
 
-- [x] TypeScript en modo strict
-- [x] NestJS + Fastify configurado
-- [x] PostgreSQL 15 con Prisma ORM
-- [x] Variables de entorno con validación Zod
-- [x] Endpoints básicos (`/health`, `/api/v1/info`)
-- [x] CORS configurado
-- [x] Dockerfile optimizado para producción
-- [ ] Autenticación JWT (Fase 1)
-- [ ] Endpoints de negocio (Fase 1)
+La implementación del workspace contiene, además de la base NestJS/Fastify, módulos para autenticación, cursos, lecciones, inscripciones, progreso, evaluaciones, grupos, instituciones, asistencias, calificaciones, materias, comunicados, foros, notificaciones, boletín, uploads y Prisma. La lista de endpoints de este README es intencionalmente parcial; la existencia de un módulo no sustituye la evidencia funcional de cada capacidad.
 
 ## Stack Tecnológico
 
-| Tecnología | Versión | Propósito                                    |
-| ---------- | ------- | -------------------------------------------- |
-| Node.js    | 20 LTS  | Runtime                                      |
-| NestJS     | 11.x    | Framework backend                            |
-| Fastify    | -       | HTTP adapter (mejor performance que Express) |
-| TypeScript | 5.x     | Tipado estático                              |
-| PostgreSQL | 15      | Base de datos                                |
-| Prisma     | 6.x     | ORM                                          |
-| Zod        | 4.x     | Validación de schemas                        |
-| Redis      | 7       | Cache (disponible)                           |
+| Tecnología | Versión | Propósito                                                                                      |
+| ---------- | ------- | ---------------------------------------------------------------------------------------------- |
+| Node.js    | 20 LTS  | Runtime                                                                                        |
+| NestJS     | 11.x    | Framework backend                                                                              |
+| Fastify    | -       | HTTP adapter (mejor performance que Express)                                                   |
+| TypeScript | 5.x     | Tipado estático                                                                                |
+| PostgreSQL | 15      | Base de datos                                                                                  |
+| Prisma     | 6.x     | ORM                                                                                            |
+| Zod        | 4.x     | Validación de schemas                                                                          |
+| Redis      | 7       | Infraestructura disponible; su rol operativo se documentará separadamente con evidencia de uso |
 
 ## Desarrollo
 

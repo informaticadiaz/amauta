@@ -1,17 +1,12 @@
 # Documentación de Gestión de Proyecto - Amauta
 
-## 🟢 Estado de Producción
+> **Fuente canónica de estado**: [roadmap.md](./roadmap.md) define la fase de producto, el sprint y el estado de las funcionalidades. El project board sirve como vista de seguimiento y los README técnicos describen únicamente implementación verificada.
 
-El proyecto está **EN PRODUCCIÓN**:
+## Estado documentado
 
-| Servicio    | URL                               |
-| ----------- | --------------------------------- |
-| Frontend    | https://amauta.diazignacio.ar     |
-| Backend API | https://amauta-api.diazignacio.ar |
+El roadmap registra la Fase 7 — Multimedia y Contenido Rico como la última fase completada y la Fase 4c como siguiente trabajo planificado. No se declara un sprint activo fuera de ese documento.
 
-**Fase 0**: 89% completado (16/18 tareas)
-
-Ver [DEPLOYMENT_PROGRESS.md](../../DEPLOYMENT_PROGRESS.md) para estado detallado.
+Las URLs de producción se conservan en [DEPLOYMENT_PROGRESS.md](../../DEPLOYMENT_PROGRESS.md) como referencia operativa; su presencia aquí no constituye evidencia adicional de funcionalidades.
 
 ---
 
@@ -30,7 +25,7 @@ Ver [DEPLOYMENT_PROGRESS.md](../../DEPLOYMENT_PROGRESS.md) para estado detallado
 
 ### Seguimiento
 
-6. [Tareas Fase 0](./fase-0-tareas.md) - Tareas de la fase actual
+6. [Tareas Fase 0](./fase-0-tareas.md) - Registro histórico de tareas iniciales
 7. [Backlog](./backlog.md) - Lista priorizada de trabajo pendiente
 8. [Project Board](./project-board.md) - Tablero de seguimiento
 
