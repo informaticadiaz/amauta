@@ -33,8 +33,8 @@ FROM "calificaciones" c JOIN "grupos" g ON g."id" = c."grupoId"
 GROUP BY c."grupoId", c."materia", g."institucionId"
 ON CONFLICT ("institucionId", "nombre") DO NOTHING;
 UPDATE "calificaciones" c SET "materiaId" = m."id"
-FROM "grupos" g JOIN "materias" m ON m."institucionId" = g."institucionId" AND m."nombre" = c."materia"
-WHERE g."id" = c."grupoId";
+FROM "grupos" g JOIN "materias" m ON m."institucionId" = g."institucionId"
+WHERE g."id" = c."grupoId" AND m."nombre" = c."materia";
 ALTER TABLE "calificaciones" ALTER COLUMN "materiaId" SET NOT NULL;
 INSERT INTO "grupos_materias" ("grupoId", "materiaId", "updatedAt")
 SELECT DISTINCT "grupoId", "materiaId", CURRENT_TIMESTAMP FROM "calificaciones"
