@@ -1,0 +1,33 @@
+Amauta — diagnóstico de arranque API Docker
+Fecha: 2026-11-11T15:44:33-03:00
+b58d04cc0832bf1f1047fd123e0a9efdf7495faee8fab35e68d6043a6db2e5e6
+4d0fd61907989fc6c34c07e2dbc93335055ccce061ecc504ee1b909e448a709d
+167ba4292942a48f487ec085fc3715d442f70e4f5ddfcd4e17a7a54cbf804e4b
+/var/run/postgresql:5432 - accepting connections
+a4fc9a83c3a4f7a2efbc8cce2e3b9c62b7a2e8cc8f7d26e239cfeab139db723e
+API state: running
+curl: (56) Recv failure: Connection reset by peer
+API state: running
+curl: (56) Recv failure: Connection reset by peer
+API state: running
+curl: (56) Recv failure: Connection reset by peer
+API state: running
+curl: (56) Recv failure: Connection reset by peer
+API state: exited
+curl: (7) Failed to connect to 127.0.0.1 port 14001 after 0 ms: Could not connect to server
+== API inspect ==
+status=exited exit=1 health=unhealthy
+== API logs ==
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "amauta_smoke", schema "public" at "postgres:5432"
+
+Error: P1001: Can't reach database server at `postgres:5432`
+
+Please make sure your database server is running at `postgres:5432`.
+npm notice
+npm notice New major version of npm available! 10.9.4 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+curl: (7) Failed to connect to 127.0.0.1 port 14001 after 0 ms: Could not connect to server
+API smoke: FAIL

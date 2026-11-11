@@ -12,7 +12,7 @@ La implementación del workspace contiene, además de la base NestJS/Fastify, m�
 
 | Tecnología | Versión | Propósito                                                                                      |
 | ---------- | ------- | ---------------------------------------------------------------------------------------------- |
-| Node.js    | 20 LTS  | Runtime                                                                                        |
+| Node.js    | 22 LTS  | Runtime                                                                                        |
 | NestJS     | 11.x    | Framework backend                                                                              |
 | Fastify    | -       | HTTP adapter (mejor performance que Express)                                                   |
 | TypeScript | 5.x     | Tipado estático                                                                                |
@@ -25,7 +25,7 @@ La implementación del workspace contiene, además de la base NestJS/Fastify, m�
 
 ### Requisitos
 
-- Node.js 20+
+- Node.js 22 LTS
 - Docker y Docker Compose (para PostgreSQL y Redis)
 
 ### Comandos

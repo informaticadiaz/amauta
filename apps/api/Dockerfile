@@ -4,7 +4,7 @@
 # ============================================
 # Stage 1: Production Dependencies
 # ============================================
-FROM node:20-alpine AS deps-prod
+FROM node:22.22.1-alpine AS deps-prod
 
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
@@ -19,7 +19,7 @@ RUN npm ci --workspace=@amauta/api --omit=dev
 # ============================================
 # Stage 2: All Dependencies (para build)
 # ============================================
-FROM node:20-alpine AS deps-build
+FROM node:22.22.1-alpine AS deps-build
 
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
@@ -37,7 +37,7 @@ RUN npm ci --workspace=@amauta/api
 # ============================================
 # Stage 3: Builder
 # ============================================
-FROM node:20-alpine AS builder
+FROM node:22.22.1-alpine AS builder
 
 WORKDIR /app
 
@@ -65,7 +65,7 @@ RUN npm run build
 # ============================================
 # Stage 4: Runner (Producción)
 # ============================================
-FROM node:20-alpine AS runner
+FROM node:22.22.1-alpine AS runner
 
 WORKDIR /app
 

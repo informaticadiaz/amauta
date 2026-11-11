@@ -4,7 +4,7 @@
 
 ### Software Necesario
 
-- **Node.js**: v20.x o superior ([Descargar](https://nodejs.org/))
+- **Node.js**: v22.11.x o superior dentro de la línea 22 ([Descargar](https://nodejs.org/))
 - **npm**: v10.x o superior (viene incluido con Node.js)
 - **PostgreSQL**: v15.x o superior ([Descargar](https://www.postgresql.org/download/)) - Pendiente de configuración
 - **Redis**: v7.x o superior ([Descargar](https://redis.io/download)) - Opcional, para futuro

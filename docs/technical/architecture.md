@@ -394,7 +394,7 @@ flowchart TB
 
 ### Backend
 
-- **Runtime**: Node.js 20+
+- **Runtime**: Node.js 22 LTS
 - **Framework**: NestJS (con adaptador Fastify)
 - **Lenguaje**: TypeScript (strict mode)
 - **ORM**: Prisma

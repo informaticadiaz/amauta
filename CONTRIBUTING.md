@@ -343,7 +343,7 @@ Resuelve: #42"
 
 ### Requisitos
 
-- Node.js 20+
+- Node.js 22 LTS
 - npm 10+ (o pnpm 8+)
 - Git
 - Editor con soporte TypeScript (recomendado: VSCode)
@@ -436,7 +436,7 @@ Incluye:
 - **Entorno**:
   - OS: [ej. Ubuntu 22.04]
   - Navegador: [ej. Chrome 120]
-  - Node.js: [ej. 20.10.0]
+  - Node.js: [ej. 22.22.1]
   - Versión del proyecto: [ej. 0.1.0]
 
 ---

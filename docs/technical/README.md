@@ -54,15 +54,16 @@ Ver [DEPLOYMENT_PROGRESS.md](../../DEPLOYMENT_PROGRESS.md) para estado detallado
 18. [🐳 Guía de Puertos y Redes en Docker](./docker-ports-networking-guide.md)
 19. [📦 Entendiendo Dokploy](./understanding-dokploy-deployment.md)
 20. [🚀 Deployment con Dokploy UI](./dokploy-ui-deployment-guide.md)
+21. [Checklist de transición a Node.js 22 LTS](./node-lts-transition-checklist.md) - Preparación y recuperación sin desplegar
 
 ### Seguridad y Deployment
 
-21. [⭐ Índice de Seguridad](./SECURITY_README.md) - **LEER PRIMERO**
-22. [📊 Estado del Deployment](../../DEPLOYMENT_PROGRESS.md) - **Estado actual de producción**
-23. [Análisis VPS y Deployment](./vps-deployment-analysis.md)
-24. [Almacenamiento de Datos Sensibles](./PRIVATE_DATA_STORAGE.md)
-25. [Repositorio Privado](./PRIVATE_REPO_REFERENCE.md)
-26. [Guía de Sanitización](../../.github/SECURITY_SANITIZATION.md)
+22. [⭐ Índice de Seguridad](./SECURITY_README.md) - **LEER PRIMERO**
+23. [📊 Estado del Deployment](../../DEPLOYMENT_PROGRESS.md) - **Estado actual de producción**
+24. [Análisis VPS y Deployment](./vps-deployment-analysis.md)
+25. [Almacenamiento de Datos Sensibles](./PRIVATE_DATA_STORAGE.md)
+26. [Repositorio Privado](./PRIVATE_REPO_REFERENCE.md)
+27. [Guía de Sanitización](../../.github/SECURITY_SANITIZATION.md)
 
 ## Propósito
 
