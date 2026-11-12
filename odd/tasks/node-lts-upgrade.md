@@ -1,6 +1,6 @@
 # ODD Plan — Amauta: actualización del runtime Node.js a una línea LTS
 
-Estado: T1, T2, T3, T4 y T5 completados; implementación local preparada, sin despliegue.
+Estado: finalizado; implementación y compatibilidad verificadas localmente, sin despliegue en producción. Commits: `c968d4a` y `1cf7535`.
 Repositorio: `/home/ignacio/amauta`
 
 ## Specs
@@ -36,7 +36,7 @@ La actualización no autoriza por sí sola cambios en producción. Cualquier des
 - Verificación: búsqueda reproducible de referencias y revisión de documentación oficial de soporte.
 - Resultado: Node.js 22 LTS, con imágenes/CI fijados en 22.22.1 y engines restringido a la línea 22.
 - Riesgo: item 5 — cambio de runtime, imágenes y entorno de entrega.
-- Commit: pendiente
+- Commit: `c968d4a`
 
 ### T2 — Actualizar CI, engines, Dockerfiles y documentación
 
@@ -53,7 +53,7 @@ La actualización no autoriza por sí sola cambios en producción. Cualquier des
 - Verificación: búsqueda sin referencias operativas obsoletas y revisión de los diffs de configuración.
 - Resultado: CI y Docker usan Node.js 22.22.1; `engines` restringe la línea 22; la documentación operativa fue alineada. Las referencias en auditorías y registros históricos se conservaron como evidencia histórica.
 - Riesgo: item 5 — una imagen o entorno olvidado puede mantener Node 20 en producción.
-- Commit: pendiente
+- Commit: `c968d4a`
 
 ### T3 — Ejecutar compatibilidad y pruebas completas
 
@@ -74,7 +74,7 @@ La actualización no autoriza por sí sola cambios en producción. Cualquier des
 - Referencias operativas: no quedan referencias activas a Node 20; las referencias en auditorías, tareas históricas y este plan se conservaron como evidencia histórica.
 - Resultado final: npm 10.2.5 quedó disponible; todos los checks locales pasaron y las imágenes API y Web se construyeron correctamente con Docker. La migración de materias y la inyección de `MateriasService` se corrigieron localmente. El smoke test aislado confirmó migraciones, arranque API, `/health` saludable, arranque Web, respuesta HTTP 200 y healthcheck Web saludable. No se desplegó producción.
 - Riesgo: item 6 — diferencias de runtime pueden aparecer solo durante build, test o ejecución.
-- Commit: pendiente
+- Commit: `c968d4a` + `1cf7535`
 
 ### Evidencia automatizada de T3
 
@@ -105,7 +105,7 @@ El smoke test local aislado se ejecutó contra PostgreSQL 15 y Redis 7 descartab
 - Criterio de cierre: se puede decidir el despliegue con evidencia de compatibilidad y sin mezclarlo con la actualización local.
 - Verificación: revisión operativa sin ejecutar cambios de producción no autorizados.
 - Riesgo: item 5 — cambios de entorno y entrega pueden afectar producción.
-- Commit: pendiente
+- Commit: `c968d4a`
 
 ### T5 — Cerrar documentación y evidencia
 
@@ -121,7 +121,7 @@ El smoke test local aislado se ejecutó contra PostgreSQL 15 y Redis 7 descartab
 - Criterio de cierre: otro colaborador puede reconstruir la decisión y verificar el runtime sin depender de la conversación.
 - Verificación: revisión cruzada de referencias y enlaces.
 - Riesgo: none
-- Commit: pendiente
+- Commit: `c968d4a`
 
 ## Orden ODD y gates
 
@@ -158,3 +158,7 @@ Se corrigió el alcance del `format:check` para ignorar artefactos generados y s
 ### L6
 
 T5 queda cerrado. `npm run format:check`, `git diff --check`, la búsqueda de referencias operativas obsoletas y el enlace del checklist técnico pasan. El ODD documenta Node.js 22.22.1 como runtime preparado localmente, evidencia completa de compatibilidad y smoke test, transición operativa preparada y producción sin cambios. Commit, push y despliegue permanecen fuera de alcance hasta autorización separada.
+
+### L7
+
+Se finaliza este ODD. La implementación quedó committeada en `c968d4a` y la corrección de migración e inyección quedó en `1cf7535`. El issue #110 puede cerrarse porque todos los checks y el smoke test local pasan. La revisión de PR y cualquier despliegue siguen siendo decisiones operativas separadas y no forman parte de este cierre.
