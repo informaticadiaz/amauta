@@ -1,0 +1,34 @@
+T4 — Decisión y verificación de estrategia de búsqueda
+Fecha: 2026-11-12
+Repositorio: /home/ignacio/amauta
+
+Decisión
+- Se mantiene la estrategia actual: `contains` insensible a mayúsculas sobre `titulo` y `descripcion`, prioridad de coincidencias en título y paginación posterior en memoria para la ruta de relevancia.
+- No se agrega migración ni índice nuevo en T4.
+- Se documenta la decisión en `docs/technical/adr/010-estrategia-busqueda-catalogo.md`.
+- Trigram/FTS queda condicionado a una baseline con volumen representativo o a evidencia de degradación.
+
+Fundamento
+- T3 verificó el contrato funcional, API, SQL y smoke headless.
+- La medición SQL local fue de 0.151 ms sin término y 0.237 ms con texto, pero solo sobre 4 cursos.
+- El filtro textual usa `cursos_estado_idx` y aplica `ILIKE` después; no existe evidencia suficiente para justificar una migración o cambios de relevancia.
+- Agregar índices B-tree no resolvería directamente el comodín inicial de `contains`.
+- FTS/trigram introduciría cambios de resultados, extensiones, SQL manual, mantenimiento de índices y riesgo contractual.
+
+Implementación T4
+- `apps/web/src/app/cursos/page.tsx` ahora consume `/cursos/buscar` para alinear la página con el endpoint público de búsqueda.
+- Se agregó cobertura de controller para delegación, filtros combinados y paginación.
+- Se agregó cobertura del servicio para prioridad de título sobre descripción y paginación posterior al ordenamiento de relevancia.
+- Se creó y registró ADR-010.
+
+Verificación
+- API: 2 suites, 55 tests focalizados aprobados.
+- Web: type-check aprobado.
+- Web: lint aprobado.
+- Web catálogo: 5 suites, 58 tests aprobados.
+- La salida y la latencia del baseline T3 se preservan: no hubo cambio en la consulta SQL ni en el esquema.
+- No se aplicaron migraciones ni se consultó producción.
+
+Limitaciones
+- La evidencia de rendimiento continúa limitada a 4 cursos locales.
+- La decisión no afirma escalabilidad; define cuándo debe reabrirse la estrategia.

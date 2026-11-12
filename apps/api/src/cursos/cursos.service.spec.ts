@@ -636,6 +636,51 @@ describe('CursosService', () => {
       expect(result.total).toBe(2);
     });
 
+    it('ordena coincidencias en título antes que coincidencias en descripción', async () => {
+      const descripcionMatch = cursoPublicado(
+        'Programación básica',
+        'Aprende Álgebra desde cero'
+      );
+      const tituloMatch = cursoPublicado(
+        'Álgebra para todos',
+        'Introducción a la programación',
+        { publicadoEn: new Date('2024-06-01') }
+      );
+      prisma.curso.findMany.mockResolvedValue([descripcionMatch, tituloMatch]);
+
+      const result = await service.buscarCursos({
+        page: 1,
+        limit: 1,
+        buscar: 'Álgebra',
+      });
+
+      expect(result.cursos).toHaveLength(1);
+      expect(result.cursos[0].titulo).toBe('Álgebra para todos');
+      expect(result.total).toBe(2);
+      expect(result.totalPages).toBe(2);
+    });
+
+    it('pagina la relevancia después de ordenar todas las coincidencias', async () => {
+      const first = cursoPublicado('Álgebra avanzada', 'Contenido', {
+        publicadoEn: new Date('2024-01-01'),
+      });
+      const second = cursoPublicado('Programación', 'Álgebra aplicada', {
+        publicadoEn: new Date('2024-02-01'),
+      });
+      prisma.curso.findMany.mockResolvedValue([second, first]);
+
+      const result = await service.buscarCursos({
+        page: 2,
+        limit: 1,
+        buscar: 'Álgebra',
+      });
+
+      expect(result.cursos).toHaveLength(1);
+      expect(result.cursos[0].titulo).toBe('Programación');
+      expect(result.total).toBe(2);
+      expect(result.totalPages).toBe(2);
+    });
+
     it('filtro duracion=corta: incluye where duracion < 60 en la query', async () => {
       prisma.curso.findMany.mockResolvedValue([]);
       prisma.curso.count.mockResolvedValue(0);

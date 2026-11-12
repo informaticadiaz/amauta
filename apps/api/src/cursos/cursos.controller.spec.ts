@@ -28,6 +28,7 @@ describe('CursosController', () => {
     actualizar: jest.fn(),
     cambiarEstadoPublicacion: jest.fn(),
     eliminar: jest.fn(),
+    buscarCursos: jest.fn(),
   };
 
   // Usuario mock para tests
@@ -144,6 +145,53 @@ describe('CursosController', () => {
           buscar: 'matemáticas',
         })
       );
+    });
+  });
+
+  describe('GET /cursos/buscar', () => {
+    it('debería delegar la búsqueda y retornar la respuesta del servicio', async () => {
+      const query = {
+        page: 1,
+        limit: 12,
+        buscar: 'Álgebra',
+        ordenarPor: 'relevancia',
+        orden: 'desc',
+      };
+      const mockResponse = {
+        cursos: [mockCurso],
+        total: 1,
+        page: 1,
+        limit: 12,
+        totalPages: 1,
+      };
+      mockCursosService.buscarCursos.mockResolvedValue(mockResponse);
+
+      const result = await controller.buscar(query);
+
+      expect(result).toEqual(mockResponse);
+      expect(mockCursosService.buscarCursos).toHaveBeenCalledWith(query);
+    });
+
+    it('debería preservar filtros combinados y paginación', async () => {
+      const query = {
+        page: 2,
+        limit: 10,
+        categoriaId: 'cat-123',
+        nivel: 'PRINCIPIANTE',
+        duracion: 'corta',
+        idioma: 'es',
+      };
+      mockCursosService.buscarCursos.mockResolvedValue({
+        cursos: [],
+        total: 0,
+        page: 2,
+        limit: 10,
+        totalPages: 0,
+      });
+
+      await controller.buscar(query);
+
+      expect(mockCursosService.buscarCursos).toHaveBeenCalledWith(query);
     });
   });
 

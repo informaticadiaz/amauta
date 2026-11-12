@@ -98,7 +98,7 @@ async function getCursos(params: CursosSearchParams): Promise<CursosResponse> {
     queryParams.set('limit', '12');
 
     const data = await api.get<CursosResponse>(
-      `/cursos?${queryParams.toString()}`
+      `/cursos/buscar?${queryParams.toString()}`
     );
     return data;
   } catch (error) {

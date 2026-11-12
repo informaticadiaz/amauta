@@ -104,6 +104,7 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 
 ### T4 — Decidir y aplicar la estrategia de búsqueda
 
+- Estado: completado
 - Spec: S2-S3
 - Ruta: backend, Prisma/migraciones si corresponde, documentación y tests
 - Dependencias: T3
@@ -112,10 +113,12 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
   - Si se modifica la consulta: migración versionada cuando corresponda, preservación del orden de relevancia y paginación eficiente.
   - Tests de regresión para el contrato público.
   - Comparación antes/después con el baseline.
+- Resultado: se acepta mantener `contains` y la relevancia actual por ahora. No se agregan índices ni migraciones porque la evidencia disponible representa solo cuatro cursos y no demuestra un cuello de botella. La página del catálogo se alinea con `/cursos/buscar`; se agregan regresiones de controller y servicio.
 - Criterio de cierre: la estrategia elegida mejora o preserva comportamiento y tiene evidencia de rendimiento suficiente.
-- Verificación: tests críticos, migración validada, `EXPLAIN ANALYZE` en entorno autorizado y comparación de salida.
-- Riesgo: item 1 — cambios de índices, consultas o formatos pueden afectar datos y rendimiento; item 3 — búsqueda es contrato público.
-- Commit: pendiente
+- Verificación: 55 tests API focalizados, 58 tests web de catálogo, type-check y lint web; baseline SQL preservado y ADR registrado.
+- Evidencia: `docs/technical/adr/010-estrategia-busqueda-catalogo.md` y `odd/evidence/search-strategy-t4.txt`.
+- Riesgo: item 3 — búsqueda es contrato público; la decisión se limita al volumen medido y debe reabrirse con datos representativos.
+- Commit: HEAD (T4 work-unit commit)
 
 ### T5 — Definir contratos compartidos mínimos
 
@@ -238,3 +241,7 @@ Se decidió que el catálogo debe ser público. Se modificó `apps/web/src/proxy
 ### L8
 
 Se completó el smoke E2E con Playwright en modo headless usando el Chromium compatible ya instalado en `/home/ignacio/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome`. El flujo verificó catálogo público, búsqueda de `Álgebra`, resultado visible y navegación exacta a `/cursos/algebra-basica`, con título `Álgebra Básica | Amauta`. T3 queda completado. T4 sigue pendiente del gate de decisión sobre mantener la consulta actual, agregar índices o implementar PostgreSQL full-text search; no se tomó esa decisión con solo cuatro cursos locales.
+
+### L9
+
+Se completó T4 aceptando la estrategia actual de `contains` y relevancia en memoria como decisión de bajo riesgo, documentada en ADR-010. No se agregaron índices ni migraciones: la baseline de 4 cursos y los `EXPLAIN ANALYZE` de T3 no justifican un cambio de esquema o de semántica. Se alineó `apps/web/src/app/cursos/page.tsx` con `/cursos/buscar` y se agregaron regresiones del controller y servicio para filtros, paginación y prioridad de título. Pasaron 55 tests API focalizados, 58 tests web de catálogo, type-check y lint web. La evidencia quedó en `odd/evidence/search-strategy-t4.txt`. El commit queda pendiente.
