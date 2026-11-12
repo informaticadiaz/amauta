@@ -1,6 +1,6 @@
 # Roadmap - Amauta
 
-**Última actualización registrada**: 2026-11-11
+**Última actualización registrada**: 2026-11-12
 
 > **Fuente canónica de estado**: este documento es la única fuente de verdad para la fase de producto, el sprint y el estado de las funcionalidades. Los documentos de contexto y los README técnicos deben describir únicamente implementación verificada y enlazar aquí para el estado de planificación.
 
@@ -12,6 +12,7 @@
 - **Siguiente trabajo**: F4c-002 y F4c-003, después del cierre formal de F4c-001.
 - **Issues cerrados**: el último issue cerrado es #104 (F4b-004); los commits posteriores corresponden al inicio de Fase 4c y no deben confundirse con el cierre de un issue.
 - **Producción**: las URLs y estados de despliegue se mantienen como referencia histórica/documental; no se usan como evidencia adicional de funcionalidades.
+- **ODD de consolidación y búsqueda**: T1–T7 completados con evidencia local; el cierre documental T8 se registra en `odd/tasks/amauta-mejoras.md`.
 
 La planificación conserva las fases y sprints históricos en el orden en que fueron documentados; este resumen evita que ese orden histórico se interprete como el estado actual.
 

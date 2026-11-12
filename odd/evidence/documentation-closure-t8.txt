@@ -1,0 +1,23 @@
+T8 — Cierre documental de la ODD
+Fecha: 2026-11-12
+Repositorio: /home/ignacio/amauta
+
+Estado reconstruible
+- `odd/tasks/amauta-mejoras.md` contiene la matriz T1–T7 con estado, commit y evidencia.
+- T3–T7 tienen commits enlazados y archivos de evidencia.
+- T1 y T2 no tuvieron commits aislados; el plan lo declara explícitamente y conserva sus resultados en el log y la matriz.
+- T8 registra las decisiones postergadas: volumen insuficiente para trigram/FTS, Redis opcional sin consumidor y cierre formal pendiente de F4c-001.
+
+Documentación sincronizada
+- `docs/project-management/roadmap.md` mantiene la fuente canónica, actualiza la fecha y enlaza el cierre ODD sin alterar el estado de producto.
+- `docs/project-management/project-board.md` identifica el kanban antiguo como instantánea histórica y evita interpretarlo como sprint actual.
+- `CLAUDE.md` refleja F4c-001 implementado con cierre formal pendiente.
+- `CODEX.md` deja de declarar Fase 4/Sprint 12 como estado actual y deja de describir Redis como activo.
+- `apps/api/prisma/README.md` describe migraciones versionadas y deja `db:push` fuera del flujo normal.
+- `docs/technical/setup.md` deja de presentar PostgreSQL como pendiente y elimina instrucciones de primera migración.
+
+Verificación
+- Búsqueda de referencias obsoletas en los documentos principales: no quedan claims activos de F4c-001 pendiente, Fase 4/Sprint 12 actual, Redis en uso desde Fase 1 ni primera migración pendiente; solo queda una aclaración histórica explícita en el README de Prisma.
+- Prettier check de los documentos modificados: aprobado.
+- `git diff --check`: aprobado.
+- No se modificó producción, no se hizo push y no se alteraron artefactos generados no relacionados.

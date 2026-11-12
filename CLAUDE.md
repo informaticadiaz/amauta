@@ -17,19 +17,19 @@ _"No concebimos la educación como un producto, sino como un derecho social."_
 
 ### Próximo trabajo planificado: Fase 4c
 
-| Issue   | Descripción                                                     | Estado       |
-| ------- | --------------------------------------------------------------- | ------------ |
-| F4c-001 | Catálogo de materias y migración de calificaciones              | ⏳ Pendiente |
-| F4c-002 | Matrícula formal: inscripción del estudiante a la institución   | ⏳ Pendiente |
-| F4c-003 | Historial académico del estudiante (trayectoria entre períodos) | ⏳ Pendiente |
-| F4c-004 | Horarios semanales por grupo                                    | ⏳ Pendiente |
-| F4c-005 | Cierre de ciclo lectivo y promoción masiva                      | ⏳ Pendiente |
-| F4c-006 | Alertas automáticas: asistencia baja y notas en riesgo          | ⏳ Pendiente |
-| F4c-007 | Rol tutor/padre: acceso al seguimiento de su hijo               | ⏳ Pendiente |
-| F4c-008 | Justificación formal de ausencias                               | ⏳ Pendiente |
-| F4c-009 | Calendario institucional                                        | ⏳ Pendiente |
+| Issue   | Descripción                                                     | Estado                                   |
+| ------- | --------------------------------------------------------------- | ---------------------------------------- |
+| F4c-001 | Catálogo de materias y migración de calificaciones              | ✅ Implementado; cierre formal pendiente |
+| F4c-002 | Matrícula formal: inscripción del estudiante a la institución   | ⏳ Pendiente                             |
+| F4c-003 | Historial académico del estudiante (trayectoria entre períodos) | ⏳ Pendiente                             |
+| F4c-004 | Horarios semanales por grupo                                    | ⏳ Pendiente                             |
+| F4c-005 | Cierre de ciclo lectivo y promoción masiva                      | ⏳ Pendiente                             |
+| F4c-006 | Alertas automáticas: asistencia baja y notas en riesgo          | ⏳ Pendiente                             |
+| F4c-007 | Rol tutor/padre: acceso al seguimiento de su hijo               | ⏳ Pendiente                             |
+| F4c-008 | Justificación formal de ausencias                               | ⏳ Pendiente                             |
+| F4c-009 | Calendario institucional                                        | ⏳ Pendiente                             |
 
-**F4c-001 debe ir primero** — es una migración de modelo de datos (materias como catálogo) de la que dependen F4c-003, F4c-004 y F4c-005.
+**F4c-001 ya está implementado** — requiere cierre formal y verificación final antes de continuar con F4c-002/F4c-003.
 **Fase 7 completada** (Multimedia y Contenido Rico — #97, #98, #99 y #100 completados, 4/4), según el registro del roadmap.
 
 ### Historial de Fases

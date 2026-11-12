@@ -1,6 +1,6 @@
 # ODD Plan — Amauta: consolidación técnica y búsqueda
 
-Estado: en curso; T1, T2, T3 y T4 realizados con evidencia local; próximo trabajo: T5. Fase 4c iniciada con implementación de F4c-001.
+Estado: T1–T7 completados con evidencia local; T8 en cierre documental. Fase 4c iniciada con implementación de F4c-001; el roadmap sigue siendo la fuente canónica del estado de producto.
 Repositorio: `/home/ignacio/amauta`
 Fuente de análisis: arquitectura actual, documentación del proyecto y estado de Fase 6.
 
@@ -177,6 +177,7 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 
 ### T8 — Cerrar documentación con evidencia
 
+- Estado: completado
 - Spec: S1-S5
 - Ruta: documentación de gestión, ADRs y README técnicos
 - Dependencias: T4, T5, T6 y T7
@@ -185,9 +186,30 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
   - Roadmap y board alineados con evidencia real.
   - Registro de pendientes explícitos y decisiones postergadas.
 - Criterio de cierre: el estado documental se puede reconstruir desde commits y verificaciones, sin depender de memoria de la conversación.
-- Verificación: revisión final de consistencia y enlaces.
+- Resultado: la documentación principal quedó alineada con el roadmap, la matriz T1-T7 y las decisiones ADR-010/ADR-011; el board antiguo queda explícitamente histórico.
+- Verificación: referencias obsoletas revisadas, Prettier check aprobado y `git diff --check` aprobado.
 - Riesgo: none
-- Commit: pendiente
+- Evidencia: `odd/evidence/documentation-closure-t8.txt`.
+- Commit: pendiente (se documentará luego del commit de implementación)
+
+#### Matriz de cierre
+
+| Task | Estado     | Commit                                                                | Evidencia / decisión                           |
+| ---- | ---------- | --------------------------------------------------------------------- | ---------------------------------------------- |
+| T1   | Completado | Sin commit aislado; cambios documentales previos                      | Revisión cruzada registrada en este documento  |
+| T2   | Completado | Sin commit aislado; cambios documentales previos                      | Matriz y brechas registradas en este documento |
+| T3   | Completado | [`7a008a0`](https://github.com/informaticodiaz/amauta/commit/7a008a0) | `odd/evidence/search-baseline-t3.txt`          |
+| T4   | Completado | [`e97d237`](https://github.com/informaticodiaz/amauta/commit/e97d237) | `odd/evidence/search-strategy-t4.txt`, ADR-010 |
+| T5   | Completado | [`116d0ff`](https://github.com/informaticodiaz/amauta/commit/116d0ff) | `odd/evidence/search-contract-t5.txt`          |
+| T6   | Completado | [`778e0a8`](https://github.com/informaticodiaz/amauta/commit/778e0a8) | `odd/evidence/redis-role-t6.txt`, ADR-011      |
+| T7   | Completado | [`e0c674d`](https://github.com/informaticodiaz/amauta/commit/e0c674d) | `odd/evidence/critical-tests-t7.txt`           |
+
+#### Pendientes explícitos y decisiones postergadas
+
+- F4c-001 está implementado, pero su cierre formal y verificación de roadmap siguen pendientes; F4c-002 y F4c-003 permanecen planificados.
+- La estrategia `contains` de búsqueda no se reabrirá hacia trigram/FTS sin volumen representativo o degradación medida; ver ADR-010.
+- Redis queda preparado y opcional, sin caché, sesiones, colas ni rate limiting distribuido; cualquier integración futura requiere una nueva tarea y ADR-011.
+- T1 y T2 no tuvieron commits aislados; su evidencia está conservada en el historial de este documento y en los cambios documentales previos.
 
 ## Orden ODD y gates
 

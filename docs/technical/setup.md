@@ -6,7 +6,7 @@
 
 - **Node.js**: v22.11.x o superior dentro de la línea 22 ([Descargar](https://nodejs.org/))
 - **npm**: v10.x o superior (viene incluido con Node.js)
-- **PostgreSQL**: v15.x o superior ([Descargar](https://www.postgresql.org/download/)) - Pendiente de configuración
+- **PostgreSQL**: v15.x o superior ([Descargar](https://www.postgresql.org/download/)) - Requerido para la API y disponible mediante Docker Compose
 - **Redis**: v7.x o superior ([Descargar](https://redis.io/download)) - Opcional; infraestructura preparada, no requerida por la API actual
 - **Git**: Para control de versiones
 - **Docker** (opcional): Para ejecutar servicios en contenedores
@@ -376,19 +376,20 @@ REDIS_CACHE_TTL=3600
 Una vez que PostgreSQL esté corriendo, configura Prisma:
 
 ```bash
-# 1. Ejecutar primera migración (crea todas las tablas)
+# 1. Revisar el estado de las migraciones versionadas
 cd apps/api
-npm run prisma:migrate
+npx prisma migrate status
 
-# Esto te pedirá un nombre para la migración, por ejemplo: "init"
-# Creará las tablas y generará Prisma Client automáticamente
+# 2. En desarrollo, crear una migración solo después de cambiar el schema
+npm run prisma:migrate
 ```
 
-**¿Qué hace esto?**
+**¿Qué hace el flujo de migraciones?**
 
-- Crea todas las tablas en PostgreSQL según `apps/api/prisma/schema.prisma`
-- Genera la carpeta `prisma/migrations/` con el historial de migraciones
-- Genera Prisma Client automáticamente en `node_modules/@prisma/client`
+- Compara el estado de PostgreSQL con `apps/api/prisma/migrations/`
+- Registra los cambios del schema como migraciones versionadas
+- Genera Prisma Client cuando corresponde
+- No uses `db:push` para cambios normales del proyecto
 
 **Comandos Prisma disponibles:**
 
