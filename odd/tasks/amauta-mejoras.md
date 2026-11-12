@@ -1,6 +1,6 @@
 # ODD Plan — Amauta: consolidación técnica y búsqueda
 
-Estado: en curso; T1 y T2 documentales realizados, T3 bloqueado y Fase 4c iniciada con implementación de F4c-001.
+Estado: en curso; T1, T2 y T3 realizados con evidencia local; T4 pendiente de decisión sobre estrategia de búsqueda. Fase 4c iniciada con implementación de F4c-001.
 Repositorio: `/home/ignacio/amauta`
 Fuente de análisis: arquitectura actual, documentación del proyecto y estado de Fase 6.
 
@@ -83,7 +83,7 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 
 ### T3 — Auditar búsqueda funcionalmente y establecer baseline
 
-- Estado: bloqueado
+- Estado: completado
 - Spec: S3
 - Ruta: búsqueda backend, proxy/frontend y `apps/e2e`
 - Dependencias: T2
@@ -94,8 +94,13 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
   - Baseline con datos representativos, sin modificar producción.
 - Criterio de cierre: se conoce qué funciona, qué falla y cuál es el costo actual antes de elegir una optimización.
 - Verificación: tests públicos, type-check, lint y medición documentada.
+- Resultado parcial: tests focalizados API (2 suites, 51 tests) y catálogo web (5 suites, 58 tests) pasan. La infraestructura local ya quedó disponible: PostgreSQL 15 y Redis 7 saludables, migraciones aplicadas y seed corregido ejecutado con 40 asistencias, 16 calificaciones y 4 comunicados. La baseline API funcional pasó con búsquedas de texto, filtros combinados, sin resultados, paginación y validación; latencias locales observadas: 3–9 ms.
+- Resultado final: baseline API/SQL y smoke E2E headless completados. PostgreSQL 15 y Redis 7 saludables; migraciones y seed local correctos; búsquedas funcionales; SQL e índices registrados; catálogo público y detalle verificados.
+- Hallazgo corregido: `/cursos` y `/cursos/*` quedaron públicos en `apps/web/src/proxy.ts`, alineados con la documentación.
+- Limitación: el runner estándar no pudo instalar su revisión Chromium en `ubuntu26.04-x64`; el smoke se ejecutó con Playwright headless usando el Chromium compatible ya instalado y `executablePath` explícito.
+- Evidencia: `odd/evidence/search-baseline-t3.txt`.
 - Riesgo: item 6 — el resultado depende del entorno y de datos representativos; no se debe extrapolar sin evidencia.
-- Commit: pendiente
+- Commit: `9600f74`
 
 ### T4 — Decidir y aplicar la estrategia de búsqueda
 
@@ -217,3 +222,19 @@ Se inició T3 y se confirmó que existen tests E2E generales, pero ninguno espec
 ### L4
 
 La revisión del historial reciente y del último issue cerrado corrigió el estado documental del proyecto. El último issue cerrado es #104 (F4b-004), pero los commits posteriores `feat(materias): incorporar catalogo escolar y calificaciones` y `feat(materias): agregar gestion escolar en la web` muestran que Fase 4c ya comenzó y que F4c-001 tiene implementación en el repositorio. El roadmap y `AGENTS.md` ahora distinguen implementación existente de cierre formal del issue y verificación pendiente.
+
+### L5
+
+Se retomó T3 con una exploración acotada y checks focalizados, sin modificar código funcional ni consultar producción. Los tests del servicio/controlador de cursos pasaron: 2 suites y 51 tests. Las suites del catálogo web pasaron mediante `test:ci`: 5 suites y 58 tests. La ejecución inicial del script web con `--watch` agotó el timeout aunque las suites habían pasado; se repitió correctamente en modo CI y quedó confirmada. `docker info` confirma que el cliente 29.8.2 existe, pero el daemon no está disponible (`/var/run/docker.sock` inexistente). Por eso T3 permanece bloqueado: todavía faltan base local aislada, datos representativos, E2E, consultas SQL, índices y latencias. La evidencia quedó en `odd/evidence/search-baseline-t3.txt`. La página de catálogo sigue consumiendo `/cursos` en lugar de `/cursos/buscar`; esto se registra como hallazgo de T3, no se corrige dentro de la baseline.
+
+### L6
+
+El daemon Docker fue iniciado por el usuario y PostgreSQL 15/Redis 7 quedaron saludables. `prisma migrate deploy` pasó contra `amauta_dev`. El seed administrativo falló inicialmente por usar campos obsoletos (`materia` y `periodo`) frente al schema actual (`materiaId` y `periodoAcademicoId`); se corrigió `apps/api/prisma/seeds/administrativo.ts` sin cambiar el schema ni producción. El seed corregido pasó con 40 asistencias, 16 calificaciones y 4 comunicados. API type-check y lint pasaron. La API local quedó saludable en `localhost:3101` y la baseline funcional de búsqueda pasó con texto, filtro combinado, sin resultados, paginación y validación, con latencias observadas de 3–9 ms. La Web arrancó en `localhost:3002` porque `3000` estaba ocupado; `/cursos` redirige a login sin sesión, confirmando una brecha en `apps/web/src/proxy.ts` respecto del catálogo documentado como público. Playwright no pudo ejecutar porque falta el navegador Chromium local; no se descargó. T3 sigue abierto hasta resolver el E2E y decidir cómo tratar la visibilidad pública del catálogo. No se registraron SQL/índices/EXPLAIN ANALYZE.
+
+### L7
+
+Se decidió que el catálogo debe ser público. Se modificó `apps/web/src/proxy.ts` para permitir `/cursos` y `/cursos/*` sin sesión. La verificación HTTP local pasó: catálogo HTTP 200 con `Catálogo de Cursos` y `Álgebra Básica`; detalle `algebra-basica` HTTP 200. Web type-check, lint y las 5 suites del catálogo (58 tests) pasaron. La instalación autorizada de Chromium para Playwright falló porque el entorno `ubuntu26.04-x64` no es compatible con ese navegador; no se reintentó ni se cambió de navegador. El smoke E2E queda bloqueado por capacidad no disponible, mientras la evidencia HTTP y SQL queda registrada.
+
+### L8
+
+Se completó el smoke E2E con Playwright en modo headless usando el Chromium compatible ya instalado en `/home/ignacio/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome`. El flujo verificó catálogo público, búsqueda de `Álgebra`, resultado visible y navegación exacta a `/cursos/algebra-basica`, con título `Álgebra Básica | Amauta`. T3 queda completado. T4 sigue pendiente del gate de decisión sobre mantener la consulta actual, agregar índices o implementar PostgreSQL full-text search; no se tomó esa decisión con solo cuatro cursos locales.

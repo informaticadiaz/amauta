@@ -333,6 +333,75 @@ export async function seedAdministrativo(prisma: PrismaClient): Promise<void> {
     include: { institucion: true },
   });
 
+  // Preparar las relaciones del módulo escolar requeridas por las calificaciones.
+  // Estas entidades fueron incorporadas después del seed administrativo original.
+  const periodoPorInstitucion = new Map<string, string>();
+  const materiaPorInstitucionYNombre = new Map<string, string>();
+  const nombresDeMaterias = [
+    ...new Set(calificacionesData.map((calificacion) => calificacion.materia)),
+  ];
+
+  for (const institucion of await prisma.institucion.findMany()) {
+    const periodoExistente = await prisma.periodoAcademico.findFirst({
+      where: { institucionId: institucion.id, nombre: '1er Trimestre' },
+    });
+    const periodo =
+      periodoExistente ??
+      (await prisma.periodoAcademico.create({
+        data: {
+          institucionId: institucion.id,
+          nombre: '1er Trimestre',
+          fechaInicio: new Date('2025-03-01T00:00:00.000Z'),
+          fechaFin: new Date('2025-06-30T23:59:59.999Z'),
+          orden: 1,
+        },
+      }));
+
+    periodoPorInstitucion.set(institucion.id, periodo.id);
+
+    for (const nombre of nombresDeMaterias) {
+      const materiaExistente = await prisma.materia.findFirst({
+        where: { institucionId: institucion.id, nombre },
+      });
+      const materia =
+        materiaExistente ??
+        (await prisma.materia.create({
+          data: { institucionId: institucion.id, nombre },
+        }));
+      materiaPorInstitucionYNombre.set(
+        `${institucion.id}:${nombre}`,
+        materia.id
+      );
+    }
+  }
+
+  for (const grupo of grupos) {
+    const periodoId = periodoPorInstitucion.get(grupo.institucionId);
+    if (periodoId) {
+      await prisma.grupo.update({
+        where: { id: grupo.id },
+        data: { periodoAcademicoId: periodoId },
+      });
+    }
+
+    const nombresParaGrupo = calificacionesData
+      .filter((calificacion) => calificacion.grupoNombre === grupo.nombre)
+      .map((calificacion) => calificacion.materia);
+
+    for (const nombre of new Set(nombresParaGrupo)) {
+      const materiaId = materiaPorInstitucionYNombre.get(
+        `${grupo.institucionId}:${nombre}`
+      );
+      if (materiaId) {
+        await prisma.grupoMateria.upsert({
+          where: { grupoId_materiaId: { grupoId: grupo.id, materiaId } },
+          update: { activo: true },
+          create: { grupoId: grupo.id, materiaId },
+        });
+      }
+    }
+  }
+
   for (const asistData of asistenciasData) {
     const estudiante = await getUsuarioByEmail(
       prisma,
@@ -393,13 +462,20 @@ export async function seedAdministrativo(prisma: PrismaClient): Promise<void> {
 
     if (!estudiante || !grupo) continue;
 
+    const periodoAcademicoId = periodoPorInstitucion.get(grupo.institucionId);
+    const materiaId = materiaPorInstitucionYNombre.get(
+      `${grupo.institucionId}:${califData.materia}`
+    );
+
+    if (!periodoAcademicoId || !materiaId) continue;
+
     // Buscar calificación existente
     const existing = await prisma.calificacion.findFirst({
       where: {
         grupoId: grupo.id,
         estudianteId: estudiante.id,
-        materia: califData.materia,
-        periodo: califData.periodo,
+        materiaId,
+        periodoAcademicoId,
       },
     });
 
@@ -416,8 +492,8 @@ export async function seedAdministrativo(prisma: PrismaClient): Promise<void> {
         data: {
           grupoId: grupo.id,
           estudianteId: estudiante.id,
-          materia: califData.materia,
-          periodo: califData.periodo,
+          materiaId,
+          periodoAcademicoId,
           nota: califData.nota,
           observaciones: califData.observaciones,
         },
