@@ -190,7 +190,8 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 - Verificación: referencias obsoletas revisadas, Prettier check aprobado y `git diff --check` aprobado.
 - Riesgo: none
 - Evidencia: `odd/evidence/documentation-closure-t8.txt`.
-- Commit: pendiente (se documentará luego del commit de implementación)
+- Commit: `59c3e78`
+- Límite de slice: `59c3e78` cierra la entrega documental T8; la rama acumula 3.801 líneas authored en 14 commits desde `origin/master`, por encima del objetivo aproximado de 400 líneas. No se agregan más cambios a este slice; cualquier continuación debe iniciar una entrega separada y reviewable.
 
 #### Matriz de cierre
 
