@@ -136,7 +136,7 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 - Verificación: builds de packages, type-check de types/shared/API/web, lint de types/shared/API/web, 55 tests API focalizados, 58 tests web de catálogo y `git diff --check` aprobados.
 - Riesgo: item 3 — modificar tipos compartidos puede alterar consumidores no incluidos inicialmente; el alcance se limitó al contrato estabilizado de búsqueda.
 - Evidencia: `odd/evidence/search-contract-t5.txt`.
-- Commit: pendiente (se documentará luego del commit de implementación)
+- Commit: `116d0ff`
 
 ### T6 — Aclarar el rol operativo de Redis
 
