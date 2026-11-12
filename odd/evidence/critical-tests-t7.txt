@@ -1,0 +1,34 @@
+T7 — Cobertura de huecos críticos
+Fecha: 2026-11-12
+Repositorio: /home/ignacio/amauta
+
+Implementación
+- Búsqueda API: se agregó regresión para rechazar parámetros inválidos antes de consultar o mutar Prisma.
+- Soft delete de lecciones: se agregó verificación de ausencia de `update`, `findMany` y `$transaction` cuando la lección no existe o el usuario no es propietario.
+- Proxy web de lecciones: se agregó `route.test.ts` con éxito, error backend, ausencia de autenticación y serialización de POST.
+- Catálogo web: se agregó un estado de error explícito separado del estado vacío y su regresión visual.
+- E2E: se agregó `apps/e2e/tests/frontend/catalog-search.spec.ts` para catálogo público → búsqueda → detalle y búsqueda sin resultados.
+- Playwright: se agregó `PLAYWRIGHT_EXECUTABLE_PATH` opcional en `playwright.config.ts` para reutilizar un Chromium compatible sin descargar otro navegador.
+- El proxy de lecciones lee `API_URL` al ejecutar la función, lo que permite verificar configuraciones locales y evita congelar la variable durante el import.
+
+Verificación focalizada
+- API: controller, cursos service y lecciones service; 86 tests aprobados.
+- Web: catálogo y proxy de lecciones; 63 tests aprobados (58 catálogo previo + 5 catálogo con error + 4 proxy; las suites de catálogo completas quedaron aprobadas).
+- E2E local headless: 2 tests aprobados con Chromium existente:
+  - catálogo público → búsqueda de Álgebra → detalle;
+  - búsqueda sin resultados.
+
+Verificación completa
+- Web `test:ci`: 54 suites, 250 tests aprobados.
+- API `test`: 28 suites, 350 tests aprobados.
+- `npm run test:all`: aprobado.
+- API y web type-check: aprobados.
+- API y web lint: aprobados.
+- Build web: aprobado.
+- Lint E2E y formato de archivos modificados: aprobados.
+
+Notas
+- Las pruebas web existentes continúan mostrando advertencias React conocidas sobre `fill` y `unoptimized` en el mock de imagen; no provocan fallos.
+- El E2E local se ejecutó contra PostgreSQL/Redis Docker locales y el Chromium existente en `/home/ignacio/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome`.
+- No se modificó producción ni se aplicaron migraciones.
+- La cobertura de EventBus no se agregó porque no existe esa integración en el código actual.

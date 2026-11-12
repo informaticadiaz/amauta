@@ -158,6 +158,7 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 
 ### T7 — Cubrir huecos críticos de pruebas
 
+- Estado: completado
 - Spec: S5
 - Ruta: tests de API, web y E2E; soft delete cuando esté implementado
 - Dependencias: T3 para búsqueda; dependencia de soft delete según `.sdd/proposal-backend/TASKS.md`
@@ -167,10 +168,12 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
   - Flujo E2E mínimo.
   - Pruebas de soft delete de lecciones cuando la implementación y migración estén disponibles.
   - Corrección de tests que dependan de mocks sin validar efectos observables.
+- Resultado: se cubren rechazos de búsqueda sin consultas ni mutaciones, soft delete sin mutación ante inexistencia o falta de propiedad, proxy de lecciones, estados vacío/error del catálogo y el flujo E2E público de búsqueda a detalle.
 - Criterio de cierre: cada regla prioritaria prueba salida, error, efectos observables y ausencia de mutación en entradas rechazadas.
-- Verificación: tests focalizados, `test:all`, type-check, lint y build cuando sean aplicables.
-- Riesgo: item 6 — un test que no cubra el comportamiento observable no ofrece evidencia suficiente.
-- Commit: pendiente
+- Verificación: `test:all` aprobado con 54 suites/250 tests web y 28 suites/350 tests API; type-check, lint, build web, formato y E2E local headless aprobados. E2E: 2 tests de catálogo aprobados.
+- Riesgo: item 6 — un test que no cubra el comportamiento observable no ofrece evidencia suficiente; los casos agregados verifican efectos públicos y ausencia de mutación.
+- Evidencia: `odd/evidence/critical-tests-t7.txt`.
+- Commit: pendiente (se documentará luego del commit de implementación)
 
 ### T8 — Cerrar documentación con evidencia
 

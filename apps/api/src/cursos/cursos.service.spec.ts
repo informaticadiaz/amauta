@@ -581,6 +581,17 @@ describe('CursosService', () => {
   });
 
   describe('buscarCursos', () => {
+    it('rechaza parámetros inválidos sin consultar ni mutar datos', async () => {
+      await expect(
+        service.buscarCursos({ page: 0, limit: 10 })
+      ).rejects.toThrow(BadRequestException);
+
+      expect(prisma.curso.findMany).not.toHaveBeenCalled();
+      expect(prisma.curso.count).not.toHaveBeenCalled();
+      expect(prisma.curso.update).not.toHaveBeenCalled();
+      expect(prisma.curso.create).not.toHaveBeenCalled();
+    });
+
     const cursoPublicado = (
       titulo: string,
       descripcion: string,

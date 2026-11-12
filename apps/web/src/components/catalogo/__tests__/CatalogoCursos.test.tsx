@@ -33,6 +33,25 @@ const cursoBase = {
 };
 
 describe('CatalogoCursos', () => {
+  it('muestra el error de carga sin presentarlo como catálogo vacío', () => {
+    render(
+      <CatalogoCursos
+        cursosData={{ cursos: [], total: 0, page: 1, limit: 12, totalPages: 0 }}
+        error="No se pudo conectar con la API."
+      />
+    );
+
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'No se pudo cargar el catálogo'
+    );
+    expect(
+      screen.getByText('No se pudo conectar con la API.')
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText(/no se encontraron cursos/i)
+    ).not.toBeInTheDocument();
+  });
+
   it('muestra estado vacío cuando no hay cursos', () => {
     render(
       <CatalogoCursos

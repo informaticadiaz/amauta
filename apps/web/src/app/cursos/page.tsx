@@ -32,6 +32,10 @@ interface CategoriasResponse {
   categorias: Categoria[];
 }
 
+type CatalogoResponse = ListaCursosResponse & {
+  error?: string;
+};
+
 type CursosSearchParams = {
   page?: string;
   buscar?: string;
@@ -57,7 +61,7 @@ async function getCategorias(): Promise<Categoria[]> {
 
 async function getCursos(
   params: CursosSearchParams
-): Promise<ListaCursosResponse> {
+): Promise<CatalogoResponse> {
   try {
     const queryParams = new URLSearchParams();
 
@@ -79,6 +83,7 @@ async function getCursos(
     console.error('Error al obtener cursos:', error);
     return {
       cursos: [] as CursoCatalogo[],
+      error: 'No se pudo cargar el catálogo de cursos.',
       total: 0,
       page: 1,
       limit: 12,
@@ -145,7 +150,10 @@ export default async function CursosPage({ searchParams }: PageProps) {
                 </div>
               }
             >
-              <CatalogoCursos cursosData={cursosData} />
+              <CatalogoCursos
+                cursosData={cursosData}
+                error={cursosData.error}
+              />
             </Suspense>
           </main>
         </div>
