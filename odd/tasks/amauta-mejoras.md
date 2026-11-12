@@ -1,6 +1,6 @@
 # ODD Plan — Amauta: consolidación técnica y búsqueda
 
-Estado: planificado, sin implementación iniciada.
+Estado: en curso; T1 y T2 documentales realizados, T3 bloqueado y Fase 4c iniciada con implementación de F4c-001.
 Repositorio: `/home/ignacio/amauta`
 Fuente de análisis: arquitectura actual, documentación del proyecto y estado de Fase 6.
 
@@ -213,3 +213,7 @@ La verificación focalizada pasó sin cambios funcionales: API `cursos.service.s
 ### L3
 
 Se inició T3 y se confirmó que existen tests E2E generales, pero ninguno específico de búsqueda (`apps/e2e/tests/api` y `apps/e2e/tests/frontend`). Se autorizó un entorno local aislado, pero Docker Compose no pudo iniciar PostgreSQL porque el daemon Docker no está disponible (`/var/run/docker.sock`). No se usó producción ni se modificó código funcional. El baseline queda bloqueado hasta disponer de un entorno local operativo o staging no productivo.
+
+### L4
+
+La revisión del historial reciente y del último issue cerrado corrigió el estado documental del proyecto. El último issue cerrado es #104 (F4b-004), pero los commits posteriores `feat(materias): incorporar catalogo escolar y calificaciones` y `feat(materias): agregar gestion escolar en la web` muestran que Fase 4c ya comenzó y que F4c-001 tiene implementación en el repositorio. El roadmap y `AGENTS.md` ahora distinguen implementación existente de cierre formal del issue y verificación pendiente.
