@@ -1,6 +1,6 @@
 # ODD Plan — Amauta: consolidación técnica y búsqueda
 
-Estado: en curso; T1, T2 y T3 realizados con evidencia local; T4 pendiente de decisión sobre estrategia de búsqueda. Fase 4c iniciada con implementación de F4c-001.
+Estado: en curso; T1, T2, T3 y T4 realizados con evidencia local; próximo trabajo: T5. Fase 4c iniciada con implementación de F4c-001.
 Repositorio: `/home/ignacio/amauta`
 Fuente de análisis: arquitectura actual, documentación del proyecto y estado de Fase 6.
 
@@ -100,7 +100,7 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 - Limitación: el runner estándar no pudo instalar su revisión Chromium en `ubuntu26.04-x64`; el smoke se ejecutó con Playwright headless usando el Chromium compatible ya instalado y `executablePath` explícito.
 - Evidencia: `odd/evidence/search-baseline-t3.txt`.
 - Riesgo: item 6 — el resultado depende del entorno y de datos representativos; no se debe extrapolar sin evidencia.
-- Commit: `9600f74`
+- Commit: `7a008a0`
 
 ### T4 — Decidir y aplicar la estrategia de búsqueda
 
@@ -118,7 +118,7 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 - Verificación: 55 tests API focalizados, 58 tests web de catálogo, type-check y lint web; baseline SQL preservado y ADR registrado.
 - Evidencia: `docs/technical/adr/010-estrategia-busqueda-catalogo.md` y `odd/evidence/search-strategy-t4.txt`.
 - Riesgo: item 3 — búsqueda es contrato público; la decisión se limita al volumen medido y debe reabrirse con datos representativos.
-- Commit: HEAD (T4 work-unit commit)
+- Commit: `e97d237`
 
 ### T5 — Definir contratos compartidos mínimos
 
