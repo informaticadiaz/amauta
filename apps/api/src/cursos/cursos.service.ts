@@ -24,6 +24,7 @@ import {
   busquedaCursosSchema,
   type BusquedaCursosDto,
 } from './dto/busqueda-cursos.dto';
+import type { ListaCursosResponse } from '@amauta/types';
 import type { EstadoCurso, Nivel, Prisma } from '@prisma/client';
 
 export interface CursoConEducador {
@@ -63,13 +64,7 @@ export interface CursoConEducador {
   }>;
 }
 
-interface ListaCursosResult {
-  cursos: CursoConEducador[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-}
+type ListaCursosResult = ListaCursosResponse;
 
 @Injectable()
 export class CursosService {

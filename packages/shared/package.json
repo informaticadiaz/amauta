@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "description": "Código compartido entre frontend y backend",
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "lint": "ESLINT_USE_FLAT_CONFIG=false eslint . --ext .ts --max-warnings 0",
     "lint:fix": "ESLINT_USE_FLAT_CONFIG=false eslint . --ext .ts --fix",
     "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@amauta/types": "0.1.0",
+    "zod": "^4.2.1"
   }
 }

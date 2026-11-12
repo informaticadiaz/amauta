@@ -19,10 +19,10 @@
       "@/middleware/*": ["./src/middleware/*"],
       "@/routes/*": ["./src/routes/*"],
       "@/lib/*": ["./src/lib/*"],
-      "@amauta/shared": ["../../packages/shared"],
-      "@amauta/shared/*": ["../../packages/shared/*"],
-      "@amauta/types": ["../../packages/types"],
-      "@amauta/types/*": ["../../packages/types/*"]
+      "@amauta/shared": ["../../packages/shared/dist"],
+      "@amauta/shared/*": ["../../packages/shared/dist/*"],
+      "@amauta/types": ["../../packages/types/dist"],
+      "@amauta/types/*": ["../../packages/types/dist/*"]
     },
 
     // Backend specific

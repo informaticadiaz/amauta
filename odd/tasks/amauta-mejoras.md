@@ -122,6 +122,7 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 
 ### T5 — Definir contratos compartidos mínimos
 
+- Estado: completado
 - Spec: S2
 - Ruta: `packages/shared`, `packages/types`, DTOs y tipos del frontend
 - Dependencias: T2
@@ -130,10 +131,12 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
   - Tipos/validaciones compartidas solamente para parámetros y respuestas estabilizados.
   - Eliminación gradual de duplicación, sin convertir todo Prisma en contrato público.
   - Tests de compatibilidad del contrato.
+- Resultado: `@amauta/types` concentra los tipos wire de búsqueda y catálogo; `@amauta/shared` concentra la validación Zod de `GET /cursos/buscar`. El backend y el frontend consumen esos contratos sin duplicar las interfaces del catálogo.
 - Criterio de cierre: frontend y backend consumen una representación única de los contratos incorporados en este task.
-- Verificación: type-check de todos los workspaces y tests de API/web.
-- Riesgo: item 3 — modificar tipos compartidos puede alterar consumidores no incluidos inicialmente.
-- Commit: pendiente
+- Verificación: builds de packages, type-check de types/shared/API/web, lint de types/shared/API/web, 55 tests API focalizados, 58 tests web de catálogo y `git diff --check` aprobados.
+- Riesgo: item 3 — modificar tipos compartidos puede alterar consumidores no incluidos inicialmente; el alcance se limitó al contrato estabilizado de búsqueda.
+- Evidencia: `odd/evidence/search-contract-t5.txt`.
+- Commit: pendiente (se documentará luego del commit de implementación)
 
 ### T6 — Aclarar el rol operativo de Redis
 

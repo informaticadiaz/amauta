@@ -1,0 +1,30 @@
+T5 — Contrato compartido mínimo de búsqueda
+Fecha: 2026-11-12
+Repositorio: /home/ignacio/amauta
+
+Decisión
+- `@amauta/types` es la fuente canónica de los tipos wire estabilizados del catálogo: parámetros de búsqueda, curso de catálogo y respuesta paginada.
+- `@amauta/shared` es la fuente canónica de la validación Zod de `GET /cursos/buscar`.
+- No se exponen tipos generados por Prisma ni se generaliza el contrato a otros módulos todavía.
+
+Implementación
+- Se agregaron `BusquedaCursosParams`, `CursoCatalogo` y `ListaCursosResponse` en `packages/types/index.ts`.
+- Se trasladó `busquedaCursosSchema` a `packages/shared/index.ts` y el DTO del API ahora lo reexporta.
+- El controller y el service de cursos consumen `ListaCursosResponse` desde `@amauta/types`.
+- La página pública de catálogo consume `ListaCursosResponse` y `CursoCatalogo` desde `@amauta/types`.
+- Se eliminaron las interfaces duplicadas del catálogo web.
+- El API resuelve los paquetes compartidos compilados (`packages/*/dist`) para respetar su `rootDir`.
+- Se actualizaron `main`/`types` de los paquetes y el lockfile para reflejar sus artefactos compilados y dependencias.
+
+Verificación
+- Build de `@amauta/types`: aprobado.
+- Build de `@amauta/shared`: aprobado.
+- Type-check de types, shared, API y web: aprobado.
+- Lint de types, shared, API y web: aprobado.
+- API: 2 suites focalizadas, 55 tests aprobados.
+- Web catálogo: 5 suites, 58 tests aprobados.
+- `git diff --check`: aprobado.
+
+Notas
+- Los tests web muestran advertencias existentes de React sobre `fill` y `unoptimized` en el mock/render de imagen; no provocan fallos y no pertenecen al alcance de T5.
+- No se modificó producción ni se aplicaron migraciones.
