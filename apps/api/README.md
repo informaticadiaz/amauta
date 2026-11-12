@@ -10,23 +10,23 @@ La implementación del workspace contiene, además de la base NestJS/Fastify, m�
 
 ## Stack Tecnológico
 
-| Tecnología | Versión | Propósito                                                                                      |
-| ---------- | ------- | ---------------------------------------------------------------------------------------------- |
-| Node.js    | 22 LTS  | Runtime                                                                                        |
-| NestJS     | 11.x    | Framework backend                                                                              |
-| Fastify    | -       | HTTP adapter (mejor performance que Express)                                                   |
-| TypeScript | 5.x     | Tipado estático                                                                                |
-| PostgreSQL | 15      | Base de datos                                                                                  |
-| Prisma     | 6.x     | ORM                                                                                            |
-| Zod        | 4.x     | Validación de schemas                                                                          |
-| Redis      | 7       | Infraestructura disponible; su rol operativo se documentará separadamente con evidencia de uso |
+| Tecnología | Versión | Propósito                                                                         |
+| ---------- | ------- | --------------------------------------------------------------------------------- |
+| Node.js    | 22 LTS  | Runtime                                                                           |
+| NestJS     | 11.x    | Framework backend                                                                 |
+| Fastify    | -       | HTTP adapter (mejor performance que Express)                                      |
+| TypeScript | 5.x     | Tipado estático                                                                   |
+| PostgreSQL | 15      | Base de datos                                                                     |
+| Prisma     | 6.x     | ORM                                                                               |
+| Zod        | 4.x     | Validación de schemas                                                             |
+| Redis      | 7       | Infraestructura preparada y opcional; no es consumida por la API actual (ADR-011) |
 
 ## Desarrollo
 
 ### Requisitos
 
 - Node.js 22 LTS
-- Docker y Docker Compose (para PostgreSQL y Redis)
+- Docker y Docker Compose (PostgreSQL; Redis es opcional y no es consumido por la API actual)
 
 ### Comandos
 

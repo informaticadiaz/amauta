@@ -18,13 +18,13 @@ docker/
 El archivo principal `docker-compose.yml` está en la raíz del proyecto y configura:
 
 - **PostgreSQL 15**: Base de datos principal
-- **Redis 7**: Caché y sesiones
+- **Redis 7**: Infraestructura preparada y opcional; no es consumida por la API actual
 - **Adminer** (opcional): Interface web para PostgreSQL
 
 ## Uso Rápido
 
 ```bash
-# Iniciar todos los servicios
+# Iniciar todos los servicios (Redis es opcional para la API actual)
 docker-compose up -d
 
 # Ver estado de servicios

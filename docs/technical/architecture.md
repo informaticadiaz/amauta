@@ -30,7 +30,7 @@ flowchart TB
 
     subgraph Data["💾 Capa de Datos"]
         PG["PostgreSQL 15<br/>Base de datos principal"]
-        Redis["Redis 7<br/>Cache + Sesiones"]
+        Redis["Redis 7<br/>Preparado; sin uso actual"]
     end
 
     subgraph Storage["📁 Almacenamiento"]
@@ -46,7 +46,6 @@ flowchart TB
     Auth --> Services
     Services --> Prisma
     Prisma --> PG
-    Services <--> Redis
 
     Backend --> Storage
 ```
@@ -103,7 +102,7 @@ flowchart TB
             FE["Frontend<br/>Next.js"]
             BE["Backend<br/>NestJS"]
             DB["PostgreSQL"]
-            Cache["Redis"]
+            Cache["Redis<br/>(preparado)"]
         end
 
         subgraph Dokploy["Dokploy"]
@@ -116,7 +115,6 @@ flowchart TB
     Traefik -->|amauta.diazignacio.ar| FE
     Traefik -->|amauta-api.diazignacio.ar| BE
     BE <--> DB
-    BE <--> Cache
 
     style SSL fill:#90EE90
     style FE fill:#87CEEB
@@ -323,7 +321,7 @@ flowchart TB
         Login["Login<br/>(email + password)"]
         ValidarCreds["Validar<br/>credenciales"]
         GenerarJWT["Generar JWT<br/>+ Refresh Token"]
-        GuardarSesion["Guardar sesión<br/>en Redis"]
+        GuardarSesion["Sesión JWT<br/>sin Redis"]
         RetornarTokens["Retornar<br/>tokens"]
 
         Login --> ValidarCreds
@@ -406,7 +404,7 @@ flowchart TB
 ### Base de Datos
 
 - **Principal**: PostgreSQL 15+
-- **Caché**: Redis 7+ (configurado, en uso desde Fase 1)
+- **Redis**: 7+ preparado y opcional; no consumido por la API actual (ADR-011)
 - **Búsqueda**: PostgreSQL Full-Text Search (Elasticsearch futuro)
 
 ### DevOps
@@ -532,7 +530,7 @@ Request → JwtAuthGuard (verifica token) → RolesGuard (verifica roles) → Co
 
 ### Horizontal
 
-- Backend stateless (sesiones en Redis)
+- Backend stateless mediante JWT; Redis no almacena sesiones actualmente
 - Load balancer compatible
 - Microservicios opcionales para módulos específicos
 
@@ -751,32 +749,16 @@ Request → JwtAuthGuard (verifica token) → RolesGuard (verifica roles) → Co
   - **Contras**: Sin type-safety, migraciones manuales, boilerplate
   - **Rechazo**: Productividad > control absoluto
 
-### ¿Por qué Redis?
+### ¿Cuál es el rol actual de Redis?
 
-**Redis 7+** fue elegido para caché y sesiones porque:
+Redis 7 está preparado en Docker y puede existir en los entornos de desarrollo o despliegue, pero la API versionada no lo consume actualmente.
 
-- **Performance**: Submilisegundos de latencia
-- **Versatilidad**: Cache, sessions, pub/sub, queues
-- **Persistence opcional**: RDB + AOF para durabilidad
-- **Simple**: API simple, fácil de operar
-- **Maduro**: Probado en producción a escala
+- No existe cliente Redis, caché de aplicación, storage de sesiones ni cola.
+- El rate limiting de NestJS usa el storage predeterminado del proceso y no es distribuido.
+- `REDIS_URL` y `REDIS_CACHE_TTL` se validan como configuración opcional, pero no activan ningún comportamiento.
+- No hay contrato vigente de TTL, claves, invalidación, métricas o degradación ante caída.
 
-**Alternativas consideradas**:
-
-- ❌ **In-memory cache (node-cache)**: Cache en proceso
-  - **Pros**: Cero configuración
-  - **Contras**: No compartido entre instancias, se pierde en restart
-  - **Rechazo**: No escala horizontalmente
-
-- ❌ **Memcached**: Sistema de caché distribuido
-  - **Pros**: Muy rápido, simple
-  - **Contras**: Solo caché (no pub/sub ni queues), menos features
-  - **Rechazo**: Redis más versátil
-
-- ❌ **Valkey (Redis fork)**: Fork open source de Redis
-  - **Pros**: Totalmente open source sin restricciones de licencia
-  - **Contras**: Fork reciente, menos maduro
-  - **Rechazo**: Redis 7 BSD-licensed es suficiente para nuestro uso
+La infraestructura se conserva para una integración futura, pero no debe describirse como una dependencia operativa. Cualquier uso de Redis requiere una nueva decisión con consumidor real, pruebas y observabilidad. Ver [ADR-011](./adr/011-rol-operativo-redis.md).
 
 ### ¿Por qué Offline-First?
 

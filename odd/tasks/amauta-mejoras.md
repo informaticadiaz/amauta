@@ -140,6 +140,7 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 
 ### T6 — Aclarar el rol operativo de Redis
 
+- Estado: completado
 - Spec: S4
 - Ruta: `docker-compose.yml`, `apps/api`, README técnico y documentación de arquitectura
 - Dependencias: T1; T3 como evidencia para cualquier uso en búsqueda
@@ -148,10 +149,12 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
   - ADR sobre caché, sesiones, rate limiting, colas o estado de “preparado”.
   - Comportamiento documentado ante caída, TTL, claves, invalidación y observabilidad si existe uso real.
   - Explicitación de lo que queda fuera de alcance.
+- Resultado: Redis se clasifica como infraestructura preparada y opcional. La API no lo consume para caché, sesiones, colas ni rate limiting distribuido; `REDIS_URL` y `REDIS_CACHE_TTL` permanecen como configuración preparada no consumida. Se corrigió el healthcheck local para autenticar y ejecutar `PING` sin mutar datos.
 - Criterio de cierre: un colaborador puede saber si Redis es obligatorio para desarrollo, test, producción y qué ocurre si no está disponible.
-- Verificación: revisión de configuración y prueba funcional únicamente si existe integración real.
-- Riesgo: item 6 — declarar una dependencia crítica sin evidencia puede bloquear entornos o esconder fallos.
-- Commit: pendiente
+- Verificación: inspección de código/configuración, `docker compose config --quiet` y estado local saludable de PostgreSQL/Redis; no se modificó producción.
+- Riesgo: item 6 — declarar una dependencia crítica sin evidencia puede bloquear entornos o esconder fallos; la documentación ahora limita explícitamente la conclusión al código versionado y al entorno local.
+- Evidencia: `odd/evidence/redis-role-t6.txt` y `docs/technical/adr/011-rol-operativo-redis.md`.
+- Commit: pendiente (se documentará luego del commit de implementación)
 
 ### T7 — Cubrir huecos críticos de pruebas
 

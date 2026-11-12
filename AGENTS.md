@@ -785,7 +785,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 - **Backend**: NestJS + Fastify con TypeScript strict mode
 - **ORM**: Prisma
 - **Base de Datos**: PostgreSQL 15+
-- **Caché**: Redis 7+ (en uso desde Fase 1)
+- **Redis**: 7+ preparado y opcional; no consumido por la API actual (ver `docs/technical/adr/011-rol-operativo-redis.md`)
 - **Deployment**: Dokploy en VPS (amauta.diazignacio.ar)
 
 Ver `docs/technical/architecture.md` para decisiones técnicas detalladas.
@@ -794,12 +794,12 @@ Ver `docs/technical/architecture.md` para decisiones técnicas detalladas.
 
 **La base de datos está en el VPS, NO local.**
 
-| Servicio        | Ubicación     | URL/Host                          |
-| --------------- | ------------- | --------------------------------- |
-| **PostgreSQL**  | VPS (Dokploy) | Producción                        |
-| **Redis**       | VPS (Dokploy) | Producción                        |
-| **Backend API** | VPS           | https://amauta-api.diazignacio.ar |
-| **Frontend**    | VPS           | https://amauta.diazignacio.ar     |
+| Servicio        | Ubicación     | URL/Host                                                   |
+| --------------- | ------------- | ---------------------------------------------------------- |
+| **PostgreSQL**  | VPS (Dokploy) | Producción                                                 |
+| **Redis**       | VPS (Dokploy) | Infraestructura preparada; no dependencia de la API actual |
+| **Backend API** | VPS           | https://amauta-api.diazignacio.ar                          |
+| **Frontend**    | VPS           | https://amauta.diazignacio.ar                              |
 
 **Implicaciones:**
 

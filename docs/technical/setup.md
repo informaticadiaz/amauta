@@ -7,7 +7,7 @@
 - **Node.js**: v22.11.x o superior dentro de la línea 22 ([Descargar](https://nodejs.org/))
 - **npm**: v10.x o superior (viene incluido con Node.js)
 - **PostgreSQL**: v15.x o superior ([Descargar](https://www.postgresql.org/download/)) - Pendiente de configuración
-- **Redis**: v7.x o superior ([Descargar](https://redis.io/download)) - Opcional, para futuro
+- **Redis**: v7.x o superior ([Descargar](https://redis.io/download)) - Opcional; infraestructura preparada, no requerida por la API actual
 - **Git**: Para control de versiones
 - **Docker** (opcional): Para ejecutar servicios en contenedores
 
@@ -306,46 +306,26 @@ echo $DATABASE_URL
 # npm run prisma db execute --stdin <<< "SELECT version();"
 ```
 
-### 5. Configurar Redis (Opcional)
+### 5. Redis (Opcional, infraestructura preparada)
 
-Redis se usa para caché y sesiones. Es opcional en desarrollo pero **recomendado**.
+La API actual no abre una conexión a Redis, no almacena sesiones allí, no usa caché y no configura el rate limiting de NestJS con storage Redis. Por eso Redis no es requisito para compilar, ejecutar o probar el backend.
 
-#### Con Docker (Recomendado)
+#### Con Docker
 
-Si usaste `docker-compose up -d`, Redis ya está corriendo en `localhost:6379`.
-
-**Verificar que Redis esté funcionando:**
+Si usás `docker compose up -d`, Redis queda disponible en `localhost:6379` como infraestructura preparada. El healthcheck del compose autentica la conexión y ejecuta `PING` sin mutar claves.
 
 ```bash
-# Opción 1: Redis CLI (si tienes redis-cli instalado)
-redis-cli -h localhost -p 6379 ping
-# Debería responder: PONG
+# Verificar el servicio local
+docker compose exec redis redis-cli -a desarrollo123 --no-auth-warning ping
+# Respuesta esperada: PONG
 
-# Opción 2: Conectar con password
-redis-cli -h localhost -p 6379 -a desarrollo123 ping
-
-# Opción 3: Desde Docker
-docker-compose exec redis redis-cli ping
+# Ver estado
+docker compose ps redis
 ```
 
-**Comandos útiles:**
+Podés omitir Redis y las variables `REDIS_URL`/`REDIS_CACHE_TTL` para el desarrollo actual. Si iniciás el contenedor, la password y la política de memoria son valores de desarrollo; no representan un contrato de caché o sesiones.
 
-```bash
-# Ver info de Redis
-docker-compose exec redis redis-cli info
-
-# Ver memoria usada
-docker-compose exec redis redis-cli info memory
-
-# Ver keys almacenadas
-docker-compose exec redis redis-cli keys '*'
-
-# Flush toda la cache (⚠️ borra todo)
-docker-compose exec redis redis-cli FLUSHALL
-
-# Ver logs de Redis
-docker-compose logs -f redis
-```
+La decisión y el alcance futuro están documentados en [ADR-011](./adr/011-rol-operativo-redis.md).
 
 #### Instalación Local (Alternativa)
 
@@ -383,14 +363,13 @@ sudo systemctl restart redis-server
 
 #### Configurar en .env.local
 
-Si Redis está disponible, agregar a `apps/api/.env.local`:
+No agregues estas variables para el desarrollo actual salvo que estés preparando una integración futura:
 
 ```env
+# Preparadas para una integración futura; hoy no son consumidas por la API.
 REDIS_URL=redis://:desarrollo123@localhost:6379
 REDIS_CACHE_TTL=3600
 ```
-
-Si **NO** usas Redis, puedes omitir estas variables. La aplicación funcionará sin caché.
 
 ### 6. Configurar Prisma ORM
 

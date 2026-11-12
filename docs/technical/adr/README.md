@@ -38,6 +38,7 @@ Los ADRs documentan las decisiones arquitectónicas importantes del proyecto. Ca
 | [008](./008-offline-first-pwa.md)              | Estrategia offline-first para la PWA                                      | Aceptado | 2026-03 |
 | [009](./009-prisma-migraciones-controladas.md) | Migraciones Prisma versionadas y deploy controlado                        | Aceptado | 2026-03 |
 | [010](./010-estrategia-busqueda-catalogo.md)   | Mantener estrategia de búsqueda hasta contar con evidencia representativa | Aceptado | 2026-11 |
+| [011](./011-rol-operativo-redis.md)            | Redis como infraestructura preparada, no dependencia operativa            | Aceptado | 2026-11 |
 
 ## Template para nuevos ADRs
 
