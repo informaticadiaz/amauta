@@ -154,7 +154,7 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 - Verificación: inspección de código/configuración, `docker compose config --quiet` y estado local saludable de PostgreSQL/Redis; no se modificó producción.
 - Riesgo: item 6 — declarar una dependencia crítica sin evidencia puede bloquear entornos o esconder fallos; la documentación ahora limita explícitamente la conclusión al código versionado y al entorno local.
 - Evidencia: `odd/evidence/redis-role-t6.txt` y `docs/technical/adr/011-rol-operativo-redis.md`.
-- Commit: pendiente (se documentará luego del commit de implementación)
+- Commit: `778e0a8`
 
 ### T7 — Cubrir huecos críticos de pruebas
 
