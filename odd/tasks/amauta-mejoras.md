@@ -173,7 +173,7 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 - Verificación: `test:all` aprobado con 54 suites/250 tests web y 28 suites/350 tests API; type-check, lint, build web, formato y E2E local headless aprobados. E2E: 2 tests de catálogo aprobados.
 - Riesgo: item 6 — un test que no cubra el comportamiento observable no ofrece evidencia suficiente; los casos agregados verifican efectos públicos y ausencia de mutación.
 - Evidencia: `odd/evidence/critical-tests-t7.txt`.
-- Commit: pendiente (se documentará luego del commit de implementación)
+- Commit: `e0c674d`
 
 ### T8 — Cerrar documentación con evidencia
 
