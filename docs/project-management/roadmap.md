@@ -9,7 +9,7 @@
 - **Última fase completada**: Fase 7 — Multimedia y Contenido Rico, completada según el registro de Sprint 19.
 - **Trabajo actual**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprint 21.
 - **Estado de F4c-001**: ✅ completado; catálogo institucional, migración de calificaciones, asignaciones a grupos y verificación local aprobados.
-- **Siguiente trabajo**: F4c-003 — Historial académico del estudiante.
+- **Siguiente trabajo**: cerrar F4c-003 — Historial académico del estudiante; la primera entrega API está implementada y quedan UI y estado de promoción.
 - **Issues cerrados**: el último issue cerrado es #104 (F4b-004); los commits posteriores corresponden al inicio de Fase 4c y no deben confundirse con el cierre de un issue.
 - **Producción**: las URLs y estados de despliegue se mantienen como referencia histórica/documental; no se usan como evidencia adicional de funcionalidades.
 - **ODD de consolidación y búsqueda**: T1–T7 completados con evidencia local; el cierre documental T8 se registra en `odd/tasks/amauta-mejoras.md`.
@@ -2133,13 +2133,13 @@ El issue más crítico de esta fase es F4c-001 (catálogo de materias) porque es
 
 ### Sprint 21 — Fundamentos del modelo
 
-| Issue   | Título                                                             | Estado        | Prioridad |
-| ------- | ------------------------------------------------------------------ | ------------- | --------- |
-| F4c-001 | Catálogo de materias por institución y migración de calificaciones | ✅ Completado | must-have |
-| F4c-002 | Matrícula formal: inscripción del estudiante a la institución      | ✅ Completado | must-have |
-| F4c-003 | Historial académico del estudiante (trayectoria entre períodos)    | ⏳ Pendiente  | must-have |
+| Issue   | Título                                                             | Estado                            | Prioridad |
+| ------- | ------------------------------------------------------------------ | --------------------------------- | --------- |
+| F4c-001 | Catálogo de materias por institución y migración de calificaciones | ✅ Completado                     | must-have |
+| F4c-002 | Matrícula formal: inscripción del estudiante a la institución      | ✅ Completado                     | must-have |
+| F4c-003 | Historial académico del estudiante (trayectoria entre períodos)    | 🔄 API implementada; UI pendiente | must-have |
 
-**Progreso Sprint 21**: 2/3 issues cerrados formalmente; F4c-003 permanece pendiente.
+**Progreso Sprint 21**: F4c-001 y F4c-002 están cerrados; F4c-003 tiene su primera entrega API verificada y permanece abierto hasta completar UI y resolver el estado de promoción por período.
 
 #### Dependencias
 
@@ -2175,7 +2175,7 @@ F4c-002 (matrícula) — independiente de F4c-001
 - Endpoint `GET /me/historial` → todas las calificaciones del estudiante agrupadas por período y materia
 - Endpoint `GET /instituciones/:id/estudiantes/:estudianteId/historial` → vista admin del legajo
 - Promedio general acumulado, evolución por materia entre períodos
-- Registro de estado de promoción por período (PROMOVIDO / REPITENTE / EGRESADO)
+- Registro de estado de promoción por período (PROMOVIDO / REPITENTE / EGRESADO); pendiente de modelo/persistencia, porque el schema actual todavía no contiene ese estado.
 
 ---
 

@@ -29,6 +29,7 @@ import { ForosModule } from './foros/foros.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
 import { ComunicadosModule } from './comunicados/comunicados.module';
 import { MatriculasModule } from './matriculas/matriculas.module';
+import { HistorialModule } from './historial/historial.module';
 import { JwtAuthGuard, RolesGuard } from './common/guards';
 
 @Module({
@@ -62,6 +63,7 @@ import { JwtAuthGuard, RolesGuard } from './common/guards';
     ForosModule,
     ComunicadosModule,
     MatriculasModule,
+    HistorialModule,
   ],
   controllers: [AppController],
   providers: [

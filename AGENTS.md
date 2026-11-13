@@ -28,7 +28,7 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 - **Última fase completada**: Fase 7 — Multimedia y Contenido Rico, completada según el Sprint 19 documentado.
 - **Trabajo actual**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprint 21; F4c-001 (catálogo de materias y migración de calificaciones) ya tiene implementación en el repositorio y permanece pendiente de cierre formal/verificación.
-- **Siguiente trabajo**: F4c-002 y F4c-003, después del cierre formal de F4c-001.
+- **Siguiente trabajo**: cerrar F4c-003 — Historial académico; su primera entrega API está implementada y verificada, con UI y estado de promoción pendientes.
 
 La sección histórica de Fase 6 que sigue conserva sus entregables documentados y no implica que sea la fase actual.
 
