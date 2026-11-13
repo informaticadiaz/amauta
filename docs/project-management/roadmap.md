@@ -8,7 +8,7 @@
 
 - **Última fase completada**: Fase 7 — Multimedia y Contenido Rico, completada según el registro de Sprint 19.
 - **Trabajo actual**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprint 21.
-- **Estado de F4c-001**: implementación de catálogo de materias y migración de calificaciones presente en el repositorio; pendiente de cierre formal del issue y verificación final.
+- **Estado de F4c-001**: ✅ completado; catálogo institucional, migración de calificaciones, asignaciones a grupos y verificación local aprobados.
 - **Siguiente trabajo**: F4c-002 y F4c-003, después del cierre formal de F4c-001.
 - **Issues cerrados**: el último issue cerrado es #104 (F4b-004); los commits posteriores corresponden al inicio de Fase 4c y no deben confundirse con el cierre de un issue.
 - **Producción**: las URLs y estados de despliegue se mantienen como referencia histórica/documental; no se usan como evidencia adicional de funcionalidades.
@@ -2133,13 +2133,13 @@ El issue más crítico de esta fase es F4c-001 (catálogo de materias) porque es
 
 ### Sprint 21 — Fundamentos del modelo
 
-| Issue   | Título                                                             | Estado                                                | Prioridad |
-| ------- | ------------------------------------------------------------------ | ----------------------------------------------------- | --------- |
-| F4c-001 | Catálogo de materias por institución y migración de calificaciones | 🔄 Implementado en código; pendiente de cierre formal | must-have |
-| F4c-002 | Matrícula formal: inscripción del estudiante a la institución      | ⏳ Pendiente                                          | must-have |
-| F4c-003 | Historial académico del estudiante (trayectoria entre períodos)    | ⏳ Pendiente                                          | must-have |
+| Issue   | Título                                                             | Estado        | Prioridad |
+| ------- | ------------------------------------------------------------------ | ------------- | --------- |
+| F4c-001 | Catálogo de materias por institución y migración de calificaciones | ✅ Completado | must-have |
+| F4c-002 | Matrícula formal: inscripción del estudiante a la institución      | ⏳ Pendiente  | must-have |
+| F4c-003 | Historial académico del estudiante (trayectoria entre períodos)    | ⏳ Pendiente  | must-have |
 
-**Progreso Sprint 21**: 0/3 issues cerrados formalmente; F4c-001 tiene implementación presente y está pendiente de verificación/cierre.
+**Progreso Sprint 21**: 1/3 issues cerrados formalmente; F4c-002 y F4c-003 permanecen pendientes.
 
 #### Dependencias
 

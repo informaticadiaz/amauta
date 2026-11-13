@@ -30,15 +30,16 @@ model Calificacion {
   periodoAcademicoId String
   periodoAcademico   PeriodoAcademico @relation(fields: [periodoAcademicoId], references: [id])
 
-  materia String
-  nota    Float
+  materiaId String
+  materia   Materia
+  nota      Float
 
   observaciones String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([grupoId, estudianteId, periodoAcademicoId, materia])
+  @@unique([grupoId, estudianteId, periodoAcademicoId, materiaId])
   @@index([grupoId, periodoAcademicoId])
   @@index([estudianteId, periodoAcademicoId])
   @@map("calificaciones")
@@ -52,7 +53,7 @@ model Calificacion {
 - El período académico debe pertenecer a la misma institución que el grupo.
 - Los estudiantes deben ser activos en el grupo (`GrupoEstudiante.activo = true`).
 - La nota debe estar dentro del rango `[notaMinima, notaMaxima]` de `EscalaCalificacion` de la institución.
-- La carga es idempotente: si ya existe una calificación para el mismo `grupoId+estudianteId+periodoAcademicoId+materia`, se actualiza.
+- La carga es idempotente: si ya existe una calificación para el mismo `grupoId+estudianteId+periodoAcademicoId+materiaId`, se actualiza.
 
 ---
 
@@ -72,7 +73,7 @@ model Calificacion {
 // query-calificaciones.dto.ts
 {
   periodoAcademicoId: string; // cuid, requerido
-  materia: string; // 1-100 chars, requerido
+  materiaId: string; // cuid, requerido
 }
 ```
 
@@ -82,7 +83,7 @@ model Calificacion {
 // cargar-calificaciones.dto.ts
 {
   periodoAcademicoId: string;
-  materia: string;
+  materiaId: string; // cuid, requerido
   calificaciones: Array<{
     estudianteId: string; // cuid
     nota: number; // float, debe estar dentro de la escala
@@ -97,7 +98,7 @@ model Calificacion {
 
 ### GET /grupos/:grupoId/calificaciones
 
-**Query:** `?periodoAcademicoId=ckr123&materia=Matemática`
+**Query:** `?periodoAcademicoId=ckr123&materiaId=ckr456`
 
 **Response:**
 
@@ -105,7 +106,10 @@ model Calificacion {
 {
   "grupoId": "ckr001",
   "periodoAcademicoId": "ckr123",
-  "materia": "Matemática",
+  "materia": {
+    "id": "ckr456",
+    "nombre": "Matemática"
+  },
   "estudiantes": [
     {
       "estudianteId": "ckr004",
@@ -135,7 +139,7 @@ model Calificacion {
 ```json
 {
   "periodoAcademicoId": "ckr123",
-  "materia": "Matemática",
+  "materiaId": "ckr456",
   "calificaciones": [
     { "estudianteId": "ckr004", "nota": 9, "observaciones": null },
     { "estudianteId": "ckr005", "nota": 7, "observaciones": "Recuperatorio" }
@@ -150,7 +154,7 @@ model Calificacion {
   "resultado": {
     "grupoId": "ckr001",
     "periodoAcademicoId": "ckr123",
-    "materia": "Matemática",
+    "materiaId": "ckr456",
     "procesadas": 2
   },
   "message": "Calificaciones cargadas exitosamente"

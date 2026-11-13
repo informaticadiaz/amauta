@@ -105,7 +105,7 @@ El sistema es **multi-tenant**: cada institución opera de forma aislada. Un adm
 
 - Una calificación es única por: grupo + estudiante + período + materia
 - `EDUCADOR` solo accede a grupos donde está asignado activamente
-- La materia es texto libre (no hay un catálogo de materias — flexibilidad para distintos tipos de instituciones)
+- Las materias pertenecen a un catálogo institucional y se asignan explícitamente a los grupos; las calificaciones referencian `materiaId`.
 
 ---
 
@@ -188,7 +188,9 @@ Institucion
   │     ├── GrupoEstudiante (activo, asignadoPor)
   │     ├── GrupoEducador (rol: TITULAR/SUPLENTE, activo)
   │     ├── Asistencia (fecha, estado, observaciones)
-  │     └── Calificacion (periodoId, materia, nota, observaciones)
+  │     └── Calificacion (periodoId, materiaId, nota, observaciones)
+  ├── Materia (catálogo institucional, activa/inactiva)
+  │     └── GrupoMateria (materias asignadas al grupo)
   └── Comunicado (tipo, prioridad, archivado)
 ```
 
@@ -239,7 +241,7 @@ Cada submódulo incluye:
 
 ## 7. Limitaciones Conocidas y Decisiones de Diseño
 
-- **Materias como texto libre**: no hay catálogo de materias. Esto da flexibilidad a distintos tipos de instituciones pero dificulta análisis cruzados por materia.
+- **Catálogo institucional de materias**: cada materia pertenece a una institución, puede desactivarse sin borrado físico y se asigna a los grupos que la dictan. Las calificaciones conservan la relación mediante `materiaId`.
 - **Un período activo a la vez**: la lógica de negocio asume un período activo por institución en los flujos principales.
 - **Sin notificaciones automáticas para comunicados**: los comunicados son visibles al ingresar al dashboard, no se envían notificaciones push.
 - **Boletín sin firma digital**: los campos de firma docente y sello son placeholders para implementación futura.

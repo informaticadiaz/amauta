@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -40,15 +41,27 @@ export class MateriasService {
   }
 
   async crear(institucionId: string, dto: CreateMateriaDto, usuarioId: string) {
-    const data = createMateriaSchema.parse(dto);
+    const result = createMateriaSchema.safeParse(dto);
+    if (!result.success) {
+      throw new BadRequestException(
+        result.error.issues[0]?.message ?? 'Datos inválidos'
+      );
+    }
     await this.validarAdmin(institucionId, usuarioId);
-    return this.prisma.materia.create({
-      data: {
-        nombre: data.nombre,
-        descripcion: data.descripcion ?? null,
-        institucionId,
-      },
-    });
+    try {
+      return await this.prisma.materia.create({
+        data: {
+          nombre: result.data.nombre,
+          descripcion: result.data.descripcion ?? null,
+          institucionId,
+        },
+      });
+    } catch (error: unknown) {
+      if (this.esViolacionDeUnicidad(error)) {
+        throw new ConflictException('Ya existe una materia con ese nombre');
+      }
+      throw error;
+    }
   }
 
   async listar(
@@ -64,7 +77,13 @@ export class MateriasService {
   }
 
   async actualizar(id: string, dto: UpdateMateriaDto, usuarioId: string) {
-    const data = updateMateriaSchema.parse(dto);
+    const result = updateMateriaSchema.safeParse(dto);
+    if (!result.success) {
+      throw new BadRequestException(
+        result.error.issues[0]?.message ?? 'Datos inválidos'
+      );
+    }
+    const data = result.data;
     if (Object.keys(data).length === 0)
       throw new BadRequestException('No hay datos para actualizar');
     const materia = await this.prisma.materia.findUnique({
@@ -73,7 +92,23 @@ export class MateriasService {
     });
     if (!materia) throw new NotFoundException('Materia no encontrada');
     await this.validarAdmin(materia.institucionId, usuarioId);
-    return this.prisma.materia.update({ where: { id }, data });
+    try {
+      return await this.prisma.materia.update({ where: { id }, data });
+    } catch (error: unknown) {
+      if (this.esViolacionDeUnicidad(error)) {
+        throw new ConflictException('Ya existe una materia con ese nombre');
+      }
+      throw error;
+    }
+  }
+
+  private esViolacionDeUnicidad(error: unknown): boolean {
+    return (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      error.code === 'P2002'
+    );
   }
 
   async desactivar(id: string, usuarioId: string) {

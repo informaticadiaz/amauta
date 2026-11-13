@@ -13,6 +13,7 @@ export function MateriasSection() {
   const [descripcion, setDescripcion] = useState('');
   const [editandoId, setEditandoId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   async function load(id: string) {
     const r = await fetch(`/api/instituciones/${id}/materias`);
     const data = await r.json();
@@ -27,7 +28,8 @@ export function MateriasSection() {
         setInstitucionId(data.institucionId);
         await load(data.institucionId);
       })
-      .catch((e) => setError(e.message));
+      .catch((e) => setError(e.message))
+      .finally(() => setLoading(false));
   }, []);
   async function guardar(e: React.FormEvent) {
     e.preventDefault();
@@ -90,37 +92,41 @@ export function MateriasSection() {
         </button>
       </form>
       {error && <p role="alert">{error}</p>}
-      <ul className="divide-y rounded-lg border">
-        {materias.map((m) => (
-          <li key={m.id} className="flex items-center justify-between p-4">
-            <div>
-              <strong>{m.nombre}</strong>
-              {m.descripcion && <p className="text-sm">{m.descripcion}</p>}
-            </div>
-            <div className="flex gap-3">
-              <button
-                onClick={() => {
-                  setEditandoId(m.id);
-                  setNombre(m.nombre);
-                  setDescripcion(m.descripcion ?? '');
-                }}
-                className="text-sm text-primary"
-              >
-                Editar
-              </button>
-              <button
-                onClick={() => deactivate(m.id)}
-                className="text-sm text-red-700"
-              >
-                Desactivar
-              </button>
-            </div>
-          </li>
-        ))}
-        {materias.length === 0 && (
-          <li className="p-4">Todavía no hay materias activas.</li>
-        )}
-      </ul>
+      {loading ? (
+        <p role="status">Cargando materias...</p>
+      ) : (
+        <ul className="divide-y rounded-lg border">
+          {materias.map((m) => (
+            <li key={m.id} className="flex items-center justify-between p-4">
+              <div>
+                <strong>{m.nombre}</strong>
+                {m.descripcion && <p className="text-sm">{m.descripcion}</p>}
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => {
+                    setEditandoId(m.id);
+                    setNombre(m.nombre);
+                    setDescripcion(m.descripcion ?? '');
+                  }}
+                  className="text-sm text-primary"
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={() => deactivate(m.id)}
+                  className="text-sm text-red-700"
+                >
+                  Desactivar
+                </button>
+              </div>
+            </li>
+          ))}
+          {materias.length === 0 && (
+            <li className="p-4">Todavía no hay materias activas.</li>
+          )}
+        </ul>
+      )}
     </div>
   );
 }
