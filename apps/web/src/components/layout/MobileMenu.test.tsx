@@ -31,6 +31,23 @@ describe('MobileMenu', () => {
     ).toHaveAttribute('href', '/dashboard/historial');
   });
 
+  it('muestra historial de estudiantes para admin de escuela', () => {
+    useAuthorization.mockReturnValue({
+      isAuthenticated: true,
+      canManageCourses: true,
+      isAdmin: true,
+      isAdminEscuela: true,
+      isEducador: false,
+      isEstudiante: false,
+    });
+
+    render(<MobileMenu isOpen onClose={jest.fn()} />);
+
+    expect(
+      screen.getByRole('link', { name: /historial de estudiantes/i })
+    ).toHaveAttribute('href', '/dashboard/historial/estudiantes');
+  });
+
   it('oculta el historial académico para otros roles', () => {
     useAuthorization.mockReturnValue({
       isAuthenticated: true,

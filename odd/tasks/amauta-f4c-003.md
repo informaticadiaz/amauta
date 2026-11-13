@@ -34,7 +34,8 @@ En esta entrega no se inventará persistencia para estados de promoción ni se i
 - T2 — S2-S3 — Implementar endpoints y autorización administrativa — completado; commit pendiente
 - T3 — S2-S3 — Agregar tests de servicio/controller y regresiones — completado; commit pendiente
 - T4 — S1-S3 — Verificar, documentar evidencia y actualizar roadmap — completado; commit `062f9bc`
-- T5 — S2-S3 — Implementar UI estudiantil del historial académico y proxy — completado; commit pendiente
+- T5 — S2-S3 — Implementar UI estudiantil del historial académico y proxy — completado; commit `325e38b`
+- T6 — S2-S3 — Implementar vista administrativa de historial para ADMIN_ESCUELA — completado; commit pendiente
 
 ## Log
 
@@ -46,3 +47,5 @@ En esta entrega no se inventará persistencia para estados de promoción ni se i
 - L6 — Documentación actualizada en `AGENTS.md` y `docs/project-management/roadmap.md`; la UI, la descarga/gráficos y la persistencia de promoción quedan fuera de esta entrega API-first.
 - L7 — El usuario indicó "continuemos"; se autoriza continuar F4c-003 con una primera UI estudiantil. El alcance es proxy, página, navegación y tests; no se agregan promoción, asistencia, gráficos ni descargas.
 - L8 — Se implementó la UI estudiantil en `/dashboard/historial`, el proxy `/api/me/historial` y navegación desktop/móvil. Verificación: 5 suites/12 tests focalizados, suite web completa con 65 suites/281 tests, type-check, lint, Prettier y `git diff --check` aprobados. La vista administrativa, promoción, asistencia, gráficos y descargas siguen fuera de alcance.
+- L9 — El usuario indicó "continuemos"; se autoriza una vista administrativa de solo lectura para `ADMIN_ESCUELA`, con selección de estudiantes y detalle reutilizando el componente académico. `SUPER_ADMIN` queda fuera de esta UI inicial porque todavía falta una selección explícita de institución.
+- L10 — Se implementaron `/dashboard/historial/estudiantes`, su detalle por estudiante, el proxy administrativo y navegación desktop/móvil. Verificación: 10 suites/30 tests focalizados, type-check, lint, Prettier y `git diff --check` aprobados; el worker reportó además 69 suites/291 tests web completos aprobados. La UI administrativa sigue siendo de solo lectura y no muestra promoción, asistencia, gráficos ni descargas.

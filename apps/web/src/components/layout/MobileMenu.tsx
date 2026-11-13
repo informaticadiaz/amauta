@@ -99,6 +99,11 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       show: isEstudiante,
     },
     {
+      href: '/dashboard/historial/estudiantes',
+      label: 'Historial de estudiantes',
+      show: isAdminEscuela,
+    },
+    {
       href: '/dashboard/asistencias',
       label: 'Asistencias',
       show: isAdminEscuela || isEducador,

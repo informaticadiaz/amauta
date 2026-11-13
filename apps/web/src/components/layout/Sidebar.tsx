@@ -229,6 +229,12 @@ export function Sidebar() {
       icon: <span aria-hidden="true">M</span>,
     },
     {
+      href: '/dashboard/historial/estudiantes',
+      label: 'Historial de estudiantes',
+      show: isAdminEscuela,
+      icon: <span aria-hidden="true">H</span>,
+    },
+    {
       href: '/dashboard/calificaciones',
       label: 'Calificaciones',
       show: isAdminEscuela || isEducador,
