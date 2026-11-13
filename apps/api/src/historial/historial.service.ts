@@ -6,12 +6,14 @@ import {
 } from '@nestjs/common';
 import type { PrismaService } from '../prisma/prisma.service';
 
+type EstadoPromocion = 'PROMOVIDO' | 'REPITENTE' | 'EGRESADO';
+
 interface HistorialCalificacion {
   nota: number;
   observaciones: string | null;
   materia: { id: string; nombre: string };
   periodoAcademico: { id: string; nombre: string; orden: number };
-  grupo: { nombre: string };
+  grupo: { id: string; nombre: string };
 }
 
 interface HistorialNota {
@@ -21,11 +23,19 @@ interface HistorialNota {
   grupo: { nombre: string };
 }
 
+interface HistorialEstadoPromocion {
+  periodoId: string;
+  periodo: string;
+  grupoId: string;
+  grupo: string;
+  estado: EstadoPromocion | null;
+}
+
 export interface HistorialPeriodo {
   id: string;
   nombre: string;
   orden: number;
-  promedio: number;
+  promedio: number | null;
   calificaciones: HistorialNota[];
 }
 
@@ -41,8 +51,8 @@ export interface HistorialResponse {
       promedio: number;
     }>;
   }>;
-  /** El schema actual no tiene estado de promoción por período. */
-  estadoPromocion: null;
+  /** Estado final persistido por estudiante, grupo y período; null significa sin evaluar. */
+  estadoPromocion: HistorialEstadoPromocion[];
 }
 
 @Injectable()
@@ -66,24 +76,46 @@ export class HistorialService {
     estudianteId: string,
     institucionId?: string
   ): Promise<HistorialResponse> {
-    const calificaciones = (await this.prisma.calificacion.findMany({
-      where: {
-        estudianteId,
-        ...(institucionId ? { grupo: { institucionId } } : {}),
-      },
-      select: {
-        nota: true,
-        observaciones: true,
-        materia: { select: { id: true, nombre: true } },
-        periodoAcademico: { select: { id: true, nombre: true, orden: true } },
-        grupo: { select: { nombre: true } },
-      },
-      orderBy: [
-        { periodoAcademico: { orden: 'asc' } },
-        { materia: { nombre: 'asc' } },
-      ],
-    })) as HistorialCalificacion[];
+    const [calificaciones, estadosPromocion] = (await Promise.all([
+      this.prisma.calificacion.findMany({
+        where: {
+          estudianteId,
+          ...(institucionId ? { grupo: { institucionId } } : {}),
+        },
+        select: {
+          nota: true,
+          observaciones: true,
+          materia: { select: { id: true, nombre: true } },
+          periodoAcademico: { select: { id: true, nombre: true, orden: true } },
+          grupo: { select: { id: true, nombre: true } },
+        },
+        orderBy: [
+          { periodoAcademico: { orden: 'asc' } },
+          { materia: { nombre: 'asc' } },
+        ],
+      }),
+      this.prisma.estadoPromocion.findMany({
+        where: {
+          estudianteId,
+          ...(institucionId ? { grupo: { institucionId } } : {}),
+        },
+        select: {
+          estado: true,
+          periodoAcademico: { select: { id: true, nombre: true, orden: true } },
+          grupo: { select: { id: true, nombre: true } },
+        },
+        orderBy: { periodoAcademico: { orden: 'asc' } },
+      }),
+    ])) as [
+      HistorialCalificacion[],
+      Array<{
+        estado: EstadoPromocion;
+        periodoAcademico: { id: string; nombre: string; orden: number };
+        grupo: { id: string; nombre: string };
+      }>,
+    ];
 
+    const estadosMap = new Map<string, HistorialEstadoPromocion>();
     const periodosMap = new Map<string, HistorialPeriodo>();
     const materiasMap = new Map<
       string,
@@ -109,9 +141,20 @@ export class HistorialService {
         materia: calificacion.materia,
         nota: calificacion.nota,
         observaciones: calificacion.observaciones,
-        grupo: calificacion.grupo,
+        grupo: { nombre: calificacion.grupo.nombre },
       });
       periodosMap.set(periodo.id, periodoExistente);
+
+      const estadoKey = `${periodo.id}:${calificacion.grupo.id}`;
+      if (!estadosMap.has(estadoKey)) {
+        estadosMap.set(estadoKey, {
+          periodoId: periodo.id,
+          periodo: periodo.nombre,
+          grupoId: calificacion.grupo.id,
+          grupo: calificacion.grupo.nombre,
+          estado: null,
+        });
+      }
 
       const materiaExistente = materiasMap.get(calificacion.materia.id) ?? {
         materia: calificacion.materia,
@@ -130,6 +173,26 @@ export class HistorialService {
         promedio: this.promedio(notasDelPeriodo),
       });
       materiasMap.set(calificacion.materia.id, materiaExistente);
+    }
+
+    for (const estado of estadosPromocion) {
+      const key = `${estado.periodoAcademico.id}:${estado.grupo.id}`;
+      estadosMap.set(key, {
+        periodoId: estado.periodoAcademico.id,
+        periodo: estado.periodoAcademico.nombre,
+        grupoId: estado.grupo.id,
+        grupo: estado.grupo.nombre,
+        estado: estado.estado,
+      });
+      if (!periodosMap.has(estado.periodoAcademico.id)) {
+        periodosMap.set(estado.periodoAcademico.id, {
+          id: estado.periodoAcademico.id,
+          nombre: estado.periodoAcademico.nombre,
+          orden: estado.periodoAcademico.orden,
+          promedio: 0,
+          calificaciones: [],
+        });
+      }
     }
 
     const periodos = [...periodosMap.values()]
@@ -158,7 +221,11 @@ export class HistorialService {
             return periodoA - periodoB;
           }),
         })),
-      estadoPromocion: null,
+      estadoPromocion: [...estadosMap.values()].sort((a, b) => {
+        const periodoA = periodosMap.get(a.periodoId)?.orden ?? 0;
+        const periodoB = periodosMap.get(b.periodoId)?.orden ?? 0;
+        return periodoA - periodoB || a.grupo.localeCompare(b.grupo);
+      }),
     };
   }
 
@@ -219,7 +286,8 @@ export class HistorialService {
       );
   }
 
-  private promedio(notas: number[]): number {
+  private promedio(notas: number[]): number | null {
+    if (notas.length === 0) return null;
     return this.redondear(
       notas.reduce((total, nota) => total + nota, 0) / notas.length
     );

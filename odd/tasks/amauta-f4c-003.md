@@ -26,7 +26,7 @@ El roadmap define estos endpoints:
 - Promedio general acumulado y evolución por materia entre períodos.
 - Registro de estado de promoción por período (`PROMOVIDO` / `REPITENTE` / `EGRESADO`).
 
-En esta entrega no se inventará persistencia para estados de promoción ni se incorporarán asistencia, gráficos o descarga de boletín sin una decisión posterior, porque el modelo actual no contiene aún un estado de promoción por período y el detalle del issue separa esas capacidades.
+La siguiente entrega agregará persistencia y lectura del estado final por estudiante × grupo × período, sin calcular promoción, ejecutar cierre masivo ni modificar estados existentes automáticamente. Los períodos sin registro se mostrarán como sin evaluar. El cálculo, preview, confirmación y cierre quedan para F4c-005.
 
 ## Tasks
 
@@ -37,6 +37,7 @@ En esta entrega no se inventará persistencia para estados de promoción ni se i
 - T5 — S2-S3 — Implementar UI estudiantil del historial académico y proxy — completado; commit `325e38b`
 - T6 — S2-S3 — Implementar vista administrativa de historial para ADMIN_ESCUELA — completado; commit `f69b03d`
 - T7 — S3 — Documentar diseño de estado de promoción y cierre, sin modificar schema — completado; commit pendiente
+- T8 — S3 — Persistir y leer estado final de promoción, sin cálculo ni cierre masivo — completado; commit pendiente
 
 ## Log
 
@@ -52,3 +53,6 @@ En esta entrega no se inventará persistencia para estados de promoción ni se i
 - L10 — Se implementaron `/dashboard/historial/estudiantes`, su detalle por estudiante, el proxy administrativo y navegación desktop/móvil. Verificación: 10 suites/30 tests focalizados, type-check, lint, Prettier y `git diff --check` aprobados; el worker reportó además 69 suites/291 tests web completos aprobados. La UI administrativa sigue siendo de solo lectura y no muestra promoción, asistencia, gráficos ni descargas.
 - L11 — El usuario eligió documentar primero el diseño, sin modificar el schema. Decisiones: estado por estudiante × grupo × período; `EN_RIESGO` queda fuera por ahora; la próxima implementación debe limitarse a una migración/API planificada separadamente del cierre masivo F4c-005.
 - L12 — Se creó el ADR propuesto `docs/technical/adr/012-estado-promocion-y-cierre-academico.md` y se agregó al índice de ADRs y al roadmap. No se modificó Prisma, no se creó migración y no se ejecutaron cambios de datos.
+- L13 — Usuario: "confirmado"
+- L14 — Se autoriza implementar persistencia y lectura del estado final de promoción por estudiante × grupo × período, mostrar `PROMOVIDO`, `REPITENTE`, `EGRESADO` o `SIN EVALUAR`, y agregar tests unitarios e integración. El cálculo, preview, confirmación y cierre masivo quedan fuera de esta entrega y corresponden a F4c-005.
+- L15 — Se implementó T8 con migración Prisma, lectura API, renderizado estudiantil/administrativo y tests focalizados. Se corrigió el caso de período con estado persistido pero sin calificaciones para devolver promedio `null` en lugar de `NaN`. La verificación automatizada de integración queda limitada porque el repositorio no tiene una suite establecida para este módulo; la migración aplicada y las consultas contra PostgreSQL local fueron verificadas manualmente.

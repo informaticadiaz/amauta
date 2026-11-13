@@ -44,7 +44,7 @@ describe('API /api/me/historial', () => {
       periodos: [],
       promedioAcumulado: null,
       evolucionPorMateria: [],
-      estadoPromocion: null,
+      estadoPromocion: [],
     };
     (global.fetch as jest.Mock).mockResolvedValue({
       status: 200,

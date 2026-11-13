@@ -7,7 +7,18 @@ jest.mock('next/navigation', () => ({
 }));
 jest.mock('@/hooks/useAuthorization', () => ({ useAuthorization: jest.fn() }));
 jest.mock('@/components/historial/HistorialAcademico', () => ({
-  HistorialAcademico: () => <div>Historial renderizado</div>,
+  HistorialAcademico: ({
+    data,
+  }: {
+    data: { estadoPromocion?: { estado: string }[] | null };
+  }) => (
+    <div>
+      Historial renderizado
+      {data.estadoPromocion?.map((estado) => (
+        <span key={estado.grupoId}>{estado.estado}</span>
+      ))}
+    </div>
+  ),
 }));
 
 const { useRouter, useParams } = jest.requireMock('next/navigation') as {
@@ -45,13 +56,22 @@ describe('EstudianteHistorialPage', () => {
           periodos: [],
           evolucionPorMateria: [],
           promedioAcumulado: null,
-          estadoPromocion: null,
+          estadoPromocion: [
+            {
+              periodoId: 'p-1',
+              periodo: 'Primer período',
+              grupoId: 'group-1',
+              grupo: '1° A',
+              estado: 'REPITENTE',
+            },
+          ],
         }),
       });
     render(<EstudianteHistorialPage />);
     expect(
       await screen.findByText('Historial renderizado')
     ).toBeInTheDocument();
+    expect(screen.getByText('REPITENTE')).toBeInTheDocument();
     expect(global.fetch).toHaveBeenNthCalledWith(
       2,
       '/api/instituciones/inst-1/estudiantes/est-1/historial'

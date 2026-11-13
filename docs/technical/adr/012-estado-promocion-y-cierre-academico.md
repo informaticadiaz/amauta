@@ -2,7 +2,7 @@
 
 ## Estado
 
-Propuesto
+Aceptado para persistencia y lectura; cálculo y cierre masivo pendientes
 
 ## Fecha
 
@@ -10,7 +10,7 @@ Propuesto
 
 ## Decisión resumida
 
-El estado de promoción se modelará como una entidad independiente por **estudiante × grupo × período académico**. En esta etapa se documenta el diseño; no se modifica el schema, no se crea una migración y no se ejecutan operaciones sobre ninguna base de datos.
+El estado de promoción se modela como una entidad independiente por **estudiante × grupo × período académico**. Esta entrega implementa la persistencia estructural y la lectura desde el historial; no calcula promoción, no ejecuta cierre masivo, no realiza backfill y no incorpora una interfaz de escritura.
 
 ## Contexto
 
@@ -29,11 +29,11 @@ El roadmap de F4c-005 requiere generar el estado por estudiante y grupo durante 
 | F4c-003               | Leerá el estado final persistido cuando exista; no calculará promoción implícitamente.                                                                     |
 | F4c-005               | Será responsable del cálculo, preview, confirmación y cierre masivo. Es una entrega posterior, no parte de esta ADR implementable.                         |
 | Cierre del período    | No se reutilizará `PeriodoAcademico.activo`, porque hoy representa vigencia administrativa/soft delete. Se requiere un estado o marca de cierre explícita. |
-| Alcance actual        | Solo diseño documentado. No hay cambios de Prisma, API, UI ni datos.                                                                                       |
+| Alcance actual        | Persistencia y lectura implementadas en Prisma, API y UI. El cálculo, preview, confirmación y cierre masivo quedan para F4c-005.                           |
 
-## Modelo conceptual propuesto
+## Modelo implementado y extensión futura
 
-La futura entidad `EstadoPromocion` debería conservar, como mínimo:
+La entidad `EstadoPromocion` implementada conserva como mínimo:
 
 - `estudianteId`.
 - `grupoId`.
@@ -74,14 +74,16 @@ Antes de implementar la migración y el cierre masivo se deben definir:
 
 - Requiere una migración y una API adicionales.
 - El cierre deberá coordinar calificaciones y asistencias, que actualmente no comparten la misma referencia temporal.
-- F4c-003 seguirá mostrando `estadoPromocion: null` hasta que exista una implementación compatible.
+- F4c-003 devuelve una lista de estados por grupo y período; cuando no existe un registro, el estado se representa como `null` en la API y `SIN EVALUAR` en la UI.
 
 ## Verificación de esta etapa
 
-- No se modificó `apps/api/prisma/schema.prisma`.
-- No se creó ni ejecutó una migración.
-- No se ejecutó `prisma migrate`, `db push` ni ningún cambio de datos.
-- La decisión queda separada de la implementación futura de F4c-005.
+- Se agregó `EstadoPromocion` y una migración Prisma versionada.
+- La migración se aplicó en la base local y `prisma migrate status` confirmó que está al día.
+- `prisma validate`, type-check y tests unitarios focalizados pasan.
+- No se ejecuta cálculo automático, backfill, cierre masivo ni escritura desde la UI.
+- El repositorio no tiene un patrón establecido de tests de integración automatizados para este módulo; la integración fue verificada mediante migración aplicada, consultas Prisma reales y datos locales, pero queda como deuda de infraestructura de testing.
+- La decisión mantiene separado el cálculo y cierre futuro de F4c-005.
 
 ## Referencias
 

@@ -2,15 +2,30 @@ export interface HistorialNota {
   materia: { id: string; nombre: string };
   nota: number;
   observaciones: string | null;
-  grupo: { nombre: string };
+  grupo: { id?: string; nombre: string };
+}
+
+export type EstadoPromocion =
+  | 'PROMOVIDO'
+  | 'REPITENTE'
+  | 'EGRESADO'
+  | 'SIN EVALUAR';
+
+export interface HistorialPromocion {
+  periodoId: string;
+  periodo: string;
+  grupoId: string;
+  grupo: string;
+  estado: Exclude<EstadoPromocion, 'SIN EVALUAR'> | null;
 }
 
 export interface HistorialPeriodo {
   id: string;
   nombre: string;
   orden: number;
-  promedio: number;
+  promedio: number | null;
   calificaciones: HistorialNota[];
+  estadoPromocion?: Exclude<EstadoPromocion, 'SIN EVALUAR'> | null;
 }
 
 export interface EvolucionMateria {
@@ -27,11 +42,50 @@ export interface HistorialData {
   periodos: HistorialPeriodo[];
   promedioAcumulado: number | null;
   evolucionPorMateria: EvolucionMateria[];
-  estadoPromocion: null;
+  estadoPromocion?: HistorialPromocion[] | null;
 }
 
-function formatNota(nota: number) {
-  return nota.toFixed(2);
+function estadoParaGrupo(
+  periodo: HistorialPeriodo,
+  grupo: HistorialNota['grupo'],
+  estados: HistorialPromocion[]
+): EstadoPromocion {
+  const estadosDelPeriodo = [
+    ...(periodo.estadoPromocion
+      ? [
+          {
+            periodoId: periodo.id,
+            periodo: periodo.nombre,
+            grupoId: '',
+            grupo: '',
+            estado: periodo.estadoPromocion,
+          },
+        ]
+      : []),
+    ...estados.filter((estado) => estado.periodoId === periodo.id),
+  ];
+  const estado = estadosDelPeriodo.find(
+    (item) =>
+      (item.grupoId && grupo.id && item.grupoId === grupo.id) ||
+      item.grupo === grupo.nombre ||
+      (!item.grupoId && !item.grupo)
+  );
+  return estado?.estado ?? 'SIN EVALUAR';
+}
+
+function EstadoPromocionBadge({ estado }: { estado: EstadoPromocion }) {
+  return (
+    <span
+      aria-label={`Estado de promoción: ${estado}`}
+      className="inline-flex rounded-full border border-[var(--border)] px-2 py-1 text-xs font-semibold text-[var(--foreground)]"
+    >
+      {estado}
+    </span>
+  );
+}
+
+function formatNota(nota: number | null) {
+  return nota === null ? '—' : nota.toFixed(2);
 }
 
 export function HistorialAcademico({ data }: { data: HistorialData }) {
@@ -77,9 +131,26 @@ export function HistorialAcademico({ data }: { data: HistorialData }) {
               <h3 className="font-semibold text-[var(--foreground)]">
                 {periodo.nombre}
               </h3>
-              <span className="text-sm text-[var(--muted)]">
-                Promedio: <strong>{formatNota(periodo.promedio)}</strong>
-              </span>
+              <div className="flex flex-wrap items-center gap-3 text-sm text-[var(--muted)]">
+                <span>
+                  Promedio: <strong>{formatNota(periodo.promedio)}</strong>
+                </span>
+                {periodo.calificaciones.length === 0 && (
+                  <span className="flex flex-wrap items-center gap-2">
+                    {(data.estadoPromocion ?? [])
+                      .filter((estado) => estado.periodoId === periodo.id)
+                      .map((estado) => (
+                        <EstadoPromocionBadge
+                          key={`${estado.periodoId}-${estado.grupoId}`}
+                          estado={estado.estado ?? 'SIN EVALUAR'}
+                        />
+                      ))}
+                    {!(data.estadoPromocion ?? []).some(
+                      (estado) => estado.periodoId === periodo.id
+                    ) && <EstadoPromocionBadge estado="SIN EVALUAR" />}
+                  </span>
+                )}
+              </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full min-w-[32rem] text-sm">
@@ -93,6 +164,9 @@ export function HistorialAcademico({ data }: { data: HistorialData }) {
                     </th>
                     <th className="px-4 py-2 text-right font-medium text-[var(--muted)]">
                       Nota
+                    </th>
+                    <th className="px-4 py-2 text-left font-medium text-[var(--muted)]">
+                      Estado de promoción
                     </th>
                   </tr>
                 </thead>
@@ -110,6 +184,15 @@ export function HistorialAcademico({ data }: { data: HistorialData }) {
                       </td>
                       <td className="px-4 py-3 text-right font-semibold text-[var(--foreground)]">
                         {formatNota(calificacion.nota)}
+                      </td>
+                      <td className="px-4 py-3">
+                        <EstadoPromocionBadge
+                          estado={estadoParaGrupo(
+                            periodo,
+                            calificacion.grupo,
+                            data.estadoPromocion ?? []
+                          )}
+                        />
                       </td>
                     </tr>
                   ))}

@@ -49,6 +49,7 @@ model Usuario {
   remocionesEducadorRealizadas   GrupoEducador[]     @relation("GrupoEducadorRemovidoPor")
   evaluacionesCreadas            Evaluacion[]        @relation("Evaluador")
   intentosEvaluacion             IntentoEvaluacion[]
+  estadosPromocion                EstadoPromocion[]
 
   // Comunidad y foros
   postsForo      ForoPost[]      @relation("AutorForoPost")
@@ -430,9 +431,10 @@ model PeriodoAcademico {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  grupos         Grupo[]
-  calificaciones Calificacion[]
-  matriculas     Matricula[]
+  grupos             Grupo[]
+  calificaciones     Calificacion[]
+  matriculas         Matricula[]
+  estadosPromocion   EstadoPromocion[]
 
   @@index([institucionId])
   @@index([activo])
@@ -515,8 +517,9 @@ model Grupo {
   estudiantes    GrupoEstudiante[]
   educadores     GrupoEducador[]
   asistencias    Asistencia[]
-  calificaciones Calificacion[]
-  materias       GrupoMateria[]
+  calificaciones    Calificacion[]
+  materias          GrupoMateria[]
+  estadosPromocion  EstadoPromocion[]
 
   @@index([institucionId])
   @@index([educadorId])
@@ -616,6 +619,37 @@ enum EstadoAsistencia {
   AUSENTE
   TARDANZA
   JUSTIFICADO
+}
+
+/// Estado final de promoción por estudiante, grupo y período académico
+enum EstadoPromocionTipo {
+  PROMOVIDO
+  REPITENTE
+  EGRESADO
+}
+
+/// Registro persistido del estado final de promoción
+model EstadoPromocion {
+  id String @id @default(cuid())
+
+  estudianteId String
+  estudiante   Usuario @relation(fields: [estudianteId], references: [id])
+
+  grupoId String
+  grupo   Grupo @relation(fields: [grupoId], references: [id])
+
+  periodoAcademicoId String
+  periodoAcademico   PeriodoAcademico @relation(fields: [periodoAcademicoId], references: [id])
+
+  estado EstadoPromocionTipo
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([estudianteId, grupoId, periodoAcademicoId])
+  @@index([estudianteId, periodoAcademicoId])
+  @@index([grupoId, periodoAcademicoId])
+  @@map("estados_promocion")
 }
 
 /// Materia del segmento de educación escolar formal. No se usa para cursos de formación.

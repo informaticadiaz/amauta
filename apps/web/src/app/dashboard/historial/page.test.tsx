@@ -48,14 +48,29 @@ describe('HistorialPage', () => {
       json: async () => ({
         estudianteId: 'student-1',
         promedioAcumulado: 8.25,
-        estadoPromocion: null,
+        estadoPromocion: [
+          {
+            periodoId: 'period-1',
+            periodo: 'Primer trimestre',
+            grupoId: 'group-a',
+            grupo: '3° A',
+            estado: 'PROMOVIDO',
+          },
+        ],
         periodos: [
           {
             id: 'period-1',
             nombre: 'Primer trimestre',
             orden: 1,
             promedio: 8.5,
-            calificaciones: [],
+            calificaciones: [
+              {
+                materia: { id: 'math', nombre: 'Matemática' },
+                nota: 9,
+                observaciones: null,
+                grupo: { nombre: '3° A' },
+              },
+            ],
           },
         ],
         evolucionPorMateria: [],
@@ -67,6 +82,7 @@ describe('HistorialPage', () => {
     await waitFor(() =>
       expect(screen.getByText('Primer trimestre')).toBeInTheDocument()
     );
+    expect(screen.getByText('PROMOVIDO')).toBeInTheDocument();
     expect(global.fetch).toHaveBeenCalledWith('/api/me/historial');
   });
 });

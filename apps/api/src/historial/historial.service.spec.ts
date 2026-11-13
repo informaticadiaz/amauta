@@ -7,6 +7,7 @@ describe('HistorialService', () => {
     institucion: { findUnique: jest.fn(), findFirst: jest.fn() },
     matricula: { findFirst: jest.fn() },
     calificacion: { findMany: jest.fn() },
+    estadoPromocion: { findMany: jest.fn() },
   } as any;
   let service: HistorialService;
 
@@ -17,6 +18,7 @@ describe('HistorialService', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     service = new HistorialService(prisma);
+    prisma.estadoPromocion.findMany.mockResolvedValue([]);
   });
 
   it('agrupa calificaciones por período y materia y calcula promedios y evolución', async () => {
@@ -69,7 +71,10 @@ describe('HistorialService', () => {
         },
       ],
     });
-    expect(result.estadoPromocion).toBeNull();
+    expect(result.estadoPromocion).toEqual([
+      expect.objectContaining({ periodoId: 'p1', estado: null }),
+      expect.objectContaining({ periodoId: 'p2', estado: null }),
+    ]);
   });
 
   it('retorna una estructura vacía cuando no hay calificaciones', async () => {
@@ -80,8 +85,67 @@ describe('HistorialService', () => {
       periodos: [],
       promedioAcumulado: null,
       evolucionPorMateria: [],
-      estadoPromocion: null,
+      estadoPromocion: [],
     });
+  });
+
+  it('lee el estado persistido por grupo y período sin calcularlo', async () => {
+    prisma.calificacion.findMany.mockResolvedValue([
+      {
+        nota: 8,
+        observaciones: null,
+        materia: { id: 'math', nombre: 'Matemática' },
+        periodoAcademico: { id: 'p1', nombre: 'Primer período', orden: 1 },
+        grupo: { id: 'group-1', nombre: '1°A' },
+      },
+    ]);
+    prisma.estadoPromocion.findMany.mockResolvedValue([
+      {
+        estado: 'PROMOVIDO',
+        periodoAcademico: { id: 'p1', nombre: 'Primer período', orden: 1 },
+        grupo: { id: 'group-1', nombre: '1°A' },
+      },
+    ]);
+
+    const result = await service.getHistorial(studentId);
+
+    expect(result.estadoPromocion).toEqual([
+      {
+        periodoId: 'p1',
+        periodo: 'Primer período',
+        grupoId: 'group-1',
+        grupo: '1°A',
+        estado: 'PROMOVIDO',
+      },
+    ]);
+    expect(prisma.estadoPromocion.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({ where: { estudianteId: studentId } })
+    );
+  });
+
+  it('conserva un estado persistido en un período sin notas sin producir NaN', async () => {
+    prisma.calificacion.findMany.mockResolvedValue([]);
+    prisma.estadoPromocion.findMany.mockResolvedValue([
+      {
+        estado: 'PROMOVIDO',
+        periodoAcademico: { id: 'p1', nombre: 'Primer período', orden: 1 },
+        grupo: { id: 'group-1', nombre: '1°A' },
+      },
+    ]);
+
+    const result = await service.getHistorial(studentId);
+
+    expect(result.periodos).toEqual([
+      expect.objectContaining({
+        id: 'p1',
+        promedio: null,
+        calificaciones: [],
+      }),
+    ]);
+    expect(result.estadoPromocion).toEqual([
+      expect.objectContaining({ periodoId: 'p1', estado: 'PROMOVIDO' }),
+    ]);
+    expect(JSON.stringify(result)).not.toContain('NaN');
   });
 
   it('redondea los promedios a dos decimales', async () => {
@@ -141,6 +205,14 @@ describe('HistorialService', () => {
           estudianteId: studentId,
           grupo: { institucionId: institutionId },
         }),
+      })
+    );
+    expect(prisma.estadoPromocion.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: {
+          estudianteId: studentId,
+          grupo: { institucionId: institutionId },
+        },
       })
     );
   });
