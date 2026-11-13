@@ -84,6 +84,7 @@ describe('AsistenciasService', () => {
     id: GRUPO_ID,
     institucionId: 'inst-1',
     activo: true,
+    periodoAcademico: { id: 'periodo-1', estadoCierre: 'ABIERTO' },
   };
 
   const roster = [
@@ -402,6 +403,28 @@ describe('AsistenciasService', () => {
           ADMIN_ID
         )
       ).rejects.toThrow(BadRequestException);
+    });
+
+    it('debería bloquear nuevas y actualizadas asistencias en períodos cerrados', async () => {
+      prisma.grupo.findUnique.mockResolvedValue({
+        ...grupo,
+        periodoAcademico: { id: 'periodo-1', estadoCierre: 'CERRADO' },
+      });
+      prisma.usuario.findUnique.mockResolvedValue(adminUser);
+      prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
+
+      await expect(
+        service.registrarAsistenciasDelDia(
+          GRUPO_ID,
+          {
+            fecha: todayStr,
+            asistencias: [{ estudianteId: ESTUDIANTE_ID, estado: 'PRESENTE' }],
+          },
+          ADMIN_ID
+        )
+      ).rejects.toThrow('el período académico está cerrado');
+      expect(prisma.asistencia.create).not.toHaveBeenCalled();
+      expect(prisma.asistencia.update).not.toHaveBeenCalled();
     });
 
     it('debería rechazar estudiantes que no estén activos en el grupo', async () => {

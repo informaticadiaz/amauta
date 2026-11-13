@@ -9,7 +9,7 @@
 - **Última fase completada**: Fase 7 — Multimedia y Contenido Rico, completada según el registro de Sprint 19.
 - **Trabajo actual**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprint 21.
 - **Estado de F4c-001**: ✅ completado; catálogo institucional, migración de calificaciones, asignaciones a grupos y verificación local aprobados.
-- **Siguiente trabajo**: avanzar con F4c-005 — Cierre de ciclo lectivo y promoción masiva; F4c-003 ya tiene API, UI y persistencia/lectura del estado de promoción.
+- **Siguiente trabajo**: avanzar con F4c-004 — Horarios semanales por grupo; F4c-005 y F4c-003 ya tienen implementación y verificación local documentadas.
 - **Issues cerrados**: el último issue cerrado es #104 (F4b-004); los commits posteriores corresponden al inicio de Fase 4c y no deben confundirse con el cierre de un issue.
 - **Producción**: las URLs y estados de despliegue se mantienen como referencia histórica/documental; no se usan como evidencia adicional de funcionalidades.
 - **ODD de consolidación y búsqueda**: T1–T7 completados con evidencia local; el cierre documental T8 se registra en `odd/tasks/amauta-mejoras.md`.
@@ -2133,13 +2133,13 @@ El issue más crítico de esta fase es F4c-001 (catálogo de materias) porque es
 
 ### Sprint 21 — Fundamentos del modelo
 
-| Issue   | Título                                                             | Estado                                                                                      | Prioridad |
-| ------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- | --------- |
-| F4c-001 | Catálogo de materias por institución y migración de calificaciones | ✅ Completado                                                                               | must-have |
-| F4c-002 | Matrícula formal: inscripción del estudiante a la institución      | ✅ Completado                                                                               | must-have |
-| F4c-003 | Historial académico del estudiante (trayectoria entre períodos)    | 🔄 API + UI implementadas; persistencia de promoción implementada; cálculo/cierre pendiente | must-have |
+| Issue   | Título                                                             | Estado                                         | Prioridad |
+| ------- | ------------------------------------------------------------------ | ---------------------------------------------- | --------- |
+| F4c-001 | Catálogo de materias por institución y migración de calificaciones | ✅ Completado                                  | must-have |
+| F4c-002 | Matrícula formal: inscripción del estudiante a la institución      | ✅ Completado                                  | must-have |
+| F4c-003 | Historial académico del estudiante (trayectoria entre períodos)    | ✅ API, UI, persistencia y lectura verificadas | must-have |
 
-**Progreso Sprint 21**: F4c-001 y F4c-002 están cerrados; F4c-003 tiene API, vistas estudiantil/administrativa y persistencia/lectura del estado de promoción verificadas. Permanece abierto por el cálculo y cierre masivo, que corresponden a F4c-005.
+**Progreso Sprint 21**: F4c-001, F4c-002 y F4c-003 están cerrados con API, vistas estudiantil/administrativa y persistencia/lectura del estado de promoción verificadas. El cálculo y cierre masivo se implementaron en F4c-005.
 
 #### Dependencias
 
@@ -2181,13 +2181,13 @@ F4c-002 (matrícula) — independiente de F4c-001
 
 ### Sprint 22 — Operativa escolar
 
-| Issue   | Título                                                 | Estado       | Prioridad   |
-| ------- | ------------------------------------------------------ | ------------ | ----------- |
-| F4c-004 | Horarios semanales por grupo                           | ⏳ Pendiente | must-have   |
-| F4c-005 | Cierre de ciclo lectivo y promoción masiva             | ⏳ Pendiente | must-have   |
-| F4c-006 | Alertas automáticas: asistencia baja y notas en riesgo | ⏳ Pendiente | should-have |
+| Issue   | Título                                                 | Estado        | Prioridad   |
+| ------- | ------------------------------------------------------ | ------------- | ----------- |
+| F4c-004 | Horarios semanales por grupo                           | ⏳ Pendiente  | must-have   |
+| F4c-005 | Cierre de ciclo lectivo y promoción masiva             | ✅ Completado | must-have   |
+| F4c-006 | Alertas automáticas: asistencia baja y notas en riesgo | ⏳ Pendiente  | should-have |
 
-**Progreso Sprint 22**: 0/3 issues completados
+**Progreso Sprint 22**: 1/3 issues completados
 
 #### Dependencias
 
@@ -2209,14 +2209,15 @@ F4c-006 (alertas) — independiente, usa datos existentes de asistencias y calif
 - Vista del educador: mis clases de la semana
 - Vista del estudiante: mi horario semanal
 
-**F4c-005 — Cierre de ciclo lectivo**
+**F4c-005 — Cierre de ciclo lectivo** ✅ Completado
 
 - Acción de cierre de período: genera `EstadoPromocion` por estudiante × grupo
-- Reglas configurables por institución: % asistencia mínima + nota de aprobación (ya en escala)
-- Promoción masiva con preview: lista de alumnos con estado calculado (PROMOVIDO / EN_RIESGO / REPITENTE)
-- El admin puede sobrescribir el estado calculado con justificación
-- Al confirmar: el período queda CERRADO (no acepta más registros de asistencia/calificaciones)
-- Generación de acta de cierre (PDF descargable)
+- Reglas configurables por período: % asistencia mínima + nota de aprobación institucional
+- Promoción masiva con preview: lista de alumnos con estado calculado y razones
+- El admin puede sobrescribir el estado calculado con justificación auditada
+- Al confirmar: el período queda CERRADO y bloquea nuevos registros de asistencia/calificaciones
+- Generación y descarga de acta institucional de cierre en PDF
+- Implementado y verificado localmente; la publicación y el commit siguen siendo decisiones separadas
 
 **F4c-006 — Alertas automáticas**
 

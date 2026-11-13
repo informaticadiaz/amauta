@@ -295,6 +295,12 @@ export function Sidebar() {
       ),
     },
     {
+      href: '/dashboard/cierre-academico',
+      label: 'Cierre académico',
+      show: isAdminEscuela,
+      icon: <span aria-hidden="true">C</span>,
+    },
+    {
       href: '/dashboard/grupos',
       label: 'Grupos',
       show: isAdminEscuela,

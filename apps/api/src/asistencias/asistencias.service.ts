@@ -23,6 +23,12 @@ interface GrupoAcceso {
   id: string;
   institucionId: string;
   activo: boolean;
+  periodoAcademico: {
+    id: string;
+    estadoCierre: 'ABIERTO' | 'CERRADO';
+    fechaInicio: Date;
+    fechaFin: Date;
+  } | null;
 }
 
 interface NominaEstudiante {
@@ -183,8 +189,26 @@ export class AsistenciasService {
         'No se pueden registrar asistencias en un grupo inactivo'
       );
     }
+    if (grupo.periodoAcademico?.estadoCierre === 'CERRADO') {
+      throw new BadRequestException(
+        'No se pueden registrar asistencias: el período académico está cerrado'
+      );
+    }
+    if (!grupo.periodoAcademico) {
+      throw new BadRequestException(
+        'El grupo no está asociado a un período académico'
+      );
+    }
 
     const fecha = this.normalizarFecha(result.data.fecha);
+    if (
+      fecha.date < grupo.periodoAcademico.fechaInicio ||
+      fecha.date > grupo.periodoAcademico.fechaFin
+    ) {
+      throw new BadRequestException(
+        'La fecha de asistencia no pertenece al período académico del grupo'
+      );
+    }
     const [estudiantesActivos, asistenciasExistentes] = await Promise.all([
       this.obtenerEstudiantesActivos(grupo.id),
       this.prisma.asistencia.findMany({
@@ -448,6 +472,14 @@ export class AsistenciasService {
         id: true,
         institucionId: true,
         activo: true,
+        periodoAcademico: {
+          select: {
+            id: true,
+            estadoCierre: true,
+            fechaInicio: true,
+            fechaFin: true,
+          },
+        },
       },
     });
 
