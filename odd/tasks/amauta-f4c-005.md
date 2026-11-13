@@ -1,5 +1,7 @@
 # ODD Plan — Amauta F4c-005: cierre de ciclo lectivo y promoción masiva
 
+Estado: completado e integrado en `master` mediante `dd89338` (PR #112). Este documento conserva el registro histórico; la fuente vigente del estado de producto es `docs/project-management/roadmap.md`.
+
 Repositorio: `/home/ignacio/amauta`
 Fuente canónica: `docs/project-management/roadmap.md`
 
@@ -41,11 +43,11 @@ El usuario seleccionó:
 
 ## Tasks
 
-- T1 — S1-S4 — Mapear schema, contratos y reglas de cálculo existentes — completado; commit pendiente
-- T2 — S2-S4 — Implementar modelo/migración de cierre y motor de preview — completado; commit pendiente
-- T3 — S2-S4 — Implementar confirmación, sobrescrituras y bloqueo post-cierre — pendiente; commit pendiente
-- T4 — S2-S4 — Implementar endpoint/UI de cierre y acta PDF — pendiente; commit pendiente
-- T5 — S1-S4 — Agregar tests, documentación y verificación completa — completado; commit pendiente
+- T1 — S1-S4 — Mapear schema, contratos y reglas de cálculo existentes — completado; commit `779201c`.
+- T2 — S2-S4 — Implementar modelo/migración de cierre y motor de preview — completado; commit `779201c`.
+- T3 — S2-S4 — Implementar confirmación, sobrescrituras y bloqueo post-cierre — completado; commit `779201c`.
+- T4 — S2-S4 — Implementar endpoint/UI de cierre y acta PDF — completado; commit `779201c`.
+- T5 — S1-S4 — Agregar tests, documentación y verificación completa — completado; commit `779201c`.
 
 ## Log
 

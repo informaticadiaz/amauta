@@ -1,10 +1,14 @@
 # ODD Plan — Amauta: consolidación técnica y búsqueda
 
-Estado: T1–T7 completados con evidencia local; T8 en cierre documental. Fase 4c iniciada con implementación de F4c-001; el roadmap sigue siendo la fuente canónica del estado de producto.
+Estado: T1–T8 completados con evidencia local; este plan conserva el contexto histórico de la consolidación y no es la fuente vigente de planificación. Según `docs/project-management/roadmap.md`, F4c-001, F4c-002, F4c-003 y F4c-005 están completados; el siguiente trabajo es F4c-004.
 Repositorio: `/home/ignacio/amauta`
 Fuente de análisis: arquitectura actual, documentación del proyecto y estado de Fase 6.
 
 ## Specs
+
+### Estado posterior del plan
+
+La deuda documental de este plan se resolvió parcialmente en `26d1937`. Los estados actuales, el sprint vigente y el próximo trabajo deben consultarse en `docs/project-management/roadmap.md`; las líneas históricas del Log no se reescriben.
 
 ### S1 — Consolidación de estado y documentación
 
@@ -205,9 +209,10 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 | T6   | Completado | [`778e0a8`](https://github.com/informaticodiaz/amauta/commit/778e0a8) | `odd/evidence/redis-role-t6.txt`, ADR-011      |
 | T7   | Completado | [`e0c674d`](https://github.com/informaticodiaz/amauta/commit/e0c674d) | `odd/evidence/critical-tests-t7.txt`           |
 
-#### Pendientes explícitos y decisiones postergadas
+#### Decisiones históricas y asuntos postergados
 
-- F4c-001 está implementado, pero su cierre formal y verificación de roadmap siguen pendientes; F4c-002 y F4c-003 permanecen planificados.
+Esta sección conserva las decisiones vigentes al cierre original de este plan. Para el estado actual de Fase 4c se debe consultar `docs/project-management/roadmap.md`: F4c-001, F4c-002, F4c-003 y F4c-005 están completados, y F4c-004 es el siguiente trabajo.
+
 - La estrategia `contains` de búsqueda no se reabrirá hacia trigram/FTS sin volumen representativo o degradación medida; ver ADR-010.
 - Redis queda preparado y opcional, sin caché, sesiones, colas ni rate limiting distribuido; cualquier integración futura requiere una nueva tarea y ADR-011.
 - T1 y T2 no tuvieron commits aislados; su evidencia está conservada en el historial de este documento y en los cambios documentales previos.

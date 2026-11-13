@@ -27,10 +27,12 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 ### Estado según el roadmap
 
 - **Última fase completada**: Fase 7 — Multimedia y Contenido Rico, completada según el Sprint 19 documentado.
-- **Trabajo actual**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprint 21; F4c-001 (catálogo de materias y migración de calificaciones) ya tiene implementación en el repositorio y permanece pendiente de cierre formal/verificación.
-- **Siguiente trabajo**: cerrar F4c-003 — Historial académico; la API y las UI estudiantil y administrativa están implementadas y verificadas, con estado de promoción pendiente.
+- **Trabajo actual**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprint 22; F4c-001, F4c-002, F4c-003 y F4c-005 están completados según `docs/project-management/roadmap.md`.
+- **Siguiente trabajo**: avanzar con F4c-004 — Horarios semanales por grupo; F4c-006 — Alertas automáticas queda pendiente para después.
 
 La sección histórica de Fase 6 que sigue conserva sus entregables documentados y no implica que sea la fase actual.
+
+La fuente canónica del estado de producto es `docs/project-management/roadmap.md`. Las afirmaciones de integración, despliegue y healthcheck deben distinguirse de la evidencia local de código y tests. Los archivos `apps/web/public/sw.js` y `apps/web/public/workbox-*.js` son artefactos generados por `next-pwa`/Workbox durante el build y se mantienen fuera del control de versiones mediante `.gitignore`.
 
 #### Completado en Fase 6:
 

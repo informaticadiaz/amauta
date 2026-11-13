@@ -12,6 +12,10 @@ out/
 build/
 dist/
 
+# PWA generado por next-pwa/Workbox durante el build
+apps/web/public/sw.js
+apps/web/public/workbox-*.js
+
 # Production
 /build
 /dist

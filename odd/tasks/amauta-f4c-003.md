@@ -1,5 +1,7 @@
 # ODD Plan — Amauta F4c-003: historial académico API
 
+Estado: completado. Este documento conserva el registro histórico de la implementación; la fuente vigente del estado de producto es `docs/project-management/roadmap.md`.
+
 Repositorio: `/home/ignacio/amauta`
 Fuente canónica: `docs/project-management/roadmap.md`
 
@@ -30,14 +32,14 @@ La siguiente entrega agregará persistencia y lectura del estado final por estud
 
 ## Tasks
 
-- T1 — S1-S3 — Mapear contrato y modelos existentes — commit pendiente
-- T2 — S2-S3 — Implementar endpoints y autorización administrativa — completado; commit pendiente
-- T3 — S2-S3 — Agregar tests de servicio/controller y regresiones — completado; commit pendiente
-- T4 — S1-S3 — Verificar, documentar evidencia y actualizar roadmap — completado; commit `062f9bc`
-- T5 — S2-S3 — Implementar UI estudiantil del historial académico y proxy — completado; commit `325e38b`
-- T6 — S2-S3 — Implementar vista administrativa de historial para ADMIN_ESCUELA — completado; commit `f69b03d`
-- T7 — S3 — Documentar diseño de estado de promoción y cierre, sin modificar schema — completado; commit pendiente
-- T8 — S3 — Persistir y leer estado final de promoción, sin cálculo ni cierre masivo — completado; commit pendiente
+- T1 — S1-S3 — Mapear contrato y modelos existentes — completado; evidencia integrada en el plan.
+- T2 — S2-S3 — Implementar endpoints y autorización administrativa — completado; commit `4907a96`.
+- T3 — S2-S3 — Agregar tests de servicio/controller y regresiones — completado; commit `4907a96`.
+- T4 — S1-S3 — Verificar, documentar evidencia y actualizar roadmap — completado; commits posteriores consolidan el estado documental.
+- T5 — S2-S3 — Implementar UI estudiantil del historial académico y proxy — completado; commit `bafcfbb`.
+- T6 — S2-S3 — Implementar vista administrativa de historial para ADMIN_ESCUELA — completado; commit `241bbce`.
+- T7 — S3 — Documentar diseño de estado de promoción y cierre, sin modificar schema — completado; commit `2005b98`.
+- T8 — S3 — Persistir y leer estado final de promoción, sin cálculo ni cierre masivo — completado; commit `858d348`.
 
 ## Log
 
