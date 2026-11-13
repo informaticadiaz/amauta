@@ -35,10 +35,25 @@ interface CursosData {
 
 interface CatalogoCursosProps {
   cursosData: CursosData;
+  error?: string;
 }
 
-export function CatalogoCursos({ cursosData }: CatalogoCursosProps) {
+export function CatalogoCursos({ cursosData, error }: CatalogoCursosProps) {
   const { cursos, total, page, totalPages } = cursosData;
+
+  if (error) {
+    return (
+      <div
+        role="alert"
+        className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-[var(--error)] bg-[var(--background)] py-20 text-center"
+      >
+        <h3 className="mb-2 text-xl font-semibold text-[var(--foreground)]">
+          No se pudo cargar el catálogo
+        </h3>
+        <p className="max-w-md text-sm text-[var(--muted)]">{error}</p>
+      </div>
+    );
+  }
 
   // Estado vacío
   if (cursos.length === 0) {

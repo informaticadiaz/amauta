@@ -530,15 +530,19 @@ describe('LeccionesService', () => {
       expect(prisma.$transaction).toHaveBeenCalled();
     });
 
-    it('debería lanzar NotFoundException si la lección no existe', async () => {
+    it('debería lanzar NotFoundException sin mutar si la lección no existe', async () => {
       prisma.leccion.findUnique.mockResolvedValue(null);
 
       await expect(
         service.eliminar('leccion-inexistente', 'educador-123')
       ).rejects.toThrow(NotFoundException);
+
+      expect(prisma.leccion.update).not.toHaveBeenCalled();
+      expect(prisma.leccion.findMany).not.toHaveBeenCalled();
+      expect(prisma.$transaction).not.toHaveBeenCalled();
     });
 
-    it('debería lanzar ForbiddenException si no es propietario', async () => {
+    it('debería lanzar ForbiddenException sin mutar si no es propietario', async () => {
       prisma.leccion.findUnique.mockResolvedValue({
         ...mockLeccion,
         curso: { educadorId: 'otro-educador' },
@@ -547,6 +551,10 @@ describe('LeccionesService', () => {
       await expect(
         service.eliminar('leccion-123', 'educador-123')
       ).rejects.toThrow(ForbiddenException);
+
+      expect(prisma.leccion.update).not.toHaveBeenCalled();
+      expect(prisma.leccion.findMany).not.toHaveBeenCalled();
+      expect(prisma.$transaction).not.toHaveBeenCalled();
     });
   });
 

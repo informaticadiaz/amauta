@@ -1,0 +1,37 @@
+T6 — Rol operativo de Redis
+Fecha: 2026-11-12
+Repositorio: /home/ignacio/amauta
+
+Determinación
+- Redis es infraestructura preparada y opcional; no es una dependencia operativa de la API actual.
+- No hay cliente, provider ni llamada Redis en `apps/api/src`.
+- `apps/api/package.json` y `package-lock.json` no contienen `redis`, `ioredis`, `cache-manager`, Bull/BullMQ ni adaptadores equivalentes.
+- `REDIS_URL` y `REDIS_CACHE_TTL` se validan en `apps/api/src/config/env.ts`, pero no se consumen después.
+- `@nestjs/throttler` está configurado sin storage Redis; el rate limiting actual no es distribuido.
+- La autenticación usa JWT y Prisma; no hay sesiones almacenadas en Redis.
+- No existe caché Redis de búsqueda o catálogo.
+
+Decisión documentada
+- ADR creado: `docs/technical/adr/011-rol-operativo-redis.md`.
+- Desarrollo y tests pueden ejecutarse sin Redis.
+- La caída de Redis no tiene impacto funcional definido en la API porque la API no abre una conexión.
+- TTL, claves, invalidación, métricas y observabilidad Redis quedan fuera de alcance hasta que exista un consumidor real.
+- No se modifica la infraestructura de producción ni se incorpora una integración.
+
+Configuración local
+- `docker-compose.yml` conserva Redis 7 como servicio preparado, con password, AOF, límite de 256 MB y política `allkeys-lru`.
+- El healthcheck fue corregido para autenticarse y usar `PING`, sin mutar la clave `ping`.
+- `docker compose config --quiet` pasó.
+- PostgreSQL y Redis locales estaban en estado `healthy` al verificar `docker compose ps`.
+- Compose emitió únicamente la advertencia existente de que el atributo `version` es obsoleto.
+
+Documentación sincronizada
+- `apps/api/README.md`
+- `docker/README.md`
+- `docs/technical/setup.md`
+- `docs/technical/architecture.md`
+- `docs/technical/adr/README.md`
+- `AGENTS.md`
+
+Limitación
+- No se inspeccionó la configuración privada externa de Dokploy; la conclusión se limita al repositorio y al entorno local versionado.

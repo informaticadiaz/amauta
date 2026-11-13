@@ -21,7 +21,7 @@ Este directorio contiene los workflows de GitHub Actions para el proyecto Amauta
 
 #### 1.2 Build (Construcción del Proyecto)
 
-- ✅ Setup de Node.js 20.x
+- ✅ Setup de Node.js 22.22.1
 - ✅ Caché de dependencias npm
 - ✅ Install dependencies (`npm ci`)
 - ✅ Check formatting (`npm run format:check`)
@@ -39,7 +39,7 @@ Este directorio contiene los workflows de GitHub Actions para el proyecto Amauta
 **Características:**
 
 - Cancela workflows anteriores del mismo PR/branch automáticamente
-- Matrix strategy para Node.js (actualmente solo 20.x)
+- Matrix strategy para Node.js (actualmente solo 22.22.1)
 - Jobs con dependencias (validate → build → summary)
 
 ## Estado Actual

@@ -22,7 +22,7 @@ Asegurate de tener instalado:
 
 | Herramienta    | Versión Mínima | Verificar                |
 | -------------- | -------------- | ------------------------ |
-| Node.js        | 20.x           | `node --version`         |
+| Node.js        | 22.x           | `node --version`         |
 | npm            | 10.x           | `npm --version`          |
 | Git            | 2.x            | `git --version`          |
 | Docker         | 24.x           | `docker --version`       |
@@ -32,10 +32,10 @@ Asegurate de tener instalado:
 **Instalación rápida (Ubuntu/Debian):**
 
 ```bash
-# Node.js 20 (via nvm)
+# Node.js 22 (via nvm)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-nvm install 20
-nvm use 20
+nvm install 22.22.1
+nvm use 22.22.1
 
 # GitHub CLI
 sudo apt install gh
@@ -328,7 +328,7 @@ gh issue close <número> --comment "✅ Completado. [descripción]"
 
 ### Entorno
 
-- [ ] Node.js 20+ instalado
+- [ ] Node.js 22 LTS instalado
 - [ ] Docker y Docker Compose funcionando
 - [ ] GitHub CLI configurado y autenticado
 - [ ] Proyecto clonado y dependencias instaladas

@@ -57,9 +57,12 @@ const proxy = auth((req) => {
 
   // Rutas públicas (no requieren autenticación)
   const publicPaths = ['/', '/login', '/register', '/about'];
-  const isPublicPath = publicPaths.some(
-    (path) => pathname === path || pathname.startsWith('/api/')
-  );
+  const isCatalogPath =
+    pathname === '/cursos' || pathname.startsWith('/cursos/');
+  const isPublicPath =
+    isCatalogPath ||
+    publicPaths.some((path) => pathname === path) ||
+    pathname.startsWith('/api/');
 
   if (isPublicPath) {
     // Si está logueado y va a login/register, redirigir a dashboard

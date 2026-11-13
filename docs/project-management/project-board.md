@@ -9,6 +9,7 @@
 - Última fase con trabajo registrado: Fase 7, completada según el roadmap.
 - Siguiente trabajo planificado: Fase 4c, Sprints 21-23.
 - Sprint activo: no declarado en el roadmap.
+- El kanban y los conteos de sprints que siguen son una instantánea histórica; no representan tareas abiertas actuales. Para el estado vigente consultar el roadmap y `odd/tasks/amauta-mejoras.md`.
 
 ## 🟢 Estado de Producción
 
@@ -65,8 +66,7 @@
 │                  │                  │                  │                  │                  │
 └──────────────────┴──────────────────┴──────────────────┴──────────────────┴──────────────────┘
 
-Sprint 1 (Fase 1): 16 issues | Completados: 2 (12.5%)
-Ready: F1-003, F1-004 | Done: F1-001, F1-002
+Instantánea histórica de Sprint 1 (Fase 1): 16 issues | Completados en esa fecha: 2 (12.5%). No representa el estado actual.
 ```
 
 ---
@@ -80,9 +80,9 @@ Implementar autenticación, autorización y sistema base de cursos.
 ### Estado Actual
 
 - **Desarrolladores**: Claude Code
-- **Issues totales**: 16
-- **Issues completados**: 2 (12.5%)
-- **Fechas**: 30/12/2024 - En curso
+- **Issues totales en la instantánea**: 16
+- **Issues completados en la instantánea**: 2 (12.5%)
+- **Fechas de la instantánea**: 30/12/2024 - registro histórico
 - **Deployment**: ✅ EN PRODUCCIÓN (auto-deploy con Dokploy + healthcheck post-deploy en GitHub Actions)
 
 ### Issues Completados

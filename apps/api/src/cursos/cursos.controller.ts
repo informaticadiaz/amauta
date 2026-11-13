@@ -24,18 +24,11 @@ import type { QueryCursosDto } from './dto/query-cursos.dto';
 import type { BusquedaCursosDto } from './dto/busqueda-cursos.dto';
 import { Public, CurrentUser, Roles } from '../common/decorators';
 import type { RequestUser } from '../common/guards';
+import type { ListaCursosResponse } from '@amauta/types';
 
 interface CursoResponse {
   curso: CursoConEducador;
   message: string;
-}
-
-interface ListaCursosResponse {
-  cursos: CursoConEducador[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
 }
 
 @Controller('cursos')

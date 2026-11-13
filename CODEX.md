@@ -22,9 +22,9 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 
 ## 🚦 Estado Actual y Próximos Pasos
 
-### Fase Actual: Fase 4 - Módulo Escolar 🚧 EN PROGRESO
+### Estado de planificación
 
-**Progreso**: Sprint 12 en curso (2/3 issues completados)
+La fuente canónica es `docs/project-management/roadmap.md`. El roadmap registra Fase 7 completada y Fase 4c como trabajo actual, con F4c-001 implementado pendiente de cierre formal. Este archivo conserva contexto histórico y no declara sprint activo.
 
 #### Completado en Fase 4:
 
@@ -198,15 +198,15 @@ El roadmap define:
 
 ### Fases del Roadmap (Resumen)
 
-| Fase | Nombre            | Estado         | Documento             |
-| ---- | ----------------- | -------------- | --------------------- |
-| 0    | Fundamentos       | ✅ Completado  | `fase-0-tareas.md`    |
-| 1    | MVP Cursos        | ✅ Completado  | `roadmap.md` → Fase 1 |
-| 2    | Offline-First PWA | ✅ Completado  | `roadmap.md` → Fase 2 |
-| 3    | Evaluaciones      | ✅ Completado  | `roadmap.md` → Fase 3 |
-| 4    | Módulo Escolar    | 🚧 En Progreso | `roadmap.md` → Fase 4 |
-| 5    | Comunidad         | 📋 Pendiente   | `roadmap.md` → Fase 5 |
-| 6-10 | Avanzadas         | 📋 Futuro      | `roadmap.md`          |
+| Fase | Nombre            | Estado                                | Documento              |
+| ---- | ----------------- | ------------------------------------- | ---------------------- |
+| 0    | Fundamentos       | ✅ Completado                         | `fase-0-tareas.md`     |
+| 1    | MVP Cursos        | ✅ Completado                         | `roadmap.md` → Fase 1  |
+| 2    | Offline-First PWA | ✅ Completado                         | `roadmap.md` → Fase 2  |
+| 3    | Evaluaciones      | ✅ Completado                         | `roadmap.md` → Fase 3  |
+| 4    | Módulo Escolar    | ✅ Completada; Fase 4c en seguimiento | `roadmap.md` → Fase 4c |
+| 5    | Comunidad         | ✅ Completada                         | `roadmap.md` → Fase 5  |
+| 6-10 | Avanzadas         | 📋 Futuro                             | `roadmap.md`           |
 
 ---
 
@@ -512,7 +512,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 
 ### Generales
 
-- **Fase actual**: Fase 4 en progreso (Sprint 12, 2/3 issues completados)
+- **Fase según roadmap**: Fase 4c en seguimiento; sin sprint activo declarado
 - Usar español para toda la comunicación y documentación
 - **SIEMPRE seguir el workflow definido en `WORKFLOW.md`**
 - **SIEMPRE consultar `roadmap.md` para desarrollo de features**
@@ -533,7 +533,7 @@ Ver `DEPLOYMENT_PROGRESS.md` para detalles del deployment.
 - **Backend**: NestJS + Fastify con TypeScript strict mode
 - **ORM**: Prisma
 - **Base de Datos**: PostgreSQL 15+
-- **Caché**: Redis 7+ (en uso desde Fase 1)
+- **Redis**: 7+ preparado y opcional; no consumido por la API actual (ADR-011)
 - **Deployment**: Dokploy en VPS (amauta.diazignacio.ar)
 
 Ver `docs/technical/architecture.md` para decisiones técnicas detalladas.

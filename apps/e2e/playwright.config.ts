@@ -8,6 +8,7 @@ dotenv.config({ path: path.resolve(__dirname, '.env') });
 const FRONTEND_URL =
   process.env.FRONTEND_URL ?? 'https://amauta.diazignacio.ar';
 const API_URL = process.env.API_URL ?? 'https://amauta-api.diazignacio.ar';
+const PLAYWRIGHT_EXECUTABLE_PATH = process.env.PLAYWRIGHT_EXECUTABLE_PATH;
 
 export default defineConfig({
   testDir: './tests',
@@ -19,6 +20,9 @@ export default defineConfig({
   use: {
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
+    ...(PLAYWRIGHT_EXECUTABLE_PATH
+      ? { launchOptions: { executablePath: PLAYWRIGHT_EXECUTABLE_PATH } }
+      : {}),
   },
 
   projects: [
@@ -28,6 +32,9 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         baseURL: FRONTEND_URL,
+        ...(PLAYWRIGHT_EXECUTABLE_PATH
+          ? { launchOptions: { executablePath: PLAYWRIGHT_EXECUTABLE_PATH } }
+          : {}),
       },
     },
     {
@@ -35,6 +42,9 @@ export default defineConfig({
       testDir: './tests/api',
       use: {
         baseURL: API_URL,
+        ...(PLAYWRIGHT_EXECUTABLE_PATH
+          ? { launchOptions: { executablePath: PLAYWRIGHT_EXECUTABLE_PATH } }
+          : {}),
         extraHTTPHeaders: {
           'Content-Type': 'application/json',
         },

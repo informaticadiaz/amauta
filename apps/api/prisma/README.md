@@ -7,9 +7,9 @@ Este directorio contiene el schema de Prisma y las migraciones de base de datos.
 - PostgreSQL 15+ corriendo (usa `docker compose up -d` en la raíz del proyecto)
 - Variables de entorno configuradas en `apps/api/.env.local`
 
-## Primera Vez - Ejecutar Migración Inicial
+## Desarrollo local y migraciones
 
-**IMPORTANTE**: Antes de ejecutar las migraciones, asegúrate de que PostgreSQL esté corriendo:
+**IMPORTANTE**: Antes de ejecutar migraciones, verifica que PostgreSQL esté corriendo. El repositorio ya tiene un historial de migraciones versionadas; no existe una migración inicial pendiente.
 
 ```bash
 # Desde la raíz del proyecto
@@ -19,7 +19,7 @@ docker compose up -d postgres
 docker compose ps
 ```
 
-Luego, ejecuta la migración inicial:
+Para desarrollo, crea una migración versionada solo cuando cambies el schema:
 
 ```bash
 # Desde apps/api/
@@ -29,11 +29,12 @@ npm run prisma:migrate
 npm run prisma:migrate --workspace=@amauta/api
 ```
 
-Esto creará:
+Para un entorno existente o producción, revisa primero el estado y aplica únicamente migraciones versionadas:
 
-1. La primera migración en `prisma/migrations/`
-2. Aplicará el schema a la base de datos PostgreSQL
-3. Generará Prisma Client automáticamente
+```bash
+npx prisma migrate status
+npm run prisma:migrate:deploy --workspace=@amauta/api
+```
 
 ## Comandos Disponibles
 
@@ -68,8 +69,8 @@ npm run prisma:studio
 ### Base de Datos
 
 ```bash
-# Push schema sin crear migración (desarrollo rápido)
-npm run db:push
+# `db:push` no forma parte del flujo normal: usar migraciones versionadas
+# npm run db:push
 
 # Pull schema desde base de datos existente
 npm run db:pull
@@ -100,7 +101,7 @@ prisma/
 ├── migrations/            # Historial de migraciones (generado)
 │   └── YYYYMMDD_nombre/
 │       └── migration.sql
-└── seed.ts               # Datos iniciales (pendiente T-014)
+└── seed.ts               # Entry point del seed local verificable
 ```
 
 ## Schema
@@ -127,9 +128,9 @@ El schema incluye todos los modelos necesarios para:
 - **Calificacion**: Calificaciones de estudiantes
 - **Comunicado**: Comunicados institucionales
 
-## Modelos por Implementar
+## Modelos del schema
 
-Los modelos ya están definidos en `schema.prisma`. La primera migración los creará todos.
+Los modelos están definidos en `schema.prisma` y su historial de cambios se conserva en `prisma/migrations/`. No hay una primera migración pendiente.
 
 Para ver la documentación completa del esquema:
 

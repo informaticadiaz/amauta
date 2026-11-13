@@ -204,20 +204,20 @@ postgresql://amauta_user:[PASSWORD]@localhost:5432/amauta_prod
 
 ```dockerfile
 # Multi-stage build
-FROM node:20-alpine AS deps
+FROM node:22.22.1-alpine AS deps
 WORKDIR /app
 COPY package*.json ./
 COPY apps/api/package*.json ./apps/api/
 RUN npm ci --workspace=@amauta/api --omit=dev
 
-FROM node:20-alpine AS builder
+FROM node:22.22.1-alpine AS builder
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 RUN npm run build --workspace=@amauta/api
 RUN npx prisma generate --schema=apps/api/prisma/schema.prisma
 
-FROM node:20-alpine AS runner
+FROM node:22.22.1-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=builder /app/apps/api/dist ./dist
@@ -642,7 +642,7 @@ docker logs amauta-postgres --tail 50
 - PostgreSQL compartido usa misma versión (no hay conflicto)
 - Aislamiento por database
 - Docker containers independientes por app
-- Node.js 20+ en todos lados
+- Node.js 22 LTS en todos lados
 
 ### Riesgo 4: Secrets Leakeados
 

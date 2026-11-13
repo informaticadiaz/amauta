@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpCode,
+  Inject,
   HttpStatus,
   Param,
   Patch,
@@ -12,12 +13,14 @@ import {
 } from '@nestjs/common';
 import { CurrentUser, Roles } from '../common/decorators';
 import type { RequestUser } from '../common/guards';
-import type { MateriasService } from './materias.service';
+import { MateriasService } from './materias.service';
 import type { CreateMateriaDto, UpdateMateriaDto } from './dto/materia.dto';
 
 @Controller()
 export class MateriasController {
-  constructor(private readonly materias: MateriasService) {}
+  constructor(
+    @Inject(MateriasService) private readonly materias: MateriasService
+  ) {}
 
   @Post('instituciones/:institucionId/materias')
   @Roles('ADMIN_ESCUELA', 'SUPER_ADMIN')

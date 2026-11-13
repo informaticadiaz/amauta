@@ -10,6 +10,7 @@ import { api } from '@/lib/api';
 import { CatalogoCursos } from '@/components/catalogo/CatalogoCursos';
 import { BuscadorCursos } from '@/components/catalogo/BuscadorCursos';
 import { FiltrosCursos } from '@/components/catalogo/FiltrosCursos';
+import type { CursoCatalogo, ListaCursosResponse } from '@amauta/types';
 
 export const metadata: Metadata = {
   title: 'Catálogo de Cursos | Amauta',
@@ -31,31 +32,9 @@ interface CategoriasResponse {
   categorias: Categoria[];
 }
 
-interface Curso {
-  id: string;
-  titulo: string;
-  descripcion: string;
-  slug: string;
-  imagen: string | null;
-  nivel: 'PRINCIPIANTE' | 'INTERMEDIO' | 'AVANZADO';
-  duracion: number | null;
-  categoria: {
-    id: string;
-    nombre: string;
-  };
-  _count?: {
-    lecciones: number;
-    inscripciones: number;
-  };
-}
-
-interface CursosResponse {
-  cursos: Curso[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-}
+type CatalogoResponse = ListaCursosResponse & {
+  error?: string;
+};
 
 type CursosSearchParams = {
   page?: string;
@@ -80,12 +59,11 @@ async function getCategorias(): Promise<Categoria[]> {
   }
 }
 
-async function getCursos(params: CursosSearchParams): Promise<CursosResponse> {
+async function getCursos(
+  params: CursosSearchParams
+): Promise<CatalogoResponse> {
   try {
     const queryParams = new URLSearchParams();
-
-    // Solo cursos publicados para el catálogo público
-    queryParams.set('estado', 'PUBLICADO');
 
     if (params.page) queryParams.set('page', params.page);
     if (params.buscar) queryParams.set('buscar', params.buscar);
@@ -97,14 +75,15 @@ async function getCursos(params: CursosSearchParams): Promise<CursosResponse> {
     // Más resultados por página en catálogo público
     queryParams.set('limit', '12');
 
-    const data = await api.get<CursosResponse>(
-      `/cursos?${queryParams.toString()}`
+    const data = await api.get<ListaCursosResponse>(
+      `/cursos/buscar?${queryParams.toString()}`
     );
     return data;
   } catch (error) {
     console.error('Error al obtener cursos:', error);
     return {
-      cursos: [],
+      cursos: [] as CursoCatalogo[],
+      error: 'No se pudo cargar el catálogo de cursos.',
       total: 0,
       page: 1,
       limit: 12,
@@ -171,7 +150,10 @@ export default async function CursosPage({ searchParams }: PageProps) {
                 </div>
               }
             >
-              <CatalogoCursos cursosData={cursosData} />
+              <CatalogoCursos
+                cursosData={cursosData}
+                error={cursosData.error}
+              />
             </Suspense>
           </main>
         </div>

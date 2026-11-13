@@ -1,15 +1,18 @@
 # Roadmap - Amauta
 
-**Última actualización registrada**: 2026-04-25
+**Última actualización registrada**: 2026-11-12
 
 > **Fuente canónica de estado**: este documento es la única fuente de verdad para la fase de producto, el sprint y el estado de las funcionalidades. Los documentos de contexto y los README técnicos deben describir únicamente implementación verificada y enlazar aquí para el estado de planificación.
 
 ## Estado actual de planificación
 
-- **Última fase con trabajo registrado**: Fase 7 — Multimedia y Contenido Rico, completada según el registro de Sprint 19.
-- **Siguiente trabajo planificado**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprints 21-23.
-- **Sprint activo**: no se declara un sprint activo en este roadmap.
+- **Última fase completada**: Fase 7 — Multimedia y Contenido Rico, completada según el registro de Sprint 19.
+- **Trabajo actual**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprint 21.
+- **Estado de F4c-001**: implementación de catálogo de materias y migración de calificaciones presente en el repositorio; pendiente de cierre formal del issue y verificación final.
+- **Siguiente trabajo**: F4c-002 y F4c-003, después del cierre formal de F4c-001.
+- **Issues cerrados**: el último issue cerrado es #104 (F4b-004); los commits posteriores corresponden al inicio de Fase 4c y no deben confundirse con el cierre de un issue.
 - **Producción**: las URLs y estados de despliegue se mantienen como referencia histórica/documental; no se usan como evidencia adicional de funcionalidades.
+- **ODD de consolidación y búsqueda**: T1–T7 completados con evidencia local; el cierre documental T8 se registra en `odd/tasks/amauta-mejoras.md`.
 
 La planificación conserva las fases y sprints históricos en el orden en que fueron documentados; este resumen evita que ese orden histórico se interprete como el estado actual.
 
@@ -2130,13 +2133,13 @@ El issue más crítico de esta fase es F4c-001 (catálogo de materias) porque es
 
 ### Sprint 21 — Fundamentos del modelo
 
-| Issue   | Título                                                             | Estado       | Prioridad |
-| ------- | ------------------------------------------------------------------ | ------------ | --------- |
-| F4c-001 | Catálogo de materias por institución y migración de calificaciones | ⏳ Pendiente | must-have |
-| F4c-002 | Matrícula formal: inscripción del estudiante a la institución      | ⏳ Pendiente | must-have |
-| F4c-003 | Historial académico del estudiante (trayectoria entre períodos)    | ⏳ Pendiente | must-have |
+| Issue   | Título                                                             | Estado                                                | Prioridad |
+| ------- | ------------------------------------------------------------------ | ----------------------------------------------------- | --------- |
+| F4c-001 | Catálogo de materias por institución y migración de calificaciones | 🔄 Implementado en código; pendiente de cierre formal | must-have |
+| F4c-002 | Matrícula formal: inscripción del estudiante a la institución      | ⏳ Pendiente                                          | must-have |
+| F4c-003 | Historial académico del estudiante (trayectoria entre períodos)    | ⏳ Pendiente                                          | must-have |
 
-**Progreso Sprint 21**: 0/3 issues completados
+**Progreso Sprint 21**: 0/3 issues cerrados formalmente; F4c-001 tiene implementación presente y está pendiente de verificación/cierre.
 
 #### Dependencias
 

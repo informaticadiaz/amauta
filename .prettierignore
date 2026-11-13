@@ -33,5 +33,9 @@ yarn-error.log*
 Thumbs.db
 
 # Generated files
+.atl/
+apps/web/next-env.d.ts
+apps/web/public/sw.js
+apps/web/public/workbox-*.js
 *.min.js
 *.min.css

@@ -76,12 +76,12 @@ Edificio (Servidor)
 # docker-compose.yml
 services:
   app1:
-    image: node:20
+    image: node:22.22.1
     # NO hay 'ports:' → Puerto NO expuesto al host
     # La app escucha en puerto 3000 INTERNO
 
   app2:
-    image: node:20
+    image: node:22.22.1
     # NO hay 'ports:' → Puerto NO expuesto al host
     # La app también escucha en puerto 3000 INTERNO
 ```
@@ -95,12 +95,12 @@ services:
 ```yaml
 services:
   app1:
-    image: node:20
+    image: node:22.22.1
     ports:
       - '3000:3000' # Host:Container
 
   app2:
-    image: node:20
+    image: node:22.22.1
     ports:
       - '3000:3000' # ❌ ERROR! Puerto 3000 del host ya ocupado
 ```

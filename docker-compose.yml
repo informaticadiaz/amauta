@@ -6,7 +6,7 @@ version: '3.8'
 #
 # Este archivo configura los servicios necesarios para desarrollo:
 # - PostgreSQL 15: Base de datos principal
-# - Redis 7: Caché y sesiones
+# - Redis 7: Infraestructura preparada (opcional; sin consumidor actual en la API)
 # - Adminer: Interface web para gestionar PostgreSQL (opcional)
 #
 # Uso:
@@ -57,7 +57,7 @@ services:
       - amauta-network
 
   # ==================================
-  # Redis - Caché y Sesiones
+  # Redis - Infraestructura preparada (opcional)
   # ==================================
   redis:
     image: redis:7-alpine
@@ -82,7 +82,8 @@ services:
       - redis_data:/data
 
     healthcheck:
-      test: ['CMD', 'redis-cli', '--raw', 'incr', 'ping']
+      test:
+        ['CMD', 'redis-cli', '-a', 'desarrollo123', '--no-auth-warning', 'ping']
       interval: 10s
       timeout: 3s
       retries: 5

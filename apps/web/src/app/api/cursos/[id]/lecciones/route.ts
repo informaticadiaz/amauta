@@ -9,7 +9,9 @@ import {
   getAuthenticatedBackendToken,
 } from '@/lib/backend-auth';
 
-const API_URL = process.env.API_URL || 'http://localhost:3001';
+function getApiUrl() {
+  return process.env.API_URL || 'http://localhost:3001';
+}
 
 export async function GET(
   _request: NextRequest,
@@ -18,12 +20,15 @@ export async function GET(
   try {
     const { id } = await params;
 
-    const response = await fetch(`${API_URL}/api/v1/cursos/${id}/lecciones`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      next: { revalidate: 0 },
-    });
+    const response = await fetch(
+      `${getApiUrl()}/api/v1/cursos/${id}/lecciones`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        next: { revalidate: 0 },
+      }
+    );
 
     const data = await response.json();
     return NextResponse.json(data, { status: response.status });
@@ -49,14 +54,17 @@ export async function POST(
     const { id } = await params;
     const body = await request.json();
 
-    const response = await fetch(`${API_URL}/api/v1/cursos/${id}/lecciones`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`,
-      },
-      body: JSON.stringify(body),
-    });
+    const response = await fetch(
+      `${getApiUrl()}/api/v1/cursos/${id}/lecciones`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(body),
+      }
+    );
 
     const data = await response.json();
     return NextResponse.json(data, { status: response.status });

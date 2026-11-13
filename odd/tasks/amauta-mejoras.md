@@ -1,6 +1,6 @@
 # ODD Plan — Amauta: consolidación técnica y búsqueda
 
-Estado: planificado, sin implementación iniciada.
+Estado: T1–T7 completados con evidencia local; T8 en cierre documental. Fase 4c iniciada con implementación de F4c-001; el roadmap sigue siendo la fuente canónica del estado de producto.
 Repositorio: `/home/ignacio/amauta`
 Fuente de análisis: arquitectura actual, documentación del proyecto y estado de Fase 6.
 
@@ -83,7 +83,7 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
 
 ### T3 — Auditar búsqueda funcionalmente y establecer baseline
 
-- Estado: bloqueado
+- Estado: completado
 - Spec: S3
 - Ruta: búsqueda backend, proxy/frontend y `apps/e2e`
 - Dependencias: T2
@@ -94,11 +94,17 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
   - Baseline con datos representativos, sin modificar producción.
 - Criterio de cierre: se conoce qué funciona, qué falla y cuál es el costo actual antes de elegir una optimización.
 - Verificación: tests públicos, type-check, lint y medición documentada.
+- Resultado parcial: tests focalizados API (2 suites, 51 tests) y catálogo web (5 suites, 58 tests) pasan. La infraestructura local ya quedó disponible: PostgreSQL 15 y Redis 7 saludables, migraciones aplicadas y seed corregido ejecutado con 40 asistencias, 16 calificaciones y 4 comunicados. La baseline API funcional pasó con búsquedas de texto, filtros combinados, sin resultados, paginación y validación; latencias locales observadas: 3–9 ms.
+- Resultado final: baseline API/SQL y smoke E2E headless completados. PostgreSQL 15 y Redis 7 saludables; migraciones y seed local correctos; búsquedas funcionales; SQL e índices registrados; catálogo público y detalle verificados.
+- Hallazgo corregido: `/cursos` y `/cursos/*` quedaron públicos en `apps/web/src/proxy.ts`, alineados con la documentación.
+- Limitación: el runner estándar no pudo instalar su revisión Chromium en `ubuntu26.04-x64`; el smoke se ejecutó con Playwright headless usando el Chromium compatible ya instalado y `executablePath` explícito.
+- Evidencia: `odd/evidence/search-baseline-t3.txt`.
 - Riesgo: item 6 — el resultado depende del entorno y de datos representativos; no se debe extrapolar sin evidencia.
-- Commit: pendiente
+- Commit: `7a008a0`
 
 ### T4 — Decidir y aplicar la estrategia de búsqueda
 
+- Estado: completado
 - Spec: S2-S3
 - Ruta: backend, Prisma/migraciones si corresponde, documentación y tests
 - Dependencias: T3
@@ -107,13 +113,16 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
   - Si se modifica la consulta: migración versionada cuando corresponda, preservación del orden de relevancia y paginación eficiente.
   - Tests de regresión para el contrato público.
   - Comparación antes/después con el baseline.
+- Resultado: se acepta mantener `contains` y la relevancia actual por ahora. No se agregan índices ni migraciones porque la evidencia disponible representa solo cuatro cursos y no demuestra un cuello de botella. La página del catálogo se alinea con `/cursos/buscar`; se agregan regresiones de controller y servicio.
 - Criterio de cierre: la estrategia elegida mejora o preserva comportamiento y tiene evidencia de rendimiento suficiente.
-- Verificación: tests críticos, migración validada, `EXPLAIN ANALYZE` en entorno autorizado y comparación de salida.
-- Riesgo: item 1 — cambios de índices, consultas o formatos pueden afectar datos y rendimiento; item 3 — búsqueda es contrato público.
-- Commit: pendiente
+- Verificación: 55 tests API focalizados, 58 tests web de catálogo, type-check y lint web; baseline SQL preservado y ADR registrado.
+- Evidencia: `docs/technical/adr/010-estrategia-busqueda-catalogo.md` y `odd/evidence/search-strategy-t4.txt`.
+- Riesgo: item 3 — búsqueda es contrato público; la decisión se limita al volumen medido y debe reabrirse con datos representativos.
+- Commit: `e97d237`
 
 ### T5 — Definir contratos compartidos mínimos
 
+- Estado: completado
 - Spec: S2
 - Ruta: `packages/shared`, `packages/types`, DTOs y tipos del frontend
 - Dependencias: T2
@@ -122,13 +131,16 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
   - Tipos/validaciones compartidas solamente para parámetros y respuestas estabilizados.
   - Eliminación gradual de duplicación, sin convertir todo Prisma en contrato público.
   - Tests de compatibilidad del contrato.
+- Resultado: `@amauta/types` concentra los tipos wire de búsqueda y catálogo; `@amauta/shared` concentra la validación Zod de `GET /cursos/buscar`. El backend y el frontend consumen esos contratos sin duplicar las interfaces del catálogo.
 - Criterio de cierre: frontend y backend consumen una representación única de los contratos incorporados en este task.
-- Verificación: type-check de todos los workspaces y tests de API/web.
-- Riesgo: item 3 — modificar tipos compartidos puede alterar consumidores no incluidos inicialmente.
-- Commit: pendiente
+- Verificación: builds de packages, type-check de types/shared/API/web, lint de types/shared/API/web, 55 tests API focalizados, 58 tests web de catálogo y `git diff --check` aprobados.
+- Riesgo: item 3 — modificar tipos compartidos puede alterar consumidores no incluidos inicialmente; el alcance se limitó al contrato estabilizado de búsqueda.
+- Evidencia: `odd/evidence/search-contract-t5.txt`.
+- Commit: `116d0ff`
 
 ### T6 — Aclarar el rol operativo de Redis
 
+- Estado: completado
 - Spec: S4
 - Ruta: `docker-compose.yml`, `apps/api`, README técnico y documentación de arquitectura
 - Dependencias: T1; T3 como evidencia para cualquier uso en búsqueda
@@ -137,13 +149,16 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
   - ADR sobre caché, sesiones, rate limiting, colas o estado de “preparado”.
   - Comportamiento documentado ante caída, TTL, claves, invalidación y observabilidad si existe uso real.
   - Explicitación de lo que queda fuera de alcance.
+- Resultado: Redis se clasifica como infraestructura preparada y opcional. La API no lo consume para caché, sesiones, colas ni rate limiting distribuido; `REDIS_URL` y `REDIS_CACHE_TTL` permanecen como configuración preparada no consumida. Se corrigió el healthcheck local para autenticar y ejecutar `PING` sin mutar datos.
 - Criterio de cierre: un colaborador puede saber si Redis es obligatorio para desarrollo, test, producción y qué ocurre si no está disponible.
-- Verificación: revisión de configuración y prueba funcional únicamente si existe integración real.
-- Riesgo: item 6 — declarar una dependencia crítica sin evidencia puede bloquear entornos o esconder fallos.
-- Commit: pendiente
+- Verificación: inspección de código/configuración, `docker compose config --quiet` y estado local saludable de PostgreSQL/Redis; no se modificó producción.
+- Riesgo: item 6 — declarar una dependencia crítica sin evidencia puede bloquear entornos o esconder fallos; la documentación ahora limita explícitamente la conclusión al código versionado y al entorno local.
+- Evidencia: `odd/evidence/redis-role-t6.txt` y `docs/technical/adr/011-rol-operativo-redis.md`.
+- Commit: `778e0a8`
 
 ### T7 — Cubrir huecos críticos de pruebas
 
+- Estado: completado
 - Spec: S5
 - Ruta: tests de API, web y E2E; soft delete cuando esté implementado
 - Dependencias: T3 para búsqueda; dependencia de soft delete según `.sdd/proposal-backend/TASKS.md`
@@ -153,13 +168,16 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
   - Flujo E2E mínimo.
   - Pruebas de soft delete de lecciones cuando la implementación y migración estén disponibles.
   - Corrección de tests que dependan de mocks sin validar efectos observables.
+- Resultado: se cubren rechazos de búsqueda sin consultas ni mutaciones, soft delete sin mutación ante inexistencia o falta de propiedad, proxy de lecciones, estados vacío/error del catálogo y el flujo E2E público de búsqueda a detalle.
 - Criterio de cierre: cada regla prioritaria prueba salida, error, efectos observables y ausencia de mutación en entradas rechazadas.
-- Verificación: tests focalizados, `test:all`, type-check, lint y build cuando sean aplicables.
-- Riesgo: item 6 — un test que no cubra el comportamiento observable no ofrece evidencia suficiente.
-- Commit: pendiente
+- Verificación: `test:all` aprobado con 54 suites/250 tests web y 28 suites/350 tests API; type-check, lint, build web, formato y E2E local headless aprobados. E2E: 2 tests de catálogo aprobados.
+- Riesgo: item 6 — un test que no cubra el comportamiento observable no ofrece evidencia suficiente; los casos agregados verifican efectos públicos y ausencia de mutación.
+- Evidencia: `odd/evidence/critical-tests-t7.txt`.
+- Commit: `e0c674d`
 
 ### T8 — Cerrar documentación con evidencia
 
+- Estado: completado
 - Spec: S1-S5
 - Ruta: documentación de gestión, ADRs y README técnicos
 - Dependencias: T4, T5, T6 y T7
@@ -168,9 +186,31 @@ La cobertura debe priorizar contratos y regresiones relevantes: búsqueda backen
   - Roadmap y board alineados con evidencia real.
   - Registro de pendientes explícitos y decisiones postergadas.
 - Criterio de cierre: el estado documental se puede reconstruir desde commits y verificaciones, sin depender de memoria de la conversación.
-- Verificación: revisión final de consistencia y enlaces.
+- Resultado: la documentación principal quedó alineada con el roadmap, la matriz T1-T7 y las decisiones ADR-010/ADR-011; el board antiguo queda explícitamente histórico.
+- Verificación: referencias obsoletas revisadas, Prettier check aprobado y `git diff --check` aprobado.
 - Riesgo: none
-- Commit: pendiente
+- Evidencia: `odd/evidence/documentation-closure-t8.txt`.
+- Commit: `59c3e78`
+- Límite de slice: `59c3e78` cierra la entrega documental T8; la rama acumula 3.801 líneas authored en 14 commits desde `origin/master`, por encima del objetivo aproximado de 400 líneas. No se agregan más cambios a este slice; cualquier continuación debe iniciar una entrega separada y reviewable.
+
+#### Matriz de cierre
+
+| Task | Estado     | Commit                                                                | Evidencia / decisión                           |
+| ---- | ---------- | --------------------------------------------------------------------- | ---------------------------------------------- |
+| T1   | Completado | Sin commit aislado; cambios documentales previos                      | Revisión cruzada registrada en este documento  |
+| T2   | Completado | Sin commit aislado; cambios documentales previos                      | Matriz y brechas registradas en este documento |
+| T3   | Completado | [`7a008a0`](https://github.com/informaticodiaz/amauta/commit/7a008a0) | `odd/evidence/search-baseline-t3.txt`          |
+| T4   | Completado | [`e97d237`](https://github.com/informaticodiaz/amauta/commit/e97d237) | `odd/evidence/search-strategy-t4.txt`, ADR-010 |
+| T5   | Completado | [`116d0ff`](https://github.com/informaticodiaz/amauta/commit/116d0ff) | `odd/evidence/search-contract-t5.txt`          |
+| T6   | Completado | [`778e0a8`](https://github.com/informaticodiaz/amauta/commit/778e0a8) | `odd/evidence/redis-role-t6.txt`, ADR-011      |
+| T7   | Completado | [`e0c674d`](https://github.com/informaticodiaz/amauta/commit/e0c674d) | `odd/evidence/critical-tests-t7.txt`           |
+
+#### Pendientes explícitos y decisiones postergadas
+
+- F4c-001 está implementado, pero su cierre formal y verificación de roadmap siguen pendientes; F4c-002 y F4c-003 permanecen planificados.
+- La estrategia `contains` de búsqueda no se reabrirá hacia trigram/FTS sin volumen representativo o degradación medida; ver ADR-010.
+- Redis queda preparado y opcional, sin caché, sesiones, colas ni rate limiting distribuido; cualquier integración futura requiere una nueva tarea y ADR-011.
+- T1 y T2 no tuvieron commits aislados; su evidencia está conservada en el historial de este documento y en los cambios documentales previos.
 
 ## Orden ODD y gates
 
@@ -213,3 +253,27 @@ La verificación focalizada pasó sin cambios funcionales: API `cursos.service.s
 ### L3
 
 Se inició T3 y se confirmó que existen tests E2E generales, pero ninguno específico de búsqueda (`apps/e2e/tests/api` y `apps/e2e/tests/frontend`). Se autorizó un entorno local aislado, pero Docker Compose no pudo iniciar PostgreSQL porque el daemon Docker no está disponible (`/var/run/docker.sock`). No se usó producción ni se modificó código funcional. El baseline queda bloqueado hasta disponer de un entorno local operativo o staging no productivo.
+
+### L4
+
+La revisión del historial reciente y del último issue cerrado corrigió el estado documental del proyecto. El último issue cerrado es #104 (F4b-004), pero los commits posteriores `feat(materias): incorporar catalogo escolar y calificaciones` y `feat(materias): agregar gestion escolar en la web` muestran que Fase 4c ya comenzó y que F4c-001 tiene implementación en el repositorio. El roadmap y `AGENTS.md` ahora distinguen implementación existente de cierre formal del issue y verificación pendiente.
+
+### L5
+
+Se retomó T3 con una exploración acotada y checks focalizados, sin modificar código funcional ni consultar producción. Los tests del servicio/controlador de cursos pasaron: 2 suites y 51 tests. Las suites del catálogo web pasaron mediante `test:ci`: 5 suites y 58 tests. La ejecución inicial del script web con `--watch` agotó el timeout aunque las suites habían pasado; se repitió correctamente en modo CI y quedó confirmada. `docker info` confirma que el cliente 29.8.2 existe, pero el daemon no está disponible (`/var/run/docker.sock` inexistente). Por eso T3 permanece bloqueado: todavía faltan base local aislada, datos representativos, E2E, consultas SQL, índices y latencias. La evidencia quedó en `odd/evidence/search-baseline-t3.txt`. La página de catálogo sigue consumiendo `/cursos` en lugar de `/cursos/buscar`; esto se registra como hallazgo de T3, no se corrige dentro de la baseline.
+
+### L6
+
+El daemon Docker fue iniciado por el usuario y PostgreSQL 15/Redis 7 quedaron saludables. `prisma migrate deploy` pasó contra `amauta_dev`. El seed administrativo falló inicialmente por usar campos obsoletos (`materia` y `periodo`) frente al schema actual (`materiaId` y `periodoAcademicoId`); se corrigió `apps/api/prisma/seeds/administrativo.ts` sin cambiar el schema ni producción. El seed corregido pasó con 40 asistencias, 16 calificaciones y 4 comunicados. API type-check y lint pasaron. La API local quedó saludable en `localhost:3101` y la baseline funcional de búsqueda pasó con texto, filtro combinado, sin resultados, paginación y validación, con latencias observadas de 3–9 ms. La Web arrancó en `localhost:3002` porque `3000` estaba ocupado; `/cursos` redirige a login sin sesión, confirmando una brecha en `apps/web/src/proxy.ts` respecto del catálogo documentado como público. Playwright no pudo ejecutar porque falta el navegador Chromium local; no se descargó. T3 sigue abierto hasta resolver el E2E y decidir cómo tratar la visibilidad pública del catálogo. No se registraron SQL/índices/EXPLAIN ANALYZE.
+
+### L7
+
+Se decidió que el catálogo debe ser público. Se modificó `apps/web/src/proxy.ts` para permitir `/cursos` y `/cursos/*` sin sesión. La verificación HTTP local pasó: catálogo HTTP 200 con `Catálogo de Cursos` y `Álgebra Básica`; detalle `algebra-basica` HTTP 200. Web type-check, lint y las 5 suites del catálogo (58 tests) pasaron. La instalación autorizada de Chromium para Playwright falló porque el entorno `ubuntu26.04-x64` no es compatible con ese navegador; no se reintentó ni se cambió de navegador. El smoke E2E queda bloqueado por capacidad no disponible, mientras la evidencia HTTP y SQL queda registrada.
+
+### L8
+
+Se completó el smoke E2E con Playwright en modo headless usando el Chromium compatible ya instalado en `/home/ignacio/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome`. El flujo verificó catálogo público, búsqueda de `Álgebra`, resultado visible y navegación exacta a `/cursos/algebra-basica`, con título `Álgebra Básica | Amauta`. T3 queda completado. T4 sigue pendiente del gate de decisión sobre mantener la consulta actual, agregar índices o implementar PostgreSQL full-text search; no se tomó esa decisión con solo cuatro cursos locales.
+
+### L9
+
+Se completó T4 aceptando la estrategia actual de `contains` y relevancia en memoria como decisión de bajo riesgo, documentada en ADR-010. No se agregaron índices ni migraciones: la baseline de 4 cursos y los `EXPLAIN ANALYZE` de T3 no justifican un cambio de esquema o de semántica. Se alineó `apps/web/src/app/cursos/page.tsx` con `/cursos/buscar` y se agregaron regresiones del controller y servicio para filtros, paginación y prioridad de título. Pasaron 55 tests API focalizados, 58 tests web de catálogo, type-check y lint web. La evidencia quedó en `odd/evidence/search-strategy-t4.txt`. El commit queda pendiente.
