@@ -25,6 +25,8 @@ apps/web/src/app/
 │   │   └── page.tsx             # /dashboard/reportes (ADMIN_ESCUELA, EDUCADOR) — tabs asistencia/rendimiento + CSV
 │   ├── calificaciones/
 │   │   └── page.tsx             # /dashboard/calificaciones (ADMIN_ESCUELA, EDUCADOR)
+│   ├── matriculas/
+│   │   └── page.tsx             # /dashboard/matriculas (ADMIN_ESCUELA)
 │   ├── mi-asistencia/
 │   │   └── page.tsx             # /dashboard/mi-asistencia (ESTUDIANTE)
 │   ├── mi-boletin/
@@ -88,6 +90,8 @@ apps/web/src/app/
     ├── instituciones/[id]/estudiantes/
     ├── instituciones/[id]/educadores/
     ├── instituciones/[id]/periodos/
+    ├── instituciones/[id]/matriculas/
+    ├── matriculas/[id]/
     ├── mi-institucion/
     └── upload/
 ```

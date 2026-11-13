@@ -9,7 +9,7 @@
 - **Última fase completada**: Fase 7 — Multimedia y Contenido Rico, completada según el registro de Sprint 19.
 - **Trabajo actual**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprint 21.
 - **Estado de F4c-001**: ✅ completado; catálogo institucional, migración de calificaciones, asignaciones a grupos y verificación local aprobados.
-- **Siguiente trabajo**: F4c-002 y F4c-003, después del cierre formal de F4c-001.
+- **Siguiente trabajo**: F4c-003 — Historial académico del estudiante.
 - **Issues cerrados**: el último issue cerrado es #104 (F4b-004); los commits posteriores corresponden al inicio de Fase 4c y no deben confundirse con el cierre de un issue.
 - **Producción**: las URLs y estados de despliegue se mantienen como referencia histórica/documental; no se usan como evidencia adicional de funcionalidades.
 - **ODD de consolidación y búsqueda**: T1–T7 completados con evidencia local; el cierre documental T8 se registra en `odd/tasks/amauta-mejoras.md`.
@@ -2136,10 +2136,10 @@ El issue más crítico de esta fase es F4c-001 (catálogo de materias) porque es
 | Issue   | Título                                                             | Estado        | Prioridad |
 | ------- | ------------------------------------------------------------------ | ------------- | --------- |
 | F4c-001 | Catálogo de materias por institución y migración de calificaciones | ✅ Completado | must-have |
-| F4c-002 | Matrícula formal: inscripción del estudiante a la institución      | ⏳ Pendiente  | must-have |
+| F4c-002 | Matrícula formal: inscripción del estudiante a la institución      | ✅ Completado | must-have |
 | F4c-003 | Historial académico del estudiante (trayectoria entre períodos)    | ⏳ Pendiente  | must-have |
 
-**Progreso Sprint 21**: 1/3 issues cerrados formalmente; F4c-002 y F4c-003 permanecen pendientes.
+**Progreso Sprint 21**: 2/3 issues cerrados formalmente; F4c-003 permanece pendiente.
 
 #### Dependencias
 

@@ -48,6 +48,8 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 | Listado de usuarios por institución (API)                  | ✅ Funcional (API)      | Sprint 13 |
 | Registro diario de asistencias por grupo                   | ✅ Funcional (API + UI) | Sprint 14 |
 | Resumen mensual de asistencias por grupo                   | ✅ Funcional (API)      | Sprint 14 |
+| Catálogo institucional de materias                         | ✅ Funcional (API + UI) | Sprint 21 |
+| Matrícula formal de estudiantes                            | ✅ Funcional (API + UI) | Sprint 21 |
 | Módulo Escolar (calificaciones, comunicados y reportes)    | 🚧 En desarrollo        | Fase 4    |
 | Búsqueda y descubrimiento de cursos                        | 📋 Diseño funcional     | Sprint 18 |
 
@@ -109,8 +111,9 @@ Ver [seed/etapa-1-usuarios.md](seed/etapa-1-usuarios.md) para lista completa.
 1. Inicia sesión
 2. Gestiona grupos de su institución
 3. Registra asistencias
-4. Publica comunicados
-5. Ve reportes
+4. Administra matrículas y padrón institucional
+5. Publica comunicados
+6. Ve reportes
 
 ## Registro Diario de Asistencias
 
@@ -162,6 +165,7 @@ Ver [seed/etapa-1-usuarios.md](seed/etapa-1-usuarios.md) para lista completa.
 | **Inscripción** | Relación entre estudiante y curso                          |
 | **Progreso**    | Avance del estudiante en las lecciones                     |
 | **Grupo**       | Clase o división dentro de una institución                 |
+| **Matrícula**   | Relación formal entre estudiante, institución y período    |
 | **NAP**         | Núcleos de Aprendizajes Prioritarios (currícula argentina) |
 
 ## Estructura de Esta Documentación

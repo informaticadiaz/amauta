@@ -70,6 +70,7 @@ model Usuario {
   progresos        Progreso[]
   asistencias      Asistencia[]
   calificaciones   Calificacion[]
+  matriculas       Matricula[] @relation("MatriculaEstudiante")
   comunicados      Comunicado[]
   gruposCreados    Grupo[]
 
@@ -444,6 +445,7 @@ model Institucion {
   comunicados        Comunicado[]
   periodosAcademicos PeriodoAcademico[]
   escalaCalificacion EscalaCalificacion?
+  matriculas         Matricula[]
 
   @@map("instituciones")
 }
@@ -577,10 +579,46 @@ model PeriodoAcademico {
 
   grupos         Grupo[]
   calificaciones Calificacion[]
+  matriculas     Matricula[]
 
   @@index([institucionId])
   @@index([activo])
   @@map("periodos_academicos")
+}
+```
+
+### Matricula
+
+```prisma
+model Matricula {
+  id String @id @default(cuid())
+
+  estudianteId String
+  estudiante   Usuario @relation("MatriculaEstudiante", fields: [estudianteId], references: [id])
+
+  institucionId String
+  institucion   Institucion @relation(fields: [institucionId], references: [id])
+
+  periodoAcademicoId String
+  periodoAcademico   PeriodoAcademico @relation(fields: [periodoAcademicoId], references: [id])
+
+  estado           EstadoMatricula @default(ACTIVA)
+  fechaInscripcion DateTime        @default(now())
+  observaciones    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([estudianteId, institucionId, periodoAcademicoId])
+  @@index([institucionId, periodoAcademicoId, estado])
+  @@index([estudianteId, estado])
+  @@map("matriculas")
+}
+
+enum EstadoMatricula {
+  ACTIVA
+  BAJA
+  EGRESADO
 }
 ```
 
