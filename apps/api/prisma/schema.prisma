@@ -49,7 +49,9 @@ model Usuario {
   remocionesEducadorRealizadas   GrupoEducador[]     @relation("GrupoEducadorRemovidoPor")
   evaluacionesCreadas            Evaluacion[]        @relation("Evaluador")
   intentosEvaluacion             IntentoEvaluacion[]
-  estadosPromocion                EstadoPromocion[]
+  estadosPromocion               EstadoPromocion[]
+  estadosPromocionSobrescritos   EstadoPromocion[]   @relation("EstadoPromocionSobrescritoPor")
+  periodosCerrados               PeriodoAcademico[]  @relation("PeriodoCerradoPor")
 
   // Comunidad y foros
   postsForo      ForoPost[]      @relation("AutorForoPost")
@@ -422,19 +424,24 @@ model PeriodoAcademico {
   institucionId String
   institucion   Institucion @relation(fields: [institucionId], references: [id])
 
-  nombre      String
-  fechaInicio DateTime
-  fechaFin    DateTime
-  orden       Int      @default(1)
-  activo      Boolean  @default(true)
+  nombre                     String
+  fechaInicio                DateTime
+  fechaFin                   DateTime
+  orden                      Int                 @default(1)
+  activo                     Boolean             @default(true)
+  estadoCierre               EstadoCierrePeriodo @default(ABIERTO)
+  porcentajeAsistenciaMinimo Float               @default(75)
+  cerradoEn                  DateTime?
+  cerradoPorId               String?
+  cerradoPor                 Usuario?            @relation("PeriodoCerradoPor", fields: [cerradoPorId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  grupos             Grupo[]
-  calificaciones     Calificacion[]
-  matriculas         Matricula[]
-  estadosPromocion   EstadoPromocion[]
+  grupos           Grupo[]
+  calificaciones   Calificacion[]
+  matriculas       Matricula[]
+  estadosPromocion EstadoPromocion[]
 
   @@index([institucionId])
   @@index([activo])
@@ -514,12 +521,12 @@ model Grupo {
   updatedAt DateTime @updatedAt
 
   // Relaciones
-  estudiantes    GrupoEstudiante[]
-  educadores     GrupoEducador[]
-  asistencias    Asistencia[]
-  calificaciones    Calificacion[]
-  materias          GrupoMateria[]
-  estadosPromocion  EstadoPromocion[]
+  estudiantes      GrupoEstudiante[]
+  educadores       GrupoEducador[]
+  asistencias      Asistencia[]
+  calificaciones   Calificacion[]
+  materias         GrupoMateria[]
+  estadosPromocion EstadoPromocion[]
 
   @@index([institucionId])
   @@index([educadorId])
@@ -622,6 +629,12 @@ enum EstadoAsistencia {
 }
 
 /// Estado final de promoción por estudiante, grupo y período académico
+enum EstadoCierrePeriodo {
+  ABIERTO
+  CERRADO
+}
+
+/// Estados finales persistibles de promoción; los estados transitorios del preview no pertenecen a este enum.
 enum EstadoPromocionTipo {
   PROMOVIDO
   REPITENTE
@@ -636,12 +649,23 @@ model EstadoPromocion {
   estudiante   Usuario @relation(fields: [estudianteId], references: [id])
 
   grupoId String
-  grupo   Grupo @relation(fields: [grupoId], references: [id])
+  grupo   Grupo  @relation(fields: [grupoId], references: [id])
 
   periodoAcademicoId String
   periodoAcademico   PeriodoAcademico @relation(fields: [periodoAcademicoId], references: [id])
 
-  estado EstadoPromocionTipo
+  estado                     EstadoPromocionTipo
+  estadoCalculado            EstadoPromocionTipo?
+  notaAprobacion             Float?
+  porcentajeAsistencia       Float?
+  porcentajeAsistenciaMinimo Float?
+  materiasTotales            Int?
+  materiasAprobadas          Int?
+  materiasSinCalificacion    Int?
+  sobrescritoPorId           String?
+  sobrescritoPor             Usuario?             @relation("EstadoPromocionSobrescritoPor", fields: [sobrescritoPorId], references: [id])
+  sobrescritoEn              DateTime?
+  justificacionSobrescritura String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

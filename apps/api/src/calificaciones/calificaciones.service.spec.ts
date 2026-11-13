@@ -48,6 +48,7 @@ describe('CalificacionesService', () => {
     id: GRUPO_ID,
     institucionId: INSTITUCION_ID,
     activo: true,
+    periodoAcademico: { id: PERIODO_ID, estadoCierre: 'ABIERTO' },
   };
 
   const adminUser = {
@@ -222,6 +223,19 @@ describe('CalificacionesService', () => {
 
       expect(result.procesadas).toBe(2);
       expect(prisma.$transaction).toHaveBeenCalledTimes(1);
+    });
+
+    it('debería bloquear cargas cuando el período del grupo está cerrado', async () => {
+      setupCargaAdmin();
+      prisma.grupo.findUnique.mockResolvedValue({
+        ...grupo,
+        periodoAcademico: { id: PERIODO_ID, estadoCierre: 'CERRADO' },
+      });
+
+      await expect(
+        service.cargarCalificaciones(GRUPO_ID, dto, ADMIN_ID)
+      ).rejects.toThrow('el período académico está cerrado');
+      expect(prisma.calificacion.upsert).not.toHaveBeenCalled();
     });
 
     it('debería lanzar BadRequestException si una nota excede el máximo de la escala', async () => {

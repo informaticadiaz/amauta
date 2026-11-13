@@ -19,6 +19,7 @@ interface GrupoAcceso {
   id: string;
   institucionId: string;
   activo: boolean;
+  periodoAcademico: { id: string; estadoCierre: 'ABIERTO' | 'CERRADO' } | null;
 }
 
 interface EstudianteCalificacion {
@@ -154,6 +155,19 @@ export class CalificacionesService {
         'El período académico no pertenece a la institución del grupo'
       );
     }
+    if (
+      !grupo.periodoAcademico ||
+      grupo.periodoAcademico.id !== periodoAcademicoId
+    ) {
+      throw new BadRequestException(
+        'El período académico no corresponde al grupo'
+      );
+    }
+    if (grupo.periodoAcademico.estadoCierre === 'CERRADO') {
+      throw new BadRequestException(
+        'No se pueden cargar calificaciones: el período académico está cerrado'
+      );
+    }
 
     const materia = await this.obtenerMateriaAsignada(grupo.id, materiaId);
     const estudiantesActivosIds = new Set(
@@ -261,6 +275,7 @@ export class CalificacionesService {
         id: true,
         institucionId: true,
         activo: true,
+        periodoAcademico: { select: { id: true, estadoCierre: true } },
       },
     });
 

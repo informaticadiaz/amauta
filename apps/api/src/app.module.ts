@@ -30,6 +30,7 @@ import { NotificacionesModule } from './notificaciones/notificaciones.module';
 import { ComunicadosModule } from './comunicados/comunicados.module';
 import { MatriculasModule } from './matriculas/matriculas.module';
 import { HistorialModule } from './historial/historial.module';
+import { CierreAcademicoModule } from './cierre-academico/cierre-academico.module';
 import { JwtAuthGuard, RolesGuard } from './common/guards';
 
 @Module({
@@ -64,6 +65,7 @@ import { JwtAuthGuard, RolesGuard } from './common/guards';
     ComunicadosModule,
     MatriculasModule,
     HistorialModule,
+    CierreAcademicoModule,
   ],
   controllers: [AppController],
   providers: [
