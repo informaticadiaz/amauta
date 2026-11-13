@@ -1,17 +1,20 @@
 # Roadmap - Amauta
 
-**Última actualización registrada**: 2026-11-12
+**Última actualización registrada**: 2026-11-13
 
 > **Fuente canónica de estado**: este documento es la única fuente de verdad para la fase de producto, el sprint y el estado de las funcionalidades. Los documentos de contexto y los README técnicos deben describir únicamente implementación verificada y enlazar aquí para el estado de planificación.
 
 ## Estado actual de planificación
 
 - **Última fase completada**: Fase 7 — Multimedia y Contenido Rico, completada según el registro de Sprint 19.
-- **Trabajo actual**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprint 21.
+- **Trabajo actual**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprint 22.
 - **Estado de F4c-001**: ✅ completado; catálogo institucional, migración de calificaciones, asignaciones a grupos y verificación local aprobados.
-- **Siguiente trabajo**: avanzar con F4c-004 — Horarios semanales por grupo; F4c-005 y F4c-003 ya tienen implementación y verificación local documentadas.
-- **Issues cerrados**: el último issue cerrado es #104 (F4b-004); los commits posteriores corresponden al inicio de Fase 4c y no deben confundirse con el cierre de un issue.
-- **Producción**: las URLs y estados de despliegue se mantienen como referencia histórica/documental; no se usan como evidencia adicional de funcionalidades.
+- **Estado de F4c-002**: ✅ completado; matrícula formal implementada y verificada.
+- **Estado de F4c-003**: ✅ completado; historial académico, persistencia y lectura del estado de promoción verificadas.
+- **Estado de F4c-005**: ✅ completado; cierre académico, promoción masiva, acta PDF y bloqueo post-cierre implementados y desplegados mediante la PR #112.
+- **Siguiente trabajo**: avanzar con F4c-004 — Horarios semanales por grupo.
+- **Issues cerrados**: el último issue GitHub formalmente cerrado sigue siendo #104 (F4b-004); F4c-005 fue entregado mediante la PR #112 y no debe confundirse el estado de una feature con el cierre de un issue.
+- **Producción**: la PR #112 (`dd89338`) fue integrada en `master`; el pipeline CI de `master` completó validaciones, build, deploy vía SSH y healthcheck exitosos. Este dato acredita el despliegue, no sustituye la verificación funcional de cada feature.
 - **ODD de consolidación y búsqueda**: T1–T7 completados con evidencia local; el cierre documental T8 se registra en `odd/tasks/amauta-mejoras.md`.
 
 La planificación conserva las fases y sprints históricos en el orden en que fueron documentados; este resumen evita que ese orden histórico se interprete como el estado actual.
@@ -2175,7 +2178,7 @@ F4c-002 (matrícula) — independiente de F4c-001
 - Endpoint `GET /me/historial` → todas las calificaciones del estudiante agrupadas por período y materia
 - Endpoint `GET /instituciones/:id/estudiantes/:estudianteId/historial` → vista admin del legajo
 - Promedio general acumulado, evolución por materia entre períodos
-- Registro de estado de promoción por período (PROMOVIDO / REPITENTE / EGRESADO); persistencia y lectura implementadas según [ADR-012](../technical/adr/012-estado-promocion-y-cierre-academico.md). El cálculo, preview, confirmación y cierre masivo quedan pendientes para F4c-005.
+- Registro de estado de promoción por período (PROMOVIDO / REPITENTE / EGRESADO); persistencia, cálculo, preview, confirmación y cierre implementados según [ADR-012](../technical/adr/012-estado-promocion-y-cierre-academico.md).
 
 ---
 
@@ -2187,7 +2190,7 @@ F4c-002 (matrícula) — independiente de F4c-001
 | F4c-005 | Cierre de ciclo lectivo y promoción masiva             | ✅ Completado | must-have   |
 | F4c-006 | Alertas automáticas: asistencia baja y notas en riesgo | ⏳ Pendiente  | should-have |
 
-**Progreso Sprint 22**: 1/3 issues completados
+**Progreso Sprint 22**: 1/3 issues con implementación registrada; F4c-005 está completado y F4c-004/F4c-006 siguen pendientes.
 
 #### Dependencias
 
@@ -2217,7 +2220,7 @@ F4c-006 (alertas) — independiente, usa datos existentes de asistencias y calif
 - El admin puede sobrescribir el estado calculado con justificación auditada
 - Al confirmar: el período queda CERRADO y bloquea nuevos registros de asistencia/calificaciones
 - Generación y descarga de acta institucional de cierre en PDF
-- Implementado y verificado localmente; la publicación y el commit siguen siendo decisiones separadas
+- Implementado y verificado localmente; integrado mediante la PR #112 (`dd89338`) y desplegado por el pipeline de `master` con CI y healthcheck exitosos.
 
 **F4c-006 — Alertas automáticas**
 

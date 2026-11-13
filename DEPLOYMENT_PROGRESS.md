@@ -69,30 +69,24 @@ CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
 
 ## 🚀 Pipeline CI/CD (Issue #71)
 
-**Estado**: ✅ Configurado — pendiente de activar secret `DOKPLOY_WEBHOOK_URL`
+**Estado**: ✅ Operativo y verificado en producción mediante la PR #112 (2026-11-13)
 
 ### Flujo completo
 
 ```
 Push a master
   → GitHub Actions: validate → build (lint + type-check + build + tests)
-  → (si todo pasa) GitHub Actions llama webhook de Dokploy
+  → (si todo pasa) GitHub Actions ejecuta el job de deploy mediante SSH
   → Dokploy redespliega: nuevo build Docker
   → Container arranca: prisma migrate deploy → node dist/main.js ✅
   → Healthcheck confirma que la API responde en /health
 ```
 
-### Activar el deploy automático (pasos manuales pendientes)
+### Configuración operativa actual
 
-1. **Obtener la URL del webhook en Dokploy**:
-   - Ir a http://72.60.144.210:3000 → servicio API → pestaña "General" o "Webhooks"
-   - Copiar la URL del webhook de deploy
+El job de deploy utiliza el secret `VPS_DEPLOY_SSH_KEY` para conectarse al servidor y disparar el redeploy en Dokploy. No depende de `DOKPLOY_WEBHOOK_URL`.
 
-2. **Agregar el secret en GitHub**:
-   - Ir a https://github.com/informaticadiaz/amauta/settings/secrets/actions
-   - Crear secret: `DOKPLOY_WEBHOOK_URL` con la URL copiada
-
-3. **Hacer un push a master** — el pipeline se ejecuta automáticamente.
+El pipeline se ejecuta automáticamente con cada push a `master`, incluido el merge de pull requests.
 
 ### Jobs del workflow
 
@@ -100,7 +94,7 @@ Push a master
 | ---------- | ------------------- | -------------------------------------------- |
 | `validate` | Siempre             | Estructura, secrets, docs, disciplina Prisma |
 | `build`    | Si validate pasa    | lint, type-check, build, tests API + Web     |
-| `deploy`   | Solo push a master  | Webhook → Dokploy → healthcheck              |
+| `deploy`   | Solo push a master  | SSH → Dokploy → healthcheck                  |
 | `summary`  | Siempre (after all) | Resumen del estado del pipeline              |
 
 ### Migraciones automáticas

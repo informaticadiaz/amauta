@@ -38,16 +38,11 @@ Las migraciones se aplican automáticamente al arrancar el contenedor en cada de
 
 ---
 
-## Paso pendiente (configuración manual)
+## Configuración operativa actual
 
-Para que el deploy automático funcione, hay que configurar el webhook de Dokploy:
+El deploy automático ya está operativo. El job `deploy` se ejecuta únicamente en `push` a `master`, utiliza el secret `VPS_DEPLOY_SSH_KEY` para disparar el redeploy en Dokploy mediante SSH y luego verifica el healthcheck de la API.
 
-1. Entrar al panel de Dokploy: http://72.60.144.210:3000
-2. Ir al servicio de la API → buscar la URL del webhook de deploy
-3. Ir a https://github.com/informaticadiaz/amauta/settings/secrets/actions
-4. Crear el secret `DOKPLOY_WEBHOOK_URL` con esa URL
-
-Una vez configurado, el pipeline completo funciona sin más intervención.
+No depende del secret `DOKPLOY_WEBHOOK_URL`.
 
 ---
 

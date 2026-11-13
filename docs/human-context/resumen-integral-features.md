@@ -1,8 +1,8 @@
 # Resumen integral de funcionalidades — Amauta
 
-**Fecha de generación**: 2026-05-20
-**Fuente**: 102 issues (GitHub) + roadmap
-**Estado del proyecto**: Fase 7 en curso · Fase 4c planificada
+**Fecha de actualización**: 2026-11-13
+**Fuente**: snapshot histórico de issues (GitHub) + roadmap
+**Estado del proyecto**: Fase 7 completada · Fase 4c en ejecución
 
 > Amauta es un sistema educativo offline-first para la gestión del aprendizaje.
 > _"No concebimos la educación como un producto, sino como un derecho social."_
@@ -254,23 +254,21 @@ Lecciones más ricas: texto formateado, video/audio, contenido interactivo.
 
 ---
 
-## Fase 4c — Administración Avanzada ⏳
+## Fase 4c — Administración Avanzada 🔄
 
-**0/9 issues iniciados** · Sprint 21-23
+F4c-001, F4c-002, F4c-003 y F4c-005 están implementados y verificados. F4c-004, F4c-006, F4c-007, F4c-008 y F4c-009 permanecen pendientes. El siguiente trabajo planificado es F4c-004 — horarios semanales por grupo.
 
-**F4c-001 debe implementarse primero** — es una migración de modelo de datos (materias como catálogo) de la que dependen F4c-003, F4c-004 y F4c-005.
-
-| Issue       | Funcionalidad                                                      | Dependencias                    |
-| ----------- | ------------------------------------------------------------------ | ------------------------------- |
-| **F4c-001** | **Catálogo de materias** + migración de calificaciones             | — (bloqueante para 003/004/005) |
-| **F4c-002** | **Matrícula formal** — inscripción del estudiante a la institución | —                               |
-| **F4c-003** | **Historial académico** — trayectoria entre periodos               | F4c-001                         |
-| **F4c-004** | **Horarios semanales** por grupo                                   | F4c-001                         |
-| **F4c-005** | **Cierre de ciclo lectivo** y promoción masiva                     | F4c-001                         |
-| **F4c-006** | **Alertas automáticas**: asistencia baja y notas en riesgo         | —                               |
-| **F4c-007** | **Rol tutor/padre**: acceso al seguimiento de su hijo              | —                               |
-| **F4c-008** | **Justificación formal de ausencias**                              | —                               |
-| **F4c-009** | **Calendario institucional**                                       | —                               |
+| Issue       | Funcionalidad                                                      | Dependencias  |
+| ----------- | ------------------------------------------------------------------ | ------------- |
+| **F4c-001** | **Catálogo de materias** + migración de calificaciones             | ✅ Completado |
+| **F4c-002** | **Matrícula formal** — inscripción del estudiante a la institución | ✅ Completado |
+| **F4c-003** | **Historial académico** — trayectoria entre periodos               | ✅ Completado |
+| **F4c-004** | **Horarios semanales** por grupo                                   | ⏳ Pendiente  |
+| **F4c-005** | **Cierre de ciclo lectivo** y promoción masiva                     | ✅ Completado |
+| **F4c-006** | **Alertas automáticas**: asistencia baja y notas en riesgo         | —             |
+| **F4c-007** | **Rol tutor/padre**: acceso al seguimiento de su hijo              | —             |
+| **F4c-008** | **Justificación formal de ausencias**                              | —             |
+| **F4c-009** | **Calendario institucional**                                       | —             |
 
 ---
 
@@ -296,17 +294,17 @@ Lecciones más ricas: texto formateado, video/audio, contenido interactivo.
 
 ## Estado global del proyecto
 
-| Fase | Nombre                  | Issues      | Estado            |
-| ---- | ----------------------- | ----------- | ----------------- |
-| 0    | Fundamentos             | #2–#27      | ✅ Completada     |
-| 1    | MVP Cursos              | #28–#43     | ✅ Completada     |
-| 2    | Offline-First PWA       | #44–#51     | ✅ Completada     |
-| 3    | Evaluaciones            | #52–#63     | ✅ Completada     |
-| 4    | Módulo Escolar          | #64–#81     | ✅ Completada     |
-| 4b   | Módulo Escolar gaps     | #101–#104   | ✅ Completada     |
-| 5    | Comunidad               | #83–#92     | ✅ Completada     |
-| 6    | Búsqueda                | #93–#95     | ✅ Completada     |
-| 7    | Multimedia              | #97–#100    | 🔄 En curso (2/4) |
-| 4c   | Administración avanzada | F4c-001–009 | ⏳ Planificada    |
+| Fase | Nombre                  | Issues      | Estado          |
+| ---- | ----------------------- | ----------- | --------------- |
+| 0    | Fundamentos             | #2–#27      | ✅ Completada   |
+| 1    | MVP Cursos              | #28–#43     | ✅ Completada   |
+| 2    | Offline-First PWA       | #44–#51     | ✅ Completada   |
+| 3    | Evaluaciones            | #52–#63     | ✅ Completada   |
+| 4    | Módulo Escolar          | #64–#81     | ✅ Completada   |
+| 4b   | Módulo Escolar gaps     | #101–#104   | ✅ Completada   |
+| 5    | Comunidad               | #83–#92     | ✅ Completada   |
+| 6    | Búsqueda                | #93–#95     | ✅ Completada   |
+| 7    | Multimedia              | #97–#100    | ✅ Completada   |
+| 4c   | Administración avanzada | F4c-001–009 | 🔄 En ejecución |
 
-**Total**: 100 issues cerrados · 2 issues abiertos · 9 issues planificados
+**Nota**: los conteos históricos de issues de este documento no se actualizaron automáticamente; el estado vigente de funcionalidades está en `docs/project-management/roadmap.md`.
