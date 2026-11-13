@@ -38,6 +38,7 @@ model Usuario {
   progresos                      Progreso[]
   asistencias                    Asistencia[]
   calificaciones                 Calificacion[]
+  matriculas                     Matricula[]         @relation("MatriculaEstudiante")
   comunicados                    Comunicado[]
   gruposCreados                  Grupo[]
   gruposEstudiante               GrupoEstudiante[]   @relation("GrupoEstudianteUsuario")
@@ -400,6 +401,7 @@ model Institucion {
   periodosAcademicos PeriodoAcademico[]
   escalaCalificacion EscalaCalificacion?
   materias           Materia[]
+  matriculas         Matricula[]
 
   @@map("instituciones")
 }
@@ -430,10 +432,44 @@ model PeriodoAcademico {
 
   grupos         Grupo[]
   calificaciones Calificacion[]
+  matriculas     Matricula[]
 
   @@index([institucionId])
   @@index([activo])
   @@map("periodos_academicos")
+}
+
+/// Matrícula formal de un estudiante en una institución y período académico
+model Matricula {
+  id String @id @default(cuid())
+
+  estudianteId String
+  estudiante   Usuario @relation("MatriculaEstudiante", fields: [estudianteId], references: [id])
+
+  institucionId String
+  institucion   Institucion @relation(fields: [institucionId], references: [id])
+
+  periodoAcademicoId String
+  periodoAcademico   PeriodoAcademico @relation(fields: [periodoAcademicoId], references: [id])
+
+  estado           EstadoMatricula @default(ACTIVA)
+  fechaInscripcion DateTime        @default(now())
+  observaciones    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([estudianteId, institucionId, periodoAcademicoId])
+  @@index([institucionId, periodoAcademicoId, estado])
+  @@index([estudianteId, estado])
+  @@map("matriculas")
+}
+
+/// Estado de una matrícula institucional
+enum EstadoMatricula {
+  ACTIVA
+  BAJA
+  EGRESADO
 }
 
 /// Escala de calificación por institución

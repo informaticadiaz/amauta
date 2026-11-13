@@ -64,6 +64,9 @@ describe('GruposService', () => {
       update: jest.fn(),
       count: jest.fn(),
     },
+    matricula: {
+      findMany: jest.fn(),
+    },
     grupoEducador: {
       findMany: jest.fn(),
       findUnique: jest.fn(),
@@ -109,6 +112,7 @@ describe('GruposService', () => {
     nombre: 'Juan',
     apellido: 'Pérez',
     rol: 'ESTUDIANTE',
+    activo: true,
     perfil: { institucion: 'Escuela Belgrano' },
   };
 
@@ -118,6 +122,7 @@ describe('GruposService', () => {
     nombre: 'María',
     apellido: 'García',
     rol: 'ESTUDIANTE',
+    activo: true,
     perfil: { institucion: 'Escuela Belgrano' },
   };
 
@@ -173,6 +178,7 @@ describe('GruposService', () => {
     prisma = module.get(PrismaService);
 
     jest.resetAllMocks();
+    prisma.matricula.findMany.mockResolvedValue([]);
   });
 
   describe('crear', () => {
@@ -300,6 +306,10 @@ describe('GruposService', () => {
       prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
       prisma.institucion.findUnique.mockResolvedValue(institucion);
       prisma.usuario.findMany.mockResolvedValue([estudiante1, estudiante2]);
+      prisma.matricula.findMany.mockResolvedValue([
+        { estudianteId: cuidEstudiante1 },
+        { estudianteId: cuidEstudiante2 },
+      ]);
       prisma.grupoEstudiante.findMany.mockResolvedValue([]);
       prisma.$transaction.mockResolvedValue([]);
       prisma.grupoEstudiante.createMany.mockResolvedValue({ count: 2 });
@@ -337,6 +347,10 @@ describe('GruposService', () => {
       prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
       prisma.institucion.findUnique.mockResolvedValue(institucion);
       prisma.usuario.findMany.mockResolvedValue([estudiante1, estudiante2]);
+      prisma.matricula.findMany.mockResolvedValue([
+        { estudianteId: cuidEstudiante1 },
+        { estudianteId: cuidEstudiante2 },
+      ]);
       prisma.grupoEstudiante.findMany.mockResolvedValue([
         { estudianteId: cuidEstudiante1, activo: true },
       ]);
@@ -360,6 +374,9 @@ describe('GruposService', () => {
       prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
       prisma.institucion.findUnique.mockResolvedValue(institucion);
       prisma.usuario.findMany.mockResolvedValue([estudiante1]);
+      prisma.matricula.findMany.mockResolvedValue([
+        { estudianteId: cuidEstudiante1 },
+      ]);
       prisma.grupoEstudiante.findMany.mockResolvedValue([
         { estudianteId: cuidEstudiante1, activo: false },
       ]);
@@ -477,6 +494,57 @@ describe('GruposService', () => {
       await expect(
         service.asignarEstudiantes(cuidGrupo, asignarDto, 'admin-1')
       ).rejects.toThrow(BadRequestException);
+    });
+
+    it('debería rechazar un grupo sin período académico', async () => {
+      prisma.grupo.findUnique.mockResolvedValue({
+        ...grupo,
+        periodoAcademicoId: null,
+      });
+      prisma.usuario.findUnique.mockResolvedValue(adminUser);
+      prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
+
+      await expect(
+        service.asignarEstudiantes(
+          cuidGrupo,
+          { estudiantesIds: [cuidEstudiante1] },
+          'admin-1'
+        )
+      ).rejects.toThrow('grupo sin período académico');
+      expect(prisma.matricula.findMany).not.toHaveBeenCalled();
+    });
+
+    it.each([
+      ['sin matrícula ACTIVA', []],
+      ['con matrícula de otro período', []],
+      ['con matrícula de otra institución', []],
+    ])('debería rechazar asignación %s', async (_caso, matriculas) => {
+      prisma.grupo.findUnique.mockResolvedValue(grupo);
+      prisma.usuario.findUnique.mockResolvedValue(adminUser);
+      prisma.institucion.findFirst.mockResolvedValue({ id: 'inst-1' });
+      prisma.institucion.findUnique.mockResolvedValue(institucion);
+      prisma.usuario.findMany.mockResolvedValue([estudiante1]);
+      prisma.matricula.findMany.mockResolvedValue(matriculas);
+      prisma.grupoEstudiante.findMany.mockResolvedValue([]);
+
+      const result = await service.asignarEstudiantes(
+        cuidGrupo,
+        { estudiantesIds: [cuidEstudiante1] },
+        'admin-1'
+      );
+
+      expect(result.agregados).toEqual([]);
+      expect(result.errores[0]?.razon).toContain('matrícula ACTIVA');
+      expect(prisma.grupoEstudiante.createMany).not.toHaveBeenCalled();
+      expect(prisma.matricula.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({
+            institucionId: 'inst-1',
+            periodoAcademicoId: cuidPeriodo,
+            estado: 'ACTIVA',
+          }),
+        })
+      );
     });
   });
 

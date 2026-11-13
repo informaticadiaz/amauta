@@ -272,12 +272,18 @@ export class GruposService {
   private async obtenerGrupoYValidarAcceso(
     grupoId: string,
     usuarioId: string
-  ): Promise<{ id: string; institucionId: string; activo: boolean }> {
+  ): Promise<{
+    id: string;
+    institucionId: string;
+    periodoAcademicoId: string | null;
+    activo: boolean;
+  }> {
     const grupo = await this.prisma.grupo.findUnique({
       where: { id: grupoId },
       select: {
         id: true,
         institucionId: true,
+        periodoAcademicoId: true,
         activo: true,
       },
     });
@@ -471,10 +477,15 @@ export class GruposService {
         'No se pueden asignar estudiantes a un grupo inactivo'
       );
     }
+    if (!grupo.periodoAcademicoId) {
+      throw new BadRequestException(
+        'No se pueden asignar estudiantes a un grupo sin período académico'
+      );
+    }
 
     const estudiantesIds = [...new Set(result.data.estudiantesIds)];
 
-    const [institucion, estudiantes, asignacionesExistentes] =
+    const [institucion, estudiantes, asignacionesExistentes, matriculas] =
       await Promise.all([
         this.prisma.institucion.findUnique({
           where: { id: grupo.institucionId },
@@ -488,6 +499,7 @@ export class GruposService {
             nombre: true,
             apellido: true,
             rol: true,
+            activo: true,
             perfil: { select: { institucion: true } },
           },
         }),
@@ -500,6 +512,15 @@ export class GruposService {
             estudianteId: true,
             activo: true,
           },
+        }),
+        this.prisma.matricula.findMany({
+          where: {
+            estudianteId: { in: estudiantesIds },
+            institucionId: grupo.institucionId,
+            periodoAcademicoId: grupo.periodoAcademicoId,
+            estado: 'ACTIVA',
+          },
+          select: { estudianteId: true },
         }),
       ]);
 
@@ -515,6 +536,9 @@ export class GruposService {
         asignacion.estudianteId,
         asignacion,
       ])
+    );
+    const matriculasIds = new Set(
+      matriculas.map((matricula) => matricula.estudianteId)
     );
 
     const agregados: string[] = [];
@@ -545,6 +569,23 @@ export class GruposService {
         errores.push({
           estudianteId,
           razon: 'El estudiante no pertenece a la institución',
+        });
+        continue;
+      }
+
+      if (!estudiante.activo) {
+        errores.push({
+          estudianteId,
+          razon: 'El estudiante está inactivo',
+        });
+        continue;
+      }
+
+      if (!matriculasIds.has(estudianteId)) {
+        errores.push({
+          estudianteId,
+          razon:
+            'El estudiante no tiene una matrícula ACTIVA para el período y la institución del grupo',
         });
         continue;
       }
