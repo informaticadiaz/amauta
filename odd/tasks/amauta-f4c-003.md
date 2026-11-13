@@ -33,7 +33,8 @@ En esta entrega no se inventará persistencia para estados de promoción ni se i
 - T1 — S1-S3 — Mapear contrato y modelos existentes — commit pendiente
 - T2 — S2-S3 — Implementar endpoints y autorización administrativa — completado; commit pendiente
 - T3 — S2-S3 — Agregar tests de servicio/controller y regresiones — completado; commit pendiente
-- T4 — S1-S3 — Verificar, documentar evidencia y actualizar roadmap — completado; commit pendiente
+- T4 — S1-S3 — Verificar, documentar evidencia y actualizar roadmap — completado; commit `062f9bc`
+- T5 — S2-S3 — Implementar UI estudiantil del historial académico y proxy — completado; commit pendiente
 
 ## Log
 
@@ -43,3 +44,5 @@ En esta entrega no se inventará persistencia para estados de promoción ni se i
 - L4 — Se implementaron `GET /api/v1/me/historial` y `GET /api/v1/instituciones/:institucionId/estudiantes/:estudianteId/historial`, con agrupación por período/materia, promedios por período, promedio acumulado y evolución por materia. `estadoPromocion` queda explícitamente en `null` porque el schema actual no lo persiste.
 - L5 — Verificación: 2 suites y 9 tests focalizados, type-check, ESLint del módulo y `git diff --check` aprobados. El verificador independiente ejecutó además las 32 suites/381 tests de API y build API, todos aprobados.
 - L6 — Documentación actualizada en `AGENTS.md` y `docs/project-management/roadmap.md`; la UI, la descarga/gráficos y la persistencia de promoción quedan fuera de esta entrega API-first.
+- L7 — El usuario indicó "continuemos"; se autoriza continuar F4c-003 con una primera UI estudiantil. El alcance es proxy, página, navegación y tests; no se agregan promoción, asistencia, gráficos ni descargas.
+- L8 — Se implementó la UI estudiantil en `/dashboard/historial`, el proxy `/api/me/historial` y navegación desktop/móvil. Verificación: 5 suites/12 tests focalizados, suite web completa con 65 suites/281 tests, type-check, lint, Prettier y `git diff --check` aprobados. La vista administrativa, promoción, asistencia, gráficos y descargas siguen fuera de alcance.

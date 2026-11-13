@@ -77,6 +77,26 @@ export function Sidebar() {
       ),
     },
     {
+      href: '/dashboard/historial',
+      label: 'Historial académico',
+      show: isEstudiante,
+      icon: (
+        <svg
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M4.5 5.25A2.25 2.25 0 016.75 3h10.5a2.25 2.25 0 012.25 2.25v13.5A2.25 2.25 0 0117.25 21H6.75a2.25 2.25 0 01-2.25-2.25V5.25zM8.25 7.5h7.5M8.25 11.25h7.5M8.25 15h4.5"
+          />
+        </svg>
+      ),
+    },
+    {
       href: '/dashboard/mi-asistencia',
       label: 'Mi asistencia',
       show: isEstudiante,

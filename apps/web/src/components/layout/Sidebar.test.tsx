@@ -50,6 +50,25 @@ describe('Sidebar', () => {
     ).toBeInTheDocument();
   });
 
+  it('debería mostrar historial académico para estudiante', () => {
+    useAuthorization.mockReturnValue({
+      isLoading: false,
+      isAuthenticated: true,
+      canManageCourses: false,
+      canEnrollInCourses: true,
+      isAdmin: false,
+      isAdminEscuela: false,
+      isEducador: false,
+      isEstudiante: true,
+    });
+
+    render(<Sidebar />);
+
+    expect(
+      screen.getByRole('link', { name: /historial académico/i })
+    ).toHaveAttribute('href', '/dashboard/historial');
+  });
+
   it('no debería mostrar acceso a asistencias para estudiante', () => {
     useAuthorization.mockReturnValue({
       isLoading: false,
