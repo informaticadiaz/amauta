@@ -32,6 +32,24 @@ describe('Sidebar', () => {
     ).toBeInTheDocument();
   });
 
+  it('debería mostrar acceso a matrículas para admin de escuela', () => {
+    useAuthorization.mockReturnValue({
+      isLoading: false,
+      isAuthenticated: true,
+      canManageCourses: true,
+      canEnrollInCourses: false,
+      isAdmin: true,
+      isAdminEscuela: true,
+      isEducador: false,
+    });
+
+    render(<Sidebar />);
+
+    expect(
+      screen.getByRole('link', { name: /matrículas/i })
+    ).toBeInTheDocument();
+  });
+
   it('no debería mostrar acceso a asistencias para estudiante', () => {
     useAuthorization.mockReturnValue({
       isLoading: false,
