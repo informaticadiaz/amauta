@@ -2175,7 +2175,7 @@ F4c-002 (matrícula) — independiente de F4c-001
 - Endpoint `GET /me/historial` → todas las calificaciones del estudiante agrupadas por período y materia
 - Endpoint `GET /instituciones/:id/estudiantes/:estudianteId/historial` → vista admin del legajo
 - Promedio general acumulado, evolución por materia entre períodos
-- Registro de estado de promoción por período (PROMOVIDO / REPITENTE / EGRESADO); pendiente de modelo/persistencia, porque el schema actual todavía no contiene ese estado.
+- Registro de estado de promoción por período (PROMOVIDO / REPITENTE / EGRESADO); diseño propuesto en [ADR-012](../technical/adr/012-estado-promocion-y-cierre-academico.md), implementación y migración pendientes.
 
 ---
 
