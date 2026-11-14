@@ -13,7 +13,7 @@ _"No concebimos la educación como un producto, sino como un derecho social."_
 
 > **Fuente canónica de estado**: `docs/project-management/roadmap.md` define la fase de producto, el sprint y el estado de las funcionalidades. Este archivo mantiene reglas y contexto operativo; no duplica el estado del roadmap.
 >
-> Según el roadmap, Fase 7 está completada y Fase 4c se encuentra en ejecución. F4c-001, F4c-002, F4c-003 y F4c-005 tienen implementación y verificación documentadas; el siguiente trabajo planificado es F4c-004.
+> Según el roadmap, Fase 7 está completada y Fase 4c se encuentra en ejecución. F4c-001 a F4c-006 tienen implementación y verificación documentadas; el siguiente trabajo planificado es F4c-007.
 
 ### Estado actual: Fase 4c
 
@@ -24,12 +24,12 @@ _"No concebimos la educación como un producto, sino como un derecho social."_
 | F4c-003 | Historial académico del estudiante (trayectoria entre períodos) | ✅ Completado |
 | F4c-004 | Horarios semanales por grupo                                    | ⏳ Pendiente  |
 | F4c-005 | Cierre de ciclo lectivo y promoción masiva                      | ✅ Completado |
-| F4c-006 | Alertas automáticas: asistencia baja y notas en riesgo          | ⏳ Pendiente  |
+| F4c-006 | Alertas automáticas: asistencia baja y notas en riesgo          | ✅ Completado |
 | F4c-007 | Rol tutor/padre: acceso al seguimiento de su hijo               | ⏳ Pendiente  |
 | F4c-008 | Justificación formal de ausencias                               | ⏳ Pendiente  |
 | F4c-009 | Calendario institucional                                        | ⏳ Pendiente  |
 
-**Siguiente trabajo planificado:** F4c-004 — horarios semanales por grupo.
+**Siguiente trabajo planificado:** F4c-007 — rol tutor/padre: acceso al seguimiento de su hijo.
 **Fase 7 completada** (Multimedia y Contenido Rico — #97, #98, #99 y #100 completados, 4/4), según el registro del roadmap.
 
 ### Historial de Fases

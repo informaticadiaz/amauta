@@ -27,8 +27,8 @@ Amauta es un sistema educativo para la gestión del aprendizaje.
 ### Estado según el roadmap
 
 - **Última fase completada**: Fase 7 — Multimedia y Contenido Rico, completada según el Sprint 19 documentado.
-- **Trabajo actual**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprint 22; F4c-001, F4c-002, F4c-003 y F4c-005 están completados según `docs/project-management/roadmap.md`.
-- **Siguiente trabajo**: avanzar con F4c-004 — Horarios semanales por grupo; F4c-006 — Alertas automáticas queda pendiente para después.
+- **Trabajo actual**: Fase 4c — Módulo Escolar: Administración Avanzada, Sprint 22; F4c-001 a F4c-006 están completados según `docs/project-management/roadmap.md`.
+- **Siguiente trabajo**: avanzar con F4c-007 — Rol tutor/padre: acceso al seguimiento de su hijo.
 
 La sección histórica de Fase 6 que sigue conserva sus entregables documentados y no implica que sea la fase actual.
 

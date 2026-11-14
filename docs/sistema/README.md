@@ -51,6 +51,7 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 | Catálogo institucional de materias                         | ✅ Funcional (API + UI) | Sprint 21 |
 | Matrícula formal de estudiantes                            | ✅ Funcional (API + UI) | Sprint 21 |
 | Horarios semanales por grupo                               | ✅ Funcional (API + UI) | Sprint 22 |
+| Alertas académicas por asistencia y notas                  | ✅ Funcional (API + UI) | Sprint 22 |
 | Módulo Escolar (calificaciones, comunicados y reportes)    | 🚧 En desarrollo        | Fase 4    |
 | Búsqueda y descubrimiento de cursos                        | 📋 Diseño funcional     | Sprint 18 |
 
@@ -116,6 +117,7 @@ Ver [seed/etapa-1-usuarios.md](seed/etapa-1-usuarios.md) para lista completa.
 5. Publica comunicados
 6. Gestiona los horarios semanales de los grupos
 7. Ve reportes
+8. Consulta y actualiza alertas académicas de sus grupos
 
 ## Registro Diario de Asistencias
 
@@ -133,6 +135,14 @@ Ver [seed/etapa-1-usuarios.md](seed/etapa-1-usuarios.md) para lista completa.
 - Métricas por estudiante: `presentes`, `ausencias`, `tardanzas`, `justificados`, `totalRegistros`, `porcentajeAsistencia`
 - Métricas del grupo: total de registros y distribución por estado
 - Limitación inicial: no reemplaza reportes históricos ni exportaciones
+
+## Alertas académicas
+
+- Ruta principal: `/dashboard/alertas`
+- Roles habilitados: `ADMIN_ESCUELA` y `EDUCADOR`
+- Detección bajo demanda: asistencia acumulada del período y promedio de calificaciones cargadas
+- Resolución automática cuando la métrica recupera el umbral
+- Documentación: [alertas-academicas.md](alertas-academicas.md)
 
 ## Arquitectura Simplificada
 

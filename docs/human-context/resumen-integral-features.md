@@ -256,7 +256,7 @@ Lecciones más ricas: texto formateado, video/audio, contenido interactivo.
 
 ## Fase 4c — Administración Avanzada 🔄
 
-F4c-001, F4c-002, F4c-003 y F4c-005 están implementados y verificados. F4c-004, F4c-006, F4c-007, F4c-008 y F4c-009 permanecen pendientes. El siguiente trabajo planificado es F4c-004 — horarios semanales por grupo.
+F4c-001 a F4c-006 están implementados y verificados. F4c-007, F4c-008 y F4c-009 permanecen pendientes. El siguiente trabajo planificado es F4c-007 — rol tutor/padre: acceso al seguimiento de su hijo.
 
 | Issue       | Funcionalidad                                                      | Dependencias  |
 | ----------- | ------------------------------------------------------------------ | ------------- |
@@ -265,7 +265,7 @@ F4c-001, F4c-002, F4c-003 y F4c-005 están implementados y verificados. F4c-004,
 | **F4c-003** | **Historial académico** — trayectoria entre periodos               | ✅ Completado |
 | **F4c-004** | **Horarios semanales** por grupo                                   | ⏳ Pendiente  |
 | **F4c-005** | **Cierre de ciclo lectivo** y promoción masiva                     | ✅ Completado |
-| **F4c-006** | **Alertas automáticas**: asistencia baja y notas en riesgo         | —             |
+| **F4c-006** | **Alertas automáticas**: asistencia baja y notas en riesgo         | ✅ Completado |
 | **F4c-007** | **Rol tutor/padre**: acceso al seguimiento de su hijo              | —             |
 | **F4c-008** | **Justificación formal de ausencias**                              | —             |
 | **F4c-009** | **Calendario institucional**                                       | —             |

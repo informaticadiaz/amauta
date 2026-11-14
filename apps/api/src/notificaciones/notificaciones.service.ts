@@ -18,7 +18,12 @@ type NotificacionesPrismaClient = Pick<
 export interface NotificacionItem {
   id: string;
   usuarioId: string;
-  tipo: 'NUEVA_RESPUESTA' | 'SOLUCION_MARCADA' | 'PREGUNTA_SIN_RESPONDER';
+  tipo:
+    | 'NUEVA_RESPUESTA'
+    | 'SOLUCION_MARCADA'
+    | 'PREGUNTA_SIN_RESPONDER'
+    | 'ALERTA_ASISTENCIA_BAJA'
+    | 'ALERTA_NOTA_EN_RIESGO';
   leida: boolean;
   postId: string | null;
   respuestaId: string | null;
@@ -147,6 +152,43 @@ export class NotificacionesService {
         tipo: 'NUEVA_RESPUESTA',
         postId: params.postId,
         respuestaId: params.respuestaId,
+      },
+    });
+  }
+
+  async crearNotificacionAlerta(
+    params: {
+      destinatarioId: string;
+      alertaId: string;
+      tipo: 'ALERTA_ASISTENCIA_BAJA' | 'ALERTA_NOTA_EN_RIESGO';
+    },
+    prismaClient: NotificacionesPrismaClient = this.prisma
+  ): Promise<NotificacionItem | null> {
+    const destinatarioActivo = await this.obtenerDestinatarioActivo(
+      params.destinatarioId,
+      prismaClient
+    );
+    if (!destinatarioActivo) {
+      return null;
+    }
+
+    const existente = await prismaClient.notificacion.findFirst({
+      where: {
+        usuarioId: params.destinatarioId,
+        alertaId: params.alertaId,
+        tipo: params.tipo,
+        leida: false,
+      },
+    });
+    if (existente) {
+      return null;
+    }
+
+    return prismaClient.notificacion.create({
+      data: {
+        usuarioId: params.destinatarioId,
+        alertaId: params.alertaId,
+        tipo: params.tipo,
       },
     });
   }
