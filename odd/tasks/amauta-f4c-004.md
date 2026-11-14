@@ -1,6 +1,6 @@
 # ODD Plan — Amauta F4c-004: horarios semanales por grupo
 
-Estado: en progreso
+Estado: completado e integrado en `master` mediante `c55c8fd`.
 Repositorio: `/home/ignacio/amauta`
 Fuente canónica: `docs/project-management/roadmap.md`
 
@@ -38,8 +38,8 @@ El roadmap define para F4c-004:
 ## Tasks
 
 - T1 — S1-S4 — Mapear contratos, schema y patrones reutilizables — completado.
-- T2 — S2-S4 — Implementar modelo Prisma, migración y validaciones de dominio — completado; pendiente verificación final del conjunto.
-- T3 — S2-S4 — Implementar API de CRUD y consultas semanales por rol — completado; pendiente verificación final del conjunto.
+- T2 — S2-S4 — Implementar modelo Prisma, migración y validaciones de dominio — completado.
+- T3 — S2-S4 — Implementar API de CRUD y consultas semanales por rol — completado.
 - T4 — S2-S4 — Implementar proxies, vistas administrativas, educador y estudiante — completado.
 - T5 — S2-S4 — Agregar tests focalizados y actualizar documentación — completado.
 - T6 — S1-S4 — Ejecutar verificación final y registrar evidencia — completado.
@@ -54,4 +54,5 @@ El roadmap define para F4c-004:
 - L6 — La verificación previa confirmó 14 migraciones aplicadas y schema actualizado antes de crear la migración de horarios. El backend agregó `DiaSemana`, `FranjaHoraria`, CRUD administrativo, consultas por rol y 4 tests focalizados; type-check, lint y validación Prisma pasan.
 - L7 — La UI agregó proxies para CRUD y consultas por rol, vistas semanales responsive para admin/educador/estudiante y navegación del sidebar. La suite web completa pasó con 71 suites y 298 tests; los tests focalizados nuevos de horarios pasaron con 3 suites y 6 tests; ambos type-checks y lint focalizado pasan.
 - L8 — Se agregaron pruebas de forwarding para los proxies grupales, edición/baja, educador y estudiante; tras ajustar las expectativas al `API_URL` capturado por módulo, las 5 pruebas de los proxies grupales y las 6 pruebas restantes de horarios pasan. Se actualizó la guía funcional de grupos, el README del sistema y el estado F4c-004 del roadmap.
-- L9 — Verificación final: 35 suites/404 tests de API pasan; 71 suites/298 tests web pasan; 11 tests focalizados de horarios pasan; type-check del monorepo, lint focalizado, Prisma validate, migraciones (15 aplicadas), Prettier y `git diff --check` pasan. Quedan cambios sin commit; no se hizo commit ni push.
+- L9 — Verificación final: 35 suites/404 tests de API pasan; 71 suites/298 tests web pasan; 11 tests focalizados de horarios pasan; type-check del monorepo, lint focalizado, Prisma validate, migraciones (15 aplicadas), Prettier y `git diff --check` pasan.
+- L10 — Se creó el commit `c55c8fd` (`feat: implementar horarios semanales por grupo`) y se publicó correctamente en `origin/master`. Los checks requeridos de GitHub quedaron esperados según la política del repositorio.
