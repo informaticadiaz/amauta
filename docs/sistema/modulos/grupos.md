@@ -3,7 +3,7 @@
 > Los grupos (o clases) permiten organizar estudiantes dentro de una institución educativa, facilitando el registro de asistencias, calificaciones y comunicaciones.
 
 **Estado**: ✅ Funcional (API + UI)
-**Última actualización**: 2026-03-29
+**Última actualización**: 2026-11-13
 
 ---
 
@@ -25,6 +25,8 @@
 - Consultar un resumen mensual de asistencias por grupo
 - Remover estudiantes sin borrar el historial
 - Remover educadores sin borrar el historial
+- Crear y administrar el horario semanal del grupo
+- Ver las franjas horarias ordenadas por día y hora
 
 ### Como Educador
 
@@ -32,11 +34,13 @@
 - Ver la lista de estudiantes de tus grupos
 - Registrar asistencias de los grupos donde estás asignado
 - Consultar el resumen mensual de asistencia de tus grupos asignados
+- Consultar tus clases de la semana
 - (Próximamente) Cargar calificaciones
 
 ### Como Estudiante
 
 - Ver los grupos a los que pertenecés
+- Consultar tu horario semanal
 - (Próximamente) Ver tu asistencia por grupo
 - (Próximamente) Ver tus calificaciones por grupo
 
@@ -216,6 +220,37 @@ Administradores de escuela y educadores asignados al grupo.
 - No exporta archivos ni genera reportes avanzados
 - No mezcla estudiantes removidos con la nómina activa actual
 - El porcentaje de asistencia inicial considera `PRESENTE` y `JUSTIFICADO` sobre el total de registros del mes
+
+---
+
+### Administrar el horario semanal
+
+**¿Qué es?**
+
+Permite definir las franjas de clase de un grupo, vinculando cada materia con un educador y un día de lunes a viernes.
+
+**¿Quién puede gestionarlo?**
+
+Administradores de escuela y super administradores mediante la API. En la interfaz del panel, el administrador de escuela accede desde el grupo o desde "Horarios".
+
+**¿Qué valida el sistema?**
+
+- La materia debe estar activa y asignada al grupo.
+- El educador debe tener una asignación activa en el grupo.
+- Las horas deben tener formato `HH:mm` y la hora de inicio debe ser menor que la de fin.
+- No se permiten solapamientos para el mismo grupo ni para el mismo educador en un mismo día.
+- La baja de una franja es lógica y conserva el registro histórico.
+
+**¿Qué puede consultar cada rol?**
+
+- El administrador gestiona y consulta el horario de cada grupo.
+- El educador consulta sus clases semanales.
+- El estudiante consulta las clases de sus grupos activos.
+
+**Rutas de acceso en la interfaz**
+
+- `/dashboard/horarios`: vista semanal según el rol.
+- `/dashboard/grupos/:id/horarios`: administración del horario de un grupo.
 
 ---
 

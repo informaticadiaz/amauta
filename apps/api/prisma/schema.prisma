@@ -52,6 +52,7 @@ model Usuario {
   estadosPromocion               EstadoPromocion[]
   estadosPromocionSobrescritos   EstadoPromocion[]   @relation("EstadoPromocionSobrescritoPor")
   periodosCerrados               PeriodoAcademico[]  @relation("PeriodoCerradoPor")
+  franjasHorarias                FranjaHoraria[]     @relation("FranjaHorariaEducador")
 
   // Comunidad y foros
   postsForo      ForoPost[]      @relation("AutorForoPost")
@@ -527,6 +528,7 @@ model Grupo {
   calificaciones   Calificacion[]
   materias         GrupoMateria[]
   estadosPromocion EstadoPromocion[]
+  franjasHorarias  FranjaHoraria[]
 
   @@index([institucionId])
   @@index([educadorId])
@@ -678,16 +680,17 @@ model EstadoPromocion {
 
 /// Materia del segmento de educación escolar formal. No se usa para cursos de formación.
 model Materia {
-  id             String         @id @default(cuid())
-  nombre         String
-  descripcion    String?
-  institucionId  String
-  institucion    Institucion    @relation(fields: [institucionId], references: [id])
-  activo         Boolean        @default(true)
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  calificaciones Calificacion[]
-  grupos         GrupoMateria[]
+  id              String          @id @default(cuid())
+  nombre          String
+  descripcion     String?
+  institucionId   String
+  institucion     Institucion     @relation(fields: [institucionId], references: [id])
+  activo          Boolean         @default(true)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  calificaciones  Calificacion[]
+  grupos          GrupoMateria[]
+  franjasHorarias FranjaHoraria[]
 
   @@unique([institucionId, nombre])
   @@index([institucionId, activo])
@@ -706,6 +709,37 @@ model GrupoMateria {
   @@id([grupoId, materiaId])
   @@index([materiaId, activo])
   @@map("grupos_materias")
+}
+
+/// Franja horaria semanal de una materia y educador dentro de un grupo
+model FranjaHoraria {
+  id         String    @id @default(cuid())
+  grupoId    String
+  grupo      Grupo     @relation(fields: [grupoId], references: [id])
+  materiaId  String
+  materia    Materia   @relation(fields: [materiaId], references: [id])
+  educadorId String
+  educador   Usuario   @relation("FranjaHorariaEducador", fields: [educadorId], references: [id])
+  diaSemana  DiaSemana
+  horaInicio String
+  horaFin    String
+  activo     Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([grupoId, activo, diaSemana])
+  @@index([educadorId, activo, diaSemana])
+  @@index([materiaId, activo])
+  @@map("franjas_horarias")
+}
+
+/// Días lectivos contemplados por el horario semanal
+enum DiaSemana {
+  LUN
+  MAR
+  MIE
+  JUE
+  VIE
 }
 
 /// Calificación de un estudiante

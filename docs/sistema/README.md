@@ -50,6 +50,7 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 | Resumen mensual de asistencias por grupo                   | ✅ Funcional (API)      | Sprint 14 |
 | Catálogo institucional de materias                         | ✅ Funcional (API + UI) | Sprint 21 |
 | Matrícula formal de estudiantes                            | ✅ Funcional (API + UI) | Sprint 21 |
+| Horarios semanales por grupo                               | ✅ Funcional (API + UI) | Sprint 22 |
 | Módulo Escolar (calificaciones, comunicados y reportes)    | 🚧 En desarrollo        | Fase 4    |
 | Búsqueda y descubrimiento de cursos                        | 📋 Diseño funcional     | Sprint 18 |
 
@@ -113,7 +114,8 @@ Ver [seed/etapa-1-usuarios.md](seed/etapa-1-usuarios.md) para lista completa.
 3. Registra asistencias
 4. Administra matrículas y padrón institucional
 5. Publica comunicados
-6. Ve reportes
+6. Gestiona los horarios semanales de los grupos
+7. Ve reportes
 
 ## Registro Diario de Asistencias
 
@@ -195,5 +197,5 @@ docs/sistema/
 
 ---
 
-**Última actualización**: 29/03/2026
-**Fase actual**: Fase 4 en curso (Sprint 14 con F4-011 y F4-012 completados)
+**Última actualización**: 13/11/2026
+**Fase actual**: Fase 4c en curso (Sprint 22; horarios semanales implementados)

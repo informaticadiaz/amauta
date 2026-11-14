@@ -12,7 +12,8 @@
 - **Estado de F4c-002**: ✅ completado; matrícula formal implementada y verificada.
 - **Estado de F4c-003**: ✅ completado; historial académico, persistencia y lectura del estado de promoción verificadas.
 - **Estado de F4c-005**: ✅ completado; cierre académico, promoción masiva, acta PDF y bloqueo post-cierre implementados y desplegados mediante la PR #112.
-- **Siguiente trabajo**: avanzar con F4c-004 — Horarios semanales por grupo.
+- **Estado de F4c-004**: ✅ completado; horarios semanales por grupo implementados y verificados localmente.
+- **Siguiente trabajo**: avanzar con F4c-006 — Alertas automáticas: asistencia baja y notas en riesgo.
 - **Issues cerrados**: el último issue GitHub formalmente cerrado sigue siendo #104 (F4b-004); F4c-005 fue entregado mediante la PR #112 y no debe confundirse el estado de una feature con el cierre de un issue.
 - **Producción**: la PR #112 (`dd89338`) fue integrada en `master`; el pipeline CI de `master` completó validaciones, build, deploy vía SSH y healthcheck exitosos. Este dato acredita el despliegue, no sustituye la verificación funcional de cada feature.
 - **ODD de consolidación y búsqueda**: T1–T7 completados con evidencia local; el cierre documental T8 se registra en `odd/tasks/amauta-mejoras.md`.
@@ -2186,11 +2187,11 @@ F4c-002 (matrícula) — independiente de F4c-001
 
 | Issue   | Título                                                 | Estado        | Prioridad   |
 | ------- | ------------------------------------------------------ | ------------- | ----------- |
-| F4c-004 | Horarios semanales por grupo                           | ⏳ Pendiente  | must-have   |
+| F4c-004 | Horarios semanales por grupo                           | ✅ Completado | must-have   |
 | F4c-005 | Cierre de ciclo lectivo y promoción masiva             | ✅ Completado | must-have   |
 | F4c-006 | Alertas automáticas: asistencia baja y notas en riesgo | ⏳ Pendiente  | should-have |
 
-**Progreso Sprint 22**: 1/3 issues con implementación registrada; F4c-005 está completado y F4c-004/F4c-006 siguen pendientes.
+**Progreso Sprint 22**: 2/3 issues con implementación registrada; F4c-004 y F4c-005 están completados y F4c-006 sigue pendiente.
 
 #### Dependencias
 
@@ -2211,6 +2212,7 @@ F4c-006 (alertas) — independiente, usa datos existentes de asistencias y calif
 - Vista semanal del grupo (tabla día × hora)
 - Vista del educador: mis clases de la semana
 - Vista del estudiante: mi horario semanal
+- Implementado y verificado localmente: `FranjaHoraria`, CRUD administrativo, consultas semanales por grupo/educador/estudiante, validación de materias y educadores activos, formato `HH:mm`, bloqueo de solapamientos y baja lógica.
 
 **F4c-005 — Cierre de ciclo lectivo** ✅ Completado
 

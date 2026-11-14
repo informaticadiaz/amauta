@@ -31,6 +31,7 @@ import { ComunicadosModule } from './comunicados/comunicados.module';
 import { MatriculasModule } from './matriculas/matriculas.module';
 import { HistorialModule } from './historial/historial.module';
 import { CierreAcademicoModule } from './cierre-academico/cierre-academico.module';
+import { HorariosModule } from './horarios/horarios.module';
 import { JwtAuthGuard, RolesGuard } from './common/guards';
 
 @Module({
@@ -66,6 +67,7 @@ import { JwtAuthGuard, RolesGuard } from './common/guards';
     MatriculasModule,
     HistorialModule,
     CierreAcademicoModule,
+    HorariosModule,
   ],
   controllers: [AppController],
   providers: [

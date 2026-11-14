@@ -255,6 +255,16 @@ export function Sidebar() {
       ),
     },
     {
+      href: '/dashboard/horarios',
+      label: isEducador
+        ? 'Mis clases de la semana'
+        : isEstudiante
+          ? 'Mi horario semanal'
+          : 'Horarios',
+      show: isAdminEscuela || isEducador || isEstudiante,
+      icon: <span aria-hidden="true">H</span>,
+    },
+    {
       href: '/dashboard/asistencias',
       label: 'Asistencias',
       show: isAdminEscuela || isEducador,
