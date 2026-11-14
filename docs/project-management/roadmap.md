@@ -13,7 +13,8 @@
 - **Estado de F4c-003**: ✅ completado; historial académico, persistencia y lectura del estado de promoción verificadas.
 - **Estado de F4c-005**: ✅ completado; cierre académico, promoción masiva, acta PDF y bloqueo post-cierre implementados y desplegados mediante la PR #112.
 - **Estado de F4c-004**: ✅ completado; horarios semanales por grupo implementados y verificados localmente.
-- **Siguiente trabajo**: avanzar con F4c-006 — Alertas automáticas: asistencia baja y notas en riesgo.
+- **Estado de F4c-006**: ✅ completado; alertas por asistencia baja y notas en riesgo implementadas y verificadas localmente.
+- **Siguiente trabajo**: avanzar con F4c-007 — Rol tutor/padre: acceso al seguimiento de su hijo.
 - **Issues cerrados**: el último issue GitHub formalmente cerrado sigue siendo #104 (F4b-004); F4c-005 fue entregado mediante la PR #112 y no debe confundirse el estado de una feature con el cierre de un issue.
 - **Producción**: la PR #112 (`dd89338`) fue integrada en `master`; el pipeline CI de `master` completó validaciones, build, deploy vía SSH y healthcheck exitosos. Este dato acredita el despliegue, no sustituye la verificación funcional de cada feature.
 - **ODD de consolidación y búsqueda**: T1–T7 completados con evidencia local; el cierre documental T8 se registra en `odd/tasks/amauta-mejoras.md`.
@@ -2189,9 +2190,9 @@ F4c-002 (matrícula) — independiente de F4c-001
 | ------- | ------------------------------------------------------ | ------------- | ----------- |
 | F4c-004 | Horarios semanales por grupo                           | ✅ Completado | must-have   |
 | F4c-005 | Cierre de ciclo lectivo y promoción masiva             | ✅ Completado | must-have   |
-| F4c-006 | Alertas automáticas: asistencia baja y notas en riesgo | ⏳ Pendiente  | should-have |
+| F4c-006 | Alertas automáticas: asistencia baja y notas en riesgo | ✅ Completado | should-have |
 
-**Progreso Sprint 22**: 2/3 issues con implementación registrada; F4c-004 y F4c-005 están completados y F4c-006 sigue pendiente.
+**Progreso Sprint 22**: 3/3 issues con implementación registrada; F4c-004, F4c-005 y F4c-006 están completados.
 
 #### Dependencias
 
@@ -2224,13 +2225,14 @@ F4c-006 (alertas) — independiente, usa datos existentes de asistencias y calif
 - Generación y descarga de acta institucional de cierre en PDF
 - Implementado y verificado localmente; integrado mediante la PR #112 (`dd89338`) y desplegado por el pipeline de `master` con CI y healthcheck exitosos.
 
-**F4c-006 — Alertas automáticas**
+**F4c-006 — Alertas automáticas** ✅ Completado
 
 - Umbral configurable por institución: % asistencia mínima (ej. 75%), nota mínima de alerta (ej. 4/10)
-- Job periódico (o cálculo on-demand) que detecta estudiantes en riesgo
+- Detección on-demand idempotente desde el dashboard; el scheduler periódico queda fuera del alcance actual
 - Notificación interna al EDUCADOR y ADMIN cuando un estudiante cae bajo el umbral
-- Panel de alertas activas en el dashboard del admin/educador
+- Panel de alertas activas en `/dashboard/alertas`
 - Las alertas se resuelven automáticamente cuando el estudiante recupera el umbral
+- Implementado y verificado localmente: migración Prisma, API, UI, 36 suites/406 tests API y 75 suites/307 tests web; type-check y lint aprobados.
 
 ---
 

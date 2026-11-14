@@ -285,6 +285,12 @@ export function Sidebar() {
       ),
     },
     {
+      href: '/dashboard/alertas',
+      label: 'Alertas académicas',
+      show: isAdminEscuela || isEducador,
+      icon: <span aria-hidden="true">!</span>,
+    },
+    {
       href: '/dashboard/reportes',
       label: 'Reportes',
       show: isAdminEscuela || isEducador,

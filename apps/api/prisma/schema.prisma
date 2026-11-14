@@ -53,6 +53,7 @@ model Usuario {
   estadosPromocionSobrescritos   EstadoPromocion[]   @relation("EstadoPromocionSobrescritoPor")
   periodosCerrados               PeriodoAcademico[]  @relation("PeriodoCerradoPor")
   franjasHorarias                FranjaHoraria[]     @relation("FranjaHorariaEducador")
+  alertasAcademicas              AlertaAcademica[]   @relation("AlertaEstudiante")
 
   // Comunidad y foros
   postsForo      ForoPost[]      @relation("AutorForoPost")
@@ -406,6 +407,7 @@ model Institucion {
   escalaCalificacion EscalaCalificacion?
   materias           Materia[]
   matriculas         Matricula[]
+  alertas            AlertaAcademica[]
 
   @@map("instituciones")
 }
@@ -443,6 +445,7 @@ model PeriodoAcademico {
   calificaciones   Calificacion[]
   matriculas       Matricula[]
   estadosPromocion EstadoPromocion[]
+  alertas          AlertaAcademica[]
 
   @@index([institucionId])
   @@index([activo])
@@ -489,10 +492,11 @@ model EscalaCalificacion {
   institucionId String      @unique
   institucion   Institucion @relation(fields: [institucionId], references: [id])
 
-  notaMinima     Float   @default(0)
-  notaMaxima     Float   @default(10)
-  notaAprobacion Float   @default(6)
-  descripcion    String?
+  notaMinima       Float   @default(0)
+  notaMaxima       Float   @default(10)
+  notaAprobacion   Float   @default(6)
+  notaAlertaMinima Float   @default(4)
+  descripcion      String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -529,6 +533,7 @@ model Grupo {
   materias         GrupoMateria[]
   estadosPromocion EstadoPromocion[]
   franjasHorarias  FranjaHoraria[]
+  alertas          AlertaAcademica[]
 
   @@index([institucionId])
   @@index([educadorId])
@@ -832,11 +837,25 @@ enum EstadoForoPost {
   ELIMINADO
 }
 
+/// Tipo de alerta académica
+enum TipoAlertaAcademica {
+  ASISTENCIA_BAJA
+  NOTA_EN_RIESGO
+}
+
+/// Estado de una alerta académica
+enum EstadoAlertaAcademica {
+  ACTIVA
+  RESUELTA
+}
+
 /// Tipo de notificación del sistema
 enum TipoNotificacion {
   NUEVA_RESPUESTA
   SOLUCION_MARCADA
   PREGUNTA_SIN_RESPONDER
+  ALERTA_ASISTENCIA_BAJA
+  ALERTA_NOTA_EN_RIESGO
 }
 
 /// Publicación en el foro de un curso
@@ -936,6 +955,9 @@ model Notificacion {
   respuestaId String?
   respuesta   ForoRespuesta? @relation("NotificacionRespuesta", fields: [respuestaId], references: [id], onDelete: Cascade)
 
+  alertaId String?
+  alerta   AlertaAcademica? @relation(fields: [alertaId], references: [id], onDelete: Cascade)
+
   leida Boolean @default(false)
 
   creadoEn DateTime @default(now())
@@ -943,5 +965,38 @@ model Notificacion {
   @@index([usuarioId])
   @@index([leida])
   @@index([tipo])
+  @@index([alertaId])
   @@map("notificaciones")
+}
+
+/// Alerta académica persistente por estudiante, grupo y período
+model AlertaAcademica {
+  id String @id @default(cuid())
+
+  tipo   TipoAlertaAcademica
+  estado EstadoAlertaAcademica @default(ACTIVA)
+
+  institucionId      String
+  institucion        Institucion      @relation(fields: [institucionId], references: [id])
+  grupoId            String
+  grupo              Grupo            @relation(fields: [grupoId], references: [id])
+  estudianteId       String
+  estudiante         Usuario          @relation("AlertaEstudiante", fields: [estudianteId], references: [id])
+  periodoAcademicoId String
+  periodoAcademico   PeriodoAcademico @relation(fields: [periodoAcademicoId], references: [id])
+
+  valorActual   Float
+  umbral        Float
+  detalle       String?
+  creadaEn      DateTime  @default(now())
+  actualizadaEn DateTime  @updatedAt
+  resueltaEn    DateTime?
+
+  notificaciones Notificacion[]
+
+  @@unique([tipo, grupoId, estudianteId, periodoAcademicoId])
+  @@index([institucionId, estado])
+  @@index([grupoId, estado])
+  @@index([estudianteId, estado])
+  @@map("alertas_academicas")
 }

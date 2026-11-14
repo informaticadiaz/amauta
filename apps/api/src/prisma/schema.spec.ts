@@ -23,7 +23,10 @@ describe('Prisma schema (evaluaciones)', () => {
     expect(schema).toContain(
       '@@unique([estudianteId, grupoId, periodoAcademicoId])'
     );
-    expect(schema).not.toContain('EN_RIESGO');
+    const estadoPromocion = schema.match(
+      /enum EstadoPromocionTipo\s*\{([\s\S]*?)\n\}/
+    );
+    expect(estadoPromocion?.[1]).not.toContain('EN_RIESGO');
   });
 
   it('incluye enum TipoPregunta', () => {

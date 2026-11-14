@@ -31,7 +31,7 @@ describe('API historial administrativo', () => {
 
     const response = await GET({} as never, {
       params: Promise.resolve({
-        institucionId: 'inst-1',
+        id: 'inst-1',
         estudianteId: 'est-1',
       }),
     });
@@ -51,7 +51,7 @@ describe('API historial administrativo', () => {
 
     const response = await GET({} as never, {
       params: Promise.resolve({
-        institucionId: 'inst-1',
+        id: 'inst-1',
         estudianteId: 'est-1',
       }),
     });
