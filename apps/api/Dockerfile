@@ -11,10 +11,12 @@ WORKDIR /app
 
 COPY package*.json ./
 COPY apps/api/package*.json ./apps/api/
+COPY packages/types/package*.json ./packages/types/
+COPY packages/shared/package*.json ./packages/shared/
 
-# Instalar solo dependencias de producción
+# Instalar solo dependencias de producción de todos los workspaces
 ENV NODE_ENV=production
-RUN npm ci --workspace=@amauta/api --omit=dev
+RUN npm ci --omit=dev
 
 # ============================================
 # Stage 2: All Dependencies (para build)
@@ -26,13 +28,15 @@ WORKDIR /app
 
 COPY package*.json ./
 COPY apps/api/package*.json ./apps/api/
+COPY packages/types/package*.json ./packages/types/
+COPY packages/shared/package*.json ./packages/shared/
 
 # Instalar TODAS las dependencias (incluyendo dev para TypeScript)
 # Actualizado: 2025-12-22 - Agregar @types/node al package.json del API
 ARG CACHEBUST=3
 RUN echo "Cache bust: $CACHEBUST"
 ENV NODE_ENV=development
-RUN npm ci --workspace=@amauta/api
+RUN npm ci
 
 # ============================================
 # Stage 3: Builder
@@ -50,8 +54,14 @@ COPY package*.json ./
 COPY tsconfig.json ./
 COPY turbo.json ./
 
-# Copiar código fuente del API
+# Copiar código fuente de los workspaces compartidos y del API
+COPY packages/types ./packages/types
+COPY packages/shared ./packages/shared
 COPY apps/api ./apps/api
+
+# Compilar los paquetes compartidos antes de la API
+RUN npm run build --workspace=@amauta/types
+RUN npm run build --workspace=@amauta/shared
 
 # Generar Prisma Client
 WORKDIR /app/apps/api
@@ -76,6 +86,8 @@ RUN adduser --system --uid 1001 nestjs
 # Copiar solo lo necesario para producción
 COPY --from=builder --chown=nestjs:nodejs /app/apps/api/dist ./dist
 COPY --from=builder --chown=nestjs:nodejs /app/apps/api/prisma ./prisma
+COPY --from=builder --chown=nestjs:nodejs /app/packages/types ./packages/types
+COPY --from=builder --chown=nestjs:nodejs /app/packages/shared ./packages/shared
 # Copiar dependencias de producción (sin devDependencies)
 COPY --from=deps-prod --chown=nestjs:nodejs /app/node_modules ./node_modules
 COPY --from=deps-prod --chown=nestjs:nodejs /app/apps/api/node_modules ./apps/api/node_modules
