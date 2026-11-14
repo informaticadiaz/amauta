@@ -9,7 +9,8 @@ import {
 } from '@nestjs/common';
 import { CurrentUser, Roles } from '../common/decorators';
 import type { RequestUser } from '../common/guards';
-import type { MatriculasService } from './matriculas.service';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports -- NestJS requires runtime import for DI
+import { MatriculasService } from './matriculas.service';
 import type { CreateMatriculaDto } from './dto/create-matricula.dto';
 import type { QueryMatriculasDto } from './dto/query-matriculas.dto';
 import type { UpdateMatriculaDto } from './dto/update-matricula.dto';
