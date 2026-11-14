@@ -14,16 +14,16 @@ export async function GET(
   {
     params,
   }: {
-    params: Promise<{ institucionId: string; estudianteId: string }>;
+    params: Promise<{ id: string; estudianteId: string }>;
   }
 ) {
   try {
     const token = await getAuthenticatedBackendToken(request);
     if (!token) return createUnauthorizedResponse();
 
-    const { institucionId, estudianteId } = await params;
+    const { id, estudianteId } = await params;
     const response = await fetch(
-      `${getApiUrl()}/api/v1/instituciones/${institucionId}/estudiantes/${estudianteId}/historial`,
+      `${getApiUrl()}/api/v1/instituciones/${id}/estudiantes/${estudianteId}/historial`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
