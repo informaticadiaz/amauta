@@ -568,14 +568,18 @@ gh issue list --milestone "Sprint 1"
 
 ---
 
-## Integración con CLAUDE.md
+## Integración con el contexto del workspace
 
-Este workflow complementa las instrucciones en `CLAUDE.md`. Siempre:
+Este workflow complementa las fuentes canónicas del workspace. Siempre:
 
-1. Leer `CLAUDE.md` para contexto del proyecto
-2. Seguir este `WORKFLOW.md` para proceso de issues
-3. Consultar `docs/technical/coding-standards.md` para estándares de código
-4. Revisar `docs/project-management/` para contexto de gestión
+1. Leer `AGENTS.md` para reglas permanentes y límites del proyecto
+2. Leer `CODEX_STATE.md` para continuidad operativa actual
+3. Seguir este `WORKFLOW.md` para el proceso de issues
+4. Consultar `docs/technical/coding-standards.md` para estándares de código
+5. Revisar `docs/project-management/` y especialmente `roadmap.md` para contexto de gestión
+
+`CLAUDE.md` puede existir por compatibilidad con herramientas externas, pero no
+es una fuente de reglas, estado ni planificación.
 
 ---
 

@@ -63,9 +63,11 @@ const data = result.data;
 
 ## Archivos Importantes
 
-- `CLAUDE.md` - Contexto general del proyecto
+- `AGENTS.md` - Reglas permanentes del workspace
+- `CODEX_STATE.md` - Estado operativo actual
+- `README.md` - Visión y principios del proyecto
 - `WORKFLOW.md` - Proceso de trabajo con issues
-- `docs/project-management/roadmap.md` - Fases del proyecto
+- `docs/project-management/roadmap.md` - Fases y estado del proyecto
 - `apps/api/prisma/schema.prisma` - Modelos de datos
 
 ## Rutas Clave

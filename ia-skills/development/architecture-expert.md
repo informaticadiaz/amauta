@@ -5,7 +5,7 @@
 > **Alcance**: revisar arquitectura general, analizar acoplamiento, proponer refactorizaciones,
 > planificar estrategias de modularización.
 >
-> **Referencia**: `CLAUDE.md`, `docs/ai-context/_patterns.md`, `docs/ai-context/modules/`.
+> **Referencia**: `AGENTS.md`, `docs/ai-context/_patterns.md`, `docs/ai-context/modules/`.
 
 ---
 
@@ -386,7 +386,7 @@ modulo-e → modulo-f (BAJO)
 
 ## 📌 Notas Importantes
 
-- **Patrones obligatorios**: Leer `CLAUDE.md` antes de implementar
+- **Patrones obligatorios**: Leer `AGENTS.md` y `docs/ai-context/_patterns.md` antes de implementar
 - **Soft delete**: Cualquier cambio en eliminación debe mantener soft delete
 - **Tests**: Actualizar tests junto con refactorización
 - **Documentación**: Actualizar `docs/ai-context/modules/` después de cambios
@@ -642,5 +642,5 @@ apps/web/src/
 - **Buscar ciclos**: A→B, B→C, C→A es un problema de arquitectura crítico
 - **Contar imports**: Un servicio con 10+ imports es sospechoso (posible violación de SRP)
 - **Revisar DTOs**: Si hay DTOs esparcidos en múltiples capas, hay fuga de abstracción
-- **Verificar patrones**: SIEMPRE leer `CLAUDE.md` y `docs/ai-context/_patterns.md` antes de proponer cambios
+- **Verificar patrones**: SIEMPRE leer `AGENTS.md` y `docs/ai-context/_patterns.md` antes de proponer cambios
 - **Soft delete es mandatorio**: Cualquier análisis que proponga cambios de eliminación debe mantener soft delete

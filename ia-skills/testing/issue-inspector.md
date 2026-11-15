@@ -47,7 +47,7 @@ Si el issue NO está cerrado, preguntar si continuar igualmente.
 
 ### PASO 2 — Identificar Módulo y Archivos
 
-Desde el body del issue y CLAUDE.md, identificar:
+Desde el body del issue, `AGENTS.md`, `CODEX_STATE.md` y `docs/project-management/roadmap.md`, identificar:
 
 1. **Módulo backend** afectado (ej: `inscripciones`, `grupos`, `foros`)
 2. **Archivos clave** mencionados o esperados:

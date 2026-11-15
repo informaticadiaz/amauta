@@ -40,7 +40,7 @@ Antes de cualquier otra acción, verificar el estado actual del desarrollo consu
 #### Fuente 1 — GitHub (estado real de cada issue)
 
 ```bash
-# Determinar primero la label de la fase actual leyendo roadmap.md y CLAUDE.md.
+# Determinar primero la label de la fase actual leyendo roadmap.md y CODEX_STATE.md.
 # Ejemplo actual del proyecto: phase-4
 
 # Issues abiertos de la fase actual, ordenados por número
@@ -64,31 +64,31 @@ Extraer:
 - Dependencias explícitas entre issues (cuál debe ir antes)
 - Issues marcados como `must-have` vs `should-have`
 
-#### Fuente 3 — CLAUDE.md (progreso documentado)
+#### Fuente 3 — Estado documental canónico
 
 ```
-LEER: CLAUDE.md → sección "Próximos pasos" y "Completado en Fase X"
+LEER: `CODEX_STATE.md` para continuidad y `docs/project-management/roadmap.md` para "Próximos pasos" y funcionalidades completadas
 ```
 
 #### Comparar las tres fuentes
 
 Construir una tabla de verificación:
 
-| Issue | Título | GitHub | roadmap.md | CLAUDE.md |
-| ----- | ------ | ------ | ---------- | --------- |
-| #38   | F1-011 | OPEN   | Pendiente  | Pendiente |
-| #37   | F1-010 | CLOSED | Completado | ✅        |
+| Issue | Título | GitHub | roadmap.md | Estado documental canónico |
+| ----- | ------ | ------ | ---------- | -------------------------- |
+| #38   | F1-011 | OPEN   | Pendiente  | Pendiente                  |
+| #37   | F1-010 | CLOSED | Completado | ✅                         |
 
 **Si las tres fuentes coinciden** → continuar al siguiente paso.
 
 **Si hay divergencias**, resolverlas con estas reglas:
 
-| Divergencia                                                                 | Fuente de verdad | Acción                           |
-| --------------------------------------------------------------------------- | ---------------- | -------------------------------- |
-| Issue cerrado en GitHub pero pendiente en CLAUDE.md                         | GitHub           | Actualizar CLAUDE.md             |
-| Issue abierto en GitHub pero marcado completo en CLAUDE.md                  | GitHub           | Reabrir o investigar             |
-| Orden diferente entre roadmap.md y los issues de GitHub                     | roadmap.md       | Seguir el orden del roadmap      |
-| Progreso total diferente (ej: GitHub dice 10 cerrados, CLAUDE.md dice 8/16) | GitHub           | Actualizar contador en CLAUDE.md |
+| Divergencia                                                             | Fuente de verdad | Acción                                            |
+| ----------------------------------------------------------------------- | ---------------- | ------------------------------------------------- |
+| Issue cerrado en GitHub pero pendiente en el estado documental canónico | GitHub           | Actualizar roadmap.md o evidencia correspondiente |
+| Issue abierto en GitHub pero marcado completo en roadmap.md             | GitHub           | Reabrir o investigar                              |
+| Orden diferente entre roadmap.md y los issues de GitHub                 | roadmap.md       | Seguir el orden del roadmap                       |
+| Progreso total diferente entre GitHub y roadmap.md                      | GitHub           | Investigar y actualizar la fuente canónica        |
 
 #### Determinar el próximo issue a trabajar
 
@@ -600,7 +600,7 @@ EOF
 
 ---
 
-### PASO 10 — Actualizar CLAUDE.md (si aplica)
+### PASO 10 — Actualizar el estado documental canónico (si aplica)
 
 Si el issue es un hito de Fase 4 (F4-0XX):
 
@@ -627,7 +627,7 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 
 **Documentación actualizada:**
 - ✅ docs/sistema/[archivo]
-- ✅ CLAUDE.md (si aplica)
+- ✅ `CODEX_STATE.md` o `roadmap.md` (según el tipo de cambio)
 
 **Commit:** [hash corto]"
 ```
@@ -727,7 +727,7 @@ En cualquier STOP: registrar razón en `ia-skills/automation/loop-status.md`.
 - [ ] Archivos de test incluidos en el commit
 - [ ] `docs/ai-context/` actualizado según tipo de issue (módulo, schema, frontend)
 - [ ] `docs/human-context/issue-{número}-{slug}.md` creado con formato obligatorio
-- [ ] CLAUDE.md refleja el nuevo progreso (si aplica)
+- [ ] `CODEX_STATE.md` o `roadmap.md` refleja el nuevo progreso cuando corresponde
 - [ ] Issue cerrado con comentario descriptivo
 - [ ] `ia-skills/automation/loop-status.md` actualizado
 - [ ] `ia-skills/automation/next-prompt.md` escrito al final y sin commit (si condiciones cumplen) o STOP documentado

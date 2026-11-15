@@ -59,7 +59,7 @@ Semántica de `loop_count`:
 Ejecutar los comandos y leer los archivos:
 
 ```bash
-# Determinar primero la label de la fase actual leyendo roadmap.md y CLAUDE.md.
+# Determinar primero la label de la fase actual leyendo roadmap.md y CODEX_STATE.md.
 # Ejemplo actual del proyecto: phase-4
 
 # Issues abiertos en la fase actual
@@ -76,18 +76,18 @@ gh issue list --label "[phase-label]" --state closed --limit 5 \
 Leer:
 
 - `docs/project-management/roadmap.md` → sección Fase actual, orden y dependencias
-- `CLAUDE.md` → sección "Próximos pasos" y "Completado en Fase actual"
+- `CODEX_STATE.md` → hilo seleccionado y próximo paso; `roadmap.md` → estado de fase y features completadas
 
 ---
 
 ### PASO 2 — Resolver inconsistencias entre fuentes
 
-| Inconsistencia detectada                                   | Acción                                           |
-| ---------------------------------------------------------- | ------------------------------------------------ |
-| Issue cerrado en GitHub pero pendiente en CLAUDE.md        | Actualizar CLAUDE.md (acción segura)             |
-| Issue abierto en GitHub pero marcado completo en CLAUDE.md | STOP — estado ambiguo, no es seguro continuar    |
-| Orden diferente entre roadmap y GitHub                     | Seguir `roadmap.md` (fuente de verdad definida)  |
-| Dependencia de issue sin resolver                          | Buscar candidato alternativo sin esa dependencia |
+| Inconsistencia detectada                                            | Acción                                                            |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| Issue cerrado en GitHub pero pendiente en la documentación canónica | Actualizar roadmap.md o el documento de evidencia correspondiente |
+| Issue abierto en GitHub pero marcado completo en roadmap.md         | STOP — estado ambiguo, no es seguro continuar                     |
+| Orden diferente entre roadmap y GitHub                              | Seguir `roadmap.md` (fuente de verdad definida)                   |
+| Dependencia de issue sin resolver                                   | Buscar candidato alternativo sin esa dependencia                  |
 
 ---
 
