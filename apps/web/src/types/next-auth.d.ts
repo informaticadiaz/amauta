@@ -11,13 +11,18 @@ declare module 'next-auth' {
   interface Session {
     user: {
       id: string;
-      rol: 'ESTUDIANTE' | 'EDUCADOR' | 'ADMIN_ESCUELA' | 'SUPER_ADMIN';
+      rol:
+        | 'ESTUDIANTE'
+        | 'EDUCADOR'
+        | 'TUTOR'
+        | 'ADMIN_ESCUELA'
+        | 'SUPER_ADMIN';
     } & DefaultSession['user'];
   }
 
   interface User extends DefaultUser {
     id: string;
-    rol: 'ESTUDIANTE' | 'EDUCADOR' | 'ADMIN_ESCUELA' | 'SUPER_ADMIN';
+    rol: 'ESTUDIANTE' | 'EDUCADOR' | 'TUTOR' | 'ADMIN_ESCUELA' | 'SUPER_ADMIN';
     nombre: string;
     apellido: string;
     avatar: string | null;
@@ -27,6 +32,6 @@ declare module 'next-auth' {
 declare module 'next-auth/jwt' {
   interface JWT extends DefaultJWT {
     id: string;
-    rol: 'ESTUDIANTE' | 'EDUCADOR' | 'ADMIN_ESCUELA' | 'SUPER_ADMIN';
+    rol: 'ESTUDIANTE' | 'EDUCADOR' | 'TUTOR' | 'ADMIN_ESCUELA' | 'SUPER_ADMIN';
   }
 }

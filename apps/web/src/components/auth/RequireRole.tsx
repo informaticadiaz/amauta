@@ -21,7 +21,12 @@ import { useAuthorization } from '@/hooks/useAuthorization';
 import { useRouter } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 
-type Rol = 'ESTUDIANTE' | 'EDUCADOR' | 'ADMIN_ESCUELA' | 'SUPER_ADMIN';
+type Rol =
+  | 'ESTUDIANTE'
+  | 'EDUCADOR'
+  | 'TUTOR'
+  | 'ADMIN_ESCUELA'
+  | 'SUPER_ADMIN';
 
 interface RequireRoleProps {
   roles: Rol[];

@@ -27,6 +27,7 @@ export function Sidebar() {
     isAdminEscuela,
     isEducador,
     isEstudiante,
+    isTutor,
     isLoading,
   } = useAuthorization();
 
@@ -137,6 +138,12 @@ export function Sidebar() {
       ),
     },
     {
+      href: '/dashboard/tutor',
+      label: 'Seguimiento de estudiantes',
+      show: isTutor,
+      icon: <span aria-hidden="true">T</span>,
+    },
+    {
       href: '/dashboard/comunicados',
       label: 'Comunicados',
       show: true,
@@ -227,6 +234,12 @@ export function Sidebar() {
       label: 'Matrículas',
       show: isAdminEscuela,
       icon: <span aria-hidden="true">M</span>,
+    },
+    {
+      href: '/dashboard/tutores-estudiantes',
+      label: 'Vínculos tutor-estudiante',
+      show: isAdmin,
+      icon: <span aria-hidden="true">T</span>,
     },
     {
       href: '/dashboard/historial/estudiantes',

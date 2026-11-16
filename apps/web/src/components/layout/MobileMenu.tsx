@@ -81,6 +81,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     isAdminEscuela,
     isEducador,
     isEstudiante,
+    isTutor,
   } = useAuthorization();
 
   if (!isOpen) return null;
@@ -102,6 +103,11 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       href: '/dashboard/historial/estudiantes',
       label: 'Historial de estudiantes',
       show: isAdminEscuela,
+    },
+    {
+      href: '/dashboard/tutor',
+      label: 'Seguimiento de estudiantes',
+      show: isTutor,
     },
     {
       href: '/dashboard/asistencias',

@@ -25,6 +25,7 @@ describe('NotificacionesService', () => {
       count: jest.fn(),
       findFirst: jest.fn(),
       create: jest.fn(),
+      upsert: jest.fn(),
       update: jest.fn(),
     },
   });
@@ -158,6 +159,51 @@ describe('NotificacionesService', () => {
 
       expect(prisma.notificacion.findFirst).not.toHaveBeenCalled();
       expect(prisma.notificacion.create).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('crearNotificacionComunicadoUrgente', () => {
+    it('debería usar una clave única por tutor y comunicado para no duplicar notificaciones', async () => {
+      prisma.usuario.findUnique.mockResolvedValue({
+        id: USUARIO_ID,
+        activo: true,
+      });
+      prisma.notificacion.upsert.mockResolvedValue({
+        id: NOTIFICACION_ID,
+        usuarioId: USUARIO_ID,
+        tipo: 'COMUNICADO_URGENTE',
+        comunicadoId: 'comunicado-1',
+        leida: false,
+        postId: null,
+        respuestaId: null,
+        creadoEn: new Date(),
+      });
+
+      await service.crearNotificacionComunicadoUrgente({
+        destinatarioId: USUARIO_ID,
+        comunicadoId: 'comunicado-1',
+      });
+      await service.crearNotificacionComunicadoUrgente({
+        destinatarioId: USUARIO_ID,
+        comunicadoId: 'comunicado-1',
+      });
+
+      expect(prisma.notificacion.upsert).toHaveBeenCalledTimes(2);
+      expect(prisma.notificacion.upsert).toHaveBeenCalledWith({
+        where: {
+          usuarioId_comunicadoId_tipo: {
+            usuarioId: USUARIO_ID,
+            comunicadoId: 'comunicado-1',
+            tipo: 'COMUNICADO_URGENTE',
+          },
+        },
+        create: {
+          usuarioId: USUARIO_ID,
+          comunicadoId: 'comunicado-1',
+          tipo: 'COMUNICADO_URGENTE',
+        },
+        update: {},
+      });
     });
   });
 

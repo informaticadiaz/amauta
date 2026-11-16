@@ -21,7 +21,12 @@ const createForoPostSchema = z.object({
 
 interface NuevoPostFormProps {
   cursoId: string;
-  currentUserRol: 'ESTUDIANTE' | 'EDUCADOR' | 'ADMIN_ESCUELA' | 'SUPER_ADMIN';
+  currentUserRol:
+    | 'ESTUDIANTE'
+    | 'EDUCADOR'
+    | 'TUTOR'
+    | 'ADMIN_ESCUELA'
+    | 'SUPER_ADMIN';
   onCreated: (post: ForoPostListItem) => Promise<void> | void;
 }
 

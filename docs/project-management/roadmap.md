@@ -14,7 +14,8 @@
 - **Estado de F4c-005**: ✅ completado; cierre académico, promoción masiva, acta PDF y bloqueo post-cierre implementados y desplegados mediante la PR #112.
 - **Estado de F4c-004**: ✅ completado; horarios semanales por grupo implementados y verificados localmente.
 - **Estado de F4c-006**: ✅ completado; alertas por asistencia baja y notas en riesgo implementadas y verificadas localmente.
-- **Siguiente trabajo**: avanzar con F4c-007 — Rol tutor/padre: acceso al seguimiento de su hijo.
+- **Estado de F4c-007**: ✅ completado; implementación verificada y migración aplicada en la base de desarrollo.
+- **Siguiente trabajo**: avanzar con F4c-008 — Justificación formal de ausencias.
 - **Issues cerrados**: el último issue GitHub formalmente cerrado sigue siendo #104 (F4b-004); F4c-005 fue entregado mediante la PR #112 y no debe confundirse el estado de una feature con el cierre de un issue.
 - **Producción**: la PR #112 (`dd89338`) fue integrada en `master`; el pipeline CI de `master` completó validaciones, build, deploy vía SSH y healthcheck exitosos. Este dato acredita el despliegue, no sustituye la verificación funcional de cada feature.
 - **ODD de consolidación y búsqueda**: T1–T7 completados con evidencia local; el cierre documental T8 se registra en `odd/tasks/amauta-mejoras.md`.
@@ -2238,13 +2239,13 @@ F4c-006 (alertas) — independiente, usa datos existentes de asistencias y calif
 
 ### Sprint 23 — Actores externos y cierre
 
-| Issue   | Título                                            | Estado       | Prioridad    |
-| ------- | ------------------------------------------------- | ------------ | ------------ |
-| F4c-007 | Rol tutor/padre: acceso al seguimiento de su hijo | ⏳ Pendiente | should-have  |
-| F4c-008 | Justificación formal de ausencias                 | ⏳ Pendiente | should-have  |
-| F4c-009 | Calendario institucional                          | ⏳ Pendiente | nice-to-have |
+| Issue   | Título                                            | Estado        | Prioridad    |
+| ------- | ------------------------------------------------- | ------------- | ------------ |
+| F4c-007 | Rol tutor/padre: acceso al seguimiento de su hijo | ✅ Completado | should-have  |
+| F4c-008 | Justificación formal de ausencias                 | ⏳ Pendiente  | should-have  |
+| F4c-009 | Calendario institucional                          | ⏳ Pendiente  | nice-to-have |
 
-**Progreso Sprint 23**: 0/3 issues completados
+**Progreso Sprint 23**: 1/3 issues completados; F4c-007 queda habilitado en el entorno de desarrollo.
 
 #### Dependencias
 
@@ -2264,6 +2265,8 @@ F4c-009 (calendario) — independiente
 - Acceso de solo lectura al boletín, asistencias, calificaciones y comunicados del estudiante vinculado
 - El ADMIN_ESCUELA gestiona los vínculos tutor ↔ estudiante
 - Notificaciones al tutor cuando se publican comunicados URGENTES
+- Implementado localmente: API, dashboard del tutor, administración de vínculos, notificaciones deduplicadas y documentación en `docs/sistema/tutores.md`
+- Migración `20261114130000_tutores_estudiantes` aplicada en la base de desarrollo mediante `prisma migrate deploy`; no se usa `prisma db push`
 
 **F4c-008 — Justificación de ausencias**
 

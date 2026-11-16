@@ -6,6 +6,8 @@ import {
 } from '@nestjs/common';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports -- NestJS requires runtime import for DI
 import { PrismaService } from '../prisma/prisma.service';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports -- NestJS requires runtime import for DI
+import { NotificacionesService } from '../notificaciones/notificaciones.service';
 import { createComunicadoSchema } from './dto/create-comunicado.dto';
 import { updateComunicadoSchema } from './dto/update-comunicado.dto';
 import {
@@ -54,7 +56,10 @@ interface UserAcceso {
 
 @Injectable()
 export class ComunicadosService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly notificacionesService: NotificacionesService
+  ) {}
 
   async crear(
     institucionId: string,
@@ -85,6 +90,10 @@ export class ComunicadosService {
         autor: { select: { id: true, nombre: true, apellido: true } },
       },
     });
+
+    if (tipo === 'URGENTE' || prioridad === 'URGENTE') {
+      await this.notificarTutores(comunicado.id, institucionId);
+    }
 
     return {
       comunicado: comunicado as ComunicadoConAutor,
@@ -247,6 +256,39 @@ export class ComunicadosService {
   ): Promise<ListaComunicadosResponse> {
     const institucionId = await this.resolverInstitucionDelUsuario(usuarioId);
     return this.listar(institucionId, query);
+  }
+
+  private async notificarTutores(
+    comunicadoId: string,
+    institucionId: string
+  ): Promise<void> {
+    const vinculos = await this.prisma.tutorEstudiante.findMany({
+      where: {
+        activo: true,
+        tutor: { activo: true, rol: 'TUTOR' },
+        estudiante: {
+          activo: true,
+          matriculas: {
+            some: {
+              institucionId,
+              estado: 'ACTIVA',
+              periodoAcademico: { activo: true },
+            },
+          },
+        },
+      },
+      select: { tutorId: true },
+    });
+
+    const tutores = new Set(vinculos.map(({ tutorId }) => tutorId));
+    await Promise.all(
+      [...tutores].map((destinatarioId) =>
+        this.notificacionesService.crearNotificacionComunicadoUrgente({
+          destinatarioId,
+          comunicadoId,
+        })
+      )
+    );
   }
 
   private async verificarInstitucion(institucionId: string) {

@@ -23,10 +23,12 @@ export interface NotificacionItem {
     | 'SOLUCION_MARCADA'
     | 'PREGUNTA_SIN_RESPONDER'
     | 'ALERTA_ASISTENCIA_BAJA'
-    | 'ALERTA_NOTA_EN_RIESGO';
+    | 'ALERTA_NOTA_EN_RIESGO'
+    | 'COMUNICADO_URGENTE';
   leida: boolean;
   postId: string | null;
   respuestaId: string | null;
+  comunicadoId: string | null;
   creadoEn: Date;
 }
 
@@ -190,6 +192,35 @@ export class NotificacionesService {
         alertaId: params.alertaId,
         tipo: params.tipo,
       },
+    });
+  }
+
+  async crearNotificacionComunicadoUrgente(params: {
+    destinatarioId: string;
+    comunicadoId: string;
+  }): Promise<NotificacionItem | null> {
+    const destinatarioActivo = await this.obtenerDestinatarioActivo(
+      params.destinatarioId,
+      this.prisma
+    );
+    if (!destinatarioActivo) {
+      return null;
+    }
+
+    return this.prisma.notificacion.upsert({
+      where: {
+        usuarioId_comunicadoId_tipo: {
+          usuarioId: params.destinatarioId,
+          comunicadoId: params.comunicadoId,
+          tipo: 'COMUNICADO_URGENTE',
+        },
+      },
+      create: {
+        usuarioId: params.destinatarioId,
+        comunicadoId: params.comunicadoId,
+        tipo: 'COMUNICADO_URGENTE',
+      },
+      update: {},
     });
   }
 

@@ -17,7 +17,12 @@
 
 import { useSession } from 'next-auth/react';
 
-type Rol = 'ESTUDIANTE' | 'EDUCADOR' | 'ADMIN_ESCUELA' | 'SUPER_ADMIN';
+type Rol =
+  | 'ESTUDIANTE'
+  | 'EDUCADOR'
+  | 'TUTOR'
+  | 'ADMIN_ESCUELA'
+  | 'SUPER_ADMIN';
 
 interface AuthorizationHook {
   // Estado
@@ -37,6 +42,7 @@ interface AuthorizationHook {
   // Helpers comunes
   isEstudiante: boolean;
   isEducador: boolean;
+  isTutor: boolean;
   isAdminEscuela: boolean;
   isSuperAdmin: boolean;
   isAdmin: boolean; // ADMIN_ESCUELA o SUPER_ADMIN
@@ -79,6 +85,7 @@ export function useAuthorization(): AuthorizationHook {
   // Helpers por rol específico
   const isEstudiante = rol === 'ESTUDIANTE';
   const isEducador = rol === 'EDUCADOR';
+  const isTutor = rol === 'TUTOR';
   const isAdminEscuela = rol === 'ADMIN_ESCUELA';
   const isSuperAdmin = rol === 'SUPER_ADMIN';
   const isAdmin = isAdminEscuela || isSuperAdmin;
@@ -102,6 +109,7 @@ export function useAuthorization(): AuthorizationHook {
     hasAnyRole,
     isEstudiante,
     isEducador,
+    isTutor,
     isAdminEscuela,
     isSuperAdmin,
     isAdmin,

@@ -21,7 +21,7 @@ export class NotificacionesController {
   ) {}
 
   @Get('notificaciones')
-  @Roles('ESTUDIANTE', 'EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN')
+  @Roles('ESTUDIANTE', 'EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN', 'TUTOR')
   async listar(
     @Query() query: QueryNotificacionesDto,
     @CurrentUser() user: RequestUser
@@ -30,7 +30,7 @@ export class NotificacionesController {
   }
 
   @Patch('notificaciones/:id/leida')
-  @Roles('ESTUDIANTE', 'EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN')
+  @Roles('ESTUDIANTE', 'EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN', 'TUTOR')
   async marcarComoLeida(
     @Param('id') id: string,
     @CurrentUser() user: RequestUser
