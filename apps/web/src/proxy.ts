@@ -9,7 +9,12 @@
 import { auth } from '@/lib/auth';
 import { NextResponse } from 'next/server';
 
-type Rol = 'ESTUDIANTE' | 'EDUCADOR' | 'ADMIN_ESCUELA' | 'SUPER_ADMIN';
+type Rol =
+  | 'ESTUDIANTE'
+  | 'EDUCADOR'
+  | 'TUTOR'
+  | 'ADMIN_ESCUELA'
+  | 'SUPER_ADMIN';
 
 /**
  * Configuración de rutas protegidas por rol
@@ -37,6 +42,9 @@ const ROUTE_ROLES: { path: string; roles: Rol[] }[] = [
     path: '/dashboard/mis-cursos',
     roles: ['EDUCADOR', 'ADMIN_ESCUELA', 'SUPER_ADMIN'],
   },
+
+  // Dashboard del tutor
+  { path: '/dashboard/tutor', roles: ['TUTOR'] },
 
   // El dashboard general está abierto a todos los autenticados
 ];

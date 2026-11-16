@@ -23,7 +23,7 @@ const CONTENIDO_ELIMINADO = '[contenido eliminado]';
 
 interface UsuarioAcceso {
   id: string;
-  rol: 'ESTUDIANTE' | 'EDUCADOR' | 'ADMIN_ESCUELA' | 'SUPER_ADMIN';
+  rol: 'ESTUDIANTE' | 'EDUCADOR' | 'ADMIN_ESCUELA' | 'SUPER_ADMIN' | 'TUTOR';
   perfil: {
     institucion: string | null;
   } | null;

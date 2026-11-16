@@ -47,7 +47,7 @@ Leer del prompt de entrada cuáles son los issues del bloque.
 Verificar con GitHub:
 
 ```bash
-# Determinar primero la label de la fase actual leyendo roadmap.md y CLAUDE.md.
+# Determinar primero la label de la fase actual leyendo roadmap.md y CODEX_STATE.md.
 # Ejemplo actual del proyecto: phase-4
 
 gh issue list --state closed --label "[phase-label]" --limit 3 \
@@ -90,14 +90,14 @@ Para cada issue del bloque, verificar según sus labels:
 
 **Criterio de falla**: módulo modificado sin archivo de contexto correspondiente.
 
-#### Verificación D — Coherencia CLAUDE.md
+#### Verificación D — Coherencia del estado documental
 
 ```bash
 # Issues cerrados en GitHub
 gh issue list --state closed --label "[phase-label]" --json number | jq length
 ```
 
-Comparar con la cantidad de issues marcados como `✅` en la sección "Completado en la fase actual" de `CLAUDE.md`.
+Comparar con la cantidad de issues y features completados declarados en `docs/project-management/roadmap.md`.
 
 **Criterio de falla**: diferencia mayor a 2.
 
@@ -116,14 +116,14 @@ Crear `ia-skills/automation/audit-report-[fecha].md` con este formato:
 
 ## Resultado: APROBADO / BLOQUEADO
 
-| Verificación         | Resultado | Detalle                              |
-| -------------------- | --------- | ------------------------------------ |
-| Tests API            | ✅/❌     | [X tests, Y fallos]                  |
-| Tests Web            | ✅/❌     | [X tests, Y fallos]                  |
-| TypeScript Backend   | ✅/❌     | [sin errores / N errores]            |
-| TypeScript Frontend  | ✅/❌     | [sin errores / N errores]            |
-| Documentación IA     | ✅/❌     | [módulos ok / faltantes: lista]      |
-| Coherencia CLAUDE.md | ✅/❌     | [GitHub: N / CLAUDE.md: M / diff: D] |
+| Verificación          | Resultado | Detalle                            |
+| --------------------- | --------- | ---------------------------------- |
+| Tests API             | ✅/❌     | [X tests, Y fallos]                |
+| Tests Web             | ✅/❌     | [X tests, Y fallos]                |
+| TypeScript Backend    | ✅/❌     | [sin errores / N errores]          |
+| TypeScript Frontend   | ✅/❌     | [sin errores / N errores]          |
+| Documentación IA      | ✅/❌     | [módulos ok / faltantes: lista]    |
+| Coherencia documental | ✅/❌     | [GitHub: N / roadmap: M / diff: D] |
 
 ## Decisión
 

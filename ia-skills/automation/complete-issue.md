@@ -84,31 +84,31 @@ Extraer:
 - Dependencias explícitas entre issues (cuál debe ir antes)
 - Issues marcados como `must-have` vs `should-have`
 
-#### Fuente 3 — CLAUDE.md (progreso documentado)
+#### Fuente 3 — Estado documental canónico
 
 ```
-LEER: CLAUDE.md → sección "Próximos pasos" y "Completado en Fase X"
+LEER: `CODEX_STATE.md` para continuidad y `docs/project-management/roadmap.md` para "Próximos pasos" y funcionalidades completadas
 ```
 
 #### Comparar las tres fuentes
 
 Construir una tabla de verificación:
 
-| Issue | Título | GitHub | roadmap.md | CLAUDE.md |
-| ----- | ------ | ------ | ---------- | --------- |
-| #38   | F1-011 | OPEN   | Pendiente  | Pendiente |
-| #37   | F1-010 | CLOSED | Completado | ✅        |
+| Issue | Título | GitHub | roadmap.md | Estado documental canónico |
+| ----- | ------ | ------ | ---------- | -------------------------- |
+| #38   | F1-011 | OPEN   | Pendiente  | Pendiente                  |
+| #37   | F1-010 | CLOSED | Completado | ✅                         |
 
 **Si las tres fuentes coinciden** → continuar al siguiente paso.
 
 **Si hay divergencias**, resolverlas con estas reglas:
 
-| Divergencia                                                                 | Fuente de verdad | Acción                           |
-| --------------------------------------------------------------------------- | ---------------- | -------------------------------- |
-| Issue cerrado en GitHub pero pendiente en CLAUDE.md                         | GitHub           | Actualizar CLAUDE.md             |
-| Issue abierto en GitHub pero marcado completo en CLAUDE.md                  | GitHub           | Reabrir o investigar             |
-| Orden diferente entre roadmap.md y los issues de GitHub                     | roadmap.md       | Seguir el orden del roadmap      |
-| Progreso total diferente (ej: GitHub dice 10 cerrados, CLAUDE.md dice 8/16) | GitHub           | Actualizar contador en CLAUDE.md |
+| Divergencia                                                             | Fuente de verdad | Acción                                            |
+| ----------------------------------------------------------------------- | ---------------- | ------------------------------------------------- |
+| Issue cerrado en GitHub pero pendiente en el estado documental canónico | GitHub           | Actualizar roadmap.md o evidencia correspondiente |
+| Issue abierto en GitHub pero marcado completo en roadmap.md             | GitHub           | Reabrir o investigar                              |
+| Orden diferente entre roadmap.md y los issues de GitHub                 | roadmap.md       | Seguir el orden del roadmap                       |
+| Progreso total diferente entre GitHub y roadmap.md                      | GitHub           | Investigar y actualizar la fuente canónica        |
 
 Mostrar las divergencias encontradas al usuario y proponer las correcciones antes de continuar.
 
@@ -650,7 +650,7 @@ EOF
 
 ---
 
-### PASO 11 — Actualizar CLAUDE.md (si aplica)
+### PASO 11 — Actualizar el estado documental canónico (si aplica)
 
 Si el issue es un hito de Fase 1 (F1-0XX):
 
@@ -677,7 +677,7 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 
 **Documentación actualizada:**
 - ✅ docs/sistema/[archivo]
-- ✅ CLAUDE.md (si aplica)
+- ✅ `CODEX_STATE.md` o `roadmap.md` (según el tipo de cambio)
 
 **Commit:** [hash corto]"
 ```
@@ -704,7 +704,7 @@ gh issue close [número] --comment "✅ Implementación completada con TDD.
 - [ ] Archivos de test incluidos en el commit
 - [ ] `docs/ai-context/` actualizado según tipo de issue (módulo, schema, frontend)
 - [ ] `docs/human-context/issue-{número}-{slug}.md` creado con formato obligatorio
-- [ ] CLAUDE.md refleja el nuevo progreso (si aplica)
+- [ ] `CODEX_STATE.md` o `roadmap.md` refleja el nuevo progreso cuando corresponde
 - [ ] Issue cerrado con comentario descriptivo
 
 ---

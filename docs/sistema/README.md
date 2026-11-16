@@ -23,46 +23,48 @@ El nombre "Amauta" proviene del quechua y significa "maestro" o "sabio".
 
 ### En Desarrollo
 
-| Módulo                                                     | Estado                  | Sprint    |
-| ---------------------------------------------------------- | ----------------------- | --------- |
-| Gestión de Cursos                                          | ✅ Funcional            | Sprint 1  |
-| Catálogo de Cursos                                         | ✅ Funcional            | Sprint 2  |
-| Inscripciones                                              | ✅ Funcional            | Sprint 3  |
-| UI Inscripción y Mis Cursos                                | ✅ Funcional            | Sprint 4  |
-| Visualizador de Lecciones                                  | ✅ Funcional            | Sprint 4  |
-| Progreso de Estudiantes                                    | ✅ Funcional            | Sprint 4  |
-| Marcar Lecciones Completadas                               | ✅ Funcional            | Sprint 4  |
-| Dashboard de Estudiante                                    | ✅ Funcional            | Sprint 4  |
-| Instalabilidad PWA                                         | ✅ Funcional            | Sprint 5  |
-| Service Worker PWA (caché)                                 | ✅ Funcional            | Sprint 5  |
-| Base de datos offline (IDB)                                | ✅ Funcional            | Sprint 5  |
-| Descarga offline de cursos                                 | ✅ Funcional            | Sprint 5  |
-| Cache de videos offline                                    | ✅ Funcional            | Sprint 5  |
-| Sync offline + Background Sync                             | ✅ Funcional            | Sprint 5  |
-| UI estado offline + almacenamiento                         | ✅ Funcional            | Sprint 6  |
-| Tests offline + Lighthouse PWA                             | ✅ Funcional            | Sprint 7  |
-| Evaluaciones (creación, listado, detalle y publicación)    | ✅ Funcional            | Sprint 10 |
-| Configuración institucional (periodos y escala)            | ✅ Funcional (API)      | Sprint 12 |
-| Gestión de grupos/clases                                   | ✅ Funcional (API + UI) | Sprint 12 |
-| Asignación de estudiantes y educadores a grupos (API + UI) | ✅ Funcional (API + UI) | Sprint 13 |
-| Listado de usuarios por institución (API)                  | ✅ Funcional (API)      | Sprint 13 |
-| Registro diario de asistencias por grupo                   | ✅ Funcional (API + UI) | Sprint 14 |
-| Resumen mensual de asistencias por grupo                   | ✅ Funcional (API)      | Sprint 14 |
-| Catálogo institucional de materias                         | ✅ Funcional (API + UI) | Sprint 21 |
-| Matrícula formal de estudiantes                            | ✅ Funcional (API + UI) | Sprint 21 |
-| Horarios semanales por grupo                               | ✅ Funcional (API + UI) | Sprint 22 |
-| Alertas académicas por asistencia y notas                  | ✅ Funcional (API + UI) | Sprint 22 |
-| Módulo Escolar (calificaciones, comunicados y reportes)    | 🚧 En desarrollo        | Fase 4    |
-| Búsqueda y descubrimiento de cursos                        | 📋 Diseño funcional     | Sprint 18 |
+| Módulo                                                     | Estado                     | Sprint    |
+| ---------------------------------------------------------- | -------------------------- | --------- |
+| Gestión de Cursos                                          | ✅ Funcional               | Sprint 1  |
+| Catálogo de Cursos                                         | ✅ Funcional               | Sprint 2  |
+| Inscripciones                                              | ✅ Funcional               | Sprint 3  |
+| UI Inscripción y Mis Cursos                                | ✅ Funcional               | Sprint 4  |
+| Visualizador de Lecciones                                  | ✅ Funcional               | Sprint 4  |
+| Progreso de Estudiantes                                    | ✅ Funcional               | Sprint 4  |
+| Marcar Lecciones Completadas                               | ✅ Funcional               | Sprint 4  |
+| Dashboard de Estudiante                                    | ✅ Funcional               | Sprint 4  |
+| Instalabilidad PWA                                         | ✅ Funcional               | Sprint 5  |
+| Service Worker PWA (caché)                                 | ✅ Funcional               | Sprint 5  |
+| Base de datos offline (IDB)                                | ✅ Funcional               | Sprint 5  |
+| Descarga offline de cursos                                 | ✅ Funcional               | Sprint 5  |
+| Cache de videos offline                                    | ✅ Funcional               | Sprint 5  |
+| Sync offline + Background Sync                             | ✅ Funcional               | Sprint 5  |
+| UI estado offline + almacenamiento                         | ✅ Funcional               | Sprint 6  |
+| Tests offline + Lighthouse PWA                             | ✅ Funcional               | Sprint 7  |
+| Evaluaciones (creación, listado, detalle y publicación)    | ✅ Funcional               | Sprint 10 |
+| Configuración institucional (periodos y escala)            | ✅ Funcional (API)         | Sprint 12 |
+| Gestión de grupos/clases                                   | ✅ Funcional (API + UI)    | Sprint 12 |
+| Asignación de estudiantes y educadores a grupos (API + UI) | ✅ Funcional (API + UI)    | Sprint 13 |
+| Listado de usuarios por institución (API)                  | ✅ Funcional (API)         | Sprint 13 |
+| Registro diario de asistencias por grupo                   | ✅ Funcional (API + UI)    | Sprint 14 |
+| Resumen mensual de asistencias por grupo                   | ✅ Funcional (API)         | Sprint 14 |
+| Catálogo institucional de materias                         | ✅ Funcional (API + UI)    | Sprint 21 |
+| Matrícula formal de estudiantes                            | ✅ Funcional (API + UI)    | Sprint 21 |
+| Horarios semanales por grupo                               | ✅ Funcional (API + UI)    | Sprint 22 |
+| Alertas académicas por asistencia y notas                  | ✅ Funcional (API + UI)    | Sprint 22 |
+| Rol tutor y seguimiento académico                          | 🟡 Implementado localmente | Sprint 23 |
+| Módulo Escolar (calificaciones, comunicados y reportes)    | 🚧 En desarrollo           | Fase 4    |
+| Búsqueda y descubrimiento de cursos                        | 📋 Diseño funcional        | Sprint 18 |
 
 ## Roles del Sistema
 
-| Rol               | Descripción                   | Puede hacer                                                    |
-| ----------------- | ----------------------------- | -------------------------------------------------------------- |
-| **SUPER_ADMIN**   | Administrador global          | Todo. Gestiona el sistema completo.                            |
-| **ADMIN_ESCUELA** | Director/Admin de institución | Gestionar su institución, grupos, comunicados.                 |
-| **EDUCADOR**      | Profesor/Docente              | Crear cursos, lecciones, ver progreso de estudiantes.          |
-| **ESTUDIANTE**    | Alumno                        | Inscribirse a cursos, completar lecciones, ver calificaciones. |
+| Rol               | Descripción                   | Puede hacer                                                           |
+| ----------------- | ----------------------------- | --------------------------------------------------------------------- |
+| **SUPER_ADMIN**   | Administrador global          | Todo. Gestiona el sistema completo.                                   |
+| **ADMIN_ESCUELA** | Director/Admin de institución | Gestionar su institución, grupos, comunicados.                        |
+| **EDUCADOR**      | Profesor/Docente              | Crear cursos, lecciones, ver progreso de estudiantes.                 |
+| **ESTUDIANTE**    | Alumno                        | Inscribirse a cursos, completar lecciones, ver calificaciones.        |
+| **TUTOR**         | Padre, madre o tutor legal    | Consultar el seguimiento académico vigente de estudiantes vinculados. |
 
 Ver [roles-permisos.md](roles-permisos.md) para detalle completo de permisos.
 
@@ -108,6 +110,13 @@ Ver [seed/etapa-1-usuarios.md](seed/etapa-1-usuarios.md) para lista completa.
 5. Ve inscripciones y progreso
 6. Califica a estudiantes
 
+### Flujo del Tutor
+
+1. Inicia sesión con un usuario previamente creado por la institución
+2. Selecciona uno de sus estudiantes vinculados
+3. Consulta el boletín, las asistencias, las calificaciones y los comunicados vigentes
+4. Recibe notificaciones internas por comunicados urgentes
+
 ### Flujo del Administrador
 
 1. Inicia sesión
@@ -118,6 +127,7 @@ Ver [seed/etapa-1-usuarios.md](seed/etapa-1-usuarios.md) para lista completa.
 6. Gestiona los horarios semanales de los grupos
 7. Ve reportes
 8. Consulta y actualiza alertas académicas de sus grupos
+9. Gestiona los vínculos tutor-estudiante desde `/dashboard/tutores-estudiantes`
 
 ## Registro Diario de Asistencias
 

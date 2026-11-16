@@ -97,7 +97,7 @@ Convertir propuesta a `SPEC.md` con:
 ```markdown
 ## Requirement: Soft Delete en Lecciones
 
-**Why**: Violación crítica de patrón (CLAUDE.md línea 197)
+**Why**: Violación crítica de patrón documentado en `AGENTS.md` y `docs/ai-context/_patterns.md`
 
 **Scenarios**:
 
@@ -294,7 +294,7 @@ Selecciona:
 - ✅ Plan tiene al menos 1 fase
 - ✅ Cada fase tiene al menos 1 tarea
 - ✅ Estado Implementación actual ≠ "Implementado" (evitar re-ejecutar)
-- ✅ ALWAYS check `CLAUDE.md` patterns antes de implementar
+- ✅ ALWAYS check `AGENTS.md` y `docs/ai-context/_patterns.md` antes de implementar
 
 ### Patrones que NO se negocian
 
@@ -359,5 +359,5 @@ docs/architecture/proposals/
 
 - **Spec-Driven Development**: `/sdd-new`, `/sdd-spec`, `/sdd-design`, `/sdd-tasks`, `/sdd-apply`, `/sdd-verify`
 - **Propuestas**: `docs/architecture/proposals/`
-- **Patrones**: `CLAUDE.md`, `docs/ai-context/_patterns.md`
+- **Patrones**: `AGENTS.md`, `docs/ai-context/_patterns.md`
 - **Testing**: `docs/technical/testing.md`

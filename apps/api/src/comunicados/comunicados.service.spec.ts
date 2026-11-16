@@ -45,11 +45,13 @@ import {
 } from '@nestjs/common';
 import { ComunicadosService } from './comunicados.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { NotificacionesService } from '../notificaciones/notificaciones.service';
 
 describe('ComunicadosService', () => {
   let service: ComunicadosService;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let prisma: any;
+  let notificacionesService: { crearNotificacionComunicadoUrgente: jest.Mock };
 
   const INSTITUCION_ID = 'cjld2cjxh0000qzrmn831i7rn';
   const AUTOR_ID = 'clh3zqxkv0001l308g5z3x1y3';
@@ -76,6 +78,9 @@ describe('ComunicadosService', () => {
     institucion: {
       findUnique: jest.fn(),
     },
+    tutorEstudiante: {
+      findMany: jest.fn(),
+    },
     comunicado: {
       create: jest.fn(),
       findMany: jest.fn(),
@@ -87,11 +92,15 @@ describe('ComunicadosService', () => {
 
   beforeEach(async () => {
     prisma = createMockPrisma();
+    notificacionesService = {
+      crearNotificacionComunicadoUrgente: jest.fn(),
+    };
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ComunicadosService,
         { provide: PrismaService, useValue: prisma },
+        { provide: NotificacionesService, useValue: notificacionesService },
       ],
     }).compile();
 
@@ -147,6 +156,89 @@ describe('ComunicadosService', () => {
           AUTOR_ID
         )
       ).rejects.toThrow(NotFoundException);
+    });
+
+    it.each([
+      ['tipo', { tipo: 'URGENTE', prioridad: 'NORMAL' }],
+      ['prioridad', { tipo: 'GENERAL', prioridad: 'URGENTE' }],
+    ])(
+      'debería notificar tutores activos por comunicado urgente por %s',
+      async (_campo, urgente) => {
+        prisma.institucion.findUnique.mockResolvedValueOnce(mockInstitucion);
+        prisma.comunicado.create.mockResolvedValueOnce({
+          ...mockComunicado,
+          ...urgente,
+        });
+        prisma.tutorEstudiante.findMany.mockResolvedValueOnce([
+          { tutorId: 'tutor-1' },
+          { tutorId: 'tutor-1' },
+          { tutorId: 'tutor-2' },
+        ]);
+
+        await service.crear(
+          INSTITUCION_ID,
+          {
+            titulo: 'Urgente',
+            contenido: 'Contenido urgente',
+            ...urgente,
+          },
+          AUTOR_ID
+        );
+
+        expect(prisma.tutorEstudiante.findMany).toHaveBeenCalledWith(
+          expect.objectContaining({
+            where: expect.objectContaining({
+              activo: true,
+              estudiante: expect.objectContaining({
+                activo: true,
+                matriculas: expect.objectContaining({
+                  some: expect.objectContaining({
+                    institucionId: INSTITUCION_ID,
+                    estado: 'ACTIVA',
+                    periodoAcademico: { activo: true },
+                  }),
+                }),
+              }),
+            }),
+          })
+        );
+        expect(
+          notificacionesService.crearNotificacionComunicadoUrgente
+        ).toHaveBeenCalledTimes(2);
+        expect(
+          notificacionesService.crearNotificacionComunicadoUrgente
+        ).toHaveBeenCalledWith({
+          destinatarioId: 'tutor-1',
+          comunicadoId: COMUNICADO_ID,
+        });
+        expect(
+          notificacionesService.crearNotificacionComunicadoUrgente
+        ).toHaveBeenCalledWith({
+          destinatarioId: 'tutor-2',
+          comunicadoId: COMUNICADO_ID,
+        });
+      }
+    );
+
+    it('debería omitir notificaciones para comunicados no urgentes', async () => {
+      prisma.institucion.findUnique.mockResolvedValueOnce(mockInstitucion);
+      prisma.comunicado.create.mockResolvedValueOnce(mockComunicado);
+
+      await service.crear(
+        INSTITUCION_ID,
+        {
+          titulo: 'Normal',
+          contenido: 'Contenido normal',
+          tipo: 'GENERAL',
+          prioridad: 'NORMAL',
+        },
+        AUTOR_ID
+      );
+
+      expect(prisma.tutorEstudiante.findMany).not.toHaveBeenCalled();
+      expect(
+        notificacionesService.crearNotificacionComunicadoUrgente
+      ).not.toHaveBeenCalled();
     });
   });
 

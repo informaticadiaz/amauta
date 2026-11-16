@@ -1,6 +1,7 @@
 export type ForoRol =
   | 'ESTUDIANTE'
   | 'EDUCADOR'
+  | 'TUTOR'
   | 'ADMIN_ESCUELA'
   | 'SUPER_ADMIN';
 

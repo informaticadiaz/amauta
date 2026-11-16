@@ -32,7 +32,8 @@ jobs:
           test -f README.md || (echo "❌ README.md no encontrado" && exit 1)
           test -f LICENSE || (echo "❌ LICENSE no encontrado" && exit 1)
           test -f .gitignore || (echo "❌ .gitignore no encontrado" && exit 1)
-          test -f CLAUDE.md || (echo "❌ CLAUDE.md no encontrado" && exit 1)
+          test -f AGENTS.md || (echo "❌ AGENTS.md no encontrado" && exit 1)
+          test -f CODEX_STATE.md || (echo "❌ CODEX_STATE.md no encontrado" && exit 1)
           test -f WORKFLOW.md || (echo "❌ WORKFLOW.md no encontrado" && exit 1)
 
           echo "✅ Estructura básica validada"
@@ -61,7 +62,7 @@ jobs:
           echo "📝 Validando documentación..."
 
           # Verificar que los archivos .md existen y no están vacíos
-          for file in README.md CLAUDE.md WORKFLOW.md; do
+          for file in README.md AGENTS.md CODEX_STATE.md WORKFLOW.md; do
             if [ ! -s "$file" ]; then
               echo "❌ $file está vacío o no existe"
               exit 1

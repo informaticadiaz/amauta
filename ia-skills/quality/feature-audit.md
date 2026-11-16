@@ -1,8 +1,9 @@
 # Skill: Feature Audit
 
 > QA Engineer senior audita features: tests (cobertura, passing), criterios de aceptación, patrones del proyecto. Alcance: por fase, módulo o issue.
-> **Referencia**: criterios de aceptación en los issues de GitHub, `CLAUDE.md`,
-> `docs/technical/testing.md`, `docs/ai-context/_patterns.md`.
+> **Referencia**: criterios de aceptación en los issues de GitHub, `AGENTS.md`,
+> `docs/project-management/roadmap.md`, `docs/technical/testing.md` y
+> `docs/ai-context/_patterns.md`.
 
 ---
 
@@ -51,7 +52,7 @@ Si el scope es un **módulo**:
 
 Si el scope es una **fase completa**:
 
-- Leer `CLAUDE.md` → sección "Completado en Fase X" para listar todos los issues
+- Leer `docs/project-management/roadmap.md` → fase actual y funcionalidades completadas para listar los issues
 - Auditar cada uno en orden
 
 ---
@@ -61,7 +62,7 @@ Si el scope es una **fase completa**:
 Para cada feature a auditar, leer:
 
 ```
-LEER: CLAUDE.md → sección del issue/feature para conocer lo implementado
+LEER: `docs/project-management/roadmap.md` y la documentación técnica del módulo para conocer lo implementado
 LEER: docs/ai-context/modules/[modulo].md (si existe)
 ```
 
@@ -240,7 +241,7 @@ console.log('total:', d.total, '| cursos:', d.cursos?.length);
 
 Para cada feature auditada verificar:
 
-1. **`CLAUDE.md`**: ¿el issue aparece en "Completado" con descripción de lo implementado?
+1. **`roadmap.md`**: ¿el issue aparece como completado y la implementación está respaldada por código/tests?
 2. **`docs/project-management/roadmap.md`**: ¿el issue está marcado como ✅ Completado?
 3. **`docs/sistema/README.md`**: ¿el módulo aparece como ✅ Funcional?
 4. **`docs/human-context/issue-[N]-*.md`**: ¿existe documentación no técnica?

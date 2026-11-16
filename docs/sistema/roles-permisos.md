@@ -4,7 +4,7 @@
 
 ## Roles Disponibles
 
-El sistema tiene 4 roles con diferentes niveles de acceso:
+El sistema tiene 5 roles con diferentes niveles de acceso:
 
 ```
 SUPER_ADMIN
@@ -87,6 +87,23 @@ SUPER_ADMIN
 
 ---
 
+### TUTOR
+
+**Quién es**: Padre, madre, tutor legal u otra persona responsable vinculada por la institución.
+
+**Puede hacer**:
+
+- Ver el listado de estudiantes vinculados con matrícula activa
+- Consultar boletín, asistencias, calificaciones y comunicados vigentes
+- Recibir notificaciones internas por comunicados urgentes
+
+**No puede hacer**:
+
+- Registrarse públicamente con el rol tutor
+- Modificar asistencias, calificaciones, matrículas o comunicados
+- Gestionar vínculos tutor-estudiante
+- Consultar estudiantes sin vínculo activo
+
 ### ESTUDIANTE
 
 **Quién es**: Alumno que consume contenido educativo.
@@ -115,27 +132,36 @@ SUPER_ADMIN
 
 ## Matriz de Permisos
 
-| Acción                                | ESTUDIANTE | EDUCADOR | ADMIN_ESCUELA | SUPER_ADMIN |
-| ------------------------------------- | :--------: | :------: | :-----------: | :---------: |
-| Ver catálogo de cursos                |     ✅     |    ✅    |      ✅       |     ✅      |
-| Inscribirse en cursos                 |     ✅     |    ✅    |      ✅       |     ✅      |
-| Ver contenido de curso inscrito       |     ✅     |    ✅    |      ✅       |     ✅      |
-| Marcar lecciones completadas          |     ✅     |    ✅    |      ✅       |     ✅      |
-| Ver progreso propio                   |     ✅     |    ✅    |      ✅       |     ✅      |
-| **Crear cursos**                      |     ❌     |    ✅    |      ✅       |     ✅      |
-| Editar cursos propios                 |     ❌     |    ✅    |      ✅       |     ✅      |
-| Ver progreso de estudiantes           |     ❌     |    ✅    |      ✅       |     ✅      |
-| Calificar estudiantes                 |     ❌     |    ✅    |      ✅       |     ✅      |
-| **Gestionar grupos**                  |     ❌     |    ❌    |      ✅       |     ✅      |
-| Publicar comunicados                  |     ❌     |    ❌    |      ✅       |     ✅      |
-| Registrar asistencias                 |     ❌     |    ❌    |      ✅       |     ✅      |
-| Gestionar usuarios de institución     |     ❌     |    ❌    |      ✅       |     ✅      |
-| **Gestionar todas las instituciones** |     ❌     |    ❌    |      ❌       |     ✅      |
-| Configurar sistema                    |     ❌     |    ❌    |      ❌       |     ✅      |
+| Acción                                  | ESTUDIANTE | EDUCADOR | TUTOR | ADMIN_ESCUELA | SUPER_ADMIN |
+| --------------------------------------- | :--------: | :------: | :---: | :-----------: | :---------: |
+| Ver catálogo de cursos                  |     ✅     |    ✅    |  ✅   |      ✅       |     ✅      |
+| Inscribirse en cursos                   |     ✅     |    ✅    |  ❌   |      ✅       |     ✅      |
+| Ver contenido de curso inscrito         |     ✅     |    ✅    |  ❌   |      ✅       |     ✅      |
+| Marcar lecciones completadas            |     ✅     |    ✅    |  ❌   |      ✅       |     ✅      |
+| Ver progreso propio                     |     ✅     |    ✅    |  ❌   |      ✅       |     ✅      |
+| **Crear cursos**                        |     ❌     |    ✅    |  ❌   |      ✅       |     ✅      |
+| Editar cursos propios                   |     ❌     |    ✅    |  ❌   |      ✅       |     ✅      |
+| Ver progreso de estudiantes             |     ❌     |    ✅    |  ❌   |      ✅       |     ✅      |
+| Calificar estudiantes                   |     ❌     |    ✅    |  ❌   |      ✅       |     ✅      |
+| **Gestionar grupos**                    |     ❌     |    ❌    |  ❌   |      ✅       |     ✅      |
+| Publicar comunicados                    |     ❌     |    ❌    |  ❌   |      ✅       |     ✅      |
+| Registrar asistencias                   |     ❌     |    ❌    |  ❌   |      ✅       |     ✅      |
+| Gestionar usuarios de institución       |     ❌     |    ❌    |  ❌   |      ✅       |     ✅      |
+| **Gestionar todas las instituciones**   |     ❌     |    ❌    |  ❌   |      ❌       |     ✅      |
+| Configurar sistema                      |     ❌     |    ❌    |  ❌   |      ❌       |     ✅      |
+| Gestionar vínculos tutor-estudiante     |     ❌     |    ❌    |  ❌   |      ✅       |     ✅      |
+| Consultar seguimiento de vinculados     |     ❌     |    ❌    |  ✅   |      ❌       |     ❌      |
+| Recibir comunicados urgentes vinculados |     ❌     |    ❌    |  ✅   |      ❌       |     ❌      |
 
 ## Navegación por Rol
 
 Según tu rol, verás diferentes opciones en el menú:
+
+### Menú de TUTOR
+
+- Dashboard
+- Seguimiento de estudiantes
+- Notificaciones
 
 ### Menú de ESTUDIANTE
 
@@ -157,6 +183,7 @@ Según tu rol, verás diferentes opciones en el menú:
 - Gestionar cursos
 - Usuarios
 - Configuración
+- Vínculos tutor-estudiante
 
 ### Menú de SUPER_ADMIN
 
