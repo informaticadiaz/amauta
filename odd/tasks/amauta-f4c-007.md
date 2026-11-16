@@ -58,6 +58,7 @@ Los endpoints deben comprobar en backend el vínculo activo, la matrícula activ
 - T3 — S2/S4 — Implementar acceso tutor de solo lectura a datos académicos vigentes; Ruta: API y proxies web; Commit: `2b4f852` y `b12da8d`; Estado: completado.
 - T4 — S3 — Integrar notificaciones por comunicados urgentes con deduplicación; Ruta: API; Commit: `b12da8d`; Estado: completado.
 - T5 — S1-S4 — Implementar UI tutor/admin, tests, documentación y actualización del roadmap; Ruta: `apps/web/src`, tests y docs; Commit: `b12da8d`; Estado: completado.
+- T6 — S2/S4 — Asociar cada vínculo tutor-estudiante a una institución y reforzar la autorización de lectura; Ruta: Prisma/API/tests; Commit: `d6bd395`; Estado: completado.
 
 ## Log
 
@@ -92,3 +93,11 @@ La implementación queda en la rama `feat/f4c007-tutores`, sin commit ni desplie
 ### L8
 
 La entrega se dividió en dos slices funcionales: `2b4f852` para schema, migración y API tutor; `b12da8d` para notificaciones, frontend, documentación y tests. Ambos commits fueron publicados en `origin/feat/f4c007-tutores`. Los commits previos `265575a` y `879f70e` corresponden a documentación local pendiente de publicación desde antes de este feature.
+
+### L9
+
+La revisión previa al merge del PR #117 detectó que `TutorEstudiante` no conservaba `institucionId`; se corrige antes del merge para cumplir S2/S4 y evitar acceso cruzado entre instituciones. El vínculo se asociará explícitamente a una institución y la autorización de lectura deberá exigir matrícula activa en esa misma institución.
+
+### L10
+
+T6 completado en `d6bd395`: `TutorEstudiante` conserva `institucionId`, la clave única permite vínculos por institución, el acceso tutor exige vínculo y matrícula activa en la misma institución, y la migración aborta si no puede asignar una institución única a datos existentes. Verificación: schema Prisma válido, type-check API, 2 suites/7 tests focalizados y `git diff --check` aprobados. `prisma migrate status` no pudo ejecutarse por ausencia de `DATABASE_URL`; no se aplicó ninguna migración.
