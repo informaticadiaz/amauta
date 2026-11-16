@@ -5,5 +5,6 @@ import { BoletinService } from './boletin.service';
 @Module({
   controllers: [BoletinController],
   providers: [BoletinService],
+  exports: [BoletinService],
 })
 export class BoletinModule {}

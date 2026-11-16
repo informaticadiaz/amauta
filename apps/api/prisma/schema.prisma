@@ -54,6 +54,8 @@ model Usuario {
   periodosCerrados               PeriodoAcademico[]  @relation("PeriodoCerradoPor")
   franjasHorarias                FranjaHoraria[]     @relation("FranjaHorariaEducador")
   alertasAcademicas              AlertaAcademica[]   @relation("AlertaEstudiante")
+  tutorias                        TutorEstudiante[]  @relation("TutorEstudianteTutor")
+  estudiantesTutorados           TutorEstudiante[]  @relation("TutorEstudianteEstudiante")
 
   // Comunidad y foros
   postsForo      ForoPost[]      @relation("AutorForoPost")
@@ -72,6 +74,7 @@ enum Rol {
   EDUCADOR
   ADMIN_ESCUELA
   SUPER_ADMIN
+  TUTOR
 }
 
 /// Perfil extendido del usuario
@@ -485,6 +488,31 @@ enum EstadoMatricula {
   EGRESADO
 }
 
+/// Vínculo administrativo entre un tutor y un estudiante.
+model TutorEstudiante {
+  id           String             @id @default(cuid())
+  tutorId      String
+  tutor        Usuario            @relation("TutorEstudianteTutor", fields: [tutorId], references: [id])
+  estudianteId String
+  estudiante   Usuario            @relation("TutorEstudianteEstudiante", fields: [estudianteId], references: [id])
+  relacion     RelacionTutor
+  activo       Boolean            @default(true)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  @@unique([tutorId, estudianteId])
+  @@index([tutorId, activo])
+  @@index([estudianteId, activo])
+  @@map("tutores_estudiantes")
+}
+
+enum RelacionTutor {
+  PADRE
+  MADRE
+  TUTOR_LEGAL
+  OTRO
+}
+
 /// Escala de calificación por institución
 model EscalaCalificacion {
   id String @id @default(cuid())
@@ -797,6 +825,8 @@ model Comunicado {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  notificaciones Notificacion[]
+
   @@index([institucionId])
   @@index([tipo])
   @@map("comunicados")
@@ -856,6 +886,7 @@ enum TipoNotificacion {
   PREGUNTA_SIN_RESPONDER
   ALERTA_ASISTENCIA_BAJA
   ALERTA_NOTA_EN_RIESGO
+  COMUNICADO_URGENTE
 }
 
 /// Publicación en el foro de un curso
@@ -958,6 +989,9 @@ model Notificacion {
   alertaId String?
   alerta   AlertaAcademica? @relation(fields: [alertaId], references: [id], onDelete: Cascade)
 
+  comunicadoId String?
+  comunicado   Comunicado? @relation(fields: [comunicadoId], references: [id], onDelete: Cascade)
+
   leida Boolean @default(false)
 
   creadoEn DateTime @default(now())
@@ -966,6 +1000,8 @@ model Notificacion {
   @@index([leida])
   @@index([tipo])
   @@index([alertaId])
+  @@index([comunicadoId])
+  @@unique([usuarioId, comunicadoId, tipo])
   @@map("notificaciones")
 }
 

@@ -5,5 +5,6 @@ import { CalificacionesService } from './calificaciones.service';
 @Module({
   controllers: [CalificacionesController],
   providers: [CalificacionesService],
+  exports: [CalificacionesService],
 })
 export class CalificacionesModule {}
