@@ -12,7 +12,9 @@ describe('TutorAccessService', () => {
   beforeEach(() => jest.clearAllMocks());
 
   it('permite el acceso con vínculo y matrícula activa en período vigente', async () => {
-    prisma.tutorEstudiante.findUnique.mockResolvedValue({ activo: true });
+    prisma.tutorEstudiante.findMany.mockResolvedValue([
+      { activo: true, institucionId: 'inst-1' },
+    ]);
     prisma.matricula.findFirst.mockResolvedValue({
       institucionId: 'inst-1',
       periodoAcademico: {
@@ -31,10 +33,15 @@ describe('TutorAccessService', () => {
         institucionId: 'inst-1',
       })
     );
+    expect(prisma.matricula.findFirst).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({ institucionId: 'inst-1' }),
+      })
+    );
   });
 
   it('deniega el acceso cruzado y los vínculos inactivos', async () => {
-    prisma.tutorEstudiante.findUnique.mockResolvedValue({ activo: false });
+    prisma.tutorEstudiante.findMany.mockResolvedValue([]);
 
     await expect(
       service.verificarAcceso('tutor-1', 'other-student')
@@ -43,7 +50,9 @@ describe('TutorAccessService', () => {
   });
 
   it('deniega el acceso si no hay matrícula activa en período vigente', async () => {
-    prisma.tutorEstudiante.findUnique.mockResolvedValue({ activo: true });
+    prisma.tutorEstudiante.findMany.mockResolvedValue([
+      { activo: true, institucionId: 'inst-1' },
+    ]);
     prisma.matricula.findFirst.mockResolvedValue(null);
 
     await expect(

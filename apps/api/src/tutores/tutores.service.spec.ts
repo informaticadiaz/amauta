@@ -68,6 +68,7 @@ describe('TutoresService', () => {
     prisma.tutorEstudiante.findUnique.mockResolvedValue({
       id: 'link-1',
       activo: true,
+      institucionId: 'inst-1',
       estudiante: { matriculas: [{ id: 'mat-1' }] },
     });
 

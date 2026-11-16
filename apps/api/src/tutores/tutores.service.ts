@@ -113,7 +113,13 @@ export class TutoresService {
         select: { id: true },
       }),
       this.prisma.tutorEstudiante.findUnique({
-        where: { tutorId_estudianteId: { tutorId, estudianteId } },
+        where: {
+          tutorId_estudianteId_institucionId: {
+            tutorId,
+            estudianteId,
+            institucionId: institucion.id,
+          },
+        },
         select: { id: true, activo: true },
       }),
     ]);
@@ -143,7 +149,12 @@ export class TutoresService {
           include: vinculoInclude,
         })
       : this.prisma.tutorEstudiante.create({
-          data: { tutorId, estudianteId, relacion },
+          data: {
+            tutorId,
+            estudianteId,
+            institucionId: institucion.id,
+            relacion,
+          },
           include: vinculoInclude,
         });
   }
@@ -167,6 +178,7 @@ export class TutoresService {
     const skip = (page - 1) * limit;
     const where: Prisma.TutorEstudianteWhereInput = {
       activo: true,
+      institucionId: institucion.id,
       estudiante: {
         matriculas: {
           some: { institucionId: institucion.id, estado: 'ACTIVA' },
@@ -215,6 +227,7 @@ export class TutoresService {
       select: {
         id: true,
         activo: true,
+        institucionId: true,
         estudiante: {
           select: {
             matriculas: {
@@ -226,7 +239,11 @@ export class TutoresService {
         },
       },
     });
-    if (!vinculo || vinculo.estudiante.matriculas.length === 0) {
+    if (
+      !vinculo ||
+      vinculo.institucionId !== institucion.id ||
+      vinculo.estudiante.matriculas.length === 0
+    ) {
       throw new NotFoundException('Vínculo no encontrado en la institución');
     }
     if (!vinculo.activo) return;

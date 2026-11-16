@@ -411,6 +411,7 @@ model Institucion {
   materias           Materia[]
   matriculas         Matricula[]
   alertas            AlertaAcademica[]
+  tutorEstudiantes   TutorEstudiante[]
 
   @@map("instituciones")
 }
@@ -490,19 +491,22 @@ enum EstadoMatricula {
 
 /// Vínculo administrativo entre un tutor y un estudiante.
 model TutorEstudiante {
-  id           String             @id @default(cuid())
-  tutorId      String
-  tutor        Usuario            @relation("TutorEstudianteTutor", fields: [tutorId], references: [id])
-  estudianteId String
-  estudiante   Usuario            @relation("TutorEstudianteEstudiante", fields: [estudianteId], references: [id])
-  relacion     RelacionTutor
+  id            String             @id @default(cuid())
+  tutorId       String
+  tutor         Usuario            @relation("TutorEstudianteTutor", fields: [tutorId], references: [id])
+  estudianteId  String
+  estudiante    Usuario            @relation("TutorEstudianteEstudiante", fields: [estudianteId], references: [id])
+  institucionId String
+  institucion   Institucion        @relation(fields: [institucionId], references: [id])
+  relacion      RelacionTutor
   activo       Boolean            @default(true)
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @updatedAt
 
-  @@unique([tutorId, estudianteId])
+  @@unique([tutorId, estudianteId, institucionId])
   @@index([tutorId, activo])
   @@index([estudianteId, activo])
+  @@index([institucionId, activo])
   @@map("tutores_estudiantes")
 }
 

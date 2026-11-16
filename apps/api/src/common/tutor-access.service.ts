@@ -22,101 +22,100 @@ export class TutorAccessService {
       where: {
         tutorId,
         activo: true,
-        estudiante: {
-          activo: true,
-          matriculas: {
-            some: {
-              estado: 'ACTIVA',
-              periodoAcademico: { activo: true },
-            },
-          },
-        },
+        estudiante: { activo: true },
       },
       select: {
         id: true,
         relacion: true,
+        institucionId: true,
+        createdAt: true,
         estudiante: {
           select: {
             id: true,
             email: true,
             nombre: true,
             apellido: true,
-            matriculas: {
-              where: {
-                estado: 'ACTIVA',
-                periodoAcademico: { activo: true },
-              },
-              orderBy: { periodoAcademico: { fechaInicio: 'desc' } },
-              take: 1,
-              select: {
-                institucionId: true,
-                periodoAcademico: {
-                  select: { id: true, nombre: true },
-                },
-              },
-            },
           },
         },
       },
       orderBy: { createdAt: 'desc' },
     });
 
-    return {
-      estudiantes: vinculos.map(({ estudiante, ...vinculo }) => ({
-        ...vinculo,
-        estudiante: {
-          ...estudiante,
-          matricula: estudiante.matriculas[0] ?? null,
-        },
-      })),
-    };
+    const estudiantes = await Promise.all(
+      vinculos.map(async ({ estudiante, ...vinculo }) => {
+        const matricula = await this.prisma.matricula.findFirst({
+          where: {
+            estudianteId: estudiante.id,
+            institucionId: vinculo.institucionId,
+            estado: 'ACTIVA',
+            periodoAcademico: { activo: true },
+          },
+          orderBy: { periodoAcademico: { fechaInicio: 'desc' } },
+          select: {
+            institucionId: true,
+            periodoAcademico: {
+              select: { id: true, nombre: true },
+            },
+          },
+        });
+
+        return matricula
+          ? { ...vinculo, estudiante: { ...estudiante, matricula } }
+          : null;
+      })
+    );
+
+    return { estudiantes: estudiantes.filter(Boolean) };
   }
 
   async verificarAcceso(
     tutorId: string,
     estudianteId: string
   ): Promise<TutorAcademicAccess> {
-    const vinculo = await this.prisma.tutorEstudiante.findUnique({
-      where: { tutorId_estudianteId: { tutorId, estudianteId } },
-      select: { activo: true },
+    const vinculos = await this.prisma.tutorEstudiante.findMany({
+      where: { tutorId, estudianteId, activo: true },
+      select: { institucionId: true },
     });
 
-    if (!vinculo?.activo) {
+    if (vinculos.length === 0) {
       throw new ForbiddenException(
         'No tienes un vínculo activo con este estudiante'
       );
     }
 
-    const matricula = await this.prisma.matricula.findFirst({
-      where: {
-        estudianteId,
-        estado: 'ACTIVA',
-        periodoAcademico: { activo: true },
-      },
-      orderBy: { periodoAcademico: { fechaInicio: 'desc' } },
-      select: {
-        institucionId: true,
-        periodoAcademico: {
-          select: {
-            id: true,
-            nombre: true,
-            fechaInicio: true,
-            fechaFin: true,
+    for (const vinculo of vinculos) {
+      const matricula = await this.prisma.matricula.findFirst({
+        where: {
+          estudianteId,
+          institucionId: vinculo.institucionId,
+          estado: 'ACTIVA',
+          periodoAcademico: { activo: true },
+        },
+        orderBy: { periodoAcademico: { fechaInicio: 'desc' } },
+        select: {
+          institucionId: true,
+          periodoAcademico: {
+            select: {
+              id: true,
+              nombre: true,
+              fechaInicio: true,
+              fechaFin: true,
+            },
           },
         },
-      },
-    });
+      });
 
-    if (!matricula) {
-      throw new ForbiddenException(
-        'El estudiante no tiene una matrícula activa en un período vigente'
-      );
+      if (matricula) {
+        return {
+          estudianteId,
+          institucionId: matricula.institucionId,
+          periodo: matricula.periodoAcademico,
+        };
+      }
     }
 
-    return {
-      estudianteId,
-      institucionId: matricula.institucionId,
-      periodo: matricula.periodoAcademico,
-    };
+    throw new ForbiddenException(
+      'El estudiante no tiene una matrícula activa en un período vigente'
+    );
   }
 }
