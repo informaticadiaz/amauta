@@ -1,7 +1,7 @@
 # Auditoría del proceso de CI/CD
 
-**Fecha de revisión:** 2026-11-15  
-**Estado:** Documento de evaluación para el equipo de desarrollo  
+**Fecha de revisión:** 2026-11-15
+**Estado:** Documento de evaluación para el equipo de desarrollo
 **Alcance:** Workflow actual de GitHub Actions, validaciones automatizadas, tests, seguridad del pipeline y relación con el deploy productivo.
 
 > Este documento no propone aplicar cambios todavía. Su objetivo es dejar una base común para que el equipo evalúe prioridades, riesgos y decisiones de diseño con tiempo.
