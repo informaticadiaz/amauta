@@ -53,11 +53,11 @@ Los endpoints deben comprobar en backend el vínculo activo, la matrícula activ
 
 ## Tasks
 
-- T1 — S1/S4 — Diseñar persistencia, autorización y contratos de tutor; Ruta: Prisma/API; Commit: pendiente; Estado: completado.
-- T2 — S1/S4 — Implementar migración, módulo de vínculos y endpoints administrativos; Ruta: `apps/api/src/tutores` y schema; Commit: pendiente; Estado: completado.
-- T3 — S2/S4 — Implementar acceso tutor de solo lectura a datos académicos vigentes; Ruta: API y proxies web; Commit: pendiente; Estado: completado.
-- T4 — S3 — Integrar notificaciones por comunicados urgentes con deduplicación; Ruta: API; Commit: pendiente; Estado: completado.
-- T5 — S1-S4 — Implementar UI tutor/admin, tests, documentación y actualización del roadmap; Ruta: `apps/web/src`, tests y docs; Commit: pendiente; Estado: completado.
+- T1 — S1/S4 — Diseñar persistencia, autorización y contratos de tutor; Ruta: Prisma/API; Commit: `2b4f852`; Estado: completado.
+- T2 — S1/S4 — Implementar migración, módulo de vínculos y endpoints administrativos; Ruta: `apps/api/src/tutores` y schema; Commit: `2b4f852`; Estado: completado.
+- T3 — S2/S4 — Implementar acceso tutor de solo lectura a datos académicos vigentes; Ruta: API y proxies web; Commit: `2b4f852` y `b12da8d`; Estado: completado.
+- T4 — S3 — Integrar notificaciones por comunicados urgentes con deduplicación; Ruta: API; Commit: `b12da8d`; Estado: completado.
+- T5 — S1-S4 — Implementar UI tutor/admin, tests, documentación y actualización del roadmap; Ruta: `apps/web/src`, tests y docs; Commit: `b12da8d`; Estado: completado.
 
 ## Log
 
@@ -88,3 +88,7 @@ T5 completó dashboard tutor, administración de vínculos, proxies, navegación
 ### L7
 
 La implementación queda en la rama `feat/f4c007-tutores`, sin commit ni despliegue. La migración `20261114130000_tutores_estudiantes` fue aplicada exitosamente en `amauta_dev`; `npx prisma migrate status` confirma que el esquema está actualizado. Se preservó el archivo no versionado preexistente `docs/auditorias/informe-incidente-amauta-2026-11-14.md`.
+
+### L8
+
+La entrega se dividió en dos slices funcionales: `2b4f852` para schema, migración y API tutor; `b12da8d` para notificaciones, frontend, documentación y tests. Ambos commits fueron publicados en `origin/feat/f4c007-tutores`. Los commits previos `265575a` y `879f70e` corresponden a documentación local pendiente de publicación desde antes de este feature.
