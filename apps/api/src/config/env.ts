@@ -88,6 +88,7 @@ const envSchema = z.object({
 
   // Archivos y uploads
   UPLOAD_DIR: z.string().default('./uploads'),
+  PRIVATE_UPLOAD_DIR: z.string().default('./private-uploads'),
 
   MAX_FILE_SIZE: z
     .string()

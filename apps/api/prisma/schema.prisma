@@ -33,29 +33,31 @@ model Usuario {
 
   // Relaciones
   perfil                         Perfil?
-  cursosCreados                  Curso[]             @relation("Educador")
+  cursosCreados                  Curso[]                 @relation("Educador")
   inscripciones                  Inscripcion[]
   progresos                      Progreso[]
   asistencias                    Asistencia[]
   calificaciones                 Calificacion[]
-  matriculas                     Matricula[]         @relation("MatriculaEstudiante")
+  matriculas                     Matricula[]             @relation("MatriculaEstudiante")
   comunicados                    Comunicado[]
   gruposCreados                  Grupo[]
-  gruposEstudiante               GrupoEstudiante[]   @relation("GrupoEstudianteUsuario")
-  asignacionesGrupoRealizadas    GrupoEstudiante[]   @relation("GrupoEstudianteAsignadoPor")
-  remocionesGrupoRealizadas      GrupoEstudiante[]   @relation("GrupoEstudianteRemovidoPor")
-  gruposEducador                 GrupoEducador[]     @relation("GrupoEducadorUsuario")
-  asignacionesEducadorRealizadas GrupoEducador[]     @relation("GrupoEducadorAsignadoPor")
-  remocionesEducadorRealizadas   GrupoEducador[]     @relation("GrupoEducadorRemovidoPor")
-  evaluacionesCreadas            Evaluacion[]        @relation("Evaluador")
+  gruposEstudiante               GrupoEstudiante[]       @relation("GrupoEstudianteUsuario")
+  asignacionesGrupoRealizadas    GrupoEstudiante[]       @relation("GrupoEstudianteAsignadoPor")
+  remocionesGrupoRealizadas      GrupoEstudiante[]       @relation("GrupoEstudianteRemovidoPor")
+  gruposEducador                 GrupoEducador[]         @relation("GrupoEducadorUsuario")
+  asignacionesEducadorRealizadas GrupoEducador[]         @relation("GrupoEducadorAsignadoPor")
+  remocionesEducadorRealizadas   GrupoEducador[]         @relation("GrupoEducadorRemovidoPor")
+  evaluacionesCreadas            Evaluacion[]            @relation("Evaluador")
   intentosEvaluacion             IntentoEvaluacion[]
   estadosPromocion               EstadoPromocion[]
-  estadosPromocionSobrescritos   EstadoPromocion[]   @relation("EstadoPromocionSobrescritoPor")
-  periodosCerrados               PeriodoAcademico[]  @relation("PeriodoCerradoPor")
-  franjasHorarias                FranjaHoraria[]     @relation("FranjaHorariaEducador")
-  alertasAcademicas              AlertaAcademica[]   @relation("AlertaEstudiante")
-  tutorias                        TutorEstudiante[]  @relation("TutorEstudianteTutor")
-  estudiantesTutorados           TutorEstudiante[]  @relation("TutorEstudianteEstudiante")
+  estadosPromocionSobrescritos   EstadoPromocion[]       @relation("EstadoPromocionSobrescritoPor")
+  periodosCerrados               PeriodoAcademico[]      @relation("PeriodoCerradoPor")
+  franjasHorarias                FranjaHoraria[]         @relation("FranjaHorariaEducador")
+  alertasAcademicas              AlertaAcademica[]       @relation("AlertaEstudiante")
+  tutorias                       TutorEstudiante[]       @relation("TutorEstudianteTutor")
+  estudiantesTutorados           TutorEstudiante[]       @relation("TutorEstudianteEstudiante")
+  justificacionesSolicitadas     JustificacionAusencia[] @relation("JustificacionSolicitante")
+  justificacionesRevisadas       JustificacionAusencia[] @relation("JustificacionRevisor")
 
   // Comunidad y foros
   postsForo      ForoPost[]      @relation("AutorForoPost")
@@ -491,17 +493,17 @@ enum EstadoMatricula {
 
 /// Vínculo administrativo entre un tutor y un estudiante.
 model TutorEstudiante {
-  id            String             @id @default(cuid())
+  id            String        @id @default(cuid())
   tutorId       String
-  tutor         Usuario            @relation("TutorEstudianteTutor", fields: [tutorId], references: [id])
+  tutor         Usuario       @relation("TutorEstudianteTutor", fields: [tutorId], references: [id])
   estudianteId  String
-  estudiante    Usuario            @relation("TutorEstudianteEstudiante", fields: [estudianteId], references: [id])
+  estudiante    Usuario       @relation("TutorEstudianteEstudiante", fields: [estudianteId], references: [id])
   institucionId String
-  institucion   Institucion        @relation(fields: [institucionId], references: [id])
+  institucion   Institucion   @relation(fields: [institucionId], references: [id])
   relacion      RelacionTutor
-  activo       Boolean            @default(true)
-  createdAt    DateTime           @default(now())
-  updatedAt    DateTime           @updatedAt
+  activo        Boolean       @default(true)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
   @@unique([tutorId, estudianteId, institucionId])
   @@index([tutorId, activo])
@@ -650,6 +652,8 @@ model Asistencia {
 
   observaciones String?
 
+  justificaciones JustificacionAusencia[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -665,6 +669,46 @@ enum EstadoAsistencia {
   AUSENTE
   TARDANZA
   JUSTIFICADO
+}
+
+enum EstadoJustificacionAusencia {
+  PENDIENTE
+  APROBADA
+  RECHAZADA
+}
+
+/// Solicitud de justificación formal de una ausencia
+model JustificacionAusencia {
+  id String @id @default(cuid())
+
+  asistenciaId String
+  asistencia   Asistencia @relation(fields: [asistenciaId], references: [id])
+
+  solicitanteId String
+  solicitante   Usuario @relation("JustificacionSolicitante", fields: [solicitanteId], references: [id])
+
+  motivo String
+
+  archivoStorageKey String
+  archivoNombre     String
+  archivoMimeType   String
+  archivoTamano     Int
+
+  estado        EstadoJustificacionAusencia @default(PENDIENTE)
+  revisadaPorId String?
+  revisadaPor   Usuario?                    @relation("JustificacionRevisor", fields: [revisadaPorId], references: [id])
+  motivoRechazo String?
+  fechaRevision DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notificaciones Notificacion[]
+
+  @@index([asistenciaId, estado])
+  @@index([solicitanteId, estado])
+  @@index([revisadaPorId])
+  @@map("justificaciones_ausencias")
 }
 
 /// Estado final de promoción por estudiante, grupo y período académico
@@ -891,6 +935,7 @@ enum TipoNotificacion {
   ALERTA_ASISTENCIA_BAJA
   ALERTA_NOTA_EN_RIESGO
   COMUNICADO_URGENTE
+  RESULTADO_JUSTIFICACION_AUSENCIA
 }
 
 /// Publicación en el foro de un curso
@@ -996,16 +1041,20 @@ model Notificacion {
   comunicadoId String?
   comunicado   Comunicado? @relation(fields: [comunicadoId], references: [id], onDelete: Cascade)
 
+  justificacionAusenciaId String?
+  justificacionAusencia   JustificacionAusencia? @relation(fields: [justificacionAusenciaId], references: [id], onDelete: Cascade)
+
   leida Boolean @default(false)
 
   creadoEn DateTime @default(now())
 
+  @@unique([usuarioId, comunicadoId, tipo])
   @@index([usuarioId])
   @@index([leida])
   @@index([tipo])
   @@index([alertaId])
   @@index([comunicadoId])
-  @@unique([usuarioId, comunicadoId, tipo])
+  @@index([justificacionAusenciaId])
   @@map("notificaciones")
 }
 

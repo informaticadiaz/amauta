@@ -87,10 +87,16 @@ export interface ResumenMensualAsistenciaResponse {
 }
 
 interface AsistenciaEstudiante {
+  id: string;
   fecha: Date;
   estado: 'PRESENTE' | 'AUSENTE' | 'TARDANZA' | 'JUSTIFICADO';
   observaciones: string | null;
   grupo: { nombre: string };
+  justificaciones: {
+    id: string;
+    estado: 'PENDIENTE' | 'APROBADA' | 'RECHAZADA';
+    motivoRechazo: string | null;
+  }[];
 }
 
 interface ResumenAsistenciaPersonal {
@@ -438,10 +444,16 @@ export class AsistenciasService {
     const asistencias = await this.prisma.asistencia.findMany({
       where,
       select: {
+        id: true,
         fecha: true,
         estado: true,
         observaciones: true,
         grupo: { select: { nombre: true } },
+        justificaciones: {
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+          select: { id: true, estado: true, motivoRechazo: true },
+        },
       },
       orderBy: { fecha: 'desc' },
     });

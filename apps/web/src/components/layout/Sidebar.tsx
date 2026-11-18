@@ -298,6 +298,12 @@ export function Sidebar() {
       ),
     },
     {
+      href: '/dashboard/justificaciones',
+      label: 'Justificaciones',
+      show: isAdminEscuela || isEducador,
+      icon: <span aria-hidden="true">J</span>,
+    },
+    {
       href: '/dashboard/alertas',
       label: 'Alertas académicas',
       show: isAdminEscuela || isEducador,

@@ -115,6 +115,11 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       show: isAdminEscuela || isEducador,
     },
     {
+      href: '/dashboard/justificaciones',
+      label: 'Justificaciones',
+      show: isAdminEscuela || isEducador,
+    },
+    {
       href: '/dashboard/reportes',
       label: 'Reportes',
       show: isAdminEscuela || isEducador,

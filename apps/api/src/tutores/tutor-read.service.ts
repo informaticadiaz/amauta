@@ -57,10 +57,16 @@ export class TutorReadService {
         },
       },
       select: {
+        id: true,
         fecha: true,
         estado: true,
         observaciones: true,
         grupo: { select: { nombre: true } },
+        justificaciones: {
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+          select: { id: true, estado: true, motivoRechazo: true },
+        },
       },
       orderBy: { fecha: 'desc' },
     });

@@ -24,11 +24,13 @@ export interface NotificacionItem {
     | 'PREGUNTA_SIN_RESPONDER'
     | 'ALERTA_ASISTENCIA_BAJA'
     | 'ALERTA_NOTA_EN_RIESGO'
-    | 'COMUNICADO_URGENTE';
+    | 'COMUNICADO_URGENTE'
+    | 'RESULTADO_JUSTIFICACION_AUSENCIA';
   leida: boolean;
   postId: string | null;
   respuestaId: string | null;
   comunicadoId: string | null;
+  justificacionAusenciaId: string | null;
   creadoEn: Date;
 }
 
@@ -221,6 +223,37 @@ export class NotificacionesService {
         tipo: 'COMUNICADO_URGENTE',
       },
       update: {},
+    });
+  }
+
+  async crearNotificacionResultadoJustificacion(
+    params: {
+      destinatarioId: string;
+      justificacionAusenciaId: string;
+    },
+    prismaClient: NotificacionesPrismaClient = this.prisma
+  ): Promise<NotificacionItem | null> {
+    const destinatarioActivo = await this.obtenerDestinatarioActivo(
+      params.destinatarioId,
+      prismaClient
+    );
+    if (!destinatarioActivo) return null;
+
+    const existente = await prismaClient.notificacion.findFirst({
+      where: {
+        usuarioId: params.destinatarioId,
+        justificacionAusenciaId: params.justificacionAusenciaId,
+        tipo: 'RESULTADO_JUSTIFICACION_AUSENCIA',
+      },
+    });
+    if (existente) return existente;
+
+    return prismaClient.notificacion.create({
+      data: {
+        usuarioId: params.destinatarioId,
+        justificacionAusenciaId: params.justificacionAusenciaId,
+        tipo: 'RESULTADO_JUSTIFICACION_AUSENCIA',
+      },
     });
   }
 

@@ -3,12 +3,19 @@
 import { useState, useEffect } from 'react';
 import { useAuthorization } from '@/hooks/useAuthorization';
 import { useRouter } from 'next/navigation';
+import { JustificacionForm } from '@/components/justificaciones/JustificacionForm';
 
 interface AsistenciaItem {
+  id: string;
   fecha: string;
   estado: 'PRESENTE' | 'AUSENTE' | 'TARDANZA' | 'JUSTIFICADO';
   observaciones: string | null;
   grupo: { nombre: string };
+  justificaciones: {
+    id: string;
+    estado: 'PENDIENTE' | 'APROBADA' | 'RECHAZADA';
+    motivoRechazo: string | null;
+  }[];
 }
 
 interface Resumen {
@@ -45,6 +52,7 @@ export default function MiAsistenciaPage() {
   const [data, setData] = useState<MisAsistenciasResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [formFor, setFormFor] = useState<string | null>(null);
 
   const now = new Date();
   const [mes, setMes] = useState(String(now.getMonth() + 1));
@@ -198,6 +206,9 @@ export default function MiAsistenciaPage() {
                     <th className="px-4 py-2 text-left font-medium text-[var(--muted)]">
                       Estado
                     </th>
+                    <th className="px-4 py-2 text-left font-medium text-[var(--muted)]">
+                      Justificación
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -218,6 +229,58 @@ export default function MiAsistenciaPage() {
                         >
                           {ESTADO_LABEL[a.estado]}
                         </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        {a.justificaciones[0]?.estado === 'PENDIENTE' && (
+                          <span className="text-xs text-amber-700">
+                            Solicitud pendiente
+                          </span>
+                        )}
+                        {a.justificaciones[0]?.estado === 'RECHAZADA' && (
+                          <div className="text-xs text-red-700">
+                            <span>
+                              Rechazada: {a.justificaciones[0].motivoRechazo}
+                            </span>
+                            {a.estado === 'AUSENTE' && (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setFormFor(formFor === a.id ? null : a.id)
+                                }
+                                className="ml-2 font-medium underline"
+                              >
+                                Corregir
+                              </button>
+                            )}
+                          </div>
+                        )}
+                        {a.estado === 'AUSENTE' && !a.justificaciones[0] && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setFormFor(formFor === a.id ? null : a.id)
+                            }
+                            className="rounded-lg border border-primary px-2 py-1 text-xs font-medium text-primary"
+                          >
+                            Justificar
+                          </button>
+                        )}
+                        {formFor === a.id && (
+                          <JustificacionForm
+                            asistenciaId={a.id}
+                            onCancel={() => setFormFor(null)}
+                            onSuccess={() => {
+                              setFormFor(null);
+                              setLoading(true);
+                              fetch(
+                                `/api/me/asistencias?mes=${mes}&anio=${anio}`
+                              )
+                                .then((res) => res.json())
+                                .then((d: MisAsistenciasResponse) => setData(d))
+                                .finally(() => setLoading(false));
+                            }}
+                          />
+                        )}
                       </td>
                     </tr>
                   ))}

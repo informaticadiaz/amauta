@@ -1,6 +1,6 @@
 # ODD Plan — Contexto local y documentación operativa de Amauta
 
-Estado: planificación creada; no se modificaron todavía AGENTS.md, CLAUDE.md, CODEX.md ni el workflow de CI.
+Estado: implementación y verificaciones completadas; `CODEX.md` fue eliminado por ser redundante y estar desactualizado.
 Repositorio: `/home/ignacio/amauta`
 
 ## Specs
@@ -46,7 +46,7 @@ odd/tasks/contexto-local-amauta.md
 
 - T1 — S1-S2 — Inventariar y clasificar `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, `README.md`, `WORKFLOW.md`, roadmap, CI y referencias activas — commit: pendiente
 - T2 — S1-S2 — Rediseñar y reducir `AGENTS.md`; definir y crear `CODEX_STATE.md` exclusivo del workspace — estado: completado; commit: pendiente
-- T3 — S3 — Migrar referencias activas, decidir el destino de `CODEX.md` y retirar `CLAUDE.md` o dejar una transición explícita — estado: completado parcialmente; `CLAUDE.md` quedó como stub y fuera del mecanismo activo; `CODEX.md` queda para auditoría separada — commit: pendiente
+- T3 — S3 — Migrar referencias activas, decidir el destino de `CODEX.md` y retirar `CLAUDE.md` o dejar una transición explícita — estado: completado; `CLAUDE.md` quedó como stub fuera del mecanismo activo y `CODEX.md` fue eliminado — commit: pendiente
 - T4 — S4 — Ejecutar validaciones documentales, CI estructural, búsqueda de referencias residuales y medición del contexto resultante — estado: completado; `git diff --check`, Prettier y checks estructurales pasaron; commit: pendiente
 
 ## Log
@@ -57,4 +57,5 @@ odd/tasks/contexto-local-amauta.md
 - L4 — 2026-11-14 — T2 verificado: `AGENTS.md` quedó en 6.450 bytes/102 líneas y `CODEX_STATE.md` en 1.995 bytes/45 líneas; `git diff --check` pasó y se conservaron reglas de Prisma, fuentes canónicas, testing, documentación y advertencias de producción.
 - L5 — 2026-11-14 — Decisión del usuario: sacar `CLAUDE.md` del mecanismo activo usando la matriz de responsabilidades; conservarlo sólo como stub de compatibilidad, migrar CI y referencias activas a las fuentes canónicas, y auditar `CODEX.md` por separado.
 - L6 — 2026-11-14 — T3 verificado: `CLAUDE.md` quedó reducido a 815 bytes y ya no es requerido por CI; CI valida `AGENTS.md` y `CODEX_STATE.md`; `WORKFLOW.md`, `.cursorrules` y las skills activas fueron migradas. Las menciones restantes están confinadas a `ia-skills/automation/loop-status.md` como historial y a la nota de compatibilidad de `WORKFLOW.md`.
-- L7 — 2026-11-14 — T4 verificado: `git diff --check`, Prettier sobre los documentos modificados, existencia de fuentes canónicas y búsqueda explícita en las referencias activas pasaron. El contexto operativo quedó en 6.450 bytes (`AGENTS.md`), 2.197 bytes (`CODEX_STATE.md`) y 815 bytes (`CLAUDE.md` stub). `CODEX.md` queda como auditoría separada.
+- L7 — 2026-11-14 — T4 verificado: `git diff --check`, Prettier sobre los documentos modificados, existencia de fuentes canónicas y búsqueda explícita en las referencias activas pasaron. El contexto operativo quedó en 6.450 bytes (`AGENTS.md`), 2.197 bytes (`CODEX_STATE.md`) y 815 bytes (`CLAUDE.md` stub). `CODEX.md` quedó como auditoría separada.
+- L8 — 2026-11-16 — Decisión del usuario: "si ya no tiene sentido hay que eliminar codex". Auditoría completada: no había consumidores activos ni contenido único; se eliminó `CODEX.md` y se actualizó `CODEX_STATE.md`.

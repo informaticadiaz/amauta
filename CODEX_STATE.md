@@ -14,9 +14,9 @@ Estado breve de continuidad para el workspace `/home/ignacio/amauta`. No reempla
 
 ## Hilo seleccionado
 
-Se está reorganizando el contexto documental local para evitar depender del estado general de `/home/ignacio` y reducir carga innecesaria.
+Se completó la reorganización del contexto documental local y se completó F4c-008 — justificación formal de ausencias.
 
-Plan ODD: `odd/tasks/contexto-local-amauta.md`.
+Plan ODD cerrado: `odd/tasks/f4c-008-justificacion-ausencias.md`.
 
 ## Decisiones vigentes
 
@@ -25,14 +25,17 @@ Plan ODD: `odd/tasks/contexto-local-amauta.md`.
 - `docs/project-management/roadmap.md` conserva la autoridad sobre fase, sprint y estado de funcionalidades.
 - `CLAUDE.md` quedó fuera del mecanismo activo y se conserva como stub de compatibilidad de 815 bytes.
 - CI valida `AGENTS.md` y `CODEX_STATE.md`, no depende de `CLAUDE.md`.
-- `CODEX.md` queda pendiente de auditoría como posible documento redundante.
+- `CODEX.md` fue eliminado tras confirmar que era redundante y estaba desactualizado.
 
 ## Trabajo en curso
 
-- T1 del plan de contexto: inventario inicial completado.
-- T2: reducción de `AGENTS.md` y creación de este archivo completadas y verificadas.
-- T3: migración de referencias activas y stub de `CLAUDE.md` completados; no se modificó `CODEX.md` ni el código de la aplicación.
-- T4: checks estructurales, `git diff --check`, Prettier y búsqueda de referencias activas completados.
+- Reorganización documental local: T1–T4 completados y verificados; `CODEX.md` fue eliminado con autorización explícita.
+- F4c-008: T1–T5 completados; API y frontend implementados y verificados localmente.
+- El usuario confirmó que los adjuntos son archivos cargados al sistema y que deben admitir imágenes o PDF.
+- Decisiones confirmadas: sólo `AUSENTE`; un archivo por solicitud; imágenes o PDF privados con descarga autorizada; rechazo corregible y reenviable; revisan educador asignado o `ADMIN_ESCUELA`; sólo períodos abiertos; límite de 5 MB; conservar archivos rechazados con historial; sólo notificación interna; una solicitud activa por ausencia; requiere conexión.
+- El motivo del rechazo será obligatorio para permitir corrección y reenvío.
+- La infraestructura pública de uploads se preserva; F4c-008 agrega almacenamiento privado, validación de firmas de archivo y descarga autorizada para documentos sensibles.
+- El usuario autorizó aplicar sólo en la base local `amauta_dev` la migración pendiente `20261116140000_tutor_links_institution`; se aplicó correctamente y el estado quedó actualizado.
 - Las menciones restantes a `CLAUDE.md` están en `ia-skills/automation/loop-status.md` como historial y en la nota de compatibilidad de `WORKFLOW.md`.
 
 ## Cambios a preservar
@@ -45,4 +48,4 @@ No eliminarlo ni asumir que pertenece al trabajo actual sin revisarlo.
 
 ## Próximo paso
 
-Auditar `CODEX.md` por separado si se decide continuar con la limpieza documental; la reorganización de `CLAUDE.md` ya quedó verificada.
+El roadmap indica F4c-009 — Calendario institucional como siguiente trabajo planificado.

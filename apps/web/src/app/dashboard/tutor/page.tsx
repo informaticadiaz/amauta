@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useAuthorization } from '@/hooks/useAuthorization';
 import { useRouter } from 'next/navigation';
+import { JustificacionForm } from '@/components/justificaciones/JustificacionForm';
 
 interface Student {
   id: string;
@@ -39,10 +40,16 @@ interface Boletin {
 
 interface Asistencias {
   asistencias: {
+    id: string;
     fecha: string;
     estado: string;
     observaciones: string | null;
     grupo: { nombre: string };
+    justificaciones: {
+      id: string;
+      estado: 'PENDIENTE' | 'APROBADA' | 'RECHAZADA';
+      motivoRechazo: string | null;
+    }[];
   }[];
   resumen: Boletin['asistencia'];
 }
@@ -102,6 +109,7 @@ export default function TutorPage() {
   const [loadingStudents, setLoadingStudents] = useState(true);
   const [loadingAcademic, setLoadingAcademic] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [formFor, setFormFor] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isLoading && isAuthenticated && !isTutor) router.replace('/dashboard');
@@ -308,7 +316,60 @@ export default function TutorPage() {
                                   'es-AR'
                                 )}
                               </span>
-                              <span className="font-medium">{item.estado}</span>
+                              <span className="text-right">
+                                <span className="font-medium">
+                                  {item.estado}
+                                </span>
+                                {item.justificaciones?.[0]?.estado ===
+                                  'PENDIENTE' && (
+                                  <span className="ml-2 text-xs text-amber-700">
+                                    Solicitud pendiente
+                                  </span>
+                                )}
+                                {item.justificaciones?.[0]?.estado ===
+                                  'RECHAZADA' && (
+                                  <span className="ml-2 block text-xs text-red-700">
+                                    Rechazada:{' '}
+                                    {item.justificaciones?.[0]?.motivoRechazo}
+                                  </span>
+                                )}
+                                {item.estado === 'AUSENTE' &&
+                                  (!item.justificaciones?.[0] ||
+                                    item.justificaciones?.[0]?.estado ===
+                                      'RECHAZADA') && (
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        setFormFor(
+                                          formFor === item.id ? null : item.id
+                                        )
+                                      }
+                                      className="ml-2 text-xs font-medium text-primary underline"
+                                    >
+                                      {item.justificaciones?.[0]
+                                        ? 'Corregir'
+                                        : 'Justificar'}
+                                    </button>
+                                  )}
+                              </span>
+                              {formFor === item.id && (
+                                <JustificacionForm
+                                  asistenciaId={item.id}
+                                  onCancel={() => setFormFor(null)}
+                                  onSuccess={() => {
+                                    setFormFor(null);
+                                    void getJson<Asistencias>(
+                                      `/api/me/tutor-estudiantes/${selectedId}/asistencias`
+                                    ).then((asistencias) =>
+                                      setAcademic((current) =>
+                                        current
+                                          ? { ...current, asistencias }
+                                          : current
+                                      )
+                                    );
+                                  }}
+                                />
+                              )}
                             </li>
                           ))}
                       </ul>
